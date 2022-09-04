@@ -1,0 +1,25 @@
+#include "TA_Texture.h"
+#include "TA_Error.h"
+#include "TA_Globals.h"
+
+void TA_Texture::load(const char *filename)
+{
+    SDL_Surface *surface = IMG_Load(filename);
+    if(surface == nullptr){
+        handleSDLError("Failed to load image");
+    }
+
+    texture = SDL_CreateTextureFromSurface(gRenderer, surface);
+    if(texture == nullptr){
+        handleSDLError("Failed to create texture from surface");
+    }
+
+    textureWidth = surface->w;
+    textureHeight = surface->h;
+    SDL_FreeSurface(surface);
+}
+
+TA_Texture::~TA_Texture()
+{
+    SDL_DestroyTexture(texture);
+}
