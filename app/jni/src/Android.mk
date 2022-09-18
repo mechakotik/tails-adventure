@@ -8,11 +8,12 @@ SDL_PATH := ../SDL2
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/../SDL2_image/include
 
+LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
+
 LOCAL_SRC_FILES := main.cpp \
                    TA_Game.cpp \
                    TA_Texture.cpp \
                    TA_Sprite.cpp \
-                   TA_Error.cpp \
                    TA_ScreenStateMachine.cpp \
                    TA_IntroScreen.cpp
 

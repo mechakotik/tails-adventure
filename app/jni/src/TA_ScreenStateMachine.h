@@ -9,9 +9,9 @@ private:
     TA_Screen *currentScreen;
 
 public:
-    TA_ScreenStateMachine();
-    ~TA_ScreenStateMachine();
+    void init();
     void update();
+    ~TA_ScreenStateMachine();
 };
 
 #endif // TA_SCREENSTATEMACHINE_H

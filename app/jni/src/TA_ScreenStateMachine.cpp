@@ -2,7 +2,7 @@
 #include "TA_IntroScreen.h"
 #include "TA_Error.h"
 
-TA_ScreenStateMachine::TA_ScreenStateMachine()
+void TA_ScreenStateMachine::init()
 {
     currentState.name = TA_SCREENSTATE_INTRO;
     currentState.param = 0;
@@ -25,7 +25,7 @@ void TA_ScreenStateMachine::update()
             currentScreen = new TA_IntroScreen();
             break;
         default:
-            handleError("Invalid new screen state");
+            handleError("%s", "Invalid new screen state");
             break;
     }
 

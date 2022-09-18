@@ -1,22 +1,23 @@
 #include "TA_IntroScreen.h"
 #include "TA_Globals.h"
+#include "TA_Time.h"
 
 void TA_IntroScreen::init(int param)
 {
-
+    segaLogoSprite.load("intro/sega_logo.png", 80, 25);
+    segaLogoSprite.setPosition(gScreenWidth / 2 - 40, gScreenHeight / 2 - 12);
+    segaLogoSprite.setAnimation(0, 16, convertFrames(3), 1);
 }
 
 TA_ScreenState TA_IntroScreen::update()
 {
-    SDL_Rect rect;
-    rect.x = rect.y = 0;
-    rect.w = gScreenWidth;
-    rect.h = gScreenHeight;
+    localTimer = (localTimer + gElapsedTime);
 
-    localTimer = (localTimer + gElapsedTime) % 4000000;
-    int color = (localTimer < 2000000 ? 250 * (localTimer / 2000000.0) : 250 * ((4000000 - localTimer) / 2000000.0));
-    SDL_SetRenderDrawColor(gRenderer, color, color, color, 0);
-    SDL_RenderDrawRect(gRenderer, &rect);
+    if(localTimer >= convertFrames(70) && !secondAnimationPlayed) {
+        segaLogoSprite.setAnimation(17, 23, convertFrames(2), 1);
+        secondAnimationPlayed = 1;
+    }
+    segaLogoSprite.draw();
 
     return {TA_SCREENSTATE_CURRENT, 0};
 }
