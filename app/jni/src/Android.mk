@@ -15,7 +15,8 @@ LOCAL_SRC_FILES := main.cpp \
                    TA_Texture.cpp \
                    TA_Sprite.cpp \
                    TA_ScreenStateMachine.cpp \
-                   TA_IntroScreen.cpp
+                   TA_IntroScreen.cpp \
+                   TA_Tools.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image
 

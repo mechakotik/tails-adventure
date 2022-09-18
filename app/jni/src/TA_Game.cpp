@@ -33,6 +33,7 @@ TA_Game::TA_Game()
     }
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
+    SDL_SetRenderDrawBlendMode(gRenderer, SDL_BLENDMODE_BLEND);
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
 }
@@ -49,6 +50,7 @@ void TA_Game::update()
     gElapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count();
     startTime = currentTime;
 
+    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
     SDL_RenderClear(gRenderer);
     screenStateMachine.update();
     SDL_RenderPresent(gRenderer);
