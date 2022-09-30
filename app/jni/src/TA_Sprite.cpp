@@ -1,13 +1,24 @@
+#include <vector>
 #include <numeric>
+#include <algorithm>
 #include "TA_Sprite.h"
 #include "TA_Globals.h"
 #include "TA_Error.h"
 
-void TA_Sprite::load(const char *filename, int newFrameWidth, int newFrameHeight)
+void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight)
 {
-    TA_Texture::load(filename);
-    frameWidth = newFrameWidth;
-    frameHeight = newFrameHeight;
+    TA_Texture::load(filename.c_str());
+
+    if(newFrameWidth == -1){
+        frameWidth = TA_Texture::textureWidth;
+        frameHeight = TA_Texture::textureHeight;
+    }
+    else {
+        frameWidth = newFrameWidth;
+        frameHeight = newFrameHeight;
+    }
+
+    animation = std::vector<int>{0};
 }
 
 void TA_Sprite::draw()
@@ -76,4 +87,12 @@ void TA_Sprite::setFrame(int newFrame)
 bool TA_Sprite::isAnimated()
 {
     return animation.size() >= 2;
+}
+
+void TA_Sprite::setAlpha(int alpha)
+{
+    printLog("%i", alpha);
+    alpha = std::min(alpha, 255);
+    alpha = std::max(alpha, 0);
+    SDL_SetTextureAlphaMod(TA_Texture::texture, alpha);
 }

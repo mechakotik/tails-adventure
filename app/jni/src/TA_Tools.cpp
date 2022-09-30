@@ -4,7 +4,7 @@
 #include "TA_Error.h"
 #include "TA_Globals.h"
 
-void drawShadow(int factor)
+void drawScreenRect(int r, int g, int b, int a)
 {
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -14,8 +14,13 @@ void drawShadow(int factor)
     rect.w = displayMode.w;
     rect.h = displayMode.h;
 
-    factor = std::max(factor, 0);
-    factor = std::min(factor, 255);
-    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, factor);
+    a = std::max(a, 0);
+    a = std::min(a, 255);
+    SDL_SetRenderDrawColor(gRenderer, r, g, b, a);
     SDL_RenderFillRect(gRenderer, &rect);
+}
+
+void drawShadow(int factor)
+{
+    drawScreenRect(0, 0, 0, factor);
 }

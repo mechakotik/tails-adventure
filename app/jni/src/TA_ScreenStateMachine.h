@@ -10,7 +10,7 @@ private:
 
 public:
     void init();
-    void update();
+    bool update();
     ~TA_ScreenStateMachine();
 };
 

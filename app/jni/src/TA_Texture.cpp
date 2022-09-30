@@ -13,6 +13,7 @@ void TA_Texture::load(const char *filename)
     if(texture == nullptr){
         handleSDLError("Failed to create texture from surface");
     }
+    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
 
     textureWidth = surface->w;
     textureHeight = surface->h;

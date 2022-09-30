@@ -7,11 +7,11 @@
 class TA_IntroScreen : public TA_Screen {
 private:
     int localTimer = 0;
-    TA_Sprite segaLogoSprite;
+    TA_Sprite segaLogoSprite, disclaimerSprite;
     bool secondAnimationPlayed = 0;
 
 public:
-    void init(int param) override;
+    void init() override;
     TA_ScreenState update() override;
     void quit() override;
 };

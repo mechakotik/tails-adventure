@@ -3,22 +3,17 @@
 
 #include <utility>
 
-enum TA_ScreenStateName
+enum TA_ScreenState
 {
     TA_SCREENSTATE_CURRENT,
-    TA_SCREENSTATE_INTRO
-};
-
-struct TA_ScreenState
-{
-    TA_ScreenStateName name;
-    int param;
+    TA_SCREENSTATE_INTRO,
+    TA_SCREENSTATE_TITLE
 };
 
 class TA_Screen {
 public:
-    virtual void init(int param = 0) {}
-    virtual TA_ScreenState update() {return {TA_SCREENSTATE_CURRENT, 0};}
+    virtual void init() {}
+    virtual TA_ScreenState update() {return TA_SCREENSTATE_CURRENT;}
     virtual void quit() {}
 };
 
