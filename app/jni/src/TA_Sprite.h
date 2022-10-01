@@ -12,7 +12,8 @@ private:
     int frame = 0;
     double xpos = 0, ypos = 0;
 
-    int animationFrame = 0, animationTimer = 0, animationDelay = 1, repeatTimesLeft = -1;
+    int animationFrame = 0, animationDelay = 1, repeatTimesLeft = -1;
+    double animationTimer = 0;
     std::vector<int> animation;
 
 public:

@@ -1,6 +1,7 @@
 #include <vector>
 #include <numeric>
 #include <algorithm>
+#include <cmath>
 #include "TA_Sprite.h"
 #include "TA_Globals.h"
 #include "TA_Error.h"
@@ -38,7 +39,7 @@ void TA_Sprite::draw()
             animationFrame %= animation.size();
         }
 
-        animationTimer %= animationDelay;
+        animationTimer = std::fmod(animationTimer, animationDelay);
         frame = animation[animationFrame];
     }
     else{
@@ -91,7 +92,6 @@ bool TA_Sprite::isAnimated()
 
 void TA_Sprite::setAlpha(int alpha)
 {
-    printLog("%i", alpha);
     alpha = std::min(alpha, 255);
     alpha = std::max(alpha, 0);
     SDL_SetTextureAlphaMod(TA_Texture::texture, alpha);

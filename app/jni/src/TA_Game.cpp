@@ -7,8 +7,8 @@
 
 SDL_Window *gWindow;
 SDL_Renderer *gRenderer;
-int gScreenWidth, gScreenHeight, gElapsedTime;
-double gWidthMultiplier, gHeightMultiplier;
+int gScreenWidth, gScreenHeight;
+double gElapsedTime, gWidthMultiplier, gHeightMultiplier;
 
 TA_Game::TA_Game()
 {
@@ -58,7 +58,7 @@ bool TA_Game::process()
 void TA_Game::update()
 {
     currentTime = std::chrono::high_resolution_clock::now();
-    gElapsedTime = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count();
+    gElapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
     startTime = currentTime;
 
     SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);

@@ -19,12 +19,12 @@ TA_ScreenState TA_TitleScreen::update()
     drawScreenRect(0, 0, 102, 255);
     titleScreenSprite.draw();
 
-    if(localTimer <= convertFrames(10)) {
-        int factor = 255 - 255 * localTimer / convertFrames(10);
+    if(localTimer <= 10) {
+        int factor = 255 - 255 * localTimer / 10;
         drawShadow(factor);
     }
-    else if(localTimer >= convertFrames(15)) {
-        int frame = ((localTimer - convertFrames(15)) / convertFrames(1)) % 90;
+    else if(localTimer >= 15) {
+        int frame = int(localTimer - 15) % 90;
         if(frame < 45) {
             int alpha = 255 - 255 * std::max(0, frame - 40) / 5;
             touchToStartSprite.setAlpha(alpha);

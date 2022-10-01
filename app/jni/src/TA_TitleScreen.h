@@ -7,7 +7,7 @@
 
 class TA_TitleScreen : public TA_Screen {
 private:
-    int localTimer = 0;
+    double localTimer = 0;
     TA_Sprite titleScreenSprite, touchToStartSprite;
     TA_Sound titleScreenSound;
 

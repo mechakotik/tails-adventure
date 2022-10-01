@@ -6,7 +6,7 @@
 
 class TA_IntroScreen : public TA_Screen {
 private:
-    int localTimer = 0;
+    double localTimer = 0;
     TA_Sprite segaLogoSprite, disclaimerSprite;
     bool secondAnimationPlayed = 0;
 
