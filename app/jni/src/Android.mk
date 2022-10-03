@@ -18,7 +18,8 @@ LOCAL_SRC_FILES := main.cpp \
                    TA_IntroScreen.cpp \
                    TA_Tools.cpp \
                    TA_Sound.cpp \
-                   TA_TitleScreen.cpp
+                   TA_TitleScreen.cpp \
+                   TA_Touchscreen.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer
 

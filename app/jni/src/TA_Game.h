@@ -11,7 +11,6 @@ private:
     const double pixelAspectRatio = 0.95;
     const int soundFrequency = 44100, soundChunkSize = 1024;
 
-    SDL_Event event;
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime, currentTime;
     TA_ScreenStateMachine screenStateMachine;
 

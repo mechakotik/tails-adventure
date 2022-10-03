@@ -4,6 +4,7 @@
 #include "TA_Game.h"
 #include "TA_Error.h"
 #include "TA_Sound.h"
+#include "TA_Touchscreen.h"
 
 SDL_Window *gWindow;
 SDL_Renderer *gRenderer;
@@ -51,8 +52,18 @@ TA_Game::TA_Game()
 
 bool TA_Game::process()
 {
-    SDL_PollEvent(&event);
-    return event.type != SDL_QUIT;
+    SDL_Event event;
+
+    while(SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            return false;
+        }
+        else if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION || event.type == SDL_FINGERUP) {
+            TA_TouchBackend::processTouchEvent(event.tfinger);
+        }
+    }
+
+    return true;
 }
 
 void TA_Game::update()

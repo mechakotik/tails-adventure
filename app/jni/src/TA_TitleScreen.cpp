@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 #include "TA_TitleScreen.h"
 #include "TA_Globals.h"
 #include "TA_Tools.h"
@@ -19,21 +20,23 @@ TA_ScreenState TA_TitleScreen::update()
     drawScreenRect(0, 0, 102, 255);
     titleScreenSprite.draw();
 
-    if(localTimer <= 10) {
-        int factor = 255 - 255 * localTimer / 10;
-        drawShadow(factor);
-    }
-    else if(localTimer >= 15) {
-        int frame = int(localTimer - 15) % 90;
-        if(frame < 45) {
-            int alpha = 255 - 255 * std::max(0, frame - 40) / 5;
-            touchToStartSprite.setAlpha(alpha);
+    auto drawTouchToStart = [&] (int delay, int fadeDelay)
+    {
+        int frame = int(localTimer) % (delay * 2), alpha;
+        if(frame < delay) {
+            alpha = 255 * std::max(0, frame - (delay - fadeDelay)) / fadeDelay;
         }
         else {
-            int alpha = 255 * std::max(0, frame - 85) / 5;
-            touchToStartSprite.setAlpha(alpha);
+            alpha = 255 - 255 * std::max(0, frame - (delay * 2 - fadeDelay)) / fadeDelay;
         }
+        touchToStartSprite.setAlpha(alpha);
         touchToStartSprite.draw();
+    };
+
+    drawTouchToStart(45, 5);
+    if(localTimer < 10) {
+        int factor = 255 - 255 * localTimer / 10;
+        drawShadow(factor);
     }
 
     return TA_SCREENSTATE_CURRENT;
