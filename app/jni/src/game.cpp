@@ -1,10 +1,10 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
-#include "TA_Game.h"
-#include "TA_Error.h"
-#include "TA_Sound.h"
-#include "TA_Touchscreen.h"
+#include "game.h"
+#include "error.h"
+#include "sound.h"
+#include "touchscreen.h"
 
 SDL_Window *gWindow;
 SDL_Renderer *gRenderer;

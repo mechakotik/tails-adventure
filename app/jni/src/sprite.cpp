@@ -2,9 +2,9 @@
 #include <numeric>
 #include <algorithm>
 #include <cmath>
-#include "TA_Sprite.h"
-#include "TA_Globals.h"
-#include "TA_Error.h"
+#include "sprite.h"
+#include "globals.h"
+#include "error.h"
 
 void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight)
 {

@@ -1,7 +1,7 @@
-#include "TA_ScreenStateMachine.h"
-#include "TA_IntroScreen.h"
-#include "TA_TitleScreen.h"
-#include "TA_Error.h"
+#include "screen_state_machine.h"
+#include "intro_screen.h"
+#include "title_screen.h"
+#include "error.h"
 
 void TA_ScreenStateMachine::init()
 {

@@ -1,7 +1,7 @@
 #ifndef TA_SCREENSTATEMACHINE_H
 #define TA_SCREENSTATEMACHINE_H
 
-#include "TA_Screen.h"
+#include "screen.h"
 
 class TA_ScreenStateMachine {
 private:

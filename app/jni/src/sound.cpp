@@ -1,5 +1,5 @@
-#include "TA_Sound.h"
-#include "TA_Error.h"
+#include "sound.h"
+#include "error.h"
 
 void TA_Sound::load(std::string filename, TA_SoundChannel newChannel, bool newLoop)
 {

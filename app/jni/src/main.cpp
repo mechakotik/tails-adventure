@@ -1,4 +1,4 @@
-#include "TA_Game.h"
+#include "game.h"
 
 int main(int argc, char* args[])
 {

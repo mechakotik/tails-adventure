@@ -3,7 +3,7 @@
 
 #include <chrono>
 #include <SDL.h>
-#include "TA_ScreenStateMachine.h"
+#include "screen_state_machine.h"
 
 class TA_Game {
 private:

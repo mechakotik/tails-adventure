@@ -1,6 +1,6 @@
-#include "TA_Touchscreen.h"
-#include "TA_Globals.h"
-#include "TA_Error.h"
+#include "touchscreen.h"
+#include "globals.h"
+#include "error.h"
 
 namespace TA_TouchBackend {
     std::map<int, TA_Finger> currentFingers;

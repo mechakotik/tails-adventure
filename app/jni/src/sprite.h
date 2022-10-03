@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <SDL.h>
-#include "TA_Texture.h"
+#include "texture.h"
 
 class TA_Sprite : TA_Texture {
 private:

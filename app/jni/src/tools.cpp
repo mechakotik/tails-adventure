@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <SDL.h>
-#include "TA_Tools.h"
-#include "TA_Error.h"
-#include "TA_Globals.h"
+#include "tools.h"
+#include "error.h"
+#include "globals.h"
 
 void drawScreenRect(int r, int g, int b, int a)
 {

@@ -1,9 +1,9 @@
 #ifndef TA_TITLESCREEN_H
 #define TA_TITLESCREEN_H
 
-#include "TA_Screen.h"
-#include "TA_Sprite.h"
-#include "TA_Sound.h"
+#include "screen.h"
+#include "sprite.h"
+#include "sound.h"
 
 class TA_TitleScreen : public TA_Screen {
 private:

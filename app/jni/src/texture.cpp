@@ -1,6 +1,6 @@
-#include "TA_Texture.h"
-#include "TA_Error.h"
-#include "TA_Globals.h"
+#include "texture.h"
+#include "error.h"
+#include "globals.h"
 
 void TA_Texture::load(const char *filename)
 {

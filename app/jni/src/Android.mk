@@ -11,15 +11,15 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/../SDL2_imag
 LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
 
 LOCAL_SRC_FILES := main.cpp \
-                   TA_Game.cpp \
-                   TA_Texture.cpp \
-                   TA_Sprite.cpp \
-                   TA_ScreenStateMachine.cpp \
-                   TA_IntroScreen.cpp \
-                   TA_Tools.cpp \
-                   TA_Sound.cpp \
-                   TA_TitleScreen.cpp \
-                   TA_Touchscreen.cpp
+                   game.cpp \
+                   texture.cpp \
+                   sprite.cpp \
+                   screen_state_machine.cpp \
+                   intro_screen.cpp \
+                   tools.cpp \
+                   sound.cpp \
+                   title_screen.cpp \
+                   touchscreen.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer
 

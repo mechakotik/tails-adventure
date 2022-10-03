@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <cmath>
-#include "TA_TitleScreen.h"
-#include "TA_Globals.h"
-#include "TA_Tools.h"
+#include "title_screen.h"
+#include "globals.h"
+#include "tools.h"
 
 void TA_TitleScreen::init()
 {
