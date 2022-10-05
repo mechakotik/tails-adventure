@@ -4,12 +4,16 @@
 #include "screen.h"
 #include "sprite.h"
 #include "sound.h"
+#include "touchscreen.h"
 
 class TA_TitleScreen : public TA_Screen {
 private:
     double localTimer = 0;
+    int timePressed = -1;
+    bool startedFadeOut = 0;
     TA_Sprite titleScreenSprite, touchToStartSprite;
-    TA_Sound titleScreenSound;
+    TA_Sound titleScreenSound,enterSound;
+    TA_Button button;
 
 public:
     void init() override;

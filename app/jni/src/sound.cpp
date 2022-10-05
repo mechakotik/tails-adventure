@@ -15,3 +15,8 @@ void TA_Sound::play()
 {
     Mix_PlayChannel(channel, chunk, loop);
 }
+
+void TA_Sound::fadeOut(int time)
+{
+    Mix_FadeOutChannel(channel, time * 1000 / 60);
+}

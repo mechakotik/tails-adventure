@@ -21,6 +21,7 @@ private:
 public:
     void load(std::string filename, TA_SoundChannel channel, bool loop);
     void play();
+    void fadeOut(int time);
 };
 
 #endif // TA_SOUND_H

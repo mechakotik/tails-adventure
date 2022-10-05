@@ -3,16 +3,21 @@
 
 #include <map>
 #include <SDL.h>
-
-struct TA_Finger {
-    double xpos, ypos;
-    bool hold;
-};
+#include "geometry.h"
 
 namespace TA_TouchBackend {
     void processTouchEvent(SDL_TouchFingerEvent event);
-    void updateHold();
-    extern std::map<int, TA_Finger> currentFingers;
+    extern std::map<int, TA_Point> currentFingers;
 }
+
+struct TA_Button : TA_Polygon {
+private:
+    bool pressed = 0, hold = 0;
+
+public:
+    void update();
+    bool isPressed() {return pressed;}
+    bool isJustPressed() {return pressed && !hold;}
+};
 
 #endif // TA_TOUCHSCREEN_H

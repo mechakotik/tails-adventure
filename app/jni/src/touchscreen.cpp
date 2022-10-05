@@ -3,30 +3,32 @@
 #include "error.h"
 
 namespace TA_TouchBackend {
-    std::map<int, TA_Finger> currentFingers;
+    std::map<int, TA_Point> currentFingers;
 }
 
 void TA_TouchBackend::processTouchEvent(SDL_TouchFingerEvent event)
 {
-    if(event.type == SDL_FINGERDOWN) {
-        TA_Finger finger;
-        finger.xpos = event.x * gScreenWidth;
-        finger.ypos = event.y * gScreenHeight;
-        finger.hold = 0;
-        currentFingers[event.fingerId] = finger;
-    }
-    else if(event.type == SDL_FINGERMOTION) {
-        currentFingers[event.fingerId].xpos = event.x * gScreenWidth;
-        currentFingers[event.fingerId].ypos = event.y * gScreenHeight;
+    if(event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION) {
+        currentFingers[event.fingerId] = {event.x * gScreenWidth, event.y * gScreenHeight};
     }
     else {
         currentFingers.erase(event.fingerId);
     }
 }
 
-void TA_TouchBackend::updateHold()
+void TA_Button::update()
 {
-    for(auto &finger : currentFingers) {
-        finger.second.hold = 1;
+    bool pressedNow = 0;
+    for(auto finger : TA_TouchBackend::currentFingers) {
+        TA_Point point = finger.second;
+        if(inside(point)) {
+            if(pressed) {
+                hold = 1;
+            }
+            pressed = pressedNow = 1;
+        }
+    }
+    if(!pressedNow) {
+        pressed = hold = 0;
     }
 }

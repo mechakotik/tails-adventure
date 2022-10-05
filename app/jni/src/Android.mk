@@ -19,7 +19,8 @@ LOCAL_SRC_FILES := main.cpp \
                    tools.cpp \
                    sound.cpp \
                    title_screen.cpp \
-                   touchscreen.cpp
+                   touchscreen.cpp \
+                   geometry.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer
 
