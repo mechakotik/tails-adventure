@@ -7,3 +7,6 @@
 [submodule "app/jni/SDL2_mixer"]
 	path = app/jni/SDL2_mixer
 	url = https://github.com/libsdl-org/SDL_mixer
+[submodule "app/jni/tinyxml2"]
+	path = app/jni/tinyxml2
+	url = https://github.com/leethomason/tinyxml2

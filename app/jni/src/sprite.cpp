@@ -6,13 +6,44 @@
 #include "globals.h"
 #include "error.h"
 
+void TA_Texture::load(std::string filename)
+{
+    SDL_Surface *surface = IMG_Load(filename.c_str());
+    if(surface == nullptr) {
+        handleSDLError("Failed to load image");
+    }
+
+    SDLTexture = SDL_CreateTextureFromSurface(gRenderer, surface);
+    if(SDLTexture == nullptr) {
+        handleSDLError("Failed to create texture from surface");
+    }
+    SDL_SetTextureBlendMode(SDLTexture, SDL_BLENDMODE_BLEND);
+
+    width = surface->w;
+    height = surface->h;
+    SDL_FreeSurface(surface);
+}
+
+TA_Texture::~TA_Texture()
+{
+    SDL_DestroyTexture(SDLTexture);
+}
+
 void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight)
 {
-    TA_Texture::load(filename.c_str());
+    TA_Texture *newTexture = new TA_Texture();
+    newTexture->load(filename);
+    loadFromTexture(newTexture, newFrameWidth, newFrameHeight);
+}
 
-    if(newFrameWidth == -1){
-        frameWidth = TA_Texture::textureWidth;
-        frameHeight = TA_Texture::textureHeight;
+void TA_Sprite::loadFromTexture(TA_Texture *newTexture, int newFrameWidth, int newFrameHeight)
+{
+    texture = newTexture;
+    texture->spritesUsed ++;
+
+    if(newFrameWidth == -1) {
+        frameWidth = texture->width;
+        frameHeight = texture->height;
     }
     else {
         frameWidth = newFrameWidth;
@@ -47,16 +78,16 @@ void TA_Sprite::draw()
     }
 
     SDL_Rect srcRect, dstRect;
-    srcRect.x = (frameWidth * frame) % textureWidth;
-    srcRect.y = (frameWidth * frame) / textureWidth * frameHeight;
+    srcRect.x = (frameWidth * frame) % texture->width;
+    srcRect.y = (frameWidth * frame) / texture->width * frameHeight;
     srcRect.w = frameWidth;
     srcRect.h = frameHeight;
 
     dstRect.x = xpos * gWidthMultiplier;
     dstRect.y = ypos * gHeightMultiplier;
-    dstRect.w = frameWidth * gWidthMultiplier;
-    dstRect.h = frameHeight * gHeightMultiplier;
-    SDL_RenderCopyEx(gRenderer, texture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
+    dstRect.w = frameWidth * gWidthMultiplier + 1;
+    dstRect.h = frameHeight * gHeightMultiplier + 1;
+    SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
 }
 
 void TA_Sprite::setPosition(double newXpos, double newYpos)
@@ -94,5 +125,13 @@ void TA_Sprite::setAlpha(int alpha)
 {
     alpha = std::min(alpha, 255);
     alpha = std::max(alpha, 0);
-    SDL_SetTextureAlphaMod(TA_Texture::texture, alpha);
+    SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
+}
+
+TA_Sprite::~TA_Sprite()
+{
+    texture->spritesUsed --;
+    if(texture->spritesUsed == 0) {
+        delete texture;
+    }
 }

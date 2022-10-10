@@ -2,11 +2,12 @@
 #include "intro_screen.h"
 #include "title_screen.h"
 #include "error.h"
+#include "game_screen.h"
 
 void TA_ScreenStateMachine::init()
 {
-    currentState = TA_SCREENSTATE_INTRO;
-    currentScreen = new TA_IntroScreen();
+    currentState = TA_SCREENSTATE_GAME;
+    currentScreen = new TA_GameScreen();
     currentScreen -> init();
 }
 
@@ -26,6 +27,9 @@ bool TA_ScreenStateMachine::update()
             break;
         case TA_SCREENSTATE_TITLE:
             currentScreen = new TA_TitleScreen();
+            break;
+        case TA_SCREENSTATE_GAME:
+            currentScreen = new TA_GameScreen();
             break;
         default:
             handleError("%s", "Invalid new screen state");
