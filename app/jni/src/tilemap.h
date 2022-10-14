@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "sprite.h"
+#include "camera.h"
 
 class TA_Tilemap {
 private:
@@ -25,6 +26,7 @@ private:
 public:
     void load(std::string filename);
     void draw(int priority);
+    void setCamera(TA_Camera *newCamera);
 };
 
 #endif // TA_TILEMAP_H

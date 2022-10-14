@@ -4,6 +4,7 @@
 #include "tinyxml2.h"
 #include "error.h"
 #include "tools.h"
+#include "globals.h"
 
 void TA_Tilemap::load(std::string filename)
 {
@@ -63,6 +64,16 @@ void TA_Tilemap::draw(int priority)
             if(tileset[tilemap[tileX][tileY].tileIndex].priority == priority) {
                 tilemap[tileX][tileY].sprite.draw();
             }
+        }
+    }
+}
+
+void TA_Tilemap::setCamera(TA_Camera *newCamera)
+{
+    newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth - gScreenWidth, height * tileHeight - gScreenHeight)});
+    for(int tileX = 0; tileX < width; tileX ++) {
+        for(int tileY = 0; tileY < height; tileY ++) {
+            tilemap[tileX][tileY].sprite.setCamera(newCamera);
         }
     }
 }

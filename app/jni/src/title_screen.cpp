@@ -32,8 +32,7 @@ TA_ScreenState TA_TitleScreen::update()
     drawScreenRect(0, 0, 102, 255);
     titleScreenSprite.draw();
 
-    auto drawTouchToStart = [&] (int delay, int fadeDelay)
-    {
+    auto drawTouchToStart = [&] (int delay, int fadeDelay) {
         int frame = int(localTimer) % (delay * 2), alpha;
         if(frame < delay) {
             alpha = 255 * std::max(0, frame - (delay - fadeDelay)) / fadeDelay;

@@ -83,17 +83,16 @@ void TA_Sprite::draw()
     srcRect.w = frameWidth;
     srcRect.h = frameHeight;
 
-    dstRect.x = xpos * gWidthMultiplier;
-    dstRect.y = ypos * gHeightMultiplier;
+    TA_Point screenPosition = position;
+    if(camera != nullptr) {
+        screenPosition = camera->getRelative(position);
+    }
+
+    dstRect.x = screenPosition.x * gWidthMultiplier;
+    dstRect.y = screenPosition.y * gHeightMultiplier;
     dstRect.w = frameWidth * gWidthMultiplier + 1;
     dstRect.h = frameHeight * gHeightMultiplier + 1;
     SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
-}
-
-void TA_Sprite::setPosition(double newXpos, double newYpos)
-{
-    xpos = newXpos;
-    ypos = newYpos;
 }
 
 void TA_Sprite::setAnimation(std::vector<int> newAnimation, int newAnimationDelay, int repeatTimes)

@@ -8,6 +8,11 @@ struct TA_Point {
     TA_Point() {}
     TA_Point(double newX, double newY);
     TA_Point operator+(const TA_Point &rv);
+    TA_Point operator-(const TA_Point &rv);
+};
+
+struct TA_Rect {
+    TA_Point topLeft, bottomRight;
 };
 
 struct TA_Line {

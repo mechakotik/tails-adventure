@@ -5,6 +5,8 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "geometry.h"
+#include "camera.h"
 
 class TA_Texture {
 public:
@@ -20,7 +22,8 @@ private:
     TA_Texture *texture;
     int frameWidth, frameHeight;
     int frame = 0;
-    double xpos = 0, ypos = 0;
+    TA_Point position;
+    TA_Camera *camera = nullptr;
 
     int animationFrame = 0, animationDelay = 1, repeatTimesLeft = -1;
     double animationTimer = 0;
@@ -30,12 +33,14 @@ public:
     void load(std::string filename, int frameWidth = -1, int frameHeight = -1);
     void loadFromTexture(TA_Texture *newTexture, int frameWidth = -1, int frameHeight = -1);
     void draw();
-    void setPosition(double newXpos, double newYpos);
+    void setPosition(TA_Point newPosition) {position = newPosition;}
+    void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}
     void setAnimation(std::vector<int> newAnimation, int newAnimationDelay, int repeatTimes);
     void setAnimation(int firstFrame, int lastFrame, int newAnimationDelay, int repeatTimes);
     void setFrame(int newFrame);
     bool isAnimated();
     void setAlpha(int alpha);
+    void setCamera(TA_Camera *newCamera) {camera = newCamera;}
     ~TA_Sprite();
 };
 

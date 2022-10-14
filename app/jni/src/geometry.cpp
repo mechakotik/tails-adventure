@@ -14,6 +14,14 @@ TA_Point TA_Point::operator+(const TA_Point &rv)
     return res;
 }
 
+TA_Point TA_Point::operator-(const TA_Point &rv)
+{
+    TA_Point res;
+    res.x = x - rv.x;
+    res.y = y - rv.y;
+    return res;
+}
+
 double TA_Line::getLineEquation(TA_Point point)
 {
     double res = (point.x - first.x) * (second.y - first.y) - (point.y - first.y) * (second.x - first.x);
