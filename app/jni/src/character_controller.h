@@ -20,6 +20,7 @@ private:
 
     TA_Point defaultPosition{39, 105}, defaultScale{0.27, 0.27};
     double interval = 5;
+    TA_Direction currentDirection = TA_DIRECTION_MAX;
 
 public:
     void load();

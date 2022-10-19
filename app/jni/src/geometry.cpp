@@ -58,11 +58,11 @@ bool TA_Polygon::inside(TA_Point point)
 {
     TA_Line ray;
     ray.first = point;
-    ray.second = {1e9, point.y};
+    ray.second = {5000, point.y};
     int count = 0;
 
-    for(int pos = 0; pos < int(vertexList.size()) - 1; pos ++) {
-        TA_Line currentLine = {vertexList[pos], vertexList[pos + 1]};
+    for(int pos = 0; pos < int(vertexList.size()); pos ++) {
+        TA_Line currentLine = {vertexList[pos], vertexList[(pos + 1) % vertexList.size()]};
         if(ray.intersects(currentLine)) {
             count ++;
         }

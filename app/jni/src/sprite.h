@@ -28,6 +28,7 @@ private:
     int animationFrame = 0, animationDelay = 1, repeatTimesLeft = -1;
     double animationTimer = 0;
     std::vector<int> animation;
+    bool hidden = false;
 
 public:
     void load(std::string filename, int frameWidth = -1, int frameHeight = -1);

@@ -1,13 +1,12 @@
 #ifndef TA_TOUCHSCREEN_H
 #define TA_TOUCHSCREEN_H
 
-#include <map>
 #include <SDL.h>
 #include "geometry.h"
 
 namespace TA_TouchBackend {
     void processTouchEvent(SDL_TouchFingerEvent event);
-    extern std::map<int, TA_Point> currentFingers;
+    void update();
 }
 
 struct TA_Button : TA_Polygon {

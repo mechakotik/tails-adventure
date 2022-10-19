@@ -92,7 +92,9 @@ void TA_Sprite::draw()
     dstRect.y = screenPosition.y * gHeightMultiplier;
     dstRect.w = frameWidth * gWidthMultiplier * scale.x + 1;
     dstRect.h = frameHeight * gHeightMultiplier * scale.y + 1;
-    SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
+    if(!hidden) {
+        SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
+    }
 }
 
 void TA_Sprite::setAnimation(std::vector<int> newAnimation, int newAnimationDelay, int repeatTimes)
@@ -124,6 +126,7 @@ void TA_Sprite::setAlpha(int alpha)
 {
     alpha = std::min(alpha, 255);
     alpha = std::max(alpha, 0);
+    hidden = (alpha == 0);
     SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
 }
 

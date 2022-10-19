@@ -1,4 +1,5 @@
 #include "game_screen.h"
+#include "globals.h"
 
 void TA_GameScreen::init()
 {
@@ -11,8 +12,22 @@ void TA_GameScreen::init()
 
 TA_ScreenState TA_GameScreen::update()
 {
-    if(characterController.update() == 1) {
-        followPosition.y --;
+    int direction = characterController.update();
+    switch(direction) {
+        case TA_DIRECTION_UP:
+            followPosition.y -= gElapsedTime;
+            break;
+        case TA_DIRECTION_DOWN:
+            followPosition.y += gElapsedTime;
+            break;
+        case TA_DIRECTION_LEFT:
+            followPosition.x -= gElapsedTime;
+            break;
+        case TA_DIRECTION_RIGHT:
+            followPosition.x += gElapsedTime;
+            break;
+        default:
+            break;
     }
 
     camera.update();

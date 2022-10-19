@@ -52,6 +52,7 @@ TA_Game::TA_Game()
 
 bool TA_Game::process()
 {
+    TA_TouchBackend::update();
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {
