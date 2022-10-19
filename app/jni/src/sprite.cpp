@@ -90,8 +90,8 @@ void TA_Sprite::draw()
 
     dstRect.x = screenPosition.x * gWidthMultiplier;
     dstRect.y = screenPosition.y * gHeightMultiplier;
-    dstRect.w = frameWidth * gWidthMultiplier + 1;
-    dstRect.h = frameHeight * gHeightMultiplier + 1;
+    dstRect.w = frameWidth * gWidthMultiplier * scale.x + 1;
+    dstRect.h = frameHeight * gHeightMultiplier * scale.y + 1;
     SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
 }
 

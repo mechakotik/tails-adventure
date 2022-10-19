@@ -22,7 +22,7 @@ private:
     TA_Texture *texture;
     int frameWidth, frameHeight;
     int frame = 0;
-    TA_Point position;
+    TA_Point position, scale{1, 1};
     TA_Camera *camera = nullptr;
 
     int animationFrame = 0, animationDelay = 1, repeatTimesLeft = -1;
@@ -41,6 +41,7 @@ public:
     bool isAnimated();
     void setAlpha(int alpha);
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
+    void setScale(TA_Point newScale) {scale = newScale;}
     ~TA_Sprite();
 };
 
