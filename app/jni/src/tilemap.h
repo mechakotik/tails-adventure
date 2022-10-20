@@ -10,7 +10,7 @@ class TA_Tilemap {
 private:
     struct TA_Tile {
         std::vector<int> animation;
-        int priority, animationDelay;
+        int animationDelay;
     };
 
     struct TA_TilemapElement {
@@ -18,10 +18,10 @@ private:
         int tileIndex;
     };
 
-    std::vector<std::vector<TA_TilemapElement>> tilemap;
+    std::vector<std::vector<std::vector<TA_TilemapElement>>> tilemap;
     std::vector<TA_Tile> tileset;
     TA_Texture texture;
-    int width, height, tileWidth, tileHeight;
+    int width, height, tileWidth, tileHeight, layerCount;
 
 public:
     void load(std::string filename);

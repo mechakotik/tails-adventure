@@ -34,6 +34,7 @@ TA_ScreenState TA_GameScreen::update()
     camera.update();
 
     tilemap.draw(0);
+    tilemap.draw(1);
     characterController.draw();
 
     return TA_SCREENSTATE_CURRENT;
