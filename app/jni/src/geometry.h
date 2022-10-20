@@ -25,11 +25,14 @@ struct TA_Line {
 class TA_Polygon {
 private:
     std::vector<TA_Point> vertexList;
+    bool circle = false;
+    double radius = 0;
 
 public:
     TA_Polygon() {}
     void setRectangle(TA_Point topLeft, TA_Point bottomRight);
-    void addVertex(TA_Point vertex) {vertexList.push_back(vertex);}
+    void setCircle(TA_Point newVertex, double newRadius);
+    void addVertex(TA_Point vertex);
     bool inside(TA_Point point);
 };
 

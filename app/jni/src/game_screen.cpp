@@ -12,7 +12,8 @@ void TA_GameScreen::init()
 
 TA_ScreenState TA_GameScreen::update()
 {
-    int direction = characterController.update();
+    characterController.update();
+    int direction = characterController.getDirection();
     switch(direction) {
         case TA_DIRECTION_UP:
             followPosition.y -= gElapsedTime;

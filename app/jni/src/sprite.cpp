@@ -130,6 +130,19 @@ void TA_Sprite::setAlpha(int alpha)
     SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
 }
 
+void TA_Sprite::setColorMod(int r, int g, int b)
+{
+    auto normalize = [&](int x) {
+        x = std::min(x, 255);
+        x = std::max(x, 0);
+        return x;
+    };
+    r = normalize(r);
+    g = normalize(g);
+    b = normalize(b);
+    SDL_SetTextureColorMod(texture->SDLTexture, r, g, b);
+}
+
 TA_Sprite::~TA_Sprite()
 {
     texture->spritesUsed --;

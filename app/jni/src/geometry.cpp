@@ -46,6 +46,15 @@ bool TA_Line::intersects(TA_Line rv)
     return sign[0] * sign[1] <= 0 && sign[2] * sign[3] <= 0;
 }
 
+void TA_Polygon::addVertex(TA_Point vertex)
+{
+    if(circle) {
+        vertexList.clear();
+        circle = false;
+    }
+    vertexList.push_back(vertex);
+}
+
 void TA_Polygon::setRectangle(TA_Point topLeft, TA_Point bottomRight)
 {
     addVertex(topLeft);
@@ -54,8 +63,21 @@ void TA_Polygon::setRectangle(TA_Point topLeft, TA_Point bottomRight)
     addVertex({topLeft.x, bottomRight.y});
 }
 
+void TA_Polygon::setCircle(TA_Point newVertex, double newRadius)
+{
+    radius = newRadius;
+    circle = true;
+    vertexList.clear();
+    vertexList.push_back(newVertex);
+}
+
 bool TA_Polygon::inside(TA_Point point)
 {
+    if(circle) {
+        double distance = sqrt(pow(point.x - vertexList[0].x, 2) + pow(point.y - vertexList[0].y, 2));
+        return distance <= radius;
+    }
+
     TA_Line ray;
     ray.first = point;
     ray.second = {5000, point.y};

@@ -43,6 +43,8 @@ public:
     void setAlpha(int alpha);
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
     void setScale(TA_Point newScale) {scale = newScale;}
+    void setColorMod(int r, int g, int b);
+    void setColorMod(int w) {setColorMod(w, w, w);}
     ~TA_Sprite();
 };
 
