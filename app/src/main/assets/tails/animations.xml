@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animations>
+	<animation name="idle">
+		0
+	</animation>
+	<animation name="walking" delay="6">
+		3,4,5,6,1,2
+	</animation>
+</animations>

@@ -10,6 +10,7 @@ struct TA_Point {
     TA_Point operator+(const TA_Point &rv);
     TA_Point operator-(const TA_Point &rv);
     TA_Point operator*(const TA_Point &rv);
+    double getDistance(TA_Point rv);
 };
 
 struct TA_Rect {
@@ -25,6 +26,7 @@ struct TA_Line {
 class TA_Polygon {
 private:
     std::vector<TA_Point> vertexList;
+    TA_Point position;
     bool circle = false;
     double radius = 0;
 
@@ -32,8 +34,15 @@ public:
     TA_Polygon() {}
     void setRectangle(TA_Point topLeft, TA_Point bottomRight);
     void setCircle(TA_Point newVertex, double newRadius);
+    void setPosition(TA_Point newPosition) {position = newPosition;}
+    TA_Point getPosition() {return position;}
     void addVertex(TA_Point vertex);
     bool inside(TA_Point point);
+    bool intersects(TA_Polygon rv);
+    double getCollisionPosition(TA_Polygon rv, TA_Point delta);
+    bool empty() {return vertexList.empty();}
+    double getDistance(TA_Polygon rv);
+    TA_Point getVertex(int pos);
 };
 
 #endif // TA_GEOMETRY_H

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <sstream>
 #include <SDL.h>
 #include "tilemap.h"
@@ -5,6 +6,7 @@
 #include "error.h"
 #include "tools.h"
 #include "globals.h"
+#include "character.h"
 
 void TA_Tilemap::load(std::string filename)
 {
@@ -55,6 +57,20 @@ void TA_Tilemap::load(std::string filename)
                     tileset[tileId].animation.push_back(frameElement->IntAttribute("tileid"));
                 }
             }
+            if(tileElement->FirstChildElement("objectgroup") != nullptr) {
+                tinyxml2::XMLElement *object = tileElement->FirstChildElement("objectgroup")->FirstChildElement("object");
+                std::stringstream pointStream;
+                pointStream << object->FirstChildElement("polygon")->Attribute("points");
+                TA_Point currentPoint;
+                char temp;
+                while(pointStream >> currentPoint.x) {
+                    pointStream >> temp >> currentPoint.y;
+                    tileset[tileId].polygon.addVertex(currentPoint);
+                }
+                if(object->FirstChildElement("properties") != nullptr) {
+                    tileset[tileId].type = object->FirstChildElement("properties")->FirstChildElement("property")->IntAttribute("value");
+                }
+            }
         }
     };
 
@@ -73,9 +89,12 @@ void TA_Tilemap::load(std::string filename)
                 }
                 tile --;
                 tilemap[layer][tileX][tileY].tileIndex = tile;
+                if(tile == -1) {
+                    continue;
+                }
                 tilemap[layer][tileX][tileY].sprite.loadFromTexture(&texture, tileWidth, tileHeight);
                 tilemap[layer][tileX][tileY].sprite.setPosition(tileX * tileWidth, tileY * tileHeight);
-                tilemap[layer][tileX][tileY].sprite.setAnimation(tileset[tile].animation, tileset[tile].animationDelay, -1);
+                tilemap[layer][tileX][tileY].sprite.setAnimation(TA_Animation(tileset[tile].animation, tileset[tile].animationDelay, -1));
             }
         }
     };
@@ -92,7 +111,9 @@ void TA_Tilemap::draw(int layer)
 {
     for(int tileX = 0; tileX < width; tileX ++) {
         for(int tileY = 0; tileY < height; tileY ++) {
-            tilemap[layer][tileX][tileY].sprite.draw();
+            if(tilemap[layer][tileX][tileY].tileIndex != -1) {
+                tilemap[layer][tileX][tileY].sprite.draw();
+            }
         }
     }
 }
@@ -103,7 +124,36 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     for(int layer = 0; layer < layerCount; layer ++) {
         for(int tileX = 0; tileX < width; tileX ++) {
             for(int tileY = 0; tileY < height; tileY ++) {
-                tilemap[layer][tileX][tileY].sprite.setCamera(newCamera);
+                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
+                    tilemap[layer][tileX][tileY].sprite.setCamera(newCamera);
+                }
+            }
+        }
+    }
+}
+
+void TA_Tilemap::updateCollisions(TA_Polygon polygon, TA_Point vector, int layer, double &minVectorPos, int &flags)
+{
+    for(int tileX = 0; tileX < width; tileX ++) {
+        for(int tileY = 0; tileY < height; tileY ++) {
+            int tileId = tilemap[layer][tileX][tileY].tileIndex;
+            if(tileId == -1 || tileset[tileId].polygon.empty()) {
+                continue;
+            }
+            tileset[tileId].polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
+            double distance = polygon.getVertex(0).getDistance(tileset[tileId].polygon.getVertex(0));
+            if(distance >= tileWidth * 2) {
+                continue;
+            }
+            TA_Point start = polygon.getPosition();
+            polygon.setPosition(start + vector);
+            if(polygon.intersects(tileset[tileId].polygon)) {
+                polygon.setPosition(start);
+                flags |= (1 << tileset[tileId].type);
+                minVectorPos = std::min(minVectorPos, polygon.getCollisionPosition(tileset[tileId].polygon, vector));
+            }
+            else {
+                polygon.setPosition(start);
             }
         }
     }

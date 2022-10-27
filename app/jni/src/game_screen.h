@@ -5,14 +5,15 @@
 #include "tilemap.h"
 #include "camera.h"
 #include "geometry.h"
-#include "character_controller.h"
+#include "character.h"
+#include "links.h"
 
 class TA_GameScreen : public TA_Screen {
 private:
     TA_Tilemap tilemap;
     TA_Camera camera;
-    TA_Point followPosition;
-    TA_CharacterController characterController;
+    TA_Character character;
+    TA_GameScreenLinks links;
 
 public:
     void init() override;

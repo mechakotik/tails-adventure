@@ -2,9 +2,12 @@
 #include <numeric>
 #include <algorithm>
 #include <cmath>
+#include <sstream>
+#include "tinyxml2.h"
 #include "sprite.h"
 #include "globals.h"
 #include "error.h"
+#include "tools.h"
 
 void TA_Texture::load(std::string filename)
 {
@@ -29,6 +32,30 @@ TA_Texture::~TA_Texture()
     SDL_DestroyTexture(SDLTexture);
 }
 
+void TA_Animation::create(std::vector<int> newFrames, int newDelay, int newRepeatTimes)
+{
+    frames = newFrames;
+    delay = newDelay;
+    repeatTimes = newRepeatTimes;
+}
+
+TA_Animation::TA_Animation(std::vector<int> newFrames, int newDelay, int newRepeatTimes)
+{
+    create(newFrames, newDelay, newRepeatTimes);
+}
+
+TA_Animation::TA_Animation(int firstFrame, int lastFrame, int newDelay, int newRepeatTimes)
+{
+    std::vector<int> newFrames(lastFrame - firstFrame + 1);
+    std::iota(newFrames.begin(), newFrames.end(), firstFrame);
+    create(newFrames, newDelay, newRepeatTimes);
+}
+
+TA_Animation::TA_Animation(int frame)
+{
+    create(std::vector<int>{frame}, 1, -1);
+}
+
 void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight)
 {
     TA_Texture *newTexture = new TA_Texture();
@@ -50,31 +77,31 @@ void TA_Sprite::loadFromTexture(TA_Texture *newTexture, int newFrameWidth, int n
         frameHeight = newFrameHeight;
     }
 
-    animation = std::vector<int>{0};
+    animation = TA_Animation(0);
 }
 
 void TA_Sprite::draw()
 {
-    if(animation.size() >= 2) {
+    if(animation.frames.size() >= 2) {
         animationTimer += gElapsedTime;
-        animationFrame += animationTimer / animationDelay;
+        animationFrame += animationTimer / animation.delay;
 
-        if (animationFrame >= animation.size()) {
-            if (repeatTimesLeft != -1) {
-                repeatTimesLeft -= animationFrame / animation.size();
-                if (repeatTimesLeft <= 0) {
-                    setFrame(animation.back());
-                    frame = animation[0];
+        if (animationFrame >= animation.frames.size()) {
+            if (animation.repeatTimes != -1) {
+                animation.repeatTimes -= animationFrame / animation.frames.size();
+                if (animation.repeatTimes <= 0) {
+                    setFrame(animation.frames.back());
+                    frame = animation.frames[0];
                 }
             }
-            animationFrame %= animation.size();
+            animationFrame %= animation.frames.size();
         }
 
-        animationTimer = std::fmod(animationTimer, animationDelay);
-        frame = animation[animationFrame];
+        animationTimer = std::fmod(animationTimer, animation.delay);
+        frame = animation.frames[animationFrame];
     }
     else{
-        frame = animation[0];
+        frame = animation.frames[0];
     }
 
     SDL_Rect srcRect, dstRect;
@@ -93,33 +120,54 @@ void TA_Sprite::draw()
     dstRect.w = frameWidth * gWidthMultiplier * scale.x + 1;
     dstRect.h = frameHeight * gHeightMultiplier * scale.y + 1;
     if(!hidden) {
-        SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, SDL_FLIP_NONE);
+        SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+        SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
     }
 }
 
-void TA_Sprite::setAnimation(std::vector<int> newAnimation, int newAnimationDelay, int repeatTimes)
+void TA_Sprite::loadAnimationsFromFile(std::string filename)
 {
-    animation = newAnimation;
-    animationDelay = newAnimationDelay;
-    animationFrame = animationTimer = 0;
-    repeatTimesLeft = repeatTimes;
+    tinyxml2::XMLDocument animationXml;
+    animationXml.Parse(readStringFromFile(filename).c_str());
+    tinyxml2::XMLElement *currentElement = animationXml.RootElement()->FirstChildElement("animation");
+
+    while(currentElement != nullptr) {
+        std::string name = currentElement->Attribute("name");
+        std::vector<int> frames; {
+            std::stringstream framesStr;
+            framesStr << currentElement->GetText();
+            int currentFrame;
+            char temp;
+            while(framesStr >> currentFrame) {
+                frames.push_back(currentFrame);
+                framesStr >> temp;
+            }
+        }
+        int delay = currentElement->IntAttribute("delay", 1);
+        int repeatTimes = currentElement->IntAttribute("repeatTimes", -1);
+        loadedAnimations[name] = TA_Animation(frames, delay, repeatTimes);
+        currentElement = currentElement->NextSiblingElement("animation");
+    }
 }
 
-void TA_Sprite::setAnimation(int firstFrame, int lastFrame, int newAnimationDelay, int repeatTimes)
+void TA_Sprite::setAnimation(TA_Animation newAnimation)
 {
-    std::vector<int> newAnimation(lastFrame - firstFrame + 1);
-    std::iota(newAnimation.begin(), newAnimation.end(), firstFrame);
-    setAnimation(newAnimation, newAnimationDelay, repeatTimes);
+    animation = newAnimation;
+}
+
+void TA_Sprite::setAnimation(std::string name)
+{
+    setAnimation(loadedAnimations[name]);
 }
 
 void TA_Sprite::setFrame(int newFrame)
 {
-    setAnimation(newFrame, newFrame, 1, -1);
+    setAnimation(TA_Animation(newFrame));
 }
 
 bool TA_Sprite::isAnimated()
 {
-    return animation.size() >= 2;
+    return animation.frames.size() >= 2;
 }
 
 void TA_Sprite::setAlpha(int alpha)

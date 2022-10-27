@@ -43,3 +43,8 @@ void drawShadow(int factor)
 {
     drawScreenRect(0, 0, 0, factor);
 }
+
+bool equal(double a, double b)
+{
+    return std::abs(a - b) < gEpsilon;
+}

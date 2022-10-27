@@ -1,4 +1,6 @@
 #include "geometry.h"
+#include "globals.h"
+#include "error.h"
 
 TA_Point::TA_Point(double newX, double newY)
 {
@@ -30,6 +32,11 @@ TA_Point TA_Point::operator*(const TA_Point &rv)
     return res;
 }
 
+double TA_Point::getDistance(TA_Point rv)
+{
+    return sqrt(pow(x - rv.x, 2) + pow(y - rv.y, 2));
+}
+
 double TA_Line::getLineEquation(TA_Point point)
 {
     double res = (point.x - first.x) * (second.y - first.y) - (point.y - first.y) * (second.x - first.x);
@@ -57,6 +64,7 @@ void TA_Polygon::addVertex(TA_Point vertex)
 
 void TA_Polygon::setRectangle(TA_Point topLeft, TA_Point bottomRight)
 {
+    vertexList.clear();
     addVertex(topLeft);
     addVertex({bottomRight.x, topLeft.y});
     addVertex(bottomRight);
@@ -74,7 +82,7 @@ void TA_Polygon::setCircle(TA_Point newVertex, double newRadius)
 bool TA_Polygon::inside(TA_Point point)
 {
     if(circle) {
-        double distance = sqrt(pow(point.x - vertexList[0].x, 2) + pow(point.y - vertexList[0].y, 2));
+        double distance = point.getDistance(vertexList[0] + position);
         return distance <= radius;
     }
 
@@ -84,11 +92,65 @@ bool TA_Polygon::inside(TA_Point point)
     int count = 0;
 
     for(int pos = 0; pos < int(vertexList.size()); pos ++) {
-        TA_Line currentLine = {vertexList[pos], vertexList[(pos + 1) % vertexList.size()]};
+        TA_Line currentLine = {vertexList[pos] + position, vertexList[(pos + 1) % vertexList.size()] + position};
         if(ray.intersects(currentLine)) {
             count ++;
         }
     }
 
     return count % 2 == 1;
+}
+
+bool TA_Polygon::intersects(TA_Polygon rv)
+{
+    for(TA_Point vertex : vertexList) {
+        if(rv.inside(vertex + position)) {
+            return true;
+        }
+    }
+    for(TA_Point vertex : rv.vertexList) {
+        if(inside(vertex + rv.position)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+double TA_Polygon::getCollisionPosition(TA_Polygon rv, TA_Point delta)
+{
+    TA_Point start = position;
+    double left = 0, right = 1;
+
+    while(right - left > gEpsilon) {
+        double mid = (left + right) / 2;
+        setPosition(start + delta * TA_Point(mid, mid));
+        if(intersects(rv)) {
+            right = mid;
+        }
+        else {
+            left = mid;
+        }
+    }
+
+    setPosition(start);
+    return left;
+}
+
+double TA_Polygon::getDistance(TA_Polygon rv)
+{
+    double distance = 1e9;
+    for(TA_Point a : vertexList) {
+        for(TA_Point b : rv.vertexList) {
+            distance = std::min(distance, a.getDistance(b));
+        }
+    }
+    return distance;
+}
+
+TA_Point TA_Polygon::getVertex(int pos)
+{
+    if(pos >= vertexList.size()) {
+        handleError("Vertex index %i is out of range [0; %i)", pos, vertexList.size());
+    }
+    return vertexList[pos] + position;
 }

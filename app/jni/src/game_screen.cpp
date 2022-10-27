@@ -3,39 +3,25 @@
 
 void TA_GameScreen::init()
 {
+    links.character = &character;
+    links.tilemap = &tilemap;
+    links.camera = &camera;
+
+    character.load(links);
     tilemap.load("maps/pf/pf1.tmx");
-    followPosition = TA_Point(0, 128);
-    camera.setFollowPosition(&followPosition);
     tilemap.setCamera(&camera);
-    characterController.load();
 }
 
 TA_ScreenState TA_GameScreen::update()
 {
-    characterController.update();
-    int direction = characterController.getDirection();
-    switch(direction) {
-        case TA_DIRECTION_UP:
-            followPosition.y -= gElapsedTime;
-            break;
-        case TA_DIRECTION_DOWN:
-            followPosition.y += gElapsedTime;
-            break;
-        case TA_DIRECTION_LEFT:
-            followPosition.x -= gElapsedTime;
-            break;
-        case TA_DIRECTION_RIGHT:
-            followPosition.x += gElapsedTime;
-            break;
-        default:
-            break;
-    }
-
+    character.update();
     camera.update();
 
     tilemap.draw(0);
     tilemap.draw(1);
-    characterController.draw();
+    character.draw();
+    tilemap.draw(2);
+    character.drawControls();
 
     return TA_SCREENSTATE_CURRENT;
 }
