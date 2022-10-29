@@ -116,24 +116,51 @@ bool TA_Polygon::intersects(TA_Polygon rv)
     return false;
 }
 
-double TA_Polygon::getCollisionPosition(TA_Polygon rv, TA_Point delta)
+TA_Point TA_Polygon::getCollisionPosition(TA_Polygon rv, TA_Point endPosition)
 {
-    TA_Point start = position;
-    double left = 0, right = 1;
-
-    while(right - left > gEpsilon) {
-        double mid = (left + right) / 2;
-        setPosition(start + delta * TA_Point(mid, mid));
-        if(intersects(rv)) {
-            right = mid;
+    TA_Point startPosition = getPosition() ,ansPosition; {
+        double left = 0, right = 1;
+        while(right - left > gEpsilon) {
+            double mid = (left + right) / 2;
+            setPosition(startPosition + (endPosition - startPosition) * TA_Point(mid, mid));
+            if(intersects(rv)) {
+                right = mid;
+            }
+            else {
+                left = mid;
+            }
         }
-        else {
-            left = mid;
-        }
+        ansPosition = startPosition + (endPosition - startPosition) * TA_Point(left, left);
     }
 
-    setPosition(start);
-    return left;
+    double leftX = 0, rightX = 1;
+    while(rightX - leftX > gEpsilon) {
+        double mid = (leftX + rightX) / 2;
+        setPosition(TA_Point(ansPosition.x + (endPosition.x - ansPosition.x) * mid, ansPosition.y));
+        if(intersects(rv)) {
+            rightX = mid;
+        }
+        else {
+            leftX = mid;
+        }
+    }
+    ansPosition.x +=  (endPosition.x - ansPosition.x) * leftX;
+
+    double leftY = 0, rightY = 1;
+    while(rightY - leftY > gEpsilon) {
+        double mid = (leftY + rightY) / 2;
+        setPosition(TA_Point(ansPosition.x, ansPosition.y + (endPosition.y - ansPosition.y) * mid));
+        if(intersects(rv)) {
+            rightY = mid;
+        }
+        else {
+            leftY = mid;
+        }
+    }
+    ansPosition.y += (endPosition.y - ansPosition.y) * leftY;
+
+    setPosition(startPosition);
+    return ansPosition;
 }
 
 double TA_Polygon::getDistance(TA_Polygon rv)

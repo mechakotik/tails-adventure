@@ -39,7 +39,7 @@ public:
     void addVertex(TA_Point vertex);
     bool inside(TA_Point point);
     bool intersects(TA_Polygon rv);
-    double getCollisionPosition(TA_Polygon rv, TA_Point delta);
+    TA_Point getCollisionPosition(TA_Polygon rv, TA_Point delta);
     bool empty() {return vertexList.empty();}
     double getDistance(TA_Polygon rv);
     TA_Point getVertex(int pos);

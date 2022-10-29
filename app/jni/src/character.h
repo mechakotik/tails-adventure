@@ -17,7 +17,6 @@ private:
     TA_CharacterController controller;
     TA_Sprite sprite;
     TA_Point position, followPosition, speed;
-    TA_Polygon hitbox;
     TA_GameScreenLinks links;
 
     bool ground = false;

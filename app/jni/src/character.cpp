@@ -24,7 +24,6 @@ void TA_Character::update()
     verticalMove();
 
     if(ground) {
-        speed.y = 0;
         if(equal(speed.x, 0)) {
             sprite.setAnimation("idle");
         }
@@ -32,9 +31,17 @@ void TA_Character::update()
             sprite.setAnimation("walking");
             sprite.setFlip(speed.x < 0);
         }
+        if(controller.isPressed(TA_BUTTON_A)) {
+            speed.y = jmp * 1.5;
+            ground = false;
+        }
     }
     else {
         speed.y += grv;
+        if(controller.isPressed(TA_BUTTON_A)) {
+            speed.y = jmp * 1.5;
+            ground = false;
+        }
     }
 
     updateCollisions();
@@ -44,18 +51,42 @@ void TA_Character::update()
 
 void TA_Character::updateCollisions()
 {
-    hitbox.setPosition(position);
-    hitbox.setRectangle(TA_Point(15, 12), TA_Point(28, 39));
-    double minVectorPos = 1;
-    int flags = 0;
-    links.tilemap->updateCollisions(hitbox, speed, 1, minVectorPos, flags);
-    speed = speed * TA_Point(minVectorPos, minVectorPos);
-    position = position + speed;
-    if(flags != 0 && !ground) {
-        printLog("%f", minVectorPos);
-        ground = true;
-    }
+    TA_Polygon hitbox;
+    hitbox.setRectangle(TA_Point(16, 12), TA_Point(27, 39));
 
+    auto checkCollision = [&](TA_Point currentPosition) {
+        hitbox.setPosition(currentPosition);
+        int mask = 0;
+        return links.tilemap->checkCollision(hitbox, 1, mask);
+    };
+
+    double left = 0, right = 1;
+    while(right - left > 1e-3) {
+        double mid = (left + right) / 2;
+        if(checkCollision(position + TA_Point(speed.x * mid, 0))) {
+            right = mid;
+        }
+        else {
+            left = mid;
+        }
+    };
+    speed.x *= left;
+    ground = checkCollision(TA_Point(0, (ground ? 1 : 0.01)));
+
+    hitbox.setRectangle(TA_Point(15, 13), TA_Point(28, 38));
+    left = 0, right = 1;
+    while(right - left > 1e-3) {
+        double mid = (left + right) / 2;
+        if(checkCollision(position + TA_Point(0, speed.x * mid))) {
+            right = mid;
+        }
+        else {
+            left = mid;
+        }
+    }
+    speed.y *= left;
+
+    position = position + speed;
     position.x = std::max(position.x, double(0));
     position.x = std::min(position.x, double(links.tilemap->getWidth()));
     position.y = std::max(position.y, double(0));

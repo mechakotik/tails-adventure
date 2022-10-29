@@ -132,7 +132,7 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     }
 }
 
-void TA_Tilemap::updateCollisions(TA_Polygon polygon, TA_Point vector, int layer, double &minVectorPos, int &flags)
+bool TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
 {
     for(int tileX = 0; tileX < width; tileX ++) {
         for(int tileY = 0; tileY < height; tileY ++) {
@@ -145,16 +145,12 @@ void TA_Tilemap::updateCollisions(TA_Polygon polygon, TA_Point vector, int layer
             if(distance >= tileWidth * 2) {
                 continue;
             }
-            TA_Point start = polygon.getPosition();
-            polygon.setPosition(start + vector);
             if(polygon.intersects(tileset[tileId].polygon)) {
-                polygon.setPosition(start);
                 flags |= (1 << tileset[tileId].type);
-                minVectorPos = std::min(minVectorPos, polygon.getCollisionPosition(tileset[tileId].polygon, vector));
-            }
-            else {
-                polygon.setPosition(start);
+                return true;
             }
         }
     }
+
+    return false;
 }
