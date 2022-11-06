@@ -61,11 +61,13 @@ void TA_Tilemap::load(std::string filename)
                 tinyxml2::XMLElement *object = tileElement->FirstChildElement("objectgroup")->FirstChildElement("object");
                 std::stringstream pointStream;
                 pointStream << object->FirstChildElement("polygon")->Attribute("points");
-                TA_Point currentPoint;
+                TA_Point currentPoint, startPoint;
+                startPoint.x = object->IntAttribute("x");
+                startPoint.y = object->IntAttribute("y");
                 char temp;
                 while(pointStream >> currentPoint.x) {
                     pointStream >> temp >> currentPoint.y;
-                    tileset[tileId].polygon.addVertex(currentPoint);
+                    tileset[tileId].polygon.addVertex(currentPoint + startPoint);
                 }
                 if(object->FirstChildElement("properties") != nullptr) {
                     tileset[tileId].type = object->FirstChildElement("properties")->FirstChildElement("property")->IntAttribute("value");
@@ -134,17 +136,21 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
 
 bool TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
 {
-    for(int tileX = 0; tileX < width; tileX ++) {
-        for(int tileY = 0; tileY < height; tileY ++) {
+    int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
+    for(int pos = 0; pos < polygon.size(); pos ++) {
+        TA_Point vertex = polygon.getVertex(pos);
+        minX = std::min(minX, int(vertex.x / tileWidth));
+        maxX = std::max(maxX, int(vertex.x / tileWidth));
+        minY = std::min(minY, int(vertex.y / tileHeight));
+        maxY = std::max(maxY, int(vertex.y / tileHeight));
+    }
+    for(int tileX = minX; tileX <= maxX; tileX ++) {
+        for(int tileY = minY; tileY <= maxY; tileY ++) {
             int tileId = tilemap[layer][tileX][tileY].tileIndex;
             if(tileId == -1 || tileset[tileId].polygon.empty()) {
                 continue;
             }
             tileset[tileId].polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
-            double distance = polygon.getVertex(0).getDistance(tileset[tileId].polygon.getVertex(0));
-            if(distance >= tileWidth * 2) {
-                continue;
-            }
             if(polygon.intersects(tileset[tileId].polygon)) {
                 flags |= (1 << tileset[tileId].type);
                 return true;

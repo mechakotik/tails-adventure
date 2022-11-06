@@ -3,7 +3,16 @@
 	<animation name="idle">
 		0
 	</animation>
-	<animation name="walking" delay="6">
+	<animation name="walk" delay="6">
 		3,4,5,6,1,2
+	</animation>
+	<animation name="jump_up">
+		7
+	</animation>
+	<animation name="jump_down">
+		8
+	</animation>
+	<animation name="push" delay="12">
+		9,10,11,12
 	</animation>
 </animations>

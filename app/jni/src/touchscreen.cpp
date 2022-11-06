@@ -29,14 +29,34 @@ void TA_TouchBackend::processTouchEvent(SDL_TouchFingerEvent event)
 
 void TA_Button::update()
 {
-    pressed = hold = 0;
-    for(auto finger : TA_TouchBackend::currentFingers) {
-        TA_Point point = finger.second;
-        if(inside(point)) {
-            if(!TA_TouchBackend::justPressedFingers.count(finger.first)) {
-                hold = 1;
+    if(mode) {
+        bool flag = false;
+        for(auto finger : TA_TouchBackend::currentFingers) {
+            TA_Point point = finger.second;
+            if(inside(point)) {
+                if(TA_TouchBackend::justPressedFingers.count(finger.first)) {
+                    pressed = true;
+                }
+                else if(pressed) {
+                    hold = true;
+                }
+                flag = true;
             }
-            pressed = 1;
+        }
+        if(!flag) {
+            pressed = hold = false;
+        }
+    }
+    else {
+        pressed = hold = false;
+        for(auto finger : TA_TouchBackend::currentFingers) {
+            TA_Point point = finger.second;
+            if(inside(point)) {
+                if(!TA_TouchBackend::justPressedFingers.count(finger.first)) {
+                    hold = true;
+                }
+                pressed = true;
+            }
         }
     }
 }

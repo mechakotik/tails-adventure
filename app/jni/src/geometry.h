@@ -40,7 +40,8 @@ public:
     bool inside(TA_Point point);
     bool intersects(TA_Polygon rv);
     TA_Point getCollisionPosition(TA_Polygon rv, TA_Point delta);
-    bool empty() {return vertexList.empty();}
+    int size() {return vertexList.size();}
+    bool empty() {return size() == 0;}
     double getDistance(TA_Polygon rv);
     TA_Point getVertex(int pos);
 };

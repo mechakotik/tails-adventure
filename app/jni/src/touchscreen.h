@@ -11,10 +11,11 @@ namespace TA_TouchBackend {
 
 struct TA_Button : TA_Polygon {
 private:
-    bool pressed = 0, hold = 0;
+    bool pressed = false, hold = false, mode = false;
 
 public:
     void update();
+    void setMode() {mode = true;}
     bool isPressed() {return pressed;}
     bool isJustPressed() {return pressed && !hold;}
 };

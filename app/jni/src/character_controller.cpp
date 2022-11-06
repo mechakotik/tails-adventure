@@ -22,6 +22,7 @@ void TA_CharacterController::load()
 
     for(int pos = 0; pos < TA_BUTTON_MAX; pos ++) {
         functionButtons[pos].sprite.setAlpha(alpha);
+        functionButtons[pos].button.setMode();
     }
 
     setFunctionButtonPosition(TA_BUTTON_A, {238, 118}, dpadScale);
