@@ -65,13 +65,23 @@ bool TA_Character::checkCollision(TA_Polygon hitbox)
 
 void TA_Character::updateCollisions()
 {
+    TA_Point baseTopLeft, baseBottomRight;
+    if(jump && velocity.y < 0) {
+        baseTopLeft = TA_Point(15, 9);
+        baseBottomRight = TA_Point(33, 39);
+    }
+    else {
+        baseTopLeft = TA_Point(15, 12);
+        baseBottomRight = TA_Point(33, 39);
+    }
+
     TA_Polygon xHitbox, yHitbox;
-    xHitbox.setRectangle(TA_Point(15, 13), TA_Point(33, 38));
-    yHitbox.setRectangle(TA_Point(16, 12), TA_Point(32, 39));
+    xHitbox.setRectangle(baseTopLeft + TA_Point(0, 1), baseBottomRight - TA_Point(0, 1));
+    yHitbox.setRectangle(baseTopLeft + TA_Point(1, 0), baseBottomRight - TA_Point(1, 0));
     moveAndCollide(xHitbox, yHitbox, velocity, ground);
 
     TA_Polygon hitbox;
-    hitbox.setRectangle(TA_Point(16, 39), TA_Point(32, 39.001));
+    hitbox.setRectangle(TA_Point(baseTopLeft.x + 1, baseBottomRight.y), TA_Point(baseBottomRight.x - 1, baseBottomRight.y + 0.001));
     hitbox.setPosition(position);
     if(checkCollision(hitbox)) {
         ground = true;
@@ -81,12 +91,12 @@ void TA_Character::updateCollisions()
         ground = false;
     }
 
-    hitbox.setRectangle(TA_Point(16, 11.999), TA_Point(32, 12));
+    hitbox.setRectangle(TA_Point(baseTopLeft.x + 1, baseTopLeft.y - 0.001), TA_Point(baseBottomRight.x - 1, baseTopLeft.y));
     if(checkCollision(hitbox)) {
         velocity.y = std::max(velocity.y, double(0));
     }
 
-    hitbox.setRectangle(TA_Point(14.999, 13), TA_Point(33.001, 38));
+    hitbox.setRectangle(baseTopLeft + TA_Point(-0.001, 1), baseBottomRight + TA_Point(0.001, -1));
     hitbox.setPosition(position);
     wall = checkCollision(hitbox);
 
