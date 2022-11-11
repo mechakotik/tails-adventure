@@ -65,45 +65,28 @@ bool TA_Character::checkCollision(TA_Polygon hitbox)
 
 void TA_Character::updateCollisions()
 {
-    TA_Point baseTopLeft, baseBottomRight;
+    TA_Point topLeft, bottomRight;
     if(jump && velocity.y < 0) {
-        baseTopLeft = TA_Point(15, 9);
-        baseBottomRight = TA_Point(33, 39);
+        topLeft = TA_Point(15, 9);
+        bottomRight = TA_Point(33, 39);
     }
     else {
-        baseTopLeft = TA_Point(15, 12);
-        baseBottomRight = TA_Point(33, 39);
+        topLeft = TA_Point(15, 12);
+        bottomRight = TA_Point(33, 39);
     }
 
-    TA_Polygon xHitbox, yHitbox;
-    xHitbox.setRectangle(baseTopLeft + TA_Point(0, 1), baseBottomRight - TA_Point(0, 1));
-    yHitbox.setRectangle(baseTopLeft + TA_Point(1, 0), baseBottomRight - TA_Point(1, 0));
-    moveAndCollide(xHitbox, yHitbox, velocity, ground);
-
-    TA_Polygon hitbox;
-    hitbox.setRectangle(TA_Point(baseTopLeft.x + 1, baseBottomRight.y), TA_Point(baseBottomRight.x - 1, baseBottomRight.y + 0.001));
-    hitbox.setPosition(position);
-    if(checkCollision(hitbox)) {
+    int flags = moveAndCollide(topLeft, bottomRight, velocity, ground);
+    if(flags & TA_GROUND_COLLISION) {
         ground = true;
         velocity.y = 0;
     }
     else {
         ground = false;
     }
-
-    hitbox.setRectangle(TA_Point(baseTopLeft.x + 1, baseTopLeft.y - 0.001), TA_Point(baseBottomRight.x - 1, baseTopLeft.y));
-    if(checkCollision(hitbox)) {
+    wall = bool(flags & TA_WALL_COLLISION);
+    if(flags & TA_CEIL_COLLISION) {
         velocity.y = std::max(velocity.y, double(0));
     }
-
-    hitbox.setRectangle(baseTopLeft + TA_Point(-0.001, 1), baseBottomRight + TA_Point(0.001, -1));
-    hitbox.setPosition(position);
-    wall = checkCollision(hitbox);
-
-    position.x = std::max(position.x, double(0));
-    position.x = std::min(position.x, double(links.tilemap->getWidth()));
-    position.y = std::max(position.y, double(0));
-    position.y = std::min(position.y, double(links.tilemap->getHeight()));
 }
 
 void TA_Character::updateAnimation()
