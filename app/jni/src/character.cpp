@@ -83,15 +83,18 @@ void TA_Character::updateCollisions()
 {
     TA_Point topLeft, bottomRight;
     if(jump && velocity.y < 0) {
-        topLeft = TA_Point(15, 9);
-        bottomRight = TA_Point(33, 39);
+        topLeft = TA_Point(16, 9);
+        bottomRight = TA_Point(32, 39);
     }
     else {
-        topLeft = TA_Point(15, 12);
-        bottomRight = TA_Point(33, 39);
+        topLeft = TA_Point(16, 12);
+        bottomRight = TA_Point(32, 39);
     }
 
     updateClimb();
+    if(climb) {
+        return;
+    }
     int flags = moveAndCollide(topLeft, bottomRight, velocity, ground);
     if(flags & TA_GROUND_COLLISION) {
         ground = true;
@@ -127,7 +130,7 @@ void TA_Character::updateClimb()
             return;
         }
 
-        TA_Point topLeft = TA_Point(15, 12), bottomRight = TA_Point(33, 39);
+        TA_Point topLeft = TA_Point(16, 12), bottomRight = TA_Point(32, 39);
         TA_Polygon hitbox;
         hitbox.setRectangle(topLeft, bottomRight);
         hitbox.setPosition(climbPosition);
