@@ -15,7 +15,7 @@
 	<animation name="push" delay="12">
 		9,10,11,12
 	</animation>
-	<animation name="climb" delay="30" repeatTimes="1">
+	<animation name="climb" delay="6" repeatTimes="1">
 		26,27,28,29
 	</animation>
 </animations>
