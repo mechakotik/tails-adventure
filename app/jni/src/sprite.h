@@ -42,7 +42,9 @@ private:
     TA_Animation animation;
     int animationFrame = 0;
     double animationTimer = 0;
-    bool flip = false, hidden = false;
+    bool flip = false, hidden = false, updateAnimationNeeded = true;
+
+    void updateAnimation();
 
 public:
     void load(std::string filename, int frameWidth = -1, int frameHeight = -1);
@@ -63,6 +65,7 @@ public:
     void setAnimation(TA_Animation newAnimation);
     void setFrame(int newFrame);
     bool isAnimated();
+    int getAnimationFrame();
 
     ~TA_Sprite();
 };

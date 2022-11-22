@@ -17,22 +17,24 @@ private:
     const double maxJumpTime = 10;
 
     TA_CharacterController controller;
-    TA_Point followPosition, velocity;
+    TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
 
-    bool ground = false, wall = false, jump = false, jumpReleased = false;
-    double jumpTime = 0;
+    bool ground = false, wall = false, jump = false, jumpReleased = false, climb = false;
+    double jumpTime = 0, climbTime = 0;
 
     void updateFollowPosition();
     void verticalMove();
     bool checkCollision(TA_Polygon hitbox) override;
     void updateCollisions();
     void updateAnimation();
+    void updateClimb();
 
 public:
     void load(TA_GameScreenLinks newLinks);
     void update();
     void drawControls() {controller.draw();}
+    bool isOnGround() {return ground;}
 };
 
 #endif // TA_CHARACTER_H

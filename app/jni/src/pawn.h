@@ -12,12 +12,12 @@ enum TA_COLLISION_STATE {
 
 class TA_Pawn : public TA_Sprite {
 protected:
-    int getCollisionFlags(TA_Point topLeft, TA_Point bottomRight);
     TA_Point position;
 
 public:
     virtual bool checkCollision(TA_Polygon hitbox) {return false;}
     int moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground);
+    int getCollisionFlags(TA_Point topLeft, TA_Point bottomRight);
 };
 
 #endif // TA_PAWN_H

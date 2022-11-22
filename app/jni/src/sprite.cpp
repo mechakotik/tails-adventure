@@ -82,6 +82,34 @@ void TA_Sprite::loadFromTexture(TA_Texture *newTexture, int newFrameWidth, int n
 
 void TA_Sprite::draw()
 {
+    updateAnimation();
+    SDL_Rect srcRect, dstRect;
+    srcRect.x = (frameWidth * frame) % texture->width;
+    srcRect.y = (frameWidth * frame) / texture->width * frameHeight;
+    srcRect.w = frameWidth;
+    srcRect.h = frameHeight;
+
+    TA_Point screenPosition = position;
+    if(camera != nullptr) {
+        screenPosition = camera->getRelative(position);
+    }
+
+    dstRect.x = screenPosition.x * gWidthMultiplier;
+    dstRect.y = screenPosition.y * gHeightMultiplier;
+    dstRect.w = frameWidth * gWidthMultiplier * scale.x + 1;
+    dstRect.h = frameHeight * gHeightMultiplier * scale.y + 1;
+    if(!hidden) {
+        SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+        SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
+    }
+    updateAnimationNeeded = true;
+}
+
+void TA_Sprite::updateAnimation()
+{
+    if(!updateAnimationNeeded) {
+        return;
+    }
     if(animation.frames.size() >= 2) {
         animationTimer += gElapsedTime;
         animationFrame += animationTimer / animation.delay;
@@ -103,26 +131,7 @@ void TA_Sprite::draw()
     else{
         frame = animation.frames[0];
     }
-
-    SDL_Rect srcRect, dstRect;
-    srcRect.x = (frameWidth * frame) % texture->width;
-    srcRect.y = (frameWidth * frame) / texture->width * frameHeight;
-    srcRect.w = frameWidth;
-    srcRect.h = frameHeight;
-
-    TA_Point screenPosition = position;
-    if(camera != nullptr) {
-        screenPosition = camera->getRelative(position);
-    }
-
-    dstRect.x = screenPosition.x * gWidthMultiplier;
-    dstRect.y = screenPosition.y * gHeightMultiplier;
-    dstRect.w = frameWidth * gWidthMultiplier * scale.x + 1;
-    dstRect.h = frameHeight * gHeightMultiplier * scale.y + 1;
-    if(!hidden) {
-        SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-        SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
-    }
+    updateAnimationNeeded = false;
 }
 
 void TA_Sprite::loadAnimationsFromFile(std::string filename)
@@ -152,7 +161,11 @@ void TA_Sprite::loadAnimationsFromFile(std::string filename)
 
 void TA_Sprite::setAnimation(TA_Animation newAnimation)
 {
+    if(animation.frames == newAnimation.frames) {
+        return;
+    }
     animation = newAnimation;
+    animationFrame = animationTimer = 0;
 }
 
 void TA_Sprite::setAnimation(std::string name)
@@ -189,6 +202,12 @@ void TA_Sprite::setColorMod(int r, int g, int b)
     g = normalize(g);
     b = normalize(b);
     SDL_SetTextureColorMod(texture->SDLTexture, r, g, b);
+}
+
+int TA_Sprite::getAnimationFrame()
+{
+    updateAnimation();
+    return animationFrame;
 }
 
 TA_Sprite::~TA_Sprite()

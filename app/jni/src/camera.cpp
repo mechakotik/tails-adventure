@@ -7,8 +7,13 @@ void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
     position = *followPosition;
 }
 
-void TA_Camera::update()
+void TA_Camera::update(bool ground)
 {
+    double movementSpeed = airSpeed;
+    if(ground) {
+        movementSpeed = groundSpeed;
+    }
+
     auto move = [&] (double current, double need) {
         if(current < need) {
             current = std::min(need, current + movementSpeed);

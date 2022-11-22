@@ -20,6 +20,19 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
 void TA_Character::update()
 {
     controller.update();
+
+    if(climb) {
+        if(!isAnimated()) {
+            position = climbPosition;
+            climb = false;
+        }
+        else if(getAnimationFrame() == 3) {
+            setPosition(position.x, climbPosition.y);
+        }
+        updateFollowPosition();
+        return;
+    }
+
     verticalMove();
 
     if(ground) {
@@ -48,6 +61,9 @@ void TA_Character::update()
 
     updateCollisions();
     setPosition(position);
+    if(climb) {
+        return;
+    }
 
     if(!equal(velocity.x, 0)) {
         setFlip(velocity.x < 0);
@@ -75,6 +91,7 @@ void TA_Character::updateCollisions()
         bottomRight = TA_Point(33, 39);
     }
 
+    updateClimb();
     int flags = moveAndCollide(topLeft, bottomRight, velocity, ground);
     if(flags & TA_GROUND_COLLISION) {
         ground = true;
@@ -87,6 +104,75 @@ void TA_Character::updateCollisions()
     if(flags & TA_CEIL_COLLISION) {
         velocity.y = std::max(velocity.y, double(0));
     }
+}
+
+void TA_Character::updateClimb()
+{
+    if(!wall) {
+        return;
+    }
+
+    auto updateClimbPosition = [&](int height) {
+        if(climb) {
+            return;
+        }
+        climbPosition = position;
+        if(controller.getDirection() == TA_DIRECTION_LEFT) {
+            climbPosition = climbPosition + TA_Point(-13, -height);
+        }
+        else if(controller.getDirection() == TA_DIRECTION_RIGHT) {
+            climbPosition = climbPosition + TA_Point(13, -height);
+        }
+        else {
+            return;
+        }
+
+        TA_Point topLeft = TA_Point(15, 12), bottomRight = TA_Point(33, 39);
+        TA_Polygon hitbox;
+        hitbox.setRectangle(topLeft, bottomRight);
+        hitbox.setPosition(climbPosition);
+        if(ground) {
+            velocity.y = 0.01;
+        }
+
+        bool collision = checkCollision(hitbox);
+        hitbox.setPosition(climbPosition + TA_Point(0, velocity.y));
+        bool collisionMoved = checkCollision(hitbox);
+        if(collision != collisionMoved) {
+            double left = 0, right = 1;
+            while (right - left > gEpsilon) {
+                double mid = (left + right) / 2;
+                hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * mid));
+                if (checkCollision(hitbox) == collision) {
+                    left = mid;
+                }
+                else {
+                    right = mid;
+                }
+            }
+            climbPosition.y += velocity.y * left;
+            TA_Point delta = climbPosition - position + TA_Point(0, 0.01);
+            int flags = getCollisionFlags(topLeft + delta, bottomRight + delta);
+            if(flags == TA_GROUND_COLLISION) {
+                ground = true;
+                jump = false;
+                climb = true;
+                climbTime = 0;
+                if(height == 32) {
+                    setAnimation("climb_high");
+                }
+                else {
+                    setAnimation("climb");
+                }
+            }
+        }
+        if(ground) {
+            velocity.y = 0;
+        }
+    };
+
+    updateClimbPosition(32);
+    updateClimbPosition(16);
 }
 
 void TA_Character::updateAnimation()
@@ -136,5 +222,9 @@ void TA_Character::verticalMove()
 
 void TA_Character::updateFollowPosition()
 {
-    followPosition = position + TA_Point(22 - gScreenWidth / 2, 26 - gScreenHeight / 2);
+    TA_Point sourcePosition = position;
+    if(climb) {
+        sourcePosition.x = climbPosition.x;
+    }
+    followPosition = sourcePosition + TA_Point(22 - gScreenWidth / 2, 26 - gScreenHeight / 2);
 }
