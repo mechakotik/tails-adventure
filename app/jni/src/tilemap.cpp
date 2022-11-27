@@ -107,6 +107,11 @@ void TA_Tilemap::load(std::string filename)
         loadLayer(layerElement);
         layerElement = layerElement->NextSiblingElement("layer");
     }
+
+    borderPolygons[0].setRectangle(TA_Point(0, -1), TA_Point(width * tileWidth, 0));
+    borderPolygons[1].setRectangle(TA_Point(0, height * tileHeight), TA_Point(width * tileWidth, height * tileHeight + 1));
+    borderPolygons[2].setRectangle(TA_Point(-1, 0), TA_Point(0, height * tileHeight));
+    borderPolygons[3].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 1, height * tileHeight));
 }
 
 void TA_Tilemap::draw(int layer)
@@ -144,6 +149,15 @@ bool TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
         minY = std::min(minY, int(vertex.y / tileHeight));
         maxY = std::max(maxY, int(vertex.y / tileHeight));
     }
+    auto normalize = [&](int &value, int left, int right) {
+        value = std::max(value, left);
+        value = std::min(value, right);
+    };
+    normalize(minX, 0, width);
+    normalize(maxX, 0, width);
+    normalize(minY, 0, height);
+    normalize(maxY, 0, height);
+
     for(int tileX = minX; tileX <= maxX; tileX ++) {
         for(int tileY = minY; tileY <= maxY; tileY ++) {
             int tileId = tilemap[layer][tileX][tileY].tileIndex;
@@ -155,6 +169,12 @@ bool TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
                 flags |= (1 << tileset[tileId].type);
                 return true;
             }
+        }
+    }
+
+    for(int pos = 0; pos < 4; pos ++) {
+        if(borderPolygons[pos].intersects(polygon)) {
+            return true;
         }
     }
 

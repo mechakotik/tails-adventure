@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <array>
 #include "sprite.h"
 #include "camera.h"
 #include "geometry.h"
@@ -24,6 +25,7 @@ private:
 
     std::vector<std::vector<std::vector<TA_TilemapElement>>> tilemap;
     std::vector<TA_Tile> tileset;
+    std::array<TA_Polygon, 4> borderPolygons;
     TA_Texture texture;
     int width, height, tileWidth, tileHeight, layerCount;
 

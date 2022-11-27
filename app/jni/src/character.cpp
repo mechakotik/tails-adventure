@@ -121,10 +121,10 @@ void TA_Character::updateClimb()
         }
         climbPosition = position;
         if(controller.getDirection() == TA_DIRECTION_LEFT) {
-            climbPosition = climbPosition + TA_Point(-13, -height);
+            climbPosition = climbPosition + TA_Point(-13, -height - (ground ? 0.025 : 0));
         }
         else if(controller.getDirection() == TA_DIRECTION_RIGHT) {
-            climbPosition = climbPosition + TA_Point(13, -height);
+            climbPosition = climbPosition + TA_Point(13, -height - (ground ? 0.025 : 0));
         }
         else {
             return;
@@ -135,7 +135,7 @@ void TA_Character::updateClimb()
         hitbox.setRectangle(topLeft, bottomRight);
         hitbox.setPosition(climbPosition);
         if(ground) {
-            velocity.y = 0.01;
+            velocity.y = 0.05;
         }
 
         bool collision = checkCollision(hitbox);
@@ -166,6 +166,12 @@ void TA_Character::updateClimb()
                 }
                 else {
                     setAnimation("climb");
+                }
+                if(controller.getDirection() == TA_DIRECTION_LEFT) {
+                    position = climbPosition + TA_Point(13, height);
+                }
+                else {
+                    position = climbPosition + TA_Point(-13, height);
                 }
             }
         }
