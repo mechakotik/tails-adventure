@@ -20,7 +20,7 @@ private:
     TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
 
-    bool ground = false, wall = false, jump = false, jumpReleased = false, climb = false;
+    bool ground = false, wall = false, jump = false, jumpReleased = false, climb = false, climbHigh = false;
     double jumpTime = 0, climbTime = 0;
 
     void updateFollowPosition();

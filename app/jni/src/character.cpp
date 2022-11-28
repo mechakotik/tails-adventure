@@ -26,7 +26,10 @@ void TA_Character::update()
             position = climbPosition;
             climb = false;
         }
-        else if(getAnimationFrame() == 3) {
+        else if(climbHigh && getAnimationFrame() == 1) {
+            setPosition(position.x, position.y - 8);
+        }
+        else if(getAnimationFrame() == 2) {
             setPosition(position.x, climbPosition.y);
         }
         updateFollowPosition();
@@ -163,9 +166,11 @@ void TA_Character::updateClimb()
                 climbTime = 0;
                 if(height == 32) {
                     setAnimation("climb_high");
+                    climbHigh = true;
                 }
                 else {
                     setAnimation("climb");
+                    climbHigh = false;
                 }
                 if(controller.getDirection() == TA_DIRECTION_LEFT) {
                     position = climbPosition + TA_Point(13, height);

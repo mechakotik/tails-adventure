@@ -108,10 +108,10 @@ void TA_Tilemap::load(std::string filename)
         layerElement = layerElement->NextSiblingElement("layer");
     }
 
-    borderPolygons[0].setRectangle(TA_Point(0, -1), TA_Point(width * tileWidth, 0));
-    borderPolygons[1].setRectangle(TA_Point(0, height * tileHeight), TA_Point(width * tileWidth, height * tileHeight + 1));
-    borderPolygons[2].setRectangle(TA_Point(-1, 0), TA_Point(0, height * tileHeight));
-    borderPolygons[3].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 1, height * tileHeight));
+    borderPolygons[0].setRectangle(TA_Point(0, -16), TA_Point(width * tileWidth, 0));
+    borderPolygons[1].setRectangle(TA_Point(0, height * tileHeight), TA_Point(width * tileWidth, height * tileHeight + 16));
+    borderPolygons[2].setRectangle(TA_Point(-16, 0), TA_Point(0, height * tileHeight));
+    borderPolygons[3].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
 }
 
 void TA_Tilemap::draw(int layer)

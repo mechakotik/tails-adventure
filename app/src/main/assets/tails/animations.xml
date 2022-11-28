@@ -18,4 +18,7 @@
 	<animation name="climb" delay="6" repeatTimes="1">
 		26,27,28,29
 	</animation>
+	<animation name="climb_high" delay="6" repeatTimes="1">
+		30,31,28,29
+	</animation>
 </animations>
