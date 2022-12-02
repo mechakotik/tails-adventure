@@ -139,7 +139,7 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     }
 }
 
-bool TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
+void TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags, int top)
 {
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
     for(int pos = 0; pos < polygon.size(); pos ++) {
@@ -167,16 +167,18 @@ bool TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
             tileset[tileId].polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
             if(polygon.intersects(tileset[tileId].polygon)) {
                 flags |= (1 << tileset[tileId].type);
-                return true;
+                if(tileset[tileId].type != 2 || tileY * tileHeight <= top) {
+                    flags |= 1;
+                    return;
+                }
             }
         }
     }
 
     for(int pos = 0; pos < 4; pos ++) {
         if(borderPolygons[pos].intersects(polygon)) {
-            return true;
+            flags |= 1;
+            return;
         }
     }
-
-    return false;
 }

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "camera.h"
+#include "globals.h"
 
 void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
 {
@@ -16,10 +17,10 @@ void TA_Camera::update(bool ground)
 
     auto move = [&] (double current, double need) {
         if(current < need) {
-            current = std::min(need, current + movementSpeed);
+            current = std::min(need, current + movementSpeed * gElapsedTime);
         }
         else {
-            current = std::max(need, current - movementSpeed);
+            current = std::max(need, current - movementSpeed * gElapsedTime);
         }
         return current;
     };
