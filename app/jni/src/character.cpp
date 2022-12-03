@@ -79,7 +79,7 @@ void TA_Character::update()
 bool TA_Character::checkCollision(TA_Polygon hitbox)
 {
     int flags = 0;
-    if(ground || velocity.y >= 0) {
+    if(ground || velocity.y >= 0.01) {
         links.tilemap->checkCollision(hitbox, 1, flags, position.y + 39);
     }
     else {

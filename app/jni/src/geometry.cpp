@@ -1,6 +1,7 @@
 #include "geometry.h"
 #include "globals.h"
 #include "error.h"
+#include "tools.h"
 
 TA_Point::TA_Point(double newX, double newY)
 {
@@ -59,7 +60,13 @@ void TA_Polygon::addVertex(TA_Point vertex)
         vertexList.clear();
         circle = false;
     }
+    rect = false;
     vertexList.push_back(vertex);
+    if(vertexList.size() == 4 && equal(getVertex(1).x, getVertex(2).x) &&
+       equal(getVertex(1).y, getVertex(0).y) && equal(getVertex(3).x, getVertex(0).x) &&
+       equal(getVertex(3).y, getVertex(2).y)) {
+        rect = true;
+    }
 }
 
 void TA_Polygon::setRectangle(TA_Point topLeft, TA_Point bottomRight)
@@ -69,12 +76,14 @@ void TA_Polygon::setRectangle(TA_Point topLeft, TA_Point bottomRight)
     addVertex({bottomRight.x, topLeft.y});
     addVertex(bottomRight);
     addVertex({topLeft.x, bottomRight.y});
+    rect = true;
 }
 
 void TA_Polygon::setCircle(TA_Point newVertex, double newRadius)
 {
     radius = newRadius;
     circle = true;
+    rect = false;
     vertexList.clear();
     vertexList.push_back(newVertex);
 }
@@ -88,7 +97,7 @@ bool TA_Polygon::inside(TA_Point point)
 
     TA_Line ray;
     ray.first = point;
-    ray.second = {5000, point.y};
+    ray.second = {1e5, point.y};
     int count = 0;
 
     for(int pos = 0; pos < int(vertexList.size()); pos ++) {
@@ -103,6 +112,11 @@ bool TA_Polygon::inside(TA_Point point)
 
 bool TA_Polygon::intersects(TA_Polygon rv)
 {
+    if(isRectangle() && rv.isRectangle()) {
+        return getTopLeft().x < rv.getBottomRight().x && getBottomRight().x > rv.getTopLeft().x &&
+               getTopLeft().y < rv.getBottomRight().y && getBottomRight().y > rv.getTopLeft().y;
+    }
+
     for(TA_Point vertex : vertexList) {
         if(rv.inside(vertex + position)) {
             return true;
@@ -114,53 +128,6 @@ bool TA_Polygon::intersects(TA_Polygon rv)
         }
     }
     return false;
-}
-
-TA_Point TA_Polygon::getCollisionPosition(TA_Polygon rv, TA_Point endPosition)
-{
-    TA_Point startPosition = getPosition() ,ansPosition; {
-        double left = 0, right = 1;
-        while(right - left > gEpsilon) {
-            double mid = (left + right) / 2;
-            setPosition(startPosition + (endPosition - startPosition) * TA_Point(mid, mid));
-            if(intersects(rv)) {
-                right = mid;
-            }
-            else {
-                left = mid;
-            }
-        }
-        ansPosition = startPosition + (endPosition - startPosition) * TA_Point(left, left);
-    }
-
-    double leftX = 0, rightX = 1;
-    while(rightX - leftX > gEpsilon) {
-        double mid = (leftX + rightX) / 2;
-        setPosition(TA_Point(ansPosition.x + (endPosition.x - ansPosition.x) * mid, ansPosition.y));
-        if(intersects(rv)) {
-            rightX = mid;
-        }
-        else {
-            leftX = mid;
-        }
-    }
-    ansPosition.x +=  (endPosition.x - ansPosition.x) * leftX;
-
-    double leftY = 0, rightY = 1;
-    while(rightY - leftY > gEpsilon) {
-        double mid = (leftY + rightY) / 2;
-        setPosition(TA_Point(ansPosition.x, ansPosition.y + (endPosition.y - ansPosition.y) * mid));
-        if(intersects(rv)) {
-            rightY = mid;
-        }
-        else {
-            leftY = mid;
-        }
-    }
-    ansPosition.y += (endPosition.y - ansPosition.y) * leftY;
-
-    setPosition(startPosition);
-    return ansPosition;
 }
 
 double TA_Polygon::getDistance(TA_Polygon rv)

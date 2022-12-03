@@ -27,7 +27,7 @@ class TA_Polygon {
 private:
     std::vector<TA_Point> vertexList;
     TA_Point position;
-    bool circle = false;
+    bool circle = false, rect = false;
     double radius = 0;
 
 public:
@@ -39,11 +39,13 @@ public:
     void addVertex(TA_Point vertex);
     bool inside(TA_Point point);
     bool intersects(TA_Polygon rv);
-    TA_Point getCollisionPosition(TA_Polygon rv, TA_Point delta);
     int size() {return vertexList.size();}
     bool empty() {return size() == 0;}
     double getDistance(TA_Polygon rv);
     TA_Point getVertex(int pos);
+    bool isRectangle() {return rect;}
+    TA_Point getTopLeft() {return getVertex(0);}
+    TA_Point getBottomRight() {return getVertex(2);}
 };
 
 #endif // TA_GEOMETRY_H

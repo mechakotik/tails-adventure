@@ -79,7 +79,6 @@ void TA_Game::update()
     if(screenStateMachine.update()) {
         startTime = std::chrono::high_resolution_clock::now();
     }
-    printLog("%i", (int)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime).count()));
     SDL_RenderPresent(gRenderer);
 }
 

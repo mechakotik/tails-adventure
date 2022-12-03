@@ -167,7 +167,8 @@ void TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags, int t
             tileset[tileId].polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
             if(polygon.intersects(tileset[tileId].polygon)) {
                 flags |= (1 << tileset[tileId].type);
-                if(tileset[tileId].type != 2 || tileY * tileHeight <= top) {
+                int currentTop = (tileset[tileId].polygon.isRectangle() ? top : top - 16);
+                if(tileset[tileId].type != 1 || tileY * tileHeight >= currentTop) {
                     flags |= 1;
                     return;
                 }
