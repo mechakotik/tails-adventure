@@ -8,7 +8,11 @@
 #include "camera.h"
 #include "geometry.h"
 
-class TA_Character;
+enum TA_TileType {
+    TA_TILE_SOLID = (1 << 0),
+    TA_TILE_HALF_SOLID = (1 << 1),
+    TA_TILE_DAMAGE = (1 << 2),
+};
 
 class TA_Tilemap {
 private:
@@ -35,7 +39,7 @@ public:
     void setCamera(TA_Camera *newCamera);
     int getWidth() {return width * tileWidth;}
     int getHeight() {return height * tileHeight;}
-    void checkCollision(TA_Polygon polygon, int layer, int &flags, int top = 1e5);
+    void checkCollision(TA_Polygon polygon, int layer, int &flags);
 };
 
 #endif // TA_TILEMAP_H

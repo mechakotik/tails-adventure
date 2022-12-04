@@ -79,13 +79,17 @@ void TA_Character::update()
 bool TA_Character::checkCollision(TA_Polygon hitbox)
 {
     int flags = 0;
-    if(ground || velocity.y >= 0.01) {
-        links.tilemap->checkCollision(hitbox, 1, flags, position.y + 39);
+    links.tilemap->checkCollision(hitbox, 1, flags);
+    if((flags & TA_TILE_SOLID) != 0) {
+        return true;
     }
-    else {
-        links.tilemap->checkCollision(hitbox, 1, flags);
+    if((flags & TA_TILE_DAMAGE) != 0) {
+        return true;
     }
-    return (flags & 1) != 0;
+    if(useHalfSolidTiles && (flags & TA_TILE_HALF_SOLID) != 0) {
+        return true;
+    }
+    return false;
 }
 
 void TA_Character::updateCollisions()
@@ -98,6 +102,25 @@ void TA_Character::updateCollisions()
     else {
         topLeft = TA_Point(16, 12);
         bottomRight = TA_Point(32, 39);
+    }
+
+    if(ground) {
+        useHalfSolidTiles = true;
+    }
+    else if(velocity.y > 0.01) {
+        if(!useHalfSolidTiles) {
+            useHalfSolidTiles = true;
+            TA_Polygon hitbox;
+            hitbox.setRectangle(topLeft, bottomRight);
+            hitbox.setPosition(position);
+            if(checkCollision(hitbox)) {
+                useHalfSolidTiles = false;
+                printLog("%f", velocity.y);
+            }
+        }
+    }
+    else {
+        useHalfSolidTiles = false;
     }
 
     updateClimb();

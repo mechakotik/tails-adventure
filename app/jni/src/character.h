@@ -21,6 +21,7 @@ private:
     TA_GameScreenLinks links;
 
     bool ground = false, wall = false, jump = false, jumpReleased = false, climb = false, climbHigh = false;
+    bool useHalfSolidTiles = false;
     double jumpTime = 0, climbTime = 0;
 
     void updateFollowPosition();
