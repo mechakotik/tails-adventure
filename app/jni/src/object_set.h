@@ -4,6 +4,7 @@
 #include <vector>
 #include "geometry.h"
 #include "pawn.h"
+#include "camera.h"
 
 class TA_ObjectSet;
 
@@ -12,16 +13,20 @@ private:
     TA_ObjectSet *objectSet;
 
 public:
-    TA_Object(TA_ObjectSet *newObjectSet) {objectSet = newObjectSet;}
+    TA_Object(TA_ObjectSet *newObjectSet);
     virtual bool update() {return false;}
 };
 
 class TA_ObjectSet {
 private:
     std::vector<TA_Object*> objects;
+    TA_Camera *camera;
+
     void spawnObject(TA_Object *object);
 
 public:
+    void setCamera(TA_Camera *newCamera) {camera = newCamera;}
+    TA_Camera *getCamera() {return camera;}
     void update();
     void draw();
     void spawnExplosion(TA_Point position);

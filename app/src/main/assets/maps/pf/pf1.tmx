@@ -398,7 +398,7 @@
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <properties>
-      <property name="type" type="int" value="2"/>
+      <property name="type" type="int" value="1"/>
      </properties>
      <polygon points="0,0 16,0 16,8 0,8"/>
     </object>

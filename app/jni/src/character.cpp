@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "tools.h"
 #include "error.h"
+#include "object_set.h"
 
 void TA_Character::load(TA_GameScreenLinks newLinks)
 {
@@ -72,6 +73,7 @@ void TA_Character::update()
         setFlip(velocity.x < 0);
     }
 
+    updateTool();
     updateAnimation();
     updateFollowPosition();
 }
@@ -115,7 +117,6 @@ void TA_Character::updateCollisions()
             hitbox.setPosition(position);
             if(checkCollision(hitbox)) {
                 useHalfSolidTiles = false;
-                printLog("%f", velocity.y);
             }
         }
     }
@@ -262,6 +263,21 @@ void TA_Character::verticalMove()
         else {
             velocity.x = std::min(double(0), velocity.x + acc * gElapsedTime);
         }
+    }
+}
+
+void TA_Character::updateTool()
+{
+    if(!controller.isJustPressed(TA_BUTTON_B)) {
+        return;
+    }
+    switch(currentTool) {
+        case TA_TOOL_BOMB:
+            links.objectSet->spawnExplosion(position);
+            break;
+
+        default:
+            break;
     }
 }
 

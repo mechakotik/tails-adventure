@@ -1,5 +1,12 @@
 #include "object_set.h"
 #include "explosion.h"
+#include "error.h"
+
+TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
+{
+    objectSet = newObjectSet;
+    setCamera(objectSet->getCamera());
+}
 
 void TA_ObjectSet::update()
 {
@@ -29,7 +36,7 @@ void TA_ObjectSet::spawnObject(TA_Object *object)
 
 void TA_ObjectSet::spawnExplosion(TA_Point position)
 {
-    TA_Explosion explosion(this);
-    explosion.load(position);
-    spawnObject(&explosion);
+    auto *explosion = new TA_Explosion(this);
+    explosion->load(position);
+    spawnObject(explosion);
 }
