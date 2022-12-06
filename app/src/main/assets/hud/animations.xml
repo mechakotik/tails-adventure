@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animations>
+	<animation name="ring_monitor" delay="6">
+		26,27,28
+	</animation>
+</animations>

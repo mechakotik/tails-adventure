@@ -7,13 +7,17 @@
 #include "geometry.h"
 #include "character.h"
 #include "links.h"
+#include "hud.h"
+#include "object_set.h"
 
 class TA_GameScreen : public TA_Screen {
 private:
     TA_Tilemap tilemap;
     TA_Camera camera;
     TA_Character character;
+    TA_ObjectSet objectSet;
     TA_GameScreenLinks links;
+    TA_Hud hud;
 
 public:
     void init() override;

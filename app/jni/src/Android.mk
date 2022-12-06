@@ -29,6 +29,9 @@ LOCAL_SRC_FILES := main.cpp \
                    character_controller.cpp \
                    character.cpp \
                    pawn.cpp \
+                   hud.cpp \
+                   object_set.cpp \
+                   explosion.cpp \
                    $(LOCAL_PATH)/../tinyxml2/tinyxml2.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer

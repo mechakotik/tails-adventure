@@ -154,9 +154,11 @@ void TA_Character::updateClimb()
         climbPosition = position;
         if(controller.getDirection() == TA_DIRECTION_LEFT) {
             climbPosition = climbPosition + TA_Point(-13, -height - (ground ? 0.025 : 0));
+            setFlip(true);
         }
         else if(controller.getDirection() == TA_DIRECTION_RIGHT) {
             climbPosition = climbPosition + TA_Point(13, -height - (ground ? 0.025 : 0));
+            setFlip(false);
         }
         else {
             return;
@@ -190,7 +192,7 @@ void TA_Character::updateClimb()
             int flags = getCollisionFlags(topLeft + delta, bottomRight + delta);
             if(flags == TA_GROUND_COLLISION) {
                 ground = true;
-                jump = false;
+                jump = wall = false;
                 climb = true;
                 climbTime = 0;
                 if(height == 32) {

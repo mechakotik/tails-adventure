@@ -10,6 +10,7 @@ void TA_GameScreen::init()
     character.load(links);
     tilemap.load("maps/pf/pf1.tmx");
     tilemap.setCamera(&camera);
+    hud.load(links);
 }
 
 TA_ScreenState TA_GameScreen::update()
@@ -22,6 +23,7 @@ TA_ScreenState TA_GameScreen::update()
     character.draw();
     tilemap.draw(2);
     character.drawControls();
+    hud.draw();
 
     return TA_SCREENSTATE_CURRENT;
 }

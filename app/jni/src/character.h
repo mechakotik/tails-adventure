@@ -36,6 +36,9 @@ public:
     void update();
     void drawControls() {controller.draw();}
     bool isOnGround() {return ground;}
+
+    int getRingsCount() {return 12;}
+    int getCurrentItem() {return 0;}
 };
 
 #endif // TA_CHARACTER_H
