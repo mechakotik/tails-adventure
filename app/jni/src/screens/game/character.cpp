@@ -139,6 +139,9 @@ void TA_Character::updateCollisions()
     wall = bool(flags & TA_WALL_COLLISION);
     if(flags & TA_CEIL_COLLISION) {
         velocity.y = std::max(velocity.y, double(0));
+        if(jump) {
+            jumpReleased = true;
+        }
     }
 }
 
