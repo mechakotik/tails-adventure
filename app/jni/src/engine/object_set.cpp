@@ -1,6 +1,6 @@
 #include "object_set.h"
-#include "explosion.h"
-#include "error.h"
+#include "objects/explosion.h"
+#include "engine/error.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {

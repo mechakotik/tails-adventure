@@ -1,7 +1,7 @@
 #ifndef TA_TOUCHSCREEN_H
 #define TA_TOUCHSCREEN_H
 
-#include <SDL.h>
+#include "SDL.h"
 #include "geometry.h"
 
 namespace TA_TouchBackend {

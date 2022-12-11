@@ -14,24 +14,24 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
 LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
 
 LOCAL_SRC_FILES := main.cpp \
-                   game.cpp \
-                   sprite.cpp \
-                   screen_state_machine.cpp \
-                   intro_screen.cpp \
-                   tools.cpp \
-                   sound.cpp \
-                   title_screen.cpp \
-                   touchscreen.cpp \
-                   geometry.cpp \
-                   tilemap.cpp \
-                   game_screen.cpp \
-                   camera.cpp \
-                   character_controller.cpp \
-                   character.cpp \
-                   pawn.cpp \
-                   hud.cpp \
-                   object_set.cpp \
-                   explosion.cpp \
+                   engine/game.cpp \
+                   engine/sprite.cpp \
+                   engine/screen_state_machine.cpp \
+                   engine/tools.cpp \
+                   engine/sound.cpp \
+                   engine/touchscreen.cpp \
+                   engine/geometry.cpp \
+                   engine/tilemap.cpp \
+                   engine/camera.cpp \
+                   engine/pawn.cpp \
+                   engine/object_set.cpp \
+                   objects/explosion.cpp \
+                   screens/intro_screen.cpp \
+                   screens/title_screen.cpp \
+                   screens/game_screen.cpp \
+                   screens/game/character_controller.cpp \
+                   screens/game/character.cpp \
+                   screens/game/hud.cpp \
                    $(LOCAL_PATH)/../tinyxml2/tinyxml2.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer

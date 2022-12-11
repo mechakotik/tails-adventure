@@ -1,8 +1,8 @@
 #include <algorithm>
 #include "character_controller.h"
-#include "touchscreen.h"
-#include "error.h"
-#include "globals.h"
+#include "engine/touchscreen.h"
+#include "engine/error.h"
+#include "engine/globals.h"
 
 void TA_CharacterController::load()
 {

@@ -1,8 +1,8 @@
 #ifndef TA_INTROSCREEN_H
 #define TA_INTROSCREEN_H
 
-#include "screen.h"
-#include "sprite.h"
+#include "engine/screen.h"
+#include "engine/sprite.h"
 
 class TA_IntroScreen : public TA_Screen {
 private:

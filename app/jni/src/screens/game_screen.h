@@ -1,14 +1,14 @@
 #ifndef TA_GAME_SCREEN_H
 #define TA_GAME_SCREEN_H
 
-#include "screen.h"
-#include "tilemap.h"
-#include "camera.h"
-#include "geometry.h"
-#include "character.h"
-#include "links.h"
-#include "hud.h"
-#include "object_set.h"
+#include "engine/screen.h"
+#include "engine/tilemap.h"
+#include "engine/camera.h"
+#include "engine/geometry.h"
+#include "screens/game/character.h"
+#include "engine/links.h"
+#include "screens/game/hud.h"
+#include "engine/object_set.h"
 
 class TA_GameScreen : public TA_Screen {
 private:

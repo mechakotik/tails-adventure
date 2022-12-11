@@ -1,10 +1,10 @@
 #ifndef TA_TITLESCREEN_H
 #define TA_TITLESCREEN_H
 
-#include "screen.h"
-#include "sprite.h"
-#include "sound.h"
-#include "touchscreen.h"
+#include "engine/screen.h"
+#include "engine/sprite.h"
+#include "engine/sound.h"
+#include "engine/touchscreen.h"
 
 class TA_TitleScreen : public TA_Screen {
 private:

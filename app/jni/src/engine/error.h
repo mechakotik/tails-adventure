@@ -2,7 +2,7 @@
 #define TA_ERROR_H
 
 #include <android/log.h>
-#include <SDL.h>
+#include "SDL.h"
 
 #define APP_NAME "com.mechakotik.tailsadventure"
 

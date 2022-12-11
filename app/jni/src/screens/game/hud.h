@@ -2,8 +2,8 @@
 #define TA_HUD_H
 
 #include <array>
-#include "sprite.h"
-#include "links.h"
+#include "engine/sprite.h"
+#include "engine/links.h"
 
 class TA_Hud {
 private:

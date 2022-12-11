@@ -1,5 +1,5 @@
 #include <algorithm>
-#include <SDL.h>
+#include "SDL.h"
 #include "tools.h"
 #include "error.h"
 #include "globals.h"

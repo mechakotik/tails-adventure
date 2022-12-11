@@ -2,8 +2,8 @@
 #define TA_CHARACTER_CONTROLLER_H
 
 #include <array>
-#include "sprite.h"
-#include "touchscreen.h"
+#include "engine/sprite.h"
+#include "engine/touchscreen.h"
 
 enum TA_Direction {
     TA_DIRECTION_UP,

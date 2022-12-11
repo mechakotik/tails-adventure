@@ -1,12 +1,12 @@
 #include <algorithm>
 #include <sstream>
-#include <SDL.h>
+#include "SDL.h"
 #include "tilemap.h"
 #include "tinyxml2.h"
 #include "error.h"
 #include "tools.h"
 #include "globals.h"
-#include "character.h"
+#include "screens/game/character.h"
 
 void TA_Tilemap::load(std::string filename)
 {

@@ -1,6 +1,6 @@
 #include "intro_screen.h"
-#include "globals.h"
-#include "tools.h"
+#include "engine/globals.h"
+#include "engine/tools.h"
 
 void TA_IntroScreen::init()
 {

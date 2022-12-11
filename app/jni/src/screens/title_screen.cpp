@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <cmath>
 #include "title_screen.h"
-#include "globals.h"
-#include "tools.h"
-#include "error.h"
+#include "engine/globals.h"
+#include "engine/tools.h"
+#include "engine/error.h"
 
 void TA_TitleScreen::init()
 {
@@ -65,7 +65,7 @@ TA_ScreenState TA_TitleScreen::update()
     }
 
     if(timePressed != -1 && localTimer - timePressed > 80) {
-        return TA_SCREENSTATE_INTRO;
+        return TA_SCREENSTATE_GAME;
     }
     return TA_SCREENSTATE_CURRENT;
 }

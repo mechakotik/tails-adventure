@@ -1,7 +1,7 @@
 #ifndef TA_EXPLOSION_H
 #define TA_EXPLOSION_H
 
-#include "object_set.h"
+#include "engine/object_set.h"
 
 class TA_Explosion : public TA_Object {
 public:

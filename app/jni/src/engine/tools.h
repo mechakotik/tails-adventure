@@ -2,7 +2,7 @@
 #define TA_TOOLS_H
 
 #include <string>
-#include <globals.h>
+#include "globals.h"
 
 std::string readStringFromFile(std::string filename);
 void drawScreenRect(int r, int g, int b, int a);

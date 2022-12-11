@@ -1,7 +1,7 @@
 #ifndef TA_GLOBALS_H
 #define TA_GLOBALS_H
 
-#include <SDL.h>
+#include "SDL.h"
 
 extern SDL_Window *gWindow;
 extern SDL_Renderer *gRenderer;

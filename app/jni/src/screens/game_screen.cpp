@@ -1,5 +1,5 @@
 #include "game_screen.h"
-#include "globals.h"
+#include "engine/globals.h"
 
 void TA_GameScreen::init()
 {
