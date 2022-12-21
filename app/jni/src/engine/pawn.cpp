@@ -7,17 +7,17 @@ int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight)
     int flags = 0;
     hitbox.setRectangle(TA_Point(topLeft.x + 1, bottomRight.y), TA_Point(bottomRight.x - 1, bottomRight.y + 0.001));
     hitbox.setPosition(position);
-    if(checkCollision(hitbox)) {
+    if(checkPawnCollision(hitbox)) {
         flags |= TA_GROUND_COLLISION;
     }
 
     hitbox.setRectangle(TA_Point(topLeft.x + 1, topLeft.y - 0.001), TA_Point(bottomRight.x - 1, topLeft.y));
-    if(checkCollision(hitbox)) {
+    if(checkPawnCollision(hitbox)) {
         flags |= TA_CEIL_COLLISION;
     }
 
     hitbox.setRectangle(topLeft + TA_Point(-0.001, 1), bottomRight + TA_Point(0.001, -1));
-    if(checkCollision(hitbox)) {
+    if(checkPawnCollision(hitbox)) {
         flags |= TA_WALL_COLLISION;
     }
 
@@ -26,6 +26,7 @@ int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight)
 
 int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground)
 {
+    velocity = velocity * TA_Point(gElapsedTime, gElapsedTime);
     TA_Polygon xHitbox, yHitbox;
     xHitbox.setRectangle(topLeft + TA_Point(0, 1), bottomRight - TA_Point(0, 1));
     yHitbox.setRectangle(topLeft + TA_Point(1, 0), bottomRight - TA_Point(1, 0));
@@ -35,7 +36,7 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     while(right - left > gEpsilon) {
         double mid = (left + right) / 2;
         xHitbox.setPosition(position + (endPosition - position) * TA_Point(mid, 0));
-        if(checkCollision(xHitbox)) {
+        if(checkPawnCollision(xHitbox)) {
             right = mid;
         }
         else {
@@ -45,12 +46,12 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     position.x += (endPosition.x - position.x) * left;
 
     yHitbox.setPosition(position + TA_Point(0, 8));
-    if(!checkCollision(yHitbox)) {
+    if(!checkPawnCollision(yHitbox)) {
         ground = false;
     }
     if(ground) {
         yHitbox.setPosition(position);
-        if(checkCollision(yHitbox)) {
+        if(checkPawnCollision(yHitbox)) {
             velocity.y = -8;
         }
         else {
@@ -62,7 +63,7 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     while(right - left > gEpsilon) {
         double mid = (left + right) / 2;
         yHitbox.setPosition(position + (endPosition - position) * TA_Point(0, mid));
-        if(checkCollision(yHitbox) != (ground && velocity.y < 0)) {
+        if(checkPawnCollision(yHitbox) != (ground && velocity.y < 0)) {
             right = mid;
         }
         else {

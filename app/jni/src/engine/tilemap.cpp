@@ -6,7 +6,7 @@
 #include "error.h"
 #include "tools.h"
 #include "globals.h"
-#include "screens/game/character.h"
+#include "game/character.h"
 
 void TA_Tilemap::load(std::string filename)
 {
@@ -99,6 +99,14 @@ void TA_Tilemap::load(std::string filename)
                 tilemap[layer][tileX][tileY].sprite.setAnimation(TA_Animation(tileset[tile].animation, tileset[tile].animationDelay, -1));
             }
         }
+
+        tinyxml2::XMLElement *propertyElement = layerElement->FirstChildElement("properties");
+        if(propertyElement != nullptr) {
+            propertyElement = propertyElement->FirstChildElement("property");
+            if(propertyElement != nullptr && std::strcmp(propertyElement->Attribute("name"), "collision") == 0) {
+                collisionLayer = layer;
+            }
+        }
     };
 
     loadTileset(xmlRoot->FirstChildElement("tileset"));
@@ -139,7 +147,7 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     }
 }
 
-void TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
+void TA_Tilemap::checkCollision(TA_Polygon polygon, int &flags)
 {
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
     for(int pos = 0; pos < polygon.size(); pos ++) {
@@ -160,7 +168,7 @@ void TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
 
     for(int tileX = minX; tileX <= maxX; tileX ++) {
         for(int tileY = minY; tileY <= maxY; tileY ++) {
-            int tileId = tilemap[layer][tileX][tileY].tileIndex;
+            int tileId = tilemap[collisionLayer][tileX][tileY].tileIndex;
             if(tileId == -1 || tileset[tileId].polygon.empty()) {
                 continue;
             }
@@ -173,7 +181,7 @@ void TA_Tilemap::checkCollision(TA_Polygon polygon, int layer, int &flags)
 
     for(int pos = 0; pos < 4; pos ++) {
         if(borderPolygons[pos].intersects(polygon)) {
-            flags |= TA_TILE_SOLID;
+            flags |= TA_COLLISION_SOLID;
             return;
         }
     }

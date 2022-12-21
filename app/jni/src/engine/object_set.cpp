@@ -1,5 +1,6 @@
 #include "object_set.h"
 #include "objects/explosion.h"
+#include "objects/bomb.h"
 #include "engine/error.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
@@ -10,15 +11,22 @@ TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 
 void TA_ObjectSet::update()
 {
-    std::vector<TA_Object*> newObjects;
+    std::vector<TA_Object*> newObjects, deleteList;
     for(TA_Object *currentObject : objects) {
         if(currentObject->update()) {
             newObjects.push_back(currentObject);
         }
         else {
-            delete currentObject;
+            deleteList.push_back(currentObject);
         }
     }
+    for(TA_Object *currentObject : deleteList) {
+        delete currentObject;
+    }
+    for(TA_Object *currentObject : spawnedObjects) {
+        newObjects.push_back(currentObject);
+    }
+    spawnedObjects.clear();
     objects = newObjects;
 }
 
@@ -31,7 +39,7 @@ void TA_ObjectSet::draw()
 
 void TA_ObjectSet::spawnObject(TA_Object *object)
 {
-    objects.push_back(object);
+    spawnedObjects.push_back(object);
 }
 
 void TA_ObjectSet::spawnExplosion(TA_Point position)
@@ -39,4 +47,21 @@ void TA_ObjectSet::spawnExplosion(TA_Point position)
     auto *explosion = new TA_Explosion(this);
     explosion->load(position);
     spawnObject(explosion);
+}
+
+void TA_ObjectSet::spawnBomb(TA_Point position, bool direction)
+{
+    auto *bomb = new TA_Bomb(this);
+    bomb->load(position, direction);
+    spawnObject(bomb);
+}
+
+void TA_ObjectSet::checkCollision(TA_Polygon hitbox, int &flags)
+{
+    tilemap->checkCollision(hitbox, flags);
+    for(TA_Object *currentObject : objects) {
+        if(currentObject->checkCollision(hitbox)) {
+            flags |= currentObject->getCollisionType();
+        }
+    }
 }

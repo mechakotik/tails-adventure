@@ -24,14 +24,16 @@ private:
     TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
 
-    bool ground = false, wall = false, jump = false, jumpReleased = false, climb = false, climbHigh = false;
+    bool ground = false, wall = false, direction = false;
+    bool jump = false, jumpReleased = false;
+    bool climb = false, climbHigh = false, throwing = false;
     bool useHalfSolidTiles = false;
     double jumpTime = 0, climbTime = 0;
     int currentTool = TA_TOOL_BOMB;
 
     void updateFollowPosition();
     void verticalMove();
-    bool checkCollision(TA_Polygon hitbox) override;
+    bool checkPawnCollision(TA_Polygon hitbox) override;
     void updateCollisions();
     void updateAnimation();
     void updateClimb();

@@ -37,6 +37,14 @@ void TA_Character::update()
         return;
     }
 
+    if(throwing) {
+        if(!isAnimated()) {
+            throwing = false;
+        }
+        updateFollowPosition();
+        return;
+    }
+
     verticalMove();
 
     if(ground) {
@@ -51,7 +59,7 @@ void TA_Character::update()
     }
     else {
         velocity.y += grv * gElapsedTime;
-        velocity.y = std::min(velocity.y, topY * gElapsedTime);
+        velocity.y = std::min(velocity.y, topY);
         if(jump && !jumpReleased) {
             jumpTime += gElapsedTime;
             if(controller.isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
@@ -70,25 +78,29 @@ void TA_Character::update()
     }
 
     if(!equal(velocity.x, 0)) {
-        setFlip(velocity.x < 0);
+        direction = (velocity.x < 0);
     }
+    setFlip(direction);
 
     updateTool();
+    if(throwing) {
+        return;
+    }
     updateAnimation();
     updateFollowPosition();
 }
 
-bool TA_Character::checkCollision(TA_Polygon hitbox)
+bool TA_Character::checkPawnCollision(TA_Polygon hitbox)
 {
     int flags = 0;
-    links.tilemap->checkCollision(hitbox, 1, flags);
-    if((flags & TA_TILE_SOLID) != 0) {
+    links.objectSet->checkCollision(hitbox, flags);
+    if((flags & TA_COLLISION_SOLID) != 0) {
         return true;
     }
-    if((flags & TA_TILE_DAMAGE) != 0) {
+    if((flags & TA_COLLISION_DAMAGE) != 0) {
         return true;
     }
-    if(useHalfSolidTiles && (flags & TA_TILE_HALF_SOLID) != 0) {
+    if(useHalfSolidTiles && (flags & TA_COLLISION_HALF_SOLID) != 0) {
         return true;
     }
     return false;
@@ -115,7 +127,7 @@ void TA_Character::updateCollisions()
             TA_Polygon hitbox;
             hitbox.setRectangle(topLeft, bottomRight);
             hitbox.setPosition(position);
-            if(checkCollision(hitbox)) {
+            if(checkPawnCollision(hitbox)) {
                 useHalfSolidTiles = false;
             }
         }
@@ -176,15 +188,15 @@ void TA_Character::updateClimb()
             velocity.y = 0.05;
         }
 
-        bool collision = checkCollision(hitbox);
+        bool collision = checkPawnCollision(hitbox);
         hitbox.setPosition(climbPosition + TA_Point(0, velocity.y));
-        bool collisionMoved = checkCollision(hitbox);
+        bool collisionMoved = checkPawnCollision(hitbox);
         if(collision != collisionMoved) {
             double left = 0, right = 1;
             while (right - left > gEpsilon) {
                 double mid = (left + right) / 2;
                 hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * mid));
-                if (checkCollision(hitbox) == collision) {
+                if (checkPawnCollision(hitbox) == collision) {
                     left = mid;
                 }
                 else {
@@ -253,11 +265,11 @@ void TA_Character::verticalMove()
 
     if(direction == TA_DIRECTION_RIGHT) {
         velocity.x += acc * gElapsedTime;
-        velocity.x = std::min(velocity.x, topX * gElapsedTime);
+        velocity.x = std::min(velocity.x, topX);
     }
     else if(direction == TA_DIRECTION_LEFT) {
         velocity.x -= acc * gElapsedTime;
-        velocity.x = std::max(velocity.x, -topX * gElapsedTime);
+        velocity.x = std::max(velocity.x, -topX);
     }
     else {
         if(velocity.x > 0) {
@@ -276,7 +288,9 @@ void TA_Character::updateTool()
     }
     switch(currentTool) {
         case TA_TOOL_BOMB:
-            links.objectSet->spawnExplosion(position);
+            links.objectSet->spawnBomb(position + TA_Point((direction? 27 : 8), 16), direction);
+            setAnimation("throw");
+            throwing = true;
             break;
 
         default:

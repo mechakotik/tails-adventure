@@ -2,6 +2,7 @@
 #define TA_EXPLOSION_H
 
 #include "engine/object_set.h"
+#include "engine/geometry.h"
 
 class TA_Explosion : public TA_Object {
 public:

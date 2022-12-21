@@ -25,13 +25,14 @@ LOCAL_SRC_FILES := main.cpp \
                    engine/camera.cpp \
                    engine/pawn.cpp \
                    engine/object_set.cpp \
+                   game/character_controller.cpp \
+                   game/character.cpp \
+                   game/hud.cpp \
                    objects/explosion.cpp \
+                   objects/bomb.cpp \
                    screens/intro_screen.cpp \
                    screens/title_screen.cpp \
                    screens/game_screen.cpp \
-                   screens/game/character_controller.cpp \
-                   screens/game/character.cpp \
-                   screens/game/hud.cpp \
                    $(LOCAL_PATH)/../tinyxml2/tinyxml2.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer

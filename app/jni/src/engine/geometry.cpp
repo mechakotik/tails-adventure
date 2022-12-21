@@ -112,6 +112,10 @@ bool TA_Polygon::inside(TA_Point point)
 
 bool TA_Polygon::intersects(TA_Polygon rv)
 {
+    if(empty() || rv.empty()) {
+        return false;
+    }
+
     if(isRectangle() && rv.isRectangle()) {
         return getTopLeft().x < rv.getBottomRight().x && getBottomRight().x > rv.getTopLeft().x &&
                getTopLeft().y < rv.getBottomRight().y && getBottomRight().y > rv.getTopLeft().y;
