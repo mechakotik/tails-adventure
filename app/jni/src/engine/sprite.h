@@ -50,7 +50,7 @@ public:
     void load(std::string filename, int frameWidth = -1, int frameHeight = -1);
     void loadFromTexture(TA_Texture *newTexture, int frameWidth = -1, int frameHeight = -1);
 
-    void draw();
+    virtual void draw();
     void setPosition(TA_Point newPosition) {position = newPosition;}
     void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}
     void setAlpha(int alpha);

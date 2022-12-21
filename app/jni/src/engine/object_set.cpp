@@ -42,10 +42,10 @@ void TA_ObjectSet::spawnObject(TA_Object *object)
     spawnedObjects.push_back(object);
 }
 
-void TA_ObjectSet::spawnExplosion(TA_Point position)
+void TA_ObjectSet::spawnExplosion(TA_Point position, int delay)
 {
     auto *explosion = new TA_Explosion(this);
-    explosion->load(position);
+    explosion->load(position, delay);
     spawnObject(explosion);
 }
 

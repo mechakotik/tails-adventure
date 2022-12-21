@@ -40,7 +40,7 @@ public:
 
     void update();
     void draw();
-    void spawnExplosion(TA_Point position);
+    void spawnExplosion(TA_Point position, int delay = 0);
     void spawnBomb(TA_Point position, bool direction);
     void checkCollision(TA_Polygon hitbox, int &flags);
 };
