@@ -65,3 +65,10 @@ void TA_ObjectSet::checkCollision(TA_Polygon hitbox, int &flags)
         }
     }
 }
+
+TA_ObjectSet::~TA_ObjectSet()
+{
+    for(TA_Object *currentObject : objects) {
+        delete currentObject;
+    }
+}

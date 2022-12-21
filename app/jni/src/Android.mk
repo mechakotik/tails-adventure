@@ -28,11 +28,11 @@ LOCAL_SRC_FILES := main.cpp \
                    game/character_controller.cpp \
                    game/character.cpp \
                    game/hud.cpp \
+                   game/intro_screen.cpp \
+                   game/title_screen.cpp \
+                   game/game_screen.cpp \
                    objects/explosion.cpp \
                    objects/bomb.cpp \
-                   screens/intro_screen.cpp \
-                   screens/title_screen.cpp \
-                   screens/game_screen.cpp \
                    $(LOCAL_PATH)/../tinyxml2/tinyxml2.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer

@@ -33,6 +33,7 @@ private:
     void spawnObject(TA_Object *object);
 
 public:
+    ~TA_ObjectSet();
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
     TA_Camera *getCamera() {return camera;}
     void setCollisionTilemap(TA_Tilemap *newTilemap) {tilemap = newTilemap;}
