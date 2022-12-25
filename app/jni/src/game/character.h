@@ -3,7 +3,7 @@
 
 #include "engine/pawn.h"
 #include "engine/geometry.h"
-#include "character_controller.h"
+#include "controller.h"
 #include "engine/links.h"
 #include "engine/tilemap.h"
 
@@ -20,7 +20,7 @@ private:
     const double topY = 5;
     const double maxJumpTime = 10;
 
-    TA_CharacterController controller;
+    TA_Controller *controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
 
@@ -42,8 +42,9 @@ private:
 public:
     void load(TA_GameScreenLinks newLinks);
     void update();
-    void drawControls() {controller.draw();}
+    void drawControls() {controller->draw();}
     bool isOnGround() {return ground;}
+    ~TA_Character();
 
     int getRingsCount() {return 12;}
     int getCurrentItem() {return 0;}

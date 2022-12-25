@@ -3,13 +3,14 @@
 
 #include "SDL.h"
 #include "geometry.h"
+#include "tools.h"
 
-namespace TA_TouchBackend {
+namespace TA { namespace touchscreen {
     void processTouchEvent(SDL_TouchFingerEvent event);
     void update();
-}
+} }
 
-struct TA_Button : TA_Polygon {
+class TA_Button : public TA_Polygon {
 private:
     bool pressed = false, hold = false, mode = false;
 

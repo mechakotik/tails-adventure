@@ -8,7 +8,7 @@ TA_Point::TA_Point(double newX, double newY)
     y = newY;
 }
 
-TA_Point TA_Point::operator+(const TA_Point &rv)
+TA_Point TA_Point::operator+(const TA_Point &rv) const
 {
     TA_Point res;
     res.x = x + rv.x;
@@ -16,7 +16,7 @@ TA_Point TA_Point::operator+(const TA_Point &rv)
     return res;
 }
 
-TA_Point TA_Point::operator-(const TA_Point &rv)
+TA_Point TA_Point::operator-(const TA_Point &rv) const
 {
     TA_Point res;
     res.x = x - rv.x;
@@ -24,7 +24,7 @@ TA_Point TA_Point::operator-(const TA_Point &rv)
     return res;
 }
 
-TA_Point TA_Point::operator*(const TA_Point &rv)
+TA_Point TA_Point::operator*(const TA_Point &rv) const
 {
     TA_Point res;
     res.x = x * rv.x;
@@ -32,18 +32,23 @@ TA_Point TA_Point::operator*(const TA_Point &rv)
     return res;
 }
 
-double TA_Point::getDistance(TA_Point rv)
+double TA_Point::length() const
 {
-    return sqrt(pow(x - rv.x, 2) + pow(y - rv.y, 2));
+    return sqrt(x * x + y * y);
 }
 
-double TA_Line::getLineEquation(TA_Point point)
+double TA_Point::getDistance(TA_Point rv) const
+{
+    return sqrt((x - rv.x) * (x - rv.x) + (y - rv.y) * (y - rv.y));
+}
+
+double TA_Line::getLineEquation(TA_Point point) const
 {
     double res = (point.x - first.x) * (second.y - first.y) - (point.y - first.y) * (second.x - first.x);
     return res;
 }
 
-bool TA_Line::intersects(TA_Line rv)
+bool TA_Line::intersects(TA_Line rv) const
 {
     std::vector<double> sign(4);
     sign[0] = getLineEquation(rv.first);

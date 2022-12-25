@@ -10,7 +10,8 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
     position = {0, 128};
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
-    controller.load();
+    controller = new TA_TouchscreenController;
+    controller->load();
 
     TA_Pawn::load("tails/tails.png", 48, 48);
     loadAnimationsFromFile("tails/animations.xml");
@@ -19,7 +20,7 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
 
 void TA_Character::update()
 {
-    controller.update();
+    controller->update();
 
     if(climb) {
         if(!isAnimated()) {
@@ -48,7 +49,7 @@ void TA_Character::update()
 
     if(ground) {
         jump = false;
-        if(controller.isJustPressed(TA_BUTTON_A)) {
+        if(controller->isJustPressed(TA_BUTTON_A)) {
             velocity.y = jmp;
             jump = true;
             jumpTime = 0;
@@ -61,10 +62,10 @@ void TA_Character::update()
         velocity.y = std::min(velocity.y, topY);
         if(jump && !jumpReleased) {
             jumpTime += TA::elapsedTime;
-            if(controller.isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
+            if(controller->isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
                 velocity.y = jmp;
             }
-            else if(!controller.isPressed(TA_BUTTON_A)) {
+            else if(!controller->isPressed(TA_BUTTON_A)) {
                 jumpReleased = true;
             }
         }
@@ -167,11 +168,11 @@ void TA_Character::updateClimb()
             return;
         }
         climbPosition = position;
-        if(controller.getDirection() == TA_DIRECTION_LEFT) {
+        if(controller->getDirection() == TA_DIRECTION_LEFT) {
             climbPosition = climbPosition + TA_Point(-13, -height - (ground ? 0.025 : 0));
             setFlip(true);
         }
-        else if(controller.getDirection() == TA_DIRECTION_RIGHT) {
+        else if(controller->getDirection() == TA_DIRECTION_RIGHT) {
             climbPosition = climbPosition + TA_Point(13, -height - (ground ? 0.025 : 0));
             setFlip(false);
         }
@@ -218,7 +219,7 @@ void TA_Character::updateClimb()
                     setAnimation("climb");
                     climbHigh = false;
                 }
-                if(controller.getDirection() == TA_DIRECTION_LEFT) {
+                if(controller->getDirection() == TA_DIRECTION_LEFT) {
                     position = climbPosition + TA_Point(13, height);
                 }
                 else {
@@ -260,7 +261,7 @@ void TA_Character::updateAnimation()
 
 void TA_Character::verticalMove()
 {
-    TA_Direction direction = controller.getDirection();
+    TA_Direction direction = controller->getDirection();
 
     if(direction == TA_DIRECTION_RIGHT) {
         velocity.x += acc * TA::elapsedTime;
@@ -282,7 +283,7 @@ void TA_Character::verticalMove()
 
 void TA_Character::updateTool()
 {
-    if(!controller.isJustPressed(TA_BUTTON_B)) {
+    if(!controller->isJustPressed(TA_BUTTON_B)) {
         return;
     }
     switch(currentTool) {
@@ -304,4 +305,9 @@ void TA_Character::updateFollowPosition()
         sourcePosition.x = climbPosition.x;
     }
     followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
+}
+
+TA_Character::~TA_Character()
+{
+    delete controller;
 }

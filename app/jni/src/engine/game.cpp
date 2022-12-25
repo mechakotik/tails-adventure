@@ -49,7 +49,7 @@ TA_Game::TA_Game()
 
 bool TA_Game::process()
 {
-    TA_TouchBackend::update();
+    TA::touchscreen::update();
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {
@@ -57,7 +57,7 @@ bool TA_Game::process()
             return false;
         }
         else if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION || event.type == SDL_FINGERUP) {
-            TA_TouchBackend::processTouchEvent(event.tfinger);
+            TA::touchscreen::processTouchEvent(event.tfinger);
         }
     }
 

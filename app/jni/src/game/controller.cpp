@@ -1,10 +1,29 @@
 #include <algorithm>
-#include "character_controller.h"
+#include "controller.h"
 #include "engine/touchscreen.h"
 #include "engine/error.h"
 #include "engine/tools.h"
 
-void TA_CharacterController::load()
+TA_Direction TA_Controller::getDirection()
+{
+    TA_Point vector = getDirectionVector();
+    if(vector.length() < analogDeadZone) {
+        return TA_DIRECTION_MAX;
+    }
+    double angle = atan2(vector.y, vector.x) * 180 / (atan(1) * 4);
+    if(90 - verticalRange <= angle && angle <= 90 + verticalRange) {
+        return TA_DIRECTION_UP;
+    }
+    if(-90 - verticalRange <= angle && angle <= -90 + verticalRange) {
+        return TA_DIRECTION_DOWN;
+    }
+    if(vector.x > 0) {
+        return TA_DIRECTION_RIGHT;
+    }
+    return TA_DIRECTION_LEFT;
+}
+
+void TA_TouchscreenController::load()
 {
     dpad[TA_DIRECTION_UP].sprite.load("controls/up.png");
     dpad[TA_DIRECTION_DOWN].sprite.load("controls/down.png");
@@ -30,7 +49,7 @@ void TA_CharacterController::load()
     setFunctionButtonPosition(TA_BUTTON_PAUSE, {264, 14}, dpadScale);
 }
 
-void TA_CharacterController::update()
+void TA_TouchscreenController::update()
 {
     for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
         dpad[pos].button.update();
@@ -91,7 +110,23 @@ void TA_CharacterController::update()
     }
 }
 
-void TA_CharacterController::setDpadPosition(TA_Point position, TA_Point scale)
+TA_Point TA_TouchscreenController::getDirectionVector()
+{
+    switch(currentDirection) {
+        case TA_DIRECTION_UP:
+            return {0, 1};
+        case TA_DIRECTION_DOWN:
+            return {0, -1};
+        case TA_DIRECTION_LEFT:
+            return {-1, 0};
+        case TA_DIRECTION_RIGHT:
+            return {1, 0};
+        default:
+            return {0, 0};
+    }
+}
+
+void TA_TouchscreenController::setDpadPosition(TA_Point position, TA_Point scale)
 {
     dpad[TA_DIRECTION_UP].sprite.setPosition(position + TA_Point(-30, -76 - dpadInterval) * scale);
     dpad[TA_DIRECTION_DOWN].sprite.setPosition(position + TA_Point(-30, dpadInterval) * scale);
@@ -125,14 +160,14 @@ void TA_CharacterController::setDpadPosition(TA_Point position, TA_Point scale)
     }
 }
 
-void TA_CharacterController::setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale)
+void TA_TouchscreenController::setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale)
 {
     functionButtons[button].sprite.setPosition(position + TA_Point(-40, -40) * scale);
     functionButtons[button].sprite.setScale(scale);
     functionButtons[button].button.setCircle(position, 50 * scale.x);
 }
 
-void TA_CharacterController::draw()
+void TA_TouchscreenController::draw()
 {
     for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
         dpad[pos].sprite.draw();

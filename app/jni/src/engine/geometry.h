@@ -7,10 +7,11 @@ struct TA_Point {
     double x = 0, y = 0;
     TA_Point() {}
     TA_Point(double newX, double newY);
-    TA_Point operator+(const TA_Point &rv);
-    TA_Point operator-(const TA_Point &rv);
-    TA_Point operator*(const TA_Point &rv);
-    double getDistance(TA_Point rv);
+    TA_Point operator+(const TA_Point &rv) const;
+    TA_Point operator-(const TA_Point &rv) const;
+    TA_Point operator*(const TA_Point &rv) const;
+    double length() const;
+    double getDistance(TA_Point rv) const;
 };
 
 struct TA_Rect {
@@ -19,8 +20,8 @@ struct TA_Rect {
 
 struct TA_Line {
     TA_Point first, second;
-    double getLineEquation(TA_Point point);
-    bool intersects(TA_Line rv);
+    double getLineEquation(TA_Point point) const;
+    bool intersects(TA_Line rv) const;
 };
 
 class TA_Polygon {
