@@ -35,9 +35,10 @@ bool TA_Bomb::update()
         int flags = moveAndCollide(TA_Point(2, 4), TA_Point(11, 13), velocity);
         if(flags != 0) {
             objectSet->spawnExplosion(position);
-            objectSet->spawnExplosion(position, 16);
-            objectSet->spawnExplosion(position, 32);
-            objectSet->spawnExplosion(position, 48);
+            for(int i = 1; i <= 3; i ++) {
+                TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
+                objectSet->spawnExplosion(explosionPosition, i * 16);
+            }
             return false;
         }
     }

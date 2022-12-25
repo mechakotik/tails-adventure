@@ -11,6 +11,11 @@ namespace TA
 
     int screenWidth, screenHeight;
     double elapsedTime, widthMultiplier, heightMultiplier;
+
+    namespace random
+    {
+        unsigned long long x = 1;
+    }
 }
 
 std::string TA::readStringFromFile(std::string filename)
@@ -56,4 +61,18 @@ void TA::drawShadow(int factor)
 bool TA::equal(double a, double b)
 {
     return std::abs(a - b) < TA::epsilon;
+}
+
+void TA::random::init(unsigned long long seed)
+{
+    seed = std::max(seed, 1ull);
+    x = seed;
+}
+
+unsigned long long TA::random::next()
+{
+    x ^= (x << 13);
+    x ^= (x >> 7);
+    x ^= (x << 17);
+    return x;
 }

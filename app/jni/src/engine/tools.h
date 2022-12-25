@@ -18,6 +18,12 @@ namespace TA
     void drawScreenRect(int r, int g, int b, int a);
     void drawShadow(int factor);
     bool equal(double a, double b);
+
+    namespace random
+    {
+        void init(unsigned long long seed);
+        unsigned long long next();
+    }
 }
 
 #endif // TA_TOOLS_H
