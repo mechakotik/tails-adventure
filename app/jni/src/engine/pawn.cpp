@@ -1,5 +1,5 @@
 #include "pawn.h"
-#include "globals.h"
+#include "tools.h"
 
 int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight)
 {
@@ -26,14 +26,14 @@ int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight)
 
 int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground)
 {
-    velocity = velocity * TA_Point(gElapsedTime, gElapsedTime);
+    velocity = velocity * TA_Point(TA::elapsedTime, TA::elapsedTime);
     TA_Polygon xHitbox, yHitbox;
     xHitbox.setRectangle(topLeft + TA_Point(0, 1), bottomRight - TA_Point(0, 1));
     yHitbox.setRectangle(topLeft + TA_Point(1, 0), bottomRight - TA_Point(1, 0));
 
     TA_Point endPosition = position + velocity;
     double left = 0, right = 1;
-    while(right - left > gEpsilon) {
+    while(right - left > TA::epsilon) {
         double mid = (left + right) / 2;
         xHitbox.setPosition(position + (endPosition - position) * TA_Point(mid, 0));
         if(checkPawnCollision(xHitbox)) {
@@ -60,7 +60,7 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
         endPosition = position + velocity;
     }
     left = 0, right = 1;
-    while(right - left > gEpsilon) {
+    while(right - left > TA::epsilon) {
         double mid = (left + right) / 2;
         yHitbox.setPosition(position + (endPosition - position) * TA_Point(0, mid));
         if(checkPawnCollision(yHitbox) != (ground && velocity.y < 0)) {

@@ -1,6 +1,5 @@
 #include <algorithm>
 #include "character.h"
-#include "engine/globals.h"
 #include "engine/tools.h"
 #include "engine/error.h"
 #include "engine/object_set.h"
@@ -58,10 +57,10 @@ void TA_Character::update()
         }
     }
     else {
-        velocity.y += grv * gElapsedTime;
+        velocity.y += grv * TA::elapsedTime;
         velocity.y = std::min(velocity.y, topY);
         if(jump && !jumpReleased) {
-            jumpTime += gElapsedTime;
+            jumpTime += TA::elapsedTime;
             if(controller.isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
                 velocity.y = jmp;
             }
@@ -77,7 +76,7 @@ void TA_Character::update()
         return;
     }
 
-    if(!equal(velocity.x, 0)) {
+    if(!TA::equal(velocity.x, 0)) {
         direction = (velocity.x < 0);
     }
     setFlip(direction);
@@ -193,7 +192,7 @@ void TA_Character::updateClimb()
         bool collisionMoved = checkPawnCollision(hitbox);
         if(collision != collisionMoved) {
             double left = 0, right = 1;
-            while (right - left > gEpsilon) {
+            while (right - left > TA::epsilon) {
                 double mid = (left + right) / 2;
                 hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * mid));
                 if (checkPawnCollision(hitbox) == collision) {
@@ -239,7 +238,7 @@ void TA_Character::updateClimb()
 void TA_Character::updateAnimation()
 {
     if(ground) {
-        if(equal(velocity.x, 0)) {
+        if(TA::equal(velocity.x, 0)) {
             setAnimation("idle");
         }
         else if(wall) {
@@ -264,19 +263,19 @@ void TA_Character::verticalMove()
     TA_Direction direction = controller.getDirection();
 
     if(direction == TA_DIRECTION_RIGHT) {
-        velocity.x += acc * gElapsedTime;
+        velocity.x += acc * TA::elapsedTime;
         velocity.x = std::min(velocity.x, topX);
     }
     else if(direction == TA_DIRECTION_LEFT) {
-        velocity.x -= acc * gElapsedTime;
+        velocity.x -= acc * TA::elapsedTime;
         velocity.x = std::max(velocity.x, -topX);
     }
     else {
         if(velocity.x > 0) {
-            velocity.x = std::max(double(0), velocity.x - acc * gElapsedTime);
+            velocity.x = std::max(double(0), velocity.x - acc * TA::elapsedTime);
         }
         else {
-            velocity.x = std::min(double(0), velocity.x + acc * gElapsedTime);
+            velocity.x = std::min(double(0), velocity.x + acc * TA::elapsedTime);
         }
     }
 }
@@ -304,5 +303,5 @@ void TA_Character::updateFollowPosition()
     if(climb) {
         sourcePosition.x = climbPosition.x;
     }
-    followPosition = sourcePosition + TA_Point(22 - gScreenWidth / 2, 26 - gScreenHeight / 2);
+    followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
 }

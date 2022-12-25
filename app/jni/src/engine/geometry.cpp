@@ -1,5 +1,4 @@
 #include "geometry.h"
-#include "globals.h"
 #include "error.h"
 #include "tools.h"
 
@@ -62,9 +61,9 @@ void TA_Polygon::addVertex(TA_Point vertex)
     }
     rect = false;
     vertexList.push_back(vertex);
-    if(vertexList.size() == 4 && equal(getVertex(1).x, getVertex(2).x) &&
-       equal(getVertex(1).y, getVertex(0).y) && equal(getVertex(3).x, getVertex(0).x) &&
-       equal(getVertex(3).y, getVertex(2).y)) {
+    if(vertexList.size() == 4 && TA::equal(getVertex(1).x, getVertex(2).x) &&
+       TA::equal(getVertex(1).y, getVertex(0).y) && TA::equal(getVertex(3).x, getVertex(0).x) &&
+       TA::equal(getVertex(3).y, getVertex(2).y)) {
         rect = true;
     }
 }

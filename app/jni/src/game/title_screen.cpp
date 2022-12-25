@@ -1,27 +1,26 @@
 #include <algorithm>
 #include <cmath>
 #include "title_screen.h"
-#include "engine/globals.h"
 #include "engine/tools.h"
 #include "engine/error.h"
 
 void TA_TitleScreen::init()
 {
     titleScreenSprite.load("title_screen/title_screen.png");
-    titleScreenSprite.setPosition(gScreenWidth / 2 - 80, 0);
+    titleScreenSprite.setPosition(TA::screenWidth / 2 - 80, 0);
     touchToStartSprite.load("title_screen/touch_to_start.png");
-    touchToStartSprite.setPosition(gScreenWidth / 2 - 57, 104);
+    touchToStartSprite.setPosition(TA::screenWidth / 2 - 57, 104);
 
     titleScreenSound.load("sound/title_screen.ogg", TA_SOUND_CHANNEL_MUSIC, 0);
     enterSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX, 0);
     titleScreenSound.play();
 
-    button.setRectangle(TA_Point(0, 0), TA_Point(gScreenWidth, gScreenHeight));
+    button.setRectangle(TA_Point(0, 0), TA_Point(TA::screenWidth, TA::screenHeight));
 }
 
 TA_ScreenState TA_TitleScreen::update()
 {
-    localTimer += gElapsedTime;
+    localTimer += TA::elapsedTime;
 
     button.update();
     if(button.isJustPressed() && timePressed == -1) {
@@ -29,7 +28,7 @@ TA_ScreenState TA_TitleScreen::update()
         timePressed = localTimer;
     }
 
-    drawScreenRect(0, 0, 102, 255);
+    TA::drawScreenRect(0, 0, 102, 255);
     titleScreenSprite.draw();
 
     auto drawTouchToStart = [&] (int delay, int fadeDelay) {
@@ -53,7 +52,7 @@ TA_ScreenState TA_TitleScreen::update()
 
     if(localTimer < 10) {
         int factor = 255 - 255 * localTimer / 10;
-        drawShadow(factor);
+        TA::drawShadow(factor);
     }
     else if(timePressed != -1 && localTimer - timePressed > 60) {
         if(!startedFadeOut) {
@@ -61,7 +60,7 @@ TA_ScreenState TA_TitleScreen::update()
             startedFadeOut = true;
         }
         int factor = 255 * (localTimer - timePressed - 60) / 10;
-        drawShadow(factor);
+        TA::drawShadow(factor);
     }
 
     if(timePressed != -1 && localTimer - timePressed > 80) {

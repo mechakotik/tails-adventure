@@ -5,7 +5,6 @@
 #include <sstream>
 #include "tinyxml2.h"
 #include "sprite.h"
-#include "globals.h"
 #include "error.h"
 #include "tools.h"
 
@@ -16,7 +15,7 @@ void TA_Texture::load(std::string filename)
         handleSDLError("Failed to load image");
     }
 
-    SDLTexture = SDL_CreateTextureFromSurface(gRenderer, surface);
+    SDLTexture = SDL_CreateTextureFromSurface(TA::renderer, surface);
     if(SDLTexture == nullptr) {
         handleSDLError("Failed to create texture from surface");
     }
@@ -94,13 +93,13 @@ void TA_Sprite::draw()
         screenPosition = camera->getRelative(position);
     }
 
-    dstRect.x = screenPosition.x * gWidthMultiplier;
-    dstRect.y = screenPosition.y * gHeightMultiplier;
-    dstRect.w = frameWidth * gWidthMultiplier * scale.x + 1;
-    dstRect.h = frameHeight * gHeightMultiplier * scale.y + 1;
+    dstRect.x = screenPosition.x * TA::widthMultiplier;
+    dstRect.y = screenPosition.y * TA::heightMultiplier;
+    dstRect.w = frameWidth * TA::widthMultiplier * scale.x + 1;
+    dstRect.h = frameHeight * TA::heightMultiplier * scale.y + 1;
     if(!hidden) {
         SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-        SDL_RenderCopyEx(gRenderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
+        SDL_RenderCopyEx(TA::renderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
     }
     updateAnimationNeeded = true;
 }
@@ -111,7 +110,7 @@ void TA_Sprite::updateAnimation()
         return;
     }
     if(animation.frames.size() >= 2) {
-        animationTimer += gElapsedTime;
+        animationTimer += TA::elapsedTime;
         animationFrame += animationTimer / animation.delay;
 
         if (animationFrame >= animation.frames.size()) {
@@ -137,7 +136,7 @@ void TA_Sprite::updateAnimation()
 void TA_Sprite::loadAnimationsFromFile(std::string filename)
 {
     tinyxml2::XMLDocument animationXml;
-    animationXml.Parse(readStringFromFile(filename).c_str());
+    animationXml.Parse(TA::readStringFromFile(filename).c_str());
     tinyxml2::XMLElement *currentElement = animationXml.RootElement()->FirstChildElement("animation");
 
     while(currentElement != nullptr) {

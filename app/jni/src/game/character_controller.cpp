@@ -2,7 +2,7 @@
 #include "character_controller.h"
 #include "engine/touchscreen.h"
 #include "engine/error.h"
-#include "engine/globals.h"
+#include "engine/tools.h"
 
 void TA_CharacterController::load()
 {
@@ -73,10 +73,10 @@ void TA_CharacterController::update()
 
     auto updateColorMod = [&](int colorMod, bool pressed) {
         if(pressed) {
-            colorMod = std::min(255, int(colorMod + 32 * gElapsedTime));
+            colorMod = std::min(255, int(colorMod + 32 * TA::elapsedTime));
         }
         else {
-            colorMod = std::max(128, int(colorMod - 32 * gElapsedTime));
+            colorMod = std::max(128, int(colorMod - 32 * TA::elapsedTime));
         }
         return colorMod;
     };

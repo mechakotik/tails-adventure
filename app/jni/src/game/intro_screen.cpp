@@ -1,20 +1,19 @@
 #include "intro_screen.h"
-#include "engine/globals.h"
 #include "engine/tools.h"
 
 void TA_IntroScreen::init()
 {
     segaLogoSprite.load("intro/sega_logo.png", 80, 25);
-    segaLogoSprite.setPosition(gScreenWidth / 2 - 40, gScreenHeight / 2 - 12);
+    segaLogoSprite.setPosition(TA::screenWidth / 2 - 40, TA::screenHeight / 2 - 12);
     segaLogoSprite.setAnimation(TA_Animation(0, 16, 3, 1));
     disclaimerSprite.load("intro/disclaimer.png");
-    disclaimerSprite.setPosition(gScreenWidth / 2 - 128, 0);
+    disclaimerSprite.setPosition(TA::screenWidth / 2 - 128, 0);
     localTimer = 0;
 }
 
 TA_ScreenState TA_IntroScreen::update()
 {
-    localTimer += gElapsedTime;
+    localTimer += TA::elapsedTime;
 
     if(localTimer <= 130) {
         if(localTimer >= 70 && !secondAnimationPlayed) {
@@ -25,7 +24,7 @@ TA_ScreenState TA_IntroScreen::update()
 
         if(localTimer >= 120) {
             int factor = 255 * (localTimer - 120) / 10;
-            drawShadow(factor);
+            TA::drawShadow(factor);
         }
     }
     else if(localTimer >= 150) {
@@ -33,11 +32,11 @@ TA_ScreenState TA_IntroScreen::update()
 
         if(localTimer <= 160) {
             int factor = 255 - 255 * (localTimer - 150) / 10;
-            drawShadow(factor);
+            TA::drawShadow(factor);
         }
         if(localTimer >= 300) {
             int factor = 255 * (localTimer - 300) / 10;
-            drawShadow(factor);
+            TA::drawShadow(factor);
         }
     }
 

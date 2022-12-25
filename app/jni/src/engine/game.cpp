@@ -5,11 +5,7 @@
 #include "error.h"
 #include "sound.h"
 #include "touchscreen.h"
-
-SDL_Window *gWindow;
-SDL_Renderer *gRenderer;
-int gScreenWidth, gScreenHeight;
-double gElapsedTime, gWidthMultiplier, gHeightMultiplier;
+#include "tools.h"
 
 TA_Game::TA_Game()
 {
@@ -29,23 +25,23 @@ TA_Game::TA_Game()
 
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
-    gScreenWidth = baseHeight * pixelAspectRatio * displayMode.w / displayMode.h;
-    gScreenHeight = baseHeight;
-    gWidthMultiplier = double(displayMode.w) / gScreenWidth;
-    gHeightMultiplier = double(displayMode.h) / gScreenHeight;
+    TA::screenWidth = baseHeight * pixelAspectRatio * displayMode.w / displayMode.h;
+    TA::screenHeight = baseHeight;
+    TA::widthMultiplier = double(displayMode.w) / TA::screenWidth;
+    TA::heightMultiplier = double(displayMode.h) / TA::screenHeight;
 
-    gWindow = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, displayMode.w, displayMode.h, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP);
-    if(gWindow == nullptr) {
+    TA::window = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, displayMode.w, displayMode.h, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP);
+    if(TA::window == nullptr) {
         handleSDLError("Failed to create window");
     }
 
-    gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if(gRenderer == nullptr) {
+    TA::renderer = SDL_CreateRenderer(TA::window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if(TA::renderer == nullptr) {
         handleSDLError("Failed to create renderer");
     }
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
-    SDL_SetRenderDrawBlendMode(gRenderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
 }
@@ -70,21 +66,21 @@ bool TA_Game::process()
 void TA_Game::update()
 {
     currentTime = std::chrono::high_resolution_clock::now();
-    gElapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
+    TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
     startTime = currentTime;
 
-    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
-    SDL_RenderClear(gRenderer);
+    SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
+    SDL_RenderClear(TA::renderer);
 
     if(screenStateMachine.update()) {
         startTime = std::chrono::high_resolution_clock::now();
     }
-    SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent(TA::renderer);
 }
 
 TA_Game::~TA_Game()
 {
-    SDL_DestroyRenderer(gRenderer);
-    SDL_DestroyWindow(gWindow);
+    SDL_DestroyRenderer(TA::renderer);
+    SDL_DestroyWindow(TA::window);
     SDL_Quit();
 }

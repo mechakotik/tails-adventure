@@ -1,5 +1,5 @@
 #include "bomb.h"
-#include "engine/globals.h"
+#include "engine/tools.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection)
 {
@@ -24,14 +24,14 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon hitbox)
 bool TA_Bomb::update()
 {
     bool flag1 = (timer <= 6);
-    timer += gElapsedTime;
+    timer += TA::elapsedTime;
     bool flag2 = (timer >= 6);
 
     if(flag1 && flag2) {
         position = position + TA_Point(9 * (direction ? -1 : 1), -6);
     }
     else if(timer >= 6) {
-        velocity.y += grv * gElapsedTime;
+        velocity.y += grv * TA::elapsedTime;
         int flags = moveAndCollide(TA_Point(2, 4), TA_Point(11, 13), velocity);
         if(flags != 0) {
             objectSet->spawnExplosion(position);

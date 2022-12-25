@@ -1,5 +1,5 @@
 #include "explosion.h"
-#include "engine/globals.h"
+#include "engine/tools.h"
 
 void TA_Explosion::load(TA_Point position, int newDelay)
 {
@@ -20,7 +20,7 @@ bool TA_Explosion::update()
 
 void TA_Explosion::draw()
 {
-    timer += gElapsedTime;
+    timer += TA::elapsedTime;
     if(timer >= delay) {
         TA_Sprite::draw();
     }

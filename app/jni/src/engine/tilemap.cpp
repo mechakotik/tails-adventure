@@ -5,13 +5,12 @@
 #include "tinyxml2.h"
 #include "error.h"
 #include "tools.h"
-#include "globals.h"
 #include "game/character.h"
 
 void TA_Tilemap::load(std::string filename)
 {
     tinyxml2::XMLDocument xmlFile;
-    xmlFile.Parse(readStringFromFile(filename).c_str());
+    xmlFile.Parse(TA::readStringFromFile(filename).c_str());
     tinyxml2::XMLElement *xmlRoot = xmlFile.FirstChildElement("map");
 
     width = xmlRoot->IntAttribute("width");
@@ -135,7 +134,7 @@ void TA_Tilemap::draw(int layer)
 
 void TA_Tilemap::setCamera(TA_Camera *newCamera)
 {
-    newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth - gScreenWidth, height * tileHeight - gScreenHeight)});
+    newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth - TA::screenWidth, height * tileHeight - TA::screenHeight)});
     for(int layer = 0; layer < layerCount; layer ++) {
         for(int tileX = 0; tileX < width; tileX ++) {
             for(int tileY = 0; tileY < height; tileY ++) {

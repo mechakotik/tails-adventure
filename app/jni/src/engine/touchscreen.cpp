@@ -1,8 +1,8 @@
 #include <map>
 #include <set>
 #include "touchscreen.h"
-#include "globals.h"
 #include "error.h"
+#include "tools.h"
 
 namespace TA_TouchBackend {
     std::map<int, TA_Point> currentFingers;
@@ -20,7 +20,7 @@ void TA_TouchBackend::processTouchEvent(SDL_TouchFingerEvent event)
         if(event.type == SDL_FINGERDOWN) {
             justPressedFingers.insert(event.fingerId);
         }
-        currentFingers[event.fingerId] = {event.x * gScreenWidth, event.y * gScreenHeight};
+        currentFingers[event.fingerId] = {event.x * TA::screenWidth, event.y * TA::screenHeight};
     }
     else {
         currentFingers.erase(event.fingerId);

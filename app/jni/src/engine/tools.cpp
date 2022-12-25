@@ -2,28 +2,37 @@
 #include "SDL.h"
 #include "tools.h"
 #include "error.h"
-#include "globals.h"
 
-std::string readStringFromFile(std::string filename)
+namespace TA
+{
+    SDL_Window *window;
+    SDL_Renderer *renderer;
+    SDL_DisplayMode displayMode;
+
+    int screenWidth, screenHeight;
+    double elapsedTime, widthMultiplier, heightMultiplier;
+}
+
+std::string TA::readStringFromFile(std::string filename)
 {
     SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
     if(input == nullptr) {
         handleSDLError("Open %s failed", filename.c_str());
     }
-    int data_bytes = SDL_RWseek(input, 0, SEEK_END);
+    int dataBytes = SDL_RWseek(input, 0, SEEK_END);
     SDL_RWseek(input, 0, SEEK_SET);
-    char* data = (char*)malloc(data_bytes);
-    SDL_RWread(input, data, 1, data_bytes);
+    char* data = (char*)malloc(dataBytes);
+    SDL_RWread(input, data, 1, dataBytes);
 
-    std::string str(data_bytes + 1, 0);
-    for(int pos = 0; pos < data_bytes; pos ++) {
+    std::string str(dataBytes + 1, 0);
+    for(int pos = 0; pos < dataBytes; pos ++) {
         str[pos] = data[pos];
     }
     str += '\0';
     return str;
 }
 
-void drawScreenRect(int r, int g, int b, int a)
+void TA::drawScreenRect(int r, int g, int b, int a)
 {
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -35,16 +44,16 @@ void drawScreenRect(int r, int g, int b, int a)
 
     a = std::max(a, 0);
     a = std::min(a, 255);
-    SDL_SetRenderDrawColor(gRenderer, r, g, b, a);
-    SDL_RenderFillRect(gRenderer, &rect);
+    SDL_SetRenderDrawColor(TA::renderer, r, g, b, a);
+    SDL_RenderFillRect(TA::renderer, &rect);
 }
 
-void drawShadow(int factor)
+void TA::drawShadow(int factor)
 {
     drawScreenRect(0, 0, 0, factor);
 }
 
-bool equal(double a, double b)
+bool TA::equal(double a, double b)
 {
-    return std::abs(a - b) < gEpsilon;
+    return std::abs(a - b) < TA::epsilon;
 }
