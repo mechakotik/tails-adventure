@@ -24,4 +24,10 @@
 	<animation name="throw" delay="6" repeatTimes="1">
 		19,20,21,22
 	</animation>
+	<animation name="helitail" delay="6">
+		13,14,15
+	</animation>
+	<animation name="helitail_tired" delay="6">
+		16,17,18
+	</animation>
 </animations>

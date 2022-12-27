@@ -45,30 +45,14 @@ void TA_Character::update()
         return;
     }
 
-    verticalMove();
-
     if(ground) {
-        jump = false;
-        if(controller->isJustPressed(TA_BUTTON_A)) {
-            velocity.y = jmp;
-            jump = true;
-            jumpTime = 0;
-            jumpReleased = false;
-            ground = false;
-        }
+        updateGround();
+    }
+    else if(helitail) {
+        updateHelitail();
     }
     else {
-        velocity.y += grv * TA::elapsedTime;
-        velocity.y = std::min(velocity.y, topY);
-        if(jump && !jumpReleased) {
-            jumpTime += TA::elapsedTime;
-            if(controller->isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
-                velocity.y = jmp;
-            }
-            else if(!controller->isPressed(TA_BUTTON_A)) {
-                jumpReleased = true;
-            }
-        }
+        updateAir();
     }
 
     updateCollisions();
@@ -76,18 +60,103 @@ void TA_Character::update()
     if(climb) {
         return;
     }
-
-    if(!TA::equal(velocity.x, 0)) {
-        direction = (velocity.x < 0);
-    }
-    setFlip(direction);
-
+    setFlip(flip);
     updateTool();
     if(throwing) {
         return;
     }
     updateAnimation();
     updateFollowPosition();
+}
+
+void TA_Character::updateGround()
+{
+    verticalMove();
+    jump = false;
+    if(controller->isJustPressed(TA_BUTTON_A)) {
+        velocity.y = jmp;
+        jump = true;
+        jumpTime = 0;
+        jumpReleased = false;
+        ground = false;
+    }
+}
+
+void TA_Character::updateAir()
+{
+    verticalMove();
+    velocity.y += grv * TA::elapsedTime;
+    velocity.y = std::min(velocity.y, topY);
+    if(jump && !jumpReleased) {
+        jumpTime += TA::elapsedTime;
+        if(controller->isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
+            velocity.y = jmp;
+        }
+        else if(!controller->isPressed(TA_BUTTON_A)) {
+            jumpReleased = true;
+        }
+    }
+    if(jumpReleased && controller->isPressed(TA_BUTTON_A)) {
+        jump = false;
+        helitail = true;
+        helitailTime = 0;
+    }
+}
+
+void TA_Character::updateHelitail()
+{
+    auto process = [&](double &x, double need) {
+        if(x > need) {
+            x = std::max(need, x - helitailAcc);
+        }
+        else {
+            x = std::min(need, x + helitailAcc);
+        }
+    };
+
+    helitailTime += TA::elapsedTime;
+    TA_Point vector;
+    TA_Direction direction = controller->getDirection();
+    if(direction != TA_DIRECTION_MAX) {
+        vector = controller->getDirectionVector();
+    }
+    if(helitailTime > maxHelitailTime) {
+        vector.y = 1;
+    }
+
+    if(direction == TA_DIRECTION_LEFT) {
+        flip = true;
+    }
+    else if(direction == TA_DIRECTION_RIGHT) {
+        flip = false;
+    }
+
+    process(velocity.x, vector.x * helitailTop);
+    process(velocity.y, vector.y * helitailTop);
+}
+
+void TA_Character::verticalMove()
+{
+    TA_Direction direction = controller->getDirection();
+
+    if(direction == TA_DIRECTION_RIGHT) {
+        flip = false;
+        velocity.x += acc * TA::elapsedTime;
+        velocity.x = std::min(velocity.x, topX);
+    }
+    else if(direction == TA_DIRECTION_LEFT) {
+        flip = true;
+        velocity.x -= acc * TA::elapsedTime;
+        velocity.x = std::max(velocity.x, -topX);
+    }
+    else {
+        if(velocity.x > 0) {
+            velocity.x = std::max(double(0), velocity.x - acc * TA::elapsedTime);
+        }
+        else {
+            velocity.x = std::min(double(0), velocity.x + acc * TA::elapsedTime);
+        }
+    }
 }
 
 bool TA_Character::checkPawnCollision(TA_Polygon hitbox)
@@ -143,6 +212,7 @@ void TA_Character::updateCollisions()
     int flags = moveAndCollide(topLeft, bottomRight, velocity, ground);
     if(flags & TA_GROUND_COLLISION) {
         ground = true;
+        helitail = false;
         velocity.y = 0;
     }
     else {
@@ -250,33 +320,19 @@ void TA_Character::updateAnimation()
         }
     }
     else {
-        if(velocity.y < 0) {
+        if(helitail) {
+            if(helitailTime > maxHelitailTime) {
+                setAnimation("helitail_tired");
+            }
+            else {
+                setAnimation("helitail");
+            }
+        }
+        else if(velocity.y < 0) {
             setAnimation("jump_up");
         }
         else {
             setAnimation("jump_down");
-        }
-    }
-}
-
-void TA_Character::verticalMove()
-{
-    TA_Direction direction = controller->getDirection();
-
-    if(direction == TA_DIRECTION_RIGHT) {
-        velocity.x += acc * TA::elapsedTime;
-        velocity.x = std::min(velocity.x, topX);
-    }
-    else if(direction == TA_DIRECTION_LEFT) {
-        velocity.x -= acc * TA::elapsedTime;
-        velocity.x = std::max(velocity.x, -topX);
-    }
-    else {
-        if(velocity.x > 0) {
-            velocity.x = std::max(double(0), velocity.x - acc * TA::elapsedTime);
-        }
-        else {
-            velocity.x = std::min(double(0), velocity.x + acc * TA::elapsedTime);
         }
     }
 }
@@ -288,7 +344,7 @@ void TA_Character::updateTool()
     }
     switch(currentTool) {
         case TA_TOOL_BOMB:
-            links.objectSet->spawnBomb(position + TA_Point((direction? 27 : 8), 16), direction);
+            links.objectSet->spawnBomb(position + TA_Point((flip? 27 : 8), 16), flip);
             setAnimation("throw");
             throwing = true;
             break;

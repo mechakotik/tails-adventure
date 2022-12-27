@@ -32,6 +32,14 @@ TA_Point TA_Point::operator*(const TA_Point &rv) const
     return res;
 }
 
+TA_Point TA_Point::operator*(const double &rv) const
+{
+    TA_Point res;
+    res.x = x * rv;
+    res.y = y * rv;
+    return res;
+}
+
 double TA_Point::length() const
 {
     return sqrt(x * x + y * y);

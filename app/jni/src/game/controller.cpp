@@ -114,9 +114,9 @@ TA_Point TA_TouchscreenController::getDirectionVector()
 {
     switch(currentDirection) {
         case TA_DIRECTION_UP:
-            return {0, 1};
-        case TA_DIRECTION_DOWN:
             return {0, -1};
+        case TA_DIRECTION_DOWN:
+            return {0, 1};
         case TA_DIRECTION_LEFT:
             return {-1, 0};
         case TA_DIRECTION_RIGHT:

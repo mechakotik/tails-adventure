@@ -10,6 +10,7 @@ struct TA_Point {
     TA_Point operator+(const TA_Point &rv) const;
     TA_Point operator-(const TA_Point &rv) const;
     TA_Point operator*(const TA_Point &rv) const;
+    TA_Point operator*(const double &rv) const;
     double length() const;
     double getDistance(TA_Point rv) const;
 };

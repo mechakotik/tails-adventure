@@ -19,17 +19,24 @@ private:
     const double topX = 1;
     const double topY = 5;
     const double maxJumpTime = 10;
+    const double helitailAcc = 0.1;
+    const double helitailTop = 1;
+    const double maxHelitailTime = 300;
 
     TA_Controller *controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
 
-    bool ground = false, wall = false, direction = false;
+    bool ground = false, helitail = false, wall = false, flip = false;
     bool jump = false, jumpReleased = false;
     bool climb = false, climbHigh = false, throwing = false;
     bool useHalfSolidTiles = false;
-    double jumpTime = 0, climbTime = 0;
+    double jumpTime = 0, climbTime = 0, helitailTime = 0;
     int currentTool = TA_TOOL_BOMB;
+
+    void updateGround();
+    void updateAir();
+    void updateHelitail();
 
     void updateFollowPosition();
     void verticalMove();
