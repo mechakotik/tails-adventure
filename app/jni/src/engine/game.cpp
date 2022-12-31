@@ -6,6 +6,7 @@
 #include "sound.h"
 #include "touchscreen.h"
 #include "tools.h"
+#include "gamepad.h"
 
 TA_Game::TA_Game()
 {
@@ -43,6 +44,7 @@ TA_Game::TA_Game()
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
     TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
+    TA::gamepad::init();
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
 }
@@ -81,6 +83,7 @@ void TA_Game::update()
 
 TA_Game::~TA_Game()
 {
+    TA::gamepad::quit();
     SDL_DestroyRenderer(TA::renderer);
     SDL_DestroyWindow(TA::window);
     SDL_Quit();

@@ -4,6 +4,21 @@
 #include <string>
 #include <SDL.h>
 
+enum TA_Direction {
+    TA_DIRECTION_UP,
+    TA_DIRECTION_DOWN,
+    TA_DIRECTION_LEFT,
+    TA_DIRECTION_RIGHT,
+    TA_DIRECTION_MAX
+};
+
+enum TA_FunctionButton {
+    TA_BUTTON_A,
+    TA_BUTTON_B,
+    TA_BUTTON_PAUSE,
+    TA_BUTTON_MAX
+};
+
 namespace TA
 {
     extern SDL_Window *window;

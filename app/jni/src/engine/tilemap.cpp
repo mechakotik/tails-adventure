@@ -160,10 +160,10 @@ void TA_Tilemap::checkCollision(TA_Polygon polygon, int &flags)
         value = std::max(value, left);
         value = std::min(value, right);
     };
-    normalize(minX, 0, width);
-    normalize(maxX, 0, width);
-    normalize(minY, 0, height);
-    normalize(maxY, 0, height);
+    normalize(minX, 0, width - 1);
+    normalize(maxX, 0, width - 1);
+    normalize(minY, 0, height - 1);
+    normalize(maxY, 0, height - 1);
 
     for(int tileX = minX; tileX <= maxX; tileX ++) {
         for(int tileY = minY; tileY <= maxY; tileY ++) {

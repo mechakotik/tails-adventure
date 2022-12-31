@@ -25,6 +25,7 @@ LOCAL_SRC_FILES := main.cpp \
                    engine/camera.cpp \
                    engine/pawn.cpp \
                    engine/object_set.cpp \
+                   engine/gamepad.cpp \
                    game/controller.cpp \
                    game/character.cpp \
                    game/hud.cpp \

@@ -10,3 +10,6 @@
 [submodule "app/jni/tinyxml2"]
 	path = app/jni/tinyxml2
 	url = https://github.com/leethomason/tinyxml2
+[submodule "app/src/main/assets/controllerdb"]
+	path = app/src/main/assets/controllerdb
+	url = https://github.com/gabomdq/SDL_GameControllerDB

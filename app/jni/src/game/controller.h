@@ -4,21 +4,8 @@
 #include <array>
 #include "engine/sprite.h"
 #include "engine/touchscreen.h"
-
-enum TA_Direction {
-    TA_DIRECTION_UP,
-    TA_DIRECTION_DOWN,
-    TA_DIRECTION_LEFT,
-    TA_DIRECTION_RIGHT,
-    TA_DIRECTION_MAX
-};
-
-enum TA_FunctionButton {
-    TA_BUTTON_A,
-    TA_BUTTON_B,
-    TA_BUTTON_PAUSE,
-    TA_BUTTON_MAX
-};
+#include "engine/tools.h"
+#include "engine/gamepad.h"
 
 enum TA_ControllerType {
     TA_CONTROLLER_TYPE_TOUCHSCREEN,
@@ -71,6 +58,7 @@ public:
     void load() override;
     void update() override;
     void draw() override;
+    TA_ControllerType getType() override {return TA_CONTROLLER_TYPE_TOUCHSCREEN;}
 
     TA_Point getDirectionVector() override;
     bool isPressed(TA_FunctionButton button) override {return functionButtons[button].button.isPressed();}
@@ -78,6 +66,18 @@ public:
 
     void setDpadPosition(TA_Point position, TA_Point scale) override;
     void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale) override;
+};
+
+class TA_GamepadController : public TA_Controller
+{
+public:
+    void load() override {TA::gamepad::init();}
+    void update() override {TA::gamepad::update();}
+    TA_ControllerType getType() override {return TA_CONTROLLER_TYPE_GAMEPAD;}
+
+    TA_Point getDirectionVector() override {return TA::gamepad::getDirectionVector();}
+    bool isPressed(TA_FunctionButton button) override {return TA::gamepad::isPressed(button);}
+    bool isJustPressed(TA_FunctionButton button) override {return TA::gamepad::isJustPressed(button);}
 };
 
 #endif // TA_CHARACTER_CONTROLLER_H

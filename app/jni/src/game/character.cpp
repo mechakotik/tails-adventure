@@ -3,6 +3,7 @@
 #include "engine/tools.h"
 #include "engine/error.h"
 #include "engine/object_set.h"
+#include "engine/gamepad.h"
 
 void TA_Character::load(TA_GameScreenLinks newLinks)
 {
@@ -10,7 +11,15 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
     position = {0, 128};
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
-    controller = new TA_TouchscreenController;
+
+    if(TA::gamepad::connected()) {
+        printLog("A");
+        controller = new TA_GamepadController();
+    }
+    else {
+        printLog("B");
+        controller = new TA_TouchscreenController();
+    }
     controller->load();
 
     TA_Pawn::load("tails/tails.png", 48, 48);
@@ -96,7 +105,7 @@ void TA_Character::updateAir()
             jumpReleased = true;
         }
     }
-    if(jumpReleased && controller->isPressed(TA_BUTTON_A)) {
+    if(jump && jumpReleased && controller->isJustPressed(TA_BUTTON_A)) {
         jump = false;
         helitail = true;
         helitailTime = 0;

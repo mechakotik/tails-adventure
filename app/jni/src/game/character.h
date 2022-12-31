@@ -19,9 +19,9 @@ private:
     const double topX = 1;
     const double topY = 5;
     const double maxJumpTime = 10;
-    const double helitailAcc = 0.1;
+    const double helitailAcc = 0.05;
     const double helitailTop = 1;
-    const double maxHelitailTime = 300;
+    const double maxHelitailTime = 200;
 
     TA_Controller *controller;
     TA_Point followPosition, velocity, climbPosition;
