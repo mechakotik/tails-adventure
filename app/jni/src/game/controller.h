@@ -45,6 +45,12 @@ private:
     std::array<TA_Point, TA_BUTTON_MAX> positions;
     std::array<TA_Point, TA_BUTTON_MAX> scales;
 
+    TA_Sprite stickSprite, stickBaseSprite;
+    TA_Button stickButton;
+    TA_Point directionVector;
+    int stickColorMod = 128;
+    bool useStick = false;
+
     double dpadInterval = 5;
     int alpha = 225;
 
@@ -62,6 +68,7 @@ public:
 
     void setDpadPosition(TA_Point position, TA_Point scale);
     void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale);
+    void setAnalogStick(bool enabled);
 };
 
 class TA_GamepadController : public TA_Controller
@@ -96,6 +103,7 @@ public:
 
     virtual void setDpadPosition(TA_Point position, TA_Point scale) {touchscreen.setDpadPosition(position, scale);}
     virtual void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale) {touchscreen.setFunctionButtonPosition(button, position, scale);}
+    void setAnalogStick(bool enabled) {touchscreen.setAnalogStick(enabled);}
 };
 
 #endif // TA_CONTROLLER_H

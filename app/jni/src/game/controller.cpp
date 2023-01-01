@@ -60,6 +60,13 @@ void TA_TouchscreenController::load()
     dpad[TA_DIRECTION_DOWN].sprite.load("controls/down.png");
     dpad[TA_DIRECTION_LEFT].sprite.load("controls/left.png");
     dpad[TA_DIRECTION_RIGHT].sprite.load("controls/right.png");
+
+    stickSprite.load("controls/stick.png");
+    stickSprite.setAlpha(alpha);
+    stickBaseSprite.load("controls/stick_base.png");
+    stickBaseSprite.setAlpha(alpha);
+    stickBaseSprite.setColorMod(128);
+
     setDpadPosition(dpadPosition, dpadScale);
 
     for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
@@ -88,38 +95,7 @@ void TA_TouchscreenController::update()
     for(int pos = 0; pos < TA_BUTTON_MAX; pos ++) {
         functionButtons[pos].button.update();
     }
-
-    bool anythingPressed = false;
-    for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
-        if(dpad[pos].button.isJustPressed()) {
-            currentDirection = TA_Direction(pos);
-        }
-        if(dpad[pos].button.isPressed()) {
-            anythingPressed = true;
-        }
-    }
-
-    if(anythingPressed) {
-        if(currentDirection == TA_DIRECTION_LEFT || currentDirection == TA_DIRECTION_RIGHT) {
-            if(dpad[TA_DIRECTION_RIGHT].button.isPressed()) {
-                currentDirection = TA_DIRECTION_RIGHT;
-            }
-            else {
-                currentDirection = TA_DIRECTION_LEFT;
-            }
-        }
-        else {
-            if(dpad[TA_DIRECTION_UP].button.isPressed()) {
-                currentDirection = TA_DIRECTION_UP;
-            }
-            else {
-                currentDirection = TA_DIRECTION_DOWN;
-            }
-        }
-    }
-    else {
-        currentDirection = TA_DIRECTION_MAX;
-    }
+    stickButton.update();
 
     auto updateColorMod = [&](int colorMod, bool pressed) {
         if(pressed) {
@@ -131,10 +107,61 @@ void TA_TouchscreenController::update()
         return colorMod;
     };
 
-    for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
-        dpad[pos].colorMod = updateColorMod(dpad[pos].colorMod, (pos == currentDirection));
-        dpad[pos].sprite.setColorMod(dpad[pos].colorMod);
+    if(useStick) {
+        TA_Point stickPosition, defaultStickPosition;
+        stickPosition = defaultStickPosition = dpadPosition;
+        if(stickButton.isPressed()) {
+            TA_Point touchPosition = stickButton.getTouchPosition();
+            double normal = std::max(double(1), (touchPosition - defaultStickPosition).length() / (30 * dpadScale.x));
+            stickPosition = stickPosition + (touchPosition - defaultStickPosition) * (1 / normal);
+            stickColorMod = updateColorMod(stickColorMod, true);
+        }
+        else {
+            stickColorMod = updateColorMod(stickColorMod, false);
+        }
+        stickSprite.setPosition(stickPosition - TA_Point(48, 50) * dpadScale.x);
+        stickSprite.setColorMod(stickColorMod);
+        directionVector = (stickPosition - defaultStickPosition) * (1 / (30 * dpadScale.x));
     }
+    else {
+        bool anythingPressed = false;
+        for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
+            if(dpad[pos].button.isJustPressed()) {
+                currentDirection = TA_Direction(pos);
+            }
+            if(dpad[pos].button.isPressed()) {
+                anythingPressed = true;
+            }
+        }
+
+        if(anythingPressed) {
+            if(currentDirection == TA_DIRECTION_LEFT || currentDirection == TA_DIRECTION_RIGHT) {
+                if(dpad[TA_DIRECTION_RIGHT].button.isPressed()) {
+                    currentDirection = TA_DIRECTION_RIGHT;
+                }
+                else {
+                    currentDirection = TA_DIRECTION_LEFT;
+                }
+            }
+            else {
+                if(dpad[TA_DIRECTION_UP].button.isPressed()) {
+                    currentDirection = TA_DIRECTION_UP;
+                }
+                else {
+                    currentDirection = TA_DIRECTION_DOWN;
+                }
+            }
+        }
+        else {
+            currentDirection = TA_DIRECTION_MAX;
+        }
+
+        for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
+            dpad[pos].colorMod = updateColorMod(dpad[pos].colorMod, (pos == currentDirection));
+            dpad[pos].sprite.setColorMod(dpad[pos].colorMod);
+        }
+    }
+
     for(int pos = 0; pos < TA_BUTTON_MAX; pos ++) {
         functionButtons[pos].colorMod = updateColorMod(functionButtons[pos].colorMod, isPressed(TA_FunctionButton(pos)));
         functionButtons[pos].sprite.setColorMod(functionButtons[pos].colorMod);
@@ -143,6 +170,9 @@ void TA_TouchscreenController::update()
 
 TA_Point TA_TouchscreenController::getDirectionVector()
 {
+    if(useStick) {
+        return directionVector;
+    }
     switch(currentDirection) {
         case TA_DIRECTION_UP:
             return {0, -1};
@@ -163,6 +193,12 @@ void TA_TouchscreenController::setDpadPosition(TA_Point position, TA_Point scale
     dpad[TA_DIRECTION_DOWN].sprite.setPosition(position + TA_Point(-30, dpadInterval) * scale);
     dpad[TA_DIRECTION_LEFT].sprite.setPosition(position + TA_Point(-76 - dpadInterval, -30) * scale);
     dpad[TA_DIRECTION_RIGHT].sprite.setPosition(position + TA_Point(dpadInterval, -30) * scale);
+
+    stickBaseSprite.setPosition(position - TA_Point(80, 80) * scale);
+    stickBaseSprite.setScale(scale);
+    stickSprite.setPosition(position - TA_Point(48, 50) * scale);
+    stickSprite.setScale(scale);
+    stickButton.setCircle(position, 240 * scale.x);
 
     auto addVertical = [&](double x, double y) {
         dpad[TA_DIRECTION_UP].button.addVertex(position + TA_Point(x, y) * scale);
@@ -189,6 +225,8 @@ void TA_TouchscreenController::setDpadPosition(TA_Point position, TA_Point scale
     for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
         dpad[pos].sprite.setScale(scale);
     }
+    dpadPosition = position;
+    dpadScale = scale;
 }
 
 void TA_TouchscreenController::setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale)
@@ -200,10 +238,25 @@ void TA_TouchscreenController::setFunctionButtonPosition(TA_FunctionButton butto
 
 void TA_TouchscreenController::draw()
 {
-    for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
-        dpad[pos].sprite.draw();
+    if(useStick) {
+        stickBaseSprite.draw();
+        stickSprite.draw();
+    }
+    else {
+        for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
+            dpad[pos].sprite.draw();
+        }
     }
     for(int pos = 0; pos < TA_BUTTON_MAX; pos ++) {
         functionButtons[pos].sprite.draw();
     }
+}
+
+void TA_TouchscreenController::setAnalogStick(bool enabled)
+{
+    if(!useStick && enabled) {
+        currentDirection = TA_DIRECTION_RIGHT;
+        stickColorMod = 128;
+    }
+    useStick = enabled;
 }

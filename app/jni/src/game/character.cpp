@@ -20,6 +20,7 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
 
 void TA_Character::update()
 {
+    controller.setAnalogStick(helitail);
     controller.update();
 
     if(climb) {
