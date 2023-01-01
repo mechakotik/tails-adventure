@@ -7,18 +7,35 @@ namespace TA { namespace gamepad {
     SDL_GameController *controller = nullptr;
     std::array<SDL_GameControllerButton, TA_BUTTON_MAX> mapping;
     std::array<bool, TA_BUTTON_MAX> pressed, justPressed;
+    bool isConnected = false;
 }}
 
 bool TA::gamepad::connected()
 {
-    return controller != nullptr;
+    return isConnected;
 }
 
-void TA::gamepad::init()
+void TA::gamepad::handleEvent(SDL_ControllerDeviceEvent event)
 {
-    controller = SDL_GameControllerOpen(0);
+    if(event.type == SDL_CONTROLLERDEVICEADDED && !isConnected) {
+        isConnected = true;
+        init(event.which);
+    }
+    else if(event.type == SDL_CONTROLLERDEVICEREMOVED) {
+        isConnected = false;
+        quit();
+    }
+}
+
+void TA::gamepad::init(int index)
+{
+    controller = SDL_GameControllerOpen(index);
     if(controller == nullptr) {
+        isConnected = false;
         return;
+    }
+    else {
+        isConnected = true;
     }
     SDL_GameControllerAddMappingsFromFile("controllerdb/gamecontrollerdb.txt");
 
@@ -29,6 +46,9 @@ void TA::gamepad::init()
 
 void TA::gamepad::update()
 {
+    if(!connected()) {
+        return;
+    }
     SDL_GameControllerUpdate();
     for(int button = 0; button < TA_BUTTON_MAX; button ++) {
         if(SDL_GameControllerGetButton(controller, mapping[button])) {

@@ -59,7 +59,10 @@ bool TA_Game::process()
             return false;
         }
         else if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION || event.type == SDL_FINGERUP) {
-            TA::touchscreen::processTouchEvent(event.tfinger);
+            TA::touchscreen::handleEvent(event.tfinger);
+        }
+        else if(event.type == SDL_CONTROLLERDEVICEADDED || event.type == SDL_CONTROLLERDEVICEREMOVED) {
+            TA::gamepad::handleEvent(event.cdevice);
         }
     }
 

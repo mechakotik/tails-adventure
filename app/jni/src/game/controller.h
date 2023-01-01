@@ -1,5 +1,5 @@
-#ifndef TA_CHARACTER_CONTROLLER_H
-#define TA_CHARACTER_CONTROLLER_H
+#ifndef TA_CONTROLLER_H
+#define TA_CONTROLLER_H
 
 #include <array>
 #include "engine/sprite.h"
@@ -22,16 +22,12 @@ public:
     virtual TA_ControllerType getType() {return TA_CONTROLLER_TYPE_MAX;}
     virtual void load() {};
     virtual void update() {};
-    virtual void draw() {};
 
     virtual TA_Point getDirectionVector() {return TA_Point(0, 0);}
     TA_Direction getDirection();
 
     virtual bool isPressed(TA_FunctionButton button) {return false;}
     virtual bool isJustPressed(TA_FunctionButton button) {return false;}
-
-    virtual void setDpadPosition(TA_Point position, TA_Point scale) {};
-    virtual void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale) {};
 };
 
 class TA_TouchscreenController : public TA_Controller {
@@ -57,15 +53,15 @@ private:
 public:
     void load() override;
     void update() override;
-    void draw() override;
+    void draw();
     TA_ControllerType getType() override {return TA_CONTROLLER_TYPE_TOUCHSCREEN;}
 
     TA_Point getDirectionVector() override;
     bool isPressed(TA_FunctionButton button) override {return functionButtons[button].button.isPressed();}
     bool isJustPressed(TA_FunctionButton button) override {return functionButtons[button].button.isJustPressed();}
 
-    void setDpadPosition(TA_Point position, TA_Point scale) override;
-    void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale) override;
+    void setDpadPosition(TA_Point position, TA_Point scale);
+    void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale);
 };
 
 class TA_GamepadController : public TA_Controller
@@ -80,4 +76,26 @@ public:
     bool isJustPressed(TA_FunctionButton button) override {return TA::gamepad::isJustPressed(button);}
 };
 
-#endif // TA_CHARACTER_CONTROLLER_H
+class TA_CommonController
+{
+private:
+    TA_TouchscreenController touchscreen;
+    TA_GamepadController gamepad;
+    TA_Controller *currentController = nullptr;
+
+public:
+    void load();
+    void update();
+    void draw();
+
+    virtual TA_Point getDirectionVector() {return currentController->getDirectionVector();}
+    TA_Direction getDirection() {return currentController->getDirection();}
+
+    bool isPressed(TA_FunctionButton button) {return currentController->isPressed(button);}
+    bool isJustPressed(TA_FunctionButton button) {return currentController->isJustPressed(button);}
+
+    virtual void setDpadPosition(TA_Point position, TA_Point scale) {touchscreen.setDpadPosition(position, scale);}
+    virtual void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale) {touchscreen.setFunctionButtonPosition(button, position, scale);}
+};
+
+#endif // TA_CONTROLLER_H

@@ -23,7 +23,7 @@ private:
     const double helitailTop = 1;
     const double maxHelitailTime = 200;
 
-    TA_Controller *controller;
+    TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
 
@@ -49,9 +49,8 @@ private:
 public:
     void load(TA_GameScreenLinks newLinks);
     void update();
-    void drawControls() {controller->draw();}
+    void drawControls() {controller.draw();}
     bool isOnGround() {return ground;}
-    ~TA_Character();
 
     int getRingsCount() {return 12;}
     int getCurrentItem() {return 0;}

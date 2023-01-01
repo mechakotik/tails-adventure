@@ -6,7 +6,8 @@
 #include "tools.h"
 
 namespace TA { namespace gamepad {
-    void init();
+    void handleEvent(SDL_ControllerDeviceEvent event);
+    void init(int index = 0);
     void update();
     bool connected();
     void quit();

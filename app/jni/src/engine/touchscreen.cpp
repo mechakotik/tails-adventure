@@ -13,7 +13,7 @@ void TA::touchscreen::update()
     justPressedFingers.clear();
 }
 
-void TA::touchscreen::processTouchEvent(SDL_TouchFingerEvent event)
+void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event)
 {
     if(event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION) {
         if(event.type == SDL_FINGERDOWN) {

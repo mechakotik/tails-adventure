@@ -23,6 +23,37 @@ TA_Direction TA_Controller::getDirection()
     return TA_DIRECTION_LEFT;
 }
 
+void TA_CommonController::load()
+{
+    touchscreen.load();
+    gamepad.load();
+    if(TA::gamepad::connected()) {
+        currentController = &gamepad;
+    }
+    else {
+        currentController = &touchscreen;
+    }
+}
+
+void TA_CommonController::update()
+{
+    touchscreen.update();
+    gamepad.update();
+    if(TA::gamepad::connected() && currentController == &touchscreen) {
+        currentController = &gamepad;
+    }
+    else if(!TA::gamepad::connected() && currentController == &gamepad) {
+        currentController = &touchscreen;
+    }
+}
+
+void TA_CommonController::draw()
+{
+    if(currentController == &touchscreen) {
+        touchscreen.draw();
+    }
+}
+
 void TA_TouchscreenController::load()
 {
     dpad[TA_DIRECTION_UP].sprite.load("controls/up.png");

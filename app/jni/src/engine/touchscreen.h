@@ -6,7 +6,7 @@
 #include "tools.h"
 
 namespace TA { namespace touchscreen {
-    void processTouchEvent(SDL_TouchFingerEvent event);
+    void handleEvent(SDL_TouchFingerEvent event);
     void update();
 } }
 
