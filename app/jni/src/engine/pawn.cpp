@@ -72,5 +72,23 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     }
     position.y += (endPosition.y - position.y) * left;
 
+    xHitbox.setPosition(position);
+    if(checkPawnCollision(xHitbox)) {
+        double delta = 0;
+        while(true) {
+            delta += 0.1;
+            xHitbox.setPosition(position + TA_Point(delta, 0));
+            if(!checkPawnCollision(xHitbox)) {
+                position.x += delta;
+                break;
+            }
+            xHitbox.setPosition(position - TA_Point(delta, 0));
+            if(!checkPawnCollision(xHitbox)) {
+                position.x -= delta;
+                break;
+            }
+        }
+    }
+
     return getCollisionFlags(topLeft, bottomRight);
 }
