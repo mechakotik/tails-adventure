@@ -180,12 +180,12 @@ void TA_Character::updateCollisions()
 {
     TA_Point topLeft, bottomRight;
     if(jump && velocity.y < 0) {
-        topLeft = TA_Point(16, 9);
-        bottomRight = TA_Point(32, 39);
+        topLeft = TA_Point(18, 9);
+        bottomRight = TA_Point(30, 39);
     }
     else {
-        topLeft = TA_Point(16, 12);
-        bottomRight = TA_Point(32, 39);
+        topLeft = TA_Point(18, 12);
+        bottomRight = TA_Point(30, 39);
     }
 
     if(ground) {
