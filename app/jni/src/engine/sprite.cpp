@@ -95,7 +95,7 @@ void TA_Sprite::draw()
 
     dstRect.x = screenPosition.x * TA::widthMultiplier;
     dstRect.y = screenPosition.y * TA::heightMultiplier;
-    dstRect.w = frameWidth * TA::widthMultiplier * scale.x + 1;
+    dstRect.w = frameWidth * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 1;
     dstRect.h = frameHeight * TA::heightMultiplier * scale.y + 1;
     if(!hidden) {
         SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);

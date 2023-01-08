@@ -43,6 +43,7 @@ private:
     int animationFrame = 0;
     double animationTimer = 0;
     bool flip = false, hidden = false, updateAnimationNeeded = true;
+    bool noPixelAspectRatio = false;
 
     void updateAnimation();
 
@@ -66,6 +67,7 @@ public:
     void setFrame(int newFrame);
     bool isAnimated();
     int getAnimationFrame();
+    void disablePixelAspectRatio() {noPixelAspectRatio = true;}
 
     ~TA_Sprite();
 };

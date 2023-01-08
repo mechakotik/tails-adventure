@@ -63,14 +63,17 @@ void TA_TouchscreenController::load()
 
     stickSprite.load("controls/stick.png");
     stickSprite.setAlpha(alpha);
+    stickSprite.disablePixelAspectRatio();
     stickBaseSprite.load("controls/stick_base.png");
     stickBaseSprite.setAlpha(alpha);
     stickBaseSprite.setColorMod(128);
+    stickBaseSprite.disablePixelAspectRatio();
 
     setDpadPosition(dpadPosition, dpadScale);
 
     for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
         dpad[pos].sprite.setAlpha(alpha);
+        dpad[pos].sprite.disablePixelAspectRatio();
     }
 
     functionButtons[TA_BUTTON_A].sprite.load("controls/a_button.png");
@@ -80,11 +83,12 @@ void TA_TouchscreenController::load()
     for(int pos = 0; pos < TA_BUTTON_MAX; pos ++) {
         functionButtons[pos].sprite.setAlpha(alpha);
         functionButtons[pos].button.setMode();
+        functionButtons[pos].sprite.disablePixelAspectRatio();
     }
 
-    setFunctionButtonPosition(TA_BUTTON_A, {238, 118}, dpadScale);
-    setFunctionButtonPosition(TA_BUTTON_B, {246, 92}, dpadScale);
-    setFunctionButtonPosition(TA_BUTTON_PAUSE, {264, 14}, dpadScale);
+    setFunctionButtonPosition(TA_BUTTON_A, {240, 118}, dpadScale);
+    setFunctionButtonPosition(TA_BUTTON_B, {248, 92}, dpadScale);
+    setFunctionButtonPosition(TA_BUTTON_PAUSE, {266, 14}, dpadScale);
 }
 
 void TA_TouchscreenController::update()

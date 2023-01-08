@@ -41,7 +41,7 @@ private:
     std::array<TA_ControllerButton, TA_DIRECTION_MAX> dpad;
     std::array<TA_ControllerButton, TA_BUTTON_MAX> functionButtons;
 
-    TA_Point dpadPosition{39, 105}, dpadScale{0.27, 0.27};
+    TA_Point dpadPosition{40, 105}, dpadScale{0.27, 0.27};
     std::array<TA_Point, TA_BUTTON_MAX> positions;
     std::array<TA_Point, TA_BUTTON_MAX> scales;
 
