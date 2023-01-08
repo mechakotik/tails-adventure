@@ -7,28 +7,12 @@
 #include "sprite.h"
 #include "error.h"
 #include "tools.h"
+#include "resource_manager.h"
 
 void TA_Texture::load(std::string filename)
 {
-    SDL_Surface *surface = IMG_Load(filename.c_str());
-    if(surface == nullptr) {
-        TA::handleSDLError("Failed to load image");
-    }
-
-    SDLTexture = SDL_CreateTextureFromSurface(TA::renderer, surface);
-    if(SDLTexture == nullptr) {
-        TA::handleSDLError("Failed to create texture from surface");
-    }
-    SDL_SetTextureBlendMode(SDLTexture, SDL_BLENDMODE_BLEND);
-
-    width = surface->w;
-    height = surface->h;
-    SDL_FreeSurface(surface);
-}
-
-TA_Texture::~TA_Texture()
-{
-    SDL_DestroyTexture(SDLTexture);
+    SDLTexture = TA::resmgr::loadTexture(filename);
+    SDL_QueryTexture(SDLTexture, NULL, NULL, &width, &height);
 }
 
 void TA_Animation::create(std::vector<int> newFrames, int newDelay, int newRepeatTimes)
@@ -65,8 +49,6 @@ void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight
 void TA_Sprite::loadFromTexture(TA_Texture *newTexture, int newFrameWidth, int newFrameHeight)
 {
     texture = newTexture;
-    texture->spritesUsed ++;
-
     if(newFrameWidth == -1) {
         frameWidth = texture->width;
         frameHeight = texture->height;
@@ -207,12 +189,4 @@ int TA_Sprite::getAnimationFrame()
 {
     updateAnimation();
     return animationFrame;
-}
-
-TA_Sprite::~TA_Sprite()
-{
-    texture->spritesUsed --;
-    if(texture->spritesUsed == 0) {
-        delete texture;
-    }
 }

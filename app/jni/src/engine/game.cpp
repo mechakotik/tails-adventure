@@ -7,6 +7,7 @@
 #include "touchscreen.h"
 #include "tools.h"
 #include "gamepad.h"
+#include "resource_manager.h"
 
 TA_Game::TA_Game()
 {
@@ -91,6 +92,7 @@ void TA_Game::update()
 TA_Game::~TA_Game()
 {
     TA::gamepad::quit();
+    TA::resmgr::quit();
     SDL_DestroyRenderer(TA::renderer);
     SDL_DestroyWindow(TA::window);
     SDL_Quit();

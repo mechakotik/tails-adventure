@@ -4,6 +4,7 @@
 void TA_Bomb::load(TA_Point newPosition, bool newDirection)
 {
     TA_Sprite::load("tools/bomb.png");
+    explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX);
     position = newPosition;
     setPosition(position);
     velocity = startVelocity;
@@ -37,6 +38,7 @@ bool TA_Bomb::update()
             objectSet->spawnExplosion(position);
             for(int i = 1; i <= 3; i ++) {
                 TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
+                explosionSound.play();
                 objectSet->spawnExplosion(explosionPosition, i * 16);
             }
             return false;

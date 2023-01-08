@@ -1,5 +1,6 @@
 #include "sound.h"
 #include "error.h"
+#include "resource_manager.h"
 
 bool TA::sound::isPlaying(TA_SoundChannel channel)
 {
@@ -8,10 +9,7 @@ bool TA::sound::isPlaying(TA_SoundChannel channel)
 
 void TA_Sound::load(std::string filename, TA_SoundChannel newChannel, bool newLoop)
 {
-    chunk = Mix_LoadWAV(filename.c_str());
-    if(chunk == nullptr) {
-        TA::handleSDLError("%s load failed", filename.c_str());
-    }
+    chunk = TA::resmgr::loadChunk(filename);
     channel = newChannel;
     loop = newLoop;
 }

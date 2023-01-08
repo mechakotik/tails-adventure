@@ -12,10 +12,9 @@
 class TA_Texture {
 public:
     virtual void load(std::string filename);
-    ~TA_Texture();
 
     SDL_Texture *SDLTexture;
-    int width, height, spritesUsed = 0;
+    int width, height;
 };
 
 class TA_Animation {
@@ -68,8 +67,6 @@ public:
     bool isAnimated();
     int getAnimationFrame();
     void disablePixelAspectRatio() {noPixelAspectRatio = true;}
-
-    ~TA_Sprite();
 };
 
 #endif //TA_SPRITE_H

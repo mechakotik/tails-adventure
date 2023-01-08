@@ -3,10 +3,12 @@
 
 #include "engine/object_set.h"
 #include "engine/geometry.h"
+#include "engine/sound.h"
 
 class TA_Bomb : public TA_Object {
 private:
     TA_Point velocity;
+    TA_Sound explosionSound;
     bool direction;
     double timer = 0;
 
