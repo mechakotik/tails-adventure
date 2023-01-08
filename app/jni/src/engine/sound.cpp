@@ -1,6 +1,11 @@
 #include "sound.h"
 #include "error.h"
 
+bool TA::sound::isPlaying(TA_SoundChannel channel)
+{
+    return Mix_Playing(channel);
+}
+
 void TA_Sound::load(std::string filename, TA_SoundChannel newChannel, bool newLoop)
 {
     chunk = Mix_LoadWAV(filename.c_str());

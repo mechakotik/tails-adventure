@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "engine/links.h"
 #include "engine/tilemap.h"
+#include "engine/sound.h"
 
 enum TA_CharacterTool {
     TA_TOOL_BOMB
@@ -29,6 +30,7 @@ private:
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
+    TA_Sound areaBeginSound, areaLoopSound, jumpSound;
 
     bool ground = false, helitail = false, wall = false, flip = false;
     bool jump = false, jumpReleased = false;

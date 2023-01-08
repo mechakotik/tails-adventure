@@ -13,6 +13,11 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
     links.camera->setFollowPosition(&followPosition);
     controller.load();
 
+    areaBeginSound.load("sound/pf_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
+    areaLoopSound.load("sound/pf_loop.ogg", TA_SOUND_CHANNEL_MUSIC, true);
+    jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX);
+    areaBeginSound.play();
+
     TA_Pawn::load("tails/tails.png", 48, 48);
     loadAnimationsFromFile("tails/animations.xml");
     setCamera(links.camera);
@@ -42,6 +47,10 @@ void TA_Character::handleInput()
 
 void TA_Character::update()
 {
+    if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
+        areaLoopSound.play();
+    }
+
     if(climb) {
         updateClimbAnimation();
         return;
@@ -77,6 +86,7 @@ void TA_Character::updateGround()
     verticalMove();
     jump = false;
     if(controller.isJustPressed(TA_BUTTON_A)) {
+        jumpSound.play();
         velocity.y = jmp;
         jump = true;
         jumpTime = 0;

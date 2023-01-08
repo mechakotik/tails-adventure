@@ -11,6 +11,10 @@ enum TA_SoundChannel
     TA_SOUND_CHANNEL_MAX
 };
 
+namespace TA { namespace sound {
+    bool isPlaying(TA_SoundChannel channel);
+}}
+
 class TA_Sound
 {
 private:
@@ -19,7 +23,7 @@ private:
     bool loop;
 
 public:
-    void load(std::string filename, TA_SoundChannel channel, bool loop);
+    void load(std::string filename, TA_SoundChannel channel, bool loop = false);
     void play();
     void fadeOut(int time);
 };
