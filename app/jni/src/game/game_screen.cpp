@@ -17,8 +17,9 @@ void TA_GameScreen::init()
 
 TA_ScreenState TA_GameScreen::update()
 {
-    character.update();
+    character.handleInput();
     objectSet.update();
+    character.update();
     camera.update(character.isOnGround());
 
     tilemap.draw(0);
@@ -29,6 +30,9 @@ TA_ScreenState TA_GameScreen::update()
     character.drawControls();
     hud.draw();
 
+    if(character.gameOver()) {
+        return TA_SCREENSTATE_TITLE;
+    }
     return TA_SCREENSTATE_CURRENT;
 }
 

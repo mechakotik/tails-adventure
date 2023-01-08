@@ -30,4 +30,10 @@
 	<animation name="helitail_tired" delay="6">
 		16,17,18
 	</animation>
+	<animation name="hurt">
+		32
+	</animation>
+	<animation name="death" delay="12" repeatTimes="1">
+		33,34,35
+	</animation>
 </animations>

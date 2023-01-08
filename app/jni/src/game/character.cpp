@@ -18,34 +18,17 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
     setCamera(links.camera);
 }
 
-void TA_Character::update()
+void TA_Character::handleInput()
 {
     controller.setAnalogStick(helitail);
     controller.update();
-
-    if(climb) {
-        if(!isAnimated()) {
-            position = climbPosition;
-            climb = false;
-        }
-        else if(climbHigh && getAnimationFrame() == 1) {
-            setPosition(position.x, position.y - 8);
-        }
-        else if(getAnimationFrame() == 2) {
-            setPosition(position.x, climbPosition.y);
-        }
-        updateFollowPosition();
+    if(climb || throwing || hurt || dead) {
         return;
     }
 
-    if(throwing) {
-        if(!isAnimated()) {
-            throwing = false;
-        }
-        updateFollowPosition();
-        return;
+    if(helitail) {
+        updateHelitail();
     }
-
     if(ground) {
         updateGround();
     }
@@ -55,10 +38,29 @@ void TA_Character::update()
     else {
         updateAir();
     }
+}
+
+void TA_Character::update()
+{
+    if(climb) {
+        updateClimbAnimation();
+        return;
+    }
+    if(throwing) {
+        updateThrowAnimation();
+        return;
+    }
+    if(hurt) {
+        velocity.y += grv;
+    }
+    if(dead) {
+        invincibleTimeLeft -= TA::elapsedTime;
+        return;
+    }
 
     updateCollisions();
     setPosition(position);
-    if(climb) {
+    if(climb || dead) {
         return;
     }
     setFlip(flip);
@@ -226,6 +228,52 @@ void TA_Character::updateCollisions()
             jumpReleased = true;
         }
     }
+
+    if(!hurt && invincibleTimeLeft <= 0) {
+        auto handleDamage = [&] (TA_Polygon &hitbox, int sign) {
+            if(hurt) {
+                return;
+            }
+            links.objectSet->checkCollision(hitbox, flags);
+            if((flags & TA_COLLISION_DAMAGE) == 0) {
+                return;
+            }
+            hurt = true;
+            ground = helitail = false;
+            position.y -= 1;
+            velocity.x = hurtXsp * sign;
+            velocity.y = hurtYsp;
+            rings --;
+        };
+        TA_Polygon leftHalf, rightHalf; {
+            double middleX = (topLeft.x + bottomRight.x) / 2;
+            leftHalf.setRectangle(topLeft - TA_Point(0.1, 0.1), {middleX, bottomRight.y + 0.1});
+            rightHalf.setRectangle({middleX, topLeft.y - 0.1}, bottomRight + TA_Point(0.1, 0.1));
+            leftHalf.setPosition(position);
+            rightHalf.setPosition(position);
+        }
+        if(flip) {
+            handleDamage(rightHalf, -1);
+            handleDamage(leftHalf, 1);
+        }
+        else {
+            handleDamage(leftHalf, 1);
+            handleDamage(rightHalf, -1);
+        }
+    }
+    else if(hurt) {
+        if(ground) {
+            hurt = false;
+            invincibleTimeLeft = invincibleTime;
+            if(rings < 0) {
+                setAnimation("death");
+                dead = true;
+            }
+        }
+    }
+    else {
+        invincibleTimeLeft -= TA::elapsedTime;
+    }
 }
 
 void TA_Character::updateClimb()
@@ -309,7 +357,20 @@ void TA_Character::updateClimb()
 
 void TA_Character::updateAnimation()
 {
-    if(ground) {
+    if(rings >= 0 && hurt) {
+        setAlpha(200);
+    }
+    else if(rings >= 0 && invincibleTimeLeft > 0) {
+        setAlpha(255 - 55 * invincibleTimeLeft / invincibleTime);
+    }
+    else {
+        setAlpha(255);
+    }
+
+    if(hurt) {
+        setAnimation("hurt");
+    }
+    else if(ground) {
         if(TA::equal(velocity.x, 0)) {
             setAnimation("idle");
         }
@@ -353,6 +414,29 @@ void TA_Character::updateTool()
         default:
             break;
     }
+}
+
+void TA_Character::updateClimbAnimation()
+{
+    if(!isAnimated()) {
+        position = climbPosition;
+        climb = false;
+    }
+    else if(climbHigh && getAnimationFrame() == 1) {
+        setPosition(position.x, position.y - 8);
+    }
+    else if(getAnimationFrame() == 2) {
+        setPosition(position.x, climbPosition.y);
+    }
+    updateFollowPosition();
+}
+
+void TA_Character::updateThrowAnimation()
+{
+    if(!isAnimated()) {
+        throwing = false;
+    }
+    updateFollowPosition();
 }
 
 void TA_Character::updateFollowPosition()

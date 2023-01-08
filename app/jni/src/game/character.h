@@ -22,6 +22,9 @@ private:
     const double helitailAcc = 0.05;
     const double helitailTop = 1;
     const double maxHelitailTime = 200;
+    const double hurtXsp = 1;
+    const double hurtYsp = -2.5;
+    const double invincibleTime = 120;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
@@ -29,9 +32,10 @@ private:
 
     bool ground = false, helitail = false, wall = false, flip = false;
     bool jump = false, jumpReleased = false;
-    bool climb = false, climbHigh = false, throwing = false;
+    bool climb = false, climbHigh = false, throwing = false, hurt = false, dead = false;
     bool useHalfSolidTiles = false;
-    double jumpTime = 0, climbTime = 0, helitailTime = 0;
+    double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
+    int rings = 1;
     int currentTool = TA_TOOL_BOMB;
 
     void updateGround();
@@ -44,16 +48,20 @@ private:
     void updateCollisions();
     void updateAnimation();
     void updateClimb();
+    void updateClimbAnimation();
+    void updateThrowAnimation();
     void updateTool();
 
 public:
     void load(TA_GameScreenLinks newLinks);
+    void handleInput();
     void update();
     void drawControls() {controller.draw();}
     bool isOnGround() {return ground;}
 
-    int getRingsCount() {return 12;}
+    int getRingsCount() {return std::max(0, rings);}
     int getCurrentItem() {return 0;}
+    bool gameOver() {return dead && invincibleTimeLeft <= 0;}
 };
 
 #endif // TA_CHARACTER_H

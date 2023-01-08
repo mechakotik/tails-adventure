@@ -58,6 +58,7 @@ void TA_ObjectSet::spawnBomb(TA_Point position, bool direction)
 
 void TA_ObjectSet::checkCollision(TA_Polygon hitbox, int &flags)
 {
+    flags = 0;
     tilemap->checkCollision(hitbox, flags);
     for(TA_Object *currentObject : objects) {
         if(currentObject->checkCollision(hitbox)) {

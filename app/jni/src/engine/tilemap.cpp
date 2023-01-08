@@ -148,6 +148,7 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
 
 void TA_Tilemap::checkCollision(TA_Polygon polygon, int &flags)
 {
+    flags = 0;
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
     for(int pos = 0; pos < polygon.size(); pos ++) {
         TA_Point vertex = polygon.getVertex(pos);
