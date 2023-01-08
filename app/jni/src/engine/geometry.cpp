@@ -160,7 +160,7 @@ double TA_Polygon::getDistance(TA_Polygon rv)
 TA_Point TA_Polygon::getVertex(int pos)
 {
     if(pos >= vertexList.size()) {
-        handleError("Vertex index %i is out of range [0; %i)", pos, vertexList.size());
+        TA::handleError("Vertex index %i is out of range [0; %i)", pos, vertexList.size());
     }
     return vertexList[pos] + position;
 }

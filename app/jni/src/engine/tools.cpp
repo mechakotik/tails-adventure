@@ -22,7 +22,7 @@ std::string TA::readStringFromFile(std::string filename)
 {
     SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
     if(input == nullptr) {
-        handleSDLError("Open %s failed", filename.c_str());
+        TA::handleSDLError("Open %s failed", filename.c_str());
     }
     int dataBytes = SDL_RWseek(input, 0, SEEK_END);
     SDL_RWseek(input, 0, SEEK_SET);

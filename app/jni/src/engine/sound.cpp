@@ -5,7 +5,7 @@ void TA_Sound::load(std::string filename, TA_SoundChannel newChannel, bool newLo
 {
     chunk = Mix_LoadWAV(filename.c_str());
     if(chunk == nullptr) {
-        handleSDLError("%s load failed", filename.c_str());
+        TA::handleSDLError("%s load failed", filename.c_str());
     }
     channel = newChannel;
     loop = newLoop;

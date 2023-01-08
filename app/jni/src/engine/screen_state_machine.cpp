@@ -32,7 +32,7 @@ bool TA_ScreenStateMachine::update()
             currentScreen = new TA_GameScreen();
             break;
         default:
-            handleError("%s", "Invalid new screen state");
+            TA::handleError("%s", "Invalid new screen state");
             break;
     }
 
