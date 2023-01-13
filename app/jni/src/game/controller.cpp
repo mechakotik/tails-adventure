@@ -86,9 +86,9 @@ void TA_TouchscreenController::load()
         functionButtons[pos].sprite.disablePixelAspectRatio();
     }
 
-    setFunctionButtonPosition(TA_BUTTON_A, {240, 118}, dpadScale);
-    setFunctionButtonPosition(TA_BUTTON_B, {248, 92}, dpadScale);
-    setFunctionButtonPosition(TA_BUTTON_PAUSE, {266, 14}, dpadScale);
+    setFunctionButtonPosition(TA_BUTTON_A, {static_cast<double>(TA::screenWidth - 33), 118}, dpadScale);
+    setFunctionButtonPosition(TA_BUTTON_B, {static_cast<double>(TA::screenWidth - 25), 92}, dpadScale);
+    setFunctionButtonPosition(TA_BUTTON_PAUSE, {static_cast<double>(TA::screenWidth - 7), 14}, dpadScale);
 }
 
 void TA_TouchscreenController::update()
