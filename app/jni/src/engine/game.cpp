@@ -87,6 +87,15 @@ void TA_Game::update()
         startTime = std::chrono::high_resolution_clock::now();
     }
     SDL_RenderPresent(TA::renderer);
+
+    auto renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);
+    fpsTimer += renderTime.count();
+    fpsCount ++;
+    if(fpsTimer > 1e6) {
+        //TA::printLog("fps %i", fpsCount);
+        fpsTimer -= 1e6;
+        fpsCount = 0;
+    }
 }
 
 TA_Game::~TA_Game()

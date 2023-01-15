@@ -15,6 +15,8 @@ private:
     TA_ScreenStateMachine screenStateMachine;
 
     bool firstFrame = true;
+    double fpsTimer = 0;
+    int fpsCount = 0;
 
 public:
     TA_Game();

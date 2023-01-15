@@ -13,6 +13,16 @@ void TA_GameScreen::init()
     objectSet.setCollisionTilemap(&tilemap);
     hud.load(links);
     objectSet.setCamera(&camera);
+
+    objectSet.spawnBreakableBlock(TA_Point(1120, 256));
+    objectSet.spawnBreakableBlock(TA_Point(1120, 272));
+    objectSet.spawnBreakableBlock(TA_Point(1120, 288));
+    objectSet.spawnBreakableBlock(TA_Point(1232, 336));
+    objectSet.spawnBreakableBlock(TA_Point(1248, 336));
+    objectSet.spawnBreakableBlock(TA_Point(1296, 336));
+    objectSet.spawnBreakableBlock(TA_Point(1312, 336));
+    objectSet.spawnBreakableBlock(TA_Point(1264, 384));
+    objectSet.spawnBreakableBlock(TA_Point(1280, 384));
 }
 
 TA_ScreenState TA_GameScreen::update()

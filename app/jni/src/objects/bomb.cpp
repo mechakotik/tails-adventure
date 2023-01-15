@@ -19,7 +19,7 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon hitbox)
 {
     int flags = 0;
     objectSet->checkCollision(hitbox, flags);
-    return flags != 0;
+    return (flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_DAMAGE);
 }
 
 bool TA_Bomb::update()

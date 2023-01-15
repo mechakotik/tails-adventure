@@ -1,6 +1,7 @@
 #include "object_set.h"
 #include "objects/explosion.h"
 #include "objects/bomb.h"
+#include "objects/breakable_block.h"
 #include "engine/error.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
@@ -37,6 +38,17 @@ void TA_ObjectSet::draw()
     }
 }
 
+void TA_ObjectSet::checkCollision(TA_Polygon hitbox, int &flags)
+{
+    flags = 0;
+    tilemap->checkCollision(hitbox, flags);
+    for(TA_Object *currentObject : objects) {
+        if(currentObject->checkCollision(hitbox)) {
+            flags |= currentObject->getCollisionType();
+        }
+    }
+}
+
 void TA_ObjectSet::spawnObject(TA_Object *object)
 {
     spawnedObjects.push_back(object);
@@ -56,15 +68,11 @@ void TA_ObjectSet::spawnBomb(TA_Point position, bool direction)
     spawnObject(bomb);
 }
 
-void TA_ObjectSet::checkCollision(TA_Polygon hitbox, int &flags)
+void TA_ObjectSet::spawnBreakableBlock(TA_Point position)
 {
-    flags = 0;
-    tilemap->checkCollision(hitbox, flags);
-    for(TA_Object *currentObject : objects) {
-        if(currentObject->checkCollision(hitbox)) {
-            flags |= currentObject->getCollisionType();
-        }
-    }
+    auto *block = new TA_BreakableBlock(this);
+    block->load(position);
+    spawnObject(block);
 }
 
 TA_ObjectSet::~TA_ObjectSet()

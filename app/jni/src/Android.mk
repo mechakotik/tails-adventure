@@ -35,6 +35,7 @@ LOCAL_SRC_FILES := main.cpp \
                    game/game_screen.cpp \
                    objects/explosion.cpp \
                    objects/bomb.cpp \
+                   objects/breakable_block.cpp \
                    $(LOCAL_PATH)/../tinyxml2/tinyxml2.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer

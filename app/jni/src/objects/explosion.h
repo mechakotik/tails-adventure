@@ -14,6 +14,7 @@ public:
     void load(TA_Point position, int newDelay = 0);
     bool update() override;
     void draw() override;
+    TA_CollisionType getCollisionType() override {return TA_COLLISION_EXPLOSION;}
 };
 
 #endif // TA_EXPLOSION_H

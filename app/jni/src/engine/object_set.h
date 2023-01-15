@@ -40,9 +40,11 @@ public:
 
     void update();
     void draw();
+    void checkCollision(TA_Polygon hitbox, int &flags);
+
     void spawnExplosion(TA_Point position, int delay = 0);
     void spawnBomb(TA_Point position, bool direction);
-    void checkCollision(TA_Polygon hitbox, int &flags);
+    void spawnBreakableBlock(TA_Point position);
 };
 
 #endif // TA_OBJECT_SET_H
