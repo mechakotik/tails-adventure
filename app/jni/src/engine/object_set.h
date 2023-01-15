@@ -22,6 +22,7 @@ public:
     virtual bool update() {return false;}
     virtual bool checkCollision(TA_Polygon rv) {return hitbox.intersects(rv);}
     virtual TA_CollisionType getCollisionType() {return TA_COLLISION_TRANSPARENT;}
+    virtual int getDrawPriority() {return 0;}
     virtual void destroy() {}
 };
 
@@ -40,7 +41,7 @@ public:
     void setCollisionTilemap(TA_Tilemap *newTilemap) {tilemap = newTilemap;}
 
     void update();
-    void draw();
+    void draw(int priority);
     void checkCollision(TA_Polygon hitbox, int &flags);
 
     void spawnExplosion(TA_Point position, int delay = 0);

@@ -31,10 +31,12 @@ void TA_ObjectSet::update()
     objects = newObjects;
 }
 
-void TA_ObjectSet::draw()
+void TA_ObjectSet::draw(int priority)
 {
     for(TA_Object *currentObject : objects) {
-        currentObject->draw();
+        if(currentObject->getDrawPriority() == priority) {
+            currentObject->draw();
+        }
     }
 }
 

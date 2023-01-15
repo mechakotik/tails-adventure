@@ -246,7 +246,7 @@ void TA_Character::updateCollisions()
     }
     wall = bool(flags & TA_WALL_COLLISION);
     if(flags & TA_CEIL_COLLISION) {
-        velocity.y = std::max(velocity.y, double(0));
+        velocity.y = std::max(velocity.y, double(-0.3));
         if(jump) {
             jumpReleased = true;
         }
@@ -439,7 +439,7 @@ void TA_Character::updateTool()
                 links.objectSet->spawnBomb(position + TA_Point(20, 32), flip, TA_BOMB_MODE_HELITAIL);
             }
             else if(!ground) {
-                links.objectSet->spawnBomb(position + TA_Point((flip ? 25 : 10), 10), flip, TA_BOMB_MODE_AIR);
+                links.objectSet->spawnBomb(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
             }
             else if(crouch) {
                 links.objectSet->spawnBomb(position + TA_Point((flip ? 12 : 23), 20), flip, TA_BOMB_MODE_CROUCH);

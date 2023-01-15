@@ -34,9 +34,10 @@ TA_ScreenState TA_GameScreen::update()
 
     tilemap.draw(0);
     tilemap.draw(1);
+    objectSet.draw(0);
     character.draw();
-    objectSet.draw();
     tilemap.draw(2);
+    objectSet.draw(1);
     character.drawControls();
     hud.draw();
 
