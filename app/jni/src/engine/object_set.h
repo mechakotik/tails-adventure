@@ -8,6 +8,7 @@
 #include "engine/tilemap.h"
 
 class TA_ObjectSet;
+enum TA_BombMode : int;
 
 class TA_Object : public TA_Pawn {
 private:
@@ -43,7 +44,7 @@ public:
     void checkCollision(TA_Polygon hitbox, int &flags);
 
     void spawnExplosion(TA_Point position, int delay = 0);
-    void spawnBomb(TA_Point position, bool direction);
+    void spawnBomb(TA_Point position, bool direction, TA_BombMode mode);
     void spawnBreakableBlock(TA_Point position);
 };
 

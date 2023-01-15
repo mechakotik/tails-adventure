@@ -15,8 +15,9 @@ private:
     TA_ScreenStateMachine screenStateMachine;
 
     bool firstFrame = true;
-    double fpsTimer = 0;
-    int fpsCount = 0;
+    long long fpsTimer = 0;
+    int fpsCount = 0, refreshRate = 60;
+    bool useVsync = true;
 
 public:
     TA_Game();

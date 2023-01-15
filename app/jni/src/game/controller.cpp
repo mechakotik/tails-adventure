@@ -11,10 +11,10 @@ TA_Direction TA_Controller::getDirection()
         return TA_DIRECTION_MAX;
     }
     double angle = atan2(vector.y, vector.x) * 180 / (atan(1) * 4);
-    if(90 - verticalRange <= angle && angle <= 90 + verticalRange) {
+    if(-90 - verticalRange <= angle && angle <= -90 + verticalRange) {
         return TA_DIRECTION_UP;
     }
-    if(-90 - verticalRange <= angle && angle <= -90 + verticalRange) {
+    if(90 - verticalRange <= angle && angle <= 90 + verticalRange) {
         return TA_DIRECTION_DOWN;
     }
     if(vector.x > 0) {

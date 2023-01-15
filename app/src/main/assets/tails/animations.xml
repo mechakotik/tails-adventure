@@ -36,4 +36,10 @@
 	<animation name="death" delay="12" repeatTimes="1">
 		33,34,35
 	</animation>
+	<animation name="look_up">
+		23
+	</animation>
+	<animation name="crouch">
+		24
+	</animation>
 </animations>

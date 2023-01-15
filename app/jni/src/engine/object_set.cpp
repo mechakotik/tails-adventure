@@ -61,10 +61,10 @@ void TA_ObjectSet::spawnExplosion(TA_Point position, int delay)
     spawnObject(explosion);
 }
 
-void TA_ObjectSet::spawnBomb(TA_Point position, bool direction)
+void TA_ObjectSet::spawnBomb(TA_Point position, bool direction, TA_BombMode mode)
 {
     auto *bomb = new TA_Bomb(this);
-    bomb->load(position, direction);
+    bomb->load(position, direction, mode);
     spawnObject(bomb);
 }
 

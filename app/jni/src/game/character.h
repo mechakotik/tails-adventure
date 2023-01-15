@@ -22,7 +22,7 @@ private:
     const double maxJumpTime = 10;
     const double helitailAcc = 0.05;
     const double helitailTop = 1;
-    const double maxHelitailTime = 200;
+    const double maxHelitailTime = 300;
     const double hurtXsp = 1;
     const double hurtYsp = -2.5;
     const double invincibleTime = 120;
@@ -35,6 +35,7 @@ private:
     bool ground = false, helitail = false, wall = false, flip = false;
     bool jump = false, jumpReleased = false;
     bool climb = false, climbHigh = false, throwing = false, hurt = false, dead = false;
+    bool lookUp = false, crouch = false;
     bool useHalfSolidTiles = false;
     double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     int rings = 1;

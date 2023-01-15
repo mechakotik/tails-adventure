@@ -16,7 +16,7 @@ enum TA_ControllerType {
 class TA_Controller {
 private:
     double analogDeadZone = 0.25;
-    double verticalRange = 10;
+    double verticalRange = 30;
 
 public:
     virtual TA_ControllerType getType() {return TA_CONTROLLER_TYPE_MAX;}

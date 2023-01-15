@@ -1,13 +1,26 @@
 #include "bomb.h"
 #include "engine/tools.h"
 
-void TA_Bomb::load(TA_Point newPosition, bool newDirection)
-{
+void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {
     TA_Sprite::load("tools/bomb.png");
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX);
     position = newPosition;
     setPosition(position);
-    velocity = startVelocity;
+    if(mode == TA_BOMB_MODE_AIR) {
+        velocity = startVelocity;
+        timer = 10;
+    }
+    if (mode == TA_BOMB_MODE_CROUCH) {
+        velocity = startCrouchVelocity;
+        timer = 10;
+    }
+    else if (mode == TA_BOMB_MODE_HELITAIL) {
+        velocity = startHelitailVelocity;
+        timer = 10;
+    }
+    else {
+        velocity = startVelocity;
+    }
     direction = newDirection;
     if(direction) {
         position.x;
@@ -33,7 +46,7 @@ bool TA_Bomb::update()
     }
     else if(timer >= 6) {
         velocity.y += grv * TA::elapsedTime;
-        int flags = moveAndCollide(TA_Point(2, 4), TA_Point(11, 13), velocity);
+        int flags = moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
         if(flags != 0) {
             objectSet->spawnExplosion(position);
             for(int i = 1; i <= 3; i ++) {

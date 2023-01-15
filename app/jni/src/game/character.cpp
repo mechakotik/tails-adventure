@@ -4,11 +4,12 @@
 #include "engine/error.h"
 #include "engine/object_set.h"
 #include "engine/gamepad.h"
+#include "objects/bomb.h"
 
 void TA_Character::load(TA_GameScreenLinks newLinks)
 {
     links = newLinks;
-    position = {0, 128};
+    position = {1064, 264};
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
     controller.load();
@@ -85,12 +86,24 @@ void TA_Character::updateGround()
 {
     verticalMove();
     jump = false;
+    lookUp = (controller.getDirection() == TA_DIRECTION_UP);
+    crouch = (controller.getDirection() == TA_DIRECTION_DOWN);
+    if(lookUp || crouch) {
+        velocity.x = 0;
+    }
     if(controller.isJustPressed(TA_BUTTON_A)) {
-        jumpSound.play();
-        velocity.y = jmp;
-        jump = true;
-        jumpTime = 0;
-        jumpReleased = false;
+        if(lookUp) {
+            helitail = true;
+            helitailTime = 0;
+            velocity.y = -2;
+        }
+        else {
+            jumpSound.play();
+            velocity.y = jmp;
+            jump = true;
+            jumpTime = 0;
+            jumpReleased = false;
+        }
         ground = false;
     }
 }
@@ -381,7 +394,13 @@ void TA_Character::updateAnimation()
         setAnimation("hurt");
     }
     else if(ground) {
-        if(TA::equal(velocity.x, 0)) {
+        if(lookUp) {
+            setAnimation("look_up");
+        }
+        else if(crouch) {
+            setAnimation("crouch");
+        }
+        else if(TA::equal(velocity.x, 0)) {
             setAnimation("idle");
         }
         else if(wall) {
@@ -416,9 +435,20 @@ void TA_Character::updateTool()
     }
     switch(currentTool) {
         case TA_TOOL_BOMB:
-            links.objectSet->spawnBomb(position + TA_Point((flip? 27 : 8), 16), flip);
-            setAnimation("throw");
-            throwing = true;
+            if(helitail) {
+                links.objectSet->spawnBomb(position + TA_Point(20, 32), flip, TA_BOMB_MODE_HELITAIL);
+            }
+            else if(!ground) {
+                links.objectSet->spawnBomb(position + TA_Point((flip ? 25 : 10), 10), flip, TA_BOMB_MODE_AIR);
+            }
+            else if(crouch) {
+                links.objectSet->spawnBomb(position + TA_Point((flip ? 12 : 23), 20), flip, TA_BOMB_MODE_CROUCH);
+            }
+            else {
+                links.objectSet->spawnBomb(position + TA_Point((flip ? 27 : 8), 12), flip, TA_BOMB_MODE_DEFAULT);
+                setAnimation("throw");
+                throwing = true;
+            }
             break;
 
         default:

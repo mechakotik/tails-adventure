@@ -1,3 +1,6 @@
+#include <chrono>
+#include <thread>
+
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 
@@ -89,10 +92,22 @@ void TA_Game::update()
     SDL_RenderPresent(TA::renderer);
 
     auto renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);
+    if(!useVsync) {
+        auto timeLeft = std::chrono::microseconds(int(1e6 / refreshRate));
+        if(renderTime < timeLeft) {
+            timeLeft -= renderTime;
+            std::this_thread::sleep_for(timeLeft);
+        }
+    }
+
+    renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);
     fpsTimer += renderTime.count();
     fpsCount ++;
     if(fpsTimer > 1e6) {
-        //TA::printLog("fps %i", fpsCount);
+        if(useVsync && fpsCount > refreshRate * 1.2) {
+            TA::printWarning("VSync is unavailable");
+            useVsync = false;
+        }
         fpsTimer -= 1e6;
         fpsCount = 0;
     }

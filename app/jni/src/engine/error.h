@@ -27,6 +27,12 @@ namespace TA {
     {
         __android_log_print(ANDROID_LOG_DEBUG, APP_NAME, args...);
     }
+
+    template<typename... T>
+    void printWarning(T... args)
+    {
+        __android_log_print(ANDROID_LOG_WARN, APP_NAME, args...);
+    }
 }
 
 #endif // TA_ERROR_H
