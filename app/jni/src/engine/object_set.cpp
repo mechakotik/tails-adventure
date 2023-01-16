@@ -2,6 +2,7 @@
 #include "objects/explosion.h"
 #include "objects/bomb.h"
 #include "objects/breakable_block.h"
+#include "objects/particle.h"
 #include "engine/error.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
@@ -75,6 +76,13 @@ void TA_ObjectSet::spawnBreakableBlock(TA_Point position)
     auto *block = new TA_BreakableBlock(this);
     block->load(position);
     spawnObject(block);
+}
+
+void TA_ObjectSet::spawnParticle(std::string filename, TA_Point position, TA_Point velocity, TA_Point delta)
+{
+    auto *particle = new TA_Particle(this);
+    particle->load(filename, position, velocity, delta);
+    spawnObject(particle);
 }
 
 TA_ObjectSet::~TA_ObjectSet()

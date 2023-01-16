@@ -47,6 +47,7 @@ public:
     void spawnExplosion(TA_Point position, int delay = 0);
     void spawnBomb(TA_Point position, bool direction, TA_BombMode mode);
     void spawnBreakableBlock(TA_Point position);
+    void spawnParticle(std::string filename, TA_Point position, TA_Point velocity, TA_Point delta);
 };
 
 #endif // TA_OBJECT_SET_H
