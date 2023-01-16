@@ -33,7 +33,7 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
 
     TA_Point endPosition = position + velocity;
     double left = 0, right = 1;
-    while(right - left > TA::epsilon) {
+    while((right - left) * std::abs(endPosition.x - position.x) > TA::epsilon) {
         double mid = (left + right) / 2;
         xHitbox.setPosition(position + (endPosition - position) * TA_Point(mid, 0));
         if(checkPawnCollision(xHitbox)) {
@@ -60,7 +60,7 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
         endPosition = position + velocity;
     }
     left = 0, right = 1;
-    while(right - left > TA::epsilon) {
+    while((right - left) * std::abs(endPosition.y - position.y) > TA::epsilon) {
         double mid = (left + right) / 2;
         yHitbox.setPosition(position + (endPosition - position) * TA_Point(0, mid));
         if(checkPawnCollision(yHitbox) != (ground && velocity.y < 0)) {
