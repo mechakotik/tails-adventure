@@ -89,9 +89,11 @@ void TA_Game::update()
     if(screenStateMachine.update()) {
         startTime = std::chrono::high_resolution_clock::now();
     }
+
+    TA::printLog("%i", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime).count());
     SDL_RenderPresent(TA::renderer);
 
-    auto renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);
+    /*auto renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);
     if(!useVsync) {
         auto timeLeft = std::chrono::microseconds(int(1e6 / refreshRate));
         if(renderTime < timeLeft) {
@@ -110,7 +112,7 @@ void TA_Game::update()
         }
         fpsTimer -= 1e6;
         fpsCount = 0;
-    }
+    }*/
 }
 
 TA_Game::~TA_Game()

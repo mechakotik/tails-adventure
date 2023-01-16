@@ -12,7 +12,7 @@ enum TA_BombMode : int;
 
 class TA_Object : public TA_Pawn {
 private:
-    virtual bool checkPawnCollision(TA_Polygon rv) override {return hitbox.intersects(rv);}
+    virtual bool checkPawnCollision(TA_Polygon &rv) override {return hitbox.intersects(rv);}
 
 public:
     TA_ObjectSet *objectSet;
@@ -46,8 +46,9 @@ public:
 
     void spawnExplosion(TA_Point position, int delay = 0);
     void spawnBomb(TA_Point position, bool direction, TA_BombMode mode);
-    void spawnBreakableBlock(TA_Point position);
+    void spawnBreakableBlock(TA_Point position, bool dropsRing = false);
     void spawnParticle(std::string filename, TA_Point position, TA_Point velocity, TA_Point delta);
+    void spawnRing(TA_Point position);
 };
 
 #endif // TA_OBJECT_SET_H

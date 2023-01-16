@@ -47,7 +47,7 @@ private:
 
     void updateFollowPosition();
     void verticalMove();
-    bool checkPawnCollision(TA_Polygon hitbox) override;
+    bool checkPawnCollision(TA_Polygon &hitbox) override;
     void updateCollisions();
     void updateAnimation();
     void updateClimb();

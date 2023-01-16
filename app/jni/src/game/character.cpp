@@ -185,7 +185,7 @@ void TA_Character::verticalMove()
     }
 }
 
-bool TA_Character::checkPawnCollision(TA_Polygon hitbox)
+bool TA_Character::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = 0;
     links.objectSet->checkCollision(hitbox, flags);

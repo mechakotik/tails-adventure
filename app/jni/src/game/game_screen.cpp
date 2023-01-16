@@ -21,8 +21,8 @@ void TA_GameScreen::init()
     objectSet.spawnBreakableBlock(TA_Point(1248, 336));
     objectSet.spawnBreakableBlock(TA_Point(1296, 336));
     objectSet.spawnBreakableBlock(TA_Point(1312, 336));
-    objectSet.spawnBreakableBlock(TA_Point(1264, 384));
-    objectSet.spawnBreakableBlock(TA_Point(1280, 384));
+    objectSet.spawnBreakableBlock(TA_Point(1264, 384), true);
+    objectSet.spawnBreakableBlock(TA_Point(1280, 384), true);
 }
 
 TA_ScreenState TA_GameScreen::update()

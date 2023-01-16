@@ -40,10 +40,9 @@ public:
     TA_Point getPosition() {return position;}
     void addVertex(TA_Point vertex);
     bool inside(TA_Point point);
-    bool intersects(TA_Polygon rv);
+    bool intersects(TA_Polygon &rv);
     int size() {return vertexList.size();}
     bool empty() {return size() == 0;}
-    double getDistance(TA_Polygon rv);
     TA_Point getVertex(int pos);
     bool isRectangle() {return rect;}
     TA_Point getTopLeft() {return getVertex(0);}

@@ -3,6 +3,7 @@
 #include "objects/bomb.h"
 #include "objects/breakable_block.h"
 #include "objects/particle.h"
+#include "objects/ring.h"
 #include "engine/error.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
@@ -71,10 +72,10 @@ void TA_ObjectSet::spawnBomb(TA_Point position, bool direction, TA_BombMode mode
     spawnObject(bomb);
 }
 
-void TA_ObjectSet::spawnBreakableBlock(TA_Point position)
+void TA_ObjectSet::spawnBreakableBlock(TA_Point position, bool dropsRing)
 {
     auto *block = new TA_BreakableBlock(this);
-    block->load(position);
+    block->load(position, dropsRing);
     spawnObject(block);
 }
 
@@ -83,6 +84,13 @@ void TA_ObjectSet::spawnParticle(std::string filename, TA_Point position, TA_Poi
     auto *particle = new TA_Particle(this);
     particle->load(filename, position, velocity, delta);
     spawnObject(particle);
+}
+
+void TA_ObjectSet::spawnRing(TA_Point position)
+{
+    auto *ring = new TA_Ring(this);
+    ring->load(position);
+    spawnObject(ring);
 }
 
 TA_ObjectSet::~TA_ObjectSet()

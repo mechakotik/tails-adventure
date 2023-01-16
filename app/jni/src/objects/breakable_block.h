@@ -6,10 +6,11 @@
 class TA_BreakableBlock : public TA_Object {
 private:
     const double grv = 0.25;
+    bool dropsRing;
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point newPosition);
+    void load(TA_Point newPosition, bool newDropsRing);
     bool update() override;
     TA_CollisionType getCollisionType() override {return TA_COLLISION_SOLID;}
     int getDrawPriority() override {return 1;}

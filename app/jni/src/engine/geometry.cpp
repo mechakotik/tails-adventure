@@ -122,7 +122,7 @@ bool TA_Polygon::inside(TA_Point point)
     return count % 2 == 1;
 }
 
-bool TA_Polygon::intersects(TA_Polygon rv)
+bool TA_Polygon::intersects(TA_Polygon &rv)
 {
     if(empty() || rv.empty()) {
         return false;
@@ -144,17 +144,6 @@ bool TA_Polygon::intersects(TA_Polygon rv)
         }
     }
     return false;
-}
-
-double TA_Polygon::getDistance(TA_Polygon rv)
-{
-    double distance = 1e9;
-    for(TA_Point a : vertexList) {
-        for(TA_Point b : rv.vertexList) {
-            distance = std::min(distance, a.getDistance(b));
-        }
-    }
-    return distance;
 }
 
 TA_Point TA_Polygon::getVertex(int pos)

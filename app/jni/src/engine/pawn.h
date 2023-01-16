@@ -16,7 +16,7 @@ protected:
     int getCollisionFlags(TA_Point topLeft, TA_Point bottomRight);
 
 public:
-    virtual bool checkPawnCollision(TA_Polygon hitbox) {return false;}
+    virtual bool checkPawnCollision(TA_Polygon &hitbox) {return false;}
     int moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground = false);
 };
 

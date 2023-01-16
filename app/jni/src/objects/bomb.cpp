@@ -2,7 +2,7 @@
 #include "engine/tools.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {
-    TA_Sprite::load("tools/bomb.png");
+    TA_Sprite::load("objects/bomb.png");
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX);
     position = newPosition;
     setPosition(position);
@@ -28,7 +28,7 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {
     }
 }
 
-bool TA_Bomb::checkPawnCollision(TA_Polygon hitbox)
+bool TA_Bomb::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = 0;
     objectSet->checkCollision(hitbox, flags);
