@@ -12,7 +12,7 @@ enum TA_BombMode : int;
 
 class TA_Object : public TA_Pawn {
 private:
-    virtual bool checkPawnCollision(TA_Polygon &rv) override {return hitbox.intersects(rv);}
+    virtual bool checkPawnCollision(TA_Polygon &rv) override {return false;}
 
 public:
     TA_ObjectSet *objectSet;
@@ -20,7 +20,7 @@ public:
 
     TA_Object(TA_ObjectSet *newObjectSet);
     virtual bool update() {return false;}
-    virtual bool checkCollision(TA_Polygon rv) {return hitbox.intersects(rv);}
+    virtual bool checkCollision(TA_Polygon rv) {return getCollisionType() != TA_COLLISION_TRANSPARENT && hitbox.intersects(rv);}
     virtual TA_CollisionType getCollisionType() {return TA_COLLISION_TRANSPARENT;}
     virtual int getDrawPriority() {return 0;}
     virtual void destroy() {}
@@ -42,7 +42,7 @@ public:
 
     void update();
     void draw(int priority);
-    void checkCollision(TA_Polygon hitbox, int &flags);
+    void checkCollision(TA_Polygon &hitbox, int &flags);
 
     void spawnExplosion(TA_Point position, int delay = 0);
     void spawnBomb(TA_Point position, bool direction, TA_BombMode mode);

@@ -42,7 +42,7 @@ void TA_ObjectSet::draw(int priority)
     }
 }
 
-void TA_ObjectSet::checkCollision(TA_Polygon hitbox, int &flags)
+void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
 {
     flags = 0;
     tilemap->checkCollision(hitbox, flags);

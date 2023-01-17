@@ -90,7 +90,7 @@ void TA_Game::update()
         startTime = std::chrono::high_resolution_clock::now();
     }
 
-    TA::printLog("%i", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime).count());
+    //TA::printLog("%i", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime).count());
     SDL_RenderPresent(TA::renderer);
 
     /*auto renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);

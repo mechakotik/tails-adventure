@@ -41,7 +41,7 @@ public:
     void setCamera(TA_Camera *newCamera);
     int getWidth() {return width * tileWidth;}
     int getHeight() {return height * tileHeight;}
-    void checkCollision(TA_Polygon polygon, int &flags);
+    void checkCollision(TA_Polygon &polygon, int &flags);
 };
 
 #endif // TA_TILEMAP_H
