@@ -28,17 +28,19 @@ public:
 
 class TA_ObjectSet {
 private:
-    std::vector<TA_Object*> objects, spawnedObjects;
+    std::vector<TA_Object*> objects, spawnedObjects, deleteList;
     TA_Camera *camera;
     TA_Tilemap *tilemap;
+    TA_Polygon *characterHitbox;
 
     void spawnObject(TA_Object *object);
 
 public:
     ~TA_ObjectSet();
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
-    TA_Camera *getCamera() {return camera;}
+    TA_Camera* getCamera() {return camera;}
     void setCollisionTilemap(TA_Tilemap *newTilemap) {tilemap = newTilemap;}
+    void setCharacterHitbox(TA_Polygon *newHitbox) {characterHitbox = newHitbox;}
 
     void update();
     void draw(int priority);

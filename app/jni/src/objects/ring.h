@@ -17,6 +17,7 @@ public:
     void load(TA_Point newPosition);
     bool update() override;
     bool checkPawnCollision(TA_Polygon &hitbox) override;
+    TA_CollisionType getCollisionType() override {return TA_COLLISION_RING;}
 };
 
 #endif // TA_RING_H

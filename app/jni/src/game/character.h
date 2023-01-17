@@ -30,7 +30,8 @@ private:
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_GameScreenLinks links;
-    TA_Sound areaBeginSound, areaLoopSound, jumpSound;
+    TA_Sound areaBeginSound, areaLoopSound, jumpSound, ringSound;
+    TA_Polygon hitbox;
 
     bool ground = false, helitail = false, wall = false, flip = false;
     bool jump = false, jumpReleased = false;
@@ -54,6 +55,7 @@ private:
     void updateClimbAnimation();
     void updateThrowAnimation();
     void updateTool();
+    void updateObjectCollision();
 
 public:
     void load(TA_GameScreenLinks newLinks);
@@ -61,6 +63,7 @@ public:
     void update();
     void drawControls() {controller.draw();}
     bool isOnGround() {return ground;}
+    TA_Polygon *getHitbox() {return &hitbox;}
 
     int getRingsCount() {return std::max(0, rings);}
     int getCurrentItem() {return 0;}

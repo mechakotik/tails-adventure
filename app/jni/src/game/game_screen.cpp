@@ -13,6 +13,7 @@ void TA_GameScreen::init()
     objectSet.setCollisionTilemap(&tilemap);
     hud.load(links);
     objectSet.setCamera(&camera);
+    objectSet.setCharacterHitbox(character.getHitbox());
 
     objectSet.spawnBreakableBlock(TA_Point(1120, 256));
     objectSet.spawnBreakableBlock(TA_Point(1120, 272));

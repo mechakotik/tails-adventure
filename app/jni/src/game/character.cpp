@@ -17,6 +17,7 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
     areaBeginSound.load("sound/pf_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
     areaLoopSound.load("sound/pf_loop.ogg", TA_SOUND_CHANNEL_MUSIC, true);
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX);
+    ringSound.load("sound/ring.ogg", TA_SOUND_CHANNEL_SFX);
     areaBeginSound.play();
 
     TA_Pawn::load("tails/tails.png", 48, 48);
@@ -44,6 +45,7 @@ void TA_Character::handleInput()
     else {
         updateAir();
     }
+    updateCollisions();
 }
 
 void TA_Character::update()
@@ -68,11 +70,8 @@ void TA_Character::update()
         return;
     }
 
-    updateCollisions();
     setPosition(position);
-    if(climb || dead) {
-        return;
-    }
+    updateObjectCollision();
     setFlip(flip);
     updateTool();
     if(throwing) {
@@ -212,6 +211,7 @@ void TA_Character::updateCollisions()
         topLeft = TA_Point(18, 12);
         bottomRight = TA_Point(30, 39);
     }
+    hitbox.setRectangle(topLeft, bottomRight);
 
     if(ground) {
         useHalfSolidTiles = true;
@@ -297,6 +297,8 @@ void TA_Character::updateCollisions()
     else {
         invincibleTimeLeft -= TA::elapsedTime;
     }
+
+    hitbox.setPosition(position);
 }
 
 void TA_Character::updateClimb()
@@ -376,6 +378,16 @@ void TA_Character::updateClimb()
 
     updateClimbPosition(32);
     updateClimbPosition(16);
+}
+
+void TA_Character::updateObjectCollision()
+{
+    int flags;
+    links.objectSet->checkCollision(hitbox, flags);
+    if(flags & TA_COLLISION_RING) {
+        rings ++;
+        ringSound.play();
+    }
 }
 
 void TA_Character::updateAnimation()

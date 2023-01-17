@@ -14,7 +14,16 @@ TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 
 void TA_ObjectSet::update()
 {
-    std::vector<TA_Object*> newObjects, deleteList;
+    for(TA_Object *currentObject : deleteList) {
+        delete currentObject;
+    }
+    for(TA_Object *currentObject : spawnedObjects) {
+        objects.push_back(currentObject);
+    }
+    deleteList.clear();
+    spawnedObjects.clear();
+
+    std::vector<TA_Object*> newObjects;
     for(TA_Object *currentObject : objects) {
         if(currentObject->update()) {
             newObjects.push_back(currentObject);
@@ -23,13 +32,6 @@ void TA_ObjectSet::update()
             deleteList.push_back(currentObject);
         }
     }
-    for(TA_Object *currentObject : deleteList) {
-        delete currentObject;
-    }
-    for(TA_Object *currentObject : spawnedObjects) {
-        newObjects.push_back(currentObject);
-    }
-    spawnedObjects.clear();
     objects = newObjects;
 }
 
@@ -50,6 +52,14 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
         if(currentObject->checkCollision(hitbox)) {
             flags |= currentObject->getCollisionType();
         }
+    }
+    for(TA_Object *currentObject : deleteList) {
+        if(currentObject->checkCollision(hitbox)) {
+            flags |= currentObject->getCollisionType();
+        }
+    }
+    if(characterHitbox->intersects(hitbox)) {
+        flags |= TA_COLLISION_CHARACTER;
     }
 }
 

@@ -35,6 +35,12 @@ bool TA_Ring::update()
         velocity.y *= -1;
     }
 
+    hitbox.setPosition(position);
+    objectSet->checkCollision(hitbox, flags);
+    if(flags & TA_COLLISION_CHARACTER) {
+        return false;
+    }
+
     timer += TA::elapsedTime;
     if(timer > maxTime) {
         return false;
