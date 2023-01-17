@@ -29,21 +29,26 @@ void TA_Character::handleInput()
 {
     controller.setAnalogStick(helitail);
     controller.update();
-    if(climb || throwing || hurt || dead) {
+    if(climb || throwing || dead) {
         return;
     }
 
-    if(helitail) {
-        updateHelitail();
-    }
-    if(ground) {
-        updateGround();
-    }
-    else if(helitail) {
-        updateHelitail();
+    if(!hurt) {
+        if(helitail) {
+            updateHelitail();
+        }
+        if(ground) {
+            updateGround();
+        }
+        else if(helitail) {
+            updateHelitail();
+        }
+        else {
+            updateAir();
+        }
     }
     else {
-        updateAir();
+        velocity.y += grv;
     }
     updateCollisions();
 }
@@ -61,9 +66,6 @@ void TA_Character::update()
     if(throwing) {
         updateThrowAnimation();
         return;
-    }
-    if(hurt) {
-        velocity.y += grv;
     }
     if(dead) {
         invincibleTimeLeft -= TA::elapsedTime;
