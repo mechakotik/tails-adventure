@@ -142,7 +142,7 @@ void TA_Sprite::loadAnimationsFromFile(std::string filename)
 
 void TA_Sprite::setAnimation(TA_Animation newAnimation)
 {
-    if(animation.frames == newAnimation.frames) {
+    if(animation.frames == newAnimation.frames && animation.delay == newAnimation.delay) {
         return;
     }
     animation = newAnimation;

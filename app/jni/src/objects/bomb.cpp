@@ -6,6 +6,7 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX);
     position = newPosition;
     setPosition(position);
+    hitbox.setRectangle(TA_Point(1.5, 2.5), TA_Point(11.5, 13.5));
     if(mode == TA_BOMB_MODE_AIR) {
         velocity = startVelocity;
         timer = 10;
@@ -46,8 +47,11 @@ bool TA_Bomb::update()
     }
     else if(timer >= 6) {
         velocity.y += grv * TA::elapsedTime;
-        int flags = moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
-        if(flags != 0) {
+        moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
+        int flags;
+        hitbox.setPosition(position);
+        objectSet->checkCollision(hitbox, flags);
+        if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_DAMAGE)) {
             objectSet->spawnExplosion(position);
             for(int i = 1; i <= 3; i ++) {
                 TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);

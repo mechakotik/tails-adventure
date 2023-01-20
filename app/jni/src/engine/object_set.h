@@ -41,6 +41,7 @@ public:
     TA_Camera* getCamera() {return camera;}
     void setCollisionTilemap(TA_Tilemap *newTilemap) {tilemap = newTilemap;}
     void setCharacterHitbox(TA_Polygon *newHitbox) {characterHitbox = newHitbox;}
+    TA_Point getCharacterPosition() {return characterHitbox->getVertex(0);}
 
     void update();
     void draw(int priority);
@@ -51,6 +52,8 @@ public:
     void spawnBreakableBlock(TA_Point position, bool dropsRing = false);
     void spawnParticle(std::string filename, TA_Point position, TA_Point velocity, TA_Point delta);
     void spawnRing(TA_Point position);
+    void spawnWalker(TA_Point position, int range, bool flip);
+    void spawnWalkerBullet(TA_Point position, bool direction);
 };
 
 #endif // TA_OBJECT_SET_H

@@ -9,7 +9,7 @@
 void TA_Character::load(TA_GameScreenLinks newLinks)
 {
     links = newLinks;
-    position = {1064, 264};
+    position = {323, 200};
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
     controller.load();
@@ -27,6 +27,7 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
 
 void TA_Character::handleInput()
 {
+    TA::printLog("%f %f", position.x, position.y);
     controller.setAnalogStick(helitail);
     controller.update();
     if(climb || throwing || dead) {
@@ -191,9 +192,6 @@ bool TA_Character::checkPawnCollision(TA_Polygon &hitbox)
     int flags = 0;
     links.objectSet->checkCollision(hitbox, flags);
     if((flags & TA_COLLISION_SOLID) != 0) {
-        return true;
-    }
-    if((flags & TA_COLLISION_DAMAGE) != 0) {
         return true;
     }
     if(useHalfSolidTiles && (flags & TA_COLLISION_HALF_SOLID) != 0) {

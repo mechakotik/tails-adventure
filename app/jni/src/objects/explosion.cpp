@@ -19,7 +19,7 @@ bool TA_Explosion::update()
         return false;
     }
     if(timer >= delay + 8) {
-        hitbox.setRectangle(TA_Point(0, 0), TA_Point(15, 15));
+        hitbox.setRectangle(TA_Point(-2, -2), TA_Point(17, 17));
     }
     return true;
 }

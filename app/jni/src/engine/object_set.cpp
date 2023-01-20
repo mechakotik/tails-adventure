@@ -4,6 +4,7 @@
 #include "objects/breakable_block.h"
 #include "objects/particle.h"
 #include "objects/ring.h"
+#include "objects/walker.h"
 #include "engine/error.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
@@ -101,6 +102,20 @@ void TA_ObjectSet::spawnRing(TA_Point position)
     auto *ring = new TA_Ring(this);
     ring->load(position);
     spawnObject(ring);
+}
+
+void TA_ObjectSet::spawnWalker(TA_Point position, int range, bool flip)
+{
+    auto *walker = new TA_Walker(this);
+    walker->load(position, range, flip);
+    spawnObject(walker);
+}
+
+void TA_ObjectSet::spawnWalkerBullet(TA_Point position, bool direction)
+{
+    auto *walkerBullet = new TA_WalkerBullet(this);
+    walkerBullet->load(position, direction);
+    spawnObject(walkerBullet);
 }
 
 TA_ObjectSet::~TA_ObjectSet()
