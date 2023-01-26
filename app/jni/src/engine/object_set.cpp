@@ -24,6 +24,13 @@ void TA_ObjectSet::update()
     deleteList.clear();
     spawnedObjects.clear();
 
+    hitboxContainer.clear();
+    for(TA_Object *currentObject : objects) {
+        if(currentObject->getCollisionType() != TA_COLLISION_TRANSPARENT) {
+            hitboxContainer.add(currentObject->hitbox, currentObject->getCollisionType());
+        }
+    }
+
     std::vector<TA_Object*> newObjects;
     for(TA_Object *currentObject : objects) {
         if(currentObject->update()) {
@@ -49,16 +56,12 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
 {
     flags = 0;
     tilemap->checkCollision(hitbox, flags);
-    for(TA_Object *currentObject : objects) {
+    flags |= hitboxContainer.getCollisionFlags(hitbox);
+    /*for(TA_Object *currentObject : deleteList) {
         if(currentObject->checkCollision(hitbox)) {
             flags |= currentObject->getCollisionType();
         }
-    }
-    for(TA_Object *currentObject : deleteList) {
-        if(currentObject->checkCollision(hitbox)) {
-            flags |= currentObject->getCollisionType();
-        }
-    }
+    }*/
     if(characterHitbox->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
     }

@@ -6,6 +6,7 @@
 #include "engine/pawn.h"
 #include "engine/camera.h"
 #include "engine/tilemap.h"
+#include "engine/hitbox_container.h"
 
 class TA_ObjectSet;
 enum TA_BombMode : int;
@@ -32,6 +33,7 @@ private:
     TA_Camera *camera;
     TA_Tilemap *tilemap;
     TA_Polygon *characterHitbox;
+    TA_HitboxContainer hitboxContainer;
 
     void spawnObject(TA_Object *object);
 

@@ -27,7 +27,6 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
 
 void TA_Character::handleInput()
 {
-    TA::printLog("%f %f", position.x, position.y);
     controller.setAnalogStick(helitail);
     controller.update();
     if(climb || throwing || dead) {
