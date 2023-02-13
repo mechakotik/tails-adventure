@@ -30,6 +30,9 @@ void TA_GameScreen::init()
     objectSet.spawnWalker(TA_Point(1216, 32), 60, true);
     objectSet.spawnWalker(TA_Point(1708, 144), 0, false);
     objectSet.spawnWalker(TA_Point(1804, 256), 0, true);
+    objectSet.spawnHoverPod(TA_Point(384, 160), 272, true);
+    objectSet.spawnHoverPod(TA_Point(752, 144), 208, true);
+    objectSet.spawnHoverPod(TA_Point(1520, 48), 208, true);
 }
 
 TA_ScreenState TA_GameScreen::update()

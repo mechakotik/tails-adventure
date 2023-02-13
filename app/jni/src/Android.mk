@@ -40,6 +40,8 @@ LOCAL_SRC_FILES := main.cpp \
                    objects/particle.cpp \
                    objects/ring.cpp \
                    objects/walker.cpp \
+                   objects/hover_pod.cpp \
+                   objects/dead_kukku.cpp \
                    $(LOCAL_PATH)/../tinyxml2/tinyxml2.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer

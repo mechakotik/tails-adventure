@@ -56,6 +56,8 @@ public:
     void spawnRing(TA_Point position);
     void spawnWalker(TA_Point position, int range, bool flip);
     void spawnWalkerBullet(TA_Point position, bool direction);
+    void spawnHoverPod(TA_Point position, int range, bool flip);
+    void spawnDeadKukku(TA_Point position);
 };
 
 #endif // TA_OBJECT_SET_H

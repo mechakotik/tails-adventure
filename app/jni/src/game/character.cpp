@@ -9,7 +9,7 @@
 void TA_Character::load(TA_GameScreenLinks newLinks)
 {
     links = newLinks;
-    position = {323, 200};
+    position = {60, 200};
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
     controller.load();

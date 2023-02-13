@@ -5,6 +5,8 @@
 #include "objects/particle.h"
 #include "objects/ring.h"
 #include "objects/walker.h"
+#include "objects/hover_pod.h"
+#include "objects/dead_kukku.h"
 #include "engine/error.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
@@ -119,6 +121,20 @@ void TA_ObjectSet::spawnWalkerBullet(TA_Point position, bool direction)
     auto *walkerBullet = new TA_WalkerBullet(this);
     walkerBullet->load(position, direction);
     spawnObject(walkerBullet);
+}
+
+void TA_ObjectSet::spawnHoverPod(TA_Point position, int range, bool flip)
+{
+    auto *hoverPod = new TA_HoverPod(this);
+    hoverPod->load(position, range, flip);
+    spawnObject(hoverPod);
+}
+
+void TA_ObjectSet::spawnDeadKukku(TA_Point position)
+{
+    auto *deadKukku = new TA_DeadKukku(this);
+    deadKukku->load(position);
+    spawnObject(deadKukku);
 }
 
 TA_ObjectSet::~TA_ObjectSet()

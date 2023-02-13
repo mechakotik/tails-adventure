@@ -26,17 +26,6 @@ void TA_Walker::load(TA_Point newPosition, int range, bool flip)
 
 bool TA_Walker::update()
 {
-    if(dead) {
-        velocity.y += grv;
-        position = position + velocity;
-        setPosition(position);
-        timer += TA::elapsedTime;
-        if(timer > deathTime) {
-            return false;
-        }
-        return true;
-    }
-
     TA_Point characterPosition = objectSet->getCharacterPosition();
 
     switch(state) {
@@ -111,21 +100,10 @@ bool TA_Walker::update()
     int flags;
     objectSet->checkCollision(hitbox, flags);
     if(flags & TA_COLLISION_EXPLOSION) {
-        setAnimation("death");
-        velocity.y = startYsp;
-        setFlip(false);
-        timer = 0;
-        dead = true;
+        objectSet->spawnDeadKukku(position);
+        return false;
     }
     return true;
-}
-
-TA_CollisionType TA_Walker::getCollisionType()
-{
-    if(dead) {
-        return TA_COLLISION_TRANSPARENT;
-    }
-    return TA_COLLISION_DAMAGE;
 }
 
 void TA_WalkerBullet::load(TA_Point newPosition, bool newDirection)

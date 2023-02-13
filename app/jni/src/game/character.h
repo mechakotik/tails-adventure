@@ -18,7 +18,7 @@ private:
     const double grv = 0.125;
     const double acc = 0.25;
     const double topX = 1;
-    const double topY = 5;
+    const double topY = 3;
     const double maxJumpTime = 10;
     const double helitailAcc = 0.05;
     const double helitailTop = 1;
