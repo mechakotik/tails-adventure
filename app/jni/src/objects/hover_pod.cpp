@@ -24,7 +24,7 @@ bool TA_HoverPod::update()
     TA_Point characterPosition = objectSet->getCharacterPosition();
 
     if(idle) {
-        if (abs(position.x - characterPosition.x) <= 130 &&
+        if (abs(position.x - characterPosition.x) <= 140 &&
             abs(position.y - characterPosition.y) <= 80) {
             idle = false;
         }

@@ -31,7 +31,7 @@ bool TA_Walker::update()
     switch(state) {
         case TA_WALKER_STATE_IDLE:
             setAnimation("walker_idle");
-            if (abs(position.x - characterPosition.x) <= 130 &&
+            if (abs(position.x - characterPosition.x) <= 140 &&
                 abs(position.y - characterPosition.y) <= 80) {
                 state = TA_WALKER_STATE_MOVE;
             }
