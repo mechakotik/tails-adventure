@@ -7,6 +7,7 @@
 #include "objects/walker.h"
 #include "objects/hover_pod.h"
 #include "objects/dead_kukku.h"
+#include "objects/pushable_object.h"
 #include "engine/error.h"
 #include "engine/tools.h"
 #include "tinyxml2.h"
@@ -52,6 +53,11 @@ void TA_ObjectSet::load(std::string filename)
             else {
                 spawnHoverPod(position, range, direction);
             }
+        }
+
+        else if(name == "pushable_rock") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnPushableRock(position);
         }
 
         else {
@@ -112,6 +118,13 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
     if(characterHitbox->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
     }
+}
+
+int TA_ObjectSet::checkCollision(TA_Polygon &hitbox)
+{
+    int flags = 0;
+    checkCollision(hitbox, flags);
+    return flags;
 }
 
 void TA_ObjectSet::spawnObject(TA_Object *object)
@@ -180,6 +193,13 @@ void TA_ObjectSet::spawnDeadKukku(TA_Point position)
     auto *deadKukku = new TA_DeadKukku(this);
     deadKukku->load(position);
     spawnObject(deadKukku);
+}
+
+void TA_ObjectSet::spawnPushableRock(TA_Point position)
+{
+    auto *pushableRock = new TA_PushableRock(this);
+    pushableRock->load(position);
+    spawnObject(pushableRock);
 }
 
 TA_ObjectSet::~TA_ObjectSet()

@@ -16,7 +16,7 @@ bool TA_Ring::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags;
     objectSet->checkCollision(hitbox, flags);
-    return (flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_DAMAGE);
+    return (flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_PUSHABLE);
 }
 
 bool TA_Ring::update()

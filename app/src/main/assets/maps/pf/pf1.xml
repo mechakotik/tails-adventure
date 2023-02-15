@@ -20,4 +20,6 @@
 	<object name="hover_pod" x="368" y="160" range="272" direction="left"/>
 	<object name="hover_pod" x="752" y="144" range="208" direction="left"/>
 	<object name="hover_pod" x="1520" y="48" range="208" direction="left"/>
+	
+	<object name="pushable_rock" x="1272" y="320"/>
 </objects>

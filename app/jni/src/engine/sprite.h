@@ -59,6 +59,8 @@ public:
     void setColorMod(int r, int g, int b);
     void setColorMod(int w) {setColorMod(w, w, w);}
     void setFlip(bool newFlip) {flip = newFlip;}
+    int getWidth() {return frameWidth;}
+    int getHeight() {return frameHeight;}
 
     void loadAnimationsFromFile(std::string filename);
     void setAnimation(std::string name);

@@ -1,5 +1,6 @@
 #include "pawn.h"
 #include "tools.h"
+#include "error.h"
 
 int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight)
 {
@@ -82,6 +83,7 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
 
     xHitbox.setPosition(position);
     if(checkPawnCollision(xHitbox)) {
+        TA::printLog("!");
         double delta = 0;
         while(true) {
             delta += 0.1;

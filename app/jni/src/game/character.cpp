@@ -51,6 +51,7 @@ void TA_Character::handleInput()
         velocity.y += grv;
     }
     updateCollisions();
+    updateObjectCollision();
 }
 
 void TA_Character::update()
@@ -73,7 +74,6 @@ void TA_Character::update()
     }
 
     setPosition(position);
-    updateObjectCollision();
     setFlip(flip);
     updateTool();
     if(throwing) {
@@ -190,7 +190,7 @@ bool TA_Character::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = 0;
     links.objectSet->checkCollision(hitbox, flags);
-    if((flags & TA_COLLISION_SOLID) != 0) {
+    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_PUSHABLE)) {
         return true;
     }
     if(useHalfSolidTiles && (flags & TA_COLLISION_HALF_SOLID) != 0) {
@@ -201,7 +201,6 @@ bool TA_Character::checkPawnCollision(TA_Polygon &hitbox)
 
 void TA_Character::updateCollisions()
 {
-    TA_Point topLeft, bottomRight;
     if(jump && velocity.y < 0) {
         topLeft = TA_Point(18, 9);
         bottomRight = TA_Point(30, 39);
@@ -302,7 +301,7 @@ void TA_Character::updateCollisions()
 
 void TA_Character::updateClimb()
 {
-    if(!wall) {
+    if(!wall || pushingObject) {
         return;
     }
 
@@ -381,12 +380,16 @@ void TA_Character::updateClimb()
 
 void TA_Character::updateObjectCollision()
 {
-    int flags;
-    links.objectSet->checkCollision(hitbox, flags);
+    TA_Polygon hitbox;
+    hitbox.setPosition(position);
+    hitbox.setRectangle(topLeft - TA_Point(0.2, 0.2), bottomRight + TA_Point(0.2, 0.2));
+
+    int flags = links.objectSet->checkCollision(hitbox);
     if(flags & TA_COLLISION_RING) {
         rings ++;
         ringSound.play();
     }
+    pushingObject = bool(flags & TA_COLLISION_PUSHABLE);
 }
 
 void TA_Character::updateAnimation()

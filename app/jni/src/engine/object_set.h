@@ -49,6 +49,7 @@ public:
     void update();
     void draw(int priority);
     void checkCollision(TA_Polygon &hitbox, int &flags);
+    int checkCollision(TA_Polygon &hitbox);
 
     void spawnExplosion(TA_Point position, int delay = 0);
     void spawnBomb(TA_Point position, bool direction, TA_BombMode mode);
@@ -59,6 +60,7 @@ public:
     void spawnWalkerBullet(TA_Point position, bool direction);
     void spawnHoverPod(TA_Point position, int range, bool flip);
     void spawnDeadKukku(TA_Point position);
+    void spawnPushableRock(TA_Point position);
 };
 
 #endif // TA_OBJECT_SET_H

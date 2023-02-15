@@ -32,11 +32,13 @@ private:
     TA_GameScreenLinks links;
     TA_Sound areaBeginSound, areaLoopSound, jumpSound, ringSound;
     TA_Polygon hitbox;
+    TA_Point topLeft, bottomRight;
 
     bool ground = false, helitail = false, wall = false, flip = false;
     bool jump = false, jumpReleased = false;
     bool climb = false, climbHigh = false, throwing = false, hurt = false, dead = false;
     bool lookUp = false, crouch = false;
+    bool pushingObject = false;
     bool useHalfSolidTiles = false;
     double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     int rings = 1;
