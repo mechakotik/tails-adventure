@@ -8,11 +8,56 @@
 #include "objects/hover_pod.h"
 #include "objects/dead_kukku.h"
 #include "engine/error.h"
+#include "engine/tools.h"
+#include "tinyxml2.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
     objectSet = newObjectSet;
     setCamera(objectSet->getCamera());
+}
+
+void TA_ObjectSet::load(std::string filename)
+{
+    tinyxml2::XMLDocument file;
+    file.Parse(TA::readStringFromFile(filename).c_str());
+
+    for(tinyxml2::XMLElement *element = file.FirstChildElement("objects")->FirstChildElement("object");
+        element != nullptr; element = element->NextSiblingElement("object"))
+    {
+        std::string name = element->Attribute("name");
+
+        if(name == "breakable_block") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            bool dropsRing = false;
+            if(element->Attribute("drops_ring", "true")) {
+                dropsRing = true;
+            }
+            spawnBreakableBlock(position, dropsRing);
+        }
+
+        else if(name == "walker" || name == "hover_pod") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            int range = 0;
+            bool direction = true;
+            if (element->Attribute("range")) {
+                range = element->IntAttribute("range");
+            }
+            if (element->Attribute("direction", "right")) {
+                direction = false;
+            }
+            if(name == "walker") {
+                spawnWalker(position, range, direction);
+            }
+            else {
+                spawnHoverPod(position, range, direction);
+            }
+        }
+
+        else {
+            TA::handleError("Unknown object %s", name.c_str());
+        }
+    }
 }
 
 void TA_ObjectSet::update()

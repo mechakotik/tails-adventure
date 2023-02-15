@@ -8,31 +8,13 @@ void TA_GameScreen::init()
     links.objectSet = &objectSet;
 
     character.load(links);
-    tilemap.load("maps/pf/pf1.tmx");
+    tilemap.load(TA::levelPath + ".tmx");
     tilemap.setCamera(&camera);
     objectSet.setCollisionTilemap(&tilemap);
     hud.load(links);
     objectSet.setCamera(&camera);
     objectSet.setCharacterHitbox(character.getHitbox());
-
-    objectSet.spawnBreakableBlock(TA_Point(1120, 256));
-    objectSet.spawnBreakableBlock(TA_Point(1120, 272));
-    objectSet.spawnBreakableBlock(TA_Point(1120, 288));
-    objectSet.spawnBreakableBlock(TA_Point(1232, 336));
-    objectSet.spawnBreakableBlock(TA_Point(1248, 336));
-    objectSet.spawnBreakableBlock(TA_Point(1296, 336));
-    objectSet.spawnBreakableBlock(TA_Point(1312, 336));
-    objectSet.spawnBreakableBlock(TA_Point(1264, 384), true);
-    objectSet.spawnBreakableBlock(TA_Point(1280, 384), true);
-    objectSet.spawnWalker(TA_Point(544, 272), 40, true);
-    objectSet.spawnWalker(TA_Point(1072, 272), 90, true);
-    objectSet.spawnWalker(TA_Point(1216, 128), 60, true);
-    objectSet.spawnWalker(TA_Point(1216, 32), 60, true);
-    objectSet.spawnWalker(TA_Point(1708, 144), 0, false);
-    objectSet.spawnWalker(TA_Point(1804, 256), 0, true);
-    objectSet.spawnHoverPod(TA_Point(384, 160), 272, true);
-    objectSet.spawnHoverPod(TA_Point(752, 144), 208, true);
-    objectSet.spawnHoverPod(TA_Point(1520, 48), 208, true);
+    objectSet.load(TA::levelPath + ".xml");
 }
 
 TA_ScreenState TA_GameScreen::update()

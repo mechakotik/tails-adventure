@@ -45,6 +45,7 @@ public:
     void setCharacterHitbox(TA_Polygon *newHitbox) {characterHitbox = newHitbox;}
     TA_Point getCharacterPosition() {return characterHitbox->getVertex(0);}
 
+    void load(std::string filename);
     void update();
     void draw(int priority);
     void checkCollision(TA_Polygon &hitbox, int &flags);
