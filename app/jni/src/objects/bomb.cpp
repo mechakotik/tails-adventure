@@ -51,7 +51,7 @@ bool TA_Bomb::update()
         int flags;
         hitbox.setPosition(position);
         objectSet->checkCollision(hitbox, flags);
-        if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_DAMAGE)) {
+        if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_DAMAGE) || (flags & TA_COLLISION_PUSHABLE)) {
             objectSet->spawnExplosion(position);
             for(int i = 1; i <= 3; i ++) {
                 TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);

@@ -33,8 +33,7 @@ bool TA_PushableObject::update()
         velocity.y = 0;
     }
 
-    setPosition(position);
-    hitbox.setPosition(position);
+    updatePosition();
     return true;
 }
 
@@ -45,4 +44,13 @@ bool TA_PushableObject::checkPawnCollision(TA_Polygon &hitbox)
         return true;
     }
     return false;
+}
+
+void TA_PushableSpring::load(TA_Point newPosition)
+{
+    TA_PushableObject::load("objects/spring.png", newPosition);
+    HitboxVectorElement element;
+    element.hitbox.setRectangle(TA_Point(0.1, 0), TA_Point(getWidth() - 0.1, 0));
+    element.collisionType = TA_COLLISION_SPRING;
+    hitboxVector.push_back(element);
 }

@@ -15,9 +15,18 @@ class TA_Object : public TA_Pawn {
 private:
     virtual bool checkPawnCollision(TA_Polygon &rv) override {return false;}
 
+protected:
+    void updatePosition();
+
 public:
     TA_ObjectSet *objectSet;
     TA_Polygon hitbox;
+
+    struct HitboxVectorElement {
+        TA_Polygon hitbox;
+        TA_CollisionType collisionType;
+    };
+    std::vector<HitboxVectorElement> hitboxVector;
 
     TA_Object(TA_ObjectSet *newObjectSet);
     virtual bool update() {return false;}
@@ -61,6 +70,7 @@ public:
     void spawnHoverPod(TA_Point position, int range, bool flip);
     void spawnDeadKukku(TA_Point position);
     void spawnPushableRock(TA_Point position);
+    void spawnPushableSpring(TA_Point position);
 };
 
 #endif // TA_OBJECT_SET_H

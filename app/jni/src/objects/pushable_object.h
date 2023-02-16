@@ -24,4 +24,10 @@ public:
     void load(TA_Point newPosition) {TA_PushableObject::load("objects/rock.png", newPosition);}
 };
 
+class TA_PushableSpring : public TA_PushableObject {
+public:
+    using TA_PushableObject::TA_PushableObject;
+    void load(TA_Point newPosition);
+};
+
 #endif // TA_PUSHABLE_OBJECT_H

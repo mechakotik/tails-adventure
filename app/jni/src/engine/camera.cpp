@@ -8,11 +8,14 @@ void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
     position = *followPosition;
 }
 
-void TA_Camera::update(bool ground)
+void TA_Camera::update(bool ground, bool spring)
 {
     double movementSpeed = airSpeed;
     if(ground) {
         movementSpeed = groundSpeed;
+    }
+    if(spring) {
+        movementSpeed = springSpeed;
     }
 
     auto move = [&] (double current, double need) {

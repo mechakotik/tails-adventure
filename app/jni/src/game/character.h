@@ -26,6 +26,7 @@ private:
     const double hurtXsp = 1;
     const double hurtYsp = -2.5;
     const double invincibleTime = 120;
+    const double springYsp = -8;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
@@ -35,7 +36,7 @@ private:
     TA_Point topLeft, bottomRight;
 
     bool ground = false, helitail = false, wall = false, flip = false;
-    bool jump = false, jumpReleased = false;
+    bool jump = false, jumpReleased = false, spring = false;
     bool climb = false, climbHigh = false, throwing = false, hurt = false, dead = false;
     bool lookUp = false, crouch = false;
     bool useHalfSolidTiles = false;
@@ -65,6 +66,7 @@ public:
     void update();
     void drawControls() {controller.draw();}
     bool isOnGround() {return ground;}
+    bool isJumpingOnSpring() {return spring;}
     TA_Polygon *getHitbox() {return &hitbox;}
 
     int getRingsCount() {return std::max(0, rings);}

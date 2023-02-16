@@ -18,6 +18,15 @@ TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
     setCamera(objectSet->getCamera());
 }
 
+void TA_Object::updatePosition()
+{
+    setPosition(position);
+    hitbox.setPosition(position);
+    for(auto & element : hitboxVector) {
+        element.hitbox.setPosition(position);
+    }
+}
+
 void TA_ObjectSet::load(std::string filename)
 {
     tinyxml2::XMLDocument file;
@@ -55,9 +64,14 @@ void TA_ObjectSet::load(std::string filename)
             }
         }
 
-        else if(name == "pushable_rock") {
+        else if(name == "pushable_rock" || name == "pushable_spring") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnPushableRock(position);
+            if(name == "pushable_rock") {
+                spawnPushableRock(position);
+            }
+            else {
+                spawnPushableSpring(position);
+            }
         }
 
         else {
@@ -81,6 +95,11 @@ void TA_ObjectSet::update()
     for(TA_Object *currentObject : objects) {
         if(currentObject->getCollisionType() != TA_COLLISION_TRANSPARENT) {
             hitboxContainer.add(currentObject->hitbox, currentObject->getCollisionType());
+        }
+        for(TA_Object::HitboxVectorElement &element : currentObject->hitboxVector) {
+            if(element.collisionType != TA_COLLISION_TRANSPARENT) {
+                hitboxContainer.add(element.hitbox, element.collisionType);
+            }
         }
     }
 
@@ -200,6 +219,13 @@ void TA_ObjectSet::spawnPushableRock(TA_Point position)
     auto *pushableRock = new TA_PushableRock(this);
     pushableRock->load(position);
     spawnObject(pushableRock);
+}
+
+void TA_ObjectSet::spawnPushableSpring(TA_Point position)
+{
+    auto *pushableSpring = new TA_PushableSpring(this);
+    pushableSpring->load(position);
+    spawnObject(pushableSpring);
 }
 
 TA_ObjectSet::~TA_ObjectSet()

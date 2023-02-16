@@ -22,7 +22,7 @@ TA_ScreenState TA_GameScreen::update()
     character.handleInput();
     objectSet.update();
     character.update();
-    camera.update(character.isOnGround());
+    camera.update(character.isOnGround(), character.isJumpingOnSpring());
 
     tilemap.draw(0);
     tilemap.draw(1);

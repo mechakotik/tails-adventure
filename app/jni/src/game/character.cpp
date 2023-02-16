@@ -53,7 +53,6 @@ void TA_Character::handleInput()
     double prevX = position.x;
     updateCollisions();
     deltaX = position.x - prevX;
-    updateObjectCollision();
 }
 
 void TA_Character::update()
@@ -77,6 +76,7 @@ void TA_Character::update()
 
     setPosition(position);
     setFlip(flip);
+    updateObjectCollision();
     updateTool();
     if(throwing) {
         return;
@@ -88,7 +88,7 @@ void TA_Character::update()
 void TA_Character::updateGround()
 {
     verticalMove();
-    jump = false;
+    jump = spring = false;
     lookUp = (controller.getDirection() == TA_DIRECTION_UP);
     crouch = (controller.getDirection() == TA_DIRECTION_DOWN);
     if(lookUp || crouch) {
@@ -352,7 +352,7 @@ void TA_Character::updateClimb()
             int flags = getCollisionFlags(topLeft + delta, bottomRight + delta);
             if(flags == TA_GROUND_COLLISION) {
                 ground = true;
-                jump = wall = false;
+                jump = spring = wall = false;
                 climb = true;
                 climbTime = 0;
                 if(height == 32) {
@@ -384,12 +384,20 @@ void TA_Character::updateObjectCollision()
 {
     TA_Polygon hitbox;
     hitbox.setPosition(position);
-    hitbox.setRectangle(topLeft - TA_Point(0.2, 0.2), bottomRight + TA_Point(0.2, 0.2));
+    hitbox.setRectangle(topLeft - TA_Point(0.05, 0.05), bottomRight + TA_Point(0.05, 0.05));
 
     int flags = links.objectSet->checkCollision(hitbox);
     if(flags & TA_COLLISION_RING) {
         rings ++;
         ringSound.play();
+    }
+    if(flags & TA_COLLISION_SPRING) {
+        jumpSound.play();
+        velocity.y = springYsp;
+        jump = spring = true;
+        jumpTime = 0;
+        jumpReleased = false;
+        ground = false;
     }
 }
 
