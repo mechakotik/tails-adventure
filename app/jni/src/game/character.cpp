@@ -50,7 +50,9 @@ void TA_Character::handleInput()
     else {
         velocity.y += grv;
     }
+    double prevX = position.x;
     updateCollisions();
+    deltaX = position.x - prevX;
     updateObjectCollision();
 }
 
@@ -301,7 +303,7 @@ void TA_Character::updateCollisions()
 
 void TA_Character::updateClimb()
 {
-    if(!wall || pushingObject) {
+    if(!wall || !TA::equal(deltaX, 0)) {
         return;
     }
 
@@ -389,7 +391,6 @@ void TA_Character::updateObjectCollision()
         rings ++;
         ringSound.play();
     }
-    pushingObject = bool(flags & TA_COLLISION_PUSHABLE);
 }
 
 void TA_Character::updateAnimation()

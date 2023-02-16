@@ -38,9 +38,9 @@ private:
     bool jump = false, jumpReleased = false;
     bool climb = false, climbHigh = false, throwing = false, hurt = false, dead = false;
     bool lookUp = false, crouch = false;
-    bool pushingObject = false;
     bool useHalfSolidTiles = false;
     double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
+    double deltaX = 0;
     int rings = 1;
     int currentTool = TA_TOOL_BOMB;
 
