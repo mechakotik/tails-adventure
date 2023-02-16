@@ -43,6 +43,7 @@ private:
     TA_Tilemap *tilemap;
     TA_Polygon *characterHitbox;
     TA_HitboxContainer hitboxContainer;
+    TA_Point spawnPoint;
 
     void spawnObject(TA_Object *object);
 
@@ -53,6 +54,7 @@ public:
     void setCollisionTilemap(TA_Tilemap *newTilemap) {tilemap = newTilemap;}
     void setCharacterHitbox(TA_Polygon *newHitbox) {characterHitbox = newHitbox;}
     TA_Point getCharacterPosition() {return characterHitbox->getVertex(0);}
+    TA_Point getCharacterSpawnPoint() {return spawnPoint;}
 
     void load(std::string filename);
     void update();

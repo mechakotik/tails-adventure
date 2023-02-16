@@ -9,9 +9,6 @@
 void TA_Character::load(TA_GameScreenLinks newLinks)
 {
     links = newLinks;
-    position = {60, 200};
-    updateFollowPosition();
-    links.camera->setFollowPosition(&followPosition);
     controller.load();
 
     areaBeginSound.load("sound/pf_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
@@ -509,4 +506,11 @@ void TA_Character::updateFollowPosition()
         sourcePosition.x = climbPosition.x;
     }
     followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
+}
+
+void TA_Character::setSpawnPoint(TA_Point newPosition)
+{
+    position = newPosition;
+    updateFollowPosition();
+    links.camera->setFollowPosition(&followPosition);
 }

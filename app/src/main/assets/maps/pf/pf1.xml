@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
+	<object name="spawn_point" x="60" y="201"/>
+
 	<object name="breakable_block" x="1120" y="256"/>
 	<object name="breakable_block" x="1120" y="272"/>
 	<object name="breakable_block" x="1120" y="288"/>
@@ -21,6 +23,7 @@
 	<object name="hover_pod" x="368" y="160" range="272" direction="left"/>
 	<object name="hover_pod" x="752" y="144" range="208" direction="left"/>
 	<object name="hover_pod" x="1520" y="48" range="208" direction="left"/>
+	<object name="hover_pod" x="1712" y="8" range="128" direction="left"/>
 	
 	<object name="pushable_rock" x="1272" y="320"/>
 	<object name="pushable_spring" x="1768" y="384"/>

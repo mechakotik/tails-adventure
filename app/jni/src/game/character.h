@@ -68,6 +68,7 @@ public:
     bool isOnGround() {return ground;}
     bool isJumpingOnSpring() {return spring;}
     TA_Polygon *getHitbox() {return &hitbox;}
+    void setSpawnPoint(TA_Point newPosition);
 
     int getRingsCount() {return std::max(0, rings);}
     int getCurrentItem() {return 0;}

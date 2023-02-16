@@ -74,6 +74,11 @@ void TA_ObjectSet::load(std::string filename)
             }
         }
 
+        else if(name == "spawn_point") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnPoint = position;
+        }
+
         else {
             TA::handleError("Unknown object %s", name.c_str());
         }

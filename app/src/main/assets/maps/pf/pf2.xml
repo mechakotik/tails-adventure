@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+	<object name="spawn_point" x="14" y="217"/>
+
+	<object name="breakable_block" x="1792" y="48"/>
+	<object name="breakable_block" x="1808" y="48"/>
+	<object name="breakable_block" x="1824" y="48"/>
+	<object name="breakable_block" x="1792" y="64"/>
+	<object name="breakable_block" x="1808" y="64"/>
+	<object name="breakable_block" x="1824" y="64"/>
+	<object name="breakable_block" x="1872" y="80"/>
+	<object name="breakable_block" x="1888" y="80"/>
+	<object name="breakable_block" x="1872" y="96"/>
+	<object name="breakable_block" x="1888" y="96"/>
+</objects>

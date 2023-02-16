@@ -12,7 +12,7 @@ namespace TA
     int screenWidth, screenHeight;
     double elapsedTime, widthMultiplier, heightMultiplier;
 
-    std::string levelPath = "maps/pf/pf1";
+    std::string levelPath = "maps/pf/pf2";
 
     namespace random
     {

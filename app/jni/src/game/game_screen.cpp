@@ -15,6 +15,7 @@ void TA_GameScreen::init()
     objectSet.setCamera(&camera);
     objectSet.setCharacterHitbox(character.getHitbox());
     objectSet.load(TA::levelPath + ".xml");
+    character.setSpawnPoint(objectSet.getCharacterSpawnPoint());
 }
 
 TA_ScreenState TA_GameScreen::update()
