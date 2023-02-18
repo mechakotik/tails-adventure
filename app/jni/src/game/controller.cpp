@@ -45,6 +45,13 @@ void TA_CommonController::update()
     else if(!TA::gamepad::connected() && currentController == &gamepad) {
         currentController = &touchscreen;
     }
+    if(getDirection() != currentDirection) {
+        currentDirection = getDirection();
+        justChanged = true;
+    }
+    else {
+        justChanged = false;
+    }
 }
 
 void TA_CommonController::draw()

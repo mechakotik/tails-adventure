@@ -89,6 +89,8 @@ private:
     TA_TouchscreenController touchscreen;
     TA_GamepadController gamepad;
     TA_Controller *currentController = nullptr;
+    TA_Direction currentDirection = TA_DIRECTION_MAX;
+    bool justChanged = false;
 
 public:
     void load();
@@ -100,6 +102,7 @@ public:
 
     bool isPressed(TA_FunctionButton button) {return currentController->isPressed(button);}
     bool isJustPressed(TA_FunctionButton button) {return currentController->isJustPressed(button);}
+    bool isJustChangedDirection() {return justChanged;}
 
     virtual void setDpadPosition(TA_Point position, TA_Point scale) {touchscreen.setDpadPosition(position, scale);}
     virtual void setFunctionButtonPosition(TA_FunctionButton button, TA_Point position, TA_Point scale) {touchscreen.setFunctionButtonPosition(button, position, scale);}

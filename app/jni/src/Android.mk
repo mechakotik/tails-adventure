@@ -28,12 +28,14 @@ LOCAL_SRC_FILES := main.cpp \
                    engine/gamepad.cpp \
                    engine/resource_manager.cpp \
                    engine/hitbox_container.cpp \
+                   engine/font.cpp \
                    game/controller.cpp \
                    game/character.cpp \
                    game/hud.cpp \
                    game/intro_screen.cpp \
                    game/title_screen.cpp \
                    game/game_screen.cpp \
+                   game/devmenu_screen.cpp \
                    objects/explosion.cpp \
                    objects/bomb.cpp \
                    objects/breakable_block.cpp \

@@ -1,13 +1,14 @@
 #include "screen_state_machine.h"
 #include "game/intro_screen.h"
 #include "game/title_screen.h"
-#include "error.h"
 #include "game/game_screen.h"
+#include "game/devmenu_screen.h"
+#include "error.h"
 
 void TA_ScreenStateMachine::init()
 {
-    currentState = TA_SCREENSTATE_GAME;
-    currentScreen = new TA_GameScreen();
+    currentState = TA_SCREENSTATE_DEVMENU;
+    currentScreen = new TA_DevmenuScreen();
     currentScreen -> init();
 }
 
@@ -30,6 +31,9 @@ bool TA_ScreenStateMachine::update()
             break;
         case TA_SCREENSTATE_GAME:
             currentScreen = new TA_GameScreen();
+            break;
+        case TA_SCREENSTATE_DEVMENU:
+            currentScreen = new TA_DevmenuScreen();
             break;
         default:
             TA::handleError("%s", "Invalid new screen state");
