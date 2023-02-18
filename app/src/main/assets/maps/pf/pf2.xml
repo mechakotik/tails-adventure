@@ -12,4 +12,18 @@
 	<object name="breakable_block" x="1888" y="80"/>
 	<object name="breakable_block" x="1872" y="96"/>
 	<object name="breakable_block" x="1888" y="96"/>
+	
+	<object name="walker" x="176" y="176" direction="left"/>
+	<object name="walker" x="576" y="144" range="112" direction="left"/>
+	<object name="walker" x="580" y="320" range="32" direction="right"/>
+	<object name="walker" x="912" y="144" range="96" direction="left"/>
+	<object name="walker" x="1300" y="96" direction="left"/>
+	<object name="walker" x="1372" y="16" range="40" direction="left"/>
+	<object name="walker" x="1552" y="128" range="12" direction="left"/>
+	
+	<object name="hover_pod" x="384" y="112" range="64" direction="left"/>
+	<object name="hover_pod" x="736" y="112" range="80" direction="left"/>
+	<object name="hover_pod" x="800" y="320" range="160" direction="left"/>
+	<object name="hover_pod" x="1136" y="112" range="144" direction="left"/>
+	<object name="hover_pod" x="1680" y="16" range="128" direction="left"/>
 </objects>
