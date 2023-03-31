@@ -7,6 +7,7 @@
 #include "engine/camera.h"
 #include "engine/tilemap.h"
 #include "engine/hitbox_container.h"
+#include "screen.h"
 
 class TA_ObjectSet;
 enum TA_BombMode : int;
@@ -44,6 +45,8 @@ private:
     TA_Polygon *characterHitbox;
     TA_HitboxContainer hitboxContainer;
     TA_Point spawnPoint;
+    TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
+    bool spawnFlip = false, firstSpawnPointSet = false;
 
 public:
     ~TA_ObjectSet();
@@ -53,12 +56,15 @@ public:
     void setCharacterHitbox(TA_Polygon *newHitbox) {characterHitbox = newHitbox;}
     TA_Point getCharacterPosition() {return characterHitbox->getVertex(0);}
     TA_Point getCharacterSpawnPoint() {return spawnPoint;}
+    bool getCharacterSpawnFlip() {return spawnFlip;}
 
     void load(std::string filename);
     void update();
     void draw(int priority);
     void checkCollision(TA_Polygon &hitbox, int &flags);
     int checkCollision(TA_Polygon &hitbox);
+    void setTransition(TA_ScreenState screenState) {transition = screenState;}
+    TA_ScreenState getTransition() {return transition;}
 
     template<class T, typename... P>
     void spawnObject(P... params) {

@@ -11,6 +11,7 @@
 #include "engine/error.h"
 #include "engine/tools.h"
 #include "tinyxml2.h"
+#include "objects/transition.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -76,11 +77,31 @@ void TA_ObjectSet::load(std::string filename)
 
         else if(name == "spawn_point") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnPoint = position;
+            std::string currentLevelPath = "";
+            if(element->Attribute("previous")) {
+                currentLevelPath = element->Attribute("previous");
+            }
+            if(!firstSpawnPointSet || currentLevelPath == TA::previousLevelPath) {
+                spawnPoint = position;
+                if(element->Attribute("direction")) {
+                    spawnFlip = (strcmp(element->Attribute("direction"), "left") == 0);
+                }
+                else {
+                    spawnFlip = false;
+                }
+                firstSpawnPointSet = true;
+            }
+        }
+
+        else if(name == "level_transition") {
+            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
+            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
+            std::string levelPath = element->Attribute("path");
+            spawnObject<TA_Transition>(topLeft, bottomRight, TA_SCREENSTATE_GAME, levelPath);
         }
 
         else {
-            TA::handleError("Unknown object %s", name.c_str());
+            TA::printWarning("Unknown object %s", name.c_str());
         }
     }
 }

@@ -5,8 +5,12 @@
 
 class TA_ScreenStateMachine {
 private:
-    TA_ScreenState currentState;
+    TA_ScreenState currentState, neededState;
     TA_Screen *currentScreen;
+    double transitionTimer = 0;
+    bool changeState = false;
+
+    const double transitionTime = 6;
 
 public:
     void init();

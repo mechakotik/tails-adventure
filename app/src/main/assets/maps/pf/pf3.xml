@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
-	<object name="spawn_point" x="0" y="0"/>
+	<object name="spawn_point" previous="maps/pf/pf2" x="-7" y="345"/>
+	
+	<object name="level_transition" path="maps/pf/pf2" top="0" bottom="384" left="0" right="2"/>
 </objects>

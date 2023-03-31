@@ -15,7 +15,8 @@ void TA_GameScreen::init()
     objectSet.setCamera(&camera);
     objectSet.setCharacterHitbox(character.getHitbox());
     objectSet.load(TA::levelPath + ".xml");
-    character.setSpawnPoint(objectSet.getCharacterSpawnPoint());
+    character.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());
+    TA::previousLevelPath = TA::levelPath;
 }
 
 TA_ScreenState TA_GameScreen::update()
@@ -36,6 +37,9 @@ TA_ScreenState TA_GameScreen::update()
 
     if(character.gameOver()) {
         return TA_SCREENSTATE_TITLE;
+    }
+    if(objectSet.getTransition() != TA_SCREENSTATE_CURRENT) {
+        return objectSet.getTransition();
     }
     return TA_SCREENSTATE_CURRENT;
 }

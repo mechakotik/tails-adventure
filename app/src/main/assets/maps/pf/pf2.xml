@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
-	<object name="spawn_point" x="14" y="217"/>
+	<object name="spawn_point" previous="maps/pf/pf1" x="-7" y="217"/>
+	<object name="spawn_point" previous="maps/pf/pf3" x="1946" y="185" direction="left"/>
+	
+	<object name="level_transition" path="maps/pf/pf1" top="0" bottom="256" left="0" right="2"/>
+	<object name="level_transition" path="maps/pf/pf3" top="160" bottom="224" left="1982" right="1984"/>
 
 	<object name="breakable_block" x="1792" y="48"/>
 	<object name="breakable_block" x="1808" y="48"/>

@@ -53,11 +53,12 @@ void TA_Button::update()
             TA_Point point = finger.second;
             if(inside(point)) {
                 touchPosition = point;
-                if(!TA::touchscreen::justPressedFingers.count(finger.first)) {
+                if(!justCreated && !TA::touchscreen::justPressedFingers.count(finger.first)) {
                     hold = true;
                 }
                 pressed = true;
             }
         }
     }
+    justCreated = false;
 }

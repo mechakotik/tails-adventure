@@ -12,7 +12,7 @@ namespace TA { namespace touchscreen {
 
 class TA_Button : public TA_Polygon {
 private:
-    bool pressed = false, hold = false, mode = false;
+    bool pressed = false, hold = false, mode = false, justCreated = true;
     TA_Point touchPosition;
 
 public:

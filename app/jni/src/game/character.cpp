@@ -24,6 +24,7 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
 
 void TA_Character::handleInput()
 {
+    //TA::printLog("%f %f", position.x, position.y);
     controller.setAnalogStick(helitail);
     controller.update();
     if(climb || throwing || dead) {
@@ -508,9 +509,10 @@ void TA_Character::updateFollowPosition()
     followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
 }
 
-void TA_Character::setSpawnPoint(TA_Point newPosition)
+void TA_Character::setSpawnPoint(TA_Point newPosition, bool newFlip)
 {
     position = newPosition;
+    flip = newFlip;
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
 }

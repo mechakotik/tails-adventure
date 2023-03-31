@@ -29,7 +29,7 @@ namespace TA
     extern double elapsedTime, widthMultiplier, heightMultiplier;
     const double epsilon = 1e-5;
 
-    extern std::string levelPath;
+    extern std::string levelPath, previousLevelPath;
 
     std::string readStringFromFile(std::string filename);
     void drawScreenRect(int r, int g, int b, int a);
