@@ -1,4 +1,5 @@
 #include "hover_pod.h"
+#include "dead_kukku.h"
 
 void TA_HoverPod::load(TA_Point newPosition, int range, bool flip)
 {
@@ -51,7 +52,7 @@ bool TA_HoverPod::update()
     int flags;
     objectSet->checkCollision(hitbox, flags);
     if(flags & TA_COLLISION_EXPLOSION) {
-        objectSet->spawnDeadKukku(position);
+        objectSet->spawnObject<TA_DeadKukku>(position);
         return false;
     }
     return true;

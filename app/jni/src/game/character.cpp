@@ -456,16 +456,16 @@ void TA_Character::updateTool()
     switch(currentTool) {
         case TA_TOOL_BOMB:
             if(helitail) {
-                links.objectSet->spawnBomb(position + TA_Point(20, 32), flip, TA_BOMB_MODE_HELITAIL);
+                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point(20, 32), flip, TA_BOMB_MODE_HELITAIL);
             }
             else if(!ground) {
-                links.objectSet->spawnBomb(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
+                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
             }
             else if(crouch) {
-                links.objectSet->spawnBomb(position + TA_Point((flip ? 12 : 23), 20), flip, TA_BOMB_MODE_CROUCH);
+                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 12 : 23), 20), flip, TA_BOMB_MODE_CROUCH);
             }
             else {
-                links.objectSet->spawnBomb(position + TA_Point((flip ? 27 : 8), 12), flip, TA_BOMB_MODE_DEFAULT);
+                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 27 : 8), 12), flip, TA_BOMB_MODE_DEFAULT);
                 setAnimation("throw");
                 throwing = true;
             }

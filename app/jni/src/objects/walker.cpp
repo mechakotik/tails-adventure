@@ -1,5 +1,6 @@
 #include "walker.h"
 #include "engine/tools.h"
+#include "dead_kukku.h"
 
 void TA_Walker::load(TA_Point newPosition, int range, bool flip)
 {
@@ -66,7 +67,7 @@ bool TA_Walker::update()
             setAnimation("walker_fire");
             timer += TA::elapsedTime;
             if(timer > fireTime) {
-                objectSet->spawnWalkerBullet(position + TA_Point(-1, 16), direction);
+                objectSet->spawnObject<TA_WalkerBullet>(position + TA_Point(-1, 16), direction);
                 state = TA_WALKER_STATE_MOVE_AWAY;
             }
             break;
@@ -100,7 +101,7 @@ bool TA_Walker::update()
     int flags;
     objectSet->checkCollision(hitbox, flags);
     if(flags & TA_COLLISION_EXPLOSION) {
-        objectSet->spawnDeadKukku(position);
+        objectSet->spawnObject<TA_DeadKukku>(position);
         return false;
     }
     return true;

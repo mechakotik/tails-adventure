@@ -43,7 +43,7 @@ void TA_ObjectSet::load(std::string filename)
             if(element->Attribute("drops_ring", "true")) {
                 dropsRing = true;
             }
-            spawnBreakableBlock(position, dropsRing);
+            spawnObject<TA_BreakableBlock>(position, dropsRing);
         }
 
         else if(name == "walker" || name == "hover_pod") {
@@ -57,20 +57,20 @@ void TA_ObjectSet::load(std::string filename)
                 direction = false;
             }
             if(name == "walker") {
-                spawnWalker(position, range, direction);
+                spawnObject<TA_Walker>(position, range, direction);
             }
             else {
-                spawnHoverPod(position, range, direction);
+                spawnObject<TA_HoverPod>(position, range, direction);
             }
         }
 
         else if(name == "pushable_rock" || name == "pushable_spring") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             if(name == "pushable_rock") {
-                spawnPushableRock(position);
+                spawnObject<TA_PushableRock>(position);
             }
             else {
-                spawnPushableSpring(position);
+                spawnObject<TA_PushableSpring>(position);
             }
         }
 
@@ -149,88 +149,6 @@ int TA_ObjectSet::checkCollision(TA_Polygon &hitbox)
     int flags = 0;
     checkCollision(hitbox, flags);
     return flags;
-}
-
-void TA_ObjectSet::spawnObject(TA_Object *object)
-{
-    spawnedObjects.push_back(object);
-}
-
-void TA_ObjectSet::spawnExplosion(TA_Point position, int delay)
-{
-    auto *explosion = new TA_Explosion(this);
-    explosion->load(position, delay);
-    spawnObject(explosion);
-}
-
-void TA_ObjectSet::spawnBomb(TA_Point position, bool direction, TA_BombMode mode)
-{
-    auto *bomb = new TA_Bomb(this);
-    bomb->load(position, direction, mode);
-    spawnObject(bomb);
-}
-
-void TA_ObjectSet::spawnBreakableBlock(TA_Point position, bool dropsRing)
-{
-    auto *block = new TA_BreakableBlock(this);
-    block->load(position, dropsRing);
-    spawnObject(block);
-}
-
-void TA_ObjectSet::spawnParticle(std::string filename, TA_Point position, TA_Point velocity, TA_Point delta)
-{
-    auto *particle = new TA_Particle(this);
-    particle->load(filename, position, velocity, delta);
-    spawnObject(particle);
-}
-
-void TA_ObjectSet::spawnRing(TA_Point position)
-{
-    auto *ring = new TA_Ring(this);
-    ring->load(position);
-    spawnObject(ring);
-}
-
-void TA_ObjectSet::spawnWalker(TA_Point position, int range, bool flip)
-{
-    auto *walker = new TA_Walker(this);
-    walker->load(position, range, flip);
-    spawnObject(walker);
-}
-
-void TA_ObjectSet::spawnWalkerBullet(TA_Point position, bool direction)
-{
-    auto *walkerBullet = new TA_WalkerBullet(this);
-    walkerBullet->load(position, direction);
-    spawnObject(walkerBullet);
-}
-
-void TA_ObjectSet::spawnHoverPod(TA_Point position, int range, bool flip)
-{
-    auto *hoverPod = new TA_HoverPod(this);
-    hoverPod->load(position, range, flip);
-    spawnObject(hoverPod);
-}
-
-void TA_ObjectSet::spawnDeadKukku(TA_Point position)
-{
-    auto *deadKukku = new TA_DeadKukku(this);
-    deadKukku->load(position);
-    spawnObject(deadKukku);
-}
-
-void TA_ObjectSet::spawnPushableRock(TA_Point position)
-{
-    auto *pushableRock = new TA_PushableRock(this);
-    pushableRock->load(position);
-    spawnObject(pushableRock);
-}
-
-void TA_ObjectSet::spawnPushableSpring(TA_Point position)
-{
-    auto *pushableSpring = new TA_PushableSpring(this);
-    pushableSpring->load(position);
-    spawnObject(pushableSpring);
 }
 
 TA_ObjectSet::~TA_ObjectSet()

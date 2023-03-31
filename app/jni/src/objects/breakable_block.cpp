@@ -1,4 +1,6 @@
 #include "breakable_block.h"
+#include "particle.h"
+#include "ring.h"
 
 void TA_BreakableBlock::load(TA_Point newPosition, bool newDropsRing)
 {
@@ -16,12 +18,12 @@ bool TA_BreakableBlock::update()
     objectSet->checkCollision(hitbox, flags);
     if((flags & TA_COLLISION_EXPLOSION) != 0) {
         const std::string rockPath = "maps/pf/pf_rock.png";
-        objectSet->spawnParticle(rockPath, position + TA_Point(2, 2), {-0.5, -2}, {0, grv});
-        objectSet->spawnParticle(rockPath, position + TA_Point(8, 2), {0.5, -2}, {0, grv});
-        objectSet->spawnParticle(rockPath, position + TA_Point(2, 8), {-0.5, -0.5}, {0, grv});
-        objectSet->spawnParticle(rockPath, position + TA_Point(8, 8), {0.5, -0.5}, {0, grv});
+        objectSet->spawnObject<TA_Particle>(rockPath, position + TA_Point(2, 2), TA_Point(-0.5, -2), TA_Point(0, grv));
+        objectSet->spawnObject<TA_Particle>(rockPath, position + TA_Point(8, 2), TA_Point(0.5, -2), TA_Point(0, grv));
+        objectSet->spawnObject<TA_Particle>(rockPath, position + TA_Point(2, 8), TA_Point(-0.5, -0.5), TA_Point(0, grv));
+        objectSet->spawnObject<TA_Particle>(rockPath, position + TA_Point(8, 8), TA_Point(0.5, -0.5), TA_Point(0, grv));
         if(dropsRing) {
-            objectSet->spawnRing(position + TA_Point(4, 4));
+            objectSet->spawnObject<TA_Ring>(position + TA_Point(4, 4));
         }
         return false;
     }

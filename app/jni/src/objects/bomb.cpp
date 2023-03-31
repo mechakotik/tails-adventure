@@ -1,5 +1,6 @@
 #include "bomb.h"
 #include "engine/tools.h"
+#include "objects/explosion.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {
     TA_Sprite::load("objects/bomb.png");
@@ -52,11 +53,11 @@ bool TA_Bomb::update()
         hitbox.setPosition(position);
         objectSet->checkCollision(hitbox, flags);
         if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_DAMAGE) || (flags & TA_COLLISION_PUSHABLE)) {
-            objectSet->spawnExplosion(position);
+            objectSet->spawnObject<TA_Explosion>(position);
             for(int i = 1; i <= 3; i ++) {
                 TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
                 explosionSound.play();
-                objectSet->spawnExplosion(explosionPosition, i * 16);
+                objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
             }
             return false;
         }

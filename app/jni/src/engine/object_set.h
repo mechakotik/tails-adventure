@@ -45,8 +45,6 @@ private:
     TA_HitboxContainer hitboxContainer;
     TA_Point spawnPoint;
 
-    void spawnObject(TA_Object *object);
-
 public:
     ~TA_ObjectSet();
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
@@ -62,17 +60,12 @@ public:
     void checkCollision(TA_Polygon &hitbox, int &flags);
     int checkCollision(TA_Polygon &hitbox);
 
-    void spawnExplosion(TA_Point position, int delay = 0);
-    void spawnBomb(TA_Point position, bool direction, TA_BombMode mode);
-    void spawnBreakableBlock(TA_Point position, bool dropsRing = false);
-    void spawnParticle(std::string filename, TA_Point position, TA_Point velocity, TA_Point delta);
-    void spawnRing(TA_Point position);
-    void spawnWalker(TA_Point position, int range, bool flip);
-    void spawnWalkerBullet(TA_Point position, bool direction);
-    void spawnHoverPod(TA_Point position, int range, bool flip);
-    void spawnDeadKukku(TA_Point position);
-    void spawnPushableRock(TA_Point position);
-    void spawnPushableSpring(TA_Point position);
+    template<class T, typename... P>
+    void spawnObject(P... params) {
+        auto *object = new T(this);
+        object->load(params...);
+        spawnedObjects.push_back(object);
+    }
 };
 
 #endif // TA_OBJECT_SET_H
