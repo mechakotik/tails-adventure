@@ -5,6 +5,7 @@ void TA_DevmenuScreen::init()
     controller.load();
     levels.emplace_back("maps/pf/pf1");
     levels.emplace_back("maps/pf/pf2");
+    levels.emplace_back("maps/pf/pf3");
     normalFont.load("fonts/devmenu.png", 7, 9);
     normalFont.setMapping(mapping);
     selectedFont.load("fonts/devmenu_selected.png", 7, 9);

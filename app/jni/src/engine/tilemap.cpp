@@ -75,9 +75,12 @@ void TA_Tilemap::load(std::string filename)
         }
     };
 
+    int currentLayer = 0;
+
     auto loadLayer = [&](tinyxml2::XMLElement *layerElement)
     {
-        int layer = layerCount - layerElement->IntAttribute("id");
+        int layer = currentLayer;
+        currentLayer ++;
         std::stringstream mapStream;
         mapStream << layerElement->FirstChildElement("data")->GetText();
         for(int tileY = 0; tileY < height; tileY ++ ) {
