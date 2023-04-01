@@ -6,16 +6,16 @@
 	<object name="level_transition" path="maps/pf/pf1" top="0" bottom="256" left="0" right="2"/>
 	<object name="level_transition" path="maps/pf/pf3" top="160" bottom="224" left="1982" right="1984"/>
 
-	<object name="breakable_block" x="1792" y="48"/>
-	<object name="breakable_block" x="1808" y="48"/>
-	<object name="breakable_block" x="1824" y="48"/>
-	<object name="breakable_block" x="1792" y="64"/>
-	<object name="breakable_block" x="1808" y="64"/>
-	<object name="breakable_block" x="1824" y="64"/>
-	<object name="breakable_block" x="1872" y="80"/>
-	<object name="breakable_block" x="1888" y="80"/>
-	<object name="breakable_block" x="1872" y="96"/>
-	<object name="breakable_block" x="1888" y="96"/>
+	<object name="pf_breakable_block" x="1792" y="48"/>
+	<object name="pf_breakable_block" x="1808" y="48"/>
+	<object name="pf_breakable_block" x="1824" y="48"/>
+	<object name="pf_breakable_block" x="1792" y="64"/>
+	<object name="pf_breakable_block" x="1808" y="64"/>
+	<object name="pf_breakable_block" x="1824" y="64"/>
+	<object name="pf_breakable_block" x="1872" y="80"/>
+	<object name="pf_breakable_block" x="1888" y="80"/>
+	<object name="pf_breakable_block" x="1872" y="96"/>
+	<object name="pf_breakable_block" x="1888" y="96"/>
 	
 	<object name="walker" x="176" y="176" direction="left"/>
 	<object name="walker" x="576" y="144" range="112" direction="left"/>
@@ -30,4 +30,6 @@
 	<object name="hover_pod" x="800" y="320" range="160" direction="left"/>
 	<object name="hover_pod" x="1136" y="112" range="144" direction="left"/>
 	<object name="hover_pod" x="1680" y="16" range="128" direction="left"/>
+	
+	<object name="pf_bridge" leftx="336" rightx="447" y="176"/>
 </objects>

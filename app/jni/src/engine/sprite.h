@@ -43,6 +43,7 @@ private:
     double animationTimer = 0;
     bool flip = false, hidden = false, updateAnimationNeeded = true;
     bool noPixelAspectRatio = false;
+    int alpha = 255;
 
     void updateAnimation();
 
@@ -53,7 +54,7 @@ public:
     virtual void draw();
     void setPosition(TA_Point newPosition) {position = newPosition;}
     void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}
-    void setAlpha(int alpha);
+    void setAlpha(int newAlpha);
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
     void setScale(TA_Point newScale) {scale = newScale;}
     void setColorMod(int r, int g, int b);

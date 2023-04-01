@@ -80,6 +80,7 @@ void TA_Sprite::draw()
     dstRect.w = frameWidth * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 1;
     dstRect.h = frameHeight * TA::heightMultiplier * scale.y + 1;
     if(!hidden) {
+        SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
         SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
         SDL_RenderCopyEx(TA::renderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
     }
@@ -164,12 +165,12 @@ bool TA_Sprite::isAnimated()
     return animation.frames.size() >= 2;
 }
 
-void TA_Sprite::setAlpha(int alpha)
+void TA_Sprite::setAlpha(int newAlpha)
 {
+    alpha = newAlpha;
     alpha = std::min(alpha, 255);
     alpha = std::max(alpha, 0);
     hidden = (alpha == 0);
-    SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
 }
 
 void TA_Sprite::setColorMod(int r, int g, int b)

@@ -12,6 +12,7 @@
 #include "engine/tools.h"
 #include "tinyxml2.h"
 #include "objects/transition.h"
+#include "objects/bridge.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -38,7 +39,7 @@ void TA_ObjectSet::load(std::string filename)
     {
         std::string name = element->Attribute("name");
 
-        if(name == "breakable_block") {
+        if(name == "pf_breakable_block") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             bool dropsRing = false;
             if(element->Attribute("drops_ring", "true")) {
@@ -98,6 +99,15 @@ void TA_ObjectSet::load(std::string filename)
             TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
             std::string levelPath = element->Attribute("path");
             spawnObject<TA_Transition>(topLeft, bottomRight, TA_SCREENSTATE_GAME, levelPath);
+        }
+
+        else if(name == "pf_bridge") {
+            int left = element->IntAttribute("leftx");
+            int right = element->IntAttribute("rightx");
+            int y = element->IntAttribute("y");
+            for(int x = left; x <= right; x += 16) {
+                spawnObject<TA_Bridge>(TA_Point(x, y), "maps/pf/pf_bridge.png", "maps/pf/pf_bridge_part.png");
+            }
         }
 
         else {
