@@ -110,6 +110,11 @@ void TA_ObjectSet::load(std::string filename)
             }
         }
 
+        else if(name == "camera_lock_point") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            camera->setLockPosition(position);
+        }
+
         else {
             TA::printWarning("Unknown object %s", name.c_str());
         }

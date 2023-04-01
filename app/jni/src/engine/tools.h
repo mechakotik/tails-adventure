@@ -36,6 +36,11 @@ namespace TA
     void drawShadow(int factor);
     bool equal(double a, double b);
 
+    template<typename T>
+    T sign(T a) {
+        return (a >= 0 ? 1 : -1);
+    }
+
     namespace random
     {
         void init(unsigned long long seed);

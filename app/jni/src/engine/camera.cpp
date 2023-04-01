@@ -8,6 +8,13 @@ void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
     position = *followPosition;
 }
 
+void TA_Camera::setLockPosition(TA_Point newLockPosition)
+{
+    lockPosition = newLockPosition;
+    locked = true;
+    lockedX = lockedY = false;
+}
+
 void TA_Camera::update(bool ground, bool spring)
 {
     double movementSpeed = airSpeed;
@@ -28,8 +35,23 @@ void TA_Camera::update(bool ground, bool spring)
         return current;
     };
 
-    position.x = move(position.x, followPosition->x);
-    position.y = move(position.y, followPosition->y);
+    TA_Point previousPosition = position;
+    if(!lockedX) {
+        position.x = move(position.x, followPosition->x);
+    }
+    if(!lockedY) {
+        position.y = move(position.y, followPosition->y);
+    }
+    if(locked) {
+        if(!lockedY && lockPosition.getDistance(position) <= 256 && TA::sign(previousPosition.y - lockPosition.y) != TA::sign(position.y - lockPosition.y)) {
+            position.y = lockPosition.y;
+            lockedY = true;
+        }
+        if(lockedY && !lockedX && TA::sign(previousPosition.x - lockPosition.x) != TA::sign(position.x - lockPosition.x)) {
+            position.x = lockPosition.x;
+            lockedX = true;
+        }
+    }
 
     auto normalize = [&] (double current, double left, double right) {
         current = std::max(current, left);
