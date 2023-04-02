@@ -13,6 +13,7 @@
 #include "tinyxml2.h"
 #include "objects/transition.h"
 #include "objects/bridge.h"
+#include "objects/bird_walker.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -113,6 +114,11 @@ void TA_ObjectSet::load(std::string filename)
         else if(name == "camera_lock_point") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             camera->setLockPosition(position);
+        }
+
+        else if(name == "bird_walker") {
+            double floorY = element->IntAttribute("floor_y");
+            spawnObject<TA_BirdWalker>(floorY);
         }
 
         else {

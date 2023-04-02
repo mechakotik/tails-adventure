@@ -20,7 +20,7 @@ private:
 
     const double delayTime = 25;
     const double fallingTime = 15;
-    const double initialSpeed = 2, grv = 0.25;
+    const double initialSpeed = 0, grv = 0.25;
 
 public:
     using TA_Object::TA_Object;

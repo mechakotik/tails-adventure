@@ -59,10 +59,14 @@ void TA_Sprite::loadFromTexture(TA_Texture *newTexture, int newFrameWidth, int n
     }
 
     animation = TA_Animation(0);
+    loaded = true;
 }
 
 void TA_Sprite::draw()
 {
+    if(!loaded) {
+        return;
+    }
     updateAnimation();
     SDL_Rect srcRect, dstRect;
     srcRect.x = (frameWidth * frame) % texture->width;

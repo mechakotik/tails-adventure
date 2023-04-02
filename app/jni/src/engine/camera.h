@@ -8,7 +8,7 @@ private:
      TA_Point position, lockPosition;
      TA_Point *followPosition;
      TA_Rect border;
-     const double groundSpeed = 1, airSpeed = 3, springSpeed = 5;
+     const double groundSpeed = 1, airSpeed = 3, springSpeed = 5, maxLockDistance = 256;
      bool locked = false, lockedX = false, lockedY = false;
 
 public:

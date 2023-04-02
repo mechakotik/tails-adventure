@@ -47,6 +47,7 @@ LOCAL_SRC_FILES := main.cpp \
                    objects/pushable_object.cpp \
                    objects/transition.cpp \
                    objects/bridge.cpp \
+                   objects/bird_walker.cpp \
                    $(LOCAL_PATH)/../tinyxml2/tinyxml2.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer

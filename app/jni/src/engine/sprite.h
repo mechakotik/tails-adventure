@@ -41,7 +41,7 @@ private:
     TA_Animation animation;
     int animationFrame = 0;
     double animationTimer = 0;
-    bool flip = false, hidden = false, updateAnimationNeeded = true;
+    bool flip = false, hidden = false, updateAnimationNeeded = true, loaded = false;
     bool noPixelAspectRatio = false;
     int alpha = 255;
 
