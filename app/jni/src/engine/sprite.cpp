@@ -195,3 +195,9 @@ int TA_Sprite::getAnimationFrame()
     updateAnimation();
     return animationFrame;
 }
+
+int TA_Sprite::getCurrentFrame()
+{
+    updateAnimation();
+    return frame;
+}

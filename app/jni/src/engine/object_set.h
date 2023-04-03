@@ -17,7 +17,7 @@ private:
     virtual bool checkPawnCollision(TA_Polygon &rv) override {return false;}
 
 protected:
-    void updatePosition();
+    virtual void updatePosition();
 
 public:
     TA_ObjectSet *objectSet;

@@ -61,4 +61,17 @@ void TA_Camera::update(bool ground, bool spring)
 
     position.x = normalize(position.x, border.topLeft.x, border.bottomRight.x);
     position.y = normalize(position.y, border.topLeft.y, border.bottomRight.y);
+
+    if(shakeTime > 0) {
+        int previousStep = shakeTime / shakeFrequency;
+        shakeTime -= TA::elapsedTime;
+        int currentStep = shakeTime / shakeFrequency;
+        if(previousStep != currentStep) {
+            shakeDelta.x = (TA::random::next() % 2 == 0 ? -shakeRadius : shakeRadius);
+            shakeDelta.y = (TA::random::next() % 2 == 0 ? -shakeRadius : shakeRadius);
+        }
+    }
+    else {
+        shakeDelta = {0, 0};
+    }
 }

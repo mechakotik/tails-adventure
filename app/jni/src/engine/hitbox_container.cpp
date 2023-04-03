@@ -2,6 +2,9 @@
 
 void TA_HitboxContainer::add(TA_Polygon &hitbox, TA_CollisionType type)
 {
+    if(hitbox.empty()) {
+        return;
+    }
     Element element = {&hitbox, type};
 
     auto addToChunk = [&](Chunk &chunk) {

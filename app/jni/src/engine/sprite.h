@@ -52,6 +52,7 @@ public:
     void loadFromTexture(TA_Texture *newTexture, int frameWidth = -1, int frameHeight = -1);
 
     virtual void draw();
+
     void setPosition(TA_Point newPosition) {position = newPosition;}
     void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}
     void setAlpha(int newAlpha);
@@ -69,6 +70,7 @@ public:
     void setFrame(int newFrame);
     bool isAnimated();
     int getAnimationFrame();
+    int getCurrentFrame();
     void disablePixelAspectRatio() {noPixelAspectRatio = true;}
 };
 

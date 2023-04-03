@@ -5,19 +5,37 @@
 
 enum TA_BirdWalkerState {
     TA_BIRD_WALKER_STATE_IDLE,
-    TA_BIRD_WALKER_STATE_GROUND,
-    TA_BIRD_WALKER_STATE_AIR
+    TA_BIRD_WALKER_STATE_AIMING,
+    TA_BIRD_WALKER_STATE_LANDING,
+    TA_BIRD_WALKER_STATE_LANDED,
+    TA_BIRD_WALKER_STATE_COOL_DOWN,
+    TA_BIRD_WALKER_STATE_FLYING_UP,
 };
 
 class TA_BirdWalker : public TA_Object {
 private:
+    void updatePosition() override;
+
+    const double aimingTime = 90, aimBorder = 48;
+    const double flyingTime = 25;
+    const double crouchTime = 6;
+    const double coolDownTime = 120;
+
+    TA_Sprite headSprite, bodySprite, feetSprite, aimSprite;
     TA_BirdWalkerState state = TA_BIRD_WALKER_STATE_IDLE;
-    double floorY;
+    TA_Point aimPosition;
+    bool flip = false;
+
+    std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, crouchHitboxVector;
+
+    double floorY, timer = 0;
 
 public:
     using TA_Object::TA_Object;
     void load(double newFloorY);
     bool update() override;
+    void draw() override;
+    int getDrawPriority() override {return 1;}
 };
 
 #endif // TA_BIRD_WALKER_H
