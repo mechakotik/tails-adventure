@@ -44,7 +44,8 @@ namespace TA
     namespace random
     {
         void init(unsigned long long seed);
-        unsigned long long next();
+        long long next();
+        long long max();
     }
 }
 

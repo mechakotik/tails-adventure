@@ -71,10 +71,15 @@ void TA::random::init(unsigned long long seed)
     x = seed;
 }
 
-unsigned long long TA::random::next()
+long long TA::random::next()
 {
     x ^= (x << 13);
     x ^= (x >> 7);
     x ^= (x << 17);
-    return x;
+    return (long long)(x % max());
+}
+
+long long TA::random::max()
+{
+    return std::numeric_limits<long long>::max();
 }

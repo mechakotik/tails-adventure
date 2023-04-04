@@ -173,6 +173,9 @@ void TA_ObjectSet::draw(int priority)
 
 void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
 {
+    if(hitbox.empty()) {
+        return;
+    }
     flags = 0;
     tilemap->checkCollision(hitbox, flags);
     flags |= hitboxContainer.getCollisionFlags(hitbox);

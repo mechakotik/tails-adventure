@@ -30,7 +30,7 @@ public:
     TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
 };
 
-class TA_WalkerBullet : public TA_Object {
+class TA_WalkerBullet : public TA_Object { // TODO: reimplement TA_WalkerBullet as inheritor of TA_Bullet
 private:
     bool direction;
 

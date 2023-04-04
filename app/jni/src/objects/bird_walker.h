@@ -9,22 +9,39 @@ enum TA_BirdWalkerState {
     TA_BIRD_WALKER_STATE_LANDING,
     TA_BIRD_WALKER_STATE_LANDED,
     TA_BIRD_WALKER_STATE_COOL_DOWN,
+    TA_BIRD_WALKER_STATE_WALK,
+    TA_BIRD_WALKER_STATE_FIRE_SHORT,
+    TA_BIRD_WALKER_STATE_FIRE_LONG,
+    TA_BIRD_WALKER_STATE_LAUGH,
     TA_BIRD_WALKER_STATE_FLYING_UP,
+    TA_BIRD_WALKER_STATE_DEAD
 };
 
 class TA_BirdWalker : public TA_Object {
 private:
-    void updatePosition() override;
-
     const double aimingTime = 90, aimBorder = 48;
     const double flyingTime = 25;
     const double crouchTime = 6;
-    const double coolDownTime = 120;
+    const double coolDownTime = 60;
+    const double laughTime = 60;
+    const double walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
+    const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = M_PI / 8, bulletSpeed = 1;
+    const int shortFireBullets = 3, longFireBullets = 10;
+    const double invincibleTime = 40;
+    const double deathTime = 180, deathExplosionDelay = 6;
+
+    void updatePosition() override;
+    void updateDamage();
 
     TA_Sprite headSprite, bodySprite, feetSprite, aimSprite;
     TA_BirdWalkerState state = TA_BIRD_WALKER_STATE_IDLE;
     TA_Point aimPosition;
     bool flip = false;
+    double currentWalkDistance = 0;
+    int bulletCounter = 0;
+
+    double invincibleTimeLeft = -1;
+    int health = 10;
 
     std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, crouchHitboxVector;
 
