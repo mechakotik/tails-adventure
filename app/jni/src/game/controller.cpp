@@ -39,11 +39,16 @@ void TA_CommonController::update()
 {
     touchscreen.update();
     gamepad.update();
-    if(TA::gamepad::connected() && currentController == &touchscreen) {
+    keyboard.update();
+    if(TA::gamepad::connected()) {
         currentController = &gamepad;
     }
-    else if(!TA::gamepad::connected() && currentController == &gamepad) {
+    else {
+        #ifdef __ANDROID__
         currentController = &touchscreen;
+        #else
+        currentController = &keyboard;
+        #endif
     }
     if(getDirection() != currentDirection) {
         currentDirection = getDirection();
@@ -56,9 +61,11 @@ void TA_CommonController::update()
 
 void TA_CommonController::draw()
 {
+    #ifdef __ANDROID
     if(currentController == &touchscreen) {
         touchscreen.draw();
     }
+    #endif
 }
 
 void TA_TouchscreenController::load()

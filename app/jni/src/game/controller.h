@@ -6,10 +6,12 @@
 #include "engine/touchscreen.h"
 #include "engine/tools.h"
 #include "engine/gamepad.h"
+#include "engine/keyboard.h"
 
 enum TA_ControllerType {
     TA_CONTROLLER_TYPE_TOUCHSCREEN,
     TA_CONTROLLER_TYPE_GAMEPAD,
+    TA_CONTROLLER_TYPE_KEYBOARD,
     TA_CONTROLLER_TYPE_MAX
 };
 
@@ -74,7 +76,6 @@ public:
 class TA_GamepadController : public TA_Controller
 {
 public:
-    void load() override {TA::gamepad::init();}
     void update() override {TA::gamepad::update();}
     TA_ControllerType getType() override {return TA_CONTROLLER_TYPE_GAMEPAD;}
 
@@ -83,11 +84,24 @@ public:
     bool isJustPressed(TA_FunctionButton button) override {return TA::gamepad::isJustPressed(button);}
 };
 
+class TA_KeyboardController : public TA_Controller
+{
+public:
+    void update() override {TA::keyboard::update();}
+    TA_ControllerType getType() override {return TA_CONTROLLER_TYPE_KEYBOARD;}
+
+    TA_Point getDirectionVector() override {return TA::keyboard::getDirectionVector();}
+    bool isPressed(TA_FunctionButton button) override {return TA::keyboard::isPressed(button);}
+    bool isJustPressed(TA_FunctionButton button) override {return TA::keyboard::isJustPressed(button);}
+};
+
 class TA_CommonController
 {
 private:
     TA_TouchscreenController touchscreen;
     TA_GamepadController gamepad;
+    TA_KeyboardController keyboard;
+
     TA_Controller *currentController = nullptr;
     TA_Direction currentDirection = TA_DIRECTION_MAX;
     bool justChanged = false;

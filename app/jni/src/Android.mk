@@ -29,6 +29,7 @@ LOCAL_SRC_FILES := main.cpp \
                    engine/resource_manager.cpp \
                    engine/hitbox_container.cpp \
                    engine/font.cpp \
+                   engine/keyboard.cpp \
                    game/controller.cpp \
                    game/character.cpp \
                    game/hud.cpp \

@@ -11,6 +11,7 @@
 #include "tools.h"
 #include "gamepad.h"
 #include "resource_manager.h"
+#include "keyboard.h"
 
 TA_Game::TA_Game()
 {
@@ -49,6 +50,7 @@ TA_Game::TA_Game()
     SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
     TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
     TA::gamepad::init();
+    TA::keyboard::init();
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
 }
