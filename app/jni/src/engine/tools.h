@@ -35,6 +35,7 @@ namespace TA
     void drawScreenRect(int r, int g, int b, int a);
     void drawShadow(int factor);
     bool equal(double a, double b);
+    void addPathPrefix(std::string &path);
 
     template<typename T>
     T sign(T a) {

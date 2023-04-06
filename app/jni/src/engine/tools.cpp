@@ -22,6 +22,7 @@ namespace TA
 
 std::string TA::readStringFromFile(std::string filename)
 {
+    TA::addPathPrefix(filename);
     SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
     if(input == nullptr) {
         TA::handleSDLError("Open %s failed", filename.c_str());
@@ -36,6 +37,9 @@ std::string TA::readStringFromFile(std::string filename)
         str[pos] = data[pos];
     }
     str += '\0';
+    if(SDL_RWclose(input) != 0) {
+        TA::handleSDLError("Close %s failed", filename.c_str());
+    }
     return str;
 }
 
@@ -82,4 +86,14 @@ long long TA::random::next()
 long long TA::random::max()
 {
     return std::numeric_limits<long long>::max();
+}
+
+void TA::addPathPrefix(std::string &path)
+{
+    #ifndef __ANDROID__
+    const std::string prefix = "assets/";
+    if(path.length() < prefix.length() || path.substr(0, prefix.length()) != prefix) {\
+        path = prefix + path;
+    }
+    #endif
 }

@@ -11,6 +11,7 @@ namespace TA { namespace resmgr {
 
 SDL_Texture* TA::resmgr::loadTexture(std::string filename)
 {
+    TA::addPathPrefix(filename);
     if(!textureMap.count(filename)) {
         SDL_Surface *surface = IMG_Load(filename.c_str());
         if(surface == nullptr) {
@@ -29,6 +30,7 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename)
 
 Mix_Chunk* TA::resmgr::loadChunk(std::string filename)
 {
+    TA::addPathPrefix(filename);
     if(!chunkMap.count(filename)) {
         chunkMap[filename] = Mix_LoadWAV(filename.c_str());
         if(chunkMap[filename] == nullptr) {
