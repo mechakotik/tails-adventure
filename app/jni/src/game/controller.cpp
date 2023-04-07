@@ -61,11 +61,9 @@ void TA_CommonController::update()
 
 void TA_CommonController::draw()
 {
-    #ifdef __ANDROID
     if(currentController == &touchscreen) {
         touchscreen.draw();
     }
-    #endif
 }
 
 void TA_TouchscreenController::load()
