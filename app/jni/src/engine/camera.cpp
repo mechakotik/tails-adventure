@@ -59,8 +59,8 @@ void TA_Camera::update(bool ground, bool spring)
         return current;
     };
 
-    position.x = normalize(position.x, border.topLeft.x, border.bottomRight.x);
-    position.y = normalize(position.y, border.topLeft.y, border.bottomRight.y);
+    position.x = normalize(position.x, border.topLeft.x, border.bottomRight.x - TA::screenWidth);
+    position.y = normalize(position.y, border.topLeft.y, border.bottomRight.y - TA::screenHeight);
 
     if(shakeTime > 0) {
         int previousStep = shakeTime / shakeFrequency;

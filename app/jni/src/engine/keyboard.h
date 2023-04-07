@@ -11,6 +11,8 @@ namespace TA { namespace keyboard {
     void update();
     bool isPressed(TA_FunctionButton button);
     bool isJustPressed(TA_FunctionButton button);
+    bool isScancodePressed(SDL_Scancode scancode);
+    bool isScancodeJustPressed(SDL_Scancode scancode);
     TA_Point getDirectionVector();
 }}
 

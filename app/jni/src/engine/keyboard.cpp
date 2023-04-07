@@ -3,8 +3,7 @@
 namespace TA { namespace keyboard {
     std::array<SDL_Scancode, TA_BUTTON_MAX> mapping;
     std::array<SDL_Scancode, TA_DIRECTION_MAX> directionMapping;
-    std::array<bool, TA_BUTTON_MAX> pressed, justPressed;
-    std::array<bool, TA_DIRECTION_MAX> directionPressed;
+    std::array<bool, SDL_NUM_SCANCODES> pressed, justPressed;
 }}
 
 void TA::keyboard::init()
@@ -22,8 +21,8 @@ void TA::keyboard::init()
 void TA::keyboard::update()
 {
     const uint8_t *keyboardState = SDL_GetKeyboardState(NULL);
-    for(int button = 0; button < TA_BUTTON_MAX; button ++) {
-        if(keyboardState[mapping[button]]) {
+    for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+        if(keyboardState[button]) {
             justPressed[button] = !pressed[button];
             pressed[button] = true;
         }
@@ -31,33 +30,39 @@ void TA::keyboard::update()
             pressed[button] = justPressed[button] = false;
         }
     }
-
-    for(int direction = 0; direction < TA_DIRECTION_MAX; direction ++) {
-        directionPressed[direction] = bool(keyboardState[directionMapping[direction]]);
-    }
 }
 
 bool TA::keyboard::isPressed(TA_FunctionButton button)
 {
-    return pressed[button];
+    return pressed[mapping[button]];
 }
 
 bool TA::keyboard::isJustPressed(TA_FunctionButton button)
 {
-    return justPressed[button];
+    return justPressed[mapping[button]];
+}
+
+bool TA::keyboard::isScancodePressed(SDL_Scancode scancode)
+{
+    return pressed[scancode];
+}
+
+bool TA::keyboard::isScancodeJustPressed(SDL_Scancode scancode)
+{
+    return justPressed[scancode];
 }
 
 TA_Point TA::keyboard::getDirectionVector()
 {
     int verticalDirection = -1, horizontalDirection = -1;
     for(int direction : {TA_DIRECTION_UP, TA_DIRECTION_DOWN}) {
-        if(directionPressed[direction]) {
+        if(pressed[directionMapping[direction]]) {
             verticalDirection = direction;
             break;
         }
     }
     for(int direction : {TA_DIRECTION_LEFT, TA_DIRECTION_RIGHT}) {
-        if(directionPressed[direction]) {
+        if(pressed[directionMapping[direction]]) {
             horizontalDirection = direction;
             break;
         }

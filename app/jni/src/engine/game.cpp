@@ -29,14 +29,10 @@ TA_Game::TA_Game()
         TA::handleSDLError("Mix_OpenAudio failed");
     }
 
-    SDL_DisplayMode displayMode;
-    SDL_GetCurrentDisplayMode(0, &displayMode);
-    TA::screenWidth = baseHeight * pixelAspectRatio * displayMode.w / displayMode.h;
-    TA::screenHeight = baseHeight;
-    TA::widthMultiplier = double(displayMode.w) / TA::screenWidth;
-    TA::heightMultiplier = double(displayMode.h) / TA::screenHeight;
+    updateWindowSize();
 
-    TA::window = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, displayMode.w, displayMode.h, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP);
+    int windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE;
+    TA::window = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, defaultWindowWidth, defaultWindowHeight, windowFlags);
     if(TA::window == nullptr) {
         TA::handleSDLError("Failed to create window");
     }
@@ -55,9 +51,38 @@ TA_Game::TA_Game()
     screenStateMachine.init();
 }
 
+void TA_Game::toggleFullscreen()
+{
+    fullscreen = !fullscreen;
+    SDL_SetWindowFullscreen(TA::window, (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
+    updateWindowSize();
+}
+
+void TA_Game::updateWindowSize()
+{
+    int windowWidth, windowHeight;
+
+    if(TA::window == nullptr) {
+        SDL_DisplayMode displayMode;
+        SDL_GetCurrentDisplayMode(0, &displayMode);
+        windowWidth = displayMode.w;
+        windowHeight = displayMode.h;
+    }
+    else {
+        SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
+    }
+
+    TA::screenWidth = baseHeight * pixelAspectRatio * windowWidth / windowHeight;
+    TA::screenHeight = baseHeight;
+    TA::widthMultiplier = double(windowWidth) / TA::screenWidth;
+    TA::heightMultiplier = double(windowHeight) / TA::screenHeight;
+}
+
 bool TA_Game::process()
 {
     TA::touchscreen::update();
+    TA::keyboard::update();
+    TA::gamepad::update();
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {
@@ -70,8 +95,18 @@ bool TA_Game::process()
         else if(event.type == SDL_CONTROLLERDEVICEADDED || event.type == SDL_CONTROLLERDEVICEREMOVED) {
             TA::gamepad::handleEvent(event.cdevice);
         }
+        else if(event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
+            updateWindowSize();
+        }
     }
 
+    if(TA::keyboard::isScancodePressed(SDL_SCANCODE_RALT) && TA::keyboard::isScancodePressed(SDL_SCANCODE_RETURN) &&
+        (TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RALT) || TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RETURN))) {
+        toggleFullscreen();
+    }
+    if(TA::keyboard::isScancodePressed(SDL_SCANCODE_ESCAPE)) {
+        return false;
+    }
     return true;
 }
 

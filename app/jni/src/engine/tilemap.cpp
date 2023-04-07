@@ -137,7 +137,7 @@ void TA_Tilemap::draw(int layer)
 
 void TA_Tilemap::setCamera(TA_Camera *newCamera)
 {
-    newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth - TA::screenWidth, height * tileHeight - TA::screenHeight)});
+    newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth, height * tileHeight)});
     for(int layer = 0; layer < layerCount; layer ++) {
         for(int tileX = 0; tileX < width; tileX ++) {
             for(int tileY = 0; tileY < height; tileY ++) {

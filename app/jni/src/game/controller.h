@@ -76,7 +76,6 @@ public:
 class TA_GamepadController : public TA_Controller
 {
 public:
-    void update() override {TA::gamepad::update();}
     TA_ControllerType getType() override {return TA_CONTROLLER_TYPE_GAMEPAD;}
 
     TA_Point getDirectionVector() override {return TA::gamepad::getDirectionVector();}
@@ -87,7 +86,6 @@ public:
 class TA_KeyboardController : public TA_Controller
 {
 public:
-    void update() override {TA::keyboard::update();}
     TA_ControllerType getType() override {return TA_CONTROLLER_TYPE_KEYBOARD;}
 
     TA_Point getDirectionVector() override {return TA::keyboard::getDirectionVector();}
