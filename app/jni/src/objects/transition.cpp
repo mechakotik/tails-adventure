@@ -1,5 +1,5 @@
 #include "transition.h"
-#include "engine/tools.h"
+#include "tools.h"
 
 void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, TA_ScreenState newScreenState, std::string newLevelPath)
 {

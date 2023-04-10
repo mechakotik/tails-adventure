@@ -1,5 +1,5 @@
 #include "walker.h"
-#include "engine/tools.h"
+#include "tools.h"
 #include "dead_kukku.h"
 
 void TA_Walker::load(TA_Point newPosition, int range, bool flip)

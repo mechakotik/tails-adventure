@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <cmath>
 #include "title_screen.h"
-#include "engine/tools.h"
-#include "engine/error.h"
+#include "tools.h"
+#include "error.h"
 
 void TA_TitleScreen::init()
 {

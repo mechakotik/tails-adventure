@@ -5,7 +5,7 @@
 #include "tinyxml2.h"
 #include "error.h"
 #include "tools.h"
-#include "game/character.h"
+#include "character.h"
 
 void TA_Tilemap::load(std::string filename)
 {

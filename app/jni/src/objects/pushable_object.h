@@ -2,7 +2,7 @@
 #define TA_PUSHABLE_OBJECT_H
 
 #include <string>
-#include "engine/object_set.h"
+#include "object_set.h"
 
 class TA_PushableObject : public TA_Object {
 private:

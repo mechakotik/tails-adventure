@@ -1,8 +1,8 @@
 #include "screen_state_machine.h"
-#include "game/intro_screen.h"
-#include "game/title_screen.h"
-#include "game/game_screen.h"
-#include "game/devmenu_screen.h"
+#include "intro_screen.h"
+#include "title_screen.h"
+#include "game_screen.h"
+#include "devmenu_screen.h"
 #include "error.h"
 
 void TA_ScreenStateMachine::init()

@@ -14,29 +14,29 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
 LOCAL_DISABLE_FORMAT_STRING_CHECKS := true
 
 LOCAL_SRC_FILES := main.cpp \
-                   engine/game.cpp \
-                   engine/sprite.cpp \
-                   engine/screen_state_machine.cpp \
-                   engine/tools.cpp \
-                   engine/sound.cpp \
-                   engine/touchscreen.cpp \
-                   engine/geometry.cpp \
-                   engine/tilemap.cpp \
-                   engine/camera.cpp \
-                   engine/pawn.cpp \
-                   engine/object_set.cpp \
-                   engine/gamepad.cpp \
-                   engine/resource_manager.cpp \
-                   engine/hitbox_container.cpp \
-                   engine/font.cpp \
-                   engine/keyboard.cpp \
-                   game/controller.cpp \
-                   game/character.cpp \
-                   game/hud.cpp \
-                   game/intro_screen.cpp \
-                   game/title_screen.cpp \
-                   game/game_screen.cpp \
-                   game/devmenu_screen.cpp \
+                   game.cpp \
+                   sprite.cpp \
+                   screen_state_machine.cpp \
+                   tools.cpp \
+                   sound.cpp \
+                   touchscreen.cpp \
+                   geometry.cpp \
+                   tilemap.cpp \
+                   camera.cpp \
+                   pawn.cpp \
+                   object_set.cpp \
+                   gamepad.cpp \
+                   resource_manager.cpp \
+                   hitbox_container.cpp \
+                   font.cpp \
+                   keyboard.cpp \
+                   controller.cpp \
+                   character.cpp \
+                   hud.cpp \
+                   intro_screen.cpp \
+                   title_screen.cpp \
+                   game_screen.cpp \
+                   devmenu_screen.cpp \
                    objects/explosion.cpp \
                    objects/bomb.cpp \
                    objects/breakable_block.cpp \

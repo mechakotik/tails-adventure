@@ -1,7 +1,7 @@
 #ifndef TA_ROCK_H
 #define TA_ROCK_H
 
-#include "engine/object_set.h"
+#include "object_set.h"
 
 class TA_Particle : public TA_Object {
 private:

@@ -1,6 +1,6 @@
 #include "bird_walker.h"
-#include "engine/tools.h"
-#include "engine/error.h"
+#include "tools.h"
+#include "error.h"
 #include "bullet.h"
 #include "explosion.h"
 

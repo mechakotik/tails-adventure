@@ -1,7 +1,7 @@
 #ifndef TA_BIRD_WALKER_H
 #define TA_BIRD_WALKER_H
 
-#include "engine/object_set.h"
+#include "object_set.h"
 
 enum TA_BirdWalkerState {
     TA_BIRD_WALKER_STATE_IDLE,

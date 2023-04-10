@@ -1,8 +1,8 @@
 #include <algorithm>
 #include "controller.h"
-#include "engine/touchscreen.h"
-#include "engine/error.h"
-#include "engine/tools.h"
+#include "touchscreen.h"
+#include "error.h"
+#include "tools.h"
 
 TA_Direction TA_Controller::getDirection()
 {

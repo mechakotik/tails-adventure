@@ -1,8 +1,8 @@
 #ifndef TA_TRANSITION_H
 #define TA_TRANSITION_H
 
-#include "engine/object_set.h"
-#include "engine/screen.h"
+#include "object_set.h"
+#include "screen.h"
 
 class TA_Transition : public TA_Object {
 private:

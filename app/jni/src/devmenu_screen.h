@@ -1,8 +1,8 @@
 #ifndef TA_DEVMENU_SCREEN_H
 #define TA_DEVMENU_SCREEN_H
 
-#include "engine/screen.h"
-#include "engine/font.h"
+#include "screen.h"
+#include "font.h"
 #include "controller.h"
 
 enum TA_DevmenuElements {

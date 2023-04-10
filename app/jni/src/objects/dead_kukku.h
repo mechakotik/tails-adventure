@@ -1,7 +1,7 @@
 #ifndef TA_DEAD_KUKKU_H
 #define TA_DEAD_KUKKU_H
 
-#include "engine/object_set.h"
+#include "object_set.h"
 
 class TA_DeadKukku : public TA_Object {
 private:

@@ -1,12 +1,12 @@
 #ifndef TA_CHARACTER_H
 #define TA_CHARACTER_H
 
-#include "engine/pawn.h"
-#include "engine/geometry.h"
+#include "pawn.h"
+#include "geometry.h"
 #include "controller.h"
-#include "engine/links.h"
-#include "engine/tilemap.h"
-#include "engine/sound.h"
+#include "links.h"
+#include "tilemap.h"
+#include "sound.h"
 
 enum TA_CharacterTool {
     TA_TOOL_BOMB

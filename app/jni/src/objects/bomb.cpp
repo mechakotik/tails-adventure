@@ -1,5 +1,5 @@
 #include "bomb.h"
-#include "engine/tools.h"
+#include "tools.h"
 #include "objects/explosion.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {

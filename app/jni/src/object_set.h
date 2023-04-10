@@ -2,11 +2,11 @@
 #define TA_OBJECT_SET_H
 
 #include <vector>
-#include "engine/geometry.h"
-#include "engine/pawn.h"
-#include "engine/camera.h"
-#include "engine/tilemap.h"
-#include "engine/hitbox_container.h"
+#include "geometry.h"
+#include "pawn.h"
+#include "camera.h"
+#include "tilemap.h"
+#include "hitbox_container.h"
 #include "screen.h"
 
 class TA_ObjectSet;

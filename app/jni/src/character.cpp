@@ -1,9 +1,9 @@
 #include <algorithm>
 #include "character.h"
-#include "engine/tools.h"
-#include "engine/error.h"
-#include "engine/object_set.h"
-#include "engine/gamepad.h"
+#include "tools.h"
+#include "error.h"
+#include "object_set.h"
+#include "gamepad.h"
 #include "objects/bomb.h"
 
 void TA_Character::load(TA_GameScreenLinks newLinks)

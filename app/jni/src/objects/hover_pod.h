@@ -1,7 +1,7 @@
 #ifndef TA_HOVER_POD_H
 #define TA_HOVER_POD_H
 
-#include "engine/object_set.h"
+#include "object_set.h"
 
 class TA_HoverPod : public TA_Object {
 private:

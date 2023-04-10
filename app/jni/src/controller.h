@@ -2,11 +2,11 @@
 #define TA_CONTROLLER_H
 
 #include <array>
-#include "engine/sprite.h"
-#include "engine/touchscreen.h"
-#include "engine/tools.h"
-#include "engine/gamepad.h"
-#include "engine/keyboard.h"
+#include "sprite.h"
+#include "touchscreen.h"
+#include "tools.h"
+#include "gamepad.h"
+#include "keyboard.h"
 
 enum TA_ControllerType {
     TA_CONTROLLER_TYPE_TOUCHSCREEN,

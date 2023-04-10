@@ -1,4 +1,4 @@
-#include "engine/game.h"
+#include "game.h"
 
 int main(int argc, char* args[])
 {

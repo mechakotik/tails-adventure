@@ -1,9 +1,9 @@
 #ifndef TA_BOMB_H
 #define TA_BOMB_H
 
-#include "engine/object_set.h"
-#include "engine/geometry.h"
-#include "engine/sound.h"
+#include "object_set.h"
+#include "geometry.h"
+#include "sound.h"
 
 enum TA_BombMode : int {
     TA_BOMB_MODE_DEFAULT,

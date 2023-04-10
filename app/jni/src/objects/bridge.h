@@ -1,7 +1,7 @@
 #ifndef TA_BRIDGE_H
 #define TA_BRIDGE_H
 
-#include "engine/object_set.h"
+#include "object_set.h"
 
 enum TA_BridgeState {
     TA_BRIDGE_STATE_IDLE,
