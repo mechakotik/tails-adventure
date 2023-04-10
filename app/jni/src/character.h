@@ -45,6 +45,7 @@ private:
     int rings = 1;
     int currentTool = TA_TOOL_BOMB;
 
+    void physicsStep();
     void updateGround();
     void updateAir();
     void updateHelitail();

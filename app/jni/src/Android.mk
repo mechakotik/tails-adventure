@@ -37,6 +37,8 @@ LOCAL_SRC_FILES := main.cpp \
                    title_screen.cpp \
                    game_screen.cpp \
                    devmenu_screen.cpp \
+                   character_movement.cpp \
+                   character_collision.cpp \
                    objects/explosion.cpp \
                    objects/bomb.cpp \
                    objects/breakable_block.cpp \
