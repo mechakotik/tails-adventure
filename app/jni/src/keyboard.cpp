@@ -1,4 +1,5 @@
 #include "keyboard.h"
+#include "error.h"
 
 namespace TA { namespace keyboard {
     std::array<SDL_Scancode, TA_BUTTON_MAX> mapping;
@@ -66,6 +67,10 @@ TA_Point TA::keyboard::getDirectionVector()
             horizontalDirection = direction;
             break;
         }
+    }
+
+    if(verticalDirection == -1 && horizontalDirection == -1) {
+        return {0, 0};
     }
 
     std::array<TA_Point, TA_DIRECTION_MAX> vectors;
