@@ -140,13 +140,9 @@ void TA_ObjectSet::update()
 
     hitboxContainer.clear();
     for(TA_Object *currentObject : objects) {
-        if(currentObject->getCollisionType() != TA_COLLISION_TRANSPARENT) {
-            hitboxContainer.add(currentObject->hitbox, currentObject->getCollisionType());
-        }
+        hitboxContainer.add(currentObject->hitbox, currentObject->getCollisionType());
         for(TA_Object::HitboxVectorElement &element : currentObject->hitboxVector) {
-            if(element.collisionType != TA_COLLISION_TRANSPARENT) {
-                hitboxContainer.add(element.hitbox, element.collisionType);
-            }
+            hitboxContainer.add(element.hitbox, element.collisionType);
         }
     }
 

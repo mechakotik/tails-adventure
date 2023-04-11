@@ -52,7 +52,7 @@ bool TA_Bomb::update()
             position = position + TA_Point(5 * (direction ? -1 : 1), -6);
         }
     }
-    else if(timer >= moveTime) {
+    if(timer >= moveTime) {
         velocity.y += grv * TA::elapsedTime;
         moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
         int flags;

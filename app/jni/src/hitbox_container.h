@@ -22,14 +22,15 @@ private:
 
     std::array<std::array<Chunk, sizeChunks>, sizeChunks> chunks;
     Chunk commonChunk;
-    int currentTime = 0;
+    int currentTime = 0, collisionTypeMask = 0;
 
     void lazyClear(Chunk &chunk);
 
 public:
     void add(TA_Polygon &hitbox, TA_CollisionType type);
     int getCollisionFlags(TA_Polygon &hitbox);
-    void clear() {currentTime ++;}
+    bool hasCollisionType(TA_CollisionType type) {return collisionTypeMask & type;}
+    void clear();
 };
 
 #endif // TA_HITBOX_CONTAINER_H

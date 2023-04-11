@@ -65,6 +65,7 @@ public:
     int checkCollision(TA_Polygon &hitbox);
     void setTransition(TA_ScreenState screenState) {transition = screenState;}
     TA_ScreenState getTransition() {return transition;}
+    bool hasCollisionType(TA_CollisionType type) {return hitboxContainer.hasCollisionType(type);}
 
     template<class T, typename... P>
     void spawnObject(P... params) {

@@ -110,7 +110,7 @@ void TA_Character::updateAnimation()
         else if(velocity.y < 0) {
             setAnimation("jump_up");
         }
-        else {
+        else { // TODO: fall animation
             setAnimation("jump_down");
         }
     }
@@ -123,10 +123,13 @@ void TA_Character::updateTool()
     }
     switch(currentTool) {
         case TOOL_BOMB:
+            if(links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
+                break;
+            }
             if(helitail) {
                 links.objectSet->spawnObject<TA_Bomb>(position + TA_Point(20, 32), flip, TA_BOMB_MODE_HELITAIL);
             }
-            else if(!ground) {
+            else if(!ground) { // TODO: throw bomb in the air animation
                 links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
             }
             else if(crouch) {

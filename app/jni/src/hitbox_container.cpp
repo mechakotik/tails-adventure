@@ -2,6 +2,11 @@
 
 void TA_HitboxContainer::add(TA_Polygon &hitbox, TA_CollisionType type)
 {
+    if(type == TA_COLLISION_TRANSPARENT) {
+        return;
+    }
+    collisionTypeMask |= type;
+
     if(hitbox.empty()) {
         return;
     }
@@ -70,4 +75,10 @@ void TA_HitboxContainer::lazyClear(Chunk &chunk)
     }
     chunk.elements.clear();
     chunk.updateTime = currentTime;
+}
+
+void TA_HitboxContainer::clear()
+{
+    currentTime ++;
+    collisionTypeMask = 0;
 }

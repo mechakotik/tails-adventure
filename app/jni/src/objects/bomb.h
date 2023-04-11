@@ -32,6 +32,7 @@ public:
     void load(TA_Point newPosition, bool newDirection, TA_BombMode mode);
     bool checkPawnCollision(TA_Polygon &hitbox) override;
     bool update() override;
+    TA_CollisionType getCollisionType() override {return TA_COLLISION_BOMB;}
     int getDrawPriority() override {return 1;}
 };
 
