@@ -26,7 +26,7 @@ void TA_Character::handleInput()
     //TA::printLog("%f %f", position.x, position.y);
     controller.setAnalogStick(helitail);
     controller.update();
-    if(climb || throwing || dead) {
+    if(state != STATE_NORMAL) {
         return;
     }
 
@@ -42,15 +42,15 @@ void TA_Character::update()
         areaLoopSound.play();
     }
 
-    if(climb) {
+    if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
         updateClimbAnimation();
         return;
     }
-    if(throwing) {
+    if(state == STATE_THROW_BOMB) {
         updateThrowAnimation();
         return;
     }
-    if(dead) {
+    if(state == STATE_DEAD) {
         invincibleTimeLeft -= TA::elapsedTime;
         return;
     }
@@ -59,7 +59,7 @@ void TA_Character::update()
     setFlip(flip);
     updateObjectCollision();
     updateTool();
-    if(throwing) {
+    if(state == STATE_THROW_BOMB) {
         return;
     }
     updateAnimation();
@@ -122,7 +122,7 @@ void TA_Character::updateTool()
         return;
     }
     switch(currentTool) {
-        case TA_TOOL_BOMB:
+        case TOOL_BOMB:
             if(helitail) {
                 links.objectSet->spawnObject<TA_Bomb>(position + TA_Point(20, 32), flip, TA_BOMB_MODE_HELITAIL);
             }
@@ -130,12 +130,14 @@ void TA_Character::updateTool()
                 links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
             }
             else if(crouch) {
-                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 12 : 23), 20), flip, TA_BOMB_MODE_CROUCH);
+                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 12 : 23), 22), flip, TA_BOMB_MODE_CROUCH);
+                setAnimation("throw_crouch");
+                state = STATE_THROW_BOMB;
             }
             else {
                 links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 27 : 8), 12), flip, TA_BOMB_MODE_DEFAULT);
                 setAnimation("throw");
-                throwing = true;
+                state = STATE_THROW_BOMB;
             }
             break;
 
@@ -148,9 +150,9 @@ void TA_Character::updateClimbAnimation()
 {
     if(!isAnimated()) {
         position = climbPosition;
-        climb = false;
+        state = STATE_NORMAL;
     }
-    else if(climbHigh && getAnimationFrame() == 1) {
+    else if(state == STATE_CLIMB_HIGH && getAnimationFrame() == 1) {
         setPosition(position.x, position.y - 8);
     }
     else if(getAnimationFrame() == 2) {
@@ -162,7 +164,7 @@ void TA_Character::updateClimbAnimation()
 void TA_Character::updateThrowAnimation()
 {
     if(!isAnimated()) {
-        throwing = false;
+        state = STATE_NORMAL;
     }
     updateFollowPosition();
 }
@@ -170,7 +172,7 @@ void TA_Character::updateThrowAnimation()
 void TA_Character::updateFollowPosition()
 {
     TA_Point sourcePosition = position;
-    if(climb) {
+    if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
         sourcePosition.x = climbPosition.x;
     }
     followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);

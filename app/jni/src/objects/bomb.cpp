@@ -2,23 +2,23 @@
 #include "tools.h"
 #include "objects/explosion.h"
 
-void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {
+void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
     TA_Sprite::load("objects/bomb.png");
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX);
     position = newPosition;
     setPosition(position);
     hitbox.setRectangle(TA_Point(1.5, 2.5), TA_Point(11.5, 13.5));
+    mode = newMode;
     if(mode == TA_BOMB_MODE_AIR) {
         velocity = startVelocity;
         timer = 10;
     }
     if (mode == TA_BOMB_MODE_CROUCH) {
         velocity = startCrouchVelocity;
-        timer = 10;
     }
     else if (mode == TA_BOMB_MODE_HELITAIL) {
         velocity = startHelitailVelocity;
-        timer = 10;
+        timer =  10;
     }
     else {
         velocity = startVelocity;
@@ -39,14 +39,20 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_Bomb::update()
 {
-    bool flag1 = (timer <= 6);
+    int moveTime = (mode == TA_BOMB_MODE_DEFAULT ? 6 : 8);
+    bool flag1 = (timer <= moveTime);
     timer += TA::elapsedTime;
-    bool flag2 = (timer >= 6);
+    bool flag2 = (timer >= moveTime);
 
     if(flag1 && flag2) {
-        position = position + TA_Point(9 * (direction ? -1 : 1), -6);
+        if(mode == TA_BOMB_MODE_DEFAULT) {
+            position = position + TA_Point(9 * (direction ? -1 : 1), -6);
+        }
+        else {
+            position = position + TA_Point(5 * (direction ? -1 : 1), -6);
+        }
     }
-    else if(timer >= 6) {
+    else if(timer >= moveTime) {
         velocity.y += grv * TA::elapsedTime;
         moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
         int flags;

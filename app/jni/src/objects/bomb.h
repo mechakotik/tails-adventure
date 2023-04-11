@@ -16,12 +16,14 @@ class TA_Bomb : public TA_Object {
 private:
     TA_Point velocity;
     TA_Sound explosionSound;
+    TA_BombMode mode;
+
     bool direction;
     double timer = 0;
 
     const double speed = 1.15;
     const TA_Point startVelocity = {2 * speed, -1 * speed};
-    const TA_Point startCrouchVelocity = {1.35 * speed, -1 * speed};
+    const TA_Point startCrouchVelocity = {1.35 * speed, -0.7 * speed};
     const TA_Point startHelitailVelocity = {0, 0};
     const double grv = 0.125 * speed * speed;
 

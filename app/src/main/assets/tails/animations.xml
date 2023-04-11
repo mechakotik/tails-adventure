@@ -42,4 +42,7 @@
 	<animation name="crouch">
 		24
 	</animation>
+	<animation name="throw_crouch" delay="8" repeatTimes="1">
+		39,40
+	</animation>
 </animations>

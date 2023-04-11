@@ -118,6 +118,7 @@ void TA_Game::update()
         firstFrame = false;
     }
     TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
+    //TA::elapsedTime /= 10;
     startTime = currentTime;
 
     SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);

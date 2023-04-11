@@ -30,7 +30,7 @@ void TA_Character::updateCollisions()
         useHalfSolidTiles = true;
     }
     else if(velocity.y > 0.01) {
-        if(!useHalfSolidTiles) {
+        if(!useHalfSolidTiles) { // TODO: find a better way to fix this
             useHalfSolidTiles = true;
             TA_Polygon hitbox;
             hitbox.setRectangle(topLeft, bottomRight);
@@ -45,7 +45,7 @@ void TA_Character::updateCollisions()
     }
 
     updateClimb();
-    if(climb) {
+    if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
         return;
     }
     int flags = moveAndCollide(topLeft, bottomRight, velocity, ground);
@@ -103,7 +103,7 @@ void TA_Character::updateCollisions()
             invincibleTimeLeft = invincibleTime;
             if(rings < 0) {
                 setAnimation("death");
-                dead = true;
+                state = STATE_DEAD;
             }
         }
     }
@@ -121,7 +121,7 @@ void TA_Character::updateClimb()
     }
 
     auto updateClimbPosition = [&](int height) {
-        if(climb) {
+        if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
             return;
         }
         climbPosition = position;
@@ -166,15 +166,14 @@ void TA_Character::updateClimb()
             if(flags == TA_GROUND_COLLISION) {
                 ground = true;
                 jump = spring = wall = false;
-                climb = true;
                 climbTime = 0;
                 if(height == 32) {
                     setAnimation("climb_high");
-                    climbHigh = true;
+                    state = STATE_CLIMB_HIGH;
                 }
                 else {
                     setAnimation("climb");
-                    climbHigh = false;
+                    state = STATE_CLIMB_LOW;
                 }
                 if(controller.getDirection() == TA_DIRECTION_LEFT) {
                     position = climbPosition + TA_Point(13, height);
