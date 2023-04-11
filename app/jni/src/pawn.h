@@ -7,7 +7,8 @@
 enum TA_COLLISION_STATE {
     TA_GROUND_COLLISION = (1 << 0),
     TA_WALL_COLLISION = (1 << 1),
-    TA_CEIL_COLLISION = (1 << 2)
+    TA_CEIL_COLLISION = (1 << 2),
+    TA_COLLISION_ERROR = (1 << 3)
 };
 
 class TA_Pawn : public TA_Sprite {

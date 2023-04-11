@@ -1,10 +1,10 @@
 #include "character.h"
 #include "object_set.h"
 
-bool TA_Character::checkPawnCollision(TA_Polygon &hitbox)
+bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
     int flags = 0;
-    links.objectSet->checkCollision(hitbox, flags);
+    links.objectSet->checkCollision(checkHitbox, flags);
     if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_PUSHABLE)) {
         return true;
     }

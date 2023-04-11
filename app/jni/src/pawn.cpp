@@ -81,8 +81,11 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     }
     position.y += (endPosition.y - position.y) * left;
 
+    int flags = 0;
+
     xHitbox.setPosition(position);
     if(checkPawnCollision(xHitbox)) {
+        flags |= TA_COLLISION_ERROR;
         double delta = 0;
         while(true) {
             delta += 0.1;
@@ -99,5 +102,27 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
         }
     }
 
-    return getCollisionFlags(topLeft, bottomRight);
+    if(!ground) {
+        yHitbox.setPosition(position);
+        if(checkPawnCollision(yHitbox)) {
+            flags |= TA_COLLISION_ERROR;
+            double delta = 0;
+            while(true) {
+                delta += 0.1;
+                yHitbox.setPosition(position + TA_Point(0, delta));
+                if(!checkPawnCollision(yHitbox)) {
+                    position.y += delta;
+                    break;
+                }
+                xHitbox.setPosition(position - TA_Point(0, delta));
+                if(!checkPawnCollision(xHitbox)) {
+                    position.y -= delta;
+                    break;
+                }
+            }
+        }
+    }
+
+    flags |= getCollisionFlags(topLeft, bottomRight);
+    return flags;
 }
