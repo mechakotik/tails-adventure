@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.26)
 project(TailsAdventure)
 
+set(SDL2IMAGE_VENDORED ON)
+set(SDL2MIXER_VENDORED ON)
+
 set(SDL2_DISABLE_INSTALL ON)
 set(SDL2IMAGE_INSTALL OFF)
 set(SDL2MIXER_INSTALL OFF)
