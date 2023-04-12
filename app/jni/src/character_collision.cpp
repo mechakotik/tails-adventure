@@ -8,7 +8,7 @@ bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
     if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_PUSHABLE)) {
         return true;
     }
-    if(useHalfSolidTiles && (flags & TA_COLLISION_HALF_SOLID) != 0) {
+    if(useHalfSolidTiles && (flags & TA_COLLISION_HALF_SOLID)) {
         return true;
     }
     return false;
@@ -30,7 +30,7 @@ void TA_Character::updateCollisions()
         useHalfSolidTiles = true;
     }
     else if(velocity.y > 0.01) {
-        if(!useHalfSolidTiles) { // TODO: find a better way to fix this
+        if(!useHalfSolidTiles) {
             useHalfSolidTiles = true;
             TA_Polygon hitbox;
             hitbox.setRectangle(topLeft, bottomRight);

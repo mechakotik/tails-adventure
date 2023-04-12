@@ -133,23 +133,29 @@ bool TA_Polygon::intersects(TA_Polygon &rv)
                getTopLeft().y < rv.getBottomRight().y && getBottomRight().y > rv.getTopLeft().y;
     }
 
-    for(TA_Point vertex : vertexList) {
-        if(rv.inside(vertex + position)) {
-            return true;
+    for(int pos1 = 0; pos1 < size(); pos1 ++) {
+        TA_Line line1 = {getVertex(pos1), getVertex(pos1 + 1)};
+        for(int pos2 = 0; pos2 < rv.size(); pos2 ++) {
+            TA_Line line2 = {rv.getVertex(pos2), rv.getVertex(pos2 + 1)};
+            if(line1.intersects(line2)) {
+                return true;
+            }
         }
     }
-    for(TA_Point vertex : rv.vertexList) {
-        if(inside(vertex + rv.position)) {
-            return true;
-        }
+
+    if(rv.inside(getVertex(0))) {
+        return true;
+    }
+    if(inside(rv.getVertex(0))) {
+        return true;
     }
     return false;
 }
 
 TA_Point TA_Polygon::getVertex(int pos)
 {
-    if(pos >= vertexList.size()) {
-        TA::handleError("Vertex index %i is out of range [0; %i)", pos, vertexList.size());
+    if(empty()) {
+        TA::handleError("Vertex list is empty");
     }
-    return vertexList[pos] + position;
+    return vertexList[pos % vertexList.size()] + position;
 }
