@@ -35,5 +35,22 @@ void TA_BirdWalkerBullet::load(TA_Point newPosition, TA_Point newVelocity)
 
 bool TA_BirdWalkerBullet::update()
 {
+    switch(getAnimationFrame()) {
+        case 0:
+            hitbox.setRectangle(TA_Point(6, 9), TA_Point(9, 14));
+            break;
+
+        case 1:
+            hitbox.setRectangle(TA_Point(5, 5), TA_Point(11, 13));
+            break;
+
+        case 2:
+            hitbox.setRectangle(TA_Point(3, 5), TA_Point(14, 15));
+            break;
+
+        default:
+            hitbox.setRectangle(TA_Point(1, 3), TA_Point(15, 15));
+            break;
+    }
     return TA_Bullet::update();
 }

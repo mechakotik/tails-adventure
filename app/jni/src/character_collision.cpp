@@ -19,12 +19,14 @@ void TA_Character::updateCollisions()
 {
     if(jump && velocity.y < 0) {
         topLeft = TA_Point(18, 9);
-        bottomRight = TA_Point(30, 39);
+    }
+    else if(crouch) {
+        topLeft = TA_Point(18, 24);
     }
     else {
         topLeft = TA_Point(18, 12);
-        bottomRight = TA_Point(30, 39);
     }
+    bottomRight = TA_Point(30, 39);
     hitbox.setRectangle(topLeft, bottomRight);
 
     if(ground) {

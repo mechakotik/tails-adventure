@@ -21,7 +21,7 @@ void TA_BirdWalker::load(double newFloorY)
     feetSprite.setCamera(objectSet->getCamera());
     aimSprite.setCamera(objectSet->getCamera());
 
-    TA_Polygon bodyHitbox; // TODO: crouch hitbox, flip hitbox
+    TA_Polygon bodyHitbox; // TODO: flip hitbox
     bodyHitbox.setRectangle({6, -61}, {33, -29});
     defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
 
@@ -50,17 +50,9 @@ void TA_BirdWalker::updatePosition()
     hitboxVector.clear();
     insertBorderHitboxes();
 
-    if(feetSprite.getCurrentFrame() == 4) {
-        for(HitboxVectorElement element : crouchHitboxVector) {
-            element.hitbox.setPosition(position);
-            hitboxVector.push_back(element);
-        }
-    }
-    else {
-        for(HitboxVectorElement element : defaultHitboxVector) {
-            element.hitbox.setPosition(position);
-            hitboxVector.push_back(element);
-        }
+    for(HitboxVectorElement element : defaultHitboxVector) {
+        element.hitbox.setPosition(position + TA_Point(0, feetSprite.getCurrentFrame() == 4 ? 9 : 0));
+        hitboxVector.push_back(element);
     }
 }
 
@@ -308,7 +300,9 @@ void TA_BirdWalker::updateDamage()
     if(invincibleTimeLeft > 0) {
         invincibleTimeLeft -= TA::elapsedTime;
     }
-    else if(state != TA_BIRD_WALKER_STATE_AIMING && state != TA_BIRD_WALKER_STATE_FLYING_UP && state != TA_BIRD_WALKER_STATE_LANDING) {
+    else if(state != TA_BIRD_WALKER_STATE_AIMING && state != TA_BIRD_WALKER_STATE_FLYING_UP &&
+            state != TA_BIRD_WALKER_STATE_LANDING && state != TA_BIRD_WALKER_STATE_DEAD)
+    {
         bool damaged = false;
         for(int pos = 3; pos < (int)hitboxVector.size(); pos ++) {
             if(objectSet->checkCollision(hitboxVector[pos].hitbox) & TA_COLLISION_EXPLOSION) {
@@ -320,6 +314,10 @@ void TA_BirdWalker::updateDamage()
             health --;
             invincibleTimeLeft = invincibleTime;
             if(health <= 0) {
+                for(auto &element : defaultHitboxVector) {
+                    element.collisionType = TA_COLLISION_TRANSPARENT;
+                }
+                timer = 0;
                 state = TA_BIRD_WALKER_STATE_DEAD;
             }
         }
