@@ -23,6 +23,7 @@ void TA_Walker::load(TA_Point newPosition, int range, bool flip)
             rangeRight = position.x;
         }
     }
+    updatePosition();
 }
 
 bool TA_Walker::update()

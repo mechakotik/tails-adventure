@@ -18,6 +18,7 @@ void TA_HoverPod::load(TA_Point newPosition, int range, bool flip)
         rangeLeft = position.x - range;
         rangeRight = position.x;
     }
+    updatePosition();
 }
 
 bool TA_HoverPod::update()
