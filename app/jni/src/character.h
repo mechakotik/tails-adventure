@@ -53,7 +53,7 @@ private:
 
     double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     double deltaX = 0;
-    int rings = 1;
+    int rings = 10;
     int currentTool = TOOL_BOMB;
 
     void physicsStep();

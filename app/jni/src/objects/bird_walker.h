@@ -27,10 +27,11 @@ private:
     const double walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
     const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = M_PI / 8, bulletSpeed = 1;
     const int shortFireBullets = 3, longFireBullets = 10;
-    const double invincibleTime = 40;
+    const double invincibleTime = 70;
     const double deathTime = 180, deathExplosionDelay = 6;
 
     void updatePosition() override;
+    void insertBorderHitboxes();
     void updateDamage();
 
     TA_Sprite headSprite, bodySprite, feetSprite, aimSprite;

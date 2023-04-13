@@ -156,7 +156,12 @@ void TA_Sprite::setAnimation(TA_Animation newAnimation)
 
 void TA_Sprite::setAnimation(std::string name)
 {
-    setAnimation(loadedAnimations[name]);
+    if(loadedAnimations.count(name)) {
+        setAnimation(loadedAnimations[name]);
+    }
+    else {
+        TA::printWarning("Unknown animation %s", name.c_str());
+    }
 }
 
 void TA_Sprite::setFrame(int newFrame)

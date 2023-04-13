@@ -48,9 +48,7 @@ void TA_BirdWalker::updatePosition()
     feetSprite.setFlip(flip);
 
     hitboxVector.clear();
-    for(HitboxVectorElement element : borderHitboxVector) {
-        hitboxVector.push_back(element);
-    }
+    insertBorderHitboxes();
 
     if(feetSprite.getCurrentFrame() == 4) {
         for(HitboxVectorElement element : crouchHitboxVector) {
@@ -66,11 +64,26 @@ void TA_BirdWalker::updatePosition()
     }
 }
 
+void TA_BirdWalker::insertBorderHitboxes()
+{
+    borderHitboxVector.clear();
+    TA_Polygon borderHitbox;
+    TA_Point cameraPosition = objectSet->getCamera()->getPosition();
+
+    borderHitbox.setRectangle(cameraPosition + TA_Point(-1, 0), cameraPosition + TA_Point(0, TA::screenHeight));
+    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+
+    borderHitbox.setRectangle(cameraPosition + TA_Point(0, -1), cameraPosition + TA_Point(TA::screenWidth, 0));
+    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+
+    borderHitbox.setRectangle(cameraPosition + TA_Point(TA::screenWidth, 0), cameraPosition + TA_Point(TA::screenWidth + 1, TA::screenHeight));
+    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+}
+
 bool TA_BirdWalker::update()
 {
     auto initAiming = [&] () {
         timer = 0;
-        flip = TA::random::next() % 2;
 
         aimPosition.x = objectSet->getCharacterPosition().x - 2;
         aimPosition.x = std::max(aimPosition.x, objectSet->getCamera()->getPosition().x + aimBorder);
@@ -87,26 +100,17 @@ bool TA_BirdWalker::update()
     switch(state) {
         case TA_BIRD_WALKER_STATE_IDLE: {
             if(objectSet->getCamera()->isLocked()) { // TODO: boss music and SFX
-                TA_Polygon borderHitbox;
-                TA_Point cameraPosition = objectSet->getCamera()->getPosition();
-
-                borderHitbox.setRectangle(cameraPosition + TA_Point(-1, 0), cameraPosition + TA_Point(0, TA::screenHeight));
-                borderHitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
-
-                borderHitbox.setRectangle(cameraPosition + TA_Point(0, -1), cameraPosition + TA_Point(TA::screenWidth, 0));
-                borderHitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
-
-                borderHitbox.setRectangle(cameraPosition + TA_Point(TA::screenWidth, 0), cameraPosition + TA_Point(TA::screenWidth + 1, TA::screenHeight));
-                borderHitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+                updatePosition();
                 initAiming();
             }
-
             break;
         }
 
         case TA_BIRD_WALKER_STATE_AIMING: {
             headSprite.setAnimation("idle");
             if(timer > aimingTime) {
+                double centeredX = (aimPosition.x - 12) + bodySprite.getWidth() / 2;
+                flip = (TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) < 0);
                 timer = 0;
                 state = TA_BIRD_WALKER_STATE_LANDING;
             }
@@ -237,24 +241,42 @@ bool TA_BirdWalker::update()
         }
 
         case TA_BIRD_WALKER_STATE_DEAD: {
+            headSprite.setAnimation("idle");
+            feetSprite.setAnimation("idle");
             int top, bottom = floorY, left = position.x, right = position.x + bodySprite.getWidth();
-            if(timer > deathTime * 3 / 4) {
-                feetSprite.setAlpha(0);
-                top = floorY;
-            }
-            else if(timer > deathTime * 2 / 4) {
-                bodySprite.setAlpha(0);
-                feetSprite.setAlpha(196);
-                top = floorY - feetSprite.getHeight();
-            }
-            else if(timer > deathTime / 4) {
-                headSprite.setAlpha(0);
-                bodySprite.setAlpha(196);
-                top = floorY - (feetSprite.getHeight() + bodySprite.getHeight());
-            }
-            else {
-                headSprite.setAlpha(196);
-                top = floorY - (feetSprite.getHeight() + bodySprite.getHeight() + headSprite.getHeight());
+
+            switch(int(timer / (deathTime / 6))) {
+                case 0:
+                    headSprite.setAlpha(196);
+                    top = floorY - (feetSprite.getHeight() + bodySprite.getHeight() + headSprite.getHeight());
+                    break;
+
+                case 1:
+                    headSprite.setAlpha(0);
+                    top = floorY - (feetSprite.getHeight() + bodySprite.getHeight());
+                    break;
+
+                case 2:
+                    bodySprite.setAlpha(196);
+                    top = floorY - (feetSprite.getHeight() + bodySprite.getHeight());
+                    break;
+
+                case 3:
+                    bodySprite.setAlpha(0);
+                    top = floorY - feetSprite.getHeight();
+                    break;
+
+                case 4:
+                    feetSprite.setAlpha(196);
+                    top = floorY - feetSprite.getHeight();
+                    break;
+
+                default:
+                    headSprite.setAlpha(0);
+                    bodySprite.setAlpha(0);
+                    feetSprite.setAlpha(0);
+                    top = floorY;
+                    break;
             }
 
             int previousStep = (timer - TA::elapsedTime) / deathExplosionDelay;
