@@ -1,10 +1,11 @@
 #include "character.h"
 #include "object_set.h"
+#include "error.h"
 
 bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
     int flags = 0;
-    links.objectSet->checkCollision(checkHitbox, flags);
+    links.objectSet->checkCollision(checkHitbox, flags, checkHitbox.getPosition().y + 36);
     if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_PUSHABLE)) {
         return true;
     }
@@ -29,7 +30,7 @@ void TA_Character::updateCollisions()
     if(ground) {
         useHalfSolidTiles = true;
     }
-    else if(velocity.y > 0.01) {
+    else if(velocity.y > -0.01) {
         if(!useHalfSolidTiles) {
             useHalfSolidTiles = true;
             TA_Polygon hitbox;

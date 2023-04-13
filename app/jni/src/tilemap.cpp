@@ -149,7 +149,7 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     }
 }
 
-void TA_Tilemap::checkCollision(TA_Polygon &polygon, int &flags)
+void TA_Tilemap::checkCollision(TA_Polygon &polygon, int &flags, int halfSolidTop)
 {
     flags = 0;
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
@@ -177,7 +177,9 @@ void TA_Tilemap::checkCollision(TA_Polygon &polygon, int &flags)
             }
             tileset[tileId].polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
             if(polygon.intersects(tileset[tileId].polygon)) {
-                flags |= (1 << tileset[tileId].type);
+                if((1 << tileset[tileId].type) != TA_COLLISION_HALF_SOLID || (tileY + 1) * tileHeight >= halfSolidTop) {
+                    flags |= (1 << tileset[tileId].type);
+                }
             }
         }
     }

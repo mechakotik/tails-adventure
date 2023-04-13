@@ -167,13 +167,13 @@ void TA_ObjectSet::draw(int priority)
     }
 }
 
-void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
+void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop)
 {
     if(hitbox.empty()) {
         return;
     }
     flags = 0;
-    tilemap->checkCollision(hitbox, flags);
+    tilemap->checkCollision(hitbox, flags, halfSolidTop);
     flags |= hitboxContainer.getCollisionFlags(hitbox);
     /*for(TA_Object *currentObject : deleteList) {
         if(currentObject->checkCollision(hitbox)) {

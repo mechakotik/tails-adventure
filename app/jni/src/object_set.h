@@ -61,7 +61,7 @@ public:
     void load(std::string filename);
     void update();
     void draw(int priority);
-    void checkCollision(TA_Polygon &hitbox, int &flags);
+    void checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop = -1e9);
     int checkCollision(TA_Polygon &hitbox);
     void setTransition(TA_ScreenState screenState) {transition = screenState;}
     TA_ScreenState getTransition() {return transition;}
