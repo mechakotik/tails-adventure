@@ -72,6 +72,14 @@ void TA_Game::updateWindowSize()
         SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
     }
 
+    double aspectRatio = double(windowWidth) / windowHeight;
+    if(aspectRatio > maxWindowAspectRatio + 0.01 || aspectRatio < minWindowAspectRatio - 0.01) {
+        int newWindowWidth = windowHeight * std::min(maxWindowAspectRatio, std::max(minWindowAspectRatio, aspectRatio));
+        SDL_SetWindowSize(TA::window, newWindowWidth, windowHeight);
+        updateWindowSize();
+        return;
+    }
+
     TA::screenWidth = baseHeight * pixelAspectRatio * windowWidth / windowHeight;
     TA::screenHeight = baseHeight;
     TA::widthMultiplier = double(windowWidth) / TA::screenWidth;
