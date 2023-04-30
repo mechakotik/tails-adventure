@@ -1,6 +1,14 @@
 #include "sound.h"
 #include "error.h"
 #include "resource_manager.h"
+#include "save.h"
+
+void TA::sound::update()
+{
+    Mix_MasterVolume(TA::save::getParameter("master_volume"));
+    Mix_Volume(TA_SOUND_CHANNEL_MUSIC, TA::save::getParameter("music_volume"));
+    Mix_Volume(TA_SOUND_CHANNEL_SFX, TA::save::getParameter("sfx_volume"));
+}
 
 bool TA::sound::isPlaying(TA_SoundChannel channel)
 {

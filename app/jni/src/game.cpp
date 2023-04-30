@@ -12,6 +12,7 @@
 #include "gamepad.h"
 #include "resource_manager.h"
 #include "keyboard.h"
+#include "save.h"
 
 TA_Game::TA_Game()
 {
@@ -44,9 +45,12 @@ TA_Game::TA_Game()
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
+
     TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
     TA::gamepad::init();
     TA::keyboard::init();
+    TA::save::load();
+
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
 }
@@ -91,6 +95,7 @@ bool TA_Game::process()
     TA::touchscreen::update();
     TA::keyboard::update();
     TA::gamepad::update();
+    TA::sound::update();
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {

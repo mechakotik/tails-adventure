@@ -39,6 +39,7 @@ LOCAL_SRC_FILES := main.cpp \
                    devmenu_screen.cpp \
                    character_movement.cpp \
                    character_collision.cpp \
+                   save.cpp \
                    objects/explosion.cpp \
                    objects/bomb.cpp \
                    objects/breakable_block.cpp \

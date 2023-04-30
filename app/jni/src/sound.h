@@ -12,6 +12,7 @@ enum TA_SoundChannel
 };
 
 namespace TA { namespace sound {
+    void update();
     bool isPlaying(TA_SoundChannel channel);
     void fadeOut(int time);
 }}
