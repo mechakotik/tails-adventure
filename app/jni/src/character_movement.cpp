@@ -21,6 +21,18 @@ void TA_Character::physicsStep()
     }
 }
 
+void TA_Character::initHelitail()
+{
+    helitail = true;
+    helitailTime = 0;
+    if(ground) {
+        velocity.y = -2;
+    }
+    if(remoteRobot) {
+        setAnimation("remote_robot_fly_init");
+    }
+}
+
 void TA_Character::updateGround()
 {
     verticalMove();
@@ -32,9 +44,7 @@ void TA_Character::updateGround()
     }
     if(controller.isJustPressed(TA_BUTTON_A)) {
         if(lookUp) {
-            helitail = true;
-            helitailTime = 0;
-            velocity.y = -2;
+            initHelitail();
         }
         else {
             jumpSound.play();
@@ -61,10 +71,8 @@ void TA_Character::updateAir()
             jumpReleased = true;
         }
     }
-    if(jump && jumpReleased && controller.isJustPressed(TA_BUTTON_A)) {
-        jump = false;
-        helitail = true;
-        helitailTime = 0;
+    if(jump && jumpReleased && !remoteRobot && controller.isJustPressed(TA_BUTTON_A)) {
+        initHelitail();
     }
 }
 
@@ -85,7 +93,7 @@ void TA_Character::updateHelitail()
     if(direction != TA_DIRECTION_MAX) {
         vector = controller.getDirectionVector();
     }
-    if(helitailTime > maxHelitailTime) {
+    if(!remoteRobot && helitailTime > maxHelitailTime) {
         vector.y = 1;
     }
 

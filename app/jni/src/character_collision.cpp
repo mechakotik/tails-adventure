@@ -18,7 +18,10 @@ bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 
 void TA_Character::updateCollisions()
 {
-    if(jump && velocity.y < 0) {
+    if(remoteRobot) {
+        topLeft = TA_Point(18, 27);
+    }
+    else if(jump && velocity.y < 0) {
         topLeft = TA_Point(18, 9);
     }
     else if(crouch) {
@@ -69,7 +72,7 @@ void TA_Character::updateCollisions()
         }
     }
 
-    if(!hurt && invincibleTimeLeft <= 0) {
+    if(!remoteRobot && !hurt && invincibleTimeLeft <= 0) {
         auto handleDamage = [&] (TA_Polygon &hitbox, int sign) {
             if(hurt) {
                 return;
@@ -120,7 +123,7 @@ void TA_Character::updateCollisions()
 
 void TA_Character::updateClimb()
 {
-    if(!wall || !TA::equal(deltaX, 0)) {
+    if(remoteRobot || !wall || !TA::equal(deltaX, 0)) {
         return;
     }
 

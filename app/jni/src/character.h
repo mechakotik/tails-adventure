@@ -11,7 +11,8 @@
 class TA_Character : public TA_Pawn {
 private:
     enum TA_CharacterTool {
-        TOOL_BOMB
+        TOOL_BOMB = 0,
+        TOOL_REMOTE_ROBOT = 6
     };
 
     enum TA_CharacterState {
@@ -19,6 +20,8 @@ private:
         STATE_CLIMB_LOW,
         STATE_CLIMB_HIGH,
         STATE_THROW_BOMB,
+        STATE_REMOTE_ROBOT_INIT,
+        STATE_REMOTE_ROBOT_RETURN,
         STATE_DEAD
     };
 
@@ -35,6 +38,7 @@ private:
     const double hurtYsp = -2.5;
     const double invincibleTime = 120;
     const double springYsp = -8;
+    const double remoteRobotInitTime = 30;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
@@ -45,13 +49,17 @@ private:
 
     TA_CharacterState state = STATE_NORMAL;
 
+    TA_Sprite remoteRobotControlSprite;
+    TA_Point remoteRobotInitialPosition;
+
     bool ground = false, helitail = false, wall = false, flip = false;
     bool jump = false, jumpReleased = false, spring = false;
     bool hurt = false;
     bool lookUp = false, crouch = false;
     bool useHalfSolidTiles = false;
+    bool remoteRobot = false;
 
-    double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
+    double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1, timer = 0;
     double deltaX = 0;
     int rings = 10;
     int currentTool = TOOL_BOMB;
@@ -60,6 +68,7 @@ private:
     void updateGround();
     void updateAir();
     void updateHelitail();
+    void initHelitail();
 
     void updateFollowPosition();
     void verticalMove();
@@ -71,11 +80,13 @@ private:
     void updateThrowAnimation();
     void updateTool();
     void updateObjectCollision();
+    void updateRemoteRobotReturn();
 
 public:
     void load(TA_GameScreenLinks newLinks);
     void handleInput();
     void update();
+    void draw() override;
     void drawControls() {controller.draw();}
     bool isOnGround() {return ground;}
     bool isJumpingOnSpring() {return spring;}

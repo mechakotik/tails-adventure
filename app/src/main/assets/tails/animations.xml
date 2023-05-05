@@ -45,4 +45,19 @@
 	<animation name="throw_crouch" delay="8" repeatTimes="1">
 		39,40
 	</animation>
+	<animation name="remote_robot_idle">
+		41
+	</animation>
+	<animation name="remote_robot_walk" delay="6">
+		42,43,44,45
+	</animation>
+	<animation name="remote_robot_fly_init" delay="6" repeatTimes="1">
+		46,47,48,49,50,51,52,53,54
+	</animation>
+	<animation name="remote_robot_fly_loop" delay="6">
+		55,56
+	</animation>
+	<animation name="control_remote_robot" delay="6">
+		57,58,59
+	</animation>
 </animations>

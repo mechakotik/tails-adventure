@@ -22,6 +22,11 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
     loadAnimationsFromFile("tails/animations.xml");
     setCamera(links.camera);
 
+    remoteRobotControlSprite.load("tails/tails.png", 48, 48);
+    remoteRobotControlSprite.loadAnimationsFromFile("tails/animations.xml");
+    remoteRobotControlSprite.setAnimation("control_remote_robot");
+    remoteRobotControlSprite.setCamera(links.camera);
+
     rings = TA::save::getSaveParameter("rings");
 }
 
@@ -58,6 +63,18 @@ void TA_Character::update()
         invincibleTimeLeft -= TA::elapsedTime;
         return;
     }
+    if(state == STATE_REMOTE_ROBOT_INIT) {
+        timer += TA::elapsedTime;
+        setAlpha(255 * (timer / remoteRobotInitTime));
+        if(timer > remoteRobotInitTime) {
+            state = STATE_NORMAL;
+        }
+        return;
+    }
+    if(state == STATE_REMOTE_ROBOT_RETURN) {
+        updateRemoteRobotReturn();
+        return;
+    }
 
     setPosition(position);
     setFlip(flip);
@@ -70,6 +87,14 @@ void TA_Character::update()
     updateFollowPosition();
 }
 
+void TA_Character::draw()
+{
+    if(remoteRobot) {
+        remoteRobotControlSprite.draw();
+    }
+    TA_Pawn::draw();
+}
+
 void TA_Character::updateAnimation()
 {
     if(rings >= 0 && hurt) {
@@ -80,6 +105,21 @@ void TA_Character::updateAnimation()
     }
     else {
         setAlpha(255);
+    }
+
+    if(remoteRobot) {
+        if(helitail) {
+            if(!isAnimated()) {
+                setAnimation("remote_robot_fly_loop");
+            }
+        }
+        else if(ground && !TA::equal(velocity.x, 0)) {
+            setAnimation("remote_robot_walk");
+        }
+        else {
+            setAnimation("remote_robot_idle");
+        }
+        return;
     }
 
     if(hurt) {
@@ -148,6 +188,23 @@ void TA_Character::updateTool()
             }
             break;
 
+        case TOOL_REMOTE_ROBOT:
+            if(!remoteRobot) {
+                if(!ground) {
+                    break;
+                }
+                remoteRobot = true;
+                remoteRobotInitialPosition = position;
+                remoteRobotControlSprite.setPosition(remoteRobotInitialPosition);
+                timer = 0;
+                state = STATE_REMOTE_ROBOT_INIT;
+            }
+            else if(state != STATE_REMOTE_ROBOT_INIT) {
+                setAnimation("remote_robot_idle");
+                state = STATE_REMOTE_ROBOT_RETURN;
+            }
+            break;
+
         default:
             break;
     }
@@ -191,4 +248,22 @@ void TA_Character::setSpawnPoint(TA_Point newPosition, bool newFlip)
     flip = newFlip;
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
+}
+
+void TA_Character::updateRemoteRobotReturn()
+{
+    TA_Point velocity = remoteRobotInitialPosition - position;
+    if(velocity.length() < 1) {
+        position = remoteRobotInitialPosition;
+        remoteRobot = false;
+        state = STATE_NORMAL;
+        return;
+    }
+    double divisor = velocity.length();
+    velocity.x /= divisor;
+    velocity.y /= divisor;
+    position = position + velocity;
+
+    setPosition(position);
+    updateFollowPosition();
 }
