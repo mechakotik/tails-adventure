@@ -3,6 +3,8 @@
 #include "tools.h"
 #include "error.h"
 #include "gamepad.h"
+#include "save.h"
+#include "hud.h"
 #include "objects/bomb.h"
 
 void TA_Character::load(TA_GameScreenLinks newLinks)
@@ -19,6 +21,8 @@ void TA_Character::load(TA_GameScreenLinks newLinks)
     TA_Pawn::load("tails/tails.png", 48, 48);
     loadAnimationsFromFile("tails/animations.xml");
     setCamera(links.camera);
+
+    rings = TA::save::getSaveParameter("rings");
 }
 
 void TA_Character::handleInput()
@@ -121,7 +125,7 @@ void TA_Character::updateTool()
     if(!controller.isJustPressed(TA_BUTTON_B)) {
         return;
     }
-    switch(currentTool) {
+    switch(links.hud->getCurrentItem()) {
         case TOOL_BOMB:
             if(links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
                 break;

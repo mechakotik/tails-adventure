@@ -25,7 +25,7 @@ TA_Direction TA_Controller::getDirection()
 
 void TA_CommonController::load()
 {
-    touchscreen.load();
+    //touchscreen.load();
     gamepad.load();
     if(TA::gamepad::connected()) {
         currentController = &gamepad;
@@ -37,7 +37,7 @@ void TA_CommonController::load()
 
 void TA_CommonController::update()
 {
-    touchscreen.update();
+    //touchscreen.update();
     gamepad.update();
     keyboard.update();
     if(TA::gamepad::connected()) {

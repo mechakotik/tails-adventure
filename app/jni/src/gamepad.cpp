@@ -42,6 +42,8 @@ void TA::gamepad::init(int index)
     mapping[TA_BUTTON_A] = SDL_CONTROLLER_BUTTON_A;
     mapping[TA_BUTTON_B] = SDL_CONTROLLER_BUTTON_B;
     mapping[TA_BUTTON_PAUSE] = SDL_CONTROLLER_BUTTON_START;
+    mapping[TA_BUTTON_LB] = SDL_CONTROLLER_BUTTON_LEFTSHOULDER;
+    mapping[TA_BUTTON_RB] = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
 }
 
 void TA::gamepad::update()

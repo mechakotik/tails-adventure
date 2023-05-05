@@ -80,10 +80,10 @@ public:
     bool isOnGround() {return ground;}
     bool isJumpingOnSpring() {return spring;}
     TA_Polygon *getHitbox() {return &hitbox;}
+    TA_CommonController *getController() {return &controller;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
 
     int getRingsCount() {return std::max(0, rings);}
-    int getCurrentItem() {return 0;}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
 };
 

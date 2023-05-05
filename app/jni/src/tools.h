@@ -16,6 +16,8 @@ enum TA_FunctionButton {
     TA_BUTTON_A,
     TA_BUTTON_B,
     TA_BUTTON_PAUSE,
+    TA_BUTTON_LB,
+    TA_BUTTON_RB,
     TA_BUTTON_MAX
 };
 

@@ -1,6 +1,7 @@
 #include "character.h"
 #include "object_set.h"
 #include "error.h"
+#include "save.h"
 
 bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
@@ -205,6 +206,7 @@ void TA_Character::updateObjectCollision()
     if(flags & TA_COLLISION_RING) {
         rings ++;
         ringSound.play();
+        TA::save::setSaveParameter("rings", rings);
     }
     if(flags & TA_COLLISION_SPRING) {
         jumpSound.play();

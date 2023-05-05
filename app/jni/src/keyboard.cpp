@@ -12,6 +12,8 @@ void TA::keyboard::init()
     mapping[TA_BUTTON_A] = SDL_SCANCODE_Z;
     mapping[TA_BUTTON_B] = SDL_SCANCODE_C;
     mapping[TA_BUTTON_PAUSE] = SDL_SCANCODE_RETURN;
+    mapping[TA_BUTTON_LB] = SDL_SCANCODE_A;
+    mapping[TA_BUTTON_RB] = SDL_SCANCODE_D;
 
     directionMapping[TA_DIRECTION_UP] = SDL_SCANCODE_UP;
     directionMapping[TA_DIRECTION_DOWN] = SDL_SCANCODE_DOWN;
