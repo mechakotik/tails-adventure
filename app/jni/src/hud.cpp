@@ -18,6 +18,7 @@ void TA_Hud::load(TA_GameScreenLinks newLinks)
     itemSprite.load("hud/items.png", 16, 16);
     itemSprite.loadAnimationsFromFile("hud/items.xml");
     itemSprite.setPosition(2, 22);
+    itemPosition = TA::save::getSaveParameter("item_position");
 }
 
 void TA_Hud::update()
@@ -33,6 +34,7 @@ void TA_Hud::update()
         itemSprite.setAnimation(direction == 1 ? "item_switch_right" : "item_switch_left");
         itemPosition = (itemPosition + direction + 4) % 4;
     }
+    TA::save::setSaveParameter("item_position", itemPosition);
     item = TA::save::getSaveParameter("item_slot" + std::to_string(itemPosition));
     if(item == -1) {
         item = 38;
