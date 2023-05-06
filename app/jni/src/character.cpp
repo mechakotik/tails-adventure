@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 #include "character.h"
 #include "tools.h"
 #include "error.h"
@@ -165,6 +166,14 @@ void TA_Character::updateTool()
     if(!controller.isJustPressed(TA_BUTTON_B)) {
         return;
     }
+    if(remoteRobot) {
+        if(state != STATE_REMOTE_ROBOT_INIT) {
+            setAnimation("remote_robot_idle");
+            state = STATE_REMOTE_ROBOT_RETURN;
+        }
+        return;
+    }
+    
     switch(links.hud->getCurrentItem()) {
         case TOOL_BOMB:
             if(links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
@@ -189,20 +198,15 @@ void TA_Character::updateTool()
             break;
 
         case TOOL_REMOTE_ROBOT:
-            if(!remoteRobot) {
-                if(!ground) {
-                    break;
-                }
-                remoteRobot = true;
-                remoteRobotInitialPosition = position;
-                remoteRobotControlSprite.setPosition(remoteRobotInitialPosition);
-                timer = 0;
-                state = STATE_REMOTE_ROBOT_INIT;
+            if(!ground) {
+                break;
             }
-            else if(state != STATE_REMOTE_ROBOT_INIT) {
-                setAnimation("remote_robot_idle");
-                state = STATE_REMOTE_ROBOT_RETURN;
-            }
+            remoteRobot = true;
+            remoteRobotInitialPosition = position;
+            remoteRobotControlSprite.setPosition(remoteRobotInitialPosition);
+            timer = 0;
+            setAnimation("remote_robot_idle");
+            state = STATE_REMOTE_ROBOT_INIT;
             break;
 
         default:
@@ -252,10 +256,20 @@ void TA_Character::setSpawnPoint(TA_Point newPosition, bool newFlip)
 
 void TA_Character::updateRemoteRobotReturn()
 {
+    timer = std::fmod(timer + TA::elapsedTime, 30);
+    if(timer < 15) {
+        setAlpha(255 - 255 * (timer / 5));
+    }
+    else {
+        setAlpha(255 * ((timer - 15) / 5));
+    }
+
     TA_Point velocity = remoteRobotInitialPosition - position;
     if(velocity.length() < 1) {
         position = remoteRobotInitialPosition;
         remoteRobot = false;
+        jump = helitail = false;
+        ground = true;
         state = STATE_NORMAL;
         return;
     }

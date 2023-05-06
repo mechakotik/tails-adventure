@@ -48,7 +48,7 @@ void TA_Character::updateGround()
         }
         else {
             jumpSound.play();
-            velocity.y = jmp;
+            velocity.y = (remoteRobot ? remoteRobotJumpSpeed : jmp);
             jump = true;
             jumpTime = 0;
             jumpReleased = false;
@@ -65,7 +65,7 @@ void TA_Character::updateAir()
     if(jump && !jumpReleased) {
         jumpTime += TA::elapsedTime;
         if(controller.isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
-            velocity.y = jmp;
+            velocity.y = (remoteRobot? remoteRobotJumpSpeed : jmp);
         }
         else if(!controller.isPressed(TA_BUTTON_A)) {
             jumpReleased = true;

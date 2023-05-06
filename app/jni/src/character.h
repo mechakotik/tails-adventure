@@ -39,6 +39,7 @@ private:
     const double invincibleTime = 120;
     const double springYsp = -8;
     const double remoteRobotInitTime = 30;
+    const double remoteRobotJumpSpeed = -2;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
