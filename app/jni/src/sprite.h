@@ -63,6 +63,7 @@ public:
     void setFlip(bool newFlip) {flip = newFlip;}
     int getWidth() {return frameWidth;}
     int getHeight() {return frameHeight;}
+    bool getFlip() {return flip;}
 
     void loadAnimationsFromFile(std::string filename);
     void setAnimation(std::string name);

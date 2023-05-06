@@ -81,11 +81,11 @@ void TA_Character::update()
     setFlip(flip);
     updateObjectCollision();
     updateTool();
-    if(state == STATE_THROW_BOMB) {
+    updateFollowPosition();
+    if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN) {
         return;
     }
     updateAnimation();
-    updateFollowPosition();
 }
 
 void TA_Character::draw()
@@ -204,6 +204,7 @@ void TA_Character::updateTool()
             remoteRobot = true;
             remoteRobotInitialPosition = position;
             remoteRobotControlSprite.setPosition(remoteRobotInitialPosition);
+            remoteRobotControlSprite.setFlip(flip);
             timer = 0;
             setAnimation("remote_robot_idle");
             state = STATE_REMOTE_ROBOT_INIT;
@@ -270,6 +271,7 @@ void TA_Character::updateRemoteRobotReturn()
         remoteRobot = false;
         jump = helitail = false;
         ground = true;
+        flip = remoteRobotControlSprite.getFlip();
         state = STATE_NORMAL;
         return;
     }
