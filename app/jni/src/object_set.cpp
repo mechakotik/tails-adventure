@@ -40,13 +40,20 @@ void TA_ObjectSet::load(std::string filename)
     {
         std::string name = element->Attribute("name");
 
-        if(name == "pf_breakable_block") {
+        if(name == "breakable_block") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             bool dropsRing = false;
             if(element->Attribute("drops_ring", "true")) {
                 dropsRing = true;
             }
-            spawnObject<TA_BreakableBlock>(position, dropsRing);
+            std::string path = "maps/pf/pf_block.png", particlePath = "maps/pf/pf_rock.png";
+            if(element->Attribute("path")) {
+                path = element->Attribute("path");
+            }
+            if(element->Attribute("particle_path")) {
+                particlePath = element->Attribute("particle_path");
+            }
+            spawnObject<TA_BreakableBlock>(path, particlePath, position, dropsRing);
         }
 
         else if(name == "walker" || name == "hover_pod") {

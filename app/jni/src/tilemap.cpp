@@ -12,7 +12,7 @@ void TA_Tilemap::load(std::string filename)
     tinyxml2::XMLDocument xmlFile;
     xmlFile.Parse(TA::readStringFromFile(filename).c_str());
     tinyxml2::XMLElement *xmlRoot = xmlFile.FirstChildElement("map");
-
+    
     width = xmlRoot->IntAttribute("width");
     height = xmlRoot->IntAttribute("height");
     layerCount = xmlRoot->IntAttribute("nextlayerid") - 1;
@@ -124,14 +124,25 @@ void TA_Tilemap::load(std::string filename)
     borderPolygons[3].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
 }
 
-void TA_Tilemap::draw(int layer)
+void TA_Tilemap::draw(int priority)
 {
-    for(int tileX = 0; tileX < width; tileX ++) {
-        for(int tileY = 0; tileY < height; tileY ++) {
-            if(tilemap[layer][tileX][tileY].tileIndex != -1) {
-                tilemap[layer][tileX][tileY].sprite.draw();
+    auto drawLayer = [&](int layer) {
+        for(int tileX = 0; tileX < width; tileX ++) {
+            for(int tileY = 0; tileY < height; tileY ++) {
+                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
+                    tilemap[layer][tileX][tileY].sprite.draw();
+                }
             }
         }
+    };
+
+    if(priority == 0) {
+        for(int layer = 0; layer < std::max(1, layerCount - 1); layer ++) {
+            drawLayer(layer);
+        }
+    }
+    else if(priority == 1 && layerCount >= 2) {
+        drawLayer(layerCount - 1);
     }
 }
 

@@ -42,7 +42,7 @@ private:
 
 public:
     void load(std::string filename);
-    void draw(int layer);
+    void draw(int priority);
     void setCamera(TA_Camera *newCamera);
     int getWidth() {return width * tileWidth;}
     int getHeight() {return height * tileHeight;}

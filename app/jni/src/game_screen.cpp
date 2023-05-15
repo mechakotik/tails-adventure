@@ -30,11 +30,10 @@ TA_ScreenState TA_GameScreen::update()
     camera.update(character.isOnGround(), character.isJumpingOnSpring());
 
     tilemap.draw(0);
-    tilemap.draw(1);
     objectSet.draw(0);
     character.draw();
     objectSet.draw(1);
-    tilemap.draw(2);
+    tilemap.draw(1);
     character.drawControls();
     hud.draw();
 
