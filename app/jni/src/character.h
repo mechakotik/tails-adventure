@@ -96,7 +96,6 @@ public:
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() {return position + TA_Point(24, 24);}
 
-    int getRingsCount() {return std::max(0, rings);}
     void addRings(int count);
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
 };

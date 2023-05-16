@@ -49,7 +49,7 @@ void TA_Hud::draw()
     itemSprite.draw();
 
     ringMonitor.draw();
-    int rings = links.character->getRingsCount();
+    int rings = TA::save::getSaveParameter("rings");
     rings = std::min(rings, 99);
     if(rings >= 10) {
         ringDigits[0].setFrame(rings / 10);
