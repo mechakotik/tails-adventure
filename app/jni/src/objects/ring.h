@@ -2,10 +2,12 @@
 #define TA_RING_H
 
 #include "object_set.h"
+#include "sound.h"
 
 class TA_Ring : public TA_Object {
 private:
     TA_Point velocity{0, -2};
+    TA_Sound ringSound;
     double timer = 0;
 
     const int maxTime = 300;
@@ -17,7 +19,6 @@ public:
     void load(TA_Point newPosition);
     bool update() override;
     bool checkPawnCollision(TA_Polygon &hitbox) override;
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_RING;}
 };
 
 #endif // TA_RING_H

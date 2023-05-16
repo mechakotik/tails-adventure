@@ -206,11 +206,6 @@ void TA_Character::updateObjectCollision()
     hitbox.setRectangle(topLeft - TA_Point(0.05, 0.05), bottomRight + TA_Point(0.05, 0.05));
 
     int flags = links.objectSet->checkCollision(hitbox);
-    if(flags & TA_COLLISION_RING) {
-        rings ++;
-        ringSound.play();
-        TA::save::setSaveParameter("rings", rings);
-    }
     if(flags & TA_COLLISION_SPRING) {
         jumpSound.play();
         velocity.y = springYsp;

@@ -44,7 +44,7 @@ private:
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
-    TA_Sound areaBeginSound, areaLoopSound, jumpSound, ringSound;
+    TA_Sound areaBeginSound, areaLoopSound, jumpSound;
     TA_Polygon hitbox;
     TA_Point topLeft, bottomRight;
 
@@ -97,6 +97,7 @@ public:
     TA_Point getPosition() {return position + TA_Point(24, 24);}
 
     int getRingsCount() {return std::max(0, rings);}
+    void addRings(int count);
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
 };
 

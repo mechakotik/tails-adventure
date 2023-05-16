@@ -16,7 +16,6 @@ void TA_Character::load(TA_Links newLinks)
     areaBeginSound.load("sound/pf_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
     areaLoopSound.load("sound/pf_loop.ogg", TA_SOUND_CHANNEL_MUSIC, true);
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX);
-    ringSound.load("sound/ring.ogg", TA_SOUND_CHANNEL_SFX);
     areaBeginSound.play();
 
     TA_Pawn::load("tails/tails.png", 48, 48);
@@ -282,4 +281,10 @@ void TA_Character::updateRemoteRobotReturn()
 
     setPosition(position);
     updateFollowPosition();
+}
+
+void TA_Character::addRings(int count)
+{
+    rings += count;
+    TA::save::setSaveParameter("rings", rings);
 }
