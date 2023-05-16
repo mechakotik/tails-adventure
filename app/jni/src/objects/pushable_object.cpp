@@ -1,5 +1,6 @@
 #include "pushable_object.h"
 #include "tools.h"
+#include "character.h"
 
 void TA_PushableObject::load(std::string filename, TA_Point newPosition)
 {
@@ -17,14 +18,14 @@ bool TA_PushableObject::update()
     rightHitbox.setPosition(position);
 
     double speed = TA::elapsedTime * 0.33;
-    if(objectSet->checkCollision(leftHitbox) & TA_COLLISION_CHARACTER) {
-        velocity.x = speed;
-    }
-    else if(objectSet->checkCollision(rightHitbox) & TA_COLLISION_CHARACTER) {
-        velocity.x = -speed;
-    }
-    else {
-        velocity.x = 0;
+    velocity.x = 0;
+    if(objectSet->getLinks().character->isOnGround()) {
+        if(objectSet->checkCollision(leftHitbox) & TA_COLLISION_CHARACTER) {
+            velocity.x = speed;
+        }
+        else if(objectSet->checkCollision(rightHitbox) & TA_COLLISION_CHARACTER) {
+            velocity.x = -speed;
+        }
     }
     velocity.y += grv;
 
