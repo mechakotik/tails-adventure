@@ -6,7 +6,7 @@
 class TA_Camera {
 private:
     const double groundSpeed = 1, airSpeed = 3, springSpeed = 5, maxLockDistance = 256;
-    const int shakeRadius = 1;
+    const int shakeRadius = 1, xOffset = 4, yOffset = 16;
     const double shakeFrequency = 3;
 
     TA_Point position, lockPosition, shakeDelta;

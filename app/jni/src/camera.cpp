@@ -37,11 +37,22 @@ void TA_Camera::update(bool ground, bool spring)
 
     TA_Point previousPosition = position;
     if(!lockedX) {
-        position.x = move(position.x, followPosition->x);
+        if(position.x < followPosition->x - xOffset) {
+            position.x = move(position.x, followPosition->x  - xOffset);
+        }
+        else if(position.x > followPosition->x + xOffset) {
+            position.x = move(position.x, followPosition->x + xOffset);
+        }
     }
     if(!lockedY) {
-        position.y = move(position.y, followPosition->y);
+        if(position.y < followPosition->y - yOffset) {
+            position.y = move(position.y, followPosition->y  - yOffset);
+        }
+        else if(position.y > followPosition->y + yOffset) {
+            position.y = move(position.y, followPosition->y + yOffset);
+        }
     }
+
     if(locked && lockPosition.getDistance(position) <= maxLockDistance) {
         if(!lockedX && TA::sign(previousPosition.x - lockPosition.x) != TA::sign(position.x - lockPosition.x)) {
             position.x = lockPosition.x;
