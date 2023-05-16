@@ -179,7 +179,7 @@ void TA_Character::updateTool()
                 break;
             }
             if(helitail) {
-                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point(20, 32), flip, TA_BOMB_MODE_HELITAIL);
+                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 15 : 21), 32), flip, TA_BOMB_MODE_HELITAIL);
             }
             else if(!ground) { // TODO: throw bomb in the air animation
                 links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);

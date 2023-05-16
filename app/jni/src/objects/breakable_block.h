@@ -14,7 +14,7 @@ public:
     void load(std::string path, std::string newParticlePath, TA_Point newPosition, bool newDropsRing);
     bool update() override;
     TA_CollisionType getCollisionType() override {return TA_COLLISION_SOLID;}
-    int getDrawPriority() override {return 1;}
+    int getDrawPriority() override {return 0;}
 };
 
 #endif // TA_BREAKABLE_BLOCK_H
