@@ -2,7 +2,7 @@
 #include "character.h"
 #include "save.h"
 
-void TA_Hud::load(TA_GameScreenLinks newLinks)
+void TA_Hud::load(TA_Links newLinks)
 {
     links = newLinks;
     ringMonitor.load("hud/items.png", 16, 16);

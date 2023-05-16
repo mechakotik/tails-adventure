@@ -8,6 +8,7 @@
 #include "tilemap.h"
 #include "hitbox_container.h"
 #include "screen.h"
+#include "links.h"
 
 class TA_ObjectSet;
 enum TA_BombMode : int;
@@ -40,9 +41,7 @@ public:
 class TA_ObjectSet {
 private:
     std::vector<TA_Object*> objects, spawnedObjects, deleteList;
-    TA_Camera *camera;
-    TA_Tilemap *tilemap;
-    TA_Polygon *characterHitbox;
+    TA_Links links;
     TA_HitboxContainer hitboxContainer;
     TA_Point spawnPoint;
     TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
@@ -50,17 +49,17 @@ private:
 
 public:
     ~TA_ObjectSet();
-    void setCamera(TA_Camera *newCamera) {camera = newCamera;}
-    TA_Camera* getCamera() {return camera;}
-    void setCollisionTilemap(TA_Tilemap *newTilemap) {tilemap = newTilemap;}
-    void setCharacterHitbox(TA_Polygon *newHitbox) {characterHitbox = newHitbox;}
-    TA_Point getCharacterPosition() {return characterHitbox->getVertex(0);}
+    TA_Point getCharacterPosition();
     TA_Point getCharacterSpawnPoint() {return spawnPoint;}
     bool getCharacterSpawnFlip() {return spawnFlip;}
+
+    void setLinks(TA_Links newLinks) {links = newLinks;}
+    TA_Links getLinks() {return links;}
 
     void load(std::string filename);
     void update();
     void draw(int priority);
+
     void checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop = -1e9);
     int checkCollision(TA_Polygon &hitbox);
     void setTransition(TA_ScreenState screenState) {transition = screenState;}

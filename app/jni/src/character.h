@@ -43,7 +43,7 @@ private:
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
-    TA_GameScreenLinks links;
+    TA_Links links;
     TA_Sound areaBeginSound, areaLoopSound, jumpSound, ringSound;
     TA_Polygon hitbox;
     TA_Point topLeft, bottomRight;
@@ -84,7 +84,7 @@ private:
     void updateRemoteRobotReturn();
 
 public:
-    void load(TA_GameScreenLinks newLinks);
+    void load(TA_Links newLinks);
     void handleInput();
     void update();
     void draw() override;
@@ -94,6 +94,7 @@ public:
     TA_Polygon *getHitbox() {return &hitbox;}
     TA_CommonController *getController() {return &controller;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
+    TA_Point getPosition() {return position + TA_Point(24, 24);}
 
     int getRingsCount() {return std::max(0, rings);}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}

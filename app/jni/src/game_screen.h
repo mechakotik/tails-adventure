@@ -16,7 +16,7 @@ private:
     TA_Camera camera;
     TA_Character character;
     TA_ObjectSet objectSet;
-    TA_GameScreenLinks links;
+    TA_Links links;
     TA_Hud hud;
 
 public:

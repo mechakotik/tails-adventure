@@ -8,12 +8,12 @@ class TA_ObjectSet;
 class TA_CommonController;
 class TA_Hud;
 
-struct TA_GameScreenLinks {
-    TA_Character *character;
-    TA_Tilemap *tilemap;
-    TA_Camera *camera;
-    TA_ObjectSet *objectSet;
-    TA_CommonController *controller;
+struct TA_Links {
+    TA_Character *character = nullptr;
+    TA_Tilemap *tilemap = nullptr;
+    TA_Camera *camera = nullptr;
+    TA_ObjectSet *objectSet = nullptr;
+    TA_CommonController *controller = nullptr;
     TA_Hud *hud;
 };
 

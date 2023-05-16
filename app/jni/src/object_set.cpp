@@ -14,11 +14,12 @@
 #include "objects/transition.h"
 #include "objects/bridge.h"
 #include "objects/bird_walker.h"
+#include "character.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
     objectSet = newObjectSet;
-    setCamera(objectSet->getCamera());
+    setCamera(objectSet->getLinks().camera);
 }
 
 void TA_Object::updatePosition()
@@ -120,7 +121,7 @@ void TA_ObjectSet::load(std::string filename)
 
         else if(name == "camera_lock_point") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            camera->setLockPosition(position);
+            links.camera->setLockPosition(position);
         }
 
         else if(name == "bird_walker") {
@@ -180,14 +181,14 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidT
         return;
     }
     flags = 0;
-    tilemap->checkCollision(hitbox, flags, halfSolidTop);
+    links.tilemap->checkCollision(hitbox, flags, halfSolidTop);
     flags |= hitboxContainer.getCollisionFlags(hitbox);
     /*for(TA_Object *currentObject : deleteList) {
         if(currentObject->checkCollision(hitbox)) {
             flags |= currentObject->getCollisionType();
         }
     }*/
-    if(characterHitbox->intersects(hitbox)) {
+    if(links.character->getHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
     }
 }
@@ -197,6 +198,11 @@ int TA_ObjectSet::checkCollision(TA_Polygon &hitbox)
     int flags = 0;
     checkCollision(hitbox, flags);
     return flags;
+}
+
+TA_Point TA_ObjectSet::getCharacterPosition()
+{
+    return links.character->getPosition();
 }
 
 TA_ObjectSet::~TA_ObjectSet()

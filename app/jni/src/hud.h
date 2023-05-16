@@ -7,13 +7,13 @@
 
 class TA_Hud {
 private:
-    TA_GameScreenLinks links;
+    TA_Links links;
     TA_Sprite ringMonitor, itemSprite;
     std::array<TA_Sprite, 2> ringDigits;
     int item = 0, itemPosition = 0;
 
 public:
-    void load(TA_GameScreenLinks newLinks);
+    void load(TA_Links newLinks);
     void update();
     void draw();
     int getCurrentItem() {return item;}

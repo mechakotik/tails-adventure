@@ -16,10 +16,10 @@ void TA_BirdWalker::load(double newFloorY)
     feetSprite.loadAnimationsFromFile("objects/bird_walker/feet.xml");
     aimSprite.loadAnimationsFromFile("objects/bird_walker/aim.xml");
 
-    headSprite.setCamera(objectSet->getCamera());
-    bodySprite.setCamera(objectSet->getCamera());
-    feetSprite.setCamera(objectSet->getCamera());
-    aimSprite.setCamera(objectSet->getCamera());
+    headSprite.setCamera(objectSet->getLinks().camera);
+    bodySprite.setCamera(objectSet->getLinks().camera);
+    feetSprite.setCamera(objectSet->getLinks().camera);
+    aimSprite.setCamera(objectSet->getLinks().camera);
 
     TA_Polygon bodyHitbox; // TODO: flip hitbox
     bodyHitbox.setRectangle({6, -61}, {33, -29});
@@ -60,7 +60,7 @@ void TA_BirdWalker::insertBorderHitboxes()
 {
     borderHitboxVector.clear();
     TA_Polygon borderHitbox;
-    TA_Point cameraPosition = objectSet->getCamera()->getPosition();
+    TA_Point cameraPosition = objectSet->getLinks().camera->getPosition();
 
     borderHitbox.setRectangle(cameraPosition + TA_Point(-1, 0), cameraPosition + TA_Point(0, TA::screenHeight));
     hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
@@ -78,8 +78,8 @@ bool TA_BirdWalker::update()
         timer = 0;
 
         aimPosition.x = objectSet->getCharacterPosition().x - 2;
-        aimPosition.x = std::max(aimPosition.x, objectSet->getCamera()->getPosition().x + aimBorder);
-        aimPosition.x = std::min(aimPosition.x, objectSet->getCamera()->getPosition().x + TA::screenWidth - aimBorder);
+        aimPosition.x = std::max(aimPosition.x, objectSet->getLinks().camera->getPosition().x + aimBorder);
+        aimPosition.x = std::min(aimPosition.x, objectSet->getLinks().camera->getPosition().x + TA::screenWidth - aimBorder);
         aimPosition.y = floorY - 20;
 
         aimSprite.setPosition(aimPosition);
@@ -91,7 +91,7 @@ bool TA_BirdWalker::update()
 
     switch(state) {
         case TA_BIRD_WALKER_STATE_IDLE: {
-            if(objectSet->getCamera()->isLocked()) { // TODO: boss music and SFX
+            if(objectSet->getLinks().camera->isLocked()) { // TODO: boss music and SFX
                 updatePosition();
                 initAiming();
             }
@@ -115,7 +115,7 @@ bool TA_BirdWalker::update()
             if(timer > flyingTime) {
                 timer = 0;
                 feetSprite.setFrame(4);
-                objectSet->getCamera()->shake(24);
+                objectSet->getLinks().camera->shake(24);
                 state = TA_BIRD_WALKER_STATE_LANDED;
             }
             break;
@@ -153,8 +153,8 @@ bool TA_BirdWalker::update()
         case TA_BIRD_WALKER_STATE_WALK: {
             feetSprite.setAnimation("walk");
             double centeredPosition = position.x + bodySprite.getWidth() / 2;
-            double leftBorder = objectSet->getCamera()->getPosition().x + walkBorder;
-            double rightBorder = objectSet->getCamera()->getPosition().x + TA::screenWidth - walkBorder;
+            double leftBorder = objectSet->getLinks().camera->getPosition().x + walkBorder;
+            double rightBorder = objectSet->getLinks().camera->getPosition().x + TA::screenWidth - walkBorder;
 
             if((!flip && centeredPosition < leftBorder) || (flip && centeredPosition > rightBorder) || currentWalkDistance > walkDistance) {
                 timer = 0;
@@ -281,7 +281,7 @@ bool TA_BirdWalker::update()
             }
 
             if(timer > deathTime) {
-                objectSet->getCamera()->unlock();
+                objectSet->getLinks().camera->unlock();
                 return false;
             }
             break;

@@ -190,6 +190,9 @@ void TA_Tilemap::checkCollision(TA_Polygon &polygon, int &flags, int halfSolidTo
             if(polygon.intersects(tileset[tileId].polygon)) {
                 if((1 << tileset[tileId].type) != TA_COLLISION_HALF_SOLID || (tileY + 1) * tileHeight >= halfSolidTop) {
                     flags |= (1 << tileset[tileId].type);
+                    if(tileset[tileId].type == 2) {
+                        flags |= 1;
+                    }
                 }
             }
         }

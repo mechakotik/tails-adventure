@@ -10,12 +10,10 @@ void TA_GameScreen::init()
     links.controller = character.getController();
 
     character.load(links);
+    objectSet.setLinks(links);
     tilemap.load(TA::levelPath + ".tmx");
     tilemap.setCamera(&camera);
-    objectSet.setCollisionTilemap(&tilemap);
     hud.load(links);
-    objectSet.setCamera(&camera);
-    objectSet.setCharacterHitbox(character.getHitbox());
     objectSet.load(TA::levelPath + ".xml");
     character.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());
     TA::previousLevelPath = TA::levelPath;

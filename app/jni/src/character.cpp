@@ -8,7 +8,7 @@
 #include "hud.h"
 #include "objects/bomb.h"
 
-void TA_Character::load(TA_GameScreenLinks newLinks)
+void TA_Character::load(TA_Links newLinks)
 {
     links = newLinks;
     controller.load();
