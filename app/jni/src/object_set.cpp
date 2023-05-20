@@ -15,6 +15,7 @@
 #include "objects/bridge.h"
 #include "objects/bird_walker.h"
 #include "character.h"
+#include "objects/bat_robot.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -127,6 +128,11 @@ void TA_ObjectSet::load(std::string filename)
         else if(name == "bird_walker") {
             double floorY = element->IntAttribute("floor_y");
             spawnObject<TA_BirdWalker>(floorY);
+        }
+
+        else if(name == "bat_robot") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_BatRobot>(position);
         }
 
         else {

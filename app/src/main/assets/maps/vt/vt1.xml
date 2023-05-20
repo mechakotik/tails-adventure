@@ -50,4 +50,13 @@
 	<object name="breakable_block" x="1168" y="64" path="maps/vt/block3.png" drops_ring="true"/>
 	<object name="breakable_block" x="1168" y="80" path="maps/vt/block3.png" drops_ring="true"/>
 	<object name="breakable_block" x="1168" y="96" path="maps/vt/block3.png" drops_ring="true"/>
+	
+	<object name="bat_robot" x="716" y="224"/>
+	<object name="bat_robot" x="796" y="272"/>
+	<object name="bat_robot" x="604" y="48"/>
+	<object name="bat_robot" x="684" y="48"/>
+	<object name="bat_robot" x="764" y="48"/>
+	<object name="bat_robot" x="1468" y="160"/>
+	<object name="bat_robot" x="1500" y="192"/>
+	<object name="bat_robot" x="1580" y="176"/>
 </objects>

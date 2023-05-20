@@ -45,11 +45,11 @@ void TA_Camera::update(bool ground, bool spring)
         }
     }
     if(!lockedY) {
-        if(position.y < followPosition->y - yOffset) {
-            position.y = move(position.y, followPosition->y  - yOffset);
+        if(position.y < followPosition->y - yBottomOffset) {
+            position.y = move(position.y, followPosition->y  - yBottomOffset);
         }
-        else if(position.y > followPosition->y + yOffset) {
-            position.y = move(position.y, followPosition->y + yOffset);
+        else if(position.y > followPosition->y + yTopOffset) {
+            position.y = move(position.y, followPosition->y + yTopOffset);
         }
     }
 
