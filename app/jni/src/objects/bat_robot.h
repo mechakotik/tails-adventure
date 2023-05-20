@@ -15,6 +15,8 @@ private:
     const double gravity = -0.1 * speed * speed;
     const double cooldownTime = 48;
 
+    double findOptimalSpeed(double deltaY);
+
     TA_Point velocity;
     State state = STATE_IDLE;
     double timer = 0;

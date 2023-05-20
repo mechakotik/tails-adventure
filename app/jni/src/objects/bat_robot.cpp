@@ -26,7 +26,7 @@ bool TA_BatRobot::update()
             setAnimation("idle");
             TA_Point characterPosition = objectSet->getCharacterPosition();
             double centeredX = position.x + 12;
-            if(abs(characterPosition.x - centeredX) <= 96 && characterPosition.y - position.y <= 64) {
+            if(abs(characterPosition.x - centeredX) <= 80 && characterPosition.y - position.y <= 80) {
                 state = STATE_ACTIVE;
             }
             break;
@@ -37,12 +37,13 @@ bool TA_BatRobot::update()
             TA_Point characterPosition = objectSet->getCharacterPosition();
             timer += TA::elapsedTime;
             double centeredX = position.x + 12;
-            if(timer >= cooldownTime && characterPosition.y - position.y <= 48 && abs(characterPosition.x - centeredX) <= 48) {
+            double deltaY = characterPosition.y - position.y - 8;
+            if(timer >= cooldownTime && 0 <= deltaY && deltaY <= 64 && abs(characterPosition.x - centeredX) <= 64) {
                 position.y += 0.1;
-                velocity = {TA::sign(characterPosition.x - position.x) * 0.5, 2 * speed};
+                velocity = {TA::sign(characterPosition.x - position.x) * 0.5, findOptimalSpeed(deltaY)};
                 state = STATE_ATTACK;
             }
-            else if(abs(characterPosition.x - position.x) >= 112 || characterPosition.y - position.y >= 80) {
+            else if(abs(characterPosition.x - centeredX) >= 82 || characterPosition.y - position.y >= 82) {
                 state = STATE_IDLE;
             }
             break;
@@ -73,4 +74,23 @@ bool TA_BatRobot::update()
         return false;
     }
     return true;
+}
+
+double TA_BatRobot::findOptimalSpeed(double deltaY)
+{
+    auto distance = [&](double jumpSpeed) {
+        double t = -(jumpSpeed - gravity / 2) / gravity;
+        return t * jumpSpeed + t * (t - 1) / 2 * gravity;
+    };
+    double left = 1 * speed, right = 2.5 * speed, eps = 1e-3;
+    while(right - left > eps) {
+        double mid = (left + right) / 2;
+        if(distance(mid) < deltaY) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    return left;
 }
