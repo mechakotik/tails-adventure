@@ -52,12 +52,9 @@ bool TA_BatRobot::update()
         case STATE_ATTACK: {
             setAnimation("attack");
             velocity.y += gravity;
-            int flags = moveAndCollide(TA_Point(6, 0), TA_Point(17, 14), velocity);
+            int flags = moveAndCollide(TA_Point(5, 0), TA_Point(18, 14), velocity);
             if(flags & TA_GROUND_COLLISION) {
                 velocity.y = std::min(double(0), velocity.y);
-            }
-            if(flags & TA_WALL_COLLISION) {
-                velocity.x = 0;
             }
             if(flags & TA_CEIL_COLLISION) {
                 state = STATE_ACTIVE;
@@ -82,7 +79,7 @@ double TA_BatRobot::findOptimalSpeed(double deltaY)
         double t = -(jumpSpeed - gravity / 2) / gravity;
         return t * jumpSpeed + t * (t - 1) / 2 * gravity;
     };
-    double left = 1 * speed, right = 2.5 * speed, eps = 1e-3;
+    double left = 1 * speed, right = 2.8 * speed, eps = 1e-3;
     while(right - left > eps) {
         double mid = (left + right) / 2;
         if(distance(mid) < deltaY) {

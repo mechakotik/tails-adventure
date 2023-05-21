@@ -45,6 +45,7 @@ TA_Game::TA_Game()
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
+    SDL_ShowCursor(SDL_DISABLE);
 
     TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
     TA::gamepad::init();
