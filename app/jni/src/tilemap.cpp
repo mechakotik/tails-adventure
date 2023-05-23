@@ -99,6 +99,7 @@ void TA_Tilemap::load(std::string filename)
                 tilemap[layer][tileX][tileY].sprite.loadFromTexture(&texture, tileWidth, tileHeight);
                 tilemap[layer][tileX][tileY].sprite.setPosition(tileX * tileWidth, tileY * tileHeight);
                 tilemap[layer][tileX][tileY].sprite.setAnimation(TA_Animation(tileset[tile].animation, tileset[tile].animationDelay, -1));
+                tilemap[layer][tileX][tileY].sprite.setFixedMode(true);
             }
         }
 

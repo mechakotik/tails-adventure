@@ -25,7 +25,8 @@ public:
     void setBorder(TA_Rect newBorder) {border = newBorder;}
     void shake(double time) {shakeTime = time;}
     TA_Point getPosition() {return position;}
-    TA_Point getRelative(TA_Point realPosition) {return realPosition - (position + shakeDelta);}
+    TA_Point getRelative(TA_Point realPosition) {return realPosition + getDelta();}
+    TA_Point getDelta() {return (position + shakeDelta) * TA_Point(-1, -1);}
 };
 
 

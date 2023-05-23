@@ -11,6 +11,7 @@ namespace TA
 
     int screenWidth, screenHeight;
     double elapsedTime, widthMultiplier, heightMultiplier;
+    bool resolutionJustChanged = false;
 
     std::string levelPath = "maps/pf/pf2", previousLevelPath = "";
 

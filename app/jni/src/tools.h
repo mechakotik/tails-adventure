@@ -29,6 +29,7 @@ namespace TA
 
     extern int screenWidth, screenHeight;
     extern double elapsedTime, widthMultiplier, heightMultiplier;
+    extern bool resolutionJustChanged;
     const double epsilon = 1e-5;
 
     extern std::string levelPath, previousLevelPath;

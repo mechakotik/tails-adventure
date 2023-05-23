@@ -91,10 +91,12 @@ void TA_Game::updateWindowSize()
     TA::screenHeight = baseHeight;
     TA::widthMultiplier = double(windowWidth) / TA::screenWidth;
     TA::heightMultiplier = double(windowHeight) / TA::screenHeight;
+    TA::resolutionJustChanged = true;
 }
 
 bool TA_Game::process()
 {
+    TA::resolutionJustChanged = false;
     TA::touchscreen::update();
     TA::keyboard::update();
     TA::gamepad::update();

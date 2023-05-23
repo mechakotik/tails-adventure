@@ -36,6 +36,8 @@ private:
     int frame = 0;
     TA_Point position, scale{1, 1};
     TA_Camera *camera = nullptr;
+    SDL_Rect baseDstRect;
+    bool fixedMode = false;
 
     std::map<std::string, TA_Animation> loadedAnimations;
     TA_Animation animation;
@@ -45,6 +47,7 @@ private:
     bool noPixelAspectRatio = false;
     int alpha = 255;
 
+    void updateDstRect();
     void updateAnimation();
 
 public:
@@ -53,11 +56,11 @@ public:
 
     virtual void draw();
 
-    void setPosition(TA_Point newPosition) {position = newPosition;}
+    void setPosition(TA_Point newPosition);
     void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}
     void setAlpha(int newAlpha);
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
-    void setScale(TA_Point newScale) {scale = newScale;}
+    void setScale(TA_Point newScale);
     void setColorMod(int r, int g, int b);
     void setColorMod(int w) {setColorMod(w, w, w);}
     void setFlip(bool newFlip) {flip = newFlip;}
@@ -69,6 +72,7 @@ public:
     void setAnimation(std::string name);
     void setAnimation(TA_Animation newAnimation);
     void setFrame(int newFrame);
+    void setFixedMode(bool enabled) {fixedMode = enabled;}
     bool isAnimated();
     int getAnimationFrame();
     int getCurrentFrame();
