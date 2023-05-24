@@ -68,27 +68,21 @@ void TA_Sprite::draw()
         return;
     }
     updateAnimation();
-    if(TA::resolutionJustChanged) {
-        updateDstRect();
-    }
-    SDL_Rect srcRect, dstRect = baseDstRect;
+    SDL_Rect srcRect, dstRect;
     srcRect.x = (frameWidth * frame) % texture->width;
     srcRect.y = (frameWidth * frame) / texture->width * frameHeight;
     srcRect.w = frameWidth;
     srcRect.h = frameHeight;
 
+    TA_Point screenPosition = position;
     if(camera != nullptr) {
-        if(fixedMode) {
-            dstRect.x += int(camera->getDelta().x * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier));
-            dstRect.y += int(camera->getDelta().y * TA::heightMultiplier);
-        }
-        else {
-            TA_Point screenPosition = camera->getRelative(position);
-            dstRect.x = screenPosition.x * ((noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier));
-            dstRect.y = screenPosition.y * TA::heightMultiplier;
-        }
+        screenPosition = camera->getRelative(position);
     }
 
+    dstRect.x = screenPosition.x * TA::widthMultiplier;
+    dstRect.y = screenPosition.y * TA::heightMultiplier;
+    dstRect.w = frameWidth * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 1;
+    dstRect.h = frameHeight * TA::heightMultiplier * scale.y + 1;
     if(!hidden) {
         SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
         SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
@@ -124,26 +118,6 @@ void TA_Sprite::updateAnimation()
         frame = animation.frames[0];
     }
     updateAnimationNeeded = false;
-}
-
-void TA_Sprite::updateDstRect()
-{
-    baseDstRect.x = position.x * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier);
-    baseDstRect.y = position.y * TA::heightMultiplier;
-    baseDstRect.w = frameWidth * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 1;
-    baseDstRect.h = frameHeight * TA::heightMultiplier * scale.y + 1;
-}
-
-void TA_Sprite::setPosition(TA_Point newPosition)
-{
-    position = newPosition;
-    updateDstRect();
-}
-
-void TA_Sprite::setScale(TA_Point newScale)
-{
-    scale = newScale;
-    updateDstRect();
 }
 
 void TA_Sprite::loadAnimationsFromFile(std::string filename)
