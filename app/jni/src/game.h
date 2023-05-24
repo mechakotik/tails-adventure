@@ -8,7 +8,7 @@
 class TA_Game {
 private:
     const int baseHeight = 144;
-    const double pixelAspectRatio = 0.95;
+    const double pixelAspectRatio = 1;
     const double minWindowAspectRatio = 1.2, maxWindowAspectRatio = 2.4;
     const int soundFrequency = 44100, soundChunkSize = 256;
 
