@@ -245,6 +245,9 @@ void TA_Character::updateClimbAnimation()
 
 void TA_Character::updateThrowAnimation()
 {
+    if(controller.isJustPressed(TA_BUTTON_B)) {
+        bombDestroySignal = true;
+    }
     if(!isAnimated()) {
         state = STATE_NORMAL;
     }

@@ -15,7 +15,6 @@
 	<object name="breakable_block" x="448" y="96" path="maps/vt/block3.png" drops_ring="true"/>
 	<object name="breakable_block" x="448" y="112" path="maps/vt/block3.png" drops_ring="true"/>
 	<object name="breakable_block" x="448" y="128" path="maps/vt/block3.png" drops_ring="true"/>
-	<object name="breakable_block" x="448" y="144" path="maps/vt/block3.png" drops_ring="true"/>
 	
 	<object name="breakable_block" x="352" y="96" path="maps/vt/block1.png"/>
 	<object name="breakable_block" x="352" y="112" path="maps/vt/block1.png"/>
@@ -50,6 +49,9 @@
 	<object name="breakable_block" x="1168" y="64" path="maps/vt/block3.png" drops_ring="true"/>
 	<object name="breakable_block" x="1168" y="80" path="maps/vt/block3.png" drops_ring="true"/>
 	<object name="breakable_block" x="1168" y="96" path="maps/vt/block3.png" drops_ring="true"/>
+	
+	<object name="breakable_block" x="1712" y="96" path="maps/vt/block4.png"/>
+	<object name="breakable_block" x="1728" y="96" path="maps/vt/block4.png"/>
 	
 	<object name="bat_robot" x="716" y="224"/>
 	<object name="bat_robot" x="796" y="272"/>
