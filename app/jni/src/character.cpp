@@ -175,28 +175,41 @@ void TA_Character::updateTool()
     
     switch(links.hud->getCurrentItem()) {
         case TOOL_BOMB:
+        case TOOL_REMOTE_BOMB: {
+            auto spawnBomb = [&] (TA_Point position, bool flip, TA_BombMode mode) {
+                if(links.hud->getCurrentItem() == TOOL_BOMB) {
+                    links.objectSet->spawnObject<TA_Bomb>(position, flip, mode);
+                }
+                else {
+                    links.objectSet->spawnObject<TA_RemoteBomb>(position, flip, mode);
+                }
+            };
+
+            bombDestroySignal = false;
             if(links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
+                bombDestroySignal = true;
                 break;
             }
             if(helitail) {
-                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 15 : 21), 32), flip, TA_BOMB_MODE_HELITAIL);
+                spawnBomb(position + TA_Point((flip ? 15 : 21), 32), flip, TA_BOMB_MODE_HELITAIL);
             }
             else if(!ground) { // TODO: throw bomb in the air animation
-                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
+                spawnBomb(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
             }
             else if(crouch) {
-                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 12 : 23), 22), flip, TA_BOMB_MODE_CROUCH);
+                spawnBomb(position + TA_Point((flip ? 12 : 23), 22), flip, TA_BOMB_MODE_CROUCH);
                 setAnimation("throw_crouch");
                 state = STATE_THROW_BOMB;
             }
             else {
-                links.objectSet->spawnObject<TA_Bomb>(position + TA_Point((flip ? 27 : 8), 12), flip, TA_BOMB_MODE_DEFAULT);
+                spawnBomb(position + TA_Point((flip ? 27 : 8), 12), flip, TA_BOMB_MODE_DEFAULT);
                 setAnimation("throw");
                 state = STATE_THROW_BOMB;
             }
             break;
+        }
 
-        case TOOL_REMOTE_ROBOT:
+        case TOOL_REMOTE_ROBOT: {
             if(!ground) {
                 break;
             }
@@ -208,6 +221,7 @@ void TA_Character::updateTool()
             setAnimation("remote_robot_idle");
             state = STATE_REMOTE_ROBOT_INIT;
             break;
+        }
 
         default:
             break;

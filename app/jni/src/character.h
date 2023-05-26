@@ -12,6 +12,7 @@ class TA_Character : public TA_Pawn {
 private:
     enum TA_CharacterTool {
         TOOL_BOMB = 0,
+        TOOL_REMOTE_BOMB = 2,
         TOOL_REMOTE_ROBOT = 6
     };
 
@@ -59,6 +60,7 @@ private:
     bool lookUp = false, crouch = false;
     bool useHalfSolidTiles = false;
     bool remoteRobot = false;
+    bool bombDestroySignal = false;
 
     double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1, timer = 0;
     double deltaX = 0;
@@ -89,8 +91,11 @@ public:
     void update();
     void draw() override;
     void drawControls() {controller.draw();}
+
     bool isOnGround() {return ground;}
     bool isJumpingOnSpring() {return spring;}
+    bool getBombDestroySignal() {return bombDestroySignal;}
+
     TA_Polygon *getHitbox() {return &hitbox;}
     TA_CommonController *getController() {return &controller;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);

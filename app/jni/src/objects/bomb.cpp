@@ -1,6 +1,7 @@
 #include "bomb.h"
 #include "tools.h"
 #include "objects/explosion.h"
+#include "character.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
     TA_Sprite::load("objects/bomb.png");
@@ -25,7 +26,6 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
     }
     direction = newDirection;
     if(direction) {
-        position.x;
         velocity.x *= -1;
     }
 }
@@ -53,12 +53,21 @@ bool TA_Bomb::update()
         }
     }
     if(timer >= moveTime) {
-        velocity.y += grv * TA::elapsedTime;
-        moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
-        int flags;
+        velocity.y += grv * speed * speed * TA::elapsedTime;
+        int moveFlags = moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
+        if(moveFlags & TA_GROUND_COLLISION) {
+            velocity.y = std::min(double(0), velocity.y);
+        }
+        if(moveFlags & TA_WALL_COLLISION) {
+            velocity.x = 0;
+        }
+        if(moveFlags & TA_CEIL_COLLISION) {
+            velocity.y = std::max(double(0), velocity.y);
+        }
+
         hitbox.setPosition(position);
-        objectSet->checkCollision(hitbox, flags);
-        if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_DAMAGE) || (flags & TA_COLLISION_PUSHABLE)) {
+        int flags = objectSet->checkCollision(hitbox);
+        if((flags & destroyFlags) || shouldExplode()) {
             objectSet->spawnObject<TA_Explosion>(position);
             for(int i = 1; i <= 3; i ++) {
                 TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
@@ -71,4 +80,45 @@ bool TA_Bomb::update()
 
     setPosition(position);
     return true;
+}
+
+void TA_RemoteBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode)
+{
+    speed = 1;
+    destroyFlags = TA_COLLISION_DAMAGE;
+    startVelocity = {1.35 * speed, -1 * speed};
+    startCrouchVelocity = {1 * speed, -0.7 * speed};
+    TA_Bomb::load(newPosition, newDirection, mode);
+}
+
+bool TA_RemoteBomb::shouldExplode()
+{
+    if(objectSet->getLinks().character->getBombDestroySignal()) {
+        return true;
+    }
+    if(timer > waitTime) {
+        return true;
+    }
+    return false;
+}
+
+bool TA_RemoteBomb::update()
+{
+    if(TA::equal(velocity.y, 0)) {
+        if(velocity.x > 0) {
+            velocity.x = std::max(double(0), velocity.x - friction * speed * speed);
+        }
+        else {
+            velocity.x = std::min(double(0), velocity.x + friction * speed * speed);
+        }
+    }
+
+    if(TA::equal(velocity.x, 0) && TA::equal(velocity.y, 0)) {
+        timer += TA::elapsedTime;
+    }
+    else {
+        timer = 0;
+    }
+
+    return TA_Bomb::update();
 }
