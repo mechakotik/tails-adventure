@@ -9,6 +9,7 @@
 #include "hitbox_container.h"
 #include "screen.h"
 #include "links.h"
+#include "sound.h"
 
 class TA_ObjectSet;
 enum TA_BombMode : int;
@@ -45,6 +46,7 @@ private:
     TA_HitboxContainer hitboxContainer;
     TA_Point spawnPoint;
     TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
+    TA_Sound areaBeginSound, areaLoopSound;
     bool spawnFlip = false, firstSpawnPointSet = false;
 
 public:

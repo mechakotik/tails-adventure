@@ -4,12 +4,14 @@
 #include <array>
 #include "sprite.h"
 #include "links.h"
+#include "sound.h"
 
 class TA_Hud {
 private:
     TA_Links links;
     TA_Sprite ringMonitor, itemSprite;
     std::array<TA_Sprite, 2> ringDigits;
+    TA_Sound switchSound;
     int item = 0, itemPosition = 0;
 
 public:

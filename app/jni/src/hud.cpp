@@ -19,6 +19,7 @@ void TA_Hud::load(TA_Links newLinks)
     itemSprite.loadAnimationsFromFile("hud/items.xml");
     itemSprite.setPosition(2, 22);
     itemPosition = TA::save::getSaveParameter("item_position");
+    switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX);
 }
 
 void TA_Hud::update()
@@ -33,6 +34,7 @@ void TA_Hud::update()
     if(direction != 0) {
         itemSprite.setAnimation(direction == 1 ? "item_switch_right" : "item_switch_left");
         itemPosition = (itemPosition + direction + 4) % 4;
+        switchSound.play();
     }
     TA::save::setSaveParameter("item_position", itemPosition);
     item = TA::save::getSaveParameter("item_slot" + std::to_string(itemPosition));

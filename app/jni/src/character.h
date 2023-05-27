@@ -45,7 +45,7 @@ private:
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
-    TA_Sound areaBeginSound, areaLoopSound, jumpSound;
+    TA_Sound areaBeginSound, areaLoopSound, jumpSound, remoteRobotStepSound;
     TA_Polygon hitbox;
     TA_Point topLeft, bottomRight;
 

@@ -111,6 +111,9 @@ void TA_Character::updateHelitail()
 void TA_Character::verticalMove()
 {
     TA_Direction direction = controller.getDirection();
+    if(remoteRobot && ground && (direction == TA_DIRECTION_LEFT || direction == TA_DIRECTION_RIGHT) && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX)) {
+        remoteRobotStepSound.play();
+    }
 
     if(direction == TA_DIRECTION_RIGHT) {
         flip = false;

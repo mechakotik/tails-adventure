@@ -2,8 +2,8 @@
 <objects>
 	<object name="spawn_point" x="60" y="201"/>
 	<object name="spawn_point" previous="maps/pf/pf2" x="2008" y="105" direction="left"/>
-	
 	<object name="level_transition" path="maps/pf/pf2" top="0" bottom="144" left="2046" right="2048"/>
+	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
 
 	<object name="breakable_block" x="1120" y="256"/>
 	<object name="breakable_block" x="1120" y="272"/>

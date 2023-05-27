@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="-4" y="73"/>
+	<object name="sound" loop="sound/vt.ogg"/>
 	
 	<object name="breakable_block" x="240" y="48" path="maps/vt/block1.png"/>
 	<object name="breakable_block" x="240" y="64" path="maps/vt/block1.png"/>

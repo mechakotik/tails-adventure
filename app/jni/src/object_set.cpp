@@ -135,6 +135,17 @@ void TA_ObjectSet::load(std::string filename)
             spawnObject<TA_BatRobot>(position);
         }
 
+        else if(name == "sound") {
+            areaLoopSound.load(element->Attribute("loop"), TA_SOUND_CHANNEL_MUSIC, true);
+            if(element->Attribute("begin")) {
+                areaBeginSound.load(element->Attribute("begin"), TA_SOUND_CHANNEL_MUSIC);
+                areaBeginSound.play();
+            }
+            else {
+                areaLoopSound.play();
+            }
+        }
+
         else {
             TA::printWarning("Unknown object %s", name.c_str());
         }
@@ -143,6 +154,10 @@ void TA_ObjectSet::load(std::string filename)
 
 void TA_ObjectSet::update()
 {
+    if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
+        areaLoopSound.play();
+    }
+
     for(TA_Object *currentObject : deleteList) {
         delete currentObject;
     }
