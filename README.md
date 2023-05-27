@@ -18,11 +18,11 @@ cmake --build .
 
 Built executable will be located in output folder.
 
-### Android
-Download and install Android Studio. Open SDK manager and install following in SDK Tools:
+### Linux
+Install GCC, G++ and CMake (installation process is specific for your distro and package manager). Then run following commands to build:
 
-- NDK
-- CMake
-- Google USB Driver
-
-Then open project and build it. It should automatically install needed SDK version.
+```console
+cd [PATH TO BUILD DIRECTORY]
+cmake [PATH TO SOURCES]
+cmake --build .
+```
