@@ -21,12 +21,15 @@ endif()
 target_link_libraries(TailsAdventure PRIVATE SDL2::SDL2 SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)
 target_link_options(TailsAdventure PRIVATE -static-libgcc -static-libstdc++)
 
-set_target_properties(SDL2 SDL2_image SDL2_mixer TailsAdventure
-        PROPERTIES
+set_target_properties(TailsAdventure SDL2 SDL2_image SDL2_mixer PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output
+)
+if(NOT WIN32)
+    set_target_properties(SDL2 SDL2_image SDL2_mixer PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib
-        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output
-)
+    )
+endif()
 
 add_custom_command(
         TARGET TailsAdventure POST_BUILD
