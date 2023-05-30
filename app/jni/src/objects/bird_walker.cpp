@@ -11,6 +11,7 @@ void TA_BirdWalker::load(double newFloorY)
     bodySprite.load("objects/bird_walker/body.png");
     feetSprite.load("objects/bird_walker/feet.png", 24, 28);
     aimSprite.load("objects/bird_walker/aim.png", 17, 16);
+    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX);
 
     headSprite.loadAnimationsFromFile("objects/bird_walker/head.xml");
     feetSprite.loadAnimationsFromFile("objects/bird_walker/feet.xml");
@@ -305,7 +306,7 @@ void TA_BirdWalker::updateDamage()
     {
         bool damaged = false;
         for(int pos = 3; pos < (int)hitboxVector.size(); pos ++) {
-            if(objectSet->checkCollision(hitboxVector[pos].hitbox) & TA_COLLISION_EXPLOSION) {
+            if(objectSet->checkCollision(hitboxVector[pos].hitbox) & TA_COLLISION_EXPLOSION_FIRST) {
                 damaged = true;
                 break;
             }
@@ -319,6 +320,9 @@ void TA_BirdWalker::updateDamage()
                 }
                 timer = 0;
                 state = TA_BIRD_WALKER_STATE_DEAD;
+            }
+            else {
+                hitSound.play();
             }
         }
     }

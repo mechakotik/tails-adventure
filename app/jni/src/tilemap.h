@@ -17,7 +17,8 @@ enum TA_CollisionType {
     TA_COLLISION_CHARACTER = (1 << 4),
     TA_COLLISION_PUSHABLE = (1 << 5),
     TA_COLLISION_SPRING = (1 << 6),
-    TA_COLLISION_BOMB = (1 << 7)
+    TA_COLLISION_BOMB = (1 << 7),
+    TA_COLLISION_EXPLOSION_FIRST = (1 << 8)
 };
 
 class TA_Tilemap {

@@ -24,6 +24,15 @@ bool TA_Explosion::update()
     return true;
 }
 
+TA_CollisionType TA_Explosion::getCollisionType()
+{
+    int type = TA_COLLISION_EXPLOSION;
+    if(delay == 0) {
+        type |= TA_COLLISION_EXPLOSION_FIRST;
+    }
+    return TA_CollisionType(type);
+}
+
 void TA_Explosion::draw()
 {
     timer += TA::elapsedTime;

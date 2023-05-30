@@ -27,7 +27,7 @@ private:
     const double walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
     const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = M_PI / 8, bulletSpeed = 1;
     const int shortFireBullets = 3, longFireBullets = 10;
-    const double invincibleTime = 70;
+    const double invincibleTime = 30;
     const double deathTime = 180, deathExplosionDelay = 6;
 
     void updatePosition() override;
@@ -37,6 +37,8 @@ private:
     TA_Sprite headSprite, bodySprite, feetSprite, aimSprite;
     TA_BirdWalkerState state = TA_BIRD_WALKER_STATE_IDLE;
     TA_Point aimPosition;
+    TA_Sound hitSound;
+
     bool flip = false;
     double currentWalkDistance = 0;
     int bulletCounter = 0;

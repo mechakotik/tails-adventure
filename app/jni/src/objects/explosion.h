@@ -15,7 +15,7 @@ public:
     bool update() override;
     void draw() override;
     int getDrawPriority() override {return 1;}
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_EXPLOSION;}
+    TA_CollisionType getCollisionType() override;
 };
 
 #endif // TA_EXPLOSION_H
