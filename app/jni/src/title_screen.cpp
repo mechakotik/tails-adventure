@@ -12,7 +12,7 @@ void TA_TitleScreen::init()
     touchToStartSprite.setPosition(TA::screenWidth / 2 - 57, 104);
 
     titleScreenSound.load("sound/title_screen.ogg", TA_SOUND_CHANNEL_MUSIC, 0);
-    enterSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX, 0);
+    enterSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX1, 0);
     titleScreenSound.play();
 
     button.setRectangle(TA_Point(0, 0), TA_Point(TA::screenWidth, TA::screenHeight));

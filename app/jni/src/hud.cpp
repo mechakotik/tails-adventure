@@ -19,7 +19,7 @@ void TA_Hud::load(TA_Links newLinks)
     itemSprite.loadAnimationsFromFile("hud/items.xml");
     itemSprite.setPosition(2, 22);
     itemPosition = TA::save::getSaveParameter("item_position");
-    switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX);
+    switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
 }
 
 void TA_Hud::update()

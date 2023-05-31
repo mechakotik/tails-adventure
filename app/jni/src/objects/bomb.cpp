@@ -5,7 +5,7 @@
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
     TA_Sprite::load("objects/bomb.png");
-    explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX);
+    explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX2);
     position = newPosition;
     setPosition(position);
     hitbox.setRectangle(TA_Point(1.5, 2.5), TA_Point(11.5, 13.5));

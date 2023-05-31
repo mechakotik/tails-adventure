@@ -13,8 +13,8 @@ void TA_Character::load(TA_Links newLinks)
     links = newLinks;
     controller.load();
 
-    jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX);
-    remoteRobotStepSound.load("sound/remote_robot_step.ogg", TA_SOUND_CHANNEL_SFX);
+    jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX1);
+    remoteRobotStepSound.load("sound/remote_robot_step.ogg", TA_SOUND_CHANNEL_SFX1);
     areaBeginSound.play();
 
     TA_Pawn::load("tails/tails.png", 48, 48);

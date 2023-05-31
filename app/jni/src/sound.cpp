@@ -7,7 +7,8 @@ void TA::sound::update()
 {
     Mix_MasterVolume(TA::save::getParameter("master_volume"));
     Mix_Volume(TA_SOUND_CHANNEL_MUSIC, TA::save::getParameter("music_volume"));
-    Mix_Volume(TA_SOUND_CHANNEL_SFX, TA::save::getParameter("sfx_volume"));
+    Mix_Volume(TA_SOUND_CHANNEL_SFX1, TA::save::getParameter("sfx_volume"));
+    Mix_Volume(TA_SOUND_CHANNEL_SFX2, TA::save::getParameter("sfx_volume"));
 }
 
 bool TA::sound::isPlaying(TA_SoundChannel channel)

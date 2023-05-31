@@ -11,7 +11,7 @@ void TA_BirdWalker::load(double newFloorY)
     bodySprite.load("objects/bird_walker/body.png");
     feetSprite.load("objects/bird_walker/feet.png", 24, 28);
     aimSprite.load("objects/bird_walker/aim.png", 17, 16);
-    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX);
+    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX2);
 
     headSprite.loadAnimationsFromFile("objects/bird_walker/head.xml");
     feetSprite.loadAnimationsFromFile("objects/bird_walker/feet.xml");
@@ -61,10 +61,10 @@ void TA_BirdWalker::updatePosition()
     }
 
     if(flip) {
-        weakHitbox.setRectangle({6, -61}, {7, 0});
+        weakHitbox.setRectangle({4, -61}, {8, 0});
     }
     else {
-        weakHitbox.setRectangle({32, -61}, {33, 0});
+        weakHitbox.setRectangle({31, -61}, {35, 0});
     }
     weakHitbox.setPosition(position);
 }
