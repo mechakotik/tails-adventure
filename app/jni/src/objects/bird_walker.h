@@ -29,6 +29,7 @@ private:
     const int shortFireBullets = 3, longFireBullets = 10;
     const double invincibleTime = 30;
     const double deathTime = 180, deathExplosionDelay = 6;
+    const double jumpWaitTime = 180;
 
     void updatePosition() override;
     void insertBorderHitboxes();
@@ -46,9 +47,10 @@ private:
     double invincibleTimeLeft = -1;
     int health = 10;
 
-    std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, crouchHitboxVector;
+    std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, flipHitboxVector;
+    TA_Polygon weakHitbox;
 
-    double floorY, timer = 0;
+    double floorY, timer = 0, jumpTimer = 0;
 
 public:
     using TA_Object::TA_Object;

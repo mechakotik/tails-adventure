@@ -22,15 +22,19 @@ void TA_BirdWalker::load(double newFloorY)
     feetSprite.setCamera(objectSet->getLinks().camera);
     aimSprite.setCamera(objectSet->getLinks().camera);
 
-    TA_Polygon bodyHitbox; // TODO: flip hitbox
+    TA_Polygon bodyHitbox;
     bodyHitbox.setRectangle({6, -61}, {33, -29});
     defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
+    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
 
     bodyHitbox.setRectangle({13, -29}, {30, 0});
     defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
+    bodyHitbox.setRectangle({9, -29}, {26, 0});
+    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
 
     bodyHitbox.setRectangle({12, -74}, {26, -61});
     defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
+    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
 }
 
 void TA_BirdWalker::updatePosition()
@@ -51,10 +55,18 @@ void TA_BirdWalker::updatePosition()
     hitboxVector.clear();
     insertBorderHitboxes();
 
-    for(HitboxVectorElement element : defaultHitboxVector) {
+    for(HitboxVectorElement element : (flip ? flipHitboxVector : defaultHitboxVector)) {
         element.hitbox.setPosition(position + TA_Point(0, feetSprite.getCurrentFrame() == 4 ? 9 : 0));
         hitboxVector.push_back(element);
     }
+
+    if(flip) {
+        weakHitbox.setRectangle({6, -61}, {7, 0});
+    }
+    else {
+        weakHitbox.setRectangle({32, -61}, {33, 0});
+    }
+    weakHitbox.setPosition(position);
 }
 
 void TA_BirdWalker::insertBorderHitboxes()
@@ -89,6 +101,13 @@ bool TA_BirdWalker::update()
     };
 
     timer += TA::elapsedTime;
+    double centeredX = position.x + bodySprite.getWidth() / 2;
+    if(TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) == (flip ? 1 : -1)) {
+        jumpTimer += TA::elapsedTime;
+    }
+    else {
+        jumpTimer = 0;
+    }
 
     switch(state) {
         case TA_BIRD_WALKER_STATE_IDLE: {
@@ -138,8 +157,7 @@ bool TA_BirdWalker::update()
         case TA_BIRD_WALKER_STATE_COOL_DOWN: {
             if(timer > coolDownTime) {
                 timer = 0;
-                double centeredX = position.x + bodySprite.getWidth() / 2;
-                if(TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) == (flip ? -1 : 1)) {
+                if(jumpTimer < jumpWaitTime) {
                     currentWalkDistance = 0;
                     state = TA_BIRD_WALKER_STATE_WALK;
                 }
@@ -304,25 +322,16 @@ void TA_BirdWalker::updateDamage()
     else if(state != TA_BIRD_WALKER_STATE_AIMING && state != TA_BIRD_WALKER_STATE_FLYING_UP &&
             state != TA_BIRD_WALKER_STATE_LANDING && state != TA_BIRD_WALKER_STATE_DEAD)
     {
-        bool damaged = false;
-        for(int pos = 3; pos < (int)hitboxVector.size(); pos ++) {
-            if(objectSet->checkCollision(hitboxVector[pos].hitbox) & TA_COLLISION_EXPLOSION_FIRST) {
-                damaged = true;
-                break;
-            }
-        }
-        if(damaged) {
+        if(objectSet->checkCollision(weakHitbox) & TA_COLLISION_EXPLOSION_FIRST) {
             health --;
             invincibleTimeLeft = invincibleTime;
+            hitSound.play();
             if(health <= 0) {
                 for(auto &element : defaultHitboxVector) {
                     element.collisionType = TA_COLLISION_TRANSPARENT;
                 }
                 timer = 0;
                 state = TA_BIRD_WALKER_STATE_DEAD;
-            }
-            else {
-                hitSound.play();
             }
         }
     }
