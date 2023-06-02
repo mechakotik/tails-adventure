@@ -90,8 +90,8 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
 
     dstRect.x = screenPosition.x * TA::widthMultiplier;
     dstRect.y = screenPosition.y * TA::heightMultiplier;
-    dstRect.w = srcRect.w * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 1;
-    dstRect.h = srcRect.h * TA::heightMultiplier * scale.y + 1;
+    dstRect.w = srcRect.w * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 0.99999;
+    dstRect.h = srcRect.h * TA::heightMultiplier * scale.y + 0.99999;
     if(!hidden) {
         SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
         SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
