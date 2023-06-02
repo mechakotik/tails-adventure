@@ -104,6 +104,7 @@ public:
     void addRings(int count);
     double getFlightTime();
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
+    bool isRemoteRobot() {return remoteRobot;}
 };
 
 #endif // TA_CHARACTER_H

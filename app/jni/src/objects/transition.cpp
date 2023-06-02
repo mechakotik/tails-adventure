@@ -1,5 +1,6 @@
 #include "transition.h"
 #include "tools.h"
+#include "character.h"
 
 void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, TA_ScreenState newScreenState, std::string newLevelPath)
 {
@@ -11,7 +12,7 @@ void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, TA_ScreenState 
 bool TA_Transition::update()
 {
     int flags = objectSet->checkCollision(hitbox);
-    if(flags & TA_COLLISION_CHARACTER) {
+    if((flags & TA_COLLISION_CHARACTER) && !objectSet->getLinks().character->isRemoteRobot()) {
         TA::levelPath = levelPath;
         objectSet->setTransition(screenState);
     }
