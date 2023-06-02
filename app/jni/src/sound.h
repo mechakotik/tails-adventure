@@ -21,7 +21,7 @@ namespace TA { namespace sound {
 class TA_Sound
 {
 private:
-    Mix_Chunk *chunk;
+    Mix_Chunk *chunk = nullptr;
     TA_SoundChannel channel;
     bool loop;
 

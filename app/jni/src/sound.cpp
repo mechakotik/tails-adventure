@@ -32,8 +32,11 @@ void TA_Sound::load(std::string filename, TA_SoundChannel newChannel, bool newLo
 
 void TA_Sound::play()
 {
+    if(chunk == nullptr) {
+        return;
+    }
     if(channel == TA_SOUND_CHANNEL_MUSIC) {
-        Mix_Volume(channel, MIX_MAX_VOLUME);
+        Mix_Volume(TA_SOUND_CHANNEL_MUSIC, TA::save::getParameter("music_volume"));
     }
     Mix_PlayChannel(channel, chunk, loop);
 }

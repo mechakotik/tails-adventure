@@ -150,12 +150,21 @@ void TA_ObjectSet::load(std::string filename)
             TA::printWarning("Unknown object %s", name.c_str());
         }
     }
+
+    bossBeginSound.load("sound/boss_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
+    bossLoopSound.load("sound/boss_loop.ogg", TA_SOUND_CHANNEL_MUSIC, true);
+    playAreaMusic();
 }
 
 void TA_ObjectSet::update()
 {
     if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
-        areaLoopSound.play();
+        if(bossMusic) {
+            bossLoopSound.play();
+        }
+        else {
+            areaLoopSound.play();
+        }
     }
 
     for(TA_Object *currentObject : deleteList) {
@@ -224,6 +233,18 @@ int TA_ObjectSet::checkCollision(TA_Polygon &hitbox)
 TA_Point TA_ObjectSet::getCharacterPosition()
 {
     return links.character->getPosition();
+}
+
+void TA_ObjectSet::playAreaMusic()
+{
+    bossMusic = false;
+    areaBeginSound.play();
+}
+
+void TA_ObjectSet::playBossMusic()
+{
+    bossMusic = true;
+    bossBeginSound.play();
 }
 
 TA_ObjectSet::~TA_ObjectSet()

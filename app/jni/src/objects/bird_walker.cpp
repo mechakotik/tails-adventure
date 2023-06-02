@@ -111,8 +111,9 @@ bool TA_BirdWalker::update()
 
     switch(state) {
         case TA_BIRD_WALKER_STATE_IDLE: {
-            if(objectSet->getLinks().camera->isLocked()) { // TODO: boss music and SFX
+            if(objectSet->getLinks().camera->isLocked()) { // TODO: boss SFX
                 updatePosition();
+                objectSet->playBossMusic();
                 initAiming();
             }
             break;
@@ -301,6 +302,7 @@ bool TA_BirdWalker::update()
 
             if(timer > deathTime) {
                 objectSet->getLinks().camera->unlock();
+                objectSet->playAreaMusic();
                 return false;
             }
             break;
