@@ -68,12 +68,21 @@ void TA_Sprite::draw()
         return;
     }
     updateAnimation();
-    SDL_Rect srcRect, dstRect;
+    SDL_Rect srcRect;
     srcRect.x = (frameWidth * frame) % texture->width;
     srcRect.y = (frameWidth * frame) / texture->width * frameHeight;
     srcRect.w = frameWidth;
     srcRect.h = frameHeight;
+    drawFrom(srcRect);
+}
 
+void TA_Sprite::drawFrom(SDL_Rect srcRect)
+{
+    if(!loaded) {
+        return;
+    }
+    updateAnimation();
+    SDL_Rect dstRect;
     TA_Point screenPosition = position;
     if(camera != nullptr) {
         screenPosition = camera->getRelative(position);
@@ -81,8 +90,8 @@ void TA_Sprite::draw()
 
     dstRect.x = screenPosition.x * TA::widthMultiplier;
     dstRect.y = screenPosition.y * TA::heightMultiplier;
-    dstRect.w = frameWidth * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 1;
-    dstRect.h = frameHeight * TA::heightMultiplier * scale.y + 1;
+    dstRect.w = srcRect.w * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier) * scale.x + 1;
+    dstRect.h = srcRect.h * TA::heightMultiplier * scale.y + 1;
     if(!hidden) {
         SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
         SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);

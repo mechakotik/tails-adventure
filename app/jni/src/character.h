@@ -102,6 +102,7 @@ public:
     TA_Point getPosition() {return position + TA_Point(24, 24);}
 
     void addRings(int count);
+    double getFlightTime();
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
 };
 

@@ -52,6 +52,7 @@ public:
     void loadFromTexture(TA_Texture *newTexture, int frameWidth = -1, int frameHeight = -1);
 
     virtual void draw();
+    void drawFrom(SDL_Rect srcRect);
 
     void setPosition(TA_Point newPosition) {position = newPosition;}
     void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}

@@ -20,6 +20,7 @@ void TA_Hud::load(TA_Links newLinks)
     itemSprite.setPosition(2, 22);
     itemPosition = TA::save::getSaveParameter("item_position");
     switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
+    flightBarSprite.load("hud/flightbar.png");
 }
 
 void TA_Hud::update()
@@ -59,4 +60,22 @@ void TA_Hud::draw()
     }
     ringDigits[1].setFrame(rings % 10);
     ringDigits[1].draw();
+    drawFlightBar();
+}
+
+void TA_Hud::drawFlightBar()
+{
+    double flightTime = links.character->getFlightTime();
+    if(flightTime > 1) {
+        flightBarX = std::max(flightBarLeft, flightBarX - flightBarSpeed * TA::elapsedTime);
+    }
+    else {
+        flightBarX = std::min(flightBarRight, flightBarX + flightBarSpeed * TA::elapsedTime);
+    }
+
+    int offset = 8 + std::min(24, int(24 * flightTime));
+    flightBarSprite.setPosition(flightBarX, flightBarY);
+    flightBarSprite.drawFrom({8, 0, 8, offset});
+    flightBarSprite.setPosition(flightBarX, flightBarY + offset);
+    flightBarSprite.drawFrom({0, offset, 8, 40 - offset});
 }
