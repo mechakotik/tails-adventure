@@ -16,6 +16,22 @@
 
 TA_Game::TA_Game()
 {
+    initSDL();
+    createWindow();
+
+    TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
+    TA::gamepad::init();
+    TA::keyboard::init();
+    TA::save::load();
+    TA::save::createSave("current_save");
+    TA::save::setCurrentSave("current_save");
+
+    startTime = std::chrono::high_resolution_clock::now();
+    screenStateMachine.init();
+}
+
+void TA_Game::initSDL()
+{
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         TA::handleSDLError("SDL init failed");
     }
@@ -30,8 +46,12 @@ TA_Game::TA_Game()
         TA::handleSDLError("Mix_OpenAudio failed");
     }
 
-    updateWindowSize();
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
+    SDL_ShowCursor(SDL_DISABLE);
+}
 
+void TA_Game::createWindow()
+{
     int windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE;
     TA::window = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, defaultWindowWidth, defaultWindowHeight, windowFlags);
     if(TA::window == nullptr) {
@@ -43,19 +63,8 @@ TA_Game::TA_Game()
         TA::handleSDLError("Failed to create renderer");
     }
 
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
+    updateWindowSize();
     SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
-    SDL_ShowCursor(SDL_DISABLE);
-
-    TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
-    TA::gamepad::init();
-    TA::keyboard::init();
-    TA::save::load();
-    TA::save::createSave("current_save");
-    TA::save::setCurrentSave("current_save");
-
-    startTime = std::chrono::high_resolution_clock::now();
-    screenStateMachine.init();
 }
 
 void TA_Game::toggleFullscreen()
@@ -68,16 +77,7 @@ void TA_Game::toggleFullscreen()
 void TA_Game::updateWindowSize()
 {
     int windowWidth, windowHeight;
-
-    if(TA::window == nullptr) {
-        SDL_DisplayMode displayMode;
-        SDL_GetCurrentDisplayMode(0, &displayMode);
-        windowWidth = displayMode.w;
-        windowHeight = displayMode.h;
-    }
-    else {
-        SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
-    }
+    SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
 
     double aspectRatio = double(windowWidth) / windowHeight;
     if(aspectRatio > maxWindowAspectRatio + 0.01 || aspectRatio < minWindowAspectRatio - 0.01) {
@@ -143,30 +143,8 @@ void TA_Game::update()
     if(screenStateMachine.update()) {
         startTime = std::chrono::high_resolution_clock::now();
     }
-
-    //TA::printLog("%i", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime).count());
+    
     SDL_RenderPresent(TA::renderer);
-
-    /*auto renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);
-    if(!useVsync) {
-        auto timeLeft = std::chrono::microseconds(int(1e6 / refreshRate));
-        if(renderTime < timeLeft) {
-            timeLeft -= renderTime;
-            std::this_thread::sleep_for(timeLeft);
-        }
-    }
-
-    renderTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - startTime);
-    fpsTimer += renderTime.count();
-    fpsCount ++;
-    if(fpsTimer > 1e6) {
-        if(useVsync && fpsCount > refreshRate * 1.2) {
-            TA::printWarning("VSync is unavailable");
-            useVsync = false;
-        }
-        fpsTimer -= 1e6;
-        fpsCount = 0;
-    }*/
 }
 
 TA_Game::~TA_Game()

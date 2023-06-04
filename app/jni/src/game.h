@@ -12,6 +12,8 @@ private:
     const double minWindowAspectRatio = 1.2, maxWindowAspectRatio = 2.4;
     const int soundFrequency = 44100, soundChunkSize = 256;
 
+    void initSDL();
+    void createWindow();
     void toggleFullscreen();
     void updateWindowSize();
 
