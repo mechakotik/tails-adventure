@@ -9,8 +9,8 @@ namespace TA
     SDL_Renderer *renderer;
     SDL_DisplayMode displayMode;
 
-    int screenWidth, screenHeight;
-    double elapsedTime, widthMultiplier, heightMultiplier;
+    int screenWidth, screenHeight, widthMultiplier, heightMultiplier;
+    double elapsedTime;
 
     std::string levelPath = "maps/pf/pf2", previousLevelPath = "";
 
@@ -50,8 +50,7 @@ void TA::drawScreenRect(int r, int g, int b, int a)
 
     SDL_Rect rect;
     rect.x = rect.y = 0;
-    rect.w = displayMode.w;
-    rect.h = displayMode.h;
+    rect.w = rect.h = 10000;
 
     a = std::max(a, 0);
     a = std::min(a, 255);

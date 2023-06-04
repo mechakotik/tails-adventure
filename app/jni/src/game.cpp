@@ -52,7 +52,7 @@ void TA_Game::initSDL()
 
 void TA_Game::createWindow()
 {
-    int windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_RESIZABLE;
+    int windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
     TA::window = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, defaultWindowWidth, defaultWindowHeight, windowFlags);
     if(TA::window == nullptr) {
         TA::handleSDLError("Failed to create window");
@@ -76,9 +76,7 @@ void TA_Game::toggleFullscreen()
 
 void TA_Game::updateWindowSize()
 {
-    int windowWidth, windowHeight;
     SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
-
     double aspectRatio = double(windowWidth) / windowHeight;
     if(aspectRatio > maxWindowAspectRatio + 0.01 || aspectRatio < minWindowAspectRatio - 0.01) {
         int newWindowWidth = windowHeight * std::min(maxWindowAspectRatio, std::max(minWindowAspectRatio, aspectRatio));
@@ -87,10 +85,15 @@ void TA_Game::updateWindowSize()
         return;
     }
 
-    TA::screenWidth = baseHeight * pixelAspectRatio * windowWidth / windowHeight;
+    TA::screenWidth = baseHeight * windowWidth / windowHeight;
     TA::screenHeight = baseHeight;
-    TA::widthMultiplier = double(windowWidth) / TA::screenWidth;
-    TA::heightMultiplier = double(windowHeight) / TA::screenHeight;
+    TA::widthMultiplier = TA::heightMultiplier = (windowWidth + TA::screenWidth - 1) / TA::screenWidth;
+
+    if(targetTexture != nullptr) {
+        SDL_DestroyTexture(targetTexture);
+    }
+    targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TA::screenWidth * TA::widthMultiplier, TA::screenHeight * TA::heightMultiplier);
+    SDL_SetTextureScaleMode(targetTexture, SDL_ScaleModeBest);
 }
 
 bool TA_Game::process()
@@ -137,13 +140,21 @@ void TA_Game::update()
     //TA::elapsedTime /= 10;
     startTime = currentTime;
 
+    SDL_SetRenderTarget(TA::renderer, targetTexture);
     SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
     SDL_RenderClear(TA::renderer);
 
     if(screenStateMachine.update()) {
         startTime = std::chrono::high_resolution_clock::now();
     }
-    
+
+    SDL_SetRenderTarget(TA::renderer, nullptr);
+    SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
+    SDL_RenderClear(TA::renderer);
+
+    SDL_Rect srcRect{0, 0, TA::screenWidth * TA::widthMultiplier, TA::screenHeight * TA::heightMultiplier};
+    SDL_Rect dstRect{0, 0, windowWidth, windowHeight};
+    SDL_RenderCopy(TA::renderer, targetTexture, &srcRect, &dstRect);
     SDL_RenderPresent(TA::renderer);
 }
 

@@ -27,8 +27,8 @@ namespace TA
     extern SDL_Renderer *renderer;
     extern SDL_DisplayMode displayMode;
 
-    extern int screenWidth, screenHeight;
-    extern double elapsedTime, widthMultiplier, heightMultiplier;
+    extern int screenWidth, screenHeight, widthMultiplier, heightMultiplier;
+    extern double elapsedTime;
     const double epsilon = 1e-5;
 
     extern std::string levelPath, previousLevelPath;
