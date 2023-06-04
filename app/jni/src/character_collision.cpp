@@ -53,6 +53,7 @@ void TA_Character::updateCollisions()
 
     updateClimb();
     if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
+        setPosition(position);
         return;
     }
     int flags = moveAndCollide(topLeft, bottomRight, velocity, ground);
