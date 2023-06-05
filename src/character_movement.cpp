@@ -103,6 +103,10 @@ void TA_Character::updateHelitail()
 
     process(velocity.x, vector.x * helitailTop);
     process(velocity.y, vector.y * helitailTop);
+
+    if(controller.isJustPressed(TA_BUTTON_A)) {
+        jump = helitail = false;
+    }
 }
 
 void TA_Character::verticalMove()
