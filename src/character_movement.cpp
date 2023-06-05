@@ -6,11 +6,8 @@ void TA_Character::physicsStep()
         if(helitail) {
             updateHelitail();
         }
-        if(ground) {
+        else if(ground) {
             updateGround();
-        }
-        else if(helitail) {
-            updateHelitail();
         }
         else {
             updateAir();

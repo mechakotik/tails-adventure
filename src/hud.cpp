@@ -66,11 +66,11 @@ void TA_Hud::draw()
 void TA_Hud::drawFlightBar()
 {
     double flightTime = links.character->getFlightTime();
-    if(flightTime > 1) {
-        flightBarX = std::max(flightBarLeft, flightBarX - flightBarSpeed * TA::elapsedTime);
+    if(links.character->isFlying() && flightTime < 1) {
+        flightBarX = std::min(flightBarRight, flightBarX + flightBarSpeed * TA::elapsedTime);
     }
     else {
-        flightBarX = std::min(flightBarRight, flightBarX + flightBarSpeed * TA::elapsedTime);
+        flightBarX = std::max(flightBarLeft, flightBarX - flightBarSpeed * TA::elapsedTime);
     }
 
     int offset = 8 + std::min(24, int(24 * flightTime));

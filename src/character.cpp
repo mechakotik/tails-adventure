@@ -315,11 +315,3 @@ void TA_Character::addRings(int count)
     rings += count;
     TA::save::setSaveParameter("rings", rings);
 }
-
-double TA_Character::getFlightTime()
-{
-    if(!helitail) {
-        return 2;
-    }
-    return helitailTime / maxHelitailTime;
-}

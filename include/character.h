@@ -32,9 +32,9 @@ private:
     const double topX = 1;
     const double topY = 3;
     const double maxJumpTime = 10;
-    const double helitailAcc = 0.05;
+    const double helitailAcc = 0.1;
     const double helitailTop = 1;
-    const double maxHelitailTime = 300;
+    const double maxHelitailTime = 150;
     const double hurtXsp = 1;
     const double hurtYsp = -2.5;
     const double invincibleTime = 120;
@@ -104,7 +104,8 @@ public:
     TA_Point getPosition() {return position + TA_Point(24, 24);}
 
     void addRings(int count);
-    double getFlightTime();
+    bool isFlying() {return helitail;}
+    double getFlightTime() {return helitailTime / maxHelitailTime;}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
     bool isRemoteRobot() {return remoteRobot;}
 };

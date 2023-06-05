@@ -124,7 +124,7 @@ void TA_Character::updateCollisions()
 
 void TA_Character::updateClimb()
 {
-    if(remoteRobot || helitail || !wall || !TA::equal(deltaX, 0)) {
+    if(remoteRobot || !wall || !TA::equal(deltaX, 0)) {
         return;
     }
 
