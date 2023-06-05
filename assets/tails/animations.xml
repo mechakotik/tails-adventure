@@ -60,4 +60,7 @@
 	<animation name="control_remote_robot" delay="6">
 		57,58,59,58
 	</animation>
+	<animation name="fall" delay="6">
+		60,61,62,63,64,65
+	</animation>
 </animations>
