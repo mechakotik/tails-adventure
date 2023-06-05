@@ -1,15 +1,15 @@
-[submodule "app/jni/SDL2"]
-	path = app/jni/SDL2
-	url = https://github.com/libsdl-org/SDL
-[submodule "app/jni/SDL2_image"]
-	path = app/jni/SDL2_image
-	url = https://github.com/libsdl-org/SDL_image
-[submodule "app/jni/SDL2_mixer"]
-	path = app/jni/SDL2_mixer
-	url = https://github.com/libsdl-org/SDL_mixer
-[submodule "app/jni/tinyxml2"]
-	path = app/jni/tinyxml2
+[submodule "external/tinyxml2"]
+	path = external/tinyxml2
 	url = https://github.com/leethomason/tinyxml2
-[submodule "app/src/main/assets/controllerdb"]
-	path = app/src/main/assets/controllerdb
+[submodule "assets/controllerdb"]
+	path = assets/controllerdb
 	url = https://github.com/gabomdq/SDL_GameControllerDB
+[submodule "external/SDL"]
+	path = external/SDL
+	url = https://github.com/libsdl-org/SDL
+[submodule "external/SDL_image"]
+	path = external/SDL_image
+	url = https://github.com/libsdl-org/SDL_image
+[submodule "external/SDL_mixer"]
+	path = external/SDL_mixer
+	url = https://github.com/libsdl-org/SDL_mixer
