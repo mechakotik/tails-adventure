@@ -256,6 +256,21 @@ void TA_Character::updateFollowPosition()
         sourcePosition.x = climbPosition.x;
     }
     followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
+
+    if(ground && (controller.getDirection() == TA_DIRECTION_UP || controller.getDirection() == TA_DIRECTION_DOWN)) {
+        lookTime += TA::elapsedTime;
+    }
+    else {
+        lookTime = 0;
+    }
+    if(lookTime > maxLookTime) {
+        if(controller.getDirection() == TA_DIRECTION_UP) {
+            followPosition.y -= 48;
+        }
+        else {
+            followPosition.y += 64;
+        }
+    }
 }
 
 void TA_Character::setSpawnPoint(TA_Point newPosition, bool newFlip)

@@ -41,6 +41,7 @@ private:
     const double springYsp = -8;
     const double remoteRobotInitTime = 30;
     const double remoteRobotJumpSpeed = -2;
+    const double maxLookTime = 100;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
@@ -62,7 +63,8 @@ private:
     bool remoteRobot = false;
     bool bombDestroySignal = false;
 
-    double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1, timer = 0;
+    double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
+    double timer = 0, lookTime = 0;
     double deltaX = 0;
     int rings = 10;
     int currentTool = TOOL_BOMB;
