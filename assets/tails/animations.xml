@@ -63,4 +63,7 @@
 	<animation name="fall" delay="6">
 		60,61,62,63,64,65
 	</animation>
+	<animation name="throw_helitail" delay="6" repeatTimes="1">
+		66,67,68
+	</animation>
 </animations>

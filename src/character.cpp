@@ -139,11 +139,13 @@ void TA_Character::updateAnimation()
     }
     else {
         if(helitail) {
-            if(helitailTime > maxHelitailTime) {
-                setAnimation("helitail_tired");
-            }
-            else {
-                setAnimation("helitail");
+            if(getAnimationName() != "throw_helitail") {
+                if(helitailTime > maxHelitailTime) {
+                    setAnimation("helitail_tired");
+                }
+                else {
+                    setAnimation("helitail");
+                }
             }
         }
         else if(jump) {
@@ -191,7 +193,8 @@ void TA_Character::updateTool()
                 break;
             }
             if(helitail) {
-                spawnBomb(position + TA_Point((flip ? 15 : 21), 32), flip, TA_BOMB_MODE_HELITAIL);
+                spawnBomb(position + TA_Point((flip ? 15 : 21), 28), flip, TA_BOMB_MODE_HELITAIL);
+                setAnimation("throw_helitail");
             }
             else if(jump) { // TODO: throw bomb in the air animation
                 spawnBomb(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);

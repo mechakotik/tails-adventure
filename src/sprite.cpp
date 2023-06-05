@@ -174,6 +174,7 @@ void TA_Sprite::setAnimation(std::string name)
 {
     if(loadedAnimations.count(name)) {
         setAnimation(loadedAnimations[name]);
+        animationName = name;
     }
     else {
         TA::printWarning("Unknown animation %s", name.c_str());
