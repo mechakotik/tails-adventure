@@ -51,8 +51,8 @@ bool TA_BatRobot::update()
 
         case STATE_ATTACK: {
             setAnimation("attack");
-            velocity.y += gravity;
-            int flags = moveAndCollide(TA_Point(5, 0), TA_Point(18, 14), velocity);
+            velocity.y += gravity * TA::elapsedTime;
+            int flags = moveAndCollide(TA_Point(5, 0), TA_Point(18, 14), velocity * TA::elapsedTime);
             if(flags & TA_GROUND_COLLISION) {
                 velocity.y = std::min(double(0), velocity.y);
             }

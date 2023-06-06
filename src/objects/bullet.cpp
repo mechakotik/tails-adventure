@@ -1,4 +1,5 @@
 #include "bullet.h"
+#include "tools.h"
 
 void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVelocity, int frameWidth, int frameHeight)
 {
@@ -16,7 +17,7 @@ void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVel
 
 bool TA_Bullet::update()
 {
-    position = position + velocity;
+    position = position + velocity * TA::elapsedTime;
     updatePosition();
 
     int flags = objectSet->checkCollision(hitbox);

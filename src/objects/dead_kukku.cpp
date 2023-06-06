@@ -13,8 +13,8 @@ void TA_DeadKukku::load(TA_Point newPosition)
 
 bool TA_DeadKukku::update()
 {
-    velocity.y += grv;
-    position = position + velocity;
+    velocity.y += grv * TA::elapsedTime;
+    position = position + velocity * TA::elapsedTime;
     setPosition(position);
     timer += TA::elapsedTime;
     if(timer > deathTime) {

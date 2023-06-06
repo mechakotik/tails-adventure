@@ -27,7 +27,6 @@ int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight)
 
 int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground)
 {
-    velocity = velocity * TA_Point(TA::elapsedTime, TA::elapsedTime);
     TA_Polygon xHitbox, yHitbox;
     xHitbox.setRectangle(topLeft + TA_Point(0, 1), bottomRight - TA_Point(0, 1));
     yHitbox.setRectangle(topLeft + TA_Point(1, 0), bottomRight - TA_Point(1, 0));

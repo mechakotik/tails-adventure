@@ -23,9 +23,9 @@ bool TA_Ring::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_Ring::update()
 {
-    velocity.y += grv;
+    velocity.y += grv * TA::elapsedTime;
     TA_Point topLeft{0, 0}, bottomRight{8, 8};
-    int flags = moveAndCollide(topLeft, bottomRight, velocity);
+    int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
     setPosition(position);
     if((flags & TA_GROUND_COLLISION) && velocity.y > 0) {
         velocity.y *= -slowdown;

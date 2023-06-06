@@ -46,13 +46,13 @@ bool TA_Walker::update()
             else {
                 setAnimation("walker");
                 if (!direction) {
-                    position.x += speed;
+                    position.x += speed * TA::elapsedTime;
                     if (position.x > rangeRight) {
                         direction = true;
                     }
                 }
                 else {
-                    position.x -= speed;
+                    position.x -= speed * TA::elapsedTime;
                     if (position.x < rangeLeft) {
                         direction = false;
                     }
@@ -80,13 +80,13 @@ bool TA_Walker::update()
             else {
                 setAnimation("walker");
                 if (!direction) {
-                    position.x -= speed;
+                    position.x -= speed * TA::elapsedTime;
                     if (position.x < rangeLeft) {
                         state = TA_WALKER_STATE_MOVE;
                     }
                 }
                 else {
-                    position.x += speed;
+                    position.x += speed * TA::elapsedTime;
                     if (position.x > rangeRight) {
                         state = TA_WALKER_STATE_MOVE;
                     }

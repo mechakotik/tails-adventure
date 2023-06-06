@@ -14,8 +14,8 @@ void TA_Particle::load(std::string filename, TA_Point newPosition, TA_Point newV
 bool TA_Particle::update()
 {
     if(delay < 0) {
-        velocity = velocity + delta;
-        position = position + velocity;
+        velocity = velocity + delta * TA::elapsedTime;
+        position = position + velocity * TA::elapsedTime;
         setPosition(position);
         timer += TA::elapsedTime;
         if(timer >= 300) {

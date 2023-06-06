@@ -14,7 +14,7 @@ void TA_Character::physicsStep()
         }
     }
     else {
-        velocity.y += grv;
+        velocity.y += grv * TA::elapsedTime;
     }
 }
 
@@ -77,10 +77,10 @@ void TA_Character::updateHelitail()
 {
     auto process = [&](double &x, double need) {
         if(x > need) {
-            x = std::max(need, x - helitailAcc);
+            x = std::max(need, x - helitailAcc * TA::elapsedTime);
         }
         else {
-            x = std::min(need, x + helitailAcc);
+            x = std::min(need, x + helitailAcc * TA::elapsedTime);
         }
     };
 

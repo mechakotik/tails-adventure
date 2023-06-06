@@ -54,7 +54,7 @@ bool TA_Bomb::update()
     }
     if(timer >= moveTime) {
         velocity.y += grv * speed * speed * TA::elapsedTime;
-        int moveFlags = moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity);
+        int moveFlags = moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity * TA::elapsedTime);
         if(moveFlags & TA_GROUND_COLLISION) {
             velocity.y = std::min(double(0), velocity.y);
         }

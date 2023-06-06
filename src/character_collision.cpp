@@ -56,7 +56,7 @@ void TA_Character::updateCollisions()
         setPosition(position);
         return;
     }
-    int flags = moveAndCollide(topLeft, bottomRight, velocity, ground);
+    int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime, ground);
     if(flags & TA_GROUND_COLLISION) {
         ground = true;
         helitail = false;

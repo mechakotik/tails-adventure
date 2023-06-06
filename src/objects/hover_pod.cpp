@@ -1,5 +1,6 @@
 #include "hover_pod.h"
 #include "dead_kukku.h"
+#include "tools.h"
 
 void TA_HoverPod::load(TA_Point newPosition, int range, bool flip)
 {
@@ -34,13 +35,13 @@ bool TA_HoverPod::update()
     }
 
     if (!direction) {
-        position.x += speed;
+        position.x += speed * TA::elapsedTime;
         if (position.x > rangeRight) {
             direction = true;
         }
     }
     else {
-        position.x -= speed;
+        position.x -= speed * TA::elapsedTime;
         if (position.x < rangeLeft) {
             direction = false;
         }
