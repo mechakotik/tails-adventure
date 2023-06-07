@@ -20,7 +20,7 @@ if(TARGET SDL2::SDL2main)
     target_link_libraries(TailsAdventure PRIVATE SDL2::SDL2main)
 endif()
 target_link_libraries(TailsAdventure PRIVATE SDL2::SDL2 SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)
-target_link_options(TailsAdventure PRIVATE -static -static-libgcc -static-libstdc++)
+target_link_options(TailsAdventure PRIVATE -static-libgcc -static-libstdc++)
 
 set_target_properties(TailsAdventure SDL2 SDL2_image SDL2_mixer PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output
