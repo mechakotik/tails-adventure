@@ -33,6 +33,7 @@ void TA_CommonController::load()
     else {
         currentController = &touchscreen;
     }
+    update();
 }
 
 void TA_CommonController::update()

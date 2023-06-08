@@ -25,7 +25,7 @@ void TA_MapScreen::appendPoints()
     points.push_back(new TA_MapPoint("tails'\nhouse", "", TA_Point(122, 97)));
     points.push_back(new TA_MapPoint("poloy\nforest", "maps/pf/pf1", TA_Point(106, 89)));
     points.push_back(new TA_MapPoint("volcanic\ntunnel", "maps/vt/vt1", TA_Point(146, 73)));
-    currentPoint = points[0];
+    currentPoint = points[TA::save::getSaveParameter("map_selection")];
 }
 
 void TA_MapScreen::setActivePoints()

@@ -108,7 +108,14 @@ void TA_ObjectSet::load(std::string filename)
             TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
             TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
             std::string levelPath = element->Attribute("path");
-            spawnObject<TA_Transition>(topLeft, bottomRight, TA_SCREENSTATE_GAME, levelPath);
+            spawnObject<TA_Transition>(topLeft, bottomRight, levelPath);
+        }
+
+        else if(name == "map_transition") {
+            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
+            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
+            int selection = element->IntAttribute("selection");
+            spawnObject<TA_Transition>(topLeft, bottomRight, selection);
         }
 
         else if(name == "pf_bridge") {

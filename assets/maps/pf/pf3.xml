@@ -2,6 +2,7 @@
 <objects>
 	<object name="spawn_point" previous="maps/pf/pf2" x="-7" y="345"/>
 	<object name="level_transition" path="maps/pf/pf2" top="0" bottom="384" left="0" right="2"/>
+	<object name="map_transition" selection="2" top="0" bottom="160" left="958" right="960"/>
 	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
 	<object name="camera_lock_point" x="576" y="64"/>
 	<object name="bird_walker" floor_y="175"/>
