@@ -26,12 +26,13 @@ private:
         STATE_DEAD
     };
 
-    const double jmp = -2.5;
+    const double jmp = -3.75;
     const double grv = 0.125;
     const double acc = 0.25;
     const double topX = 1;
-    const double topY = 3;
-    const double maxJumpTime = 10;
+    const double minJumpSpeed = -2.5;
+    const double maxJumpSpeed = 3;
+    const double releaseJumpSpeed = -1.8;
     const double helitailAcc = 0.1;
     const double helitailTop = 1;
     const double maxHelitailTime = 150;
@@ -63,7 +64,8 @@ private:
     bool remoteRobot = false;
     bool bombDestroySignal = false;
 
-    double jumpTime = 0, climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
+    double jumpSpeed = 0;
+    double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     double timer = 0, lookTime = 0;
     double deltaX = 0;
     int rings = 10;

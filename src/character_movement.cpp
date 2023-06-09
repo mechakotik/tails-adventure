@@ -45,10 +45,10 @@ void TA_Character::updateGround()
         }
         else {
             jumpSound.play();
-            velocity.y = (remoteRobot ? remoteRobotJumpSpeed : jmp);
+            jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp);
             jump = true;
-            jumpTime = 0;
             jumpReleased = false;
+            updateAir();
         }
         ground = false;
     }
@@ -57,19 +57,25 @@ void TA_Character::updateGround()
 void TA_Character::updateAir()
 {
     verticalMove();
-    velocity.y += grv * TA::elapsedTime;
-    velocity.y = std::min(velocity.y, topY);
-    if(jump && !jumpReleased) {
-        jumpTime += TA::elapsedTime;
-        if(controller.isPressed(TA_BUTTON_A) && jumpTime < maxJumpTime) {
-            velocity.y = (remoteRobot? remoteRobotJumpSpeed : jmp);
-        }
-        else if(!controller.isPressed(TA_BUTTON_A)) {
+    if(jump) {
+        jumpSpeed += grv * TA::elapsedTime;
+        if(jump && !jumpReleased && !controller.isPressed(TA_BUTTON_A)) {
+            jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
             jumpReleased = true;
         }
+        if(spring) {
+            velocity.y = std::min(maxJumpSpeed, jumpSpeed);
+        }
+        else {
+            velocity.y = std::min(maxJumpSpeed, std::max(minJumpSpeed, jumpSpeed));
+        }
+        if(jump && jumpReleased && !remoteRobot && controller.isJustPressed(TA_BUTTON_A)) {
+            initHelitail();
+        }
     }
-    if(jump && jumpReleased && !remoteRobot && controller.isJustPressed(TA_BUTTON_A)) {
-        initHelitail();
+    else {
+        velocity.y += grv;
+        velocity.y = std::min(velocity.y, maxJumpSpeed);
     }
 }
 

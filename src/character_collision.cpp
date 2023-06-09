@@ -67,9 +67,12 @@ void TA_Character::updateCollisions()
     }
     wall = bool(flags & TA_WALL_COLLISION);
     if(flags & TA_CEIL_COLLISION) {
-        velocity.y = std::max(velocity.y, double(-0.3));
         if(jump) {
+            jumpSpeed = std::max(jumpSpeed, double(-0.3));
             jumpReleased = true;
+        }
+        else {
+            velocity.y = std::max(velocity.y, double(-0.3));
         }
     }
 
@@ -209,10 +212,9 @@ void TA_Character::updateObjectCollision()
     int flags = links.objectSet->checkCollision(hitbox);
     if(flags & TA_COLLISION_SPRING) {
         jumpSound.play();
-        velocity.y = springYsp;
+        jumpSpeed = springYsp;
         jump = spring = true;
-        jumpTime = 0;
-        jumpReleased = false;
+        jumpReleased = true;
         ground = false;
     }
 }

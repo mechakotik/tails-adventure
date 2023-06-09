@@ -1,3 +1,4 @@
+#include <cmath>
 #include "map_screen.h"
 #include "save.h"
 
