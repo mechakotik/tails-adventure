@@ -28,6 +28,7 @@ protected:
     double speed = 1.15;
     int destroyFlags = TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_PUSHABLE;
 
+    TA_Point topLeft{3, 4}, bottomRight{12, 14};
     TA_Point startVelocity = {2 * speed, -1 * speed};
     TA_Point startCrouchVelocity = {1.35 * speed, -0.7 * speed};
     TA_Point startHelitailVelocity = {0, 0};

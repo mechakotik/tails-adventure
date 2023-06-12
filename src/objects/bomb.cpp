@@ -4,11 +4,12 @@
 #include "character.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
-    TA_Sprite::load("objects/bomb.png");
+    TA_Sprite::load("objects/bomb.png", 16, 16);
+    TA_Sprite::loadAnimationsFromFile("objects/bomb.xml");
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX2);
     position = newPosition;
     setPosition(position);
-    hitbox.setRectangle(TA_Point(1.5, 2.5), TA_Point(11.5, 13.5));
+    hitbox.setRectangle(topLeft - TA_Point(0.5, 0.5), bottomRight + TA_Point(0.5, 0.5));
     mode = newMode;
     if(mode == TA_BOMB_MODE_AIR) {
         velocity = startVelocity;
@@ -54,7 +55,7 @@ bool TA_Bomb::update()
     }
     if(timer >= moveTime) {
         velocity.y += grv * speed * speed * TA::elapsedTime;
-        int moveFlags = moveAndCollide(TA_Point(2, 3), TA_Point(11, 13), velocity * TA::elapsedTime);
+        int moveFlags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
         if(moveFlags & TA_GROUND_COLLISION) {
             velocity.y = std::min(double(0), velocity.y);
         }
@@ -84,11 +85,14 @@ bool TA_Bomb::update()
 
 void TA_RemoteBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode)
 {
+    topLeft = TA_Point(1, 4);
+    bottomRight = TA_Point(14, 16);
     speed = 1;
     destroyFlags = TA_COLLISION_DAMAGE;
     startVelocity = {1.35 * speed, -1 * speed};
     startCrouchVelocity = {1 * speed, -0.7 * speed};
     TA_Bomb::load(newPosition, newDirection, mode);
+    setAnimation("remote");
 }
 
 bool TA_RemoteBomb::shouldExplode()

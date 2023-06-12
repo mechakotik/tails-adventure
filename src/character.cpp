@@ -193,19 +193,19 @@ void TA_Character::updateTool()
                 break;
             }
             if(helitail) {
-                spawnBomb(position + TA_Point((flip ? 15 : 21), 28), flip, TA_BOMB_MODE_HELITAIL);
+                spawnBomb(position + TA_Point((flip ? 14 : 20), 27), flip, TA_BOMB_MODE_HELITAIL);
                 setAnimation("throw_helitail");
             }
             else if(jump) { // TODO: throw bomb in the air animation
-                spawnBomb(position + TA_Point((flip ? 25 : 10), 8), flip, TA_BOMB_MODE_AIR);
+                spawnBomb(position + TA_Point((flip ? 24 : 9), 7), flip, TA_BOMB_MODE_AIR);
             }
             else if(crouch) {
-                spawnBomb(position + TA_Point((flip ? 12 : 23), 22), flip, TA_BOMB_MODE_CROUCH);
+                spawnBomb(position + TA_Point((flip ? 11 : 22), 21), flip, TA_BOMB_MODE_CROUCH);
                 setAnimation("throw_crouch");
                 state = STATE_THROW_BOMB;
             }
             else if(ground) {
-                spawnBomb(position + TA_Point((flip ? 27 : 8), 12), flip, TA_BOMB_MODE_DEFAULT);
+                spawnBomb(position + TA_Point((flip ? 26 : 7), 11), flip, TA_BOMB_MODE_DEFAULT);
                 setAnimation("throw");
                 state = STATE_THROW_BOMB;
             }
