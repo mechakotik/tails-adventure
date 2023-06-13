@@ -16,6 +16,7 @@
 #include "objects/bird_walker.h"
 #include "character.h"
 #include "objects/bat_robot.h"
+#include "objects/nezu.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -151,6 +152,11 @@ void TA_ObjectSet::load(std::string filename)
             else {
                 areaLoopSound.play();
             }
+        }
+
+        else if(name == "nezu") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_Nezu>(position);
         }
 
         else {
