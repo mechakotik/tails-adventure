@@ -33,14 +33,13 @@ set_target_properties(TailsAdventure PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output
     BUILD_RPATH lib
 )
+
 if(WIN32)
-    add_custom_command(TARGET TailsAdventure POST_BUILD COMMAND
-        COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:TailsAdventure> $<TARGET_RUNTIME_DLLS:exe>
-        COMMAND_EXPAND_LISTS
+    set_target_properties(SDL2 SDL2_image SDL2_mixer PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:TailsAdventure>
     )
 else()
     set_target_properties(SDL2 SDL2_image SDL2_mixer PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:TailsAdventure>/lib
         ARCHIVE_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:TailsAdventure>/lib
         LIBRARY_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:TailsAdventure>/lib
     )
