@@ -2,12 +2,14 @@
 #include "tools.h"
 #include "error.h"
 
-void TA_Explosion::load(TA_Point position, int newDelay)
+void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type)
 {
     TA_Sprite::load("effects/explosion.png", 16, 16);
     TA_Sprite::loadAnimationsFromFile("effects/animations.xml");
     TA_Sprite::setPosition(position);
     TA_Sprite::setAnimation("explosion");
+
+    this->type = type;
     delay = newDelay;
     hitbox.setRectangle(TA_Point(4, 4), TA_Point(11, 11));
     hitbox.setPosition(position);
@@ -26,11 +28,17 @@ bool TA_Explosion::update()
 
 TA_CollisionType TA_Explosion::getCollisionType()
 {
-    int type = TA_COLLISION_EXPLOSION;
-    if(delay == 0) {
-        type |= TA_COLLISION_EXPLOSION_FIRST;
+    int collisionType = TA_COLLISION_TRANSPARENT;
+    if(type == TA_EXPLOSION_CHARACTER) {
+        collisionType = TA_COLLISION_EXPLOSION;
+        if(delay == 0) {
+            collisionType |= TA_COLLISION_EXPLOSION_FIRST;
+        }
     }
-    return TA_CollisionType(type);
+    else if(type == TA_EXPLOSION_ENEMY) {
+        collisionType = TA_COLLISION_DAMAGE;
+    }
+    return TA_CollisionType(collisionType);
 }
 
 void TA_Explosion::draw()

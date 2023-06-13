@@ -66,8 +66,8 @@ bool TA_BatRobot::update()
 
     updatePosition();
 
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_EXPLOSION) {
-        objectSet->spawnObject<TA_Explosion>(position + TA_Point(4, 0));
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB)) {
+        objectSet->spawnObject<TA_Explosion>(position + TA_Point(4, 0), 0, TA_EXPLOSION_NEUTRAL);
         return false;
     }
     return true;

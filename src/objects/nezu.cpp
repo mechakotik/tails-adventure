@@ -29,8 +29,8 @@ bool TA_Nezu::update()
     }
 
     updatePosition();
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_EXPLOSION) {
-        objectSet->spawnObject<TA_Explosion>(position);
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB)) {
+        objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
         return false;
     }
     return true;
