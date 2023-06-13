@@ -6,7 +6,7 @@
 class TA_BreakableBlock : public TA_Object {
 private:
     std::string particlePath;
-    const double grv = 0.25;
+    const double grv = 0.35;
     bool dropsRing;
 
 public:

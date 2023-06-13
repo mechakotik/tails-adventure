@@ -21,4 +21,4 @@ pacman -Syu
 pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-cmake
 ```
 
-Then open MSYS2 MINGW64 terminal, create a build directory and run CMake build with same commands as on Linux. If you don't have MSYS2's `bin` folder in your `PATH`, you will need to manually copy runtime DLLs (`libgcc_s_seh-1.dll`, `libstdc++-6.dll` and `libwinpthread-1.dll`) to `output` directory.
+Then open MSYS2 MINGW64 terminal, create a build directory and run CMake build with same commands as on Linux. If you don't have MSYS2's `bin` directory in your `PATH`, you will need to manually copy runtime DLLs (`libgcc_s_seh-1.dll`, `libstdc++-6.dll` and `libwinpthread-1.dll`) to `output` directory.
