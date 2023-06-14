@@ -41,7 +41,7 @@ void TA_Nezu::updateIdle()
     setAnimation("idle");
     setFlip(false);
     TA_Point distance = getDistanceToCharacter();
-    if(abs(distance.x) <= 64 && abs(distance.y) <= 32) {
+    if(abs(distance.x) <= 54 && abs(distance.y) <= 32) {
         state = STATE_WALK;
         direction = (distance.x > 0);
     }

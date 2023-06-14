@@ -64,7 +64,7 @@
 	<object name="bat_robot" x="1500" y="192"/>
 	<object name="bat_robot" x="1580" y="176"/>
 
-	<object name="nezu" x="408" y="64"/>
+	<object name="nezu" x="400" y="64"/>
 	<object name="nezu" x="336" y="240"/>
 	<object name="nezu" x="1376" y="80"/>
 	<object name="nezu" x="1712" y="224"/>
