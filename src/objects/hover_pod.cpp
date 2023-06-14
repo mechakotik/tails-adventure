@@ -53,7 +53,7 @@ bool TA_HoverPod::update()
 
     int flags;
     objectSet->checkCollision(hitbox, flags);
-    if(flags & TA_COLLISION_EXPLOSION) {
+    if(flags & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB)) {
         objectSet->spawnObject<TA_DeadKukku>(position);
         return false;
     }

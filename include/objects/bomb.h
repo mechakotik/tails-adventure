@@ -15,15 +15,17 @@ enum TA_BombMode : int {
 class TA_Bomb : public TA_Object {
 private:
     const double grv = 0.125;
+    const double destroyedTime = 5;
 
     TA_Sound explosionSound;
     TA_BombMode mode;
 
-    bool direction;
+    bool direction, destroyed = false;
     double timer = 0;
 
 protected:
     virtual bool shouldExplode() {return false;}
+    void explode();
 
     double speed = 1.15;
     int destroyFlags = TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_PUSHABLE;
@@ -37,8 +39,10 @@ protected:
 public:
     using TA_Object::TA_Object;
     virtual void load(TA_Point newPosition, bool newDirection, TA_BombMode mode);
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
     bool update() override;
+    void draw() override;
+
+    bool checkPawnCollision(TA_Polygon &hitbox) override;
     TA_CollisionType getCollisionType() override {return TA_COLLISION_BOMB;}
     int getDrawPriority() override {return 1;}
 };

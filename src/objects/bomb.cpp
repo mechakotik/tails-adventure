@@ -7,9 +7,11 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
     TA_Sprite::load("objects/bomb.png", 16, 16);
     TA_Sprite::loadAnimationsFromFile("objects/bomb.xml");
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX2);
+
     position = newPosition;
     setPosition(position);
     hitbox.setRectangle(topLeft - TA_Point(0.5, 0.5), bottomRight + TA_Point(0.5, 0.5));
+
     mode = newMode;
     if(mode == TA_BOMB_MODE_AIR) {
         velocity = startVelocity;
@@ -25,6 +27,7 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
     else {
         velocity = startVelocity;
     }
+
     direction = newDirection;
     if(direction) {
         velocity.x *= -1;
@@ -40,6 +43,14 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_Bomb::update()
 {
+    if(destroyed) {
+        timer += TA::elapsedTime;
+        if(timer > destroyedTime) {
+            return false;
+        }
+        return true;
+    }
+
     int moveTime = (mode == TA_BOMB_MODE_DEFAULT ? 6 : 8);
     bool flag1 = (timer <= moveTime);
     timer += TA::elapsedTime;
@@ -69,18 +80,33 @@ bool TA_Bomb::update()
         hitbox.setPosition(position);
         int flags = objectSet->checkCollision(hitbox);
         if((flags & destroyFlags) || shouldExplode()) {
-            objectSet->spawnObject<TA_Explosion>(position);
-            for(int i = 1; i <= 3; i ++) {
-                TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
-                explosionSound.play();
-                objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
-            }
-            return false;
+            explode();
         }
     }
 
     setPosition(position);
     return true;
+}
+
+void TA_Bomb::explode()
+{
+    objectSet->spawnObject<TA_Explosion>(position);
+    hitbox.setRectangle(topLeft - TA_Point(2, 2), bottomRight + TA_Point(2, 2));
+    for(int i = 1; i <= 3; i ++) {
+        TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
+        explosionSound.play();
+        objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
+    }
+
+    destroyed = true;
+    timer = 0;
+}
+
+void TA_Bomb::draw()
+{
+    if(!destroyed) {
+        TA_Sprite::draw();
+    }
 }
 
 void TA_RemoteBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode)
