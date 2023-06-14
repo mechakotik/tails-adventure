@@ -95,7 +95,7 @@ bool TA_Nezu::updateFall()
 {
     fallSpeed += gravity * TA::elapsedTime;
     fallSpeed = std::min(fallSpeed, maxFallSpeed);
-    int flags = moveAndCollide(TA_Point(2, 0), TA_Point(14, 16), TA_Point(0, fallSpeed));
+    int flags = moveAndCollide(TA_Point(2, 0), TA_Point(14, 16), TA_Point(0, fallSpeed * TA::elapsedTime));
     return flags == 0;
 }
 

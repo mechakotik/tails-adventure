@@ -17,6 +17,7 @@
 #include "character.h"
 #include "objects/bat_robot.h"
 #include "objects/nezu.h"
+#include "objects/flame.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -157,6 +158,11 @@ void TA_ObjectSet::load(std::string filename)
         else if(name == "nezu") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             spawnObject<TA_Nezu>(position);
+        }
+
+        else if(name == "flame") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_FlameLauncher>(position);
         }
 
         else {

@@ -71,4 +71,11 @@
 	<object name="nezu" x="1808" y="192"/>
 	<object name="nezu" x="1728" y="80"/>
 	<object name="nezu" x="1824" y="80"/>
+
+	<object name="flame" x="460" y="288"/>
+	<object name="flame" x="908" y="320"/>
+	<object name="flame" x="972" y="320"/>
+	<object name="flame" x="1036" y="320"/>
+	<object name="flame" x="1324" y="112"/>
+	<object name="flame" x="1516" y="272"/>
 </objects>
