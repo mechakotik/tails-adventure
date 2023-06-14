@@ -26,9 +26,18 @@ bool TA_Nezu::update()
         case STATE_ATTACK:
             updateAttack();
             break;
+        case STATE_FALL:
+            if(!updateFall()) {
+                objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
+                return false;
+            }
+            break;
     }
 
     updatePosition();
+    if(isGoingToFall()) {
+        state = STATE_FALL;
+    }
     if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB)) {
         objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
         return false;
@@ -82,6 +91,14 @@ void TA_Nezu::updateAttack()
     }
 }
 
+bool TA_Nezu::updateFall()
+{
+    fallSpeed += gravity * TA::elapsedTime;
+    fallSpeed = std::min(fallSpeed, maxFallSpeed);
+    int flags = moveAndCollide(TA_Point(2, 0), TA_Point(14, 16), TA_Point(0, fallSpeed));
+    return flags == 0;
+}
+
 TA_Point TA_Nezu::getDistanceToCharacter()
 {
     TA_Point centeredPosition = position + TA_Point(8, 8);
@@ -122,4 +139,16 @@ bool TA_Nezu::isCloseToCharacter()
         return false;
     }
     return abs(distance.x) <= 14 && abs(distance.y) <= 16;
+}
+
+bool TA_Nezu::isGoingToFall()
+{
+    TA_Polygon groundHitbox;
+    groundHitbox.setRectangle(TA_Point(2, 15), TA_Point(14, 17));
+    groundHitbox.setPosition(position);
+
+    if((objectSet->checkCollision(groundHitbox) & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) == 0) {
+        return true;
+    }
+    return false;
 }
