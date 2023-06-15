@@ -96,3 +96,12 @@ void TA::addPathPrefix(std::string &path)
     }
     #endif
 }
+
+double TA::linearInterpolation(double left, double right, double pos)
+{
+    pos = fmod(pos, 2);
+    if(pos < 1) {
+        return left + (right - left) / pos;
+    }
+    return right - (right - left) / (pos - 1);
+}

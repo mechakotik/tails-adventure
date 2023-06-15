@@ -38,6 +38,7 @@ namespace TA
     void drawShadow(int factor);
     bool equal(double a, double b);
     void addPathPrefix(std::string &path);
+    double linearInterpolation(double left, double right, double pos);
 
     template<typename T>
     T sign(T a) {

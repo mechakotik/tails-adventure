@@ -26,6 +26,7 @@ bool TA_Fire::update()
 
     updateHitbox();
     updatePosition();
+    updateAlpha();
     return true;
 }
 
@@ -54,4 +55,11 @@ void TA_Fire::updateHitbox()
     else {
         hitbox.setRectangle(TA_Point(left, 0), TA_Point(24, 8));
     }
+}
+
+void TA_Fire::updateAlpha()
+{
+    alphaTimer += TA::elapsedTime;
+    double factor = TA::linearInterpolation(128, 255, alphaTimer / alphaPeriod);
+    TA_Sprite::setAlpha(factor);
 }
