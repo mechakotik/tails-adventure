@@ -83,12 +83,22 @@ void TA_Nezu::updateAttack()
 
     timer += TA::elapsedTime;
     if(timer > placeTime && !bombPlaced) {
+        placeBomb();
         bombPlaced = true;
     }
     if(timer > attackTime) {
         direction = !direction;
         state = STATE_WALK;
     }
+}
+
+void TA_Nezu::placeBomb()
+{
+    TA_Point bombPosition = position + TA_Point(-2, 8);
+    if(direction) {
+        bombPosition.x += 14;
+    }
+    objectSet->spawnObject<TA_NezuBomb>(bombPosition);
 }
 
 bool TA_Nezu::updateFall()
@@ -151,4 +161,21 @@ bool TA_Nezu::isGoingToFall()
         return true;
     }
     return false;
+}
+
+void TA_NezuBomb::load(TA_Point position)
+{
+    this->position = position;
+    TA_Sprite::load("objects/nezu_bomb.png");
+    updatePosition();
+}
+
+bool TA_NezuBomb::update()
+{
+    timer += TA::elapsedTime;
+    if(timer > waitTime) {
+        objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 4), 0, TA_EXPLOSION_ENEMY);
+        return false;
+    }
+    return true;
 }
