@@ -1,10 +1,13 @@
+#include <cmath>
 #include "flame.h"
 #include "tools.h"
 
-void TA_Flame::load(TA_Point position)
+void TA_Flame::load(TA_Point position, double startSpeed)
 {
     this->position = position;
+    speed = -startSpeed;
     startY = position.y;
+
     TA_Sprite::load("objects/flame.png");
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(7, 8));
     updatePosition();
@@ -12,8 +15,8 @@ void TA_Flame::load(TA_Point position)
 
 bool TA_Flame::update()
 {
-    velocity.y += gravity * TA::elapsedTime;
-    position = position + velocity;
+    speed += gravity * TA::elapsedTime;
+    position.y += std::max(-maxSpeed, std::min(maxSpeed, speed));
     updatePosition();
 
     if(position.y > startY) {
@@ -22,9 +25,10 @@ bool TA_Flame::update()
     return true;
 }
 
-void TA_FlameLauncher::load(TA_Point position)
+void TA_FlameLauncher::load(TA_Point position, double startSpeed)
 {
     this->position = position;
+    this->startSpeed = startSpeed;
 }
 
 bool TA_FlameLauncher::update()
@@ -32,7 +36,7 @@ bool TA_FlameLauncher::update()
     if(active) {
         timer += TA::elapsedTime;
         if(timer > launchPeriod) {
-            objectSet->spawnObject<TA_Flame>(position);
+            objectSet->spawnObject<TA_Flame>(position, startSpeed);
             timer = std::fmod(timer, launchPeriod);
         }
     }

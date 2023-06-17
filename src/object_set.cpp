@@ -163,13 +163,19 @@ void TA_ObjectSet::load(std::string filename)
 
         else if(name == "flame") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_FlameLauncher>(position);
+            if(element->Attribute("speed")) {
+                double speed = element->DoubleAttribute("speed");
+                spawnObject<TA_FlameLauncher>(position, speed);
+            }
+            else {
+                spawnObject<TA_FlameLauncher>(position);
+            }
         }
 
         else if(name == "fire") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             bool direction = false;
-            if (element->Attribute("direction", "right")) {
+            if(element->Attribute("direction", "right")) {
                 direction = true;
             }
             spawnObject<TA_Fire>(position, direction);
