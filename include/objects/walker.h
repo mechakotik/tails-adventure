@@ -13,15 +13,22 @@ enum TA_WalkerState
 
 class TA_Walker : public TA_Object {
 private:
+    const double speed = 0.25;
+    const double fireTime = 80;
+    const double standTime = 20;
+
+    void updateIdle();
+    void updateMove();
+    void updateFire();
+    void updateMoveAway();
+    TA_Point getDistanceToCharacter();
+
     int rangeLeft, rangeRight;
     bool direction;
     TA_Point velocity;
     double timer = 0;
     bool alwaysIdle = false;
     TA_WalkerState state = TA_WALKER_STATE_IDLE;
-
-    const double speed = 0.25;
-    const double fireTime = 90;
 
 public:
     using TA_Object::TA_Object;

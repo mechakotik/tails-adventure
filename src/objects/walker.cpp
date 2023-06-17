@@ -28,70 +28,18 @@ void TA_Walker::load(TA_Point newPosition, int range, bool flip)
 
 bool TA_Walker::update()
 {
-    TA_Point characterPosition = objectSet->getCharacterPosition();
-
     switch(state) {
         case TA_WALKER_STATE_IDLE:
-            setAnimation("walker_idle");
-            if (abs(position.x - characterPosition.x) <= 140 &&
-                abs(position.y - characterPosition.y) <= 80) {
-                state = TA_WALKER_STATE_MOVE;
-            }
+            updateIdle();
             break;
-
         case TA_WALKER_STATE_MOVE:
-            if (alwaysIdle) {
-                setAnimation("walker_idle");
-            }
-            else {
-                setAnimation("walker");
-                if (!direction) {
-                    position.x += speed * TA::elapsedTime;
-                    if (position.x > rangeRight) {
-                        direction = true;
-                    }
-                }
-                else {
-                    position.x -= speed * TA::elapsedTime;
-                    if (position.x < rangeLeft) {
-                        direction = false;
-                    }
-                }
-            }
-            if(direction == (position.x > characterPosition.x) && abs(position.x - characterPosition.x) < 64 && abs(position.y - characterPosition.y) < 16) {
-                state = TA_WALKER_STATE_FIRE;
-                timer = 0;
-            }
+            updateMove();
             break;
-
         case TA_WALKER_STATE_FIRE:
-            setAnimation("walker_fire");
-            timer += TA::elapsedTime;
-            if(timer > fireTime) {
-                objectSet->spawnObject<TA_WalkerBullet>(position + TA_Point(-1, 16), direction);
-                state = TA_WALKER_STATE_MOVE_AWAY;
-            }
+            updateFire();
             break;
-
         case TA_WALKER_STATE_MOVE_AWAY:
-            if (alwaysIdle) {
-                state = TA_WALKER_STATE_MOVE;
-            }
-            else {
-                setAnimation("walker");
-                if (!direction) {
-                    position.x -= speed * TA::elapsedTime;
-                    if (position.x < rangeLeft) {
-                        state = TA_WALKER_STATE_MOVE;
-                    }
-                }
-                else {
-                    position.x += speed * TA::elapsedTime;
-                    if (position.x > rangeRight) {
-                        state = TA_WALKER_STATE_MOVE;
-                    }
-                }
-            }
+            updateMoveAway();
             break;
     }
 
@@ -106,6 +54,85 @@ bool TA_Walker::update()
         return false;
     }
     return true;
+}
+
+void TA_Walker::updateIdle()
+{
+    setAnimation("walker_idle");
+    TA_Point distance = getDistanceToCharacter();
+    if (abs(distance.x) <= 140 && abs(distance.y) <= 90) {
+        state = TA_WALKER_STATE_MOVE;
+    }
+}
+
+void TA_Walker::updateMove()
+{
+    if (alwaysIdle) {
+        setAnimation("walker_idle");
+    }
+    else {
+        setAnimation("walker");
+        if (!direction) {
+            position.x += speed * TA::elapsedTime;
+            if (position.x > rangeRight) {
+                direction = true;
+            }
+        }
+        else {
+            position.x -= speed * TA::elapsedTime;
+            if (position.x < rangeLeft) {
+                direction = false;
+            }
+        }
+    }
+    TA_Point distance = getDistanceToCharacter();
+    if(direction == (distance.x < 0) && abs(distance.x) <= 64 && abs(distance.y) <= 16) {
+        state = TA_WALKER_STATE_FIRE;
+        timer = 0;
+    }
+}
+
+void TA_Walker::updateFire()
+{
+    if(!alwaysIdle && timer < standTime) {
+        setAnimation("walker_idle");
+    }
+    else {
+        setAnimation("walker_fire");
+    }
+    timer += TA::elapsedTime;
+    if(timer > fireTime) {
+        objectSet->spawnObject<TA_WalkerBullet>(position + TA_Point((direction ? -1 : 16), 16), direction);
+        state = TA_WALKER_STATE_MOVE_AWAY;
+    }
+}
+
+void TA_Walker::updateMoveAway()
+{
+    if (alwaysIdle) {
+        state = TA_WALKER_STATE_MOVE;
+        return;
+    }
+    setAnimation("walker");
+    if (!direction) {
+        position.x -= speed * TA::elapsedTime;
+        if (position.x < rangeLeft) {
+            state = TA_WALKER_STATE_MOVE;
+        }
+    }
+    else {
+        position.x += speed * TA::elapsedTime;
+        if (position.x > rangeRight) {
+            state = TA_WALKER_STATE_MOVE;
+        }
+    }
+}
+
+TA_Point TA_Walker::getDistanceToCharacter()
+{
+    TA_Point centeredPosition = position + TA_Point(12, 16);
+    TA_Point characterPosition = objectSet->getCharacterPosition();
+    return characterPosition - centeredPosition;
 }
 
 void TA_WalkerBullet::load(TA_Point newPosition, bool newDirection)

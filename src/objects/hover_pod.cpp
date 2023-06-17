@@ -28,7 +28,7 @@ bool TA_HoverPod::update()
 
     if(idle) {
         if (abs(position.x - characterPosition.x) <= 140 &&
-            abs(position.y - characterPosition.y) <= 80) {
+            abs(position.y - characterPosition.y) <= 90) {
             idle = false;
         }
         return true;

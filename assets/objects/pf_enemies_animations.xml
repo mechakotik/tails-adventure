@@ -12,7 +12,7 @@
 	<animation name="walker_idle">
 		5
 	</animation>
-	<animation name="walker_fire" delay="6">
+	<animation name="walker_fire" delay="4">
 		2,3
 	</animation>
 	<animation name="hover_pod" delay="6">
