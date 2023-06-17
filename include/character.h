@@ -41,7 +41,7 @@ private:
     const double invincibleTime = 120;
     const double springYsp = -8;
     const double remoteRobotInitTime = 30;
-    const double remoteRobotJumpSpeed = -2;
+    const double remoteRobotJumpSpeed = -3.25;
     const double maxLookTime = 100;
 
     TA_CommonController controller;
