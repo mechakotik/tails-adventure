@@ -106,7 +106,7 @@ public:
     TA_Point getPosition() {return position + TA_Point(24, 24);}
 
     void addRings(int count);
-    bool isFlying() {return helitail;}
+    bool displayFlighTimeBar() {return helitail && !remoteRobot;}
     double getFlightTime() {return helitailTime / maxHelitailTime;}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
     bool isRemoteRobot() {return remoteRobot;}
