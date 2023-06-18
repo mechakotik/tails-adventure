@@ -5,11 +5,11 @@
 
 namespace TA { namespace save {
     void load();
-    int getParameter(std::string name);
-    void setParameter(std::string name, int value);
+    long long getParameter(std::string name);
+    void setParameter(std::string name, long long value);
     void setCurrentSave(std::string name);
-    int getSaveParameter(std::string name, std::string saveName = "");
-    void setSaveParameter(std::string name, int value, std::string saveName = "");
+    long long getSaveParameter(std::string name, std::string saveName = "");
+    void setSaveParameter(std::string name, long long value, std::string saveName = "");
     void createSave(std::string saveName);
 }}
 

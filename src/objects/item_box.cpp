@@ -16,11 +16,11 @@ void TA_ItemBox::load(TA_Point position, int itemNumber)
 bool TA_ItemBox::update()
 {
     int itemMask = TA::save::getSaveParameter("item_mask");
-    if(itemMask & (1 << itemNumber)) {
+    if(itemMask & (1ll << itemNumber)) {
         return false;
     }
     if(objectSet->checkCollision(hitbox) & TA_COLLISION_CHARACTER) {
-        itemMask |= (1 << itemNumber);
+        itemMask |= (1ll << itemNumber);
         return false;
     }
     return true;

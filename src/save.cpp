@@ -6,7 +6,7 @@
 
 namespace TA { namespace save {
     void addOptionsFromFile(std::string filename);
-    std::map<std::string, int> saveMap;
+    std::map<std::string, long long> saveMap;
     std::string currentSave = "";
 }}
 
@@ -18,7 +18,7 @@ void TA::save::addOptionsFromFile(std::string filename)
     }
 
     std::string name;
-    int value;
+    long long value;
     while(stream >> name >> value) {
         saveMap[name] = value;
     }
@@ -29,7 +29,7 @@ void TA::save::load()
     addOptionsFromFile("default_config");
 }
 
-int TA::save::getParameter(std::string name)
+long long TA::save::getParameter(std::string name)
 {
     if(!saveMap.count(name)) {
         TA::handleError("Unknown parameter %s", name.c_str());
@@ -37,7 +37,7 @@ int TA::save::getParameter(std::string name)
     return saveMap[name];
 }
 
-void TA::save::setParameter(std::string name, int value)
+void TA::save::setParameter(std::string name, long long value)
 {
     saveMap[name] = value;
 }
@@ -47,7 +47,7 @@ void TA::save::setCurrentSave(std::string name)
     currentSave = name;
 }
 
-int TA::save::getSaveParameter(std::string name, std::string saveName)
+long long TA::save::getSaveParameter(std::string name, std::string saveName)
 {
     if(saveName == "") {
         saveName = currentSave;
@@ -55,7 +55,7 @@ int TA::save::getSaveParameter(std::string name, std::string saveName)
     return getParameter(saveName + "/" + name);
 }
 
-void TA::save::setSaveParameter(std::string name, int value, std::string saveName)
+void TA::save::setSaveParameter(std::string name, long long value, std::string saveName)
 {
     if(saveName == "") {
         saveName = currentSave;
@@ -65,7 +65,7 @@ void TA::save::setSaveParameter(std::string name, int value, std::string saveNam
 
 void TA::save::createSave(std::string saveName)
 {
-    std::map<std::string, int> newSaveMap = saveMap;
+    std::map<std::string, long long> newSaveMap = saveMap;
     std::string defaultSaveName = "default_save/";
     for(auto item : saveMap) {
         if(item.first.length() >= defaultSaveName.length() && item.first.substr(0, defaultSaveName.length()) == defaultSaveName) {
