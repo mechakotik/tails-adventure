@@ -19,6 +19,7 @@
 #include "objects/nezu.h"
 #include "objects/flame.h"
 #include "objects/fire.h"
+#include "objects/item_box.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -179,6 +180,12 @@ void TA_ObjectSet::load(std::string filename)
                 direction = true;
             }
             spawnObject<TA_Fire>(position, direction);
+        }
+
+        else if(name == "item_box") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            int number = element->IntAttribute("number");
+            spawnObject<TA_ItemBox>(position, number);
         }
 
         else {

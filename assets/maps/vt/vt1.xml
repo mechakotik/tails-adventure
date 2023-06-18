@@ -80,4 +80,7 @@
 	<object name="flame" x="1516" y="272"/>
 
 	<object name="fire" x="1240" y="152" direction="left"/>
+
+    <object name="item_box" x="968" y="112" number="19"/>
+    <object name="item_box" x="1864" y="288" number="2"/>
 </objects>
