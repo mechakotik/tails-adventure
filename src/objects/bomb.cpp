@@ -2,6 +2,7 @@
 #include "tools.h"
 #include "objects/explosion.h"
 #include "character.h"
+#include "error.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
     TA_Sprite::load("objects/bomb.png", 16, 16);
@@ -14,7 +15,9 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
 
     mode = newMode;
     if(mode == TA_BOMB_MODE_AIR) {
-        velocity = startVelocity;
+        TA_Point addVelocity = objectSet->getLinks().character->getVelocity();
+        addVelocity.x = abs(addVelocity.x);
+        velocity = startVelocity + addVelocity;
         timer = 10;
     }
     if (mode == TA_BOMB_MODE_CROUCH) {

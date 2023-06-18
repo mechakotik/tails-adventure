@@ -104,6 +104,7 @@ public:
     TA_CommonController *getController() {return &controller;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() {return position + TA_Point(24, 24);}
+    TA_Point getVelocity() {return velocity;}
 
     void addRings(int count);
     bool displayFlighTimeBar() {return helitail && !remoteRobot;}

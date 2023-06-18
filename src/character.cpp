@@ -157,7 +157,9 @@ void TA_Character::updateAnimation()
             }
         }
         else {
-            setAnimation("fall");
+            if(getAnimationName() != "throw_air") {
+                setAnimation("fall");
+            }
         }
     }
 }
@@ -196,8 +198,10 @@ void TA_Character::updateTool()
                 spawnBomb(position + TA_Point((flip ? 14 : 20), 27), flip, TA_BOMB_MODE_HELITAIL);
                 setAnimation("throw_helitail");
             }
-            else if(jump) { // TODO: throw bomb in the air animation
+            else if(jump) {
                 spawnBomb(position + TA_Point((flip ? 24 : 9), 7), flip, TA_BOMB_MODE_AIR);
+                jump = false;
+                setAnimation("throw_air");
             }
             else if(crouch) {
                 spawnBomb(position + TA_Point((flip ? 11 : 22), 21), flip, TA_BOMB_MODE_CROUCH);

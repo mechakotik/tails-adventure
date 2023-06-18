@@ -66,4 +66,7 @@
 	<animation name="throw_helitail" delay="6" repeatTimes="1">
 		66,67,68
 	</animation>
+	<animation name="throw_air" delay="6" repeatTimes="1">
+		69,70,71,72
+	</animation>
 </animations>
