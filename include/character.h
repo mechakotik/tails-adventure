@@ -116,6 +116,7 @@ public:
 
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();
+    void setReleaseState();
 };
 
 #endif // TA_CHARACTER_H

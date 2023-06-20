@@ -71,12 +71,18 @@ void TA_Character::update()
         return;
     }
     if(state == STATE_UNPACK_ITEM) {
-        setAnimation("unpack");
+        if(remoteRobot) {
+            setAnimation("remote_robot_idle");
+        }
+        else {
+            setAnimation("unpack");
+        }
         setPosition(position);
+        updateFollowPosition();
         return;
     }
     if(state == STATE_RAISE_ITEM) {
-        if(!isAnimated() && getCurrentFrame() == 74) {
+        if(!isAnimated() && (remoteRobot || getCurrentFrame() == 74)) {
             state = STATE_NORMAL;
             velocity = {0, 0};
         }
@@ -343,5 +349,17 @@ void TA_Character::addRings(int count)
 void TA_Character::setRaiseState()
 {
     state = STATE_RAISE_ITEM;
-    setAnimation("raise");
+    if(remoteRobot) {
+        setAnimation("remote_robot_raise");
+    }
+    else {
+        setAnimation("raise");
+    }
+}
+
+void TA_Character::setReleaseState()
+{
+    if(!remoteRobot) {
+        setAnimation("release");
+    }
 }

@@ -128,6 +128,6 @@ void TA_ItemBox::updateHold()
         long long itemMask = TA::save::getSaveParameter("item_mask");
         itemMask |= (1ll << itemNumber);
         TA::save::setSaveParameter("item_mask", itemMask);
-        objectSet->getLinks().character->setAnimation("release");
+        objectSet->getLinks().character->setReleaseState();
     }
 }

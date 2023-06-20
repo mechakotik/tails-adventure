@@ -72,10 +72,13 @@
 	<animation name="unpack">
 		73
 	</animation>
-	<animation name="raise" delay="12" repeatTimes="1">
+	<animation name="raise" delay="8" repeatTimes="1">
 		78,74,75,76,77
 	</animation>
-	<animation name="release" delay="12" repeatTimes="1">
+	<animation name="release" delay="8" repeatTimes="1">
 		77,76,75,74
+	</animation>
+	<animation name="remote_robot_raise" delay="32" repeatTimes="1">
+		41
 	</animation>
 </animations>
