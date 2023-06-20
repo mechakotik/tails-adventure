@@ -37,6 +37,7 @@ public:
     virtual TA_CollisionType getCollisionType() {return TA_COLLISION_TRANSPARENT;}
     virtual int getDrawPriority() {return 0;}
     virtual void destroy() {}
+    virtual ~TA_Object() = default;
 };
 
 class TA_ObjectSet {

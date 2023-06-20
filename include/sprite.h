@@ -31,7 +31,7 @@ public:
 
 class TA_Sprite {
 private:
-    TA_Texture *texture;
+    TA_Texture texture;
     int frameWidth, frameHeight;
     int frame = 0;
     TA_Point position, scale{1, 1};
@@ -50,7 +50,6 @@ private:
 
 public:
     void load(std::string filename, int frameWidth = -1, int frameHeight = -1);
-    void loadFromTexture(TA_Texture *newTexture, int frameWidth = -1, int frameHeight = -1);
 
     virtual void draw();
     void drawFrom(SDL_Rect srcRect);

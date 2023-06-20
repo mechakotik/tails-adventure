@@ -41,17 +41,10 @@ TA_Animation::TA_Animation(int frame)
 
 void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight)
 {
-    TA_Texture *newTexture = new TA_Texture();
-    newTexture->load(filename);
-    loadFromTexture(newTexture, newFrameWidth, newFrameHeight);
-}
-
-void TA_Sprite::loadFromTexture(TA_Texture *newTexture, int newFrameWidth, int newFrameHeight)
-{
-    texture = newTexture;
+    texture.load(filename);
     if(newFrameWidth == -1) {
-        frameWidth = texture->width;
-        frameHeight = texture->height;
+        frameWidth = texture.width;
+        frameHeight = texture.height;
     }
     else {
         frameWidth = newFrameWidth;
@@ -69,8 +62,8 @@ void TA_Sprite::draw()
     }
     updateAnimation();
     SDL_Rect srcRect;
-    srcRect.x = (frameWidth * frame) % texture->width;
-    srcRect.y = (frameWidth * frame) / texture->width * frameHeight;
+    srcRect.x = (frameWidth * frame) % texture.width;
+    srcRect.y = (frameWidth * frame) / texture.width * frameHeight;
     srcRect.w = frameWidth;
     srcRect.h = frameHeight;
     drawFrom(srcRect);
@@ -100,9 +93,9 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
     }
     
     if(!hidden) {
-        SDL_SetTextureAlphaMod(texture->SDLTexture, alpha);
+        SDL_SetTextureAlphaMod(texture.SDLTexture, alpha);
         SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-        SDL_RenderCopyEx(TA::renderer, texture->SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
+        SDL_RenderCopyEx(TA::renderer, texture.SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
     }
     updateAnimationNeeded = true;
 }
@@ -209,7 +202,7 @@ void TA_Sprite::setColorMod(int r, int g, int b)
     r = normalize(r);
     g = normalize(g);
     b = normalize(b);
-    SDL_SetTextureColorMod(texture->SDLTexture, r, g, b);
+    SDL_SetTextureColorMod(texture.SDLTexture, r, g, b);
 }
 
 int TA_Sprite::getAnimationFrame()

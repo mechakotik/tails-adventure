@@ -29,6 +29,11 @@ target_include_directories(TailsAdventure PRIVATE
     external/tinyxml2
 )
 
+if(${CMAKE_BUILD_TYPE} MATCHES Debug AND UNIX)
+    target_compile_options(TailsAdventure PRIVATE -fsanitize=address,leak,undefined)
+    target_link_options(TailsAdventure PRIVATE -fsanitize=address,leak,undefined)
+endif()
+
 set_target_properties(TailsAdventure PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output
     BUILD_RPATH lib

@@ -29,7 +29,7 @@ std::string TA::readStringFromFile(std::string filename)
     }
     int dataBytes = SDL_RWseek(input, 0, SEEK_END);
     SDL_RWseek(input, 0, SEEK_SET);
-    char* data = (char*)malloc(dataBytes);
+    char* data = new char[dataBytes];
     SDL_RWread(input, data, 1, dataBytes);
 
     std::string str(dataBytes + 1, 0);
@@ -37,6 +37,7 @@ std::string TA::readStringFromFile(std::string filename)
         str[pos] = data[pos];
     }
     str += '\0';
+    delete[] data;
     if(SDL_RWclose(input) != 0) {
         TA::handleSDLError("Close %s failed", filename.c_str());
     }

@@ -34,14 +34,15 @@ void TA_Tilemap::load(std::string filename)
         tileset[pos].animationDelay = 1;
     }
 
+    std::string textureFilename = "";
+
     auto loadTileset = [&](tinyxml2::XMLElement *tilesetElement)
     {
-        std::string textureFilename = filename;
+        textureFilename = filename;
         while(!textureFilename.empty() && textureFilename.back() != '/') {
             textureFilename.pop_back();
         }
         textureFilename += tilesetElement->FirstChildElement("image")->Attribute("source");
-        texture.load(textureFilename);
 
         for(tinyxml2::XMLElement *tileElement = tilesetElement->FirstChildElement("tile");
             tileElement != nullptr; tileElement = tileElement->NextSiblingElement("tile"))
@@ -96,7 +97,7 @@ void TA_Tilemap::load(std::string filename)
                 if(tile == -1) {
                     continue;
                 }
-                tilemap[layer][tileX][tileY].sprite.loadFromTexture(&texture, tileWidth, tileHeight);
+                tilemap[layer][tileX][tileY].sprite.load(textureFilename, tileWidth, tileHeight);
                 tilemap[layer][tileX][tileY].sprite.setPosition(tileX * tileWidth, tileY * tileHeight);
                 tilemap[layer][tileX][tileY].sprite.setAnimation(TA_Animation(tileset[tile].animation, tileset[tile].animationDelay, -1));
             }

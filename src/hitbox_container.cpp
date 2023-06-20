@@ -50,19 +50,25 @@ int TA_HitboxContainer::getCollisionFlags(TA_Polygon &hitbox)
         }
     };
 
+    auto processChunkAt = [&](int x, int y) {
+        if(0 <= x && x < (int)chunks.size() && 0 <= y && y <= (int)chunks[x].size()) {
+            processChunk(chunks[x][y]);
+        }
+    };
+
     TA_Point topLeft = hitbox.getTopLeft(), bottomRight = hitbox.getBottomRight();
     int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize, bottom = bottomRight.y / chunkSize;
 
     processChunk(commonChunk);
-    processChunk(chunks[top][left]);
+    processChunkAt(top, left);
     if(right != left) {
-        processChunk(chunks[top][right]);
+        processChunkAt(top, right);
     }
     if(bottom != top) {
-        processChunk(chunks[bottom][left]);
+        processChunkAt(bottom, left);
     }
     if(right != left && bottom != top) {
-        processChunk(chunks[bottom][right]);
+        processChunkAt(bottom, right);
     }
 
     return flags;

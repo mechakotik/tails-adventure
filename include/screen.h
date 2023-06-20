@@ -18,6 +18,7 @@ public:
     virtual void init() {}
     virtual TA_ScreenState update() {return TA_SCREENSTATE_CURRENT;}
     virtual void quit() {}
+    virtual ~TA_Screen() = default;
 };
 
 #endif // TA_SCREEN_H
