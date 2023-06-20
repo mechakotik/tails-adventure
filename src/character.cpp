@@ -70,6 +70,18 @@ void TA_Character::update()
         updateRemoteRobotReturn();
         return;
     }
+    if(state == STATE_UNPACK_ITEM) {
+        setAnimation("unpack");
+        setPosition(position);
+        return;
+    }
+    if(state == STATE_RAISE_ITEM) {
+        if(!isAnimated() && getCurrentFrame() == 74) {
+            state = STATE_NORMAL;
+            velocity = {0, 0};
+        }
+        return;
+    }
 
     setPosition(position);
     setFlip(flip);
@@ -326,4 +338,10 @@ void TA_Character::addRings(int count)
 {
     rings += count;
     TA::save::setSaveParameter("rings", rings);
+}
+
+void TA_Character::setRaiseState()
+{
+    state = STATE_RAISE_ITEM;
+    setAnimation("raise");
 }

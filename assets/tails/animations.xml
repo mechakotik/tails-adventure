@@ -69,4 +69,13 @@
 	<animation name="throw_air" delay="6" repeatTimes="1">
 		69,70,71,72
 	</animation>
+	<animation name="unpack">
+		73
+	</animation>
+	<animation name="raise" delay="12" repeatTimes="1">
+		78,74,75,76,77
+	</animation>
+	<animation name="release" delay="12" repeatTimes="1">
+		77,76,75,74
+	</animation>
 </animations>

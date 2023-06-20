@@ -66,6 +66,7 @@ public:
     int getWidth() {return frameWidth;}
     int getHeight() {return frameHeight;}
     bool getFlip() {return flip;}
+    TA_Point getPosition() {return position;}
 
     void loadAnimationsFromFile(std::string filename);
     void setAnimation(std::string name);

@@ -23,6 +23,8 @@ private:
         STATE_THROW_BOMB,
         STATE_REMOTE_ROBOT_INIT,
         STATE_REMOTE_ROBOT_RETURN,
+        STATE_UNPACK_ITEM,
+        STATE_RAISE_ITEM,
         STATE_DEAD
     };
 
@@ -111,6 +113,9 @@ public:
     double getFlightTime() {return helitailTime / maxHelitailTime;}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
     bool isRemoteRobot() {return remoteRobot;}
+
+    void setUnpackState() {state = STATE_UNPACK_ITEM;}
+    void setRaiseState();
 };
 
 #endif // TA_CHARACTER_H
