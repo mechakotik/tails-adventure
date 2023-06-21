@@ -91,6 +91,8 @@ private:
     void updateObjectCollision();
     void updateRemoteRobotReturn();
 
+    int getMaxRings();
+
 public:
     void load(TA_Links newLinks);
     void handleInput();
@@ -109,6 +111,7 @@ public:
     TA_Point getVelocity() {return velocity;}
 
     void addRings(int count);
+    void addRingsToMaximum();
     bool displayFlighTimeBar() {return helitail && !remoteRobot;}
     double getFlightTime() {return helitailTime / maxHelitailTime;}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}

@@ -6,9 +6,10 @@ private:
     void updateIdle();
     void updateUnpack();
     void updateRaise();
-    void updateHold();
+    bool updateHold();
     bool characterHasThisItem();
     void drawItemName();
+    void addItemToCharacter();
 
     const double unpackTime = 40;
     const double holdTime = 60;

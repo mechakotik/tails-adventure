@@ -343,7 +343,25 @@ void TA_Character::updateRemoteRobotReturn()
 void TA_Character::addRings(int count)
 {
     rings += count;
+    rings = std::min(rings, getMaxRings());
     TA::save::setSaveParameter("rings", rings);
+}
+
+void TA_Character::addRingsToMaximum()
+{
+    rings = getMaxRings();
+    TA::save::setSaveParameter("rings", rings);
+}
+
+int TA_Character::getMaxRings()
+{
+    long long itemMask = TA::save::getSaveParameter("item_mask"), maxRings = 10;
+    for(int item = 29; item <= 34; item ++) {
+        if(itemMask & (1ll << item)) {
+            maxRings += 10;
+        }
+    }
+    return maxRings;
 }
 
 void TA_Character::setRaiseState()

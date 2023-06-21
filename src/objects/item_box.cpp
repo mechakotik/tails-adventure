@@ -24,6 +24,9 @@ bool TA_ItemBox::update()
 {
     switch(state) {
         case STATE_IDLE:
+            if(characterHasThisItem()) {
+                return false;
+            }
             updateIdle();
             break;
         case STATE_UNPACK:
@@ -33,14 +36,13 @@ bool TA_ItemBox::update()
             updateRaise();
             break;
         case STATE_HOLD:
-            updateHold();
+            if(!updateHold()) {
+                return false;
+            }
             break;
     }
 
     updatePosition();
-    if(characterHasThisItem()) {
-        return false;
-    }
     return true;
 }
 
@@ -63,6 +65,7 @@ void TA_ItemBox::updateIdle()
     if((flags & TA_COLLISION_CHARACTER) != 0 && objectSet->getLinks().character->isOnGround()) {
         objectSet->getLinks().character->setUnpackState();
         sound.play();
+        addItemToCharacter();
         state = STATE_UNPACK;
     }
 }
@@ -136,14 +139,23 @@ void TA_ItemBox::updateRaise()
     position = characterPosition + addPosition;
 }
 
-void TA_ItemBox::updateHold()
+bool TA_ItemBox::updateHold()
 {
     timer += TA::elapsedTime;
     if(timer > holdTime) {
-        long long itemMask = TA::save::getSaveParameter("item_mask");
-        itemMask |= (1ll << itemNumber);
-        TA::save::setSaveParameter("item_mask", itemMask);
         objectSet->getLinks().character->setReleaseState();
+        return false;
+    }
+    return true;
+}
+
+void TA_ItemBox::addItemToCharacter()
+{
+    long long itemMask = TA::save::getSaveParameter("item_mask");
+    itemMask |= (1ll << itemNumber);
+    TA::save::setSaveParameter("item_mask", itemMask);
+    if(itemNumber >= 29) {
+        objectSet->getLinks().character->addRingsToMaximum();
     }
 }
 
