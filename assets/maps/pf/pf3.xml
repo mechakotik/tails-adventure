@@ -6,4 +6,5 @@
 	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
 	<object name="camera_lock_point" x="576" y="64"/>
 	<object name="bird_walker" floor_y="175"/>
+    <object name="item_box" x="888" y="112" number="6" item_name=" remote &#10; robot  "/>
 </objects>
