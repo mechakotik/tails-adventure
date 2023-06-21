@@ -23,6 +23,7 @@
 	<object name="walker" x="1708" y="144" direction="right"/>
 	<object name="walker" x="1804" y="256" direction="left"/>
 	<object name="walker" x="1848" y="368" range="48" direction="left"/>
+	<object name="walker" x="1892" y="160" direction="right"/>
 	
 	<object name="hover_pod" x="368" y="160" range="272" direction="left"/>
 	<object name="hover_pod" x="752" y="144" range="208" direction="left"/>
