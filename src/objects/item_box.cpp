@@ -75,7 +75,7 @@ void TA_ItemBox::updateUnpack()
         objectSet->getLinks().character->setRaiseState();
         timer = 0;
 
-        TA_Point absoluteTextPosition = position + TA_Point(-24, 16);
+        TA_Point absoluteTextPosition = position + TA_Point(0, 16);
         objectSet->spawnObject<TA_ItemLabel>(objectSet->getLinks().camera->getRelative(absoluteTextPosition), itemName);
 
         return;
@@ -149,11 +149,12 @@ void TA_ItemBox::updateHold()
 
 void TA_ItemLabel::load(TA_Point position, std::string name)
 {
-    this->position = position;
-    this->name = name;
-
     font.load("fonts/item.png", 8, 8);
     font.setMapping("abcdefghijklmnopqrstuvwxyz ");
+
+    position.x -= font.getTextWidth(name) / 2 - 8;
+    this->position = position;
+    this->name = name;
 }
 
 bool TA_ItemLabel::update()
