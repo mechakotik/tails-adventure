@@ -1,6 +1,7 @@
 #include "nezu.h"
 #include "explosion.h"
 #include "tools.h"
+#include "ring.h"
 
 void TA_Nezu::load(TA_Point position)
 {
@@ -28,7 +29,7 @@ bool TA_Nezu::update()
             break;
         case STATE_FALL:
             if(!updateFall()) {
-                objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
+                destroy();
                 return false;
             }
             break;
@@ -39,10 +40,18 @@ bool TA_Nezu::update()
         state = STATE_FALL;
     }
     if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB)) {
-        objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
+        destroy();
         return false;
     }
     return true;
+}
+
+void TA_Nezu::destroy()
+{
+    objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
+    if(objectSet->enemyShouldDropRing()) {
+        objectSet->spawnObject<TA_Ring>(position + TA_Point(4, 4));
+    }
 }
 
 void TA_Nezu::updateIdle()

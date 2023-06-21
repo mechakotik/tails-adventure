@@ -1,6 +1,7 @@
 #include "bat_robot.h"
 #include "tools.h"
 #include "explosion.h"
+#include "ring.h"
 
 void TA_BatRobot::load(TA_Point newPosition)
 {
@@ -11,7 +12,7 @@ void TA_BatRobot::load(TA_Point newPosition)
     position = newPosition;
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(18, 14));
     updatePosition();
-}
+}void destroy();
 
 bool TA_BatRobot::checkPawnCollision(TA_Polygon &collisionHitbox)
 {
@@ -68,6 +69,9 @@ bool TA_BatRobot::update()
 
     if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB)) {
         objectSet->spawnObject<TA_Explosion>(position + TA_Point(4, 0), 0, TA_EXPLOSION_NEUTRAL);
+        if(objectSet->enemyShouldDropRing()) {
+            objectSet->spawnObject<TA_Ring>(position + TA_Point(8, 4));
+        }
         return false;
     }
     return true;

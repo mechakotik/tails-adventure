@@ -6,7 +6,7 @@
 
 class TA_Ring : public TA_Object {
 private:
-    TA_Point velocity{0, -2};
+    TA_Point velocity;
     TA_Sound ringSound;
     double timer = 0;
 
@@ -16,9 +16,10 @@ private:
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point newPosition);
+    void load(TA_Point newPosition, double startSpeed = -2);
     bool update() override;
     bool checkPawnCollision(TA_Polygon &hitbox) override;
+    int getDrawPriority() override {return 1;}
 };
 
 #endif // TA_RING_H

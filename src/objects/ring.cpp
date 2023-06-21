@@ -3,9 +3,10 @@
 #include "error.h"
 #include "character.h"
 
-void TA_Ring::load(TA_Point newPosition)
+void TA_Ring::load(TA_Point newPosition, double startSpeed)
 {
     position = newPosition;
+    velocity = {0, startSpeed};
     setPosition(position);
     TA_Sprite::load("objects/ring.png", 8, 8);
     TA_Sprite::loadAnimationsFromFile("objects/ring_animations.xml");

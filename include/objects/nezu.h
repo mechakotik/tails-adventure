@@ -18,6 +18,7 @@ private:
     void updateAttack();
     bool updateFall();
     void placeBomb();
+    void destroy();
 
     enum State {
         STATE_IDLE,
