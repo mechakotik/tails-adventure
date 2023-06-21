@@ -10,15 +10,22 @@ class TA_Hud {
 private:
     const double flightBarLeft = -9, flightBarRight = 3, flightBarY = 47;
     const double flightBarSpeed = 0.7;
+    const double ringAddTime = 6;
 
     TA_Links links;
     TA_Sprite ringMonitor, itemSprite, flightBarSprite;
     std::array<TA_Sprite, 2> ringDigits;
     TA_Sound switchSound;
-    int item = 0, itemPosition = 0;
+    int item = 0, itemPosition = 0, rings;
     double flightBarX = flightBarLeft;
+    double timer = 0;
+
+    void updateRingsCounter();
+    void updateCurrentItem();
 
     void drawFlightBar();
+    void drawCurrentItem();
+    void drawRingsCounter();
 
 public:
     void load(TA_Links newLinks);
