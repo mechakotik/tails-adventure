@@ -21,12 +21,18 @@ void TA_Font::drawText(TA_Point position, std::string text, TA_Point offset)
         }
         else if(symbol == '\n') {
             currentPosition.x = position.x;
-            currentPosition.x += getHeight() + offset.y;
+            currentPosition.y += getHeight() + offset.y;
         }
     }
 }
 
 void TA_Font::drawTextCentered(double y, std::string text, TA_Point offset)
+{
+    double width = getTextWidth(text, offset);
+    drawText(TA_Point(TA::screenWidth / 2 - width / 2, y), text, offset);
+}
+
+double TA_Font::getTextWidth(std::string text, TA_Point offset)
 {
     double currentWidth = 0, maxWidth = 0;
     for(char symbol : text) {
@@ -38,5 +44,5 @@ void TA_Font::drawTextCentered(double y, std::string text, TA_Point offset)
             currentWidth = 0;
         }
     }
-    drawText(TA_Point(TA::screenWidth / 2 - maxWidth / 2, y), text, offset);
+    return maxWidth;
 }

@@ -1,4 +1,5 @@
 #include "object_set.h"
+#include "font.h"
 
 class TA_ItemBox : public TA_Object {
 private:
@@ -7,6 +8,7 @@ private:
     void updateRaise();
     void updateHold();
     bool characterHasThisItem();
+    void drawItemName();
 
     const double unpackTime = 40;
     const double holdTime = 60;
@@ -22,9 +24,32 @@ private:
     int itemNumber = 0;
     double timer = 0;
 
+    TA_Sound sound;
+    TA_Font font;
+    std::string itemName;
+
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position, int itemNumber);
+    void load(TA_Point position, int itemNumber, std::string itemName);
     bool update();
     int getDrawPriority() override {return 1;}
+};
+
+class TA_ItemLabel : public TA_Object {
+private:
+    const double showTime = 100;
+    const double appearTime = 10;
+    const double shift = 32;
+
+    std::string name;
+    TA_Font font;
+    TA_Point currentPosition;
+    double timer = 0;
+
+public:
+    using TA_Object::TA_Object;
+    void load(TA_Point position, std::string name);
+    bool update() override;
+    void draw() override;
+    int getDrawPriority() override {return 2;}
 };

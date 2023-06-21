@@ -5,13 +5,16 @@
 #include "character.h"
 #include "error.h"
 
-void TA_ItemBox::load(TA_Point position, int itemNumber)
+void TA_ItemBox::load(TA_Point position, int itemNumber, std::string itemName)
 {
     this->position = position;
     this->itemNumber = itemNumber;
+    this->itemName = itemName;
 
     TA_Sprite::load("hud/items.png", 16, 16);
     TA_Sprite::setFrame(39);
+
+    sound.load("sound/find_item.ogg", TA_SOUND_CHANNEL_SFX1);
 
     hitbox.setRectangle(TA_Point(8, 0), TA_Point(9, 16));
     updatePosition();
@@ -49,9 +52,17 @@ bool TA_ItemBox::characterHasThisItem()
 
 void TA_ItemBox::updateIdle()
 {
+    if(objectSet->getLinks().character->isRemoteRobot()) {
+        hitbox.setRectangle(TA_Point(2, 0), TA_Point(14, 16));
+    }
+    else {
+        hitbox.setRectangle(TA_Point(8, 0), TA_Point(9, 16));
+    }
+
     int flags = objectSet->checkCollision(hitbox);
     if((flags & TA_COLLISION_CHARACTER) != 0 && objectSet->getLinks().character->isOnGround()) {
         objectSet->getLinks().character->setUnpackState();
+        sound.play();
         state = STATE_UNPACK;
     }
 }
@@ -63,6 +74,10 @@ void TA_ItemBox::updateUnpack()
         state = STATE_RAISE;
         objectSet->getLinks().character->setRaiseState();
         timer = 0;
+
+        TA_Point absoluteTextPosition = position + TA_Point(-24, 16);
+        objectSet->spawnObject<TA_ItemLabel>(objectSet->getLinks().camera->getRelative(absoluteTextPosition), itemName);
+
         return;
     }
 
@@ -130,4 +145,43 @@ void TA_ItemBox::updateHold()
         TA::save::setSaveParameter("item_mask", itemMask);
         objectSet->getLinks().character->setReleaseState();
     }
+}
+
+void TA_ItemLabel::load(TA_Point position, std::string name)
+{
+    this->position = position;
+    this->name = name;
+
+    font.load("fonts/item.png", 8, 8);
+    font.setMapping("abcdefghijklmnopqrstuvwxyz ");
+}
+
+bool TA_ItemLabel::update()
+{
+    timer += TA::elapsedTime;
+    if(timer > showTime) {
+        return false;
+    }
+
+    currentPosition = position;
+    if(timer < appearTime) {
+        double factor = timer / appearTime;
+        font.setAlpha(255 * factor);
+        currentPosition.x += shift * (1 - factor);
+    }
+    else if(timer > showTime - appearTime) {
+        double factor = (timer - (showTime - appearTime)) / appearTime;
+        font.setAlpha(255 * (1 - factor));
+        currentPosition.x -= shift * factor;
+    }
+    else {
+        font.setAlpha(255);
+    }
+
+    return true;
+}
+
+void TA_ItemLabel::draw()
+{
+    font.drawText(currentPosition, name);
 }

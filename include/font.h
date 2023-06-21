@@ -13,6 +13,7 @@ public:
     void setMapping(std::string mappingString);
     void drawText(TA_Point position, std::string text, TA_Point offset = {0, 0});
     void drawTextCentered(double y, std::string text, TA_Point offset = {0, 0});
+    double getTextWidth(std::string text, TA_Point offset = {0, 0});
 };
 
 #endif // TA_FONT_H

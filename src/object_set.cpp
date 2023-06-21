@@ -185,7 +185,8 @@ void TA_ObjectSet::load(std::string filename)
         else if(name == "item_box") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             int number = element->IntAttribute("number");
-            spawnObject<TA_ItemBox>(position, number);
+            std::string itemName = element->Attribute("item_name");
+            spawnObject<TA_ItemBox>(position, number, itemName);
         }
 
         else {
