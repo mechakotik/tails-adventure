@@ -12,6 +12,7 @@ enum TA_BridgeState {
 class TA_Bridge : public TA_Object {
 private:
     TA_BridgeState state = TA_BRIDGE_STATE_IDLE;
+    TA_Sound breakSound;
     TA_Point velocity;
     TA_Polygon collisionHitbox;
     std::string particleFilename;

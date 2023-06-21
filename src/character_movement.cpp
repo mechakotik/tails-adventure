@@ -113,6 +113,15 @@ void TA_Character::updateHelitail()
     if(controller.isJustPressed(TA_BUTTON_A)) {
         jump = helitail = false;
     }
+
+    if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX1)) {
+        if(remoteRobot) {
+            remoteRobotFlySound.play();
+        }
+        else {
+            flySound.play();
+        }
+    }
 }
 
 void TA_Character::verticalMove()
