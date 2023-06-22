@@ -17,6 +17,7 @@ namespace TA { namespace sound {
     void update();
     bool isPlaying(TA_SoundChannel channel);
     void fadeOut(int time);
+    void fadeOutChannel(TA_SoundChannel channel, int time);
 }}
 
 class TA_Sound

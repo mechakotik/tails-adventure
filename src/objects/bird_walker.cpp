@@ -316,6 +316,7 @@ bool TA_BirdWalker::update()
 
             if(timer > deathTime) {
                 objectSet->getLinks().camera->unlock();
+                TA::sound::fadeOutChannel(TA_SOUND_CHANNEL_SFX3, 0);
                 objectSet->playAreaMusic();
                 return false;
             }
