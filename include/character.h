@@ -37,7 +37,6 @@ private:
     const double releaseJumpSpeed = -1.8;
     const double helitailAcc = 0.1;
     const double helitailTop = 1;
-    const double maxHelitailTime = 150;
     const double hurtXsp = 1;
     const double hurtYsp = -2.5;
     const double invincibleTime = 120;
@@ -93,7 +92,9 @@ private:
     void updateObjectCollision();
     void updateRemoteRobotReturn();
 
-    int getMaxRings();
+    int getEmeraldsCount();
+    int getMaxRings() {return 10 * (getEmeraldsCount() + 1);}
+    double getMaxHelitailTime() {return 150 * (getEmeraldsCount() + 1);}
 
 public:
     void load(TA_Links newLinks);
@@ -115,7 +116,7 @@ public:
     void addRings(int count);
     void addRingsToMaximum();
     bool displayFlighTimeBar() {return helitail && !remoteRobot;}
-    double getFlightTime() {return helitailTime / maxHelitailTime;}
+    double getFlightTime() {return helitailTime / getMaxHelitailTime();}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
     bool isRemoteRobot() {return remoteRobot;}
 

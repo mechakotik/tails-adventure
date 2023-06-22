@@ -96,7 +96,7 @@ void TA_Character::updateHelitail()
     if(direction != TA_DIRECTION_MAX) {
         vector = controller.getDirectionVector();
     }
-    if(!remoteRobot && helitailTime > maxHelitailTime) {
+    if(!remoteRobot && helitailTime > getMaxHelitailTime()) {
         vector.y = 1;
     }
 

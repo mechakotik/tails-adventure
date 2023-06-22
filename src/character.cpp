@@ -159,7 +159,7 @@ void TA_Character::updateAnimation()
     else {
         if(helitail) {
             if(getAnimationName() != "throw_helitail") {
-                if(helitailTime > maxHelitailTime) {
+                if(helitailTime > getMaxHelitailTime()) {
                     setAnimation("helitail_tired");
                 }
                 else {
@@ -354,15 +354,16 @@ void TA_Character::addRingsToMaximum()
     TA::save::setSaveParameter("rings", rings);
 }
 
-int TA_Character::getMaxRings()
+int TA_Character::getEmeraldsCount()
 {
-    long long itemMask = TA::save::getSaveParameter("item_mask"), maxRings = 10;
+    long long itemMask = TA::save::getSaveParameter("item_mask");
+    int count = 0;
     for(int item = 29; item <= 34; item ++) {
         if(itemMask & (1ll << item)) {
-            maxRings += 10;
+            count ++;
         }
     }
-    return maxRings;
+    return count;
 }
 
 void TA_Character::setRaiseState()
