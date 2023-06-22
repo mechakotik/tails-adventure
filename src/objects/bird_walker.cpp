@@ -11,7 +11,12 @@ void TA_BirdWalker::load(double newFloorY)
     bodySprite.load("objects/bird_walker/body.png");
     feetSprite.load("objects/bird_walker/feet.png", 24, 28);
     aimSprite.load("objects/bird_walker/aim.png", 17, 16);
+
     hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX2);
+    jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX2);
+    fallSound.load("sound/fall.ogg", TA_SOUND_CHANNEL_SFX2);
+    landSound.load("sound/land.ogg", TA_SOUND_CHANNEL_SFX2);
+    shootSound.load("sound/shoot.ogg", TA_SOUND_CHANNEL_SFX2);
 
     headSprite.loadAnimationsFromFile("objects/bird_walker/head.xml");
     feetSprite.loadAnimationsFromFile("objects/bird_walker/feet.xml");
@@ -111,7 +116,7 @@ bool TA_BirdWalker::update()
 
     switch(state) {
         case TA_BIRD_WALKER_STATE_IDLE: {
-            if(objectSet->getLinks().camera->isLocked()) { // TODO: boss SFX
+            if(objectSet->getLinks().camera->isLocked()) {
                 updatePosition();
                 objectSet->playBossMusic();
                 initAiming();
@@ -126,6 +131,7 @@ bool TA_BirdWalker::update()
                 flip = (TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) < 0);
                 timer = 0;
                 state = TA_BIRD_WALKER_STATE_LANDING;
+                fallSound.play();
             }
             break;
         }
@@ -138,6 +144,7 @@ bool TA_BirdWalker::update()
                 feetSprite.setFrame(4);
                 objectSet->getLinks().camera->shake(24);
                 state = TA_BIRD_WALKER_STATE_LANDED;
+                landSound.play();
             }
             break;
         }
@@ -205,6 +212,7 @@ bool TA_BirdWalker::update()
                     TA_Point velocity(bulletSpeed * cos(angle) * (flip ? 1 : -1), bulletSpeed * sin(angle));
                     objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30  : -6), -64), velocity);
                     bulletCounter ++;
+                    shootSound.play();
                 }
                 timer = 0;
             }
@@ -223,6 +231,7 @@ bool TA_BirdWalker::update()
                     TA_Point velocity(bulletSpeed * cos(angle) * (flip ? 1 : -1), bulletSpeed * sin(angle));
                     objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30  : -6), -55), velocity);
                     bulletCounter ++;
+                    shootSound.play();
                 }
                 timer = 0;
             }
@@ -237,6 +246,7 @@ bool TA_BirdWalker::update()
                 headSprite.setAnimation("idle_flip");
                 timer = 0;
                 state = TA_BIRD_WALKER_STATE_FLYING_UP;
+                jumpSound.play();
             }
             break;
         }

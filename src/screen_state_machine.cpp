@@ -8,9 +8,9 @@
 
 void TA_ScreenStateMachine::init()
 {
-    currentState = TA_SCREENSTATE_MAP;
+    currentState = TA_SCREENSTATE_DEVMENU;
     neededState = TA_SCREENSTATE_CURRENT;
-    currentScreen = new TA_MapScreen();
+    currentScreen = new TA_DevmenuScreen();
     currentScreen -> init();
 }
 

@@ -38,7 +38,7 @@ private:
     TA_Sprite headSprite, bodySprite, feetSprite, aimSprite;
     TA_BirdWalkerState state = TA_BIRD_WALKER_STATE_IDLE;
     TA_Point aimPosition;
-    TA_Sound hitSound;
+    TA_Sound hitSound, jumpSound, fallSound, landSound, shootSound;
 
     bool flip = false;
     double currentWalkDistance = 0;
