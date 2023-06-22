@@ -81,8 +81,8 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
         screenPosition = camera->getRelative(position);
     }
 
-    dstRect.x = screenPosition.x * TA::widthMultiplier;
-    dstRect.y = screenPosition.y * TA::heightMultiplier;
+    dstRect.x = screenPosition.x * TA::widthMultiplier + 0.5;
+    dstRect.y = screenPosition.y * TA::heightMultiplier + 0.5;
     dstRect.w = srcRect.w * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier);
     dstRect.h = srcRect.h * TA::heightMultiplier;
     if(!TA::equal(scale.x, 1)) {
