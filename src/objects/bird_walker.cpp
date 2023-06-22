@@ -12,11 +12,12 @@ void TA_BirdWalker::load(double newFloorY)
     feetSprite.load("objects/bird_walker/feet.png", 24, 28);
     aimSprite.load("objects/bird_walker/aim.png", 17, 16);
 
-    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX2);
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX2);
     fallSound.load("sound/fall.ogg", TA_SOUND_CHANNEL_SFX2);
     landSound.load("sound/land.ogg", TA_SOUND_CHANNEL_SFX2);
     shootSound.load("sound/shoot.ogg", TA_SOUND_CHANNEL_SFX2);
+    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX3);
+    explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
     headSprite.loadAnimationsFromFile("objects/bird_walker/head.xml");
     feetSprite.loadAnimationsFromFile("objects/bird_walker/feet.xml");
@@ -263,6 +264,9 @@ bool TA_BirdWalker::update()
         }
 
         case TA_BIRD_WALKER_STATE_DEAD: {
+            if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3)) {
+                explosionSound.play();
+            }
             headSprite.setAnimation("idle");
             feetSprite.setAnimation("idle");
             int top, bottom = floorY, left = position.x, right = position.x + bodySprite.getWidth();
