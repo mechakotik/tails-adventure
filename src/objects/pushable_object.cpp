@@ -50,8 +50,28 @@ bool TA_PushableObject::checkPawnCollision(TA_Polygon &hitbox)
 void TA_PushableSpring::load(TA_Point newPosition)
 {
     TA_PushableObject::load("objects/spring.png", newPosition);
+    springBounceSprite.load("objects/spring_bounce.png");
+    springBounceSprite.setCamera(objectSet->getLinks().camera);
+
     HitboxVectorElement element;
     element.hitbox.setRectangle(TA_Point(0.1, 0), TA_Point(getWidth() - 0.1, 0));
     element.collisionType = TA_COLLISION_SPRING;
     hitboxVector.push_back(element);
+}
+
+bool TA_PushableSpring::update()
+{
+    springBounceSprite.setPosition(position - TA_Point(0, 12));
+    return TA_PushableObject::update();
+}
+
+void TA_PushableSpring::draw()
+{
+    if(objectSet->getLinks().character->isJumpingOnSpring() &&
+        objectSet->getLinks().character->getJumpTime() < bounceTime) {
+        springBounceSprite.draw();
+    }
+    else {
+        TA_PushableObject::draw();
+    }
 }

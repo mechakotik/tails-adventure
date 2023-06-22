@@ -25,9 +25,16 @@ public:
 };
 
 class TA_PushableSpring : public TA_PushableObject {
+private:
+    const double bounceTime = 12;
+
+    TA_Sprite springBounceSprite;
+
 public:
     using TA_PushableObject::TA_PushableObject;
     void load(TA_Point newPosition);
+    bool update() override;
+    void draw() override;
 };
 
 #endif // TA_PUSHABLE_OBJECT_H

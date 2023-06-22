@@ -67,7 +67,7 @@ private:
     bool remoteRobot = false;
     bool bombDestroySignal = false;
 
-    double jumpSpeed = 0;
+    double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     double timer = 0, lookTime = 0;
     double deltaX = 0;
@@ -112,6 +112,7 @@ public:
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() {return position + TA_Point(24, 24);}
     TA_Point getVelocity() {return velocity;}
+    double getJumpTime() {return jumpTime;}
 
     void addRings(int count);
     void addRingsToMaximum();

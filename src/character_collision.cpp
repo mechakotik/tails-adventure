@@ -215,6 +215,7 @@ void TA_Character::updateObjectCollision()
         jumpSpeed = springYsp;
         jump = spring = true;
         jumpReleased = true;
+        jumpTime = 0;
         ground = false;
     }
 }

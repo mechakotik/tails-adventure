@@ -48,6 +48,7 @@ void TA_Character::updateGround()
             jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp);
             jump = true;
             jumpReleased = false;
+            jumpTime = 0;
             updateAir();
         }
         ground = false;
@@ -59,6 +60,7 @@ void TA_Character::updateAir()
     verticalMove();
     if(jump) {
         jumpSpeed += grv * TA::elapsedTime;
+        jumpTime += TA::elapsedTime;
         if(jump && !jumpReleased && !controller.isPressed(TA_BUTTON_A)) {
             jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
             jumpReleased = true;
