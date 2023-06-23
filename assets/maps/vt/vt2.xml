@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+	<object name="spawn_point" x="1" y="73"/>
+	<object name="sound" loop="sound/vt.ogg"/>
+	
+	<object name="breakable_block" x="544" y="32" path="maps/vt/block3.png" particle_path="maps/vt/rock.png" drops_ring="true"/>
+	<object name="breakable_block" x="720" y="192" path="maps/vt/block3.png" particle_path="maps/vt/rock.png" drops_ring="true"/>
+	<object name="breakable_block" x="720" y="208" path="maps/vt/block3.png" particle_path="maps/vt/rock.png" drops_ring="true"/>
+	
+	<object name="breakable_block" x="1008" y="16" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1008" y="32" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1008" y="48" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1024" y="16" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1024" y="32" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1024" y="48" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="1120" y="208" path="maps/vt/block3.png" particle_path="maps/vt/rock.png" drops_ring="true"/>
+	<object name="breakable_block" x="1120" y="224" path="maps/vt/block3.png" particle_path="maps/vt/rock.png" drops_ring="true"/>
+	
+	<object name="breakable_block" x="1280" y="208" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1280" y="224" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1296" y="208" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1296" y="224" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="1232" y="240" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1232" y="256" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1248" y="240" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1248" y="256" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="1264" y="240" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1264" y="256" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1264" y="272" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1280" y="240" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1280" y="256" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1280" y="272" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="1296" y="240" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1296" y="256" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1296" y="272" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1296" y="288" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1312" y="240" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1312" y="256" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1312" y="272" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1312" y="288" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="880" y="64" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="896" y="64" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="1776" y="208" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1776" y="224" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1792" y="208" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1792" y="224" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="1616" y="144" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1616" y="160" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1632" y="144" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1632" y="160" path="maps/vt/block2.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="breakable_block" x="1392" y="48" path="maps/vt/block3.png" particle_path="maps/vt/rock.png" drops_ring="true"/>
+	<object name="breakable_block" x="1392" y="64" path="maps/vt/block3.png" particle_path="maps/vt/rock.png" drops_ring="true"/>
+	
+	<object name="breakable_block" x="1696" y="112" path="maps/vt/block4.png" particle_path="maps/vt/rock.png"/>
+	<object name="breakable_block" x="1712" y="112" path="maps/vt/block4.png" particle_path="maps/vt/rock.png"/>
+	
+	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="1616" rightx="1839" y="320"/>
+	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="1568" rightx="1615" y="112"/>
+</objects>

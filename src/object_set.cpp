@@ -122,12 +122,14 @@ void TA_ObjectSet::load(std::string filename)
             spawnObject<TA_Transition>(topLeft, bottomRight, selection);
         }
 
-        else if(name == "pf_bridge") {
+        else if(name == "bridge") {
+            std::string path = element->Attribute("path");
+            std::string particlePath = element->Attribute("particle_path");
             int left = element->IntAttribute("leftx");
             int right = element->IntAttribute("rightx");
             int y = element->IntAttribute("y");
             for(int x = left; x <= right; x += 16) {
-                spawnObject<TA_Bridge>(TA_Point(x, y), "maps/pf/pf_bridge.png", "maps/pf/pf_bridge_part.png");
+                spawnObject<TA_Bridge>(TA_Point(x, y), path, particlePath);
             }
         }
 

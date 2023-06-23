@@ -32,7 +32,6 @@ void TA_Character::load(TA_Links newLinks)
 
 void TA_Character::handleInput()
 {
-    //TA::printLog("%f %f", position.x, position.y);
     controller.setAnalogStick(helitail);
     controller.update();
     if(state != STATE_NORMAL) {

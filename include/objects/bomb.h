@@ -27,7 +27,7 @@ protected:
     virtual bool shouldExplode() {return false;}
     void explode();
 
-    double speed = 1.15;
+    double speed = 1.15, crouchThrowHeight = -6;
     int destroyFlags = TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_PUSHABLE;
 
     TA_Point topLeft{3, 4}, bottomRight{12, 14};

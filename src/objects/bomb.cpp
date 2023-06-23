@@ -64,7 +64,7 @@ bool TA_Bomb::update()
             position = position + TA_Point(9 * (direction ? -1 : 1), -6);
         }
         else {
-            position = position + TA_Point(5 * (direction ? -1 : 1), -6);
+            position = position + TA_Point(5 * (direction ? -1 : 1), crouchThrowHeight);
         }
     }
     if(timer >= moveTime) {
@@ -120,6 +120,7 @@ void TA_RemoteBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mo
     destroyFlags = TA_COLLISION_DAMAGE;
     startVelocity = {1.35 * speed, -1 * speed};
     startCrouchVelocity = {1 * speed, -0.7 * speed};
+    crouchThrowHeight = 0;
     TA_Bomb::load(newPosition, newDirection, mode);
     setAnimation("remote");
 }
