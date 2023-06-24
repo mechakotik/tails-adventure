@@ -12,7 +12,7 @@ void TA_BatRobot::load(TA_Point newPosition)
     position = newPosition;
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(18, 14));
     updatePosition();
-}void destroy();
+}
 
 bool TA_BatRobot::checkPawnCollision(TA_Polygon &collisionHitbox)
 {
@@ -39,7 +39,7 @@ bool TA_BatRobot::update()
             timer += TA::elapsedTime;
             double centeredX = position.x + 12;
             double deltaY = characterPosition.y - position.y - 8;
-            if(timer >= cooldownTime && 0 <= deltaY && deltaY <= 64 && abs(characterPosition.x - centeredX) <= 64) {
+            if(timer >= cooldownTime && 0 <= deltaY && deltaY <= 80 && abs(characterPosition.x - centeredX) <= 64) {
                 position.y += 0.1;
                 velocity = {TA::sign(characterPosition.x - position.x) * 0.5, findOptimalSpeed(deltaY)};
                 state = STATE_ATTACK;
@@ -83,7 +83,7 @@ double TA_BatRobot::findOptimalSpeed(double deltaY)
         double t = -(jumpSpeed - gravity / 2) / gravity;
         return t * jumpSpeed + t * (t - 1) / 2 * gravity;
     };
-    double left = 1 * speed, right = 2.8 * speed, eps = 1e-3;
+    double left = 1 * speed, right = 3.2 * speed, eps = 1e-3;
     while(right - left > eps) {
         double mid = (left + right) / 2;
         if(distance(mid) < deltaY) {
