@@ -79,44 +79,43 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
         }
     }
     position.y += (endPosition.y - position.y) * left;
+    xHitbox.setPosition(position);
+    yHitbox.setPosition(position);
     int flags = 0;
 
-    xHitbox.setPosition(position);
-    if(checkPawnCollision(xHitbox)) {
+    if(checkPawnCollision(xHitbox) || checkPawnCollision(yHitbox) != (ground && velocity.y < 0)) {
         flags |= TA_COLLISION_ERROR;
         double delta = 0;
-        while(true) {
-            delta += 0.1;
-            xHitbox.setPosition(position + TA_Point(delta, 0));
-            if(!checkPawnCollision(xHitbox)) {
-                position.x += delta;
-                break;
+
+        auto good = [&] (TA_Point newPosition) {
+            xHitbox.setPosition(newPosition);
+            if(checkPawnCollision(xHitbox)) {
+                return false;
             }
-            xHitbox.setPosition(position - TA_Point(delta, 0));
-            if(!checkPawnCollision(xHitbox)) {
+            yHitbox.setPosition(newPosition);
+            if(checkPawnCollision(yHitbox) != (ground && velocity.y < 0)) {
+                return false;
+            }
+            return true;
+        };
+
+        while(true) {
+            delta += 0.05;
+            if(good(position - TA_Point(delta, 0))) {
                 position.x -= delta;
                 break;
             }
-        }
-    }
-
-    if(!ground) {
-        yHitbox.setPosition(position);
-        if(checkPawnCollision(yHitbox)) {
-            flags |= TA_COLLISION_ERROR;
-            double delta = 0;
-            while(true) {
-                delta += 0.1;
-                yHitbox.setPosition(position + TA_Point(0, delta));
-                if(!checkPawnCollision(yHitbox)) {
-                    position.y += delta;
-                    break;
-                }
-                xHitbox.setPosition(position - TA_Point(0, delta));
-                if(!checkPawnCollision(xHitbox)) {
-                    position.y -= delta;
-                    break;
-                }
+            if(good(position + TA_Point(delta, 0))) {
+                position.x += delta;
+                break;
+            }
+            if(good(position - TA_Point(0, delta))) {
+                position.y -= delta;
+                break;
+            }
+            if(good(position + TA_Point(0, delta))) {
+                position.y += delta;
+                break;
             }
         }
     }

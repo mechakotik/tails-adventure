@@ -66,7 +66,13 @@ bool TA_Bomb::update()
         else {
             position = position + TA_Point(5 * (direction ? -1 : 1), crouchThrowHeight);
         }
+        updatePosition();
+        if(checkPawnCollision(hitbox)) {
+            explode();
+            return true;
+        }
     }
+
     if(timer >= moveTime) {
         velocity.y += grv * speed * speed * TA::elapsedTime;
         int moveFlags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
