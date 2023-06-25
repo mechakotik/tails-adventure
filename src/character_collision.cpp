@@ -90,7 +90,13 @@ void TA_Character::updateCollisions()
             position.y -= 1;
             velocity.x = hurtXsp * sign;
             velocity.y = hurtYsp;
-            addRings(-1);
+
+            if(flags & TA_COLLISION_DAMAGE_X2) {
+                addRings(-4);
+            }
+            else {
+                addRings(-2);
+            }
         };
         TA_Polygon leftHalf, rightHalf; {
             double middleX = (topLeft.x + bottomRight.x) / 2;

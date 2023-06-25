@@ -93,7 +93,7 @@ private:
     void updateRemoteRobotReturn();
 
     int getEmeraldsCount();
-    int getMaxRings() {return 5 * (getEmeraldsCount() + 1);}
+    int getMaxRings() {return 10 * (getEmeraldsCount() + 1);}
     double getMaxHelitailTime() {return 150 * (getEmeraldsCount() + 1);}
 
 public:
