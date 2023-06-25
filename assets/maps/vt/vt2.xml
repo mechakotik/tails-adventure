@@ -62,8 +62,8 @@
 	<object name="breakable_block" x="1696" y="112" path="maps/vt/block4.png" particle_path="maps/vt/rock.png"/>
 	<object name="breakable_block" x="1712" y="112" path="maps/vt/block4.png" particle_path="maps/vt/rock.png"/>
 	
-	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="1616" rightx="1839" y="320"/>
-	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="1568" rightx="1615" y="112"/>
+	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="1616" rightx="1839" y="320"/>
+	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="1568" rightx="1615" y="112"/>
 	
 	<object name="fire" x="168" y="88" direction="left"/>
 	<object name="fire" x="232" y="120" direction="left"/>
