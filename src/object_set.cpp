@@ -20,6 +20,7 @@
 #include "objects/flame.h"
 #include "objects/fire.h"
 #include "objects/item_box.h"
+#include "objects/drill_mole.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -189,6 +190,11 @@ void TA_ObjectSet::load(std::string filename)
             int number = element->IntAttribute("number");
             std::string itemName = element->Attribute("item_name");
             spawnObject<TA_ItemBox>(position, number, itemName);
+        }
+
+        else if(name == "drill_mole") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_DrillMole>(position);
         }
 
         else {

@@ -98,5 +98,8 @@
 	<object name="flame" x="1260" y="320"/>
 	<object name="flame" x="1436" y="320"/>
 
+    <object name="drill_mole" x="692" y="54"/>
+    <object name="drill_mole" x="1524" y="38"/>
+
 	<object name="item_box" x="1880" y="272" number="29" item_name="  chaos  &#10; emerald "/>
 </objects>
