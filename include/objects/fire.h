@@ -1,3 +1,6 @@
+#ifndef TA_FIRE_H
+#define TA_FIRE_H
+
 #include "object_set.h"
 
 class TA_Fire : public TA_Object {
@@ -17,3 +20,5 @@ public:
     bool update() override;
     TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
 };
+
+#endif // TA_FIRE_H

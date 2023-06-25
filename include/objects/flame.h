@@ -1,3 +1,6 @@
+#ifndef TA_FLAME_H
+#define TA_FLAME_H
+
 #include "object_set.h"
 
 class TA_Flame : public TA_Object {
@@ -26,3 +29,5 @@ public:
     void load(TA_Point position, double startSpeed = 3.75);
     bool update() override;
 };
+
+#endif // TA_FLAME_H

@@ -1,5 +1,5 @@
-#ifndef TA_ROCK_H
-#define TA_ROCK_H
+#ifndef TA_PARTICLE_H
+#define TA_PARTICLE_H
 
 #include "object_set.h"
 
@@ -14,4 +14,4 @@ public:
     bool update() override;
 };
 
-#endif // TA_ROCK_H
+#endif // TA_PARTICLE_H

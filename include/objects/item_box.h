@@ -1,3 +1,6 @@
+#ifndef TA_ITEM_BOX_H
+#define TA_ITEM_BOX_H
+
 #include "object_set.h"
 #include "font.h"
 
@@ -54,3 +57,5 @@ public:
     void draw() override;
     int getDrawPriority() override {return 2;}
 };
+
+#endif // TA_ITEM_BOX_H

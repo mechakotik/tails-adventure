@@ -1,3 +1,6 @@
+#ifndef TA_NEZU_H
+#define TA_NEZU_H
+
 #include "object_set.h"
 
 class TA_Nezu : public TA_Object {
@@ -49,3 +52,5 @@ public:
     void load(TA_Point position);
     bool update();
 };
+
+#endif // TA_NEZU_H
