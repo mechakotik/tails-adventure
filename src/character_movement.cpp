@@ -1,4 +1,5 @@
 #include "character.h"
+#include "error.h"
 
 void TA_Character::physicsStep()
 {
@@ -16,6 +17,7 @@ void TA_Character::physicsStep()
     else {
         velocity.y += grv * TA::elapsedTime;
     }
+    //TA::printLog("%f %f", position.x, position.y);
 }
 
 void TA_Character::initHelitail()
