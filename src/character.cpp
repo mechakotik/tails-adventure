@@ -34,6 +34,11 @@ void TA_Character::handleInput()
 {
     controller.setAnalogStick(helitail);
     controller.update();
+
+    if(state == STATE_THROW_BOMB) {
+        setPosition(position);
+        hitbox.setPosition(position);
+    }
     if(state != STATE_NORMAL) {
         return;
     }
@@ -52,6 +57,8 @@ void TA_Character::update()
     }
     if(state == STATE_THROW_BOMB) {
         updateThrowAnimation();
+        setPosition(position);
+        hitbox.setPosition(position);
         return;
     }
     if(state == STATE_DEAD) {
@@ -238,6 +245,11 @@ void TA_Character::updateTool()
             if(!ground) {
                 break;
             }
+            hitbox.setPosition(position + TA_Point(0, 0.01));
+            if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_MOVING_PLATFORM) {
+                break;
+            }
+            
             remoteRobot = true;
             remoteRobotInitialPosition = position;
             remoteRobotControlSprite.setPosition(remoteRobotInitialPosition);

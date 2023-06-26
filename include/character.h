@@ -63,7 +63,7 @@ private:
     bool jump = false, jumpReleased = false, spring = false;
     bool hurt = false;
     bool lookUp = false, crouch = false;
-    bool useHalfSolidTiles = false;
+    bool useHalfSolidTiles = false, useMovingPlatforms = true;
     bool remoteRobot = false;
     bool bombDestroySignal = false;
 
@@ -106,6 +106,7 @@ public:
     bool isOnGround() {return ground;}
     bool isJumpingOnSpring() {return spring;}
     bool getBombDestroySignal() {return bombDestroySignal;}
+    bool isClimbing() {return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH;}
 
     TA_Polygon *getHitbox() {return &hitbox;}
     TA_CommonController *getController() {return &controller;}
@@ -124,6 +125,7 @@ public:
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();
     void setReleaseState();
+    void addToPosition(TA_Point delta) {position = position + delta;}
 };
 
 #endif // TA_CHARACTER_H

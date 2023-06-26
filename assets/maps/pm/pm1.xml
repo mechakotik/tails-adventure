@@ -19,4 +19,9 @@
 	<object name="breakable_block" x="192" y="432" path="maps/pm/block.png"/>
 	<object name="breakable_block" x="176" y="448" path="maps/pm/block.png"/>
 	<object name="breakable_block" x="192" y="448" path="maps/pm/block.png"/>
+	
+	<object name="moving_platform" start_x="400" start_y="1936" end_x="400" end_y="1696"/>
+	<object name="moving_platform" start_x="336" start_y="1488" end_x="336" end_y="1392"/>
+	<object name="moving_platform" start_x="288" start_y="288" end_x="160" end_y="288"/>
+	<object name="moving_platform" start_x="192" start_y="160" end_x="224" end_y="160" idle="false"/>
 </objects>

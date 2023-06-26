@@ -7,10 +7,13 @@ bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
     int flags = 0;
     links.objectSet->checkCollision(checkHitbox, flags, checkHitbox.getPosition().y + 36);
-    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_PUSHABLE)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE)) {
         return true;
     }
     if(useHalfSolidTiles && (flags & TA_COLLISION_HALF_SOLID)) {
+        return true;
+    }
+    if(useMovingPlatforms && (flags & TA_COLLISION_MOVING_PLATFORM)) {
         return true;
     }
     return false;
@@ -56,7 +59,17 @@ void TA_Character::updateCollisions()
         setPosition(position);
         return;
     }
+
+    useMovingPlatforms = true;
+    TA_Point prevPosition = position;
     int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime, ground);
+
+    if(flags & TA_COLLISION_ERROR) {
+        position = prevPosition;
+        useHalfSolidTiles = useMovingPlatforms = false;
+        flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime, ground);
+    }
+
     if(flags & TA_GROUND_COLLISION) {
         ground = true;
         helitail = false;
@@ -165,6 +178,7 @@ void TA_Character::updateClimb()
         bool collision = checkPawnCollision(hitbox);
         hitbox.setPosition(climbPosition + TA_Point(0, velocity.y));
         bool collisionMoved = checkPawnCollision(hitbox);
+
         if(collision != collisionMoved) {
             double left = 0, right = 1;
             while (right - left > TA::epsilon) {
@@ -177,7 +191,13 @@ void TA_Character::updateClimb()
                     right = mid;
                 }
             }
+            
             climbPosition.y += velocity.y * left;
+            hitbox.setPosition(climbPosition + TA_Point(0, 0.01));
+            if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_MOVING_PLATFORM) {
+                return;
+            }
+
             TA_Point delta = climbPosition - position + TA_Point(0, 0.01);
             int flags = getCollisionFlags(topLeft + delta, bottomRight + delta);
             if(flags == TA_GROUND_COLLISION) {

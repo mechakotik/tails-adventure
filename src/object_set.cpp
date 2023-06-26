@@ -21,6 +21,7 @@
 #include "objects/fire.h"
 #include "objects/item_box.h"
 #include "objects/drill_mole.h"
+#include "objects/moving_platform.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -197,6 +198,17 @@ void TA_ObjectSet::load(std::string filename)
             spawnObject<TA_DrillMole>(position);
         }
 
+        else if(name == "moving_platform") {
+            TA_Point startPosition(element->IntAttribute("start_x"), element->IntAttribute("start_y"));
+            TA_Point endPosition(element->IntAttribute("end_x"), element->IntAttribute("end_y"));
+            if(element->Attribute("idle", "false")) {
+                spawnObject<TA_MovingPlatform>(startPosition, endPosition, false);
+            }
+            else {
+                spawnObject<TA_MovingPlatform>(startPosition, endPosition, true);
+            }
+        }
+
         else {
             TA::printWarning("Unknown object %s", name.c_str());
         }
@@ -264,11 +276,6 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidT
     flags = 0;
     links.tilemap->checkCollision(hitbox, flags, halfSolidTop);
     flags |= hitboxContainer.getCollisionFlags(hitbox);
-    /*for(TA_Object *currentObject : deleteList) {
-        if(currentObject->checkCollision(hitbox)) {
-            flags |= currentObject->getCollisionType();
-        }
-    }*/
     if(links.character->getHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
     }
