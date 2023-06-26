@@ -22,6 +22,7 @@
 #include "objects/item_box.h"
 #include "objects/drill_mole.h"
 #include "objects/moving_platform.h"
+#include "objects/bomb_thrower.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -207,6 +208,12 @@ void TA_ObjectSet::load(std::string filename)
             else {
                 spawnObject<TA_MovingPlatform>(startPosition, endPosition, true);
             }
+        }
+
+        else if(name == "bomb_thrower") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            double leftX = element->IntAttribute("left_x"), rightX = element->IntAttribute("right_x");
+            spawnObject<TA_BombThrower>(position, leftX, rightX);
         }
 
         else {

@@ -24,4 +24,7 @@
 	<object name="moving_platform" start_x="336" start_y="1488" end_x="336" end_y="1392"/>
 	<object name="moving_platform" start_x="288" start_y="288" end_x="160" end_y="288"/>
 	<object name="moving_platform" start_x="192" start_y="160" end_x="224" end_y="160" idle="false"/>
+	
+	<object name="bomb_thrower" x="272" y="1893" left_x="96" right_x="336"/>
+	<object name="bomb_thrower" x="368" y="1893" left_x="128" right_x="368"/>
 </objects>
