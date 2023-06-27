@@ -23,6 +23,7 @@
 #include "objects/drill_mole.h"
 #include "objects/moving_platform.h"
 #include "objects/bomb_thrower.h"
+#include "objects/rock_thrower.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -37,6 +38,13 @@ void TA_Object::updatePosition()
     for(auto & element : hitboxVector) {
         element.hitbox.setPosition(position);
     }
+}
+
+TA_Point TA_Object::getDistanceToCharacter()
+{
+    TA_Point characterPosition = objectSet->getCharacterPosition();
+    TA_Point centeredPosition = position + TA_Point(getWidth() / 2, getHeight() / 2);
+    return characterPosition - centeredPosition;
 }
 
 void TA_ObjectSet::load(std::string filename)
@@ -214,6 +222,12 @@ void TA_ObjectSet::load(std::string filename)
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             double leftX = element->IntAttribute("left_x"), rightX = element->IntAttribute("right_x");
             spawnObject<TA_BombThrower>(position, leftX, rightX);
+        }
+
+        else if(name == "rock_thrower") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            bool direction = element->Attribute("direction", "right");
+            spawnObject<TA_RockThrower>(position, direction);
         }
 
         else {

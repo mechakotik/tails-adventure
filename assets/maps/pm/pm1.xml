@@ -27,4 +27,12 @@
 	
 	<object name="bomb_thrower" x="272" y="1893" left_x="96" right_x="336"/>
 	<object name="bomb_thrower" x="368" y="1893" left_x="128" right_x="368"/>
+
+	<object name="rock_thrower" x="248" y="1539" direction="left"/>
+	<object name="rock_thrower" x="288" y="1059" direction="left"/>
+	<object name="rock_thrower" x="352" y="931" direction="left"/>
+	<object name="rock_thrower" x="144" y="435" direction="left"/>
+	<object name="rock_thrower" x="272" y="451" direction="right"/>
+	<object name="rock_thrower" x="368" y="307" direction="left"/>
+	<object name="rock_thrower" x="64" y="227" direction="right"/>
 </objects>

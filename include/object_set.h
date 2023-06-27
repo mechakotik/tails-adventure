@@ -37,6 +37,7 @@ public:
     virtual bool checkCollision(TA_Polygon rv) {return getCollisionType() != TA_COLLISION_TRANSPARENT && hitbox.intersects(rv);}
     virtual TA_CollisionType getCollisionType() {return TA_COLLISION_TRANSPARENT;}
     virtual int getDrawPriority() {return 0;}
+    TA_Point getDistanceToCharacter();
     virtual void destroy() {}
     virtual ~TA_Object() = default;
 };
