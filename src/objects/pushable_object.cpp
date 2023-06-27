@@ -6,7 +6,7 @@ void TA_PushableObject::load(std::string filename, TA_Point newPosition)
 {
     TA_Sprite::load(filename);
     position = newPosition;
-    hitbox.setRectangle(TA_Point(0, 0), TA_Point(getWidth(), getHeight()));
+    hitbox.setRectangle(TA_Point(0.33, 0), TA_Point(getWidth() - 0.33, getHeight()));
 }
 
 bool TA_PushableObject::update()
