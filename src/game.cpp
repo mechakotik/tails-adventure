@@ -19,7 +19,15 @@ TA_Game::TA_Game()
     initSDL();
     createWindow();
 
-    TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
+    //TA::eventLog::openRead("event_log");
+
+    if(TA::eventLog::isReading() || TA::eventLog::isWriting()) {
+        TA::random::init(1490824);
+    }
+    else {
+        TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
+    }
+    
     TA::gamepad::init();
     TA::keyboard::init();
     TA::save::load();
@@ -136,8 +144,14 @@ void TA_Game::update()
         startTime = currentTime;
         firstFrame = false;
     }
-    TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
-    //TA::elapsedTime /= 10;
+
+    if(TA::eventLog::isReading() || TA::eventLog::isWriting()) {
+        TA::elapsedTime = 0.998160;
+    }
+    else {
+        TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
+        //TA::elapsedTime /= 10;
+    }
     startTime = currentTime;
 
     SDL_SetRenderTarget(TA::renderer, targetTexture);
@@ -162,6 +176,7 @@ TA_Game::~TA_Game()
 {
     TA::gamepad::quit();
     TA::resmgr::quit();
+    TA::eventLog::quit();
     SDL_DestroyRenderer(TA::renderer);
     SDL_DestroyWindow(TA::window);
     SDL_Quit();

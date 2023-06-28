@@ -5,6 +5,7 @@ namespace TA { namespace keyboard {
     std::array<SDL_Scancode, TA_BUTTON_MAX> mapping;
     std::array<SDL_Scancode, TA_DIRECTION_MAX> directionMapping;
     std::array<bool, SDL_NUM_SCANCODES> pressed, justPressed;
+    std::array<bool, SDL_NUM_SCANCODES> getKeyboardState();
 }}
 
 void TA::keyboard::init()
@@ -23,7 +24,8 @@ void TA::keyboard::init()
 
 void TA::keyboard::update()
 {
-    const uint8_t *keyboardState = SDL_GetKeyboardState(NULL);
+    std::array<bool, SDL_NUM_SCANCODES> keyboardState = getKeyboardState();
+
     for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
         if(keyboardState[button]) {
             justPressed[button] = !pressed[button];
@@ -32,6 +34,35 @@ void TA::keyboard::update()
         else {
             pressed[button] = justPressed[button] = false;
         }
+    }
+}
+
+std::array<bool, SDL_NUM_SCANCODES> TA::keyboard::getKeyboardState()
+{
+    if(TA::eventLog::isReading()) {
+        std::array<bool, SDL_NUM_SCANCODES> state;
+        for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+            state[button] = TA::eventLog::read();
+        }
+
+        return state;
+    }
+
+    else {
+        std::array<bool, SDL_NUM_SCANCODES> state;
+        const uint8_t* keyState = SDL_GetKeyboardState(NULL);
+
+        for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+            state[button] = keyState[button];
+        }
+
+        if(TA::eventLog::isWriting()) {
+            for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+                TA::eventLog::write(state[button]);
+            }
+        }
+
+        return state;
     }
 }
 

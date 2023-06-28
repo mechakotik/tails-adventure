@@ -1,4 +1,7 @@
 #include <algorithm>
+#include <vector>
+#include <limits>
+#include <fstream>
 #include "SDL.h"
 #include "tools.h"
 #include "error.h"
@@ -17,6 +20,12 @@ namespace TA
     namespace random
     {
         unsigned long long x = 1;
+    }
+
+    namespace eventLog
+    {
+        std::ifstream input;
+        std::ofstream output;
     }
 }
 
@@ -105,4 +114,46 @@ double TA::linearInterpolation(double left, double right, double pos)
         return left + (right - left) / pos;
     }
     return right - (right - left) / (pos - 1);
+}
+
+void TA::eventLog::openRead(std::string filename)
+{
+    input.open(filename);
+}
+
+void TA::eventLog::openWrite(std::string filename)
+{
+    output.open(filename, std::ofstream::trunc);
+}
+
+bool TA::eventLog::isReading()
+{
+    return input.is_open();
+}
+
+bool TA::eventLog::isWriting()
+{
+    return output.is_open();
+}
+
+int TA::eventLog::read()
+{
+    int x;
+    input >> x;
+    return x;
+}
+
+void TA::eventLog::write(int x)
+{
+    output << x << ' ';
+}
+
+void TA::eventLog::quit()
+{
+    if(input.is_open()) {
+        input.close();
+    }
+    if(output.is_open()) {
+        output.close();
+    }
 }

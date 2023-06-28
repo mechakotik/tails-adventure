@@ -14,7 +14,7 @@ namespace TA {
     template<typename... T>
     void handleError(T... args)
     {
-        #ifdef __ANDROID__ // TODO: handle errors on Windows
+        #ifdef __ANDROID__
         __android_log_print(ANDROID_LOG_ERROR, APP_NAME, args...);
         #else
         std::printf(args...);
