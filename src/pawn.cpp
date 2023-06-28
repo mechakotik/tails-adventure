@@ -81,7 +81,7 @@ void TA_Pawn::popOut()
 {
     std::vector<std::pair<double, TA_Point>> directions;
     
-    for(TA_Point delta : {TA_Point(-16, 0), TA_Point(16, 0), TA_Point(0, -16), TA_Point(0, 16)}) {
+    for(TA_Point delta : {TA_Point(-32, 0), TA_Point(32, 0), TA_Point(0, -32), TA_Point(0, 32)}) {
         directions.push_back({getFirstGood(delta), delta});
     }
 
