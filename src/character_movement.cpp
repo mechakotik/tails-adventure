@@ -16,6 +16,7 @@ void TA_Character::physicsStep()
     }
     else {
         velocity.y += grv * TA::elapsedTime;
+        velocity.y = std::min(velocity.y, maxJumpSpeed);
     }
     //TA::printLog("%f %f", position.x, position.y);
 }

@@ -6,7 +6,6 @@
 #include "gamepad.h"
 #include "save.h"
 #include "hud.h"
-#include "objects/bomb.h"
 
 void TA_Character::load(TA_Links newLinks)
 {
@@ -186,82 +185,6 @@ void TA_Character::updateAnimation()
                 setAnimation("fall");
             }
         }
-    }
-}
-
-void TA_Character::updateTool()
-{
-    if(!controller.isJustPressed(TA_BUTTON_B)) {
-        return;
-    }
-    if(remoteRobot) {
-        if(state != STATE_REMOTE_ROBOT_INIT) {
-            setAnimation("remote_robot_idle");
-            state = STATE_REMOTE_ROBOT_RETURN;
-        }
-        return;
-    }
-    
-    switch(links.hud->getCurrentItem()) {
-        case TOOL_BOMB:
-        case TOOL_REMOTE_BOMB: {
-            auto spawnBomb = [&] (TA_Point position, bool flip, TA_BombMode mode) {
-                if(links.hud->getCurrentItem() == TOOL_BOMB) {
-                    links.objectSet->spawnObject<TA_Bomb>(position, flip, mode);
-                }
-                else {
-                    links.objectSet->spawnObject<TA_RemoteBomb>(position, flip, mode);
-                }
-            };
-
-            bombDestroySignal = false;
-            if(links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
-                bombDestroySignal = true;
-                break;
-            }
-            if(helitail) {
-                spawnBomb(position + TA_Point((flip ? 14 : 20), 27), flip, TA_BOMB_MODE_HELITAIL);
-                setAnimation("throw_helitail");
-            }
-            else if(jump) {
-                spawnBomb(position + TA_Point((flip ? 24 : 9), 7), flip, TA_BOMB_MODE_AIR);
-                jump = false;
-                setAnimation("throw_air");
-            }
-            else if(crouch) {
-                spawnBomb(position + TA_Point((flip ? 11 : 22), 21), flip, TA_BOMB_MODE_CROUCH);
-                setAnimation("throw_crouch");
-                state = STATE_THROW_BOMB;
-            }
-            else if(ground) {
-                spawnBomb(position + TA_Point((flip ? 26 : 7), 11), flip, TA_BOMB_MODE_DEFAULT);
-                setAnimation("throw");
-                state = STATE_THROW_BOMB;
-            }
-            break;
-        }
-
-        case TOOL_REMOTE_ROBOT: {
-            if(!ground) {
-                break;
-            }
-            hitbox.setPosition(position + TA_Point(0, 0.01));
-            if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_MOVING_PLATFORM) {
-                break;
-            }
-            
-            remoteRobot = true;
-            remoteRobotInitialPosition = position;
-            remoteRobotControlSprite.setPosition(remoteRobotInitialPosition);
-            remoteRobotControlSprite.setFlip(flip);
-            timer = 0;
-            setAnimation("remote_robot_idle");
-            state = STATE_REMOTE_ROBOT_INIT;
-            break;
-        }
-
-        default:
-            break;
     }
 }
 

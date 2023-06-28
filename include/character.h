@@ -88,9 +88,12 @@ private:
     void updateClimb();
     void updateClimbAnimation();
     void updateThrowAnimation();
-    void updateTool();
     void updateObjectCollision();
     void updateRemoteRobotReturn();
+
+    void updateTool();
+    void spawnBomb(bool remote);
+    void spawnRemoteRobot();
 
     int getEmeraldsCount();
     int getMaxRings() {return 10 * (getEmeraldsCount() + 1);}

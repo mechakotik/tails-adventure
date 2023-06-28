@@ -240,7 +240,7 @@ void TA_Character::updateObjectCollision()
 {
     TA_Polygon hitbox;
     hitbox.setPosition(position);
-    hitbox.setRectangle(topLeft - TA_Point(0.05, 0.05), bottomRight + TA_Point(0.05, 0.05));
+    hitbox.setRectangle({topLeft.x + 0.01, bottomRight.y}, bottomRight + TA_Point(-0.01, 0.01));
 
     int flags = links.objectSet->checkCollision(hitbox);
     if(flags & TA_COLLISION_SPRING) {
