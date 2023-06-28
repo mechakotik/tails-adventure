@@ -12,6 +12,16 @@ enum TA_COLLISION_STATE {
 };
 
 class TA_Pawn : public TA_Sprite {
+private:
+    TA_Point topLeft, bottomRight, velocity;
+    bool ground;
+
+    void moveByX();
+    void moveByY();
+    void popOut();
+    double getFirstGood(TA_Point delta);
+    bool isGoodPosition(TA_Point position);
+
 protected:
     TA_Point position;
     int getCollisionFlags(TA_Point topLeft, TA_Point bottomRight);
