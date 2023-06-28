@@ -10,38 +10,16 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     this->velocity = velocity;
     this->ground = ground;
 
+    if(!isGoodPosition(position)) {
+        popOut();
+    }
+    if(!isGoodPosition(position)) {
+        return TA_COLLISION_ERROR;
+    }
+
     moveByX();
     moveByY();
     return getCollisionFlags(topLeft, bottomRight);
-}
-
-void TA_Pawn::popOut()
-{
-    std::vector<std::pair<double, TA_Point>> directions;
-    
-    for(TA_Point delta : {TA_Point(32, 0), TA_Point(-32, 0), TA_Point(0, 32), TA_Point(0, -32)}) {
-        directions.push_back({getFirstGood(delta), delta});
-    }
-
-    int min = 0;
-    for(int pos = 1; pos < (int)directions.size(); pos ++) {
-
-    }
-}
-
-double TA_Pawn::getFirstGood(TA_Point delta)
-{
-    double left = 0, right = 0, eps = 1e-5;
-    while((right - left) * delta.length() > eps) {
-        double mid = (left + right) / 2;
-        if(isGoodPosition(position + delta * mid)) {
-            left = mid;
-        }
-        else {
-            right = mid;
-        }
-    }
-    return left;
 }
 
 void TA_Pawn::moveByX()
@@ -97,6 +75,42 @@ void TA_Pawn::moveByY()
     }
 
     position.y += velocity.y * left;
+}
+
+void TA_Pawn::popOut()
+{
+    std::vector<std::pair<double, TA_Point>> directions;
+    
+    for(TA_Point delta : {TA_Point(-16, 0), TA_Point(16, 0), TA_Point(0, -16), TA_Point(0, 16)}) {
+        directions.push_back({getFirstGood(delta), delta});
+    }
+
+    int min = 0;
+    for(int pos = 1; pos < (int)directions.size(); pos ++) {
+        if(directions[pos].first < directions[min].first) {
+            min = pos;
+        }
+    }
+
+    TA_Point add = directions[min].second * directions[min].first;
+    if(isGoodPosition(position + add)) {
+        position = position + add;
+    }
+}
+
+double TA_Pawn::getFirstGood(TA_Point delta)
+{
+    double left = 0, right = 1, eps = 1e-5;
+    while((right - left) * delta.length() > eps) {
+        double mid = (left + right) / 2;
+        if(isGoodPosition(position + delta * mid)) {
+            right = mid;
+        }
+        else {
+            left = mid;
+        }
+    }
+    return right;
 }
 
 bool TA_Pawn::isGoodPosition(TA_Point position)

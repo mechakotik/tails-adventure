@@ -192,7 +192,14 @@ void TA_Character::updateClimb()
                 }
             }
             
-            climbPosition.y += velocity.y * left;
+            hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * left));
+            if(checkPawnCollision(hitbox)) {
+                climbPosition.y += velocity.y * right;
+            }
+            else {
+                climbPosition.y += velocity.y * left;
+            }
+            
             hitbox.setPosition(climbPosition + TA_Point(0, 0.01));
             if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_MOVING_PLATFORM) {
                 return;
