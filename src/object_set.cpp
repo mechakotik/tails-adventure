@@ -24,6 +24,7 @@
 #include "objects/moving_platform.h"
 #include "objects/bomb_thrower.h"
 #include "objects/rock_thrower.h"
+#include "objects/jumper.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -228,6 +229,11 @@ void TA_ObjectSet::load(std::string filename)
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             bool direction = element->Attribute("direction", "right");
             spawnObject<TA_RockThrower>(position, direction);
+        }
+
+        else if(name == "jumper") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_Jumper>(position);
         }
 
         else {
