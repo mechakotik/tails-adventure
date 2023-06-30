@@ -3,7 +3,7 @@
 	<animation name="jump" delay="6">
 		1,2
 	</animation>
-	<animation name="aim" delay="24">
-		0,1
+	<animation name="aim" delay="12" repeatTimes="1">
+		0,1,0,1,0
 	</animation>
 </animations>

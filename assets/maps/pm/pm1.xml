@@ -35,4 +35,10 @@
 	<object name="rock_thrower" x="272" y="451" direction="right"/>
 	<object name="rock_thrower" x="368" y="307" direction="left"/>
 	<object name="rock_thrower" x="64" y="227" direction="right"/>
+
+	<object name="jumper" x="256" y="1713"/>
+	<object name="jumper" x="176" y="1713"/>
+	<object name="jumper" x="224" y="817"/>
+	<object name="jumper" x="176" y="785"/>
+	<object name="jumper" x="128" y="753"/>
 </objects>
