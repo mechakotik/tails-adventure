@@ -19,13 +19,13 @@ bool TA_RockThrower::update()
 {
     if(idle) {
         updateIdle();
-        return true;
     }
-
-    if(shouldThrowRock()) {
-        throwRock();
+    else {
+        if(shouldThrowRock()) {
+            throwRock();
+        }
+        prevFrame = getAnimationFrame();
     }
-    prevFrame = getAnimationFrame();
 
     if(shouldBeDestroyed()) {
         destroy();

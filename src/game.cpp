@@ -19,7 +19,7 @@ TA_Game::TA_Game()
     initSDL();
     createWindow();
 
-    //TA::eventLog::openRead("event_log");
+    //TA::eventLog::openWrite("event_log");
 
     if(TA::eventLog::isReading() || TA::eventLog::isWriting()) {
         TA::random::init(1490824);
