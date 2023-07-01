@@ -9,7 +9,7 @@ void TA_BreakableBlock::load(std::string path, std::string newParticlePath, TA_P
     position = newPosition;
     dropsRing = newDropsRing;
     setPosition(position);
-    hitbox.setRectangle(TA_Point(0, 0), TA_Point(15, 15));
+    hitbox.setRectangle(TA_Point(0, 0), TA_Point(16, 16));
     hitbox.setPosition(position);
 }
 

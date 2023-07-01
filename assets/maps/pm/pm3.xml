@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+	<object name="spawn_point" x="68" y="360"/>
+	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+
+	<object name="breakable_block" x="176" y="192" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="192" y="192" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="176" y="208" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="192" y="208" path="maps/pm/block.png"/>
+
+	<object name="breakable_block" x="464" y="320" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="464" y="336" path="maps/pm/block.png"/>
+
+	<object name="breakable_block" x="848" y="80" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="864" y="80" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="880" y="80" path="maps/pm/block.png"/>
+
+	<object name="breakable_block" x="1216" y="336" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="1216" y="352" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="1216" y="368" path="maps/pm/block.png"/>
+	
+	<object name="rock_thrower" x="80" y="307" direction="right"/>
+	<object name="rock_thrower" x="176" y="131" direction="left"/>
+	<object name="rock_thrower" x="272" y="51" direction="left"/>
+	<object name="rock_thrower" x="480" y="323" direction="right"/>
+	<object name="rock_thrower" x="1600" y="131" direction="left"/>
+	<object name="rock_thrower" x="1792" y="275" direction="left"/>
+	<object name="rock_thrower" x="1728" y="35" direction="right"/>
+	<object name="rock_thrower" x="1840" y="83" direction="left"/>
+
+	<object name="jumper" x="512" y="97"/>
+	<object name="jumper" x="592" y="113"/>
+	<object name="jumper" x="640" y="81"/>
+	<object name="jumper" x="704" y="65"/>
+	<object name="jumper" x="624" y="305"/>
+	<object name="jumper" x="960" y="129"/>
+	<object name="jumper" x="1024" y="129"/>
+	<object name="jumper" x="1184" y="33"/>
+	<object name="jumper" x="1280" y="33"/>
+	<object name="jumper" x="1376" y="33"/>
+	<object name="jumper" x="1424" y="49"/>
+	<object name="jumper" x="1456" y="33"/>
+
+	<object name="bomb_thrower" x="1744" y="357" left_x="1728" right_x="1744"/>
+</objects>
