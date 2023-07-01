@@ -56,14 +56,21 @@ void TA_Jumper::initAim()
 {
     state = STATE_AIM;
     setAnimation("aim");
-    setJumpVelocity();
+}
+
+void TA_Jumper::updateAim()
+{
+    if(!isAnimated()) {
+        setJumpVelocity();
+        state = STATE_JUMP;
+    }
 }
 
 void TA_Jumper::setJumpVelocity()
 {
     int tileDistance = (std::abs(getDistanceToCharacter().x) + 8) / 16;
-    if(tileDistance > 3 && TA::random::next() % 5 == 0) {
-        tileDistance = 1;
+    if(tileDistance > 3 && TA::random::next() % 3 == 0) {
+        tileDistance = 3;
     }
 
     if(tileDistance > 3 || tileDistance == 0) {
@@ -75,13 +82,6 @@ void TA_Jumper::setJumpVelocity()
     velocity.x = tileDistance * jumpSpeed * (direction ? 1 : -1);
     double jumpTime = tileDistance * 16 / std::abs(velocity.x), deltaY = getDistanceToCharacter().y;
     velocity.y = (deltaY - jumpTime * (jumpTime - 1) * gravity / 2) / jumpTime;
-}
-
-void TA_Jumper::updateAim()
-{
-    if(!isAnimated()) {
-        state = STATE_JUMP;
-    }
 }
 
 void TA_Jumper::updateJump()
