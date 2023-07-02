@@ -72,7 +72,7 @@ bool TA_DrillMole::shouldBeDestroyed()
     if(getStateAndTime().first != STATE_IDLE_UP) {
         return false;
     }
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_EXPLOSION) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
         return true;
     }
     return false;
@@ -81,6 +81,7 @@ bool TA_DrillMole::shouldBeDestroyed()
 void TA_DrillMole::destroy()
 {
     objectSet->spawnObject<TA_Explosion>(position + TA_Point(3, 5));
+    objectSet->resetInstaShield();
     if(objectSet->enemyShouldDropRing()) {
         objectSet->spawnObject<TA_Ring>(position + TA_Point(7, 9));
     }

@@ -13,7 +13,8 @@ private:
     enum TA_CharacterTool {
         TOOL_BOMB = 0,
         TOOL_REMOTE_BOMB = 2,
-        TOOL_REMOTE_ROBOT = 6
+        TOOL_REMOTE_ROBOT = 6,
+        TOOL_INSTA_SHIELD = 19
     };
 
     enum TA_CharacterState {
@@ -44,6 +45,7 @@ private:
     const double remoteRobotInitTime = 30;
     const double remoteRobotJumpSpeed = -3.25;
     const double maxLookTime = 100;
+    const double instaShieldCooldownTime = 60;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
@@ -74,6 +76,9 @@ private:
     int rings = 10;
     int currentTool = TOOL_BOMB;
 
+    TA_Sprite instaShieldSprite;
+    double instaShieldTime = instaShieldCooldownTime;
+
     void physicsStep();
     void updateGround();
     void updateAir();
@@ -94,6 +99,8 @@ private:
     void updateTool();
     void spawnBomb(bool remote);
     void spawnRemoteRobot();
+    void spawnInstaShield();
+    void updateInstaShield();
 
     int getEmeraldsCount();
     int getMaxRings() {return 10 * (getEmeraldsCount() + 1);}
@@ -117,6 +124,7 @@ public:
     TA_Point getPosition() {return position + TA_Point(24, 24);}
     TA_Point getVelocity() {return velocity;}
     double getJumpTime() {return jumpTime;}
+    TA_CollisionType getCollisionType();
 
     void addRings(int count);
     void addRingsToMaximum();
@@ -129,6 +137,7 @@ public:
     void setRaiseState();
     void setReleaseState();
     void addToPosition(TA_Point delta) {position = position + delta;}
+    void resetInstaShield();
 };
 
 #endif // TA_CHARACTER_H

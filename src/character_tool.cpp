@@ -28,6 +28,8 @@ void TA_Character::updateTool()
         case TOOL_REMOTE_ROBOT:
             spawnRemoteRobot();
             break;
+        case TOOL_INSTA_SHIELD:
+            spawnInstaShield();
         default:
             break;
     }
@@ -87,4 +89,32 @@ void TA_Character::spawnRemoteRobot()
     timer = 0;
     setAnimation("remote_robot_idle");
     state = STATE_REMOTE_ROBOT_INIT;
+}
+
+void TA_Character::spawnInstaShield()
+{
+    if(instaShieldTime < instaShieldCooldownTime) {
+        return;
+    }
+    instaShieldSprite.setAnimation("shield");
+    instaShieldTime = 0;
+}
+
+void TA_Character::updateInstaShield()
+{
+    if(instaShieldSprite.isAnimated()) {
+        instaShieldSprite.setPosition(position + TA_Point(8, 8));
+        instaShieldSprite.setAlpha(255);
+    }
+    else {
+        instaShieldTime += TA::elapsedTime;
+        instaShieldSprite.setAlpha(0);
+    }
+}
+
+void TA_Character::resetInstaShield()
+{
+    if(instaShieldSprite.isAnimated()) {
+        instaShieldTime = instaShieldCooldownTime;
+    }
 }

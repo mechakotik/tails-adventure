@@ -101,7 +101,7 @@ TA_Point TA_RockThrower::getRockVelocity()
 
 bool TA_RockThrower::shouldBeDestroyed()
 {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
         return true;
     }
     return false;
@@ -110,6 +110,7 @@ bool TA_RockThrower::shouldBeDestroyed()
 void TA_RockThrower::destroy()
 {
     objectSet->spawnObject<TA_DeadKukku>(position - TA_Point(4, 1));
+    objectSet->resetInstaShield();
 }
 
 void TA_EnemyRock::load(TA_Point position, TA_Point velocity)

@@ -11,6 +11,7 @@
 #include "links.h"
 #include "sound.h"
 #include "tools.h"
+#include "character.h"
 
 class TA_ObjectSet;
 enum TA_BombMode : int;
@@ -71,6 +72,7 @@ public:
     TA_ScreenState getTransition() {return transition;}
     bool hasCollisionType(TA_CollisionType type) {return hitboxContainer.hasCollisionType(type);}
     bool enemyShouldDropRing() {return TA::random::next() % 4 == 0;}
+    void resetInstaShield() {links.character->resetInstaShield();}
 
     void playAreaMusic();
     void playBossMusic();

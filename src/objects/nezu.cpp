@@ -39,7 +39,7 @@ bool TA_Nezu::update()
     if(isGoingToFall()) {
         state = STATE_FALL;
     }
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB | TA_COLLISION_INSTA_SHIELD)) {
         destroy();
         return false;
     }
@@ -49,6 +49,7 @@ bool TA_Nezu::update()
 void TA_Nezu::destroy()
 {
     objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
+    objectSet->resetInstaShield();
     if(objectSet->enemyShouldDropRing()) {
         objectSet->spawnObject<TA_Ring>(position + TA_Point(4, 4));
     }

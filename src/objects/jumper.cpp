@@ -127,7 +127,7 @@ bool TA_Jumper::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_Jumper::shouldBeDestroyed()
 {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
         return true;
     }
     return false;
@@ -136,4 +136,5 @@ bool TA_Jumper::shouldBeDestroyed()
 void TA_Jumper::destroy()
 {
     objectSet->spawnObject<TA_DeadKukku>(position - TA_Point(4, 1));
+    objectSet->resetInstaShield();
 }

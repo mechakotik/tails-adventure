@@ -8,6 +8,6 @@ default_save/rings 10
 default_save/item_slot0 0
 default_save/item_slot1 6
 default_save/item_slot2 2
-default_save/item_slot3 -1
+default_save/item_slot3 19
 default_save/item_position 0
 default_save/map_selection 0

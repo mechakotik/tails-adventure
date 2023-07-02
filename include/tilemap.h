@@ -20,7 +20,8 @@ enum TA_CollisionType {
     TA_COLLISION_BOMB = (1 << 7),
     TA_COLLISION_EXPLOSION_FIRST = (1 << 8),
     TA_COLLISION_DAMAGE_X2 = (1 << 9),
-    TA_COLLISION_MOVING_PLATFORM = (1 << 10)
+    TA_COLLISION_MOVING_PLATFORM = (1 << 10),
+    TA_COLLISION_INSTA_SHIELD = (1 << 11)
 };
 
 class TA_Tilemap {

@@ -112,7 +112,7 @@ TA_Point TA_BombThrower::getDistanceToCharacter()
 
 bool TA_BombThrower::shouldBeDestroyed()
 {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
         return true;
     }
     return false;
@@ -121,6 +121,7 @@ bool TA_BombThrower::shouldBeDestroyed()
 void TA_BombThrower::destroy()
 {
     objectSet->spawnObject<TA_DeadKukku>(position - TA_Point(4, 2));
+    objectSet->resetInstaShield();
 }
 
 void TA_EnemyBomb::load(TA_Point position)

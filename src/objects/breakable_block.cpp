@@ -17,11 +17,12 @@ bool TA_BreakableBlock::update()
 {
     int flags;
     objectSet->checkCollision(hitbox, flags);
-    if((flags & TA_COLLISION_EXPLOSION) != 0) {
+    if(flags & (TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
         objectSet->spawnObject<TA_Particle>(particlePath, position + TA_Point(2, 2), TA_Point(-0.5, -2), TA_Point(0, grv));
         objectSet->spawnObject<TA_Particle>(particlePath, position + TA_Point(8, 2), TA_Point(0.5, -2), TA_Point(0, grv));
         objectSet->spawnObject<TA_Particle>(particlePath, position + TA_Point(2, 8), TA_Point(-0.5, -0.5), TA_Point(0, grv));
         objectSet->spawnObject<TA_Particle>(particlePath, position + TA_Point(8, 8), TA_Point(0.5, -0.5), TA_Point(0, grv));
+        objectSet->resetInstaShield();
         if(dropsRing) {
             objectSet->spawnObject<TA_Ring>(position + TA_Point(4, 4));
         }
