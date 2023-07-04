@@ -84,7 +84,12 @@ void TA_Character::updateCollisions()
     else {
         ground = false;
     }
+
     wall = bool(flags & TA_WALL_COLLISION);
+    if(wall) {
+        velocity.x = 0;
+    }
+
     if(flags & TA_CEIL_COLLISION) {
         if(jump) {
             jumpSpeed = std::max(jumpSpeed, double(-0.3));
@@ -105,7 +110,7 @@ void TA_Character::updateCollisions()
                 return;
             }
             hurt = true;
-            ground = helitail = false;
+            ground = helitail = jump = false;
             position.y -= 1;
             velocity.x = hurtXsp * sign;
             velocity.y = hurtYsp;
