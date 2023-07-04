@@ -81,6 +81,6 @@
 
 	<object name="fire" x="1240" y="152" direction="left"/>
 
-    <object name="item_box" x="968" y="112" number="19" item_name=" hammer &#10;        "/>
+    <object name="item_box" x="968" y="112" number="19" item_name=" insta  &#10; shield "/>
     <object name="item_box" x="1864" y="288" number="2" item_name=" remote &#10;  bomb  "/>
 </objects>
