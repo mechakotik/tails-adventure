@@ -12,7 +12,11 @@ private:
     bool updateHold();
     bool characterHasThisItem();
     void drawItemName();
+    
     void addItemToCharacter();
+    void addItemToFirstFreeSlot();
+    int getFirstFreeItemSlot();
+    std::string getItemSlotName(int number);
 
     const double unpackTime = 40;
     const double holdTime = 60;

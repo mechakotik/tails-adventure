@@ -154,9 +154,38 @@ void TA_ItemBox::addItemToCharacter()
     long long itemMask = TA::save::getSaveParameter("item_mask");
     itemMask |= (1ll << itemNumber);
     TA::save::setSaveParameter("item_mask", itemMask);
+
+    if(itemNumber <= 19) {
+        addItemToFirstFreeSlot();
+    }
     if(itemNumber >= 29) {
         objectSet->getLinks().character->addRingsToMaximum();
     }
+}
+
+void TA_ItemBox::addItemToFirstFreeSlot()
+{
+    int slot = getFirstFreeItemSlot();
+    if(slot != -1) {
+        TA::save::setSaveParameter(getItemSlotName(slot), itemNumber);
+    }
+}
+
+int TA_ItemBox::getFirstFreeItemSlot()
+{
+    int slot = 0;
+    while(slot <= 3 && TA::save::getSaveParameter(getItemSlotName(slot)) != -1) {
+        slot ++;
+    }
+    if(slot == 4) {
+        slot = -1;
+    }
+    return slot;
+}
+
+std::string TA_ItemBox::getItemSlotName(int number)
+{
+    return "item_slot" + std::to_string(number);
 }
 
 void TA_ItemLabel::load(TA_Point position, std::string name)
