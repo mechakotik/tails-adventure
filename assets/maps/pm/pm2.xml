@@ -21,9 +21,9 @@
 	<object name="breakable_block" x="640" y="64" path="maps/pm/block.png"/>
 	<object name="breakable_block" x="656" y="64" path="maps/pm/block.png"/>
 
-	<object name="bridge" path="maps/pf/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="320" rightx="399" y="320"/>
-	<object name="bridge" path="maps/pf/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="432" rightx="463" y="352"/>
-	<object name="bridge" path="maps/pf/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="496" rightx="527" y="320"/>
+	<object name="bridge" path="maps/pm/bridge.png" particle_path="maps/pm/bridge_part.png" leftx="320" rightx="399" y="320"/>
+	<object name="bridge" path="maps/pm/bridge.png" particle_path="maps/pm/bridge_part.png" leftx="432" rightx="463" y="352"/>
+	<object name="bridge" path="maps/pm/bridge.png" particle_path="maps/pm/bridge_part.png" leftx="496" rightx="527" y="320"/>
 
 	<object name="jumper" x="32" y="209"/>
 	<object name="jumper" x="80" y="209"/>
