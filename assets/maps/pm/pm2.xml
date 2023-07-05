@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+	<object name="spawn_point" x="-4" y="41"/>
+	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+
+	<object name="breakable_block" x="208" y="208" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="224" y="208" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="240" y="208" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="256" y="208" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="208" y="224" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="224" y="224" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="208" y="240" path="maps/pm/block.png"/>
+
+	<object name="breakable_block" x="480" y="48" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="480" y="64" path="maps/pm/block.png"/>
+
+	<object name="breakable_block" x="624" y="48" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="640" y="48" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="656" y="48" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="624" y="64" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="640" y="64" path="maps/pm/block.png"/>
+	<object name="breakable_block" x="656" y="64" path="maps/pm/block.png"/>
+
+	<object name="bridge" path="maps/pf/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="320" rightx="399" y="320"/>
+	<object name="bridge" path="maps/pf/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="432" rightx="463" y="352"/>
+	<object name="bridge" path="maps/pf/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="496" rightx="527" y="320"/>
+
+	<object name="jumper" x="32" y="209"/>
+	<object name="jumper" x="80" y="209"/>
+
+	<object name="rock_thrower" x="384" y="51" direction="left"/>
+	<object name="rock_thrower" x="512" y="147" direction="right"/>
+	<object name="rock_thrower" x="592" y="99" direction="left"/>
+	<object name="rock_thrower" x="512" y="51" direction="right"/>
+</objects>

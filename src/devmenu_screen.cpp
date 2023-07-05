@@ -9,6 +9,7 @@ void TA_DevmenuScreen::init()
     levels.emplace_back("maps/vt/vt1");
     levels.emplace_back("maps/vt/vt2");
     levels.emplace_back("maps/pm/pm1");
+    levels.emplace_back("maps/pm/pm2");
     levels.emplace_back("maps/pm/pm3");
     normalFont.load("fonts/devmenu.png", 7, 9);
     normalFont.setMapping(mapping);
