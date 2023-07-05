@@ -7,7 +7,7 @@
 #include "tools.h"
 #include "character.h"
 
-void TA_Tilemap::load(std::string filename)
+void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parser
 {
     tinyxml2::XMLDocument xmlFile;
     xmlFile.Parse(TA::readStringFromFile(filename).c_str());
@@ -27,7 +27,7 @@ void TA_Tilemap::load(std::string filename)
             tilemap[layer][pos].resize(height);
         }
     }
-    tileset.assign(tileCount, TA_Tile());
+    tileset.assign(tileCount, Tile());
 
     for(int pos = 0; pos < tileCount; pos ++) {
         tileset[pos].animation = std::vector<int>{pos};
@@ -57,6 +57,7 @@ void TA_Tilemap::load(std::string filename)
                     tileset[tileId].animation.push_back(frameElement->IntAttribute("tileid"));
                 }
             }
+
             if(tileElement->FirstChildElement("objectgroup") != nullptr) {
                 tinyxml2::XMLElement *object = tileElement->FirstChildElement("objectgroup")->FirstChildElement("object");
                 std::stringstream pointStream;
@@ -64,14 +65,31 @@ void TA_Tilemap::load(std::string filename)
                 TA_Point currentPoint, startPoint;
                 startPoint.x = object->IntAttribute("x");
                 startPoint.y = object->IntAttribute("y");
+
+                TA_Polygon polygon;
                 char temp;
+
                 while(pointStream >> currentPoint.x) {
                     pointStream >> temp >> currentPoint.y;
-                    tileset[tileId].polygon.addVertex(currentPoint + startPoint);
+                    polygon.addVertex(currentPoint + startPoint);
                 }
                 if(object->FirstChildElement("properties") != nullptr) {
                     tileset[tileId].type = object->FirstChildElement("properties")->FirstChildElement("property")->IntAttribute("value");
                 }
+
+                int collisionType = TA_COLLISION_SOLID;
+                if(tileset[tileId].type == 1) {
+                    collisionType = TA_COLLISION_HALF_SOLID;
+                }
+                else if(tileset[tileId].type == 2) {
+                    collisionType = TA_COLLISION_SOLID | TA_COLLISION_DAMAGE_X2;
+                }
+                tileset[tileId].hitboxes.push_back({polygon, collisionType});
+            }
+
+            if(tileElement->FirstChildElement("properties") != nullptr) {
+                int type = tileElement->FirstChildElement("properties")->FirstChildElement("property")->IntAttribute("value");
+                tileset[tileId].hitboxes = getSpikesHitboxVector(type);
             }
         }
     };
@@ -161,10 +179,10 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     }
 }
 
-void TA_Tilemap::checkCollision(TA_Polygon &polygon, int &flags, int halfSolidTop)
+int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
 {
-    flags = 0;
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
+
     for(int pos = 0; pos < polygon.size(); pos ++) {
         TA_Point vertex = polygon.getVertex(pos);
         minX = std::min(minX, int(vertex.x / tileWidth));
@@ -172,38 +190,107 @@ void TA_Tilemap::checkCollision(TA_Polygon &polygon, int &flags, int halfSolidTo
         minY = std::min(minY, int(vertex.y / tileHeight));
         maxY = std::max(maxY, int(vertex.y / tileHeight));
     }
+
     auto normalize = [&](int &value, int left, int right) {
         value = std::max(value, left);
         value = std::min(value, right);
     };
+
     normalize(minX, 0, width - 1);
     normalize(maxX, 0, width - 1);
     normalize(minY, 0, height - 1);
     normalize(maxY, 0, height - 1);
 
+    int flags = 0;
+
+    auto checkCollisionWithTile = [&] (int tileX, int tileY)
+    {
+        int tileId = tilemap[collisionLayer][tileX][tileY].tileIndex;
+        if(tileId == -1) {
+            return;
+        }
+
+        for(auto& hitbox : tileset[tileId].hitboxes) {
+            hitbox.polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
+            if((tileset[tileId].type != 1 || (tileY + 1) * tileHeight >= halfSolidTop)
+                && polygon.intersects(hitbox.polygon)) {
+                flags |= hitbox.type;
+            }
+        }
+    };
+
     for(int tileX = minX; tileX <= maxX; tileX ++) {
         for(int tileY = minY; tileY <= maxY; tileY ++) {
-            int tileId = tilemap[collisionLayer][tileX][tileY].tileIndex;
-            if(tileId == -1 || tileset[tileId].polygon.empty()) {
-                continue;
-            }
-            tileset[tileId].polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
-            if(polygon.intersects(tileset[tileId].polygon)) {
-                if((1 << tileset[tileId].type) != TA_COLLISION_HALF_SOLID || (tileY + 1) * tileHeight >= halfSolidTop) {
-                    flags |= (1 << tileset[tileId].type);
-                    if(tileset[tileId].type == 2) {
-                        flags |= TA_COLLISION_SOLID;
-                        flags |= TA_COLLISION_DAMAGE_X2;
-                    }
-                }
-            }
+            checkCollisionWithTile(tileX, tileY);
         }
     }
 
     for(int pos = 0; pos < 4; pos ++) {
         if(borderPolygons[pos].intersects(polygon)) {
             flags |= TA_COLLISION_SOLID;
-            return;
         }
     }
+
+    return flags;
+}
+
+std::vector<TA_Tilemap::Hitbox> TA_Tilemap::getSpikesHitboxVector(int type)
+{
+    std::vector<Hitbox> hitboxes;
+    hitboxes.push_back(getSpikesSolidHitbox(type));
+    hitboxes.push_back(getSpikesDamageHitbox(type));
+    return hitboxes;
+}
+
+TA_Tilemap::Hitbox TA_Tilemap::getSpikesSolidHitbox(int type)
+{
+    TA_Point topLeft, bottomRight;
+    switch(type) {
+        case 0:
+            topLeft = {0, 1};
+            bottomRight = {16, 16};
+            break;
+        case 1:
+            topLeft = {0, 0};
+            bottomRight = {16, 15};
+            break;
+        case 2:
+            topLeft = {1, 0};
+            bottomRight = {16, 16};
+            break;
+        case 3:
+            topLeft = {0, 0};
+            bottomRight = {15, 16};
+    }
+
+    TA_Polygon polygon;
+    polygon.setRectangle(topLeft, bottomRight);
+    return {polygon, TA_COLLISION_SOLID};
+}
+
+TA_Tilemap::Hitbox TA_Tilemap::getSpikesDamageHitbox(int type)
+{
+    TA_Point topLeft, bottomRight;
+    switch(type) {
+        case 0:
+            topLeft = {0.01, 0.99};
+            bottomRight = {15.99, 1};
+            break;
+        case 1:
+            topLeft = {0.01, 15};
+            bottomRight = {15.99, 15.01};
+            break;
+        case 2:
+            topLeft = {0.99, 0.01};
+            bottomRight = {1, 15.99};
+            break;
+        case 3:
+            topLeft = {15, 0.01};
+            bottomRight = {15.01, 15.99};
+            break;
+    }
+
+    TA_Polygon polygon;
+    polygon.setRectangle(topLeft, bottomRight);
+    return {polygon, TA_COLLISION_DAMAGE | TA_COLLISION_DAMAGE_X2};
 }

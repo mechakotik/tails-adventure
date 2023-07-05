@@ -300,8 +300,7 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidT
     if(hitbox.empty()) {
         return;
     }
-    flags = 0;
-    links.tilemap->checkCollision(hitbox, flags, halfSolidTop);
+    flags = links.tilemap->checkCollision(hitbox, halfSolidTop);
     flags |= hitboxContainer.getCollisionFlags(hitbox);
     if(links.character->getHitbox()->intersects(hitbox)) {
         flags |= links.character->getCollisionType();

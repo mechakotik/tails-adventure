@@ -124,8 +124,8 @@ void TA_Character::updateCollisions()
         };
         TA_Polygon leftHalf, rightHalf; {
             double middleX = (topLeft.x + bottomRight.x) / 2;
-            leftHalf.setRectangle(topLeft - TA_Point(0.1, 0.1), {middleX, bottomRight.y + 0.1});
-            rightHalf.setRectangle({middleX, topLeft.y - 0.1}, bottomRight + TA_Point(0.1, 0.1));
+            leftHalf.setRectangle(topLeft - TA_Point(0.001, 0.001), {middleX, bottomRight.y + 0.001});
+            rightHalf.setRectangle({middleX, topLeft.y - 0.001}, bottomRight + TA_Point(0.001, 0.001));
             leftHalf.setPosition(position);
             rightHalf.setPosition(position);
         }

@@ -26,19 +26,28 @@ enum TA_CollisionType {
 
 class TA_Tilemap {
 private:
-    struct TA_Tile {
+    struct Hitbox {
         TA_Polygon polygon;
+        int type;
+    };
+
+    struct Tile {
+        std::vector<Hitbox> hitboxes;
         std::vector<int> animation;
         int animationDelay, type = 0;
     };
 
-    struct TA_TilemapElement {
+    struct TilemapElement {
         TA_Sprite sprite;
         int tileIndex;
     };
 
-    std::vector<std::vector<std::vector<TA_TilemapElement>>> tilemap;
-    std::vector<TA_Tile> tileset;
+    std::vector<Hitbox> getSpikesHitboxVector(int type);
+    Hitbox getSpikesSolidHitbox(int type);
+    Hitbox getSpikesDamageHitbox(int type);
+
+    std::vector<std::vector<std::vector<TilemapElement>>> tilemap;
+    std::vector<Tile> tileset;
     std::array<TA_Polygon, 4> borderPolygons;
     int width, height, tileWidth, tileHeight, layerCount, collisionLayer;
 
@@ -48,7 +57,7 @@ public:
     void setCamera(TA_Camera *newCamera);
     int getWidth() {return width * tileWidth;}
     int getHeight() {return height * tileHeight;}
-    void checkCollision(TA_Polygon &polygon, int &flags, int halfSolidTop = -1e9);
+    int checkCollision(TA_Polygon &polygon, int halfSolidTop = -1e9);
 };
 
 #endif // TA_TILEMAP_H

@@ -430,6 +430,11 @@
     </object>
    </objectgroup>
   </tile>
+  <tile id="71">
+   <properties>
+    <property name="spikes" type="int" value="1"/>
+   </properties>
+  </tile>
   <tile id="72">
    <animation>
     <frame tileid="72" duration="400"/>
