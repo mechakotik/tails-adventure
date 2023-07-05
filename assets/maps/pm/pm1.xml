@@ -41,4 +41,7 @@
 	<object name="jumper" x="224" y="817"/>
 	<object name="jumper" x="176" y="785"/>
 	<object name="jumper" x="128" y="753"/>
+
+	<object name="item_box" x="408" y="1408" number="25" item_name=" rocket  &#10; booster "/>
+	<object name="item_box" x="376" y="896" number="16" item_name=" helmet &#10;        "/>
 </objects>

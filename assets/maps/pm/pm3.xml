@@ -42,4 +42,6 @@
 	<object name="jumper" x="1456" y="33"/>
 
 	<object name="bomb_thrower" x="1744" y="357" left_x="1728" right_x="1744"/>
+
+	<object name="item_box" x="376" y="256" number="8" item_name="  super  &#10;  glove  "/>
 </objects>

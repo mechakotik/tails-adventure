@@ -32,4 +32,6 @@
 	<object name="rock_thrower" x="512" y="147" direction="right"/>
 	<object name="rock_thrower" x="592" y="99" direction="left"/>
 	<object name="rock_thrower" x="512" y="51" direction="right"/>
+
+	<object name="item_box" x="440" y="64" number="10" item_name=" knuckles &#10;          "/>
 </objects>
