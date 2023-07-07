@@ -17,7 +17,7 @@ bool TA_PushableObject::update()
     leftHitbox.setPosition(position);
     rightHitbox.setPosition(position);
 
-    double speed = TA::elapsedTime * 0.33;
+    double speed = 0.33;
     velocity.x = 0;
     if(objectSet->getLinks().character->isOnGround()) {
         if(objectSet->checkCollision(leftHitbox) & TA_COLLISION_CHARACTER) {
@@ -27,9 +27,9 @@ bool TA_PushableObject::update()
             velocity.x = -speed;
         }
     }
-    velocity.y += grv;
+    velocity.y += grv * TA::elapsedTime;
 
-    int flags = moveAndCollide(TA_Point(0, 0), TA_Point(getWidth(), getHeight()), velocity);
+    int flags = moveAndCollide(TA_Point(0, 0), TA_Point(getWidth(), getHeight()), velocity * TA::elapsedTime);
     if(flags & TA_GROUND_COLLISION) {
         velocity.y = 0;
     }

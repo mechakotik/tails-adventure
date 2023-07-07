@@ -147,10 +147,10 @@ void TA_WalkerBullet::load(TA_Point newPosition, bool newDirection)
 bool TA_WalkerBullet::update()
 {
     if(direction) {
-        position.x -= speed;
+        position.x -= speed * TA::elapsedTime;
     }
     else {
-        position.x += speed;
+        position.x += speed * TA::elapsedTime;
     }
     setPosition(position);
     hitbox.setPosition(position);
