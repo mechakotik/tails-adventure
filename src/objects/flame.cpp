@@ -16,7 +16,7 @@ void TA_Flame::load(TA_Point position, double startSpeed)
 bool TA_Flame::update()
 {
     speed += gravity * TA::elapsedTime;
-    position.y += std::max(-maxSpeed, std::min(maxSpeed, speed));
+    position.y += std::max(-maxSpeed, std::min(maxSpeed, speed)) * TA::elapsedTime;
     updatePosition();
 
     if(position.y > startY) {

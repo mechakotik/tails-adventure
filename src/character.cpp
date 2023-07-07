@@ -283,7 +283,7 @@ void TA_Character::updateRemoteRobotReturn()
     double divisor = velocity.length();
     velocity.x /= divisor;
     velocity.y /= divisor;
-    position = position + velocity;
+    position = position + velocity * TA::elapsedTime;
 
     setPosition(position);
     updateFollowPosition();

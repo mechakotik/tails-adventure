@@ -146,10 +146,10 @@ bool TA_RemoteBomb::update()
 {
     if(TA::equal(velocity.y, 0)) {
         if(velocity.x > 0) {
-            velocity.x = std::max(double(0), velocity.x - friction * speed * speed);
+            velocity.x = std::max(double(0), velocity.x - friction * speed * speed * TA::elapsedTime);
         }
         else {
-            velocity.x = std::min(double(0), velocity.x + friction * speed * speed);
+            velocity.x = std::min(double(0), velocity.x + friction * speed * speed * TA::elapsedTime);
         }
     }
 

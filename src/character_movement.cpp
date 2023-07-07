@@ -79,7 +79,7 @@ void TA_Character::updateAir()
         }
     }
     else {
-        velocity.y += grv;
+        velocity.y += grv * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxJumpSpeed);
     }
 }
