@@ -58,9 +58,9 @@ namespace TA
         void openWrite(std::string filename);
         bool isReading();
         bool isWriting();
-        void write(int x);
+        void write(long long x);
         void quit();
-        int read();
+        long long read();
     }
 }
 

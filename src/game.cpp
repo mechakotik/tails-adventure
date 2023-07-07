@@ -21,12 +21,23 @@ TA_Game::TA_Game()
 
     //TA::eventLog::openWrite("event_log");
 
-    if(TA::eventLog::isReading() || TA::eventLog::isWriting()) {
-        TA::random::init(1490824);
+    unsigned long long seed = std::chrono::steady_clock::now().time_since_epoch().count();
+    union SeedConverter {
+        unsigned long long a;
+        long long b;
+    } seedConverter;
+
+    if(TA::eventLog::isReading()) {
+        seedConverter.b = TA::eventLog::read();
+        seed = seedConverter.a;
     }
     else {
-        TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
+        if(TA::eventLog::isWriting()) {
+            seedConverter.a = seed;
+            TA::eventLog::write(seedConverter.b);
+        }
     }
+    TA::random::init(seed);
     
     TA::gamepad::init();
     TA::keyboard::init();
@@ -145,12 +156,22 @@ void TA_Game::update()
         firstFrame = false;
     }
 
-    if(TA::eventLog::isReading() || TA::eventLog::isWriting()) {
-        TA::elapsedTime = 0.998160;
+    union TimeConverter {
+        double a;
+        long long b;
+    } timeConverter;
+
+    if(TA::eventLog::isReading()) {
+        timeConverter.b = TA::eventLog::read();
+        TA::elapsedTime = timeConverter.a;
     }
     else {
         TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
         //TA::elapsedTime /= 10;
+        if(TA::eventLog::isWriting()) {
+            timeConverter.a = TA::elapsedTime;
+            TA::eventLog::write(timeConverter.b);
+        }
     }
     startTime = currentTime;
 

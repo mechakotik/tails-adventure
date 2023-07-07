@@ -136,14 +136,14 @@ bool TA::eventLog::isWriting()
     return output.is_open();
 }
 
-int TA::eventLog::read()
+long long TA::eventLog::read()
 {
-    int x;
+    long long x;
     input >> x;
     return x;
 }
 
-void TA::eventLog::write(int x)
+void TA::eventLog::write(long long x)
 {
     output << x << ' ';
 }
