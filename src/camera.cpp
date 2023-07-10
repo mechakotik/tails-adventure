@@ -5,7 +5,7 @@
 void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
 {
     followPosition = newFollowPosition;
-    position = *followPosition;
+    position = *followPosition - TA_Point(0, yBottomOffset);
 }
 
 void TA_Camera::setLockPosition(TA_Point newLockPosition)
