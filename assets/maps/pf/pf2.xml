@@ -33,6 +33,8 @@
 	
 	<object name="bridge" path="maps/pf/bridge.png" particle_path="maps/pf/bridge_part.png" leftx="336" rightx="447" y="176"/>
 
+	<object name="wind" top="0" left="672" bottom="208" right="816" xsp="-1" ysp="0"/>
+
     <object name="item_box" x="248" y="272" number="7" item_name=" speed  &#10; boots  "/>
     <object name="item_box" x="1144" y="208" number="18" item_name=" radio  &#10;        "/>
     <object name="item_box" x="1880" y="64" number="31" item_name="  chaos  &#10; emerald "/>

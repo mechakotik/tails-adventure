@@ -46,12 +46,14 @@ private:
     const double remoteRobotJumpSpeed = -3.25;
     const double maxLookTime = 100;
     const double instaShieldCooldownTime = 60;
+    const double strongWindForce = 0.25;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
     TA_Polygon hitbox;
     TA_Point topLeft, bottomRight;
+    TA_Point windVelocity;
 
     TA_Sound jumpSound, remoteRobotStepSound;
     TA_Sound flySound, remoteRobotFlySound;
@@ -61,13 +63,14 @@ private:
     TA_Sprite remoteRobotControlSprite;
     TA_Point remoteRobotInitialPosition;
 
-    bool ground = false, helitail = false, wall = false, flip = false;
+    bool ground = false, helitail = false, wall = false, ceiling = false, flip = false;
     bool jump = false, jumpReleased = false, spring = false;
     bool hurt = false;
     bool lookUp = false, crouch = false;
     bool useHalfSolidTiles = false, useMovingPlatforms = true;
     bool remoteRobot = false;
     bool bombDestroySignal = false;
+    bool strongWind = false;
 
     double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
@@ -132,12 +135,16 @@ public:
     double getFlightTime() {return helitailTime / getMaxHelitailTime();}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
     bool isRemoteRobot() {return remoteRobot;}
+    bool isFlying() {return helitail;}
+    bool isOnCeiling() {return ceiling;}
+    bool isOnStrongWind() {return strongWind;}
 
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();
     void setReleaseState();
     void addToPosition(TA_Point delta) {position = position + delta;}
     void resetInstaShield();
+    void setWindVelociy(TA_Point windVelocity);
 };
 
 #endif // TA_CHARACTER_H

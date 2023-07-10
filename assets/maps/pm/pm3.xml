@@ -43,5 +43,11 @@
 
 	<object name="bomb_thrower" x="1744" y="357" left_x="1728" right_x="1744"/>
 
+	<object name="wind" top="224" left="64" bottom="272" right="176" xsp="-1" ysp="-1"/>
+	<object name="wind" top="80" left="16" bottom="192" right="256" xsp="1" ysp="-1"/>
+	<object name="wind" top="0" left="464" bottom="272" right="752" xsp="0" ysp="1"/>
+	<object name="wind" top="144" left="1776" bottom="304" right="1872" xsp="0" ysp="-1"/>
+	<object name="wind" top="0" left="1712" bottom="144" right="1856" xsp="0" ysp="-1"/>
+
 	<object name="item_box" x="376" y="256" number="8" item_name="  super  &#10;  glove  "/>
 </objects>

@@ -50,6 +50,9 @@ void TA_Character::handleInput()
     double prevX = position.x;
     updateCollisions();
     deltaX = position.x - prevX;
+
+    windVelocity = {0, 0};
+    strongWind = false;
 }
 
 void TA_Character::update()
@@ -329,5 +332,20 @@ void TA_Character::setReleaseState()
 {
     if(!remoteRobot) {
         setAnimation("release");
+    }
+}
+
+void TA_Character::setWindVelociy(TA_Point windVelocity)
+{
+    if((helitail && helitailTime > getMaxHelitailTime()) || windVelocity.y < -2.5) {
+        ground = jump = helitail = false;
+    }
+    if(windVelocity.y > -2.5) {
+        this->windVelocity = windVelocity;
+    }
+    else {
+        velocity.y -= strongWindForce * TA::elapsedTime;
+        velocity.y = std::max(velocity.y, double(-5));
+        strongWind = true;
     }
 }

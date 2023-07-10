@@ -42,6 +42,10 @@
 	<object name="jumper" x="176" y="785"/>
 	<object name="jumper" x="128" y="753"/>
 
+	<object name="strong_wind" top="1360" left="96" bottom="1424" right="128"/>
+	<object name="wind" top="528" left="48" bottom="688" right="192" xsp="0" ysp="-1"/>
+	<object name="wind" top="32" left="272" bottom="192" right="368" xsp="0" ysp="-1"/>
+
 	<object name="item_box" x="408" y="1408" number="25" item_name=" rocket  &#10; booster "/>
 	<object name="item_box" x="376" y="896" number="16" item_name=" helmet &#10;        "/>
 </objects>

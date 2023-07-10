@@ -68,12 +68,12 @@ void TA_Character::updateCollisions()
 
     useMovingPlatforms = true;
     TA_Point prevPosition = position;
-    int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime, ground);
+    int flags = moveAndCollide(topLeft, bottomRight, (velocity + windVelocity) * TA::elapsedTime, ground);
 
     if(flags & TA_COLLISION_ERROR) {
         position = prevPosition;
         useHalfSolidTiles = useMovingPlatforms = false;
-        flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime, ground);
+        flags = moveAndCollide(topLeft, bottomRight, (velocity + windVelocity) * TA::elapsedTime, ground);
     }
 
     if(flags & TA_GROUND_COLLISION) {
@@ -91,6 +91,7 @@ void TA_Character::updateCollisions()
     }
 
     if(flags & TA_CEIL_COLLISION) {
+        ceiling = true;
         if(jump) {
             jumpSpeed = std::max(jumpSpeed, double(-0.3));
             jumpReleased = true;
@@ -98,6 +99,9 @@ void TA_Character::updateCollisions()
         else {
             velocity.y = std::max(velocity.y, double(-0.3));
         }
+    }
+    else {
+        ceiling = false;
     }
 
     if(!remoteRobot && !hurt && !instaShieldSprite.isAnimated() && invincibleTimeLeft <= 0) {
@@ -236,10 +240,8 @@ void TA_Character::updateClimb()
                 else {
                     position = climbPosition + TA_Point(-13, height);
                 }
+                velocity.y = 0;
             }
-        }
-        if(ground) {
-            velocity.y = 0;
         }
     };
 
