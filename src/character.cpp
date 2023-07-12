@@ -349,3 +349,19 @@ void TA_Character::setWindVelociy(TA_Point windVelocity)
         strongWind = true;
     }
 }
+
+double TA_Character::getMaxHelitailTime()
+{
+    if(TA::levelPath == "maps/pm/pm4") {
+        return 1e6;
+    }
+    return 150 * (getEmeraldsCount() + 1);
+}
+
+bool TA_Character::displayFlighTimeBar()
+{
+    if(TA::levelPath == "maps/pm/pm4") {
+        return false;
+    }
+    return helitail && !remoteRobot;
+}

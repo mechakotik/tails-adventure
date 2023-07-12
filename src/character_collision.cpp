@@ -164,6 +164,9 @@ void TA_Character::updateClimb()
     if(remoteRobot || !wall || !TA::equal(deltaX, 0)) {
         return;
     }
+    if(helitail && TA::levelPath == "maps/pm/pm4") {
+        return;
+    }
 
     auto updateClimbPosition = [&](int height) {
         if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {

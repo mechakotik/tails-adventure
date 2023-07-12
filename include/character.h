@@ -107,7 +107,7 @@ private:
 
     int getEmeraldsCount();
     int getMaxRings() {return 10 * (getEmeraldsCount() + 1);}
-    double getMaxHelitailTime() {return 150 * (getEmeraldsCount() + 1);}
+    double getMaxHelitailTime();
 
 public:
     void load(TA_Links newLinks);
@@ -131,7 +131,7 @@ public:
 
     void addRings(int count);
     void addRingsToMaximum();
-    bool displayFlighTimeBar() {return helitail && !remoteRobot;}
+    bool displayFlighTimeBar();
     double getFlightTime() {return helitailTime / getMaxHelitailTime();}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
     bool isRemoteRobot() {return remoteRobot;}
