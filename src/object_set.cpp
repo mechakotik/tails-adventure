@@ -240,7 +240,7 @@ void TA_ObjectSet::load(std::string filename)
         else if(name == "wind") {
             TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
             TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
-            TA_Point velocity(element->IntAttribute("xsp"), element->IntAttribute("ysp"));
+            TA_Point velocity(element->DoubleAttribute("xsp"), element->DoubleAttribute("ysp"));
             spawnObject<TA_Wind>(topLeft, bottomRight, velocity);
         }
         

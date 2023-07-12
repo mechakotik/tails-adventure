@@ -29,6 +29,9 @@
   <tile id="8">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
+     <properties>
+      <property name="type" type="int" value="1"/>
+     </properties>
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
@@ -125,9 +128,6 @@
    </objectgroup>
   </tile>
   <tile id="26">
-   <properties>
-    <property name="type" type="int" value="1"/>
-   </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
@@ -135,9 +135,6 @@
    </objectgroup>
   </tile>
   <tile id="27">
-   <properties>
-    <property name="type" type="int" value="1"/>
-   </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
