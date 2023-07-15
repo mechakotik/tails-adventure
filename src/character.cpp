@@ -35,6 +35,11 @@ void TA_Character::load(TA_Links newLinks)
 
 void TA_Character::handleInput()
 {
+    hidden = nextFrameHidden;
+    if(hidden) {
+        return;
+    }
+
     controller.setAnalogStick(helitail);
     controller.update();
 
@@ -57,6 +62,10 @@ void TA_Character::handleInput()
 
 void TA_Character::update()
 {
+    if(hidden) {
+        return;
+    }
+
     updateInstaShield();
     if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
         updateClimbAnimation();
@@ -116,6 +125,9 @@ void TA_Character::update()
 
 void TA_Character::draw()
 {
+    if(hidden) {
+        return;
+    }
     if(remoteRobot) {
         remoteRobotControlSprite.draw();
     }

@@ -71,6 +71,7 @@ private:
     bool remoteRobot = false;
     bool bombDestroySignal = false;
     bool strongWind = false;
+    bool hidden = false, nextFrameHidden = false;
 
     double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
@@ -142,6 +143,7 @@ public:
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();
     void setReleaseState();
+    void setHide(bool hidden) {nextFrameHidden = hidden;}
 
     void addToPosition(TA_Point delta) {position = position + delta;}
     void resetInstaShield();
