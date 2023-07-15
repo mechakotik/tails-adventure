@@ -142,6 +142,7 @@ public:
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();
     void setReleaseState();
+
     void addToPosition(TA_Point delta) {position = position + delta;}
     void resetInstaShield();
     void setWindVelociy(TA_Point windVelocity);

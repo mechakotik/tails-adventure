@@ -4,6 +4,7 @@
 
 void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
 {
+    updateOffset();
     followPosition = newFollowPosition;
     position = *followPosition - TA_Point(0, yBottomOffset);
 }
@@ -17,6 +18,7 @@ void TA_Camera::setLockPosition(TA_Point newLockPosition)
 
 void TA_Camera::update(bool ground, bool spring)
 {
+    updateOffset();
     double movementSpeed = airSpeed;
     if(ground) {
         movementSpeed = groundSpeed;
@@ -84,5 +86,17 @@ void TA_Camera::update(bool ground, bool spring)
     }
     else {
         shakeDelta = {0, 0};
+    }
+}
+
+void TA_Camera::updateOffset()
+{
+    if(TA::levelPath == "maps/pm/pm4") {
+        yTopOffset = -8;
+        yBottomOffset = 16;
+    }
+    else {
+        yTopOffset = 8;
+        yBottomOffset = 16;
     }
 }

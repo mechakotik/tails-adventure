@@ -26,6 +26,7 @@
 #include "objects/rock_thrower.h"
 #include "objects/jumper.h"
 #include "objects/wind.h"
+#include "objects/speedy.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -248,6 +249,10 @@ void TA_ObjectSet::load(std::string filename)
             TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
             TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
             spawnObject<TA_StrongWind>(topLeft, bottomRight);
+        }
+
+        else if(name == "speedy") {
+            spawnObject<TA_Speedy>();
         }
 
         else {

@@ -6,13 +6,16 @@
 class TA_Camera {
 private:
     const double groundSpeed = 1, airSpeed = 3, springSpeed = 5, maxLockDistance = 256;
-    const int shakeRadius = 1, xOffset = 4, yTopOffset = 8, yBottomOffset = 16;
+    const int shakeRadius = 1, xOffset = 4;
     const double shakeFrequency = 3;
+
+    void updateOffset();
 
     TA_Point position, lockPosition, shakeDelta;
     TA_Point *followPosition;
     TA_Rect border;
 
+    int yTopOffset, yBottomOffset;
     bool locked = false, lockedX = false, lockedY = false;
     double shakeTime = -1;
 
