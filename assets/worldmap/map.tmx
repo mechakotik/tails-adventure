@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="git" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="8" tileheight="8" infinite="0" nextlayerid="2" nextobjectid="1">
- <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="336" columns="14">
-  <image source="map.png" width="112" height="192"/>
+ <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8" tilecount="364" columns="14">
+  <image source="map.png" width="112" height="208"/>
   <tile id="4">
    <animation>
     <frame tileid="4" duration="700"/>
@@ -488,6 +488,30 @@
     <frame tileid="330" duration="700"/>
    </animation>
   </tile>
+  <tile id="336">
+   <animation>
+    <frame tileid="336" duration="200"/>
+    <frame tileid="338" duration="200"/>
+   </animation>
+  </tile>
+  <tile id="337">
+   <animation>
+    <frame tileid="337" duration="200"/>
+    <frame tileid="339" duration="200"/>
+   </animation>
+  </tile>
+  <tile id="350">
+   <animation>
+    <frame tileid="350" duration="200"/>
+    <frame tileid="352" duration="200"/>
+   </animation>
+  </tile>
+  <tile id="351">
+   <animation>
+    <frame tileid="351" duration="200"/>
+    <frame tileid="353" duration="200"/>
+   </animation>
+  </tile>
  </tileset>
  <layer id="1" name="layer" width="32" height="18">
   <data encoding="csv">
@@ -502,8 +526,8 @@
 15,15,15,15,15,15,15,96,66,67,97,98,99,100,89,101,102,58,103,92,104,53,15,15,15,15,15,15,15,15,15,15,
 15,15,15,15,15,15,15,15,15,21,105,72,106,107,101,107,102,80,61,92,90,84,108,15,26,15,21,15,15,15,15,15,
 15,15,15,15,15,15,15,21,15,96,109,110,111,101,107,101,112,113,79,80,114,38,15,15,15,68,83,21,15,15,15,15,
-15,15,15,15,15,15,15,15,15,15,105,115,73,74,101,107,116,117,107,118,119,53,120,121,15,96,95,15,15,15,15,15,
-15,15,15,15,15,15,15,15,15,15,96,122,123,124,125,126,127,128,129,130,131,132,133,134,15,15,15,15,15,15,15,15,
+15,15,15,15,15,15,15,15,337,338,105,115,73,74,101,107,116,117,107,118,119,53,120,121,15,96,95,15,15,15,15,15,
+15,15,15,15,15,15,15,15,351,352,96,122,123,124,125,126,127,128,129,130,131,132,133,134,15,15,15,15,15,15,15,15,
 15,15,15,15,15,15,15,15,15,15,96,135,136,137,138,139,140,141,142,143,144,145,146,147,148,71,15,15,15,15,15,15,
 15,15,15,15,15,21,21,15,15,15,15,15,149,150,151,152,153,154,155,156,68,109,157,158,84,159,15,15,15,15,15,15,
 15,15,15,15,21,68,83,15,15,15,15,15,15,15,15,16,160,161,15,15,15,162,84,84,163,15,15,15,15,15,15,15,

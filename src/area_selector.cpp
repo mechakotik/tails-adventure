@@ -12,9 +12,10 @@ void TA_AreaSelector::load()
 
 void TA_AreaSelector::appendPoints()
 {
-    points.push_back(new TA_MapPoint("tails'\nhouse", "", TA_Point(122, 97)));
-    points.push_back(new TA_MapPoint("poloy\nforest", "maps/pf/pf1", TA_Point(106, 89)));
+    points.push_back(new TA_MapPoint(" tails'\n house", "", TA_Point(122, 97)));
+    points.push_back(new TA_MapPoint(" poloy\n forest", "maps/pf/pf1", TA_Point(106, 89)));
     points.push_back(new TA_MapPoint("volcanic\ntunnel", "maps/vt/vt1", TA_Point(146, 73)));
+    points.push_back(new TA_MapPoint(" polly\n mt.1", "maps/pm/pm1", TA_Point(146, 41)));
     currentPoint = points[TA::save::getSaveParameter("map_selection")];
 }
 
@@ -38,6 +39,9 @@ void TA_AreaSelector::setPointNeighbours()
 
     points[2]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
     points[2]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
+    points[2]->setNeighbour(TA_DIRECTION_UP, points[3]);
+
+    points[3]->setNeighbour(TA_DIRECTION_DOWN, points[2]);
 }
 
 void TA_AreaSelector::loadTailsIcon()
@@ -71,6 +75,11 @@ void TA_AreaSelector::draw()
         points[pos]->draw();
     }
     tailsIcon.draw();
+}
+
+std::string TA_AreaSelector::getSelectionName()
+{
+    return currentPoint->getName();
 }
 
 TA_AreaSelector::~TA_AreaSelector()

@@ -23,6 +23,7 @@ private:
 public:
     void load();
     TA_ScreenState update();
+    std::string getSelectionName();
     void draw();
     ~TA_AreaSelector();
 };
