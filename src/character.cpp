@@ -377,3 +377,11 @@ bool TA_Character::displayFlighTimeBar()
     }
     return helitail && !remoteRobot;
 }
+
+void TA_Character::setCharacterPosition(TA_Point position)
+{
+    this->position = position;
+    ground = true;
+    jump = helitail = false;
+    flip = false;
+}

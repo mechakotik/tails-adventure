@@ -125,13 +125,15 @@ public:
     TA_Polygon *getHitbox() {return &hitbox;}
     TA_CommonController *getController() {return &controller;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
-    TA_Point getPosition() {return position + TA_Point(24, 24);}
+    TA_Point getPosition() {return position;}
     TA_Point getVelocity() {return velocity;}
     double getJumpTime() {return jumpTime;}
     TA_CollisionType getCollisionType();
 
     void addRings(int count);
     void addRingsToMaximum();
+    void setCharacterPosition(TA_Point position);
+
     bool displayFlighTimeBar();
     double getFlightTime() {return helitailTime / getMaxHelitailTime();}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
@@ -144,6 +146,7 @@ public:
     void setRaiseState();
     void setReleaseState();
     void setHide(bool hidden) {nextFrameHidden = hidden;}
+    bool isHidden() {return hidden;}
 
     void addToPosition(TA_Point delta) {position = position + delta;}
     void resetInstaShield();

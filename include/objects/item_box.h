@@ -7,6 +7,7 @@
 class TA_ItemBox : public TA_Object {
 private:
     void updateIdle();
+    void updateFall();
     void updateUnpack();
     void updateRaise();
     bool updateHold();
@@ -20,9 +21,12 @@ private:
 
     const double unpackTime = 40;
     const double holdTime = 60;
+    const double gravity = 0.125;
+    const double maxFallSpeed = 3;
 
     enum State {
         STATE_IDLE,
+        STATE_FALL,
         STATE_UNPACK,
         STATE_RAISE,
         STATE_HOLD
@@ -35,12 +39,14 @@ private:
     TA_Sound sound;
     TA_Font font;
     std::string itemName;
+    TA_Point velocity;
 
 public:
     using TA_Object::TA_Object;
     void load(TA_Point position, int itemNumber, std::string itemName);
     bool update();
     int getDrawPriority() override {return 1;}
+    bool checkPawnCollision(TA_Polygon &hitbox) override;
 };
 
 class TA_ItemLabel : public TA_Object {

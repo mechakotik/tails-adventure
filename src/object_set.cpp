@@ -335,7 +335,7 @@ int TA_ObjectSet::checkCollision(TA_Polygon &hitbox)
 
 TA_Point TA_ObjectSet::getCharacterPosition()
 {
-    return links.character->getPosition();
+    return links.character->getPosition() + TA_Point(24, 24);
 }
 
 void TA_ObjectSet::playAreaMusic()

@@ -19,7 +19,7 @@ TA_Game::TA_Game()
     initSDL();
     createWindow();
 
-    TA::eventLog::openWrite("event_log");
+    //TA::eventLog::openWrite("event_log");
 
     unsigned long long seed = std::chrono::steady_clock::now().time_since_epoch().count();
     union SeedConverter {

@@ -1,11 +1,13 @@
 #include "speedy.h"
 #include "tools.h"
 #include "character.h"
+#include "item_box.h"
 
 void TA_Speedy::load()
 {
     loadSprite();
     initShow();
+    objectSet->getLinks().camera->setLockPosition({0, 112});
 }
 
 void TA_Speedy::loadSprite()
@@ -13,6 +15,10 @@ void TA_Speedy::loadSprite()
     TA_Sprite::load("objects/speedy.png", 24, 32);
     TA_Sprite::loadAnimationsFromFile("objects/speedy.xml");
     hitbox.setRectangle(TA_Point(6, 10), TA_Point(20, 30));
+
+    characterPlaceholder.load("tails/tails.png", 48, 48);
+    characterPlaceholder.loadAnimationsFromFile("tails/animations.xml");
+    characterPlaceholder.setCamera(objectSet->getLinks().camera);
 }
 
 void TA_Speedy::initShow()
@@ -21,6 +27,8 @@ void TA_Speedy::initShow()
     position = {200, 3883};
     velocity = startShowVelocity;
     setAnimation("show");
+    objectSet->getLinks().character->setHide(true);
+    characterPlaceholder.setAnimation("look_up");
 }
 
 bool TA_Speedy::update()
@@ -40,6 +48,9 @@ bool TA_Speedy::update()
             break;
         case STATE_FLY_UP:
             updateFlyUp();
+            break;
+        case STATE_END_SEQUENCE:
+            updateEndSequence();
             break;
     }
 
@@ -61,6 +72,9 @@ void TA_Speedy::updateShow()
         position = position + velocity * TA::elapsedTime;
     }
     
+    characterPlaceholder.setPosition(objectSet->getLinks().character->getPosition());
+    characterPlaceholder.setFlip(getDistanceToCharacter().x > 0);
+
     TA_Point cameraPosition = objectSet->getLinks().camera->getPosition();
 
     if((position.x < cameraPosition.x - 24 || position.y < cameraPosition.y - 32) && velocity.x < 0) {
@@ -71,6 +85,7 @@ void TA_Speedy::updateShow()
     }
     
     else if(position.x > cameraPosition.x + 180 && position.y < cameraPosition.y - 32) {
+        objectSet->getLinks().character->setHide(false);
         initIdle();
     }
 }
@@ -91,6 +106,11 @@ void TA_Speedy::updateIdle()
 
 void TA_Speedy::initAttack()
 {
+    if(objectSet->getLinks().camera->isLocked()) {
+        initEndSequence();
+        return;
+    }
+
     state = STATE_ATTACK;
     position.x = objectSet->getCharacterPosition().x - 12;
     position.y = objectSet->getLinks().camera->getPosition().y - 32;
@@ -160,10 +180,135 @@ void TA_Speedy::updateFlyUp()
     updateFlyUpSimple();
 }
 
+void TA_Speedy::initEndSequence()
+{
+    state = STATE_END_SEQUENCE;
+    position = objectSet->getLinks().camera->getPosition() + TA_Point(240, -34);
+    objectSet->playAreaMusic();
+    endSequencePhase = 0;
+
+    objectSet->getLinks().character->setHide(true);
+    cpPosition = objectSet->getLinks().character->getPosition();
+    characterPlaceholder.setAnimation("helitail");
+    characterPlaceholder.setFlip(false);
+}
+
+void TA_Speedy::updateEndSequence()
+{
+    switch(endSequencePhase) {
+        case 0:
+            updateEndSequencePhase0();
+            break;
+        case 1:
+            updateEndSequencePhase1();
+            break;
+        case 2:
+            updateEndSequencePhase2();
+            break;
+        case 3:
+            updateEndSequencePhase3();
+            break;
+        case 4:
+            updateEndSequencePhase4();
+            break;
+        case 5:
+            updateEndSequencePhase5();
+        default:
+            break;
+    }
+
+    characterPlaceholder.setPosition(cpPosition);
+}
+
+void TA_Speedy::updateEndSequencePhase0()
+{
+    cpPosition.y -= TA::elapsedTime;
+    double needY = objectSet->getLinks().camera->getPosition().y + 48;
+
+    if(cpPosition.y < needY) {
+        endSequencePhase = 1;
+    }
+}
+
+void TA_Speedy::updateEndSequencePhase1()
+{
+    const double needX = 48;
+
+    if(cpPosition.x < needX) {
+        cpPosition.x += TA::elapsedTime;
+        cpPosition.x = std::min(cpPosition.x, needX);
+    }
+    else {
+        cpPosition.x -= TA::elapsedTime;
+        cpPosition.x = std::max(cpPosition.x, needX);
+    }
+
+    if(TA::equal(cpPosition.x, needX)) {
+        endSequencePhase = 2;
+    }
+}
+
+void TA_Speedy::updateEndSequencePhase2()
+{
+    double needY = objectSet->getLinks().camera->getPosition().y + 89;
+
+    cpPosition.y += TA::elapsedTime;
+    if(cpPosition.y > needY) {
+        cpPosition.y = needY;
+        characterPlaceholder.setAnimation("idle");
+        setAnimation("show");
+        velocity = {-2, 4};
+        endSequencePhase = 3;
+    }
+}
+
+void TA_Speedy::updateEndSequencePhase3()
+{
+    velocity.y -= gravity * TA::elapsedTime;
+    velocity.y = std::max(velocity.y, double(0));
+    position = position + velocity * TA::elapsedTime;
+
+    if(TA::equal(velocity.y, 0)) {
+        setAnimation("throw");
+        endSequencePhase = 4;
+    }
+}
+
+void TA_Speedy::updateEndSequencePhase4()
+{
+    if(!isAnimated()) {
+        endSequencePhase = 5;
+        velocity = {2, 0};
+        setAnimation("show");
+        objectSet->spawnObject<TA_ItemBox>(position + TA_Point(4, 16), 33, "  chaos  \n emerald ");
+        return;
+    }
+
+    velocity.x = (getCurrentFrame() == 4 ? -1 : 1);
+    velocity.y = 0;
+    position = position + velocity * TA::elapsedTime;
+}
+
+void TA_Speedy::updateEndSequencePhase5()
+{
+    velocity.y -= gravity * TA::elapsedTime;
+    position = position + velocity * TA::elapsedTime;
+    double cameraY = objectSet->getLinks().camera->getPosition().y;
+
+    if(position.x > 260 || position.y < cameraY - 36) {
+        endSequencePhase = 6;
+        objectSet->getLinks().character->setCharacterPosition(cpPosition);
+        objectSet->getLinks().character->setHide(false);
+    }
+}
+
 void TA_Speedy::updateFlip()
 {
     if(state == STATE_FLY_UP && getCurrentFrame() == 7) {
         setFlip(position.x < 128);
+    }
+    else if(state == STATE_END_SEQUENCE) {
+        setFlip(false);
     }
     else {
         setFlip(getAnimationFrame() >= 2);
@@ -176,4 +321,12 @@ TA_CollisionType TA_Speedy::getCollisionType()
         return TA_COLLISION_DAMAGE;
     }
     return TA_COLLISION_TRANSPARENT;
+}
+
+void TA_Speedy::draw()
+{
+    TA_Object::draw();
+    if(objectSet->getLinks().character->isHidden()) {
+        characterPlaceholder.draw();
+    }
 }

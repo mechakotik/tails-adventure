@@ -29,6 +29,9 @@ bool TA_ItemBox::update()
             }
             updateIdle();
             break;
+        case STATE_FALL:
+            updateFall();
+            break;
         case STATE_UNPACK:
             updateUnpack();
             break;
@@ -55,19 +58,43 @@ bool TA_ItemBox::characterHasThisItem()
 void TA_ItemBox::updateIdle()
 {
     if(objectSet->getLinks().character->isRemoteRobot()) {
-        hitbox.setRectangle(TA_Point(2, 0), TA_Point(14, 16));
+        hitbox.setRectangle(TA_Point(2, 0), TA_Point(14, 17));
     }
     else {
-        hitbox.setRectangle(TA_Point(8, 0), TA_Point(9, 16));
+        hitbox.setRectangle(TA_Point(8, 0), TA_Point(9, 17));
     }
 
     int flags = objectSet->checkCollision(hitbox);
+
+    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) == 0) {
+        velocity = {0, 0};
+        state = STATE_FALL;
+        return;
+    }
+
     if((flags & TA_COLLISION_CHARACTER) != 0 && objectSet->getLinks().character->isOnGround()) {
         objectSet->getLinks().character->setUnpackState();
         sound.play();
         addItemToCharacter();
         state = STATE_UNPACK;
     }
+}
+
+void TA_ItemBox::updateFall()
+{
+    velocity.y += gravity * TA::elapsedTime;
+    velocity.y = std::min(velocity.y, maxFallSpeed);
+    int flags = moveAndCollide(TA_Point(8, 0), TA_Point(9, 16), velocity * TA::elapsedTime);
+
+    if(flags & TA_GROUND_COLLISION) {
+        state = STATE_IDLE;
+    }
+}
+
+bool TA_ItemBox::checkPawnCollision(TA_Polygon &hitbox)
+{
+    int flags = objectSet->checkCollision(hitbox);
+    return (flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) != 0;
 }
 
 void TA_ItemBox::updateUnpack()
