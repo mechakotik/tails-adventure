@@ -9,6 +9,7 @@ class TA_MapScreen : public TA_Screen {
 private:
     TA_InGameMap map;
     TA_AreaSelector selector;
+    TA_Sound beginMusic, loopMusic;
 
 public:
     void init() override;

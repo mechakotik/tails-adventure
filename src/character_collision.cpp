@@ -118,6 +118,7 @@ void TA_Character::updateCollisions()
             position.y -= 1;
             velocity.x = hurtXsp * sign;
             velocity.y = hurtYsp;
+            damageSound.play();
 
             if(flags & TA_COLLISION_DAMAGE_X2) {
                 addRings(-4);

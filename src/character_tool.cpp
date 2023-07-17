@@ -30,7 +30,9 @@ void TA_Character::updateTool()
             break;
         case TOOL_INSTA_SHIELD:
             spawnInstaShield();
+            break;
         default:
+            damageSound.play();
             break;
     }
 }
@@ -98,6 +100,7 @@ void TA_Character::spawnInstaShield()
     }
     instaShieldSprite.setAnimation("shield");
     instaShieldTime = 0;
+    instaShieldSound.play();
 }
 
 void TA_Character::updateInstaShield()

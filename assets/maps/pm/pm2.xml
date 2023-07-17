@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="-4" y="41"/>
-	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+	<object name="sound" begin="sound/pm_begin.ogg" loop="sound/pm_loop.ogg"/>
 
 	<object name="breakable_block" x="208" y="208" path="maps/pm/block.png"/>
 	<object name="breakable_block" x="224" y="208" path="maps/pm/block.png"/>

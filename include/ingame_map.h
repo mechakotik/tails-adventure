@@ -4,6 +4,7 @@
 #include "sprite.h"
 #include "tilemap.h"
 #include "font.h"
+#include "sound.h"
 
 class TA_InGameMap {
 private:

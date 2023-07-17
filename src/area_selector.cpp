@@ -8,6 +8,7 @@ void TA_AreaSelector::load()
     setActivePoints();
     setPointNeighbours();
     loadTailsIcon();
+    switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
 }
 
 void TA_AreaSelector::appendPoints()
@@ -58,6 +59,7 @@ TA_ScreenState TA_AreaSelector::update()
         TA_Direction direction = controller.getDirection();
         if(direction != TA_DIRECTION_MAX && currentPoint->getNeighbour(direction) != nullptr) {
             currentPoint = currentPoint->getNeighbour(direction);
+            switchSound.play();
         }
     }
     tailsIcon.setPosition(currentPoint->getPosition() + TA_Point(-2, 8));

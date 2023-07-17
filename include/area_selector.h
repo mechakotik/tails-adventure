@@ -4,6 +4,7 @@
 #include <vector>
 #include "screen_state_machine.h"
 #include "controller.h"
+#include "sound.h"
 
 class TA_MapPoint;
 
@@ -19,6 +20,7 @@ private:
     std::vector<TA_MapPoint*> points;
     TA_Sprite tailsIcon;
     TA_MapPoint* currentPoint;
+    TA_Sound switchSound;
 
 public:
     void load();
