@@ -167,11 +167,12 @@ void TA_Game::update()
     }
     else {
         TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
-        //TA::elapsedTime /= 10;
         if(TA::eventLog::isWriting()) {
             timeConverter.a = TA::elapsedTime;
             TA::eventLog::write(timeConverter.b);
         }
+        TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
+        //TA::elapsedTime /= 10;
     }
     startTime = currentTime;
 
