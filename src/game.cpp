@@ -171,9 +171,10 @@ void TA_Game::update()
             timeConverter.a = TA::elapsedTime;
             TA::eventLog::write(timeConverter.b);
         }
-        TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
-        //TA::elapsedTime /= 10;
     }
+
+    TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
+    //TA::elapsedTime /= 10;
     startTime = currentTime;
 
     SDL_SetRenderTarget(TA::renderer, targetTexture);
