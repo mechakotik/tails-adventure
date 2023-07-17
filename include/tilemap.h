@@ -48,7 +48,7 @@ private:
 
     std::vector<std::vector<std::vector<TilemapElement>>> tilemap;
     std::vector<Tile> tileset;
-    std::array<TA_Polygon, 4> borderPolygons;
+    std::array<TA_Polygon, 3> borderPolygons;
     int width, height, tileWidth, tileHeight, layerCount, collisionLayer;
 
 public:

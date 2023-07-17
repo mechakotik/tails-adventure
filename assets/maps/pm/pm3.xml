@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="68" y="360"/>
+	<object name="spawn_point" previous="maps/pm/pm4" x="1941" y="9" direction="left"/>
 	<object name="sound" begin="sound/pm_begin.ogg" loop="sound/pm_loop.ogg"/>
+	<object name="level_transition" path="maps/pm/pm1" top="368" bottom="400" left="80" right="82"/>
+	<object name="level_transition" path="maps/pm/pm4" top="0" bottom="48" left="1982" right="1984"/>
+	<object name="map_transition" selection="3" top="462" bottom="464" left="0" right="1984"/>
 
 	<object name="breakable_block" x="176" y="192" path="maps/pm/block.png"/>
 	<object name="breakable_block" x="192" y="192" path="maps/pm/block.png"/>

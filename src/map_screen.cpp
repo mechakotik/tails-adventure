@@ -10,6 +10,8 @@ void TA_MapScreen::init()
     beginMusic.load("sound/map_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
     loopMusic.load("sound/map_loop.ogg", TA_SOUND_CHANNEL_MUSIC, true);
     beginMusic.play();
+
+    TA::previousLevelPath = "";
 }
 
 TA_ScreenState TA_MapScreen::update()

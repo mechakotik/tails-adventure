@@ -113,7 +113,7 @@ void TA_ObjectSet::load(std::string filename)
             if(!firstSpawnPointSet || currentLevelPath == TA::previousLevelPath) {
                 spawnPoint = position;
                 if(element->Attribute("direction")) {
-                    spawnFlip = (strcmp(element->Attribute("direction"), "left") == 0);
+                    spawnFlip = element->Attribute("direction", "left");
                 }
                 else {
                     spawnFlip = false;

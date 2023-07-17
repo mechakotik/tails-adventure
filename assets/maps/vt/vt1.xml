@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="-4" y="73"/>
-	<object name="map_transition" selection="2" top="16" bottom="117" left="0" right="2"/>
+	<object name="spawn_point" previous="maps/vt/vt2" x="1924" y="57" direction="left"/>
 	<object name="sound" loop="sound/vt.ogg"/>
+	<object name="map_transition" selection="2" top="16" bottom="117" left="0" right="2"/>
+	<object name="level_transition" path="maps/vt/vt2" top="32" bottom="96" left="1966" right="1968"/>
 	
 	<object name="breakable_block" x="240" y="48" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>
 	<object name="breakable_block" x="240" y="64" path="maps/vt/block1.png" particle_path="maps/vt/rock.png"/>

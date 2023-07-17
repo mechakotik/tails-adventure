@@ -138,9 +138,8 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
     }
 
     borderPolygons[0].setRectangle(TA_Point(0, -16), TA_Point(width * tileWidth, 0));
-    borderPolygons[1].setRectangle(TA_Point(0, height * tileHeight), TA_Point(width * tileWidth, height * tileHeight + 16));
-    borderPolygons[2].setRectangle(TA_Point(-16, 0), TA_Point(0, height * tileHeight));
-    borderPolygons[3].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
+    borderPolygons[1].setRectangle(TA_Point(-16, 0), TA_Point(0, height * tileHeight));
+    borderPolygons[2].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
 }
 
 void TA_Tilemap::draw(int priority)
@@ -225,7 +224,7 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
         }
     }
 
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < (int)borderPolygons.size(); pos ++) {
         if(borderPolygons[pos].intersects(polygon)) {
             flags |= TA_COLLISION_SOLID;
         }
