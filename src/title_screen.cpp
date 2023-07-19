@@ -8,14 +8,15 @@ void TA_TitleScreen::init()
 {
     titleScreenSprite.load("title_screen/title_screen.png");
     titleScreenSprite.setPosition(TA::screenWidth / 2 - 80, 0);
-    touchToStartSprite.load("title_screen/touch_to_start.png");
-    touchToStartSprite.setPosition(TA::screenWidth / 2 - 57, 104);
+    pressStartSprite.load("title_screen/press_start.png");
+    pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104);
 
     titleScreenSound.load("sound/title_screen.ogg", TA_SOUND_CHANNEL_MUSIC, 0);
     enterSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX1, 0);
     titleScreenSound.play();
 
     button.setRectangle(TA_Point(0, 0), TA_Point(TA::screenWidth, TA::screenHeight));
+    controller.load();
 }
 
 TA_ScreenState TA_TitleScreen::update()
@@ -23,15 +24,23 @@ TA_ScreenState TA_TitleScreen::update()
     localTimer += TA::elapsedTime;
 
     button.update();
-    if(button.isJustPressed() && timePressed == -1) {
-        enterSound.play();
-        timePressed = localTimer;
+    controller.update();
+
+    if(timePressed == -1) {
+        if(controller.isJustPressed(TA_BUTTON_PAUSE) || button.isJustPressed()) {
+            enterSound.play();
+            timePressed = localTimer;
+        }
+        else if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
+            timeOut = true;
+            timePressed = localTimer;
+        }
     }
 
     TA::drawScreenRect(0, 0, 102, 255);
     titleScreenSprite.draw();
 
-    auto drawTouchToStart = [&] (int delay, int fadeDelay) {
+    auto drawPressStart = [&] (int delay, int fadeDelay) {
         int frame = int(localTimer) % (delay * 2), alpha;
         if(frame < delay) {
             alpha = 255 * std::max(0, frame - (delay - fadeDelay)) / fadeDelay;
@@ -39,32 +48,32 @@ TA_ScreenState TA_TitleScreen::update()
         else {
             alpha = 255 - 255 * std::max(0, frame - (delay * 2 - fadeDelay)) / fadeDelay;
         }
-        touchToStartSprite.setAlpha(alpha);
-        touchToStartSprite.draw();
+        pressStartSprite.setAlpha(alpha);
+        pressStartSprite.draw();
     };
 
-    if(timePressed == -1) {
-        drawTouchToStart(30, 5);
+    if(timePressed == -1 || timeOut) {
+        drawPressStart(30, 5);
     }
     else {
-        drawTouchToStart(5, 2);
+        drawPressStart(5, 2);
     }
 
     if(localTimer < 10) {
         int factor = 255 - 255 * localTimer / 10;
         TA::drawShadow(factor);
     }
-    else if(timePressed != -1 && localTimer - timePressed > 60) {
+    else if(timePressed != -1 && localTimer - timePressed > 40) {
         if(!startedFadeOut) {
             titleScreenSound.fadeOut(10);
             startedFadeOut = true;
         }
-        int factor = 255 * (localTimer - timePressed - 60) / 10;
+        int factor = 255 * (localTimer - timePressed - 40) / 10;
         TA::drawShadow(factor);
     }
 
-    if(timePressed != -1 && localTimer - timePressed > 80) {
-        return TA_SCREENSTATE_GAME;
+    if(timePressed != -1 && localTimer - timePressed > 50) {
+        return TA_SCREENSTATE_MAP;
     }
     return TA_SCREENSTATE_CURRENT;
 }
