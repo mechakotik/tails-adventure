@@ -11,7 +11,7 @@ void TA_ScreenStateMachine::init()
 {
     currentState = TA_SCREENSTATE_DEVMENU;
     neededState = TA_SCREENSTATE_CURRENT;
-    currentScreen = new TA_TitleScreen();
+    currentScreen = new TA_DevmenuScreen();
     currentScreen -> init();
 }
 

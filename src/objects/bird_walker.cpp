@@ -1,11 +1,17 @@
+#include <cmath>
 #include "bird_walker.h"
 #include "tools.h"
 #include "error.h"
 #include "bullet.h"
 #include "explosion.h"
+#include "save.h"
 
 void TA_BirdWalker::load(double newFloorY)
 {
+    if(TA::save::getSaveParameter("boss_mask") & (1ll << 0)) {
+        return;
+    }
+
     floorY = newFloorY;
     headSprite.load("objects/bird_walker/head.png", 27, 16);
     bodySprite.load("objects/bird_walker/body.png");
@@ -41,6 +47,10 @@ void TA_BirdWalker::load(double newFloorY)
     bodyHitbox.setRectangle({12, -74}, {26, -61});
     defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
     flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
+
+    hitbox.setPosition(TA_Point(0, 0));
+    hitbox.setRectangle(TA_Point(TA::screenWidth + 576, 0), TA_Point(TA::screenWidth + 592, 448));
+    objectSet->getLinks().camera->setLockPosition(TA_Point(576, 64));
 }
 
 void TA_BirdWalker::updatePosition()
@@ -81,18 +91,19 @@ void TA_BirdWalker::insertBorderHitboxes()
     TA_Polygon borderHitbox;
     TA_Point cameraPosition = objectSet->getLinks().camera->getPosition();
 
-    borderHitbox.setRectangle(cameraPosition + TA_Point(-1, 0), cameraPosition + TA_Point(0, TA::screenHeight));
+    borderHitbox.setRectangle(cameraPosition + TA_Point(-16, -16), cameraPosition + TA_Point(0, TA::screenHeight + 16));
     hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
 
-    borderHitbox.setRectangle(cameraPosition + TA_Point(0, -1), cameraPosition + TA_Point(TA::screenWidth, 0));
-    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
-
-    borderHitbox.setRectangle(cameraPosition + TA_Point(TA::screenWidth, 0), cameraPosition + TA_Point(TA::screenWidth + 1, TA::screenHeight));
+    borderHitbox.setRectangle(cameraPosition + TA_Point(-16, -16), cameraPosition + TA_Point(TA::screenWidth + 16, 0));
     hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
 }
 
 bool TA_BirdWalker::update()
 {
+    if(TA::save::getSaveParameter("boss_mask") & (1ll << 0)) {
+        return false;
+    }
+
     auto initAiming = [&] () {
         timer = 0;
 
@@ -188,7 +199,8 @@ bool TA_BirdWalker::update()
                 timer = 0;
                 feetSprite.setAnimation("idle");
                 bulletCounter = 0;
-                if(TA::random::next() % 3 == 0) {
+                if((centeredPosition < objectSet->getCharacterPosition().x) == flip
+                    && TA::random::next() % 3 == 0) {
                     state = TA_BIRD_WALKER_STATE_FIRE_LONG;
                 }
                 else {
@@ -318,6 +330,11 @@ bool TA_BirdWalker::update()
                 objectSet->getLinks().camera->unlock();
                 TA::sound::fadeOutChannel(TA_SOUND_CHANNEL_SFX3, 0);
                 objectSet->playAreaMusic();
+
+                long long bossMask = TA::save::getSaveParameter("boss_mask");
+                bossMask |= (1ll << 0);
+                TA::save::setSaveParameter("boss_mask", bossMask);
+
                 return false;
             }
             break;

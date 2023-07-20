@@ -25,11 +25,11 @@ private:
     const double coolDownTime = 60;
     const double laughTime = 60;
     const double walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
-    const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = M_PI / 8, bulletSpeed = 1;
+    const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = M_PI / 6, bulletSpeed = 1;
     const int shortFireBullets = 3, longFireBullets = 10;
     const double invincibleTime = 30;
     const double deathTime = 180, deathExplosionDelay = 6;
-    const double jumpWaitTime = 180;
+    const double jumpWaitTime = 120;
 
     void updatePosition() override;
     void insertBorderHitboxes();
@@ -45,7 +45,7 @@ private:
     int bulletCounter = 0;
 
     double invincibleTimeLeft = -1;
-    int health = 10;
+    int health = 16;
 
     std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, flipHitboxVector;
     TA_Polygon weakHitbox;
@@ -58,6 +58,7 @@ public:
     bool update() override;
     void draw() override;
     int getDrawPriority() override {return 1;}
+    TA_CollisionType getCollisionType() {return TA_COLLISION_SOLID;}
 };
 
 #endif // TA_BIRD_WALKER_H
