@@ -2,8 +2,8 @@ master_volume 128
 music_volume 128
 sfx_volume 128
 
-default_save/item_mask 524365
-default_save/area_mask 15
+default_save/item_mask 1
+default_save/area_mask 3
 default_save/boss_mask 0
 default_save/rings 10
 default_save/item_slot0 0

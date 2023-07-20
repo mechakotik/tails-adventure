@@ -5,6 +5,7 @@ void TA_AreaSelector::load()
 {
     controller.load();
     appendPoints();
+    addSelectedArea();
     setActivePoints();
     setPointNeighbours();
     loadTailsIcon();
@@ -18,6 +19,13 @@ void TA_AreaSelector::appendPoints()
     points.push_back(new TA_MapPoint("volcanic\ntunnel", "maps/vt/vt1", TA_Point(146, 73)));
     points.push_back(new TA_MapPoint(" polly\n mt.1", "maps/pm/pm1", TA_Point(146, 41)));
     currentPoint = points[TA::save::getSaveParameter("map_selection")];
+}
+
+void TA_AreaSelector::addSelectedArea()
+{
+    long long areaMask = TA::save::getSaveParameter("area_mask");
+    areaMask |= (1ll << TA::save::getSaveParameter("map_selection"));
+    TA::save::setSaveParameter("area_mask", areaMask);
 }
 
 void TA_AreaSelector::setActivePoints()
@@ -57,7 +65,8 @@ TA_ScreenState TA_AreaSelector::update()
     controller.update();
     if(controller.isJustChangedDirection()) {
         TA_Direction direction = controller.getDirection();
-        if(direction != TA_DIRECTION_MAX && currentPoint->getNeighbour(direction) != nullptr) {
+        if(direction != TA_DIRECTION_MAX && currentPoint->getNeighbour(direction) != nullptr
+            && currentPoint->getNeighbour(direction)->isActive()) {
             currentPoint = currentPoint->getNeighbour(direction);
             switchSound.play();
         }

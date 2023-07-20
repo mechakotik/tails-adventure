@@ -12,6 +12,7 @@ class TA_AreaSelector {
 private:
     void loadPoints();
     void appendPoints();
+    void addSelectedArea();
     void setActivePoints();
     void setPointNeighbours();
     void loadTailsIcon();
