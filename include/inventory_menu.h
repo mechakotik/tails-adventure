@@ -43,7 +43,7 @@ private:
     TA_CommonController* controller;
     TA_Sprite itemSprite, pointerSprite, arrowSprite;
     TA_Sprite inventoryItemSprite, inventoryPointerSprite;
-    TA_Sound switchSound;
+    TA_Sound switchSound, selectSound, backSound, errorSound;
     TA_Font font;
 
     int selectionX = 0, selectionY = 0, selectionSlot = 0;

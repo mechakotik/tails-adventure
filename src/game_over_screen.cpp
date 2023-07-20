@@ -6,6 +6,10 @@ void TA_GameOverScreen::init()
 {
     gameOverSprite.load("gameover/gameover.png");
     controller.load();
+
+    music.load("sound/game_over.ogg", TA_SOUND_CHANNEL_MUSIC);
+    music.play();
+
     setMaxRings();
 }
 
@@ -28,7 +32,7 @@ TA_ScreenState TA_GameOverScreen::update()
     gameOverSprite.draw();
 
     controller.update();
-    if(controller.isJustPressed(TA_BUTTON_PAUSE)) {
+    if(controller.isJustPressed(TA_BUTTON_PAUSE) || !TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
         return TA_SCREENSTATE_TITLE;
     }
     return TA_SCREENSTATE_CURRENT;

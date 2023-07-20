@@ -57,7 +57,7 @@ private:
 
     TA_Sound jumpSound, remoteRobotStepSound;
     TA_Sound flySound, remoteRobotFlySound;
-    TA_Sound damageSound, instaShieldSound;
+    TA_Sound damageSound, instaShieldSound, deathSound;
 
     TA_CharacterState state = STATE_NORMAL;
 

@@ -12,8 +12,11 @@ void TA_HouseScreen::init()
     font.setMapping("abcdefghijklmnopqrstuvwxyz .*");
     controller.load();
 
+    music.load("sound/house.ogg", TA_SOUND_CHANNEL_MUSIC, true);
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
-    errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);
+    errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
+    selectSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
+    music.play();
 
     inventoryMenu.load(&controller);
 }
@@ -118,6 +121,8 @@ bool TA_HouseScreen::shouldDoTransition()
         errorSound.play();
         return false;
     }
+    
+    selectSound.play();
     return true;
 }
 

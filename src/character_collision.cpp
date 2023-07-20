@@ -153,6 +153,7 @@ void TA_Character::updateCollisions()
             if(rings <= 0) {
                 setAnimation("death");
                 state = STATE_DEAD;
+                deathSound.play();
             }
         }
     }

@@ -28,7 +28,7 @@ private:
     TA_Sprite interfaceSprite, houseSprite, curtainSprite;
     TA_Font font;
     TA_CommonController controller;
-    TA_Sound switchSound, errorSound;
+    TA_Sound music, switchSound, errorSound, selectSound;
 
     int selectionX = 1, selectionY = 1;
     double curtainTimeLeft = -1;

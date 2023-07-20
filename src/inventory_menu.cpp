@@ -15,6 +15,9 @@ void TA_InventoryMenu::load(TA_CommonController* controller)
     font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?");
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
+    selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
+    backSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
+    errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
 
     fillItemMatrix();
 }
@@ -84,9 +87,11 @@ bool TA_InventoryMenu::updateSlotSelection()
     }
 
     if(controller->isJustPressed(TA_BUTTON_A)) {
+        selectSound.play();
         selectingSlot = false;
     }
     if(controller->isJustPressed(TA_BUTTON_B)) {
+        backSound.play();
         return false;
     }
     return true;
@@ -126,11 +131,16 @@ void TA_InventoryMenu::updateItemSelection()
     if(controller->isJustPressed(TA_BUTTON_A)) {
         if(canPlaceItem(items[selectionX][selectionY].number)) {
             placeItem(selectionSlot, items[selectionX][selectionY].number);
-            selectingSlot = true;
+            selectSound.play();
         }
+        else {
+            errorSound.play();
+        }
+        selectingSlot = true;
     }
     if(controller->isJustPressed(TA_BUTTON_B)) {
         selectingSlot = true;
+        backSound.play();
     }
 }
 
