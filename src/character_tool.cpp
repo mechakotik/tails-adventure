@@ -34,6 +34,9 @@ void TA_Character::updateTool()
         case TOOL_TELEPORT_DEVICE:
             initTeleport();
             break;
+        case TOOL_RADIO:
+            changeMusic();
+            break;
         default:
             damageSound.play();
             break;
@@ -148,4 +151,27 @@ bool TA_Character::isTeleported()
 {
     double cameraY = links.camera->getPosition().y;
     return state == STATE_TELEPORT && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3);
+}
+
+void TA_Character::changeMusic()
+{
+    struct LevelMusic {
+        std::string begin, loop;
+    };
+
+    std::vector<LevelMusic> music;
+    music.push_back({"sound/map_begin.ogg", "sound/map_loop.ogg"});
+    music.push_back({"", "sound/house.ogg"});
+    music.push_back({"sound/pf_begin.ogg", "sound/pf_loop.ogg"});
+    music.push_back({"", "sound/vt.ogg"});
+    music.push_back({"sound/pm_begin.ogg", "sound/pm_loop.ogg"});
+
+    while(true) {
+        int pos = TA::random::next() % (int)music.size();
+        if(links.objectSet->getCurrentLoopMusic() == music[pos].loop) {
+            continue;
+        }
+        links.objectSet->setMusic(music[pos].begin, music[pos].loop);
+        break;
+    }
 }

@@ -163,13 +163,11 @@ void TA_ObjectSet::load(std::string filename)
         }
 
         else if(name == "sound") {
-            areaLoopSound.load(element->Attribute("loop"), TA_SOUND_CHANNEL_MUSIC, true);
             if(element->Attribute("begin")) {
-                areaBeginSound.load(element->Attribute("begin"), TA_SOUND_CHANNEL_MUSIC);
-                areaBeginSound.play();
+                setMusic(element->Attribute("begin"), element->Attribute("loop"));
             }
             else {
-                areaLoopSound.play();
+                setMusic("", element->Attribute("loop"));
             }
         }
 
@@ -341,13 +339,31 @@ TA_Point TA_ObjectSet::getCharacterPosition()
 void TA_ObjectSet::playAreaMusic()
 {
     bossMusic = false;
-    areaBeginSound.play();
+    if(areaBeginSound.empty()) {
+        areaLoopSound.play();
+    }
+    else {
+        areaBeginSound.play();
+    }
 }
 
 void TA_ObjectSet::playBossMusic()
 {
     bossMusic = true;
     bossBeginSound.play();
+}
+
+void TA_ObjectSet::setMusic(std::string begin, std::string loop)
+{
+    areaBeginSound.clear();
+    if(begin != "") {
+        areaBeginSound.load(begin, TA_SOUND_CHANNEL_MUSIC);
+    }
+    areaLoopSound.load(loop, TA_SOUND_CHANNEL_MUSIC, true);
+    loopMusicPath = loop;
+    if(!bossMusic) {
+        playAreaMusic();
+    }
 }
 
 TA_ObjectSet::~TA_ObjectSet()

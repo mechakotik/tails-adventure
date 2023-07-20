@@ -31,6 +31,8 @@ public:
     void load(std::string filename, TA_SoundChannel channel, bool loop = false);
     void play();
     void fadeOut(int time);
+    void clear() {chunk = nullptr;}
+    bool empty() {return chunk == nullptr;}
 };
 
 #endif // TA_SOUND_H

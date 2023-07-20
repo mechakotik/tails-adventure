@@ -15,6 +15,7 @@ private:
         TOOL_REMOTE_BOMB = 2,
         TOOL_TELEPORT_DEVICE = 3,
         TOOL_REMOTE_ROBOT = 6,
+        TOOL_RADIO = 18,
         TOOL_INSTA_SHIELD = 19
     };
 
@@ -103,14 +104,15 @@ private:
     void updateThrowAnimation();
     void updateObjectCollision();
     void updateRemoteRobotReturn();
-    void updateTeleport();
 
     void updateTool();
     void spawnBomb(bool remote);
     void spawnRemoteRobot();
     void spawnInstaShield();
-    void initTeleport();
     void updateInstaShield();
+    void initTeleport();
+    void updateTeleport();
+    void changeMusic();
 
     int getEmeraldsCount();
     int getMaxRings() {return 10 * (getEmeraldsCount() + 1);}

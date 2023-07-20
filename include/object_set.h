@@ -51,6 +51,7 @@ private:
     TA_Point spawnPoint;
     TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
     TA_Sound areaBeginSound, areaLoopSound, bossBeginSound, bossLoopSound;
+    std::string loopMusicPath = "";
     bool spawnFlip = false, firstSpawnPointSet = false, bossMusic = false;
 
 public:
@@ -76,6 +77,8 @@ public:
 
     void playAreaMusic();
     void playBossMusic();
+    std::string getCurrentLoopMusic() {return loopMusicPath;}
+    void setMusic(std::string begin, std::string loop);
 
     template<class T, typename... P>
     void spawnObject(P... params) {
