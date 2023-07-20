@@ -4,6 +4,7 @@
 #include "game_screen.h"
 #include "devmenu_screen.h"
 #include "map_screen.h"
+#include "house_screen.h"
 #include "error.h"
 
 void TA_ScreenStateMachine::init()
@@ -50,6 +51,9 @@ bool TA_ScreenStateMachine::update()
                 break;
             case TA_SCREENSTATE_MAP:
                 currentScreen = new TA_MapScreen();
+                break;
+            case TA_SCREENSTATE_HOUSE:
+                currentScreen = new TA_HouseScreen();
                 break;
             default:
                 TA::handleError("%s", "Invalid new screen state");

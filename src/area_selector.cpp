@@ -66,6 +66,9 @@ TA_ScreenState TA_AreaSelector::update()
 
     if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B)) {
         TA::levelPath = currentPoint->getPath();
+        if(TA::levelPath == "") {
+            return TA_SCREENSTATE_HOUSE;
+        }
         return TA_SCREENSTATE_GAME;
     }
     return TA_SCREENSTATE_CURRENT;
