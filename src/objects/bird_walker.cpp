@@ -73,6 +73,9 @@ void TA_BirdWalker::updatePosition()
 
     for(HitboxVectorElement element : (flip ? flipHitboxVector : defaultHitboxVector)) {
         element.hitbox.setPosition(position + TA_Point(0, feetSprite.getCurrentFrame() == 4 ? 9 : 0));
+        if(state == TA_BIRD_WALKER_STATE_DEAD) {
+            element.collisionType = TA_COLLISION_TRANSPARENT;
+        }
         hitboxVector.push_back(element);
     }
 
