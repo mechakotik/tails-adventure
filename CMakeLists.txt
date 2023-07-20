@@ -34,6 +34,11 @@ if(${CMAKE_BUILD_TYPE} MATCHES Debug AND UNIX)
     target_link_options(TailsAdventure PRIVATE -fsanitize=address,leak,undefined)
 endif()
 
+if(NOT ${CMAKE_BUILD_TYPE} MATCHES Debug AND WIN32)
+    target_compile_options(TailsAdventure PRIVATE -mwindows)
+    target_link_options(TailsAdventure PRIVATE -mwindows)
+endif()
+
 set_target_properties(TailsAdventure PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output
     BUILD_RPATH lib
