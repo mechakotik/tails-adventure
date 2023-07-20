@@ -260,7 +260,6 @@ void TA_ObjectSet::load(std::string filename)
 
     bossBeginSound.load("sound/boss_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
     bossLoopSound.load("sound/boss_loop.ogg", TA_SOUND_CHANNEL_MUSIC, true);
-    playAreaMusic();
 }
 
 void TA_ObjectSet::update()

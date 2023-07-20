@@ -21,7 +21,7 @@ bool TA_ScreenStateMachine::update()
     TA_ScreenState returnedState = currentScreen -> update();
     if(neededState == TA_SCREENSTATE_CURRENT && returnedState != TA_SCREENSTATE_CURRENT) {
         neededState = returnedState;
-        TA::sound::fadeOut(transitionTime);
+        TA::sound::fadeOut(transitionTime + 2);
     }
     if(neededState == TA_SCREENSTATE_CURRENT) {
         if(transitionTimer > 0) {
