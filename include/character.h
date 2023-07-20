@@ -13,6 +13,7 @@ private:
     enum TA_CharacterTool {
         TOOL_BOMB = 0,
         TOOL_REMOTE_BOMB = 2,
+        TOOL_TELEPORT_DEVICE = 3,
         TOOL_REMOTE_ROBOT = 6,
         TOOL_INSTA_SHIELD = 19
     };
@@ -26,6 +27,7 @@ private:
         STATE_REMOTE_ROBOT_RETURN,
         STATE_UNPACK_ITEM,
         STATE_RAISE_ITEM,
+        STATE_TELEPORT,
         STATE_DEAD
     };
 
@@ -47,6 +49,7 @@ private:
     const double maxLookTime = 100;
     const double instaShieldCooldownTime = 60;
     const double strongWindForce = 0.25;
+    const double teleportInitTime = 60;
 
     TA_CommonController controller;
     TA_Point followPosition, velocity, climbPosition;
@@ -57,7 +60,7 @@ private:
 
     TA_Sound jumpSound, remoteRobotStepSound;
     TA_Sound flySound, remoteRobotFlySound;
-    TA_Sound damageSound, instaShieldSound, deathSound;
+    TA_Sound damageSound, instaShieldSound, deathSound, teleportSound;
 
     TA_CharacterState state = STATE_NORMAL;
 
@@ -76,7 +79,7 @@ private:
 
     double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
-    double timer = 0, lookTime = 0;
+    double timer = 0, lookTime = 0, teleportTime = 0;
     double deltaX = 0;
     int rings = 10;
     int currentTool = TOOL_BOMB;
@@ -100,11 +103,13 @@ private:
     void updateThrowAnimation();
     void updateObjectCollision();
     void updateRemoteRobotReturn();
+    void updateTeleport();
 
     void updateTool();
     void spawnBomb(bool remote);
     void spawnRemoteRobot();
     void spawnInstaShield();
+    void initTeleport();
     void updateInstaShield();
 
     int getEmeraldsCount();
@@ -142,6 +147,7 @@ public:
     bool isFlying() {return helitail;}
     bool isOnCeiling() {return ceiling;}
     bool isOnStrongWind() {return strongWind;}
+    bool isTeleported();
 
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();

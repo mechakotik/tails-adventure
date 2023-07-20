@@ -81,4 +81,7 @@
 	<animation name="remote_robot_raise" delay="32" repeatTimes="1">
 		41
 	</animation>
+	<animation name="teleport" delay="6">
+		79,80,81,82,83,84,85
+	</animation>
 </animations>

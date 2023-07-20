@@ -31,6 +31,9 @@ void TA_Character::updateTool()
         case TOOL_INSTA_SHIELD:
             spawnInstaShield();
             break;
+        case TOOL_TELEPORT_DEVICE:
+            initTeleport();
+            break;
         default:
             damageSound.play();
             break;
@@ -120,4 +123,29 @@ void TA_Character::resetInstaShield()
     if(instaShieldSprite.isAnimated()) {
         instaShieldTime = instaShieldCooldownTime;
     }
+}
+
+void TA_Character::initTeleport()
+{
+    state = STATE_TELEPORT;
+    teleportSound.play();
+    setAnimation("teleport");
+    velocity = {0, 0};
+    teleportTime = 0;
+}
+
+void TA_Character::updateTeleport()
+{
+    teleportTime += TA::elapsedTime;
+    if(teleportTime > teleportInitTime) {
+        velocity.y -= grv * TA::elapsedTime;
+        position = position + velocity * TA::elapsedTime;
+    }
+    setPosition(position);
+}
+
+bool TA_Character::isTeleported()
+{
+    double cameraY = links.camera->getPosition().y;
+    return state == STATE_TELEPORT && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3);
 }

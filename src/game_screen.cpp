@@ -39,6 +39,9 @@ TA_ScreenState TA_GameScreen::update()
     if(character.gameOver()) {
         return TA_SCREENSTATE_GAMEOVER;
     }
+    if(character.isTeleported()) {
+        return TA_SCREENSTATE_HOUSE;
+    }
     if(objectSet.getTransition() != TA_SCREENSTATE_CURRENT) {
         return objectSet.getTransition();
     }

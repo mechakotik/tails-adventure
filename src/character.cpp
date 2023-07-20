@@ -19,6 +19,7 @@ void TA_Character::load(TA_Links newLinks)
     damageSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);
     instaShieldSound.load("sound/insta_shield.ogg", TA_SOUND_CHANNEL_SFX3);
     deathSound.load("sound/death.ogg", TA_SOUND_CHANNEL_MUSIC);
+    teleportSound.load("sound/teleport.ogg", TA_SOUND_CHANNEL_SFX3);
 
     TA_Pawn::load("tails/tails.png", 48, 48);
     loadAnimationsFromFile("tails/animations.xml");
@@ -70,20 +71,29 @@ void TA_Character::update()
     }
 
     updateInstaShield();
+
+    if(state == STATE_TELEPORT) {
+        updateTeleport();
+        return;
+    }
+
     if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
         updateClimbAnimation();
         return;
     }
+
     if(state == STATE_THROW_BOMB) {
         updateThrowAnimation();
         setPosition(position);
         hitbox.setPosition(position);
         return;
     }
+
     if(state == STATE_DEAD) {
         invincibleTimeLeft -= TA::elapsedTime;
         return;
     }
+
     if(state == STATE_REMOTE_ROBOT_INIT) {
         timer += TA::elapsedTime;
         setAlpha(255 * (timer / remoteRobotInitTime));
@@ -92,10 +102,12 @@ void TA_Character::update()
         }
         return;
     }
+
     if(state == STATE_REMOTE_ROBOT_RETURN) {
         updateRemoteRobotReturn();
         return;
     }
+
     if(state == STATE_UNPACK_ITEM) {
         if(remoteRobot) {
             setAnimation("remote_robot_idle");
@@ -107,6 +119,7 @@ void TA_Character::update()
         updateFollowPosition();
         return;
     }
+
     if(state == STATE_RAISE_ITEM) {
         if(!isAnimated() && (remoteRobot || getCurrentFrame() == 74)) {
             state = STATE_NORMAL;
@@ -120,7 +133,7 @@ void TA_Character::update()
     updateObjectCollision();
     updateTool();
     updateFollowPosition();
-    if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN) {
+    if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT) {
         return;
     }
     updateAnimation();
@@ -376,6 +389,9 @@ double TA_Character::getMaxHelitailTime()
 bool TA_Character::displayFlighTimeBar()
 {
     if(TA::levelPath == "maps/pm/pm4") {
+        return false;
+    }
+    if(state == STATE_TELEPORT) {
         return false;
     }
     return helitail && !remoteRobot;
