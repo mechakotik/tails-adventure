@@ -24,6 +24,9 @@ void TA_Character::updateCollisions()
     if(remoteRobot) {
         topLeft = TA_Point(18, 27);
     }
+    else if(hurt) {
+        topLeft = TA_Point(18, 12);
+    }
     else if(jump && velocity.y < 0) {
         topLeft = TA_Point(18, 9);
     }
@@ -147,7 +150,7 @@ void TA_Character::updateCollisions()
         if(ground) {
             hurt = false;
             invincibleTimeLeft = invincibleTime;
-            if(rings < 0) {
+            if(rings <= 0) {
                 setAnimation("death");
                 state = STATE_DEAD;
             }

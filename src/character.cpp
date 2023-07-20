@@ -148,7 +148,7 @@ TA_CollisionType TA_Character::getCollisionType()
 void TA_Character::updateAnimation()
 {
     if(rings >= 0 && hurt) {
-        setAlpha(200);
+        setAlpha(255);
     }
     else if(rings >= 0 && invincibleTimeLeft > 0) {
         setAlpha(255 - 55 * invincibleTimeLeft / invincibleTime);

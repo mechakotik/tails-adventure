@@ -37,7 +37,7 @@ TA_ScreenState TA_GameScreen::update()
     hud.draw();
 
     if(character.gameOver()) {
-        return TA_SCREENSTATE_TITLE;
+        return TA_SCREENSTATE_GAMEOVER;
     }
     if(objectSet.getTransition() != TA_SCREENSTATE_CURRENT) {
         return objectSet.getTransition();
