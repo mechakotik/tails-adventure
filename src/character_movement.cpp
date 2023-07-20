@@ -18,7 +18,6 @@ void TA_Character::physicsStep()
         velocity.y += grv * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxJumpSpeed);
     }
-    //TA::printLog("%f %f", position.x, position.y);
 }
 
 void TA_Character::initHelitail()

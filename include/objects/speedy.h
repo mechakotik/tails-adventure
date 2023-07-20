@@ -22,6 +22,7 @@ private:
         STATE_END_SEQUENCE
     } state = STATE_SHOW;
 
+    bool isComplete();
     void loadSprite();
     void initShow();
     void initIdle();

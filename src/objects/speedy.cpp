@@ -2,12 +2,26 @@
 #include "tools.h"
 #include "character.h"
 #include "item_box.h"
+#include "save.h"
+#include "transition.h"
 
 void TA_Speedy::load()
 {
+    objectSet->getLinks().camera->setLockPosition({0, 112});
+
+    if(isComplete()) {
+        objectSet->spawnObject<TA_Transition>(TA_Point(254, 3888), TA_Point(256, 4016), 3);
+        return;
+    }
+
     loadSprite();
     initShow();
-    objectSet->getLinks().camera->setLockPosition({0, 112});
+}
+
+bool TA_Speedy::isComplete()
+{
+    long long itemMask = TA::save::getSaveParameter("item_mask");
+    return itemMask & (1ll << 33);
 }
 
 void TA_Speedy::loadSprite()
@@ -33,6 +47,10 @@ void TA_Speedy::initShow()
 
 bool TA_Speedy::update()
 {
+    if(isComplete()) {
+        return false;
+    }
+
     switch(state) {
         case STATE_SHOW:
             updateShow();
@@ -108,6 +126,9 @@ void TA_Speedy::initAttack()
 {
     if(objectSet->getLinks().camera->isLocked()) {
         initEndSequence();
+        return;
+    }
+    if(objectSet->getCharacterPosition().y < 384) {
         return;
     }
 
@@ -284,7 +305,7 @@ void TA_Speedy::updateEndSequencePhase4()
         return;
     }
 
-    velocity.x = (getCurrentFrame() == 4 ? -1 : 1);
+    velocity.x = (getCurrentFrame() == 4 ? 1 : -1);
     velocity.y = 0;
     position = position + velocity * TA::elapsedTime;
 }
