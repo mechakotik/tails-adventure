@@ -215,6 +215,14 @@ std::string TA_ItemBox::getItemSlotName(int number)
     return "item_slot" + std::to_string(number);
 }
 
+int TA_ItemBox::getDrawPriority()
+{
+    if(objectSet->getLinks().character->isRemoteRobot()) {
+        return 0;
+    }
+    return 1;
+}
+
 void TA_ItemLabel::load(TA_Point position, std::string name)
 {
     font.load("fonts/item.png", 8, 8);

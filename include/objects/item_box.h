@@ -45,7 +45,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, int itemNumber, std::string itemName);
     bool update();
-    int getDrawPriority() override {return 1;}
+    int getDrawPriority() override;
     bool checkPawnCollision(TA_Polygon &hitbox) override;
 };
 
