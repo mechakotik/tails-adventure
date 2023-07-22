@@ -1,6 +1,7 @@
 #ifndef TA_BIRD_WALKER_H
 #define TA_BIRD_WALKER_H
 
+#include <numbers>
 #include "object_set.h"
 
 enum TA_BirdWalkerState {
@@ -25,7 +26,7 @@ private:
     const double coolDownTime = 60;
     const double laughTime = 60;
     const double walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
-    const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = M_PI / 6, bulletSpeed = 1;
+    const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = std::numbers::pi / 6, bulletSpeed = 1;
     const int shortFireBullets = 3, longFireBullets = 10;
     const double invincibleTime = 30;
     const double deathTime = 180, deathExplosionDelay = 6;

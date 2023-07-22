@@ -29,6 +29,8 @@ namespace TA
 
     extern int screenWidth, screenHeight, widthMultiplier, heightMultiplier;
     extern double elapsedTime;
+
+    const double pi = atan(double(1)) * 4;
     const double epsilon = 1e-5;
 
     extern std::string levelPath, previousLevelPath;
