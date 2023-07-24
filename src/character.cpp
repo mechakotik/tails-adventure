@@ -400,6 +400,7 @@ bool TA_Character::displayFlighTimeBar()
 void TA_Character::setCharacterPosition(TA_Point position)
 {
     this->position = position;
+    velocity = TA_Point(0, 0);
     ground = true;
     jump = helitail = false;
     flip = false;
