@@ -212,6 +212,9 @@ void TA_Speedy::initEndSequence()
     cpPosition = objectSet->getLinks().character->getPosition();
     characterPlaceholder.setAnimation("helitail");
     characterPlaceholder.setFlip(false);
+
+    objectSet->spawnObject<TA_Transition>(TA_Point(0, 16), TA_Point(2, 240), 3);
+    objectSet->spawnObject<TA_Transition>(TA_Point(254, 16), TA_Point(256, 240), 3);
 }
 
 void TA_Speedy::updateEndSequence()
