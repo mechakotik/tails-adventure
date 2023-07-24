@@ -10,8 +10,8 @@ To build this project, you need to install C++ compiler, Meson build system and 
 - [SDL2_image](https://github.com/libsdl-org/SDL_image/tree/SDL2)
 - [SDL2_mixer](https://github.com/libsdl-org/SDL_mixer/tree/SDL2)
 - [tinyxml2](https://github.com/leethomason/tinyxml2)
-- [libcurl] (https://github.com/curl/curl)
-- [libarchive] (https://github.com/libarchive/libarchive)
+- [libcurl](https://github.com/curl/curl)
+- [libarchive](https://github.com/libarchive/libarchive)
 
 The installation process is specific for your OS and package manager, here is a few examples:
 
