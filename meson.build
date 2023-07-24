@@ -14,6 +14,9 @@ deps = [sdl2_dep, sdl2_image_dep, sdl2_mixer_dep, tinyxml2_dep]
 sources = files()
 subdir('src')
 
+windows = import('windows')
+sources += windows.compile_resources('res/icon.rc')
+
 incdir = include_directories('include', 'include/objects')
 output_dir = meson.build_root() + '/output'
 
