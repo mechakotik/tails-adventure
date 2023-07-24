@@ -10,6 +10,8 @@ To build this project, you need to install C++ compiler, Meson build system and 
 - [SDL2_image](https://github.com/libsdl-org/SDL_image/tree/SDL2)
 - [SDL2_mixer](https://github.com/libsdl-org/SDL_mixer/tree/SDL2)
 - [tinyxml2](https://github.com/leethomason/tinyxml2)
+- [libcurl] (https://github.com/curl/curl)
+- [libarchive] (https://github.com/libarchive/libarchive)
 
 The installation process is specific for your OS and package manager, here is a few examples:
 
@@ -24,7 +26,7 @@ pacman -Syu
 If it asks to restart the terminal, restart it and run this command again. After packages are updated, run following command to install dependencies:
 
 ```console
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-tinyxml2
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-tinyxml2 mingw-w64-x86_64-curl mingw-w64-x86_64-libarchive
 ```
 
 After installing dependencies, close terminal and run MSYS2 MINGW64 terminal to run build commands in.
