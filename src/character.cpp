@@ -39,13 +39,13 @@ void TA_Character::load(TA_Links newLinks)
 
 void TA_Character::handleInput()
 {
+    controller.setAnalogStick(helitail);
+    controller.update();
+
     hidden = nextFrameHidden;
     if(hidden) {
         return;
     }
-
-    controller.setAnalogStick(helitail);
-    controller.update();
 
     if(state == STATE_THROW_BOMB) {
         setPosition(position);
@@ -172,6 +172,7 @@ void TA_Character::updateAnimation()
     }
 
     if(remoteRobot) {
+        setAlpha(255);
         if(helitail) {
             if(!isAnimated()) {
                 setAnimation("remote_robot_fly_loop");
@@ -303,14 +304,17 @@ void TA_Character::updateRemoteRobotReturn()
 
     TA_Point velocity = remoteRobotInitialPosition - position;
     if(velocity.length() < 1) {
-        position = remoteRobotInitialPosition;
         remoteRobot = false;
-        jump = helitail = false;
-        ground = true;
-        flip = remoteRobotControlSprite.getFlip();
         state = STATE_NORMAL;
+        setCharacterPosition(remoteRobotInitialPosition);
+        flip = remoteRobotControlSprite.getFlip();
+
+        setPosition(position);
+        setFlip(flip);
+        updateFollowPosition();
         return;
     }
+
     double divisor = velocity.length();
     velocity.x /= divisor;
     velocity.y /= divisor;
@@ -403,5 +407,7 @@ void TA_Character::setCharacterPosition(TA_Point position)
     velocity = TA_Point(0, 0);
     ground = true;
     jump = helitail = false;
+    lookUp = crouch = false;
     flip = false;
+    updateAnimation();
 }
