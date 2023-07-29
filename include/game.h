@@ -2,7 +2,7 @@
 #define TA_GAME_H
 
 #include <chrono>
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "screen_state_machine.h"
 
 class TA_Game {

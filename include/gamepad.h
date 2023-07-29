@@ -1,7 +1,7 @@
 #ifndef TA_GAMEPAD_H
 #define TA_GAMEPAD_H
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "geometry.h"
 #include "tools.h"
 

@@ -2,7 +2,7 @@
 #define TA_KEYBOARD_H
 
 #include <array>
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "tools.h"
 #include "geometry.h"
 

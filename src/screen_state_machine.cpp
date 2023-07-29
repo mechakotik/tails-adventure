@@ -10,9 +10,9 @@
 
 void TA_ScreenStateMachine::init()
 {
-    currentState = TA_SCREENSTATE_TITLE;
+    currentState = TA_SCREENSTATE_HOUSE;
     neededState = TA_SCREENSTATE_CURRENT;
-    currentScreen = new TA_TitleScreen();
+    currentScreen = new TA_HouseScreen();
     currentScreen -> init();
 }
 
