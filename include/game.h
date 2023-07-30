@@ -27,7 +27,7 @@ private:
     bool firstFrame = true;
     long long fpsTimer = 0;
     int fpsCount = 0, refreshRate = 60;
-    int windowWidth, windowHeight;
+    int windowWidth, windowHeight, targetWidth = 0, targetHeight = 0;
     bool useVsync = true, fullscreen = true;
 
 public:

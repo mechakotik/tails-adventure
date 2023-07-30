@@ -95,27 +95,28 @@ void TA_Game::toggleFullscreen()
 
 void TA_Game::updateWindowSize()
 {
-    SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
     if(!fullscreen) {
         int factor = TA::save::getParameter("resolution");
         int neededWidth = TA::screenWidth * factor;
         int neededHeight = TA::screenHeight * factor;
-        if(windowWidth != neededWidth || windowHeight != neededHeight) {
-            windowWidth = neededWidth;
-            windowHeight = neededHeight;
-            SDL_SetWindowSize(TA::window, windowWidth, windowHeight);
-        }
+        SDL_SetWindowSize(TA::window, neededWidth, neededHeight);
     }
 
+    SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
     TA::screenWidth = baseHeight * windowWidth / windowHeight;
     TA::screenHeight = baseHeight;
     TA::widthMultiplier = TA::heightMultiplier = (windowWidth + TA::screenWidth - 1) / TA::screenWidth;
 
-    if(targetTexture != nullptr) {
-        SDL_DestroyTexture(targetTexture);
+    if(targetWidth < TA::screenWidth * TA::widthMultiplier || targetHeight < TA::screenHeight * TA::heightMultiplier) {
+        targetWidth = std::max(targetWidth, TA::screenWidth * TA::widthMultiplier);
+        targetHeight = std::max(targetHeight, TA::screenHeight * TA::heightMultiplier);
+
+        if(targetTexture != nullptr) {
+            SDL_DestroyTexture(targetTexture);
+        }
+        targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, targetWidth, targetHeight);
+        SDL_SetTextureScaleMode(targetTexture, SDL_ScaleModeBest);
     }
-    targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, TA::screenWidth * TA::widthMultiplier, TA::screenHeight * TA::heightMultiplier);
-    SDL_SetTextureScaleMode(targetTexture, SDL_ScaleModeBest);
 }
 
 bool TA_Game::process()
@@ -202,6 +203,7 @@ TA_Game::~TA_Game()
     TA::gamepad::quit();
     TA::resmgr::quit();
     TA::eventLog::quit();
+    SDL_DestroyTexture(targetTexture);
     SDL_DestroyRenderer(TA::renderer);
     SDL_DestroyWindow(TA::window);
     SDL_Quit();
