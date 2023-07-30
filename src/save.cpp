@@ -1,32 +1,67 @@
 #include <map>
-#include <sstream>
+#include <fstream>
+#include <filesystem>
 #include "save.h"
 #include "tools.h"
 #include "error.h"
 
 namespace TA { namespace save {
     void addOptionsFromFile(std::string filename);
+    std::string getSaveFileName();
     std::map<std::string, long long> saveMap;
     std::string currentSave = "";
 }}
 
 void TA::save::addOptionsFromFile(std::string filename)
 {
-    std::stringstream stream; {
-        std::string file = TA::readStringFromFile(filename);
-        stream << file;
+    std::ifstream fin(filename);
+    if(!fin.is_open()) {
+        return;
     }
 
     std::string name;
     long long value;
-    while(stream >> name >> value) {
+    while(fin >> name >> value) {
         saveMap[name] = value;
     }
+    fin.close();
 }
 
 void TA::save::load()
 {
-    addOptionsFromFile("default_config");
+    addOptionsFromFile("assets/default_config");
+    addOptionsFromFile(getSaveFileName());
+}
+
+void TA::save::writeToFile()
+{
+    std::ofstream fout(getSaveFileName());
+    if(!fout.is_open()) {
+        return;
+    }
+
+    for(auto [key, value] : saveMap) {
+        if(key.find('/') != key.npos) {
+            continue;
+        }
+        fout << key << ' ' << value << std::endl;
+    }
+    fout.close();
+}
+
+std::string TA::save::getSaveFileName()
+{
+    #ifdef __WIN32
+        std::filesystem::path path = getenv("LOCALAPPDATA");
+        path /= "TailsAdventure";
+        if(!std::filesystem::exists(path)) {
+            std::filesystem::create_directories(path);
+        }
+        path /= "config";
+        return path.string();
+    #else
+        // TODO: get save filename on Linux
+    #endif
 }
 
 long long TA::save::getParameter(std::string name)
@@ -63,14 +98,16 @@ void TA::save::setSaveParameter(std::string name, long long value, std::string s
     setParameter(saveName + "/" + name, value);
 }
 
-void TA::save::createSave(std::string saveName)
+void TA::save::repairSave(std::string saveName)
 {
     std::map<std::string, long long> newSaveMap = saveMap;
     std::string defaultSaveName = "default_save/";
     for(auto item : saveMap) {
         if(item.first.length() >= defaultSaveName.length() && item.first.substr(0, defaultSaveName.length()) == defaultSaveName) {
             std::string itemName = saveName + "/" + item.first.substr(defaultSaveName.length(), item.first.length() - defaultSaveName.length());
-            newSaveMap[itemName] = item.second;
+            if(!newSaveMap.count(itemName)) {
+                newSaveMap[itemName] = item.second;
+            }
         }
     }
     saveMap = newSaveMap;

@@ -7,6 +7,7 @@
 #include "house_screen.h"
 #include "game_over_screen.h"
 #include "error.h"
+#include "save.h"
 
 void TA_ScreenStateMachine::init()
 {
@@ -35,6 +36,8 @@ bool TA_ScreenStateMachine::update()
         TA::drawShadow(255);
         currentScreen -> quit();
         delete currentScreen;
+
+        TA::save::writeToFile();
 
         switch(neededState)
         {

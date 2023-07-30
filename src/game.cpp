@@ -42,7 +42,7 @@ TA_Game::TA_Game()
     TA::gamepad::init();
     TA::keyboard::init();
     TA::save::load();
-    TA::save::createSave("current_save");
+    TA::save::repairSave("current_save");
     TA::save::setCurrentSave("current_save");
 
     startTime = std::chrono::high_resolution_clock::now();

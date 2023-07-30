@@ -210,9 +210,11 @@ void TA_OptionsMenu::updateOptionSelector()
                 break;
             case TA_DIRECTION_LEFT:
                 sound = options[group][option]->move(-1);
+                TA::save::writeToFile();
                 break;
             case TA_DIRECTION_RIGHT:
                 sound = options[group][option]->move(1);
+                TA::save::writeToFile();
                 break;
             default:
                 break;
@@ -221,6 +223,7 @@ void TA_OptionsMenu::updateOptionSelector()
 
     if(controller->isJustPressed(TA_BUTTON_A)) {
         sound = options[group][option]->move(1);
+        TA::save::writeToFile();
     }
 
     switch(sound) {
