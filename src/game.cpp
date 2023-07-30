@@ -77,7 +77,7 @@ void TA_Game::createWindow()
         TA::handleSDLError("Failed to create window");
     }
 
-    TA::renderer = SDL_CreateRenderer(TA::window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    TA::renderer = SDL_CreateRenderer(TA::window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
     if(TA::renderer == nullptr) {
         TA::handleSDLError("Failed to create renderer");
     }
@@ -96,12 +96,15 @@ void TA_Game::toggleFullscreen()
 void TA_Game::updateWindowSize()
 {
     SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
-    double aspectRatio = double(windowWidth) / windowHeight;
-    if(aspectRatio > maxWindowAspectRatio + 0.01 || aspectRatio < minWindowAspectRatio - 0.01) {
-        int newWindowWidth = windowHeight * std::min(maxWindowAspectRatio, std::max(minWindowAspectRatio, aspectRatio));
-        SDL_SetWindowSize(TA::window, newWindowWidth, windowHeight);
-        updateWindowSize();
-        return;
+    if(!fullscreen) {
+        int factor = TA::save::getParameter("resolution");
+        int neededWidth = TA::screenWidth * factor;
+        int neededHeight = TA::screenHeight * factor;
+        if(windowWidth != neededWidth || windowHeight != neededHeight) {
+            windowWidth = neededWidth;
+            windowHeight = neededHeight;
+            SDL_SetWindowSize(TA::window, windowWidth, windowHeight);
+        }
     }
 
     TA::screenWidth = baseHeight * windowWidth / windowHeight;
@@ -117,6 +120,8 @@ void TA_Game::updateWindowSize()
 
 bool TA_Game::process()
 {
+    updateWindowSize();
+
     TA::touchscreen::update();
     TA::keyboard::update();
     TA::gamepad::update();
@@ -132,9 +137,6 @@ bool TA_Game::process()
         }
         else if(event.type == SDL_CONTROLLERDEVICEADDED || event.type == SDL_CONTROLLERDEVICEREMOVED) {
             TA::gamepad::handleEvent(event.cdevice);
-        }
-        else if(event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
-            updateWindowSize();
         }
     }
 

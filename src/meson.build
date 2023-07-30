@@ -25,6 +25,7 @@ sources += files(
     'main.cpp',
     'map_screen.cpp',
     'object_set.cpp',
+    'options_menu.cpp',
     'pawn.cpp',
     'resource_manager.cpp',
     'save.cpp',

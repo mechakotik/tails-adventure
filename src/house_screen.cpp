@@ -19,6 +19,7 @@ void TA_HouseScreen::init()
     music.play();
 
     inventoryMenu.load(&controller);
+    optionsMenu.load(&controller);
 }
 
 TA_ScreenState TA_HouseScreen::update()
@@ -26,8 +27,8 @@ TA_ScreenState TA_HouseScreen::update()
     controller.update();
     updatePositions();
 
-    if(inventoryOpen) {
-        if(curtainTimeLeft <= 0) {
+    if(curtainTimeLeft <= 0) {
+        if(inventoryOpen) {
             shouldMove |= !inventoryMenu.update();
             if(shouldMove) {
                 inventoryMenu.hide();
@@ -36,9 +37,18 @@ TA_ScreenState TA_HouseScreen::update()
                 inventoryMenu.show();
             }
         }
-    }
-    else {
-        updateSelector();
+        else if(optionsOpen) {
+            shouldMove |= !optionsMenu.update();
+            if(shouldMove) {
+                optionsMenu.hide();
+            }
+            else {
+                optionsMenu.show();
+            }
+        }
+        else {
+            updateSelector();
+        }
     }
 
     updateCurtain();
@@ -92,7 +102,7 @@ void TA_HouseScreen::updateSelector()
 
 void TA_HouseScreen::updateCurtain()
 {
-    if(curtainTimeLeft < 0) {
+    if(curtainTimeLeft <= 0) {
         if(shouldDoTransition()) {
             curtainTimeLeft = curtainMoveTime * 2 + curtainIdleTime;
             shouldMove = false;
@@ -111,13 +121,16 @@ void TA_HouseScreen::updateCurtain()
 bool TA_HouseScreen::shouldDoTransition()
 {
     if(inventoryOpen) {
-        return shouldMove && !inventoryMenu.isShown();
+        return !inventoryMenu.isShown();
+    }
+    if(optionsOpen) {
+        return !optionsMenu.isShown();
     }
     if(!controller.isJustPressed(TA_BUTTON_A)) {
         return false;
     }
 
-    if((selectionX == 1 && selectionY == 0) || (selectionX == 0 && selectionY == 1)) {
+    if(selectionX == 0 && selectionY == 1) {
         errorSound.play();
         return false;
     }
@@ -131,6 +144,12 @@ void TA_HouseScreen::applyTransition()
     if(selectionX == 0 && selectionY == 0) {
         inventoryOpen = !inventoryOpen;
     }
+    else if(selectionX == 1 && selectionY == 0) {
+        optionsOpen = !optionsOpen;
+        if(optionsOpen) {
+            optionsMenu.reset();
+        }
+    }
     else if(selectionX == 1 && selectionY == 1) {
         shouldExit = true;
     }
@@ -143,6 +162,9 @@ void TA_HouseScreen::draw()
 
     if(inventoryOpen) {
         inventoryMenu.draw();
+    }
+    else if(optionsOpen) {
+        optionsMenu.draw();
     }
     else {
         houseSprite.draw();

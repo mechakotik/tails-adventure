@@ -52,6 +52,7 @@ private:
     double arrowTimer = 0, showTimeLeft = -1, hideTimeLeft = -1, listTransitionTimeLeft = -1;
 
 public:
+    TA_InventoryMenu() {}
     void load(TA_CommonController* controller);
     bool update();
     void draw();

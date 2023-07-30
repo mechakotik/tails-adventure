@@ -2,7 +2,8 @@
 #define TA_TOOLS_H
 
 #include <string>
-#include <SDL.h>
+#include <vector>
+#include "SDL2/SDL.h"
 
 enum TA_Direction {
     TA_DIRECTION_UP,
@@ -32,6 +33,8 @@ namespace TA
 
     const double pi = atan(double(1)) * 4;
     const double epsilon = 1e-5;
+
+    const std::vector<int> fpsLimits{30, 60, 75, 120, 144, 165, 240, 360};
 
     extern std::string levelPath, previousLevelPath;
 
