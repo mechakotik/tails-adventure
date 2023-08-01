@@ -16,6 +16,10 @@
 
 TA_Game::TA_Game()
 {
+    TA::save::load();
+    TA::save::repairSave("current_save");
+    TA::save::setCurrentSave("current_save");
+
     initSDL();
     createWindow();
 
@@ -41,9 +45,6 @@ TA_Game::TA_Game()
     
     TA::gamepad::init();
     TA::keyboard::init();
-    TA::save::load();
-    TA::save::repairSave("current_save");
-    TA::save::setCurrentSave("current_save");
 
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
@@ -77,7 +78,11 @@ void TA_Game::createWindow()
         TA::handleSDLError("Failed to create window");
     }
 
-    TA::renderer = SDL_CreateRenderer(TA::window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+    int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
+    if(TA::save::getParameter("vsync")) {
+        rendererFlags |= SDL_RENDERER_PRESENTVSYNC;
+    }
+    TA::renderer = SDL_CreateRenderer(TA::window, -1, rendererFlags);
     if(TA::renderer == nullptr) {
         TA::handleSDLError("Failed to create renderer");
     }
