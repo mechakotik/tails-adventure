@@ -94,7 +94,7 @@ void TA_Game::createWindow()
 void TA_Game::toggleFullscreen()
 {
     fullscreen = !fullscreen;
-    SDL_SetWindowFullscreen(TA::window, (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
+    SDL_SetWindowFullscreen(TA::window, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
     updateWindowSize();
 }
 
@@ -201,6 +201,23 @@ void TA_Game::update()
     SDL_Rect dstRect{0, 0, windowWidth, windowHeight};
     SDL_RenderCopy(TA::renderer, targetTexture, &srcRect, &dstRect);
     SDL_RenderPresent(TA::renderer);
+
+    int fpsLimit = getFPSLimit();
+    if(fpsLimit != 0) {
+        auto endTime = currentTime + std::chrono::nanoseconds(int(1e9 / fpsLimit));
+        while(std::chrono::high_resolution_clock::now() < endTime) {}
+    }
+}
+
+int TA_Game::getFPSLimit()
+{
+    if(TA::save::getParameter("vsync")) {
+        return 0;
+    }
+    if(TA::save::getParameter("fps_limit") == 0) {
+        return 0;
+    }
+    return TA::fpsLimits[TA::save::getParameter("fps_limit") - 1];
 }
 
 TA_Game::~TA_Game()

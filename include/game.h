@@ -18,6 +18,7 @@ private:
     void createWindow();
     void toggleFullscreen();
     void updateWindowSize();
+    int getFPSLimit();
 
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime, currentTime;
     TA_ScreenStateMachine screenStateMachine;
@@ -25,10 +26,8 @@ private:
     SDL_Texture *targetTexture = nullptr;
 
     bool firstFrame = true;
-    long long fpsTimer = 0;
-    int fpsCount = 0, refreshRate = 60;
     int windowWidth, windowHeight, targetWidth = 0, targetHeight = 0;
-    bool useVsync = true, fullscreen = true;
+    bool vsync = false, fullscreen = true;
 
 public:
     TA_Game();
