@@ -15,6 +15,12 @@ keyboard_map_lb 4
 keyboard_map_rb 7
 keyboard_map_start 40
 
+gamepad_map_a 0
+gamepad_map_b 1
+gamepad_map_lb 9
+gamepad_map_rb 10
+gamepad_map_start 6
+
 default_save/item_mask 1
 default_save/area_mask 3
 default_save/boss_mask 0

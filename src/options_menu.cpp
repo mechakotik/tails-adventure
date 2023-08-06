@@ -172,6 +172,48 @@ public:
     }
 };
 
+class TA_MapGamepadOption : public TA_Option {
+private:
+    const std::vector<std::string> buttons{"a", "b", "lb", "rb", "start"};
+
+    bool locked = false;
+    int button = 0;
+
+public:
+    std::string getName() override {return "map gamepad";}
+
+    std::string getValue() override {
+        if(!locked) {
+            return "";
+        }
+        return buttons[button];
+    }
+
+    bool isLocked() override {return locked;}
+
+    TA_MoveSoundId move(int delta) override {
+        locked = true;
+        button = 0;
+        return TA_MOVE_SOUND_SELECT;
+    }
+
+    TA_MoveSoundId updateLocked() override {
+        for(int id = 0; id < SDL_CONTROLLER_BUTTON_MAX; id ++) {
+            if(TA::gamepad::isControllerButtonJustPressed(SDL_GameControllerButton(id))) {
+                TA::save::setParameter("gamepad_map_" + buttons[button], id);
+                button ++;
+                if(button >= (int)buttons.size()) {
+                    locked = false;
+                    TA::save::writeToFile();
+                }
+                return TA_MOVE_SOUND_SWITCH;
+            }
+        }
+
+        return TA_MOVE_SOUND_EMPTY;
+    }
+};
+
 void TA_OptionsMenu::load(TA_Controller* controller)
 {
     this->controller = controller;
@@ -186,6 +228,7 @@ void TA_OptionsMenu::load(TA_Controller* controller)
     options[0].push_back(new TA_MaxFPSOption());
 
     options[1].push_back(new TA_MapKeyboardOption());
+    options[1].push_back(new TA_MapGamepadOption());
 
     options[2].push_back(new TA_VolumeOption("main", "main_volume"));
     options[2].push_back(new TA_VolumeOption("music", "music_volume"));

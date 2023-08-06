@@ -15,6 +15,8 @@ namespace TA { namespace gamepad {
     TA_Point getDirectionVector();
     bool isPressed(TA_FunctionButton button);
     bool isJustPressed(TA_FunctionButton button);
+    bool isControllerButtonPressed(SDL_GameControllerButton button);
+    bool isControllerButtonJustPressed(SDL_GameControllerButton button);
 }}
 
 #endif // TA_GAMEPAD_H

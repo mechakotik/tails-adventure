@@ -1,9 +1,10 @@
 #include <array>
 #include "gamepad.h"
-#include "error.h"
+#include "save.h"
 #include "tools.h"
 
 namespace TA { namespace gamepad {
+    void updateMapping();
     bool isDpadPressed();
     TA_Point getDpadDirectionVector();
     TA_Point getStickDirectionVector();
@@ -12,7 +13,7 @@ namespace TA { namespace gamepad {
     std::array<SDL_GameControllerButton, TA_DIRECTION_MAX> directionMapping;
 
     SDL_GameController *controller = nullptr;
-    std::array<bool, TA_BUTTON_MAX> pressed, justPressed;
+    std::array<bool, SDL_CONTROLLER_BUTTON_MAX> pressed, justPressed;
     bool isConnected = false;
 }}
 
@@ -45,11 +46,20 @@ void TA::gamepad::init(int index)
     }
     SDL_GameControllerAddMappingsFromFile("controllerdb/gamecontrollerdb.txt");
 
-    mapping[TA_BUTTON_A] = SDL_CONTROLLER_BUTTON_A;
-    mapping[TA_BUTTON_B] = SDL_CONTROLLER_BUTTON_B;
-    mapping[TA_BUTTON_PAUSE] = SDL_CONTROLLER_BUTTON_START;
-    mapping[TA_BUTTON_LB] = SDL_CONTROLLER_BUTTON_LEFTSHOULDER;
-    mapping[TA_BUTTON_RB] = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER;
+    updateMapping();
+}
+
+void TA::gamepad::updateMapping()
+{
+    auto getMap = [] (std::string name) {
+        return (SDL_GameControllerButton)TA::save::getParameter("gamepad_map_" + name);
+    };
+
+    mapping[TA_BUTTON_A] = getMap("a");
+    mapping[TA_BUTTON_B] = getMap("b");
+    mapping[TA_BUTTON_PAUSE] = getMap("start");
+    mapping[TA_BUTTON_LB] = getMap("lb");
+    mapping[TA_BUTTON_RB] = getMap("rb");
 
     directionMapping[TA_DIRECTION_UP] = SDL_CONTROLLER_BUTTON_DPAD_UP;
     directionMapping[TA_DIRECTION_DOWN] = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
@@ -63,8 +73,10 @@ void TA::gamepad::update()
         return;
     }
     SDL_GameControllerUpdate();
-    for(int button = 0; button < TA_BUTTON_MAX; button ++) {
-        if(SDL_GameControllerGetButton(controller, mapping[button])) {
+    updateMapping();
+
+    for(int button = 0; button < SDL_CONTROLLER_BUTTON_MAX; button ++) {
+        if(SDL_GameControllerGetButton(controller, (SDL_GameControllerButton)button)) {
             if(!pressed[button]) {
                 pressed[button] = justPressed[button] = true;
             }
@@ -104,13 +116,13 @@ TA_Point TA::gamepad::getDpadDirectionVector()
 {
     int verticalDirection = -1, horizontalDirection = -1;
     for(int direction : {TA_DIRECTION_UP, TA_DIRECTION_DOWN}) {
-        if(SDL_GameControllerGetButton(controller, directionMapping[direction])) {
+        if(pressed[directionMapping[direction]]) {
             verticalDirection = direction;
             break;
         }
     }
     for(int direction : {TA_DIRECTION_LEFT, TA_DIRECTION_RIGHT}) {
-        if(SDL_GameControllerGetButton(controller, directionMapping[direction])) {
+        if(pressed[directionMapping[direction]]) {
             horizontalDirection = direction;
             break;
         }
@@ -147,10 +159,20 @@ TA_Point TA::gamepad::getStickDirectionVector()
 
 bool TA::gamepad::isPressed(TA_FunctionButton button)
 {
-    return connected() && pressed[button];
+    return isControllerButtonPressed(mapping[button]);
 }
 
 bool TA::gamepad::isJustPressed(TA_FunctionButton button)
+{
+    return isControllerButtonJustPressed(mapping[button]);
+}
+
+bool TA::gamepad::isControllerButtonPressed(SDL_GameControllerButton button)
+{
+    return connected() && pressed[button];
+}
+
+bool TA::gamepad::isControllerButtonJustPressed(SDL_GameControllerButton button)
 {
     return connected() && justPressed[button];
 }
