@@ -24,7 +24,6 @@ private:
 
     SDL_Texture *targetTexture = nullptr;
 
-    bool firstFrame = true;
     int windowWidth, windowHeight, targetWidth = 0, targetHeight = 0;
     bool vsync = false, fullscreen = true;
 

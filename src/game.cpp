@@ -81,6 +81,7 @@ void TA_Game::createWindow()
     int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
     if(TA::save::getParameter("vsync")) {
         rendererFlags |= SDL_RENDERER_PRESENTVSYNC;
+        vsync = true;
     }
     TA::renderer = SDL_CreateRenderer(TA::window, -1, rendererFlags);
     if(TA::renderer == nullptr) {
@@ -159,10 +160,6 @@ bool TA_Game::process()
 void TA_Game::update()
 {
     currentTime = std::chrono::high_resolution_clock::now();
-    if(firstFrame) {
-        startTime = currentTime;
-        firstFrame = false;
-    }
 
     union TimeConverter {
         double a;
