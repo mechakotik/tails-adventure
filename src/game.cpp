@@ -202,22 +202,11 @@ void TA_Game::update()
     SDL_RenderCopy(TA::renderer, targetTexture, &srcRect, &dstRect);
     SDL_RenderPresent(TA::renderer);
 
-    int fpsLimit = getFPSLimit();
-    if(fpsLimit != 0) {
+    int fpsLimit = TA::getFPSLimit();
+    if(!vsync && fpsLimit != 0) {
         auto endTime = currentTime + std::chrono::nanoseconds(int(1e9 / fpsLimit));
         while(std::chrono::high_resolution_clock::now() < endTime) {}
     }
-}
-
-int TA_Game::getFPSLimit()
-{
-    if(TA::save::getParameter("vsync")) {
-        return 0;
-    }
-    if(TA::save::getParameter("fps_limit") == 0) {
-        return 0;
-    }
-    return TA::fpsLimits[TA::save::getParameter("fps_limit") - 1];
 }
 
 TA_Game::~TA_Game()

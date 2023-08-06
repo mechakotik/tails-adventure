@@ -42,6 +42,11 @@ public:
         int value = TA::save::getParameter("vsync");
         value = 1 - value;
         TA::save::setParameter("vsync", value);
+
+        if(value == 1) {
+            TA::save::setParameter("fps_limit", 0);
+        }
+
         return TA_MOVE_SOUND_SWITCH;
     }
 };
@@ -51,11 +56,11 @@ public:
     std::string getName() override {return "fps limit";}
 
     std::string getValue() override {
-        int value = TA::save::getParameter("fps_limit");
+        int value = TA::getFPSLimit();
         if(value == 0) {
             return "off";
         }
-        return std::to_string(TA::fpsLimits[value - 1]);
+        return std::to_string(value);
     }
 
     TA_MoveSoundId move(int delta) override {
@@ -67,11 +72,14 @@ public:
             value = 0;
             result = TA_MOVE_SOUND_ERROR;
         }
-        if(value > (int)TA::fpsLimits.size()) {
-            value = (int)TA::fpsLimits.size();
+        if(value > 20) {
+            value = 20;
             result = TA_MOVE_SOUND_ERROR;
         }
 
+        if(value >= 1) {
+            TA::save::setParameter("vsync", 0);
+        }
         TA::save::setParameter("fps_limit", value);
         return result;
     }

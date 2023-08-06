@@ -26,15 +26,12 @@ namespace TA
 {
     extern SDL_Window *window;
     extern SDL_Renderer *renderer;
-    extern SDL_DisplayMode displayMode;
 
     extern int screenWidth, screenHeight, widthMultiplier, heightMultiplier;
     extern double elapsedTime;
 
     const double pi = atan(double(1)) * 4;
     const double epsilon = 1e-5;
-
-    const std::vector<int> fpsLimits{30, 60, 75, 120, 144, 165, 240, 360};
 
     extern std::string levelPath, previousLevelPath;
 
@@ -44,6 +41,7 @@ namespace TA
     bool equal(double a, double b);
     void addPathPrefix(std::string &path);
     double linearInterpolation(double left, double right, double pos);
+    int getFPSLimit();
 
     template<typename T>
     T sign(T a) {

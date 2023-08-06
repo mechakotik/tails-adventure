@@ -5,17 +5,17 @@
 #include "SDL2/SDL.h"
 #include "tools.h"
 #include "error.h"
+#include "save.h"
 
 namespace TA
 {
     SDL_Window *window;
     SDL_Renderer *renderer;
-    SDL_DisplayMode displayMode;
 
     int screenWidth, screenHeight, widthMultiplier, heightMultiplier;
     double elapsedTime;
 
-    std::string levelPath = "maps/pf/pf2", previousLevelPath = "";
+    std::string levelPath = "", previousLevelPath = "";
 
     namespace random
     {
@@ -156,4 +156,21 @@ void TA::eventLog::quit()
     if(output.is_open()) {
         output.close();
     }
+}
+
+int TA::getFPSLimit()
+{
+    int factor = TA::save::getParameter("fps_limit");
+    if(factor == 0) {
+        return 0;
+    }
+
+    SDL_DisplayMode displayMode;
+    SDL_GetCurrentDisplayMode(0, &displayMode);
+    
+    int refreshRate = displayMode.refresh_rate;
+    if(refreshRate == 0) {
+        refreshRate = 60;
+    }
+    return refreshRate * factor / 2;
 }

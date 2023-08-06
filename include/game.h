@@ -18,7 +18,6 @@ private:
     void createWindow();
     void toggleFullscreen();
     void updateWindowSize();
-    int getFPSLimit();
 
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime, currentTime;
     TA_ScreenStateMachine screenStateMachine;
