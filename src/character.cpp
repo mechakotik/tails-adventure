@@ -39,7 +39,6 @@ void TA_Character::load(TA_Links newLinks)
 
 void TA_Character::handleInput()
 {
-    controller.setAnalogStick(helitail);
     controller.update();
 
     hidden = nextFrameHidden;

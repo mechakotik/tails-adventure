@@ -69,8 +69,6 @@ TA_ScreenState TA_DevmenuScreen::update()
         normalFont.drawTextCentered(22, "Level: " + levels[levelPosition], {-1, 0});
     }
 
-    controller.draw();
-
     if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B)) {
         TA::levelPath = levels[levelPosition];
         return TA_SCREENSTATE_GAME;

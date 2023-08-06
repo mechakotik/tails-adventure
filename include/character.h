@@ -123,7 +123,6 @@ public:
     void handleInput();
     void update();
     void draw() override;
-    void drawControls() {controller.draw();}
 
     bool isOnGround() {return ground;}
     bool isJumpingOnSpring() {return spring;}

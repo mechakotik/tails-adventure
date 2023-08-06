@@ -33,7 +33,6 @@ TA_ScreenState TA_GameScreen::update()
     objectSet.draw(1);
     tilemap.draw(1);
     objectSet.draw(2);
-    character.drawControls();
     hud.draw();
 
     if(character.gameOver()) {
