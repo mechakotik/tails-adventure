@@ -214,6 +214,22 @@ public:
     }
 };
 
+class TA_RumbleOption : public TA_Option {
+    std::string getName() override {return "rumble";}
+
+    std::string getValue() override {
+        int value = TA::save::getParameter("rumble");
+        return (value ? "on" : "off");
+    }
+
+    TA_MoveSoundId move(int delta) override {
+        int value = TA::save::getParameter("rumble");
+        value = 1 - value;
+        TA::save::setParameter("rumble", value);
+        return TA_MOVE_SOUND_SWITCH;
+    }
+};
+
 void TA_OptionsMenu::load(TA_Controller* controller)
 {
     this->controller = controller;
@@ -229,6 +245,7 @@ void TA_OptionsMenu::load(TA_Controller* controller)
 
     options[1].push_back(new TA_MapKeyboardOption());
     options[1].push_back(new TA_MapGamepadOption());
+    options[1].push_back(new TA_RumbleOption());
 
     options[2].push_back(new TA_VolumeOption("main", "main_volume"));
     options[2].push_back(new TA_VolumeOption("music", "music_volume"));

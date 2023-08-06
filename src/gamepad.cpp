@@ -179,7 +179,7 @@ bool TA::gamepad::isControllerButtonJustPressed(SDL_GameControllerButton button)
 
 void TA::gamepad::rumble(double lowFreqStrength, double highFreqStrength, int time)
 {
-    if(!connected()) {
+    if(!connected() || !TA::save::getParameter("rumble")) {
         return;
     }
     SDL_GameControllerRumble(controller, 0xFFFF * lowFreqStrength, 0xFFFF * highFreqStrength, time * 1000 / 60);
