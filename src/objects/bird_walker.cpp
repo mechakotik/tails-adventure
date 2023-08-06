@@ -158,6 +158,7 @@ bool TA_BirdWalker::update()
                 timer = 0;
                 feetSprite.setFrame(4);
                 objectSet->getLinks().camera->shake(24);
+                TA::gamepad::rumble(0.75, 0, 20);
                 state = TA_BIRD_WALKER_STATE_LANDED;
                 landSound.play();
             }

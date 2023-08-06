@@ -17,6 +17,7 @@ namespace TA { namespace gamepad {
     bool isJustPressed(TA_FunctionButton button);
     bool isControllerButtonPressed(SDL_GameControllerButton button);
     bool isControllerButtonJustPressed(SDL_GameControllerButton button);
+    void rumble(double lowFreqStrength, double highFreqStrength, int time);
 }}
 
 #endif // TA_GAMEPAD_H

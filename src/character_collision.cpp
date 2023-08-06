@@ -122,6 +122,7 @@ void TA_Character::updateCollisions()
             velocity.x = hurtXsp * sign;
             velocity.y = hurtYsp;
             damageSound.play();
+            TA::gamepad::rumble(0.75, 0.75, 20);
 
             if(flags & TA_COLLISION_DAMAGE_X2) {
                 addRings(-4);
