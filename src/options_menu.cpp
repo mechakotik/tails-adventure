@@ -1,3 +1,4 @@
+#include "SDL2/SDL_scancode.h"
 #include "options_menu.h"
 #include "save.h"
 
@@ -126,6 +127,51 @@ public:
     }
 };
 
+class TA_MapKeyboardOption : public TA_Option {
+private:
+    const std::vector<std::string> buttons{"up", "down", "left", "right", "a", "b", "lb", "rb", "start"};
+
+    bool locked = false;
+    int button = 0;
+
+public:
+    std::string getName() override {return "map keyboard";}
+
+    std::string getValue() override {
+        if(!locked) {
+            return "";
+        }
+        return buttons[button];
+    }
+
+    bool isLocked() override {return locked;}
+
+    TA_MoveSoundId move(int delta) override {
+        locked = true;
+        button = 0;
+        return TA_MOVE_SOUND_SELECT;
+    }
+
+    TA_MoveSoundId updateLocked() override {
+        for(int scancode = 0; scancode < SDL_NUM_SCANCODES; scancode ++) {
+            if(scancode == SDL_SCANCODE_ESCAPE || scancode == SDL_SCANCODE_RALT) {
+                continue;
+            }
+            if(TA::keyboard::isScancodeJustPressed(SDL_Scancode(scancode))) {
+                TA::save::setParameter("keyboard_map_" + buttons[button], scancode);
+                button ++;
+                if(button >= (int)buttons.size()) {
+                    locked = false;
+                    TA::save::writeToFile();
+                }
+                return TA_MOVE_SOUND_SWITCH;
+            }
+        }
+
+        return TA_MOVE_SOUND_EMPTY;
+    }
+};
+
 void TA_OptionsMenu::load(TA_Controller* controller)
 {
     this->controller = controller;
@@ -138,6 +184,8 @@ void TA_OptionsMenu::load(TA_Controller* controller)
     options[0].push_back(new TA_ResolutionOption());
     options[0].push_back(new TA_VSyncOption());
     options[0].push_back(new TA_MaxFPSOption());
+
+    options[1].push_back(new TA_MapKeyboardOption());
 
     options[2].push_back(new TA_VolumeOption("main", "main_volume"));
     options[2].push_back(new TA_VolumeOption("music", "music_volume"));
@@ -198,6 +246,11 @@ void TA_OptionsMenu::updateGroupSelector()
 
 void TA_OptionsMenu::updateOptionSelector()
 {
+    if(options[group][option]->isLocked()) {
+        playMoveSound(options[group][option]->updateLocked());
+        return;
+    }
+
     TA_MoveSoundId sound = TA_MOVE_SOUND_EMPTY;
 
     if(controller->isJustChangedDirection()) {
@@ -234,7 +287,17 @@ void TA_OptionsMenu::updateOptionSelector()
         TA::save::writeToFile();
     }
 
-    switch(sound) {
+    playMoveSound(sound);
+
+    if(controller->isJustPressed(TA_BUTTON_B)) {
+        menuTransitionTimeLeft = transitionTime * 2;
+        backSound.play();
+    }
+}
+
+void TA_OptionsMenu::playMoveSound(TA_MoveSoundId id)
+{
+    switch(id) {
         case TA_MOVE_SOUND_SWITCH:
             switchSound.play();
             break;
@@ -246,11 +309,6 @@ void TA_OptionsMenu::updateOptionSelector()
             break;
         default:
             break;
-    }
-
-    if(controller->isJustPressed(TA_BUTTON_B)) {
-        menuTransitionTimeLeft = transitionTime * 2;
-        backSound.play();
     }
 }
 
@@ -286,15 +344,15 @@ void TA_OptionsMenu::drawOptionList()
     for(int pos = 0; pos < (int)options[group].size(); pos ++) {
         std::string left = options[group][pos]->getName();
         std::string right = options[group][pos]->getValue();
-        int offset = activeFont.getTextWidth(right, {0, 0});
+        int offset = activeFont.getTextWidth(right, {-1, 0});
 
         if(pos == option) {
-            activeFont.drawText({lx, y}, left);
-            activeFont.drawText({rx - offset, y}, right);
+            activeFont.drawText({lx, y}, left, {-1, 0});
+            activeFont.drawText({rx - offset, y}, right, {-1, 0});
         }
         else {
-            inactiveFont.drawText({lx, y}, left);
-            inactiveFont.drawText({rx - offset, y}, right);
+            inactiveFont.drawText({lx, y}, left, {-1, 0});
+            inactiveFont.drawText({rx - offset, y}, right, {-1, 0});
         }
         y += 10;
     }

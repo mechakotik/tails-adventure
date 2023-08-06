@@ -5,6 +5,16 @@ main_volume 8
 music_volume 8
 sfx_volume 8
 
+keyboard_map_up 82
+keyboard_map_down 81
+keyboard_map_left 80
+keyboard_map_right 79
+keyboard_map_a 29
+keyboard_map_b 6
+keyboard_map_lb 4
+keyboard_map_rb 7
+keyboard_map_start 40
+
 default_save/item_mask 1
 default_save/area_mask 3
 default_save/boss_mask 0

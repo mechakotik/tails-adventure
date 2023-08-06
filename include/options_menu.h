@@ -17,6 +17,9 @@ public:
     virtual std::string getName() {return "name";}
     virtual std::string getValue() {return "value";}
     virtual TA_MoveSoundId move(int delta) {return TA_MOVE_SOUND_ERROR;}
+
+    virtual bool isLocked() {return false;}
+    virtual TA_MoveSoundId updateLocked() {return TA_MOVE_SOUND_EMPTY;}
 };
 
 class TA_OptionsMenu {
@@ -25,6 +28,7 @@ private:
 
     void updateGroupSelector();
     void updateOptionSelector();
+    void playMoveSound(TA_MoveSoundId id);
 
     void updateAlpha();
     int getLeftX() {return TA::screenWidth / 2 - 80;}
