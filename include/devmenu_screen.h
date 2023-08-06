@@ -13,7 +13,7 @@ enum TA_DevmenuElements {
 class TA_DevmenuScreen : public TA_Screen {
 private:
     TA_Font normalFont, selectedFont;
-    TA_CommonController controller;
+    TA_Controller controller;
     int menuPosition = 0, levelPosition = 0;
 
     std::vector<std::string> levels;

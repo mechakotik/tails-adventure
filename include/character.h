@@ -52,7 +52,7 @@ private:
     const double strongWindForce = 0.25;
     const double teleportInitTime = 60;
 
-    TA_CommonController controller;
+    TA_Controller controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
     TA_Polygon hitbox;
@@ -130,7 +130,7 @@ public:
     bool isClimbing() {return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH;}
 
     TA_Polygon *getHitbox() {return &hitbox;}
-    TA_CommonController *getController() {return &controller;}
+    TA_Controller *getController() {return &controller;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() {return position;}
     TA_Point getVelocity() {return velocity;}

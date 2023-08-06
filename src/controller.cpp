@@ -4,7 +4,7 @@
 #include "error.h"
 #include "tools.h"
 
-TA_Direction TA_Controller::getDirection()
+TA_Direction TA_AbstractController::getDirection()
 {
     TA_Point vector = getDirectionVector();
     if(vector.length() < analogDeadZone) {
@@ -23,7 +23,7 @@ TA_Direction TA_Controller::getDirection()
     return TA_DIRECTION_LEFT;
 }
 
-void TA_CommonController::update()
+void TA_Controller::update()
 {
     if(getDirection() != currentDirection) {
         currentDirection = getDirection();
@@ -34,7 +34,7 @@ void TA_CommonController::update()
     }
 }
 
-TA_Point TA_CommonController::getDirectionVector()
+TA_Point TA_Controller::getDirectionVector()
 {
     if(gamepad.getDirection() != TA_DIRECTION_MAX) {
         return gamepad.getDirectionVector();
@@ -42,7 +42,7 @@ TA_Point TA_CommonController::getDirectionVector()
     return keyboard.getDirectionVector();
 }
 
-TA_Direction TA_CommonController::getDirection()
+TA_Direction TA_Controller::getDirection()
 {
     if(gamepad.getDirection() != TA_DIRECTION_MAX) {
         return gamepad.getDirection();
@@ -50,12 +50,12 @@ TA_Direction TA_CommonController::getDirection()
     return keyboard.getDirection();
 }
 
-bool TA_CommonController::isPressed(TA_FunctionButton button)
+bool TA_Controller::isPressed(TA_FunctionButton button)
 {
     return keyboard.isPressed(button) || gamepad.isPressed(button);
 }
 
-bool TA_CommonController::isJustPressed(TA_FunctionButton button)
+bool TA_Controller::isJustPressed(TA_FunctionButton button)
 {
     return keyboard.isJustPressed(button) || gamepad.isJustPressed(button);
 }

@@ -17,7 +17,7 @@ private:
     void setPointNeighbours();
     void loadTailsIcon();
 
-    TA_CommonController controller;
+    TA_Controller controller;
     std::vector<TA_MapPoint*> points;
     TA_Sprite tailsIcon;
     TA_MapPoint* currentPoint;

@@ -38,7 +38,7 @@ private:
         STATE_QUIT
     };
 
-    TA_CommonController* controller;
+    TA_Controller* controller;
     TA_Font activeFont, inactiveFont;
     double transitionTimeLeft = -1, menuTransitionTimeLeft = -1;
     bool shown = false;
@@ -51,7 +51,7 @@ private:
 
 public:
     TA_OptionsMenu() {}
-    void load(TA_CommonController* controller);
+    void load(TA_Controller* controller);
     bool update();
     void draw();
     void reset();

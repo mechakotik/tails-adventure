@@ -8,7 +8,7 @@
 #include "gamepad.h"
 #include "keyboard.h"
 
-class TA_Controller {
+class TA_AbstractController {
 private:
     double analogDeadZone = 0.25;
     double verticalRange = 30;
@@ -21,7 +21,7 @@ public:
     virtual bool isJustPressed(TA_FunctionButton button) {return false;}
 };
 
-class TA_GamepadController : public TA_Controller
+class TA_GamepadController : public TA_AbstractController
 {
 public:
     TA_Point getDirectionVector() override {return TA::gamepad::getDirectionVector();}
@@ -29,7 +29,7 @@ public:
     bool isJustPressed(TA_FunctionButton button) override {return TA::gamepad::isJustPressed(button);}
 };
 
-class TA_KeyboardController : public TA_Controller
+class TA_KeyboardController : public TA_AbstractController
 {
 public:
     TA_Point getDirectionVector() override {return TA::keyboard::getDirectionVector();}
@@ -37,7 +37,7 @@ public:
     bool isJustPressed(TA_FunctionButton button) override {return TA::keyboard::isJustPressed(button);}
 };
 
-class TA_CommonController
+class TA_Controller
 {
 private:
     TA_GamepadController gamepad;

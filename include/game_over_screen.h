@@ -10,7 +10,7 @@ class TA_GameOverScreen : public TA_Screen {
 private:
     void setMaxRings();
 
-    TA_CommonController controller;
+    TA_Controller controller;
     TA_Sprite gameOverSprite;
     TA_Sound music;
 

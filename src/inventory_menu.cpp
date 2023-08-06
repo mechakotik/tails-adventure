@@ -1,7 +1,7 @@
 #include "inventory_menu.h"
 #include "save.h"
 
-void TA_InventoryMenu::load(TA_CommonController* controller)
+void TA_InventoryMenu::load(TA_Controller* controller)
 {
     this->controller = controller;
 

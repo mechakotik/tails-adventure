@@ -126,7 +126,7 @@ public:
     }
 };
 
-void TA_OptionsMenu::load(TA_CommonController* controller)
+void TA_OptionsMenu::load(TA_Controller* controller)
 {
     this->controller = controller;
     activeFont.load("fonts/item.png", 8, 8);

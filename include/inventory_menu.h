@@ -40,7 +40,7 @@ private:
     std::array<std::array<Item, 2>, 12> items;
     std::map<int, std::string> itemName;
 
-    TA_CommonController* controller;
+    TA_Controller* controller;
     TA_Sprite itemSprite, pointerSprite, arrowSprite;
     TA_Sprite inventoryItemSprite, inventoryPointerSprite;
     TA_Sound switchSound, selectSound, backSound, errorSound;
@@ -53,7 +53,7 @@ private:
 
 public:
     TA_InventoryMenu() {}
-    void load(TA_CommonController* controller);
+    void load(TA_Controller* controller);
     bool update();
     void draw();
     void show();

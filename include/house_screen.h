@@ -29,7 +29,7 @@ private:
     TA_OptionsMenu optionsMenu;
     TA_Sprite interfaceSprite, houseSprite, curtainSprite;
     TA_Font font;
-    TA_CommonController controller;
+    TA_Controller controller;
     TA_Sound music, switchSound, errorSound, selectSound;
 
     int selectionX = 1, selectionY = 1;
