@@ -4,12 +4,17 @@
 
 void TA_Character::updateTool()
 {
+    if(!ground || !controller.isPressed(TA_BUTTON_B)) {
+        usingSpeedBoots = false;
+    }
     if(!controller.isJustPressed(TA_BUTTON_B)) {
         return;
     }
+
     if(hurt) {
         return;
     }
+
     if(remoteRobot) {
         if(state != STATE_REMOTE_ROBOT_INIT) {
             setAnimation("remote_robot_idle");
@@ -36,6 +41,9 @@ void TA_Character::updateTool()
             break;
         case TOOL_RADIO:
             changeMusic();
+            break;
+        case TOOL_SPEED_BOOTS:
+            usingSpeedBoots = true;
             break;
         default:
             damageSound.play();

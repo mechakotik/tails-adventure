@@ -135,15 +135,20 @@ void TA_Character::verticalMove()
         remoteRobotStepSound.play();
     }
 
+    double currentTopX = topX;
+    if(isUsingSpeedBoots()) {
+        currentTopX *= 2;
+    }
+
     if(direction == TA_DIRECTION_RIGHT) {
         flip = false;
         velocity.x += acc * TA::elapsedTime;
-        velocity.x = std::min(velocity.x, topX);
+        velocity.x = std::min(velocity.x, currentTopX);
     }
     else if(direction == TA_DIRECTION_LEFT) {
         flip = true;
         velocity.x -= acc * TA::elapsedTime;
-        velocity.x = std::max(velocity.x, -topX);
+        velocity.x = std::max(velocity.x, -currentTopX);
     }
     else {
         if(velocity.x > 0) {

@@ -15,6 +15,7 @@ private:
         TOOL_REMOTE_BOMB = 2,
         TOOL_TELEPORT_DEVICE = 3,
         TOOL_REMOTE_ROBOT = 6,
+        TOOL_SPEED_BOOTS = 7,
         TOOL_RADIO = 18,
         TOOL_INSTA_SHIELD = 19
     };
@@ -84,6 +85,7 @@ private:
     double deltaX = 0;
     int rings = 10;
     int currentTool = TOOL_BOMB;
+    bool usingSpeedBoots = false;
 
     TA_Sprite instaShieldSprite;
     double instaShieldTime = instaShieldCooldownTime;
@@ -149,6 +151,7 @@ public:
     bool isOnCeiling() {return ceiling;}
     bool isOnStrongWind() {return strongWind;}
     bool isTeleported();
+    bool isUsingSpeedBoots() {return usingSpeedBoots;}
 
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();

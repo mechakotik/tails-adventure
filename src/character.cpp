@@ -246,6 +246,7 @@ void TA_Character::updateClimbAnimation()
         setPosition(position.x, climbPosition.y);
     }
     updateFollowPosition();
+    usingSpeedBoots = false;
 }
 
 void TA_Character::updateThrowAnimation()
