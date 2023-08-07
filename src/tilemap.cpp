@@ -178,6 +178,19 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     }
 }
 
+void TA_Tilemap::setPosition(TA_Point position)
+{
+    for(int layer = 0; layer < layerCount; layer ++) {
+        for(int tileX = 0; tileX < width; tileX ++) {
+            for(int tileY = 0; tileY < height; tileY ++) {
+                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
+                    tilemap[layer][tileX][tileY].sprite.setPosition(position + TA_Point(tileX * tileWidth, tileY * tileHeight));
+                }
+            }
+        }
+    }
+}
+
 int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
 {
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;

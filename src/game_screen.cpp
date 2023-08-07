@@ -9,6 +9,10 @@ void TA_GameScreen::init()
     links.hud = &hud;
     links.controller = character.getController();
 
+    if(TA::levelPath.substr(0, 10) == "maps/pm/pm") {
+        backgroundTilemap.load("maps/pm/pm_background.tmx");
+    }
+
     character.load(links);
     objectSet.setLinks(links);
     tilemap.load(TA::levelPath + ".tmx");
@@ -26,6 +30,14 @@ TA_ScreenState TA_GameScreen::update()
     objectSet.update();
     character.update();
     camera.update(character.isOnGround(), character.isJumpingOnSpring() || character.isOnStrongWind());
+
+    if(TA::levelPath.substr(0, 10) == "maps/pm/pm") {
+        double parallaxX = camera.getPosition().x * -0.2;
+        double startY = 144 - backgroundTilemap.getHeight();
+        double parallaxY = -32;
+        backgroundTilemap.setPosition({parallaxX, parallaxY});
+        backgroundTilemap.draw(0);
+    }
 
     tilemap.draw(0);
     objectSet.draw(0);

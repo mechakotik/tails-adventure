@@ -55,6 +55,7 @@ public:
     void load(std::string filename);
     void draw(int priority);
     void setCamera(TA_Camera *newCamera);
+    void setPosition(TA_Point position);
     int getWidth() {return width * tileWidth;}
     int getHeight() {return height * tileHeight;}
     int checkCollision(TA_Polygon &polygon, int halfSolidTop = -1e9);
