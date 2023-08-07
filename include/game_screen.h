@@ -12,7 +12,7 @@
 
 class TA_GameScreen : public TA_Screen {
 private:
-    TA_Tilemap tilemap, backgroundTilemap;
+    TA_Tilemap tilemap;
     TA_Camera camera;
     TA_Character character;
     TA_ObjectSet objectSet;
