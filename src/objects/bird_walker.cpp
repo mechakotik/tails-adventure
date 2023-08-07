@@ -14,8 +14,11 @@ void TA_BirdWalker::load(double newFloorY)
 
     floorY = newFloorY;
     headSprite.load("objects/bird_walker/head.png", 27, 16);
-    bodySprite.load("objects/bird_walker/body.png");
+    headFlashSprite.load("objects/bird_walker/head.png", 27, 16);
+    bodySprite.load("objects/bird_walker/body.png", 40, 32);
+    bodyFlashSprite.load("objects/bird_walker/body.png", 40, 32);
     feetSprite.load("objects/bird_walker/feet.png", 24, 28);
+    feetFlashSprite.load("objects/bird_walker/feet.png", 24, 28);
     aimSprite.load("objects/bird_walker/aim.png", 17, 16);
 
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX2);
@@ -32,6 +35,9 @@ void TA_BirdWalker::load(double newFloorY)
     headSprite.setCamera(objectSet->getLinks().camera);
     bodySprite.setCamera(objectSet->getLinks().camera);
     feetSprite.setCamera(objectSet->getLinks().camera);
+    headFlashSprite.setCamera(objectSet->getLinks().camera);
+    bodyFlashSprite.setCamera(objectSet->getLinks().camera);
+    feetFlashSprite.setCamera(objectSet->getLinks().camera);
     aimSprite.setCamera(objectSet->getLinks().camera);
 
     TA_Polygon bodyHitbox;
@@ -86,6 +92,14 @@ void TA_BirdWalker::updatePosition()
         weakHitbox.setRectangle({31, -61}, {35, 0});
     }
     weakHitbox.setPosition(position);
+
+    headFlashSprite.setPosition(headSprite.getPosition());
+    bodyFlashSprite.setPosition(bodySprite.getPosition());
+    feetFlashSprite.setPosition(feetSprite.getPosition());
+    
+    headFlashSprite.setFlip(flip);
+    bodyFlashSprite.setFlip(flip);
+    feetFlashSprite.setFlip(flip);
 }
 
 void TA_BirdWalker::insertBorderHitboxes()
@@ -121,6 +135,10 @@ bool TA_BirdWalker::update()
     };
 
     timer += TA::elapsedTime;
+    if(flashTimer < damageFlashTime * 4) {
+        flashTimer += TA::elapsedTime;
+    }
+
     double centeredX = position.x + bodySprite.getWidth() / 2;
     if(TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) == (flip ? 1 : -1)) {
         jumpTimer += TA::elapsedTime;
@@ -349,6 +367,23 @@ bool TA_BirdWalker::update()
     if(state != TA_BIRD_WALKER_STATE_IDLE) {
         updatePosition();
     }
+
+    headSprite.updateAnimation();
+    bodySprite.updateAnimation();
+    feetSprite.updateAnimation();
+
+    headFlashSprite.setFrame(headSprite.getCurrentFrame() + 5);
+    bodyFlashSprite.setFrame(1);
+    feetFlashSprite.setFrame(feetSprite.getCurrentFrame() + 5);
+
+    int flashAlpha = 0;
+    if(flashTimer < damageFlashTime * 4) {
+        flashAlpha = TA::linearInterpolation(0, 128, flashTimer / damageFlashTime);
+    }
+    headFlashSprite.setAlpha(flashAlpha);
+    bodyFlashSprite.setAlpha(flashAlpha);
+    feetFlashSprite.setAlpha(flashAlpha);
+
     return true;
 }
 
@@ -363,6 +398,7 @@ void TA_BirdWalker::updateDamage()
         if(objectSet->checkCollision(weakHitbox) & (TA_COLLISION_EXPLOSION_FIRST | TA_COLLISION_INSTA_SHIELD)) {
             health --;
             invincibleTimeLeft = invincibleTime;
+            flashTimer = 0;
             hitSound.play();
             if(health <= 0) {
                 for(auto &element : defaultHitboxVector) {
@@ -386,4 +422,8 @@ void TA_BirdWalker::draw()
     if(state == TA_BIRD_WALKER_STATE_AIMING) {
         aimSprite.draw();
     }
+
+    headFlashSprite.draw();
+    bodyFlashSprite.draw();
+    feetFlashSprite.draw();
 }

@@ -31,12 +31,15 @@ private:
     const double invincibleTime = 30;
     const double deathTime = 180, deathExplosionDelay = 6;
     const double jumpWaitTime = 120;
+    const double damageFlashTime = 4;
 
     void updatePosition() override;
     void insertBorderHitboxes();
     void updateDamage();
 
     TA_Sprite headSprite, bodySprite, feetSprite, aimSprite;
+    TA_Sprite headFlashSprite, bodyFlashSprite, feetFlashSprite;
+
     TA_BirdWalkerState state = TA_BIRD_WALKER_STATE_IDLE;
     TA_Point aimPosition;
     TA_Sound hitSound, jumpSound, fallSound, landSound, shootSound, explosionSound;
@@ -51,7 +54,7 @@ private:
     std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, flipHitboxVector;
     TA_Polygon weakHitbox;
 
-    double floorY, timer = 0, jumpTimer = 0;
+    double floorY, timer = 0, jumpTimer = 0, flashTimer = damageFlashTime * 5;
 
 public:
     using TA_Object::TA_Object;
