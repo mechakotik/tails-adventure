@@ -259,7 +259,7 @@ void TA_OptionsMenu::load(TA_Controller* controller)
 
 bool TA_OptionsMenu::update()
 {
-    if(menuTransitionTimeLeft > 0) {
+    if(listTransitionTimeLeft > 0) {
         return true;
     }
 
@@ -292,7 +292,7 @@ void TA_OptionsMenu::updateGroupSelector()
     }
 
     if(controller->isJustPressed(TA_BUTTON_A)) {
-        menuTransitionTimeLeft = transitionTime * 2;
+        listTransitionTimeLeft = listTransitionTime * 2;
         option = 0;
         selectSound.play();
         return;
@@ -350,7 +350,7 @@ void TA_OptionsMenu::updateOptionSelector()
     playMoveSound(sound);
 
     if(controller->isJustPressed(TA_BUTTON_B)) {
-        menuTransitionTimeLeft = transitionTime * 2;
+        listTransitionTimeLeft = listTransitionTime * 2;
         backSound.play();
     }
 }
@@ -431,19 +431,19 @@ void TA_OptionsMenu::updateAlpha()
             alpha = 255 * transitionTimeLeft / transitionTime;
         }
     }
-    else if(menuTransitionTimeLeft > 0) {
-        bool flag1 = (menuTransitionTimeLeft > transitionTime);
-        menuTransitionTimeLeft -= TA::elapsedTime;
-        bool flag2 = (menuTransitionTimeLeft > transitionTime);
+    else if(listTransitionTimeLeft > 0) {
+        bool flag1 = (listTransitionTimeLeft > listTransitionTime);
+        listTransitionTimeLeft -= TA::elapsedTime;
+        bool flag2 = (listTransitionTimeLeft > listTransitionTime);
 
         if(flag1 != flag2) {
             state = (state == STATE_SELECTING_GROUP ? STATE_SELECTING_OPTION : STATE_SELECTING_GROUP);
         }
-        if(menuTransitionTimeLeft > transitionTime) {
-            alpha = 255 * (menuTransitionTimeLeft - transitionTime) / transitionTime;
+        if(listTransitionTimeLeft > listTransitionTime) {
+            alpha = 255 * (listTransitionTimeLeft - listTransitionTime) / listTransitionTime;
         }
         else {
-            alpha = 255 - 255 * menuTransitionTimeLeft / transitionTime;
+            alpha = 255 - 255 * listTransitionTimeLeft / listTransitionTime;
         }
     }
     else if(shown) {

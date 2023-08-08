@@ -25,6 +25,7 @@ public:
 class TA_OptionsMenu {
 private:
     const double transitionTime = 10;
+    const double listTransitionTime = 5;
 
     void updateGroupSelector();
     void updateOptionSelector();
@@ -44,7 +45,7 @@ private:
 
     TA_Controller* controller;
     TA_Font activeFont, inactiveFont;
-    double transitionTimeLeft = -1, menuTransitionTimeLeft = -1;
+    double transitionTimeLeft = -1, listTransitionTimeLeft = -1;
     bool shown = false;
 
     State state = STATE_SELECTING_GROUP;
