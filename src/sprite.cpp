@@ -57,16 +57,7 @@ void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight
 
 void TA_Sprite::draw()
 {
-    if(!loaded) {
-        return;
-    }
-    updateAnimation();
-    SDL_Rect srcRect;
-    srcRect.x = (frameWidth * frame) % texture.width;
-    srcRect.y = (frameWidth * frame) / texture.width * frameHeight;
-    srcRect.w = frameWidth;
-    srcRect.h = frameHeight;
-    drawFrom(srcRect);
+    drawFrom({-1, -1, -1, -1});
 }
 
 void TA_Sprite::drawFrom(SDL_Rect srcRect)
@@ -75,6 +66,20 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
         return;
     }
     updateAnimation();
+    
+    if(srcRect.x == -1) {
+        srcRect.x = (frameWidth * frame) % texture.width;
+    }
+    if(srcRect.y == -1) {
+        srcRect.y = (frameWidth * frame) / texture.width * frameHeight;
+    }
+    if(srcRect.w == -1) {
+        srcRect.w = frameWidth;
+    }
+    if(srcRect.h == -1) {
+        srcRect.h = frameHeight;
+    }
+    
     SDL_Rect dstRect;
     TA_Point screenPosition = position;
     if(camera != nullptr) {

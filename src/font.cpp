@@ -12,11 +12,19 @@ void TA_Font::setMapping(std::string mappingString)
 void TA_Font::drawText(TA_Point position, std::string text, TA_Point offset)
 {
     TA_Point currentPosition = position;
-    for(char symbol : text) {
+    for(int pos = 0; pos < (int)text.length(); pos ++) {
+        char symbol = text[pos];
         if(mapping.count(symbol)) {
             setPosition(currentPosition);
             setFrame(mapping[symbol]);
-            draw();
+
+            if(pos == (int)text.length() - 1 || text[pos + 1] == '\n') {
+                draw();
+            }
+            else {
+                drawFrom({-1, -1, getWidth() + std::min(0, int(offset.x - 0.1)), getHeight() + std::min(0, int(offset.y - 0.1))});
+            }
+            
             currentPosition.x += getWidth() + offset.x;
         }
         else if(symbol == '\n') {
