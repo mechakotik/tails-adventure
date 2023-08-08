@@ -221,7 +221,11 @@ bool TA_BirdWalker::update()
                 timer = 0;
                 feetSprite.setAnimation("idle");
                 bulletCounter = 0;
-                if((centeredPosition < objectSet->getCharacterPosition().x) == flip
+                if(jumpTimer > jumpWaitTime) {
+                    headSprite.setAnimation("turn");
+                    state = TA_BIRD_WALKER_STATE_LAUGH;
+                }
+                else if((centeredPosition < objectSet->getCharacterPosition().x) == flip
                     && TA::random::next() % 3 == 0) {
                     state = TA_BIRD_WALKER_STATE_FIRE_LONG;
                 }
