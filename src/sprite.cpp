@@ -107,7 +107,7 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
 
 void TA_Sprite::updateAnimation()
 {
-    if(!updateAnimationNeeded) {
+    if(!doUpdateAnimation || !updateAnimationNeeded) {
         return;
     }
     if(animation.frames.size() >= 2) {

@@ -233,6 +233,19 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
     return flags;
 }
 
+void TA_Tilemap::setUpdateAnimation(bool enabled)
+{
+    for(int layer = 0; layer < layerCount; layer ++) {
+        for(int tileX = 0; tileX < width; tileX ++) {
+            for(int tileY = 0; tileY < height; tileY ++) {
+                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
+                    tilemap[layer][tileX][tileY].sprite.setUpdateAnimation(enabled);
+                }
+            }
+        }
+    }
+}
+
 std::vector<TA_Tilemap::Hitbox> TA_Tilemap::getSpikesHitboxVector(int type)
 {
     std::vector<Hitbox> hitboxes;

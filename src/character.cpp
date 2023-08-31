@@ -387,7 +387,7 @@ double TA_Character::getMaxHelitailTime()
     if(TA::levelPath == "maps/pm/pm4") {
         return 1e6;
     }
-    return 150 * (getEmeraldsCount() + 1);
+    return 140 + 70 * getEmeraldsCount();
 }
 
 bool TA_Character::displayFlighTimeBar()

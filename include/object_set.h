@@ -53,6 +53,7 @@ private:
     TA_Sound areaBeginSound, areaLoopSound, bossBeginSound, bossLoopSound;
     std::string loopMusicPath = "";
     bool spawnFlip = false, firstSpawnPointSet = false, bossMusic = false;
+    bool paused = false;
 
 public:
     ~TA_ObjectSet();
@@ -74,6 +75,8 @@ public:
     bool hasCollisionType(TA_CollisionType type) {return hitboxContainer.hasCollisionType(type);}
     bool enemyShouldDropRing() {return TA::random::next() % 4 == 0;}
     void resetInstaShield() {links.character->resetInstaShield();}
+    bool isPaused() {return paused;}
+    void setPaused(bool enabled) {paused = enabled;}
 
     void playAreaMusic();
     void playBossMusic();

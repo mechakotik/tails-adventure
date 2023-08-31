@@ -11,6 +11,7 @@
 #include "error.h"
 #include "tools.h"
 #include "tinyxml2.h"
+#include "hud.h"
 #include "objects/transition.h"
 #include "objects/bridge.h"
 #include "objects/bird_walker.h"
@@ -306,6 +307,7 @@ void TA_ObjectSet::draw(int priority)
 {
     for(TA_Object *currentObject : objects) {
         if(currentObject->getDrawPriority() == priority) {
+            currentObject->setUpdateAnimation(!isPaused());
             currentObject->draw();
         }
     }

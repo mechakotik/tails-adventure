@@ -58,6 +58,7 @@ public:
     int getWidth() {return width * tileWidth;}
     int getHeight() {return height * tileHeight;}
     int checkCollision(TA_Polygon &polygon, int halfSolidTop = -1e9);
+    void setUpdateAnimation(bool enabled);
 };
 
 #endif // TA_TILEMAP_H

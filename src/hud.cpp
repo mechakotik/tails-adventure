@@ -23,12 +23,39 @@ void TA_Hud::load(TA_Links newLinks)
     switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
     flightBarSprite.load("hud/flightbar.png");
     rings = TA::save::getSaveParameter("rings");
+
+    pauseMenu.sprite.load("hud/pause_menu.png");
 }
 
 void TA_Hud::update()
 {
-    updateRingsCounter();
-    updateCurrentItem();
+    updatePause();
+    if(!paused) {
+        updateRingsCounter();
+        updateCurrentItem();
+    }
+}
+
+void TA_Hud::updatePause()
+{
+    if(!paused) {
+        /*if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
+            paused = true;
+        }*/
+        return;
+    }
+
+    updatePauseMenu();
+    if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
+        paused = false;
+    }
+}
+
+void TA_Hud::updatePauseMenu()
+{
+    pauseMenu.position += TA::elapsedTime / 2;
+    pauseMenu.position = std::fmod(pauseMenu.position, 10);
+    pauseMenu.sprite.setPosition(TA::screenWidth - pauseMenu.sprite.getWidth(), -pauseMenu.position);
 }
 
 void TA_Hud::updateRingsCounter()
@@ -76,6 +103,7 @@ void TA_Hud::draw()
     drawCurrentItem();
     drawRingsCounter();
     drawFlightBar();
+    drawPauseMenu();
 }
 
 void TA_Hud::drawCurrentItem()
@@ -113,4 +141,13 @@ void TA_Hud::drawFlightBar()
     flightBarSprite.drawFrom({8, 0, 8, offset});
     flightBarSprite.setPosition(flightBarX, flightBarY + offset);
     flightBarSprite.drawFrom({0, offset, 8, 40 - offset});
+}
+
+void TA_Hud::drawPauseMenu()
+{
+    if(!paused) {
+        return;
+    }
+    TA::drawScreenRect(0, 0, 0, 128);
+    pauseMenu.sprite.draw();
 }

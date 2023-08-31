@@ -43,6 +43,7 @@ private:
     double animationTimer = 0;
     bool flip = false, hidden = false, updateAnimationNeeded = true, loaded = false;
     bool noPixelAspectRatio = false;
+    bool doUpdateAnimation = true;
     int alpha = 255;
     std::string animationName;
 
@@ -75,6 +76,7 @@ public:
     void disablePixelAspectRatio() {noPixelAspectRatio = true;}
     std::string getAnimationName() {return (isAnimated() ? animationName : "");}
     void updateAnimation();
+    void setUpdateAnimation(bool enabled) {doUpdateAnimation = enabled;}
 };
 
 #endif //TA_SPRITE_H

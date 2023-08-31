@@ -22,10 +22,17 @@ void TA_GameScreen::init()
 TA_ScreenState TA_GameScreen::update()
 {
     hud.update();
-    character.handleInput();
-    objectSet.update();
-    character.update();
-    camera.update(character.isOnGround(), character.isJumpingOnSpring() || character.isOnStrongWind() || character.isUsingSpeedBoots());
+
+    if(!hud.isPaused()) {
+        character.handleInput();
+        objectSet.update();
+        character.update();
+        camera.update(character.isOnGround(), character.isJumpingOnSpring() || character.isOnStrongWind() || character.isUsingSpeedBoots());
+    }
+
+    character.setUpdateAnimation(!hud.isPaused());
+    tilemap.setUpdateAnimation(!hud.isPaused());
+    objectSet.setPaused(hud.isPaused());
 
     tilemap.draw(0);
     objectSet.draw(0);

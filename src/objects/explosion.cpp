@@ -17,6 +17,7 @@ void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type)
 
 bool TA_Explosion::update()
 {
+    timer += TA::elapsedTime;
     if(!TA_Sprite::isAnimated()) {
         return false;
     }
@@ -43,7 +44,6 @@ TA_CollisionType TA_Explosion::getCollisionType()
 
 void TA_Explosion::draw()
 {
-    timer += TA::elapsedTime;
     if(timer >= delay) {
         TA_Sprite::draw();
     }

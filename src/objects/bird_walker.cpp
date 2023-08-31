@@ -417,6 +417,10 @@ void TA_BirdWalker::updateDamage()
 
 void TA_BirdWalker::draw()
 {
+    headSprite.setUpdateAnimation(!objectSet->isPaused());
+    bodySprite.setUpdateAnimation(!objectSet->isPaused());
+    feetSprite.setUpdateAnimation(!objectSet->isPaused());
+
     if(state == TA_BIRD_WALKER_STATE_IDLE) {
         return;
     }
