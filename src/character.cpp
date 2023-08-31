@@ -30,10 +30,6 @@ void TA_Character::load(TA_Links newLinks)
     remoteRobotControlSprite.setAnimation("control_remote_robot");
     remoteRobotControlSprite.setCamera(links.camera);
 
-    instaShieldSprite.load("objects/insta_shield.png", 32, 32);
-    instaShieldSprite.loadAnimationsFromFile("objects/insta_shield.xml");
-    instaShieldSprite.setCamera(links.camera);
-
     rings = TA::save::getSaveParameter("rings");
 }
 
@@ -146,13 +142,12 @@ void TA_Character::draw()
     if(remoteRobot) {
         remoteRobotControlSprite.draw();
     }
-    instaShieldSprite.draw();
     TA_Pawn::draw();
 }
 
 TA_CollisionType TA_Character::getCollisionType()
 {
-    if(instaShieldSprite.isAnimated()) {
+    if(usingInstaShield) {
         return TA_COLLISION_INSTA_SHIELD;
     }
     return TA_COLLISION_CHARACTER;
@@ -168,6 +163,10 @@ void TA_Character::updateAnimation()
     }
     else {
         setAlpha(255);
+    }
+
+    if(usingInstaShield) {
+        return;
     }
 
     if(remoteRobot) {

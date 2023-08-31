@@ -38,7 +38,7 @@ void TA_Character::updateCollisions()
     }
     bottomRight = TA_Point(30, 39);
 
-    if(instaShieldSprite.isAnimated()) {
+    if(usingInstaShield) {
         hitbox.setRectangle(TA_Point(10, 6), TA_Point(38, 42));
     }
     else {
@@ -107,7 +107,7 @@ void TA_Character::updateCollisions()
         ceiling = false;
     }
 
-    if(!remoteRobot && !hurt && !instaShieldSprite.isAnimated() && invincibleTimeLeft <= 0) {
+    if(!remoteRobot && !hurt && !usingInstaShield && invincibleTimeLeft <= 0) {
         auto handleDamage = [&] (TA_Polygon &hitbox, int sign) {
             if(hurt) {
                 return;

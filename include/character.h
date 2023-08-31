@@ -78,6 +78,7 @@ private:
     bool bombDestroySignal = false;
     bool strongWind = false;
     bool hidden = false, nextFrameHidden = false;
+    bool usingInstaShield = false;
 
     double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
@@ -86,8 +87,6 @@ private:
     int rings = 10;
     int currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
-
-    TA_Sprite instaShieldSprite;
     double instaShieldTime = instaShieldCooldownTime;
 
     void physicsStep();

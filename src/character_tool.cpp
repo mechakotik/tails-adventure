@@ -112,26 +112,33 @@ void TA_Character::spawnInstaShield()
     if(instaShieldTime < instaShieldCooldownTime) {
         return;
     }
-    instaShieldSprite.setAnimation("shield");
+    if(!jump || helitail) {
+        return;
+    }
+    
+    setAnimation("shield");
     instaShieldTime = 0;
     instaShieldSound.play();
+
+    usingInstaShield = true;
+    jump = helitail = false;
 }
 
 void TA_Character::updateInstaShield()
 {
-    if(instaShieldSprite.isAnimated()) {
-        instaShieldSprite.setPosition(position + TA_Point(8, 8));
-        instaShieldSprite.setAlpha(255);
+    if(usingInstaShield) {
+        if(ground || !isAnimated()) {
+            usingInstaShield = false;
+        }
     }
     else {
         instaShieldTime += TA::elapsedTime;
-        instaShieldSprite.setAlpha(0);
     }
 }
 
 void TA_Character::resetInstaShield()
 {
-    if(instaShieldSprite.isAnimated()) {
+    if(usingInstaShield) {
         instaShieldTime = instaShieldCooldownTime;
     }
 }

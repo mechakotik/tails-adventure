@@ -84,4 +84,7 @@
 	<animation name="teleport" delay="6">
 		79,80,81,82,83,84,85
 	</animation>
+	<animation name="shield" delay="2" repeatTimes="1">
+		86,87,88,89,90,91,92,93
+	</animation>
 </animations>
