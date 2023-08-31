@@ -1,6 +1,6 @@
 resolution 4
 vsync 1
-fps_limit 2
+fps_limit 0
 rumble 1
 main_volume 8
 music_volume 8
