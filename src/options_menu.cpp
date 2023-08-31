@@ -45,7 +45,7 @@ public:
         TA::save::setParameter("vsync", value);
 
         if(value == 1) {
-            TA::save::setParameter("fps_limit", 2);
+            TA::save::setParameter("fps_limit", 0);
         }
 
         return TA_MOVE_SOUND_SWITCH;
@@ -73,8 +73,8 @@ public:
             value = 0;
             result = TA_MOVE_SOUND_ERROR;
         }
-        if(value > 20) {
-            value = 20;
+        if(value > 4971) {
+            value = 4971;
             result = TA_MOVE_SOUND_ERROR;
         }
 

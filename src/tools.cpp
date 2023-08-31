@@ -160,17 +160,9 @@ void TA::eventLog::quit()
 
 int TA::getFPSLimit()
 {
-    int factor = TA::save::getParameter("fps_limit");
-    if(factor == 0) {
+    int value = TA::save::getParameter("fps_limit");
+    if(value == 0) {
         return 0;
     }
-
-    SDL_DisplayMode displayMode;
-    SDL_GetCurrentDisplayMode(0, &displayMode);
-    
-    int refreshRate = displayMode.refresh_rate;
-    if(refreshRate == 0) {
-        refreshRate = 60;
-    }
-    return refreshRate * factor / 2;
+    return value + 29;
 }
