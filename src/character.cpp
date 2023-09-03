@@ -208,11 +208,15 @@ void TA_Character::updateAnimation()
     else {
         if(helitail) {
             if(getAnimationName() != "throw_helitail") {
-                if(helitailTime > getMaxHelitailTime()) {
-                    setAnimation("helitail_tired");
+                double maxTime = getMaxHelitailTime();
+                if(helitailTime < maxTime / 3) {
+                    setAnimation("helitail_full");
+                }
+                else if(helitailTime < maxTime * 2 / 3) {
+                    setAnimation("helitail");
                 }
                 else {
-                    setAnimation("helitail");
+                    setAnimation("helitail_tired");
                 }
             }
         }

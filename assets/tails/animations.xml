@@ -27,6 +27,9 @@
 	<animation name="helitail" delay="6">
 		13,14,15
 	</animation>
+	<animation name="helitail_full" delay="6">
+		94,95,96
+	</animation>
 	<animation name="helitail_tired" delay="6">
 		16,17,18
 	</animation>
