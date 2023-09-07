@@ -11,6 +11,7 @@ namespace TA { namespace save {
     void setCurrentSave(std::string name);
     long long getSaveParameter(std::string name, std::string saveName = "");
     void setSaveParameter(std::string name, long long value, std::string saveName = "");
+    void createSave(std::string saveName);
     void repairSave(std::string saveName);
 }}
 

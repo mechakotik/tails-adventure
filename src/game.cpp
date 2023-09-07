@@ -17,8 +17,6 @@
 TA_Game::TA_Game()
 {
     TA::save::load();
-    TA::save::repairSave("current_save");
-    TA::save::setCurrentSave("current_save");
 
     initSDL();
     createWindow();
