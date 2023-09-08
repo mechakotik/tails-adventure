@@ -73,7 +73,7 @@ void TA_Character::updateAir()
         else {
             velocity.y = std::min(maxJumpSpeed, std::max(minJumpSpeed, jumpSpeed));
         }
-        if(jump && jumpReleased && !remoteRobot && controller.isJustPressed(TA_BUTTON_A)) {
+        if(jump && jumpReleased && controller.isJustPressed(TA_BUTTON_A)) {
             initHelitail();
         }
     }
