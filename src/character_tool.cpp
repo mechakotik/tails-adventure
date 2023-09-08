@@ -112,6 +112,7 @@ void TA_Character::initHammer()
     if(ground || (jump && !helitail)) {
         setAnimation("hammer");
         state = STATE_HAMMER;
+        hammerSound.play();
         if(!ground) {
             jump = helitail = false;
             velocity = {0, hammerFallSpeed};
