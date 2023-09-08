@@ -33,8 +33,8 @@ void TA_Character::updateTool()
         case TOOL_REMOTE_ROBOT:
             spawnRemoteRobot();
             break;
-        case TOOL_INSTA_SHIELD:
-            spawnInstaShield();
+        case TOOL_HAMMER:
+            initHammer();
             break;
         case TOOL_TELEPORT_DEVICE:
             initTeleport();
@@ -107,40 +107,60 @@ void TA_Character::spawnRemoteRobot()
     state = STATE_REMOTE_ROBOT_INIT;
 }
 
-void TA_Character::spawnInstaShield()
+void TA_Character::initHammer()
 {
-    if(instaShieldTime < instaShieldCooldownTime) {
-        return;
-    }
-    if(!jump || helitail) {
-        return;
-    }
-    
-    setAnimation("shield");
-    instaShieldTime = 0;
-    instaShieldSound.play();
-
-    usingInstaShield = true;
-    jump = helitail = false;
-}
-
-void TA_Character::updateInstaShield()
-{
-    if(usingInstaShield) {
-        if(ground || !isAnimated()) {
-            usingInstaShield = false;
+    if(ground || (jump && !helitail)) {
+        setAnimation("hammer");
+        state = STATE_HAMMER;
+        if(!ground) {
+            jump = helitail = false;
+            velocity = {0, hammerFallSpeed};
         }
     }
-    else {
-        instaShieldTime += TA::elapsedTime;
+}
+
+void TA_Character::updateHammer()
+{
+    if(!ground) {
+        TA_Point topLeft{18, 12}, bottomRight{30, 39};
+        int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
+        if(flags & TA_GROUND_COLLISION) {
+            ground = true;
+        }
+    }
+
+    setPosition(position);
+    hitbox.setPosition(position);
+    TA_Point topLeft;
+
+    switch(getAnimationFrame()) {
+        case 0:
+            topLeft = {-2, 12};
+            break;
+        case 1:
+            topLeft = {12, -1};
+            break;
+        case 2:
+            topLeft = {29, 4};
+            break;
+        case 3:
+            topLeft = {32, 10};
+            break;
+    }
+
+    if(flip) {
+        topLeft.x = 30 - topLeft.x;
+    }
+    hitbox.setRectangle(topLeft, topLeft + TA_Point(18, 18));
+    
+    if(!isAnimated()) {
+        state = STATE_NORMAL;
     }
 }
 
 void TA_Character::resetInstaShield()
 {
-    if(usingInstaShield) {
-        instaShieldTime = instaShieldCooldownTime;
-    }
+    
 }
 
 void TA_Character::initTeleport()

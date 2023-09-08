@@ -17,7 +17,7 @@ private:
         TOOL_REMOTE_ROBOT = 6,
         TOOL_SPEED_BOOTS = 7,
         TOOL_RADIO = 18,
-        TOOL_INSTA_SHIELD = 19
+        TOOL_HAMMER = 19
     };
 
     enum TA_CharacterState {
@@ -30,6 +30,7 @@ private:
         STATE_UNPACK_ITEM,
         STATE_RAISE_ITEM,
         STATE_TELEPORT,
+        STATE_HAMMER,
         STATE_DEAD
     };
 
@@ -49,9 +50,9 @@ private:
     const double remoteRobotInitTime = 30;
     const double remoteRobotJumpSpeed = -3.25;
     const double maxLookTime = 100;
-    const double instaShieldCooldownTime = 60;
     const double strongWindForce = 0.25;
     const double teleportInitTime = 60;
+    const double hammerFallSpeed = 0.2;
 
     TA_Controller controller;
     TA_Point followPosition, velocity, climbPosition;
@@ -78,7 +79,6 @@ private:
     bool bombDestroySignal = false;
     bool strongWind = false;
     bool hidden = false, nextFrameHidden = false;
-    bool usingInstaShield = false;
 
     double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
@@ -87,7 +87,6 @@ private:
     int rings = 10;
     int currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
-    double instaShieldTime = instaShieldCooldownTime;
 
     void physicsStep();
     void updateGround();
@@ -109,8 +108,8 @@ private:
     void updateTool();
     void spawnBomb(bool remote);
     void spawnRemoteRobot();
-    void spawnInstaShield();
-    void updateInstaShield();
+    void initHammer();
+    void updateHammer();
     void initTeleport();
     void updateTeleport();
     void changeMusic();

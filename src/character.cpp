@@ -65,7 +65,10 @@ void TA_Character::update()
         return;
     }
 
-    updateInstaShield();
+    if(state == STATE_HAMMER) {
+        updateHammer();
+        return;
+    }
 
     if(state == STATE_TELEPORT) {
         updateTeleport();
@@ -128,7 +131,7 @@ void TA_Character::update()
     updateObjectCollision();
     updateTool();
     updateFollowPosition();
-    if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT) {
+    if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT || state == STATE_HAMMER) {
         return;
     }
     updateAnimation();
@@ -147,7 +150,7 @@ void TA_Character::draw()
 
 TA_CollisionType TA_Character::getCollisionType()
 {
-    if(usingInstaShield) {
+    if(state == STATE_HAMMER) {
         return TA_COLLISION_INSTA_SHIELD;
     }
     return TA_COLLISION_CHARACTER;
@@ -163,10 +166,6 @@ void TA_Character::updateAnimation()
     }
     else {
         setAlpha(255);
-    }
-
-    if(usingInstaShield) {
-        return;
     }
 
     if(remoteRobot) {

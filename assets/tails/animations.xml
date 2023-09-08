@@ -90,4 +90,7 @@
 	<animation name="shield" delay="2" repeatTimes="1">
 		86,87,88,89,90,91,92,93
 	</animation>
+	<animation name="hammer" delay="6" repeatTimes="1">
+		97,98,99,100
+	</animation>
 </animations>

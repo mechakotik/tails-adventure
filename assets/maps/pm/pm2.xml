@@ -42,5 +42,5 @@
 	<object name="wind" left="288" top="336" right="400" bottom="432" xsp="-1" ysp="1"/>
 	<object name="strong_wind" left="592" top="432" right="624" bottom="480"/>
 
-	<object name="item_box" x="440" y="64" number="19" item_name=" insta  &#10; shield "/>
+	<object name="item_box" x="440" y="64" number="3" item_name=" teleport &#10;  device  "/>
 </objects>
