@@ -12,11 +12,6 @@ private:
     const double flightBarSpeed = 0.7;
     const double ringAddTime = 6;
 
-    struct PauseMenu {
-        TA_Sprite sprite;
-        double position;
-    } pauseMenu;
-
     TA_Links links;
     TA_Sprite ringMonitor, itemSprite, flightBarSprite;
     std::array<TA_Sprite, 2> ringDigits;

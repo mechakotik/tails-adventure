@@ -23,8 +23,6 @@ void TA_Hud::load(TA_Links newLinks)
     switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
     flightBarSprite.load("hud/flightbar.png");
     rings = TA::save::getSaveParameter("rings");
-
-    pauseMenu.sprite.load("hud/pause_menu.png");
 }
 
 void TA_Hud::update()
@@ -53,9 +51,7 @@ void TA_Hud::updatePause()
 
 void TA_Hud::updatePauseMenu()
 {
-    pauseMenu.position += TA::elapsedTime / 2;
-    pauseMenu.position = std::fmod(pauseMenu.position, 10);
-    pauseMenu.sprite.setPosition(TA::screenWidth - pauseMenu.sprite.getWidth(), -pauseMenu.position);
+
 }
 
 void TA_Hud::updateRingsCounter()
@@ -148,6 +144,5 @@ void TA_Hud::drawPauseMenu()
     if(!paused) {
         return;
     }
-    TA::drawScreenRect(0, 0, 0, 128);
-    pauseMenu.sprite.draw();
+    TA::drawScreenRect(0, 0, 0, 172);
 }
