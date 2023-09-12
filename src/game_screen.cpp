@@ -1,4 +1,5 @@
 #include "game_screen.h"
+#include "save.h"
 
 void TA_GameScreen::init()
 {
@@ -46,9 +47,13 @@ TA_ScreenState TA_GameScreen::update()
         return TA_SCREENSTATE_GAMEOVER;
     }
     if(character.isTeleported()) {
+        TA::save::saveToLatest();
         return TA_SCREENSTATE_HOUSE;
     }
     if(objectSet.getTransition() != TA_SCREENSTATE_CURRENT) {
+        if(objectSet.getTransition() == TA_SCREENSTATE_MAP) {
+            TA::save::saveToLatest();
+        }
         return objectSet.getTransition();
     }
     return TA_SCREENSTATE_CURRENT;

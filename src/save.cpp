@@ -10,6 +10,17 @@ namespace TA { namespace save {
     std::string getSaveFileName();
     std::map<std::string, long long> saveMap;
     std::string currentSave = "";
+
+    const std::vector<std::string> latestNames {
+        "item_mask",
+        "boss_mask",
+        "rings",
+        "item_slot0",
+        "item_slot1",
+        "item_slot2",
+        "item_slot3",
+        "item_position"
+    };
 }}
 
 void TA::save::addOptionsFromFile(std::string filename)
@@ -115,4 +126,18 @@ void TA::save::repairSave(std::string saveName)
     }
 
     saveMap = newSaveMap;
+}
+
+void TA::save::saveToLatest()
+{
+    for(std::string name : latestNames) {
+        setSaveParameter("latest_" + name, getSaveParameter(name));
+    }
+}
+
+void TA::save::loadFromLatest()
+{
+    for(std::string name : latestNames) {
+        setSaveParameter(name, getSaveParameter("latest_" + name));
+    }
 }

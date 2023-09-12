@@ -13,6 +13,8 @@ namespace TA { namespace save {
     void setSaveParameter(std::string name, long long value, std::string saveName = "");
     void createSave(std::string saveName);
     void repairSave(std::string saveName);
+    void loadFromLatest();
+    void saveToLatest();
 }}
 
 #endif // TA_SAVE_H

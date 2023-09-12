@@ -4,6 +4,7 @@
 
 void TA_MapScreen::init()
 {
+    TA::save::loadFromLatest();
     map.load();
     selector.load();
 
