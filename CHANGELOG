@@ -1,4 +1,15 @@
 ==========
+demo-1.3.0
+==========
+
+- Game progress is now saved
+- Removed updater
+- Config file is now located in game directory
+- Replaced Insta-Shield with Hammer
+- Changed Teleport Device location
+- Added more flight animations
+
+==========
 demo-1.2.0
 ==========
 
