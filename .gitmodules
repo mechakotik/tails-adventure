@@ -1,7 +1,3 @@
 [submodule "assets/controllerdb"]
 	path = assets/controllerdb
 	url = https://github.com/gabomdq/SDL_GameControllerDB
-[submodule "subprojects/updater"]
-	path = subprojects/updater
-	url = https://github.com/TA-Remake/updater
-	branch = main
