@@ -29,4 +29,3 @@ executable(
 )
 
 install_subdir('assets', install_dir: output_dir)
-install_data('version', install_dir: output_dir)
