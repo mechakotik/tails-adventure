@@ -10,8 +10,6 @@ To build this project, you need to install C++ compiler, Meson build system and 
 - [SDL2_image](https://github.com/libsdl-org/SDL_image/tree/SDL2)
 - [SDL2_mixer](https://github.com/libsdl-org/SDL_mixer/tree/SDL2)
 - [tinyxml2](https://github.com/leethomason/tinyxml2)
-- [libcurl](https://github.com/curl/curl)
-- [libarchive](https://github.com/libarchive/libarchive)
 
 The installation process is specific for your OS and package manager, here is a few examples:
 
@@ -47,3 +45,11 @@ meson compile && meson install
 ```
 
 Built game will be located in `build/output` directory.
+
+## Using shared libraries
+
+By default, build system will link all the dependencies statically. If you want to use shared libraries instead, run this command in `build` directory before compiling:
+
+```console
+meson configure -Dshared=true
+```
