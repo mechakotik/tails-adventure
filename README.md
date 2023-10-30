@@ -1,4 +1,14 @@
-# Tails Adventure Remake
+<h1 align="center">Tails Adventure Remake</h1>
+
+<div align="center">
+  
+![GitHub release (with filter)](https://img.shields.io/github/v/release/TA-Remake/TailsAdventure?style=flat&label=latest&color=&logo=Git&logoColor=white)
+![GitHub issues](https://img.shields.io/github/issues/TA-Remake/TailsAdventure?color=red&logo=GitHub&logoColor=white)
+[![Telegram](https://img.shields.io/badge/Telegram-blue.svg?style=flat&logo=Telegram&logoColor=white)](https://t.me/tailsadventure)
+
+<img width="480" alt="pf" src="https://github.com/TA-Remake/TailsAdventure/assets/43793572/7a9a6597-2c18-4e7a-9637-2c043673bab3"><img width="480" alt="pm2" src="https://github.com/TA-Remake/TailsAdventure/assets/43793572/144954c7-a9fb-425e-9f4d-795b7ca591f0">
+
+</div>
 
 An unofficial remake of Tails Adventure for modern platforms, featuring 16:9 widescreen, high refresh rate support, improved physics, controls and enemies' behaviour. It is written in C++ and SDL2 without using any game engines / frameworks. The current demo includes first 3 areas - Poloy Forest, Volcanic Tunnel and Polly Mt. 1.
 
