@@ -15,19 +15,19 @@ The installation process is specific for your OS and package manager, here is a 
 
 ### MSYS2 MinGW (Windows)
 
-Download and install [MSYS2](https://www.msys2.org/), then run following command in its terminal to update packages:
+IMPORTANT: run install and build commands in MSYS2 MINGW64 terminal, not in the default MSYS terminal.
 
 ```console
 pacman -Syu
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-tinyxml2 mingw-w64-x86_64-curl mingw-w64-x86_64-
 ```
 
-If it asks to restart the terminal, restart it and run this command again. After packages are updated, run following command to install dependencies:
+### Arch Linux
 
 ```console
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-tinyxml2 mingw-w64-x86_64-curl mingw-w64-x86_64-libarchive
+sudo pacman -Syu
+sudo pacman -S base-devel meson sdl2 sdl2_image sdl2_mixer tinyxml2
 ```
-
-After installing dependencies, close terminal and run MSYS2 MINGW64 terminal to run build commands in.
 
 ## Building
 
@@ -46,10 +46,10 @@ meson compile && meson install
 
 Built game will be located in `build/output` directory.
 
-## Using shared libraries
+### Using static linking
 
-By default, build system will link all the dependencies statically. If you want to use shared libraries instead, run this command in `build` directory before compiling:
+It is recommended to link all the dependencies statically for better portability. Howewer, most of distros don't package static libraries, so static linking is impossible without manually building all the dependent libraries. To make build system try using static linking, pass the `prefer_static` option when creating build directory:
 
 ```console
-meson configure -Dshared=true
+meson setup build -Dprefer_static=true
 ```
