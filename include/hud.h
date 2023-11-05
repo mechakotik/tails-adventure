@@ -10,7 +10,7 @@ class TA_Hud {
 private:
     const double flightBarLeft = -9, flightBarRight = 3, flightBarY = 47;
     const double flightBarSpeed = 0.7;
-    const double ringAddTime = 6;
+    const double ringAddTime = 6, fadeTime = 6;
 
     TA_Links links;
     TA_Sprite ringMonitor, itemSprite, flightBarSprite;
@@ -19,12 +19,18 @@ private:
     int item = 0, itemPosition = 0, rings;
     double flightBarX = flightBarLeft;
     double timer = 0;
-    bool paused = false;
+
+    TA_Sprite pauseMenuItemSprite, pointerSprite;
+    double pauseMenuAlpha = 0;
+    bool paused = false, exitPause = false;
 
     void updateRingsCounter();
     void updateCurrentItem();
     void updatePause();
     void updatePauseMenu();
+
+    void setHudAlpha(int alpha);
+    void setPauseMenuAlpha(int alpha);
 
     void drawFlightBar();
     void drawCurrentItem();

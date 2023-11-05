@@ -19,6 +19,10 @@ void TA_Hud::load(TA_Links newLinks)
     itemSprite.load("hud/items.png", 16, 16);
     itemSprite.loadAnimationsFromFile("hud/items.xml");
     itemSprite.setPosition(2, 22);
+
+    pauseMenuItemSprite.load("hud/items.png", 16, 16);
+    pointerSprite.load("house/pointer.png");
+
     itemPosition = TA::save::getSaveParameter("item_position");
     switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
     flightBarSprite.load("hud/flightbar.png");
@@ -37,21 +41,76 @@ void TA_Hud::update()
 void TA_Hud::updatePause()
 {
     if(!paused) {
-        /*if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
+        if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
             paused = true;
-        }*/
+            timer = 0;
+        }
         return;
     }
 
     updatePauseMenu();
-    if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
-        paused = false;
-    }
 }
 
 void TA_Hud::updatePauseMenu()
 {
+    timer += TA::elapsedTime;
 
+    if(exitPause) {
+        if(timer < fadeTime) {
+            setHudAlpha(255 * timer / fadeTime);
+            setPauseMenuAlpha(255 - 255 * timer / fadeTime);
+        }
+        else {
+            setHudAlpha(255);
+            setPauseMenuAlpha(0);
+            timer = 0;
+            paused = exitPause = false;
+        }
+        return;
+    }
+
+    if(timer < fadeTime) {
+        setHudAlpha(255 - 255 * timer / fadeTime);
+        setPauseMenuAlpha(255 * timer / fadeTime);
+    }
+    else {
+        setHudAlpha(0);
+        setPauseMenuAlpha(255);
+    }
+
+    if(links.controller->isJustChangedDirection()) {
+        if(links.controller->getDirection() == TA_DIRECTION_LEFT && itemPosition >= 1) {
+            itemPosition --;
+            TA::save::setSaveParameter("item_position", itemPosition);
+        }
+        if(links.controller->getDirection() == TA_DIRECTION_RIGHT && itemPosition <= 2) {
+            itemPosition ++;
+            TA::save::setSaveParameter("item_position", itemPosition);
+        }
+    }
+
+    if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
+        exitPause = true;
+        timer = 0;
+    }
+}
+
+void TA_Hud::setHudAlpha(int alpha)
+{
+    ringMonitor.setAlpha(alpha);
+    itemSprite.setAlpha(alpha);
+    flightBarSprite.setAlpha(alpha);
+
+    for(int digit = 0; digit < 2; digit ++) {
+        ringDigits[digit].setAlpha(alpha);
+    }
+}
+
+void TA_Hud::setPauseMenuAlpha(int alpha)
+{
+    pauseMenuItemSprite.setAlpha(alpha);
+    pointerSprite.setAlpha(alpha);
+    pauseMenuAlpha = alpha;
 }
 
 void TA_Hud::updateRingsCounter()
@@ -144,5 +203,21 @@ void TA_Hud::drawPauseMenu()
     if(!paused) {
         return;
     }
-    TA::drawScreenRect(0, 0, 0, 172);
+    TA::drawScreenRect(0, 0, 0, pauseMenuAlpha / 2);
+
+    {
+        int startX = TA::screenWidth / 2 - 41;
+
+        for(int num = 0; num < 4; num ++) {
+            pauseMenuItemSprite.setPosition(startX + num * 22, 48);
+
+            int item = TA::save::getSaveParameter("item_slot" + std::to_string(num));
+            pauseMenuItemSprite.setFrame(item);
+
+            pauseMenuItemSprite.draw();
+        }
+
+        pointerSprite.setPosition(startX + itemPosition * 22 - 2, 46);
+        pointerSprite.draw();
+    }
 }
