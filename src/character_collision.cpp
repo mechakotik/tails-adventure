@@ -174,11 +174,11 @@ void TA_Character::updateClimb()
             return;
         }
         climbPosition = position;
-        if(controller.getDirection() == TA_DIRECTION_LEFT) {
+        if(links.controller->getDirection() == TA_DIRECTION_LEFT) {
             climbPosition = climbPosition + TA_Point(-13, -height - (ground ? 0.025 : 0));
             setFlip(true);
         }
-        else if(controller.getDirection() == TA_DIRECTION_RIGHT) {
+        else if(links.controller->getDirection() == TA_DIRECTION_RIGHT) {
             climbPosition = climbPosition + TA_Point(13, -height - (ground ? 0.025 : 0));
             setFlip(false);
         }
@@ -238,7 +238,7 @@ void TA_Character::updateClimb()
                     setAnimation("climb");
                     state = STATE_CLIMB_LOW;
                 }
-                if(controller.getDirection() == TA_DIRECTION_LEFT) {
+                if(links.controller->getDirection() == TA_DIRECTION_LEFT) {
                     position = climbPosition + TA_Point(13, height);
                 }
                 else {

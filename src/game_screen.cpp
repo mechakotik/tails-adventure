@@ -8,8 +8,9 @@ void TA_GameScreen::init()
     links.camera = &camera;
     links.objectSet = &objectSet;
     links.hud = &hud;
-    links.controller = character.getController();
+    links.controller = &controller;
 
+    controller.load();
     character.load(links);
     objectSet.setLinks(links);
     tilemap.load(TA::levelPath + ".tmx");
@@ -22,6 +23,7 @@ void TA_GameScreen::init()
 
 TA_ScreenState TA_GameScreen::update()
 {
+    controller.update();
     hud.update();
 
     if(!hud.isPaused()) {

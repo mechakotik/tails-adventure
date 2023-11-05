@@ -54,7 +54,6 @@ private:
     const double teleportInitTime = 60;
     const double hammerFallSpeed = 0.2;
 
-    TA_Controller controller;
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
     TA_Polygon hitbox;
@@ -130,7 +129,6 @@ public:
     bool isClimbing() {return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH;}
 
     TA_Polygon *getHitbox() {return &hitbox;}
-    TA_Controller *getController() {return &controller;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() {return position;}
     TA_Point getVelocity() {return velocity;}

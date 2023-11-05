@@ -10,8 +10,6 @@
 void TA_Character::load(TA_Links newLinks)
 {
     links = newLinks;
-    controller.load();
-
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX1);
     remoteRobotStepSound.load("sound/remote_robot_step.ogg", TA_SOUND_CHANNEL_SFX1);
     flySound.load("sound/fly.ogg", TA_SOUND_CHANNEL_SFX1);
@@ -35,8 +33,6 @@ void TA_Character::load(TA_Links newLinks)
 
 void TA_Character::handleInput()
 {
-    controller.update();
-
     hidden = nextFrameHidden;
     if(hidden) {
         return;
@@ -253,7 +249,7 @@ void TA_Character::updateClimbAnimation()
 
 void TA_Character::updateThrowAnimation()
 {
-    if(controller.isJustPressed(TA_BUTTON_B)) {
+    if(links.controller->isJustPressed(TA_BUTTON_B)) {
         bombDestroySignal = true;
     }
     if(!isAnimated()) {
@@ -270,14 +266,14 @@ void TA_Character::updateFollowPosition()
     }
     followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
 
-    if(ground && (controller.getDirection() == TA_DIRECTION_UP || controller.getDirection() == TA_DIRECTION_DOWN)) {
+    if(ground && (links.controller->getDirection() == TA_DIRECTION_UP || links.controller->getDirection() == TA_DIRECTION_DOWN)) {
         lookTime += TA::elapsedTime;
     }
     else {
         lookTime = 0;
     }
     if(lookTime > maxLookTime) {
-        if(controller.getDirection() == TA_DIRECTION_UP) {
+        if(links.controller->getDirection() == TA_DIRECTION_UP) {
             followPosition.y -= 48;
         }
         else {

@@ -4,10 +4,10 @@
 
 void TA_Character::updateTool()
 {
-    if(!ground || !controller.isPressed(TA_BUTTON_B)) {
+    if(!ground || !links.controller->isPressed(TA_BUTTON_B)) {
         usingSpeedBoots = false;
     }
-    if(!controller.isJustPressed(TA_BUTTON_B)) {
+    if(!links.controller->isJustPressed(TA_BUTTON_B)) {
         return;
     }
 

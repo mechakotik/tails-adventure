@@ -36,12 +36,12 @@ void TA_Character::updateGround()
 {
     verticalMove();
     jump = spring = false;
-    lookUp = (controller.getDirection() == TA_DIRECTION_UP);
-    crouch = (controller.getDirection() == TA_DIRECTION_DOWN);
+    lookUp = (links.controller->getDirection() == TA_DIRECTION_UP);
+    crouch = (links.controller->getDirection() == TA_DIRECTION_DOWN);
     if(lookUp || crouch) {
         velocity.x = 0;
     }
-    if(controller.isJustPressed(TA_BUTTON_A)) {
+    if(links.controller->isJustPressed(TA_BUTTON_A)) {
         if(lookUp) {
             initHelitail();
         }
@@ -63,7 +63,7 @@ void TA_Character::updateAir()
     if(jump) {
         jumpSpeed += grv * TA::elapsedTime;
         jumpTime += TA::elapsedTime;
-        if(jump && !jumpReleased && !controller.isPressed(TA_BUTTON_A)) {
+        if(jump && !jumpReleased && !links.controller->isPressed(TA_BUTTON_A)) {
             jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
             jumpReleased = true;
         }
@@ -73,7 +73,7 @@ void TA_Character::updateAir()
         else {
             velocity.y = std::min(maxJumpSpeed, std::max(minJumpSpeed, jumpSpeed));
         }
-        if(jump && jumpReleased && controller.isJustPressed(TA_BUTTON_A)) {
+        if(jump && jumpReleased && links.controller->isJustPressed(TA_BUTTON_A)) {
             initHelitail();
         }
     }
@@ -96,9 +96,9 @@ void TA_Character::updateHelitail()
 
     helitailTime += TA::elapsedTime;
     TA_Point vector;
-    TA_Direction direction = controller.getDirection();
+    TA_Direction direction = links.controller->getDirection();
     if(direction != TA_DIRECTION_MAX) {
-        vector = controller.getDirectionVector();
+        vector = links.controller->getDirectionVector();
     }
     if(!remoteRobot && helitailTime > getMaxHelitailTime()) {
         vector.y = 1;
@@ -114,7 +114,7 @@ void TA_Character::updateHelitail()
     process(velocity.x, vector.x * helitailTop);
     process(velocity.y, vector.y * helitailTop);
 
-    if(controller.isJustPressed(TA_BUTTON_A)) {
+    if(links.controller->isJustPressed(TA_BUTTON_A)) {
         jump = helitail = false;
     }
 
@@ -130,7 +130,7 @@ void TA_Character::updateHelitail()
 
 void TA_Character::verticalMove()
 {
-    TA_Direction direction = controller.getDirection();
+    TA_Direction direction = links.controller->getDirection();
     if(remoteRobot && ground && (direction == TA_DIRECTION_LEFT || direction == TA_DIRECTION_RIGHT) && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX1)) {
         remoteRobotStepSound.play();
     }

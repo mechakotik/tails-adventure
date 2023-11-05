@@ -6,6 +6,7 @@
 #include "camera.h"
 #include "geometry.h"
 #include "character.h"
+#include "controller.h"
 #include "links.h"
 #include "hud.h"
 #include "object_set.h"
@@ -15,6 +16,7 @@ private:
     TA_Tilemap tilemap;
     TA_Camera camera;
     TA_Character character;
+    TA_Controller controller;
     TA_ObjectSet objectSet;
     TA_Links links;
     TA_Hud hud;
