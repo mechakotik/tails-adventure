@@ -5,6 +5,7 @@
 #include "sprite.h"
 #include "links.h"
 #include "sound.h"
+#include "font.h"
 
 class TA_Hud {
 private:
@@ -20,7 +21,9 @@ private:
     double flightBarX = flightBarLeft;
     double timer = 0;
 
-    TA_Sprite pauseMenuItemSprite, pointerSprite;
+    TA_Sprite pauseMenuItemSprite, pointerSprite, pauseMenuFrameSprite;
+    TA_Font pauseMenuFont, pauseMenuInactiveFont;
+    int pauseMenuSelection = 0;
     double pauseMenuAlpha = 0;
     bool paused = false, exitPause = false;
 

@@ -22,11 +22,18 @@ void TA_Hud::load(TA_Links newLinks)
 
     pauseMenuItemSprite.load("hud/items.png", 16, 16);
     pointerSprite.load("house/pointer.png");
+    pauseMenuFont.load("fonts/pause_menu.png", 8, 8);
+    pauseMenuFont.setMapping("abcdefghijklmnopqrstuvwxyz .*");
+    pauseMenuInactiveFont.load("fonts/pause_menu_inactive.png", 8, 8);
+    pauseMenuInactiveFont.setMapping("abcdefghijklmnopqrstuvwxyz .*");
+    pauseMenuFrameSprite.load("hud/pause_menu_frame.png");
+    pauseMenuFrameSprite.setPosition(TA::screenWidth / 2 - 52, 42);
 
     itemPosition = TA::save::getSaveParameter("item_position");
     switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
     flightBarSprite.load("hud/flightbar.png");
     rings = TA::save::getSaveParameter("rings");
+    setPauseMenuAlpha(0);
 }
 
 void TA_Hud::update()
@@ -72,6 +79,7 @@ void TA_Hud::updatePauseMenu()
     if(timer < fadeTime) {
         setHudAlpha(255 - 255 * timer / fadeTime);
         setPauseMenuAlpha(255 * timer / fadeTime);
+        return;
     }
     else {
         setHudAlpha(0);
@@ -79,13 +87,20 @@ void TA_Hud::updatePauseMenu()
     }
 
     if(links.controller->isJustChangedDirection()) {
-        if(links.controller->getDirection() == TA_DIRECTION_LEFT && itemPosition >= 1) {
+        TA_Direction direction = links.controller->getDirection();
+        if(direction == TA_DIRECTION_LEFT && itemPosition >= 1) {
             itemPosition --;
             TA::save::setSaveParameter("item_position", itemPosition);
         }
-        if(links.controller->getDirection() == TA_DIRECTION_RIGHT && itemPosition <= 2) {
+        else if(direction == TA_DIRECTION_RIGHT && itemPosition <= 2) {
             itemPosition ++;
             TA::save::setSaveParameter("item_position", itemPosition);
+        }
+        else if(direction == TA_DIRECTION_UP && pauseMenuSelection >= 1) {
+            pauseMenuSelection --;
+        }
+        else if(direction == TA_DIRECTION_DOWN && pauseMenuSelection <= 1) {
+            pauseMenuSelection ++;
         }
     }
 
@@ -111,6 +126,9 @@ void TA_Hud::setPauseMenuAlpha(int alpha)
     pauseMenuItemSprite.setAlpha(alpha);
     pointerSprite.setAlpha(alpha);
     pauseMenuAlpha = alpha;
+    pauseMenuFont.setAlpha(alpha);
+    pauseMenuInactiveFont.setAlpha(alpha);
+    pauseMenuFrameSprite.setAlpha(alpha);
 }
 
 void TA_Hud::updateRingsCounter()
@@ -147,10 +165,6 @@ void TA_Hud::updateCurrentItem()
     }
 
     TA::save::setSaveParameter("item_position", itemPosition);
-    item = TA::save::getSaveParameter("item_slot" + std::to_string(itemPosition));
-    if(item == -1) {
-        item = 38;
-    }
 }
 
 void TA_Hud::draw()
@@ -163,6 +177,11 @@ void TA_Hud::draw()
 
 void TA_Hud::drawCurrentItem()
 {
+    item = TA::save::getSaveParameter("item_slot" + std::to_string(itemPosition));
+    if(item == -1) {
+        item = 38;
+    }
+
     if(!itemSprite.isAnimated()) {
         itemSprite.setFrame(item);
     }
@@ -203,7 +222,9 @@ void TA_Hud::drawPauseMenu()
     if(!paused) {
         return;
     }
+
     TA::drawScreenRect(0, 0, 0, pauseMenuAlpha / 2);
+    pauseMenuFrameSprite.draw();
 
     {
         int startX = TA::screenWidth / 2 - 41;
@@ -217,7 +238,22 @@ void TA_Hud::drawPauseMenu()
             pauseMenuItemSprite.draw();
         }
 
-        pointerSprite.setPosition(startX + itemPosition * 22 - 2, 46);
+        pointerSprite.setPosition(startX + itemPosition * 22 - 1, 46);
         pointerSprite.draw();
+    }
+
+    const std::array<std::string, 3> menu {
+        "continue",
+        "quit to map",
+        "quit game"
+    };
+
+    for(int pos = 0; pos < (int)menu.size(); pos ++) {
+        if(pos == pauseMenuSelection) {
+            pauseMenuFont.drawTextCentered(70 + 10 * pos, menu[pos], {-1, 0});
+        }
+        else {
+            pauseMenuInactiveFont.drawTextCentered(70 + 10 * pos, menu[pos], {-1, 0});
+        }
     }
 }
