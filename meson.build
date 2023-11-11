@@ -20,11 +20,17 @@ endif
 incdir = include_directories('include', 'include/objects')
 output_dir = meson.build_root() + '/output'
 
+link_args = []
+if host_machine.system() == 'windows' and get_option('prefer_static')
+    link_args = ['-static']
+endif
+
 executable(
     'TailsAdventure', sources,
     win_subsystem: 'windows',
     dependencies: deps,
     include_directories: incdir,
+    link_args: link_args,
     install: true,
     install_dir: output_dir
 )
