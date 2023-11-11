@@ -148,9 +148,6 @@ bool TA_Game::process()
         (TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RALT) || TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RETURN))) {
         toggleFullscreen();
     }
-    if(TA::keyboard::isScancodePressed(SDL_SCANCODE_ESCAPE)) {
-        return false;
-    }
     if(screenStateMachine.isQuitNeeded()) {
         return false;
     }
