@@ -265,15 +265,6 @@ void TA_ObjectSet::load(std::string filename)
 
 void TA_ObjectSet::update()
 {
-    if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
-        if(bossMusic) {
-            bossLoopSound.play();
-        }
-        else {
-            areaLoopSound.play();
-        }
-    }
-
     for(TA_Object *currentObject : deleteList) {
         delete currentObject;
     }
@@ -309,6 +300,18 @@ void TA_ObjectSet::draw(int priority)
         if(currentObject->getDrawPriority() == priority) {
             currentObject->setUpdateAnimation(!isPaused());
             currentObject->draw();
+        }
+    }
+}
+
+void TA_ObjectSet::updateMusic()
+{
+    if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
+        if(bossMusic) {
+            bossLoopSound.play();
+        }
+        else {
+            areaLoopSound.play();
         }
     }
 }

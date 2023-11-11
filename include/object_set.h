@@ -67,6 +67,7 @@ public:
     void load(std::string filename);
     void update();
     void draw(int priority);
+    void updateMusic();
 
     void checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop = -1e9);
     int checkCollision(TA_Polygon &hitbox);
