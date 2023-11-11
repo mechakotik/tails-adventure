@@ -30,10 +30,13 @@ void TA_Hud::load(TA_Links newLinks)
     pauseMenuFrameSprite.setPosition(TA::screenWidth / 2 - 52, 42);
 
     itemPosition = TA::save::getSaveParameter("item_position");
-    switchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
     flightBarSprite.load("hud/flightbar.png");
     rings = TA::save::getSaveParameter("rings");
     setPauseMenuAlpha(0);
+
+    switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
+    itemSwitchSound.load("sound/item_switch.ogg", TA_SOUND_CHANNEL_SFX1);
+    pauseSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX2);
 }
 
 void TA_Hud::update()
@@ -49,6 +52,7 @@ void TA_Hud::updatePause()
 {
     if(!paused) {
         if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
+            pauseSound.play();
             paused = true;
             timer = 0;
         }
@@ -89,17 +93,21 @@ void TA_Hud::updatePauseMenu()
     if(links.controller->isJustChangedDirection()) {
         TA_Direction direction = links.controller->getDirection();
         if(direction == TA_DIRECTION_LEFT && itemPosition >= 1) {
+            switchSound.play();
             itemPosition --;
             TA::save::setSaveParameter("item_position", itemPosition);
         }
         else if(direction == TA_DIRECTION_RIGHT && itemPosition <= 2) {
+            switchSound.play();
             itemPosition ++;
             TA::save::setSaveParameter("item_position", itemPosition);
         }
         else if(direction == TA_DIRECTION_UP && pauseMenuSelection >= 1) {
+            switchSound.play();
             pauseMenuSelection --;
         }
         else if(direction == TA_DIRECTION_DOWN && pauseMenuSelection <= 1) {
+            switchSound.play();
             pauseMenuSelection ++;
         }
     }
@@ -115,6 +123,7 @@ void TA_Hud::pauseMenuSelect()
 {
     switch(pauseMenuSelection) {
         case 0: // continue
+            pauseSound.play();
             exitPause = true;
             timer = 0;
             break;
@@ -180,7 +189,7 @@ void TA_Hud::updateCurrentItem()
     if(direction != 0) {
         itemSprite.setAnimation(direction == 1 ? "item_switch_right" : "item_switch_left");
         itemPosition = (itemPosition + direction + 4) % 4;
-        switchSound.play();
+        itemSwitchSound.play();
     }
 
     TA::save::setSaveParameter("item_position", itemPosition);
@@ -249,11 +258,13 @@ void TA_Hud::drawPauseMenu()
         int startX = TA::screenWidth / 2 - 41;
 
         for(int num = 0; num < 4; num ++) {
-            pauseMenuItemSprite.setPosition(startX + num * 22, 48);
-
             int item = TA::save::getSaveParameter("item_slot" + std::to_string(num));
-            pauseMenuItemSprite.setFrame(item);
+            if(item == -1) {
+                item = 38;
+            }
 
+            pauseMenuItemSprite.setPosition(startX + num * 22, 48);
+            pauseMenuItemSprite.setFrame(item);
             pauseMenuItemSprite.draw();
         }
 

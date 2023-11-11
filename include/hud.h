@@ -17,7 +17,7 @@ private:
     TA_Links links;
     TA_Sprite ringMonitor, itemSprite, flightBarSprite;
     std::array<TA_Sprite, 2> ringDigits;
-    TA_Sound switchSound;
+    TA_Sound switchSound, itemSwitchSound, pauseSound;
     int item = 0, itemPosition = 0, rings;
     double flightBarX = flightBarLeft;
     double timer = 0;
