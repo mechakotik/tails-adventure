@@ -1,4 +1,13 @@
 ==========
+demo-1.4.0
+==========
+
+- Source code is now open
+- Initial Linux support (build from source for your distro)
+- Added pause menu with item switching
+- Removed exit on ESC
+
+==========
 demo-1.3.0
 ==========
 
