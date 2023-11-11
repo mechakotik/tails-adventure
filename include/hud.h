@@ -6,6 +6,7 @@
 #include "links.h"
 #include "sound.h"
 #include "font.h"
+#include "screen_state_machine.h"
 
 class TA_Hud {
 private:
@@ -21,6 +22,7 @@ private:
     double flightBarX = flightBarLeft;
     double timer = 0;
 
+    TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
     TA_Sprite pauseMenuItemSprite, pointerSprite, pauseMenuFrameSprite;
     TA_Font pauseMenuFont, pauseMenuInactiveFont;
     int pauseMenuSelection = 0;
@@ -31,6 +33,7 @@ private:
     void updateCurrentItem();
     void updatePause();
     void updatePauseMenu();
+    void pauseMenuSelect();
 
     void setHudAlpha(int alpha);
     void setPauseMenuAlpha(int alpha);
@@ -46,6 +49,7 @@ public:
     void draw();
     int getCurrentItem() {return item;}
     bool isPaused() {return paused;}
+    TA_ScreenState getTransition() {return transition;}
 };
 
 #endif // TA_HUD_H

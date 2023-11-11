@@ -41,10 +41,11 @@ private:
     std::array<TA_MapPoint*, TA_DIRECTION_MAX> neighbours;
 
     bool active = false;
+    int index = 0;
     double timer = 0;
 
 public:
-    TA_MapPoint(std::string name, std::string path, TA_Point position);
+    TA_MapPoint(int index, std::string name, std::string path, TA_Point position);
     void setNeighbour(TA_Direction direction, TA_MapPoint* neighbour) {neighbours[direction] = neighbour;}
     void activate() {active = true;}
     void draw();
@@ -54,6 +55,7 @@ public:
     std::string getPath() {return path;}
     bool isActive() {return active;}
     TA_MapPoint* getNeighbour(TA_Direction direction) {return neighbours[direction];}
+    int getIndex() {return index;}
 };
 
 #endif // TA_AREA_SELECTOR_H

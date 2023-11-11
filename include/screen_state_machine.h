@@ -8,13 +8,14 @@ private:
     TA_ScreenState currentState, neededState;
     TA_Screen *currentScreen;
     double transitionTimer = 0;
-    bool changeState = false;
+    bool changeState = false, quitNeeded = false;
 
     const double transitionTime = 6;
 
 public:
     void init();
     bool update();
+    bool isQuitNeeded() {return quitNeeded;}
     ~TA_ScreenStateMachine();
 };
 

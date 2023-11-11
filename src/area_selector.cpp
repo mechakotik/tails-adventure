@@ -14,10 +14,10 @@ void TA_AreaSelector::load()
 
 void TA_AreaSelector::appendPoints()
 {
-    points.push_back(new TA_MapPoint(" tails'\n house", "", TA_Point(122, 97)));
-    points.push_back(new TA_MapPoint(" poloy\n forest", "maps/pf/pf1", TA_Point(106, 89)));
-    points.push_back(new TA_MapPoint("volcanic\ntunnel", "maps/vt/vt1", TA_Point(146, 73)));
-    points.push_back(new TA_MapPoint(" polly\n mt.1", "maps/pm/pm1", TA_Point(146, 41)));
+    points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122, 97)));
+    points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106, 89)));
+    points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146, 73)));
+    points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146, 41)));
     currentPoint = points[TA::save::getSaveParameter("map_selection")];
 }
 
@@ -71,6 +71,8 @@ TA_ScreenState TA_AreaSelector::update()
             switchSound.play();
         }
     }
+
+    TA::save::setSaveParameter("map_selection", currentPoint->getIndex());
     tailsIcon.setPosition(currentPoint->getPosition() + TA_Point(-2, 8));
 
     if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B)) {
@@ -103,8 +105,9 @@ TA_AreaSelector::~TA_AreaSelector()
     }
 }
 
-TA_MapPoint::TA_MapPoint(std::string name, std::string path, TA_Point position)
+TA_MapPoint::TA_MapPoint(int index, std::string name, std::string path, TA_Point position)
 {
+    this->index = index;
     this->position = position;
     this->name = name;
     this->path = path;

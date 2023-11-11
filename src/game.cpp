@@ -92,7 +92,7 @@ void TA_Game::createWindow()
 void TA_Game::toggleFullscreen()
 {
     fullscreen = !fullscreen;
-    SDL_SetWindowFullscreen(TA::window, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+    SDL_SetWindowFullscreen(TA::window, (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
     updateWindowSize();
 }
 
@@ -149,6 +149,9 @@ bool TA_Game::process()
         toggleFullscreen();
     }
     if(TA::keyboard::isScancodePressed(SDL_SCANCODE_ESCAPE)) {
+        return false;
+    }
+    if(screenStateMachine.isQuitNeeded()) {
         return false;
     }
     return true;

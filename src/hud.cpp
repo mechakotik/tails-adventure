@@ -104,9 +104,28 @@ void TA_Hud::updatePauseMenu()
         }
     }
 
-    if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
-        exitPause = true;
-        timer = 0;
+    if(links.controller->isJustPressed(TA_BUTTON_PAUSE) ||
+        links.controller->isJustPressed(TA_BUTTON_A) ||
+        links.controller->isJustPressed(TA_BUTTON_B)) {
+        pauseMenuSelect();
+    }
+}
+
+void TA_Hud::pauseMenuSelect()
+{
+    switch(pauseMenuSelection) {
+        case 0: // continue
+            exitPause = true;
+            timer = 0;
+            break;
+        
+        case 1: // quit to map
+            transition = TA_SCREENSTATE_MAP;
+            break;
+        
+        case 2: // quit game
+            transition = TA_SCREENSTATE_QUIT;
+            break;
     }
 }
 

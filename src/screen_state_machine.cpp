@@ -20,6 +20,11 @@ void TA_ScreenStateMachine::init()
 bool TA_ScreenStateMachine::update()
 {
     TA_ScreenState returnedState = currentScreen -> update();
+    if(returnedState == TA_SCREENSTATE_QUIT) {
+        returnedState = TA_SCREENSTATE_CURRENT;
+        quitNeeded = true;
+    }
+
     if(neededState == TA_SCREENSTATE_CURRENT && returnedState != TA_SCREENSTATE_CURRENT) {
         neededState = returnedState;
         TA::sound::fadeOut(transitionTime + 2);
