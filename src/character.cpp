@@ -409,3 +409,9 @@ void TA_Character::setCharacterPosition(TA_Point position)
     flip = false;
     updateAnimation();
 }
+
+void TA_Character::setPaused(bool paused)
+{
+    setUpdateAnimation(!paused);
+    remoteRobotControlSprite.setUpdateAnimation(!paused);
+}

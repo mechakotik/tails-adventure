@@ -158,6 +158,7 @@ public:
     void addToPosition(TA_Point delta) {position = position + delta;}
     void resetInstaShield();
     void setWindVelociy(TA_Point windVelocity);
+    void setPaused(bool paused);
 };
 
 #endif // TA_CHARACTER_H

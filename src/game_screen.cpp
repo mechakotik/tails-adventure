@@ -34,7 +34,7 @@ TA_ScreenState TA_GameScreen::update()
         camera.update(character.isOnGround(), character.isJumpingOnSpring() || character.isOnStrongWind() || character.isUsingSpeedBoots());
     }
 
-    character.setUpdateAnimation(!hud.isPaused());
+    character.setPaused(hud.isPaused());
     tilemap.setUpdateAnimation(!hud.isPaused());
     objectSet.setPaused(hud.isPaused());
 
