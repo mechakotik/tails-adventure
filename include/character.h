@@ -56,7 +56,7 @@ private:
 
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
-    TA_Polygon hitbox;
+    TA_Polygon hitbox, hammerHitbox;
     TA_Point topLeft, bottomRight;
     TA_Point windVelocity;
 
@@ -129,11 +129,11 @@ public:
     bool isClimbing() {return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH;}
 
     TA_Polygon *getHitbox() {return &hitbox;}
+    TA_Polygon *getHammerHitbox() {return &hammerHitbox;}
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() {return position;}
     TA_Point getVelocity() {return velocity;}
     double getJumpTime() {return jumpTime;}
-    TA_CollisionType getCollisionType();
 
     void addRings(int count);
     void addRingsToMaximum();
@@ -148,6 +148,7 @@ public:
     bool isOnStrongWind() {return strongWind;}
     bool isTeleported();
     bool isUsingSpeedBoots() {return usingSpeedBoots;}
+    bool isUsingHammer() {return state == STATE_HAMMER;}
 
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();

@@ -39,7 +39,7 @@ bool TA_Nezu::update()
     if(isGoingToFall()) {
         state = STATE_FALL;
     }
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB | TA_COLLISION_INSTA_SHIELD)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB | TA_COLLISION_HAMMER)) {
         destroy();
         return false;
     }

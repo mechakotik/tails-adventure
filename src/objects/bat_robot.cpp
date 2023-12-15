@@ -67,7 +67,7 @@ bool TA_BatRobot::update()
 
     updatePosition();
 
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB | TA_COLLISION_INSTA_SHIELD)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB | TA_COLLISION_HAMMER)) {
         objectSet->spawnObject<TA_Explosion>(position + TA_Point(4, 0), 0, TA_EXPLOSION_NEUTRAL);
         objectSet->resetInstaShield();
         if(objectSet->enemyShouldDropRing()) {

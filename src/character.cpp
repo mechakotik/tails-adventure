@@ -38,7 +38,7 @@ void TA_Character::handleInput()
         return;
     }
 
-    if(state == STATE_THROW_BOMB) {
+    if(state == STATE_THROW_BOMB || state == STATE_HAMMER) {
         setPosition(position);
         hitbox.setPosition(position);
     }
@@ -142,14 +142,6 @@ void TA_Character::draw()
         remoteRobotControlSprite.draw();
     }
     TA_Pawn::draw();
-}
-
-TA_CollisionType TA_Character::getCollisionType()
-{
-    if(state == STATE_HAMMER) {
-        return TA_COLLISION_INSTA_SHIELD;
-    }
-    return TA_COLLISION_CHARACTER;
 }
 
 void TA_Character::updateAnimation()

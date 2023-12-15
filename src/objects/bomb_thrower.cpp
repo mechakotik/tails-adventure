@@ -112,7 +112,7 @@ TA_Point TA_BombThrower::getDistanceToCharacter()
 
 bool TA_BombThrower::shouldBeDestroyed()
 {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_HAMMER)) {
         return true;
     }
     return false;

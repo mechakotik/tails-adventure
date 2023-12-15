@@ -101,7 +101,7 @@ TA_Point TA_RockThrower::getRockVelocity()
 
 bool TA_RockThrower::shouldBeDestroyed()
 {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_HAMMER)) {
         return true;
     }
     return false;

@@ -132,6 +132,7 @@ void TA_Character::updateHammer()
 
     setPosition(position);
     hitbox.setPosition(position);
+    hammerHitbox.setPosition(position);
     TA_Point topLeft;
 
     switch(getAnimationFrame()) {
@@ -152,8 +153,9 @@ void TA_Character::updateHammer()
     if(flip) {
         topLeft.x = 30 - topLeft.x;
     }
-    hitbox.setRectangle(topLeft, topLeft + TA_Point(18, 18));
-    
+    hammerHitbox.setRectangle(topLeft, topLeft + TA_Point(18, 18));
+    updateFollowPosition();
+
     if(!isAnimated()) {
         state = STATE_NORMAL;
     }

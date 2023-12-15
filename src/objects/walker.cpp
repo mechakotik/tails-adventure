@@ -49,7 +49,7 @@ bool TA_Walker::update()
 
     int flags;
     objectSet->checkCollision(hitbox, flags);
-    if(flags & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB | TA_COLLISION_INSTA_SHIELD)) {
+    if(flags & (TA_COLLISION_EXPLOSION | TA_COLLISION_BOMB | TA_COLLISION_HAMMER)) {
         objectSet->spawnObject<TA_DeadKukku>(position);
         objectSet->resetInstaShield();
         return false;

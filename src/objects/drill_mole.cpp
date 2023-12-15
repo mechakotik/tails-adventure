@@ -72,7 +72,7 @@ bool TA_DrillMole::shouldBeDestroyed()
     if(getStateAndTime().first != STATE_IDLE_UP) {
         return false;
     }
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_INSTA_SHIELD)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_HAMMER)) {
         return true;
     }
     return false;
