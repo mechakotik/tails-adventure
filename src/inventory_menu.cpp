@@ -32,7 +32,7 @@ void TA_InventoryMenu::fillItemMatrix()
     items[2][1] = {16, "helmet"};
     items[3][0] = {13, "napalm bomb"};
     items[3][1] = {6, "remote robot"};
-    items[4][0] = {19, "insta shield"};
+    items[4][0] = {19, "hammer"};
     items[4][1] = {8, "super glove"};
     items[5][0] = {3, "teleport device"};
     items[5][1] = {9, "fang"};
