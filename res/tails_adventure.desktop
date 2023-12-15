@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Tails Adventure Remake
+Exec=tails-adventure
+Comment=The definitive way to play Tails Adventure
+Icon=tails-adventure
+Categories=Game;
+Terminal=false

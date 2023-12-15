@@ -32,7 +32,7 @@ namespace TA
 std::string TA::readStringFromFile(std::string filename)
 {
     TA::addPathPrefix(filename);
-    SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "r+b");
+    SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "rb");
     if(input == nullptr) {
         TA::handleSDLError("Open %s failed", filename.c_str());
     }
@@ -99,12 +99,15 @@ long long TA::random::max()
 
 void TA::addPathPrefix(std::string &path)
 {
-    #ifndef __ANDROID__
-    const std::string prefix = "assets/";
+    #ifdef TA_LINUX_INSTALL
+        const std::string prefix = "/usr/share/tails-adventure/";
+    #else
+        const std::string prefix = "assets/";
+    #endif
+
     if(path.length() < prefix.length() || path.substr(0, prefix.length()) != prefix) {\
         path = prefix + path;
     }
-    #endif
 }
 
 double TA::linearInterpolation(double left, double right, double pos)

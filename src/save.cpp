@@ -40,7 +40,9 @@ void TA::save::addOptionsFromFile(std::string filename)
 
 void TA::save::load()
 {
-    addOptionsFromFile("assets/default_config");
+    std::string defaultConfigPath = "default_config";
+    TA::addPathPrefix(defaultConfigPath);
+    addOptionsFromFile(defaultConfigPath);
     addOptionsFromFile(getSaveFileName());
 }
 
@@ -59,7 +61,13 @@ void TA::save::writeToFile()
 
 std::string TA::save::getSaveFileName()
 {
-    return "config";
+    #ifdef TA_LINUX_INSTALL
+        std::string path = std::string(getenv("HOME")) + "/.local/share/tails-adventure/";
+        std::filesystem::create_directories(path);
+        return path + "config";
+    #else
+        return "config";
+    #endif
 }
 
 long long TA::save::getParameter(std::string name)
