@@ -60,7 +60,7 @@ void TA_BombThrower::updateWalkForward()
     position.x -= speed * TA::elapsedTime;
     TA_Point distance = getDistanceToCharacter();
 
-    if(position.x < leftX || (distance.x < 0 && abs(distance.x) <= 54) && abs(distance.y) <= 48) {
+    if(position.x < leftX || ((distance.x < 0 && abs(distance.x) <= 54) && abs(distance.y) <= 48)) {
         position.x = std::max(position.x, leftX);
         initAttack();
         return;

@@ -4,7 +4,7 @@
 void TA_Font::setMapping(std::string mappingString)
 {
     mapping.clear();
-    for(int pos = 0; pos < mappingString.length(); pos ++) {
+    for(int pos = 0; pos < (int)mappingString.length(); pos ++) {
         mapping[mappingString[pos]] = pos;
     }
 }

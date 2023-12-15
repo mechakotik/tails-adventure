@@ -185,7 +185,6 @@ void TA_Character::updateTeleport()
 
 bool TA_Character::isTeleported()
 {
-    double cameraY = links.camera->getPosition().y;
     return state == STATE_TELEPORT && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3);
 }
 

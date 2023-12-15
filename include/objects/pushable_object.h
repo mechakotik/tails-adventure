@@ -12,7 +12,7 @@ private:
 
 public:
     using TA_Object::TA_Object;
-    virtual void load(std::string filename, TA_Point newPosition);
+    void load(std::string filename, TA_Point newPosition);
     bool update();
     TA_CollisionType getCollisionType() {return TA_COLLISION_PUSHABLE;}
     bool checkPawnCollision(TA_Polygon &hitbox) override;

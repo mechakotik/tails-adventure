@@ -386,7 +386,7 @@ void TA_OptionsMenu::draw()
 
 void TA_OptionsMenu::drawGroupList()
 {
-    TA_Point textPosition{getLeftX() + 16, 36};
+    TA_Point textPosition{(double)getLeftX() + 16, 36};
     for(int pos = 0; pos < (int)groups.size(); pos ++) {
         if(pos == group) {
             activeFont.drawText(textPosition, groups[pos]);

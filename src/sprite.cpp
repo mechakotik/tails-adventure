@@ -114,7 +114,7 @@ void TA_Sprite::updateAnimation()
         animationTimer += TA::elapsedTime;
         animationFrame += animationTimer / animation.delay;
 
-        if (animationFrame >= animation.frames.size()) {
+        if (animationFrame >= (int)animation.frames.size()) {
             if (animation.repeatTimes != -1) {
                 animation.repeatTimes -= animationFrame / animation.frames.size();
                 if (animation.repeatTimes <= 0) {
