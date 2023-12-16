@@ -15,11 +15,11 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename)
     if(!textureMap.count(filename)) {
         SDL_Surface *surface = IMG_Load(filename.c_str());
         if(surface == nullptr) {
-            TA::handleSDLError("Failed to load image");
+            TA::handleSDLError("%s", "Failed to load image");
         }
         SDL_Texture *texture = SDL_CreateTextureFromSurface(TA::renderer, surface);
         if(texture == nullptr) {
-            TA::handleSDLError("Failed to create texture from surface");
+            TA::handleSDLError("%s", "Failed to create texture from surface");
         }
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
         textureMap[filename] = texture;

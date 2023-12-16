@@ -12,12 +12,12 @@
 
 namespace TA {
     template<typename... T>
-    void handleError(T... args)
+    void handleError(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_ERROR, APP_NAME, args...);
+        __android_log_print(ANDROID_LOG_ERROR, APP_NAME, format, args...);
         #else
-        std::printf(args...);
+        std::printf(format, args...);
         std::printf("\n");
         system("pause");
         #endif
@@ -25,13 +25,13 @@ namespace TA {
     }
 
     template<typename... T>
-    void handleSDLError(T... args)
+    void handleSDLError(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_ERROR, APP_NAME, args...);
+        __android_log_print(ANDROID_LOG_ERROR, APP_NAME, format, args...);
         __android_log_print(ANDROID_LOG_ERROR, APP_NAME, "%s", SDL_GetError());
         #else
-        std::printf(args...);
+        std::printf(format, args...);
         std::printf("\n%s\n", SDL_GetError());
         system("pause");
         #endif
@@ -39,23 +39,23 @@ namespace TA {
     }
 
     template<typename... T>
-    void printLog(T... args)
+    void printLog(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_DEBUG, APP_NAME, args...);
+        __android_log_print(ANDROID_LOG_DEBUG, APP_NAME, format, args...);
         #else
-        std::printf(args...);
+        std::printf(format, args...);
         std::printf("\n");
         #endif
     }
 
     template<typename... T>
-    void printWarning(T... args)
+    void printWarning(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_WARN, APP_NAME, args...);
+        __android_log_print(ANDROID_LOG_WARN, APP_NAME, format, args...);
         #else
-        std::printf(args...);
+        std::printf(format, args...);
         std::printf("\n");
         #endif
     }

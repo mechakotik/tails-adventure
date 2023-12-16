@@ -50,17 +50,17 @@ TA_Game::TA_Game()
 void TA_Game::initSDL()
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        TA::handleSDLError("SDL init failed");
+        TA::handleSDLError("%s", "SDL init failed");
     }
     if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
-        TA::handleSDLError("SDL_image init failed");
+        TA::handleSDLError("%s", "SDL_image init failed");
     }
 
     if(Mix_Init(MIX_INIT_OGG) != MIX_INIT_OGG) {
-        TA::handleSDLError("SDL_mixer init failed");
+        TA::handleSDLError("%s", "SDL_mixer init failed");
     }
     if(Mix_OpenAudio(soundFrequency, MIX_DEFAULT_FORMAT, TA_SOUND_CHANNEL_MAX, soundChunkSize) == -1) {
-        TA::handleSDLError("Mix_OpenAudio failed");
+        TA::handleSDLError("%s", "Mix_OpenAudio failed");
     }
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
@@ -72,7 +72,7 @@ void TA_Game::createWindow()
     int windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
     TA::window = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, defaultWindowWidth, defaultWindowHeight, windowFlags);
     if(TA::window == nullptr) {
-        TA::handleSDLError("Failed to create window");
+        TA::handleSDLError("%s", "Failed to create window");
     }
 
     int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
@@ -82,7 +82,7 @@ void TA_Game::createWindow()
     }
     TA::renderer = SDL_CreateRenderer(TA::window, -1, rendererFlags);
     if(TA::renderer == nullptr) {
-        TA::handleSDLError("Failed to create renderer");
+        TA::handleSDLError("%s", "Failed to create renderer");
     }
 
     updateWindowSize();

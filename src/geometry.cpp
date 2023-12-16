@@ -155,7 +155,7 @@ bool TA_Polygon::intersects(TA_Polygon &rv)
 TA_Point TA_Polygon::getVertex(int pos)
 {
     if(empty()) {
-        TA::handleError("Vertex list is empty");
+        TA::handleError("%s", "Vertex list is empty");
     }
     return vertexList[pos % vertexList.size()] + position;
 }
