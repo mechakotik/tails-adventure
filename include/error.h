@@ -19,7 +19,6 @@ namespace TA {
         #else
         std::printf(format, args...);
         std::printf("\n");
-        system("pause");
         #endif
         exit(0);
     }
@@ -33,7 +32,6 @@ namespace TA {
         #else
         std::printf(format, args...);
         std::printf("\n%s\n", SDL_GetError());
-        system("pause");
         #endif
         exit(0);
     }
