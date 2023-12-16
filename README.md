@@ -28,6 +28,7 @@ This project tries to completely rewrite Tails Adventure to provide a better way
 | Platform | Description |
 | ------------- | ------------- |
 | Windows | Download latest binary release from [Releases](https://github.com/mechakotik/TailsAdventure/releases) |
+| Arch Linux | Install [tails-adventure](https://aur.archlinux.org/packages/tails-adventure) package from AUR |
 | Windows/Linux | Build from source (see tutorial below) |
 
 ## Building from source
