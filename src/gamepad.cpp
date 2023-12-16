@@ -44,8 +44,8 @@ void TA::gamepad::init(int index)
     else {
         isConnected = true;
     }
-    SDL_GameControllerAddMappingsFromFile("controllerdb/gamecontrollerdb.txt");
-
+    
+    SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
     updateMapping();
 }
 
