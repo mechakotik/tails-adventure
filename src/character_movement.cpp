@@ -34,7 +34,7 @@ void TA_Character::initHelitail()
 
 void TA_Character::updateGround()
 {
-    verticalMove();
+    horizontalMove();
     jump = spring = false;
     lookUp = (links.controller->getDirection() == TA_DIRECTION_UP);
     crouch = (links.controller->getDirection() == TA_DIRECTION_DOWN);
@@ -59,7 +59,7 @@ void TA_Character::updateGround()
 
 void TA_Character::updateAir()
 {
-    verticalMove();
+    horizontalMove();
     if(jump) {
         jumpSpeed += grv * TA::elapsedTime;
         jumpTime += TA::elapsedTime;
@@ -128,7 +128,7 @@ void TA_Character::updateHelitail()
     }
 }
 
-void TA_Character::verticalMove()
+void TA_Character::horizontalMove()
 {
     TA_Direction direction = links.controller->getDirection();
     if(remoteRobot && ground && (direction == TA_DIRECTION_LEFT || direction == TA_DIRECTION_RIGHT) && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX1)) {
@@ -140,22 +140,23 @@ void TA_Character::verticalMove()
         currentTopX *= 2;
     }
 
+    double currentAcc = (ground ? acc : airAcc);
     if(direction == TA_DIRECTION_RIGHT) {
         flip = false;
-        velocity.x += acc * TA::elapsedTime;
+        velocity.x += currentAcc * TA::elapsedTime;
         velocity.x = std::min(velocity.x, currentTopX);
     }
     else if(direction == TA_DIRECTION_LEFT) {
         flip = true;
-        velocity.x -= acc * TA::elapsedTime;
+        velocity.x -= currentAcc * TA::elapsedTime;
         velocity.x = std::max(velocity.x, -currentTopX);
     }
     else {
         if(velocity.x > 0) {
-            velocity.x = std::max(double(0), velocity.x - acc * TA::elapsedTime);
+            velocity.x = std::max(double(0), velocity.x - currentAcc * TA::elapsedTime);
         }
         else {
-            velocity.x = std::min(double(0), velocity.x + acc * TA::elapsedTime);
+            velocity.x = std::min(double(0), velocity.x + currentAcc * TA::elapsedTime);
         }
     }
 }

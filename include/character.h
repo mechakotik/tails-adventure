@@ -37,6 +37,7 @@ private:
     const double jmp = -3.75;
     const double grv = 0.125;
     const double acc = 0.25;
+    const double airAcc = 0.09;
     const double topX = 1;
     const double minJumpSpeed = -2.5;
     const double maxJumpSpeed = 3;
@@ -94,7 +95,7 @@ private:
     void initHelitail();
 
     void updateFollowPosition();
-    void verticalMove();
+    void horizontalMove();
     bool checkPawnCollision(TA_Polygon &hitbox) override;
     void updateCollisions();
     void updateAnimation();
