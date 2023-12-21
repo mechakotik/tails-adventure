@@ -1,4 +1,5 @@
 #include "devmenu_screen.h"
+#include "save.h"
 
 void TA_DevmenuScreen::init()
 {
@@ -12,6 +13,7 @@ void TA_DevmenuScreen::init()
     levels.emplace_back("maps/pm/pm2");
     levels.emplace_back("maps/pm/pm3");
     levels.emplace_back("maps/pm/pm4");
+    levels.emplace_back("maps/ci/ci1");
     normalFont.load("fonts/devmenu.png", 7, 9);
     normalFont.setMapping(mapping);
     selectedFont.load("fonts/devmenu_selected.png", 7, 9);
@@ -71,6 +73,8 @@ TA_ScreenState TA_DevmenuScreen::update()
 
     if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B)) {
         TA::levelPath = levels[levelPosition];
+        TA::save::repairSave("save_0");
+        TA::save::setCurrentSave("save_0");
         return TA_SCREENSTATE_GAME;
     }
     return TA_SCREENSTATE_CURRENT;

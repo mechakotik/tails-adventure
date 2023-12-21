@@ -60,6 +60,12 @@ void TA_ObjectSet::load(std::string filename)
         element != nullptr; element = element->NextSiblingElement("object"))
     {
         std::string name = element->Attribute("name");
+        if(element->IntAttribute("tile_x")) {
+            element->SetAttribute("x", element->IntAttribute("tile_x") * 16);
+        }
+        if(element->IntAttribute("tile_y")) {
+            element->SetAttribute("y", element->IntAttribute("tile_y") * 16);
+        }
 
         if(name == "breakable_block") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
