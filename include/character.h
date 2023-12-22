@@ -54,6 +54,8 @@ private:
     const double strongWindForce = 0.25;
     const double teleportInitTime = 60;
     const double hammerFallSpeed = 0.2;
+    const double waterFriction = 0.75;
+    const double waterFlowAcc = 0.15;
 
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
@@ -79,6 +81,7 @@ private:
     bool bombDestroySignal = false;
     bool strongWind = false;
     bool hidden = false, nextFrameHidden = false;
+    bool water = false;
 
     double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
@@ -93,6 +96,7 @@ private:
     void updateAir();
     void updateHelitail();
     void initHelitail();
+    void updateWaterFlow();
 
     void updateFollowPosition();
     void horizontalMove();
@@ -140,7 +144,7 @@ public:
     void addRingsToMaximum();
     void setCharacterPosition(TA_Point position);
 
-    bool displayFlighTimeBar();
+    bool displayFlightTimeBar();
     double getFlightTime() {return helitailTime / getMaxHelitailTime();}
     bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
     bool isRemoteRobot() {return remoteRobot;}
@@ -150,6 +154,7 @@ public:
     bool isTeleported();
     bool isUsingSpeedBoots() {return usingSpeedBoots;}
     bool isUsingHammer() {return state == STATE_HAMMER;}
+    bool isInWater() {return water;}
 
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();
@@ -159,7 +164,7 @@ public:
 
     void addToPosition(TA_Point delta) {position = position + delta;}
     void resetInstaShield();
-    void setWindVelociy(TA_Point windVelocity);
+    void setWindVelocity(TA_Point windVelocity);
     void setPaused(bool paused);
 };
 

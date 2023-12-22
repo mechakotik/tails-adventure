@@ -357,7 +357,7 @@ void TA_Character::setReleaseState()
     }
 }
 
-void TA_Character::setWindVelociy(TA_Point windVelocity)
+void TA_Character::setWindVelocity(TA_Point windVelocity)
 {
     if((helitail && helitailTime > getMaxHelitailTime()) || windVelocity.y < -2.5) {
         ground = jump = helitail = false;
@@ -380,7 +380,7 @@ double TA_Character::getMaxHelitailTime()
     return 140 + 70 * getEmeraldsCount();
 }
 
-bool TA_Character::displayFlighTimeBar()
+bool TA_Character::displayFlightTimeBar()
 {
     if(TA::levelPath == "maps/pm/pm4") {
         return false;

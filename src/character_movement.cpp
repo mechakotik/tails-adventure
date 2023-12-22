@@ -4,7 +4,11 @@
 void TA_Character::physicsStep()
 {
     if(!hurt) {
-        if(helitail) {
+        if(TA::levelPath.substr(0, 7) == "maps/ci" && 
+            (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
+            updateWaterFlow();
+        }
+        else if(helitail) {
             updateHelitail();
         }
         else if(ground) {
@@ -15,8 +19,8 @@ void TA_Character::physicsStep()
         }
     }
     else {
-        velocity.y += grv * TA::elapsedTime;
-        velocity.y = std::min(velocity.y, maxJumpSpeed);
+        velocity.y += grv * (water ? 0.5 : 1) * TA::elapsedTime;
+        velocity.y = std::min(velocity.y, maxJumpSpeed * (water ? 0.5 : 1));
     }
 }
 
@@ -42,12 +46,12 @@ void TA_Character::updateGround()
         velocity.x = 0;
     }
     if(links.controller->isJustPressed(TA_BUTTON_A)) {
-        if(lookUp) {
+        if(lookUp && (!water || remoteRobot)) {
             initHelitail();
         }
         else {
             jumpSound.play();
-            jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp);
+            jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * (water ? 0.7 : 1);
             jump = true;
             jumpReleased = false;
             jumpTime = 0;
@@ -61,25 +65,31 @@ void TA_Character::updateAir()
 {
     horizontalMove();
     if(jump) {
-        jumpSpeed += grv * TA::elapsedTime;
+        jumpSpeed += grv * (water ? 0.5 : 1) * TA::elapsedTime;
         jumpTime += TA::elapsedTime;
         if(jump && !jumpReleased && !links.controller->isPressed(TA_BUTTON_A)) {
             jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
             jumpReleased = true;
         }
+        if(water && jumpSpeed > maxJumpSpeed * 0.5) {
+            jumpSpeed = std::max(maxJumpSpeed * 0.5, jumpSpeed - waterFriction * TA::elapsedTime);
+        }
         if(spring) {
-            velocity.y = std::min(maxJumpSpeed, jumpSpeed);
+            velocity.y = std::min(maxJumpSpeed * (water ? 0.5 : 1), jumpSpeed);
         }
         else {
-            velocity.y = std::min(maxJumpSpeed, std::max(minJumpSpeed, jumpSpeed));
+            velocity.y = std::min(maxJumpSpeed, std::max(minJumpSpeed * (water ? 0.5 : 1), jumpSpeed));
         }
-        if(jump && jumpReleased && links.controller->isJustPressed(TA_BUTTON_A)) {
+        if(jump && jumpReleased && (!water || remoteRobot) && links.controller->isJustPressed(TA_BUTTON_A)) {
             initHelitail();
         }
     }
     else {
-        velocity.y += grv * TA::elapsedTime;
+        velocity.y += grv * (water ? 0.5 : 1) * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxJumpSpeed);
+        if(water && velocity.y > maxJumpSpeed * 0.5) {
+            velocity.y = std::max(maxJumpSpeed * 0.5, velocity.y - waterFriction * TA::elapsedTime);
+        }
     }
 }
 
@@ -111,8 +121,9 @@ void TA_Character::updateHelitail()
         flip = false;
     }
 
-    process(velocity.x, vector.x * helitailTop);
-    process(velocity.y, vector.y * helitailTop);
+    double topSpeed = helitailTop * (water ? 0.7 : 1);
+    process(velocity.x, vector.x * topSpeed);
+    process(velocity.y, vector.y * topSpeed);
 
     if(links.controller->isJustPressed(TA_BUTTON_A)) {
         jump = helitail = false;
@@ -136,11 +147,16 @@ void TA_Character::horizontalMove()
     }
 
     double currentTopX = topX;
+    double currentAcc = (ground ? acc : airAcc);
+
     if(isUsingSpeedBoots()) {
         currentTopX *= 2;
     }
+    if(water) {
+        currentTopX *= 0.75;
+        currentAcc *= 0.5;
+    }
 
-    double currentAcc = (ground ? acc : airAcc);
     if(direction == TA_DIRECTION_RIGHT) {
         flip = false;
         velocity.x += currentAcc * TA::elapsedTime;
@@ -158,5 +174,25 @@ void TA_Character::horizontalMove()
         else {
             velocity.x = std::min(double(0), velocity.x + currentAcc * TA::elapsedTime);
         }
+    }
+}
+
+void TA_Character::updateWaterFlow()
+{
+    auto addAcceleration = [&] (double &speed, double neededSpeed) {
+        if(speed < neededSpeed) {
+            speed = std::min(neededSpeed, speed + waterFlowAcc * TA::elapsedTime);
+        }
+        else {
+            speed = std::max(neededSpeed, speed - waterFlowAcc * TA::elapsedTime);
+        }
+    };
+
+    addAcceleration(velocity.y, windVelocity.y);
+    if(TA::equal(windVelocity.x, 0)) {
+        horizontalMove();
+    }
+    else {
+        addAcceleration(velocity.x, windVelocity.x);
     }
 }

@@ -163,6 +163,16 @@
     </object>
    </objectgroup>
   </tile>
+  <tile id="44">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <properties>
+      <property name="type" type="int" value="3"/>
+     </properties>
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
   <tile id="45">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
@@ -304,12 +314,28 @@
    </objectgroup>
   </tile>
   <tile id="72">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="12">
+     <properties>
+      <property name="type" type="int" value="3"/>
+     </properties>
+     <polygon points="0,0 16,0 16,4 0,4"/>
+    </object>
+   </objectgroup>
    <animation>
     <frame tileid="72" duration="500"/>
     <frame tileid="74" duration="500"/>
    </animation>
   </tile>
   <tile id="73">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="12">
+     <properties>
+      <property name="type" type="int" value="3"/>
+     </properties>
+     <polygon points="0,0 16,0 16,4 0,4"/>
+    </object>
+   </objectgroup>
    <animation>
     <frame tileid="73" duration="500"/>
     <frame tileid="75" duration="500"/>
@@ -317,6 +343,9 @@
   </tile>
  </tileset>
  <layer id="1" name="layer0" width="61" height="59">
+  <properties>
+   <property name="collision" type="bool" value="true"/>
+  </properties>
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,4,3,4,2,3,4,3,4,3,4,3,4,3,4,3,4,3,4,3,4,3,4,3,4,3,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -380,6 +409,9 @@
 </data>
  </layer>
  <layer id="2" name="layer1" width="61" height="59">
+  <properties>
+   <property name="collision" type="bool" value="true"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

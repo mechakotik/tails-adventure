@@ -84,6 +84,9 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
                 else if(tileset[tileId].type == 2) {
                     collisionType = TA_COLLISION_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_DAMAGE_X2;
                 }
+                else if(tileset[tileId].type == 3) {
+                    collisionType = TA_COLLISION_WATER;
+                }
                 tileset[tileId].hitboxes.push_back({polygon, collisionType});
             }
 
@@ -125,7 +128,7 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
         if(propertyElement != nullptr) {
             propertyElement = propertyElement->FirstChildElement("property");
             if(propertyElement != nullptr && std::strcmp(propertyElement->Attribute("name"), "collision") == 0) {
-                collisionLayer = layer;
+                collisionLayers.push_back(layer);
             }
         }
     };
@@ -140,6 +143,10 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
     borderPolygons[0].setRectangle(TA_Point(0, -16), TA_Point(width * tileWidth, 0));
     borderPolygons[1].setRectangle(TA_Point(-16, 0), TA_Point(0, height * tileHeight));
     borderPolygons[2].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
+
+    if(collisionLayers.empty()) {
+        collisionLayers.push_back(0);
+    }
 }
 
 void TA_Tilemap::draw(int priority)
@@ -202,9 +209,9 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
 
     int flags = 0;
 
-    auto checkCollisionWithTile = [&] (int tileX, int tileY)
+    auto checkCollisionWithTile = [&] (int layer, int tileX, int tileY)
     {
-        int tileId = tilemap[collisionLayer][tileX][tileY].tileIndex;
+        int tileId = tilemap[layer][tileX][tileY].tileIndex;
         if(tileId == -1) {
             return;
         }
@@ -218,9 +225,11 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
         }
     };
 
-    for(int tileX = minX; tileX <= maxX; tileX ++) {
-        for(int tileY = minY; tileY <= maxY; tileY ++) {
-            checkCollisionWithTile(tileX, tileY);
+    for(int layer : collisionLayers) {
+        for(int tileX = minX; tileX <= maxX; tileX ++) {
+            for(int tileY = minY; tileY <= maxY; tileY ++) {
+                checkCollisionWithTile(layer, tileX, tileY);
+            }
         }
     }
 

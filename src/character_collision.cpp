@@ -66,12 +66,21 @@ void TA_Character::updateCollisions()
 
     useMovingPlatforms = true;
     TA_Point prevPosition = position;
-    int flags = moveAndCollide(topLeft, bottomRight, (velocity + windVelocity) * TA::elapsedTime, ground);
+
+    TA_Point positionDelta;
+    if(TA::levelPath.substr(0, 7) == "maps/ci") {
+        positionDelta = velocity * TA::elapsedTime;
+    }
+    else {
+        positionDelta = (velocity + windVelocity) * TA::elapsedTime;
+    }
+
+    int flags = moveAndCollide(topLeft, bottomRight, positionDelta, ground);
 
     if(flags & TA_COLLISION_ERROR) {
         position = prevPosition;
         useHalfSolidTiles = useMovingPlatforms = false;
-        flags = moveAndCollide(topLeft, bottomRight, (velocity + windVelocity) * TA::elapsedTime, ground);
+        flags = moveAndCollide(topLeft, bottomRight, positionDelta, ground);
     }
 
     if(flags & TA_GROUND_COLLISION) {
@@ -157,6 +166,10 @@ void TA_Character::updateCollisions()
         invincibleTimeLeft -= TA::elapsedTime;
     }
 
+    if(TA::levelPath.substr(0, 7) == "maps/ci" && (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
+        ground = jump = jumpReleased = false;
+    }
+    
     hitbox.setPosition(position);
 }
 
@@ -166,6 +179,9 @@ void TA_Character::updateClimb()
         return;
     }
     if(helitail && TA::levelPath == "maps/pm/pm4") {
+        return;
+    }
+    if((!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0)) && TA::levelPath.substr(0, 7) == "maps/ci") {
         return;
     }
 
@@ -258,8 +274,8 @@ void TA_Character::updateObjectCollision()
     TA_Polygon hitbox;
     hitbox.setPosition(position);
     hitbox.setRectangle({topLeft.x + 0.01, bottomRight.y}, bottomRight + TA_Point(-0.01, 0.01));
-
     int flags = links.objectSet->checkCollision(hitbox);
+
     if(flags & TA_COLLISION_SPRING) {
         jumpSound.play();
         jumpSpeed = springYsp;
@@ -268,4 +284,6 @@ void TA_Character::updateObjectCollision()
         jumpTime = 0;
         ground = false;
     }
+
+    water = (flags & TA_COLLISION_WATER);    
 }

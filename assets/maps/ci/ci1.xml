@@ -71,4 +71,10 @@
 
 	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="48" rightx="175" y="704"/>
 	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="240" rightx="383" y="704"/>
+
+	<object name="wind" top="208" left="48" bottom="336" right="112" xsp="0" ysp="-2"/>
+	<object name="wind" top="336" left="32" bottom="496" right="64" xsp="0" ysp="-2"/>
+	<object name="wind" top="304" left="288" bottom="400" right="480" xsp="2" ysp="2"/>
+	<object name="wind" top="400" left="256" bottom="496" right="608" xsp="-2" ysp="2"/>
+	<object name="wind" top="544" left="144" bottom="576" right="368" xsp="2" ysp="2"/>
 </objects>

@@ -10,9 +10,9 @@ void TA_Wind::load(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity)
 bool TA_Wind::update()
 {
     if(shouldBlow()) {
-        objectSet->getLinks().character->setWindVelociy(velocity);
+        objectSet->getLinks().character->setWindVelocity(velocity);
         timer += TA::elapsedTime;
-        if(timer > leafSpawnTime) {
+        if(timer > leafSpawnTime && TA::levelPath.substr(0, 7) != "maps/ci") {
             spawnLeaf();
             timer = 0;
         }
@@ -31,6 +31,9 @@ bool TA_Wind::shouldBlow()
     }
     if(objectSet->getLinks().character->isRemoteRobot()) {
         return false;
+    }
+    if(TA::levelPath.substr(0, 7) == "maps/ci") {
+        return objectSet->getLinks().character->isInWater();
     }
     return objectSet->getLinks().character->isFlying();
 }
