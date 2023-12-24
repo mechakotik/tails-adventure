@@ -1,1 +1,2 @@
 option('linux_install', type: 'boolean', value: false)
+option('static', type: 'boolean', value: false)

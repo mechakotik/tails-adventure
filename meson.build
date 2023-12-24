@@ -3,10 +3,13 @@ project(
     default_options: 'cpp_std=c++20'
 )
 
-sdl2_dep = dependency('sdl2')
-sdl2_image_dep = dependency('sdl2_image')
-sdl2_mixer_dep = dependency('sdl2_mixer')
-tinyxml2_dep = dependency('tinyxml2')
+linux_install = get_option('linux_install')
+static = get_option('static')
+
+sdl2_dep = dependency('sdl2', static: static)
+sdl2_image_dep = dependency('sdl2_image', static: static)
+sdl2_mixer_dep = dependency('sdl2_mixer', static: static)
+tinyxml2_dep = dependency('tinyxml2', static: static)
 deps = [sdl2_dep, sdl2_image_dep, sdl2_mixer_dep, tinyxml2_dep]
 
 sources = files()
@@ -18,7 +21,6 @@ if host_machine.system() == 'windows'
 endif
 
 incdir = include_directories('include', 'include/objects')
-linux_install = get_option('linux_install')
 
 if(linux_install)
     exec_name = 'tails-adventure'
@@ -32,11 +34,17 @@ else
     cpp_args = []
 endif
 
+link_args = []
+if(static)
+	link_args = ['-static']
+endif
+
 executable(
     exec_name, sources,
     win_subsystem: 'windows',
     dependencies: deps,
     cpp_args: cpp_args,
+	link_args: link_args,
     include_directories: incdir,
     install: true,
     install_dir: exec_dir
