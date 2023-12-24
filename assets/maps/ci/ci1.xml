@@ -77,4 +77,14 @@
 	<object name="wind" top="304" left="288" bottom="400" right="480" xsp="2" ysp="2"/>
 	<object name="wind" top="400" left="256" bottom="496" right="608" xsp="-2" ysp="2"/>
 	<object name="wind" top="544" left="144" bottom="576" right="368" xsp="2" ysp="2"/>
+
+	<object name="bat_robot" x="300" y="128"/>
+
+	<object name="nezu" x="192" y="176"/>
+	<object name="nezu" x="448" y="96"/>
+	<object name="nezu" x="560" y="96"/>
+	<object name="nezu" x="672" y="96"/>
+
+    <object name="drill_mole" x="540" y="246"/>
+    <object name="drill_mole" x="604" y="246"/>
 </objects>
