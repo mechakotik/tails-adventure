@@ -2,6 +2,7 @@
 #include "object_set.h"
 #include "error.h"
 #include "save.h"
+#include "splash.h"
 
 bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
@@ -285,5 +286,15 @@ void TA_Character::updateObjectCollision()
         ground = false;
     }
 
-    water = (flags & TA_COLLISION_WATER);    
+    bool newWater = (flags & TA_COLLISION_WATER);
+    if(water != newWater && !ground) {
+        links.objectSet->spawnObject<TA_Splash>(position + TA_Point(14, 22));
+    }
+    if(water && !newWater && !jump && velocity.y < 0) {
+        jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * (water ? 0.7 : 1);
+        jump = true;
+        jumpReleased = false;
+        jumpTime = 0;
+    }
+    water = newWater;
 }

@@ -23,5 +23,6 @@ sources += files(
     'speedy.cpp',
     'transition.cpp',
     'walker.cpp',
-    'wind.cpp'
+    'wind.cpp',
+    'splash.cpp'
 )
