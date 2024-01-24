@@ -362,8 +362,13 @@ void TA_Character::setWindVelocity(TA_Point windVelocity)
     if((helitail && helitailTime > getMaxHelitailTime()) || windVelocity.y < -2.5) {
         ground = jump = helitail = false;
     }
+
     if(windVelocity.y > -2.5) {
         this->windVelocity = windVelocity;
+        if(hurt && rings >= 1) {
+            hurt = false;
+            invincibleTimeLeft = invincibleTime;
+        }
     }
     else {
         velocity.y -= strongWindForce * TA::elapsedTime;

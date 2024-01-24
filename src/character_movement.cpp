@@ -68,10 +68,14 @@ void TA_Character::updateAir()
         jumpSpeed += grv * (water ? 0.5 : 1) * TA::elapsedTime;
         jumpSpeed = std::min(jumpSpeed, maxJumpSpeed);
         jumpTime += TA::elapsedTime;
+
         if(jump && !jumpReleased && !links.controller->isPressed(TA_BUTTON_A)) {
-            jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
             jumpReleased = true;
         }
+        if(jumpReleased) {
+            jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
+        }
+
         if(water && jumpSpeed > maxJumpSpeed * 0.5) {
             jumpSpeed = std::max(maxJumpSpeed * 0.5, jumpSpeed - waterFriction * TA::elapsedTime);
         }
