@@ -23,12 +23,10 @@ endif
 incdir = include_directories('include', 'include/objects')
 
 if(linux_install)
-    exec_name = 'tails-adventure'
     exec_dir = '/usr/bin'
     assets_dir = '/usr/share/tails-adventure'
     cpp_args = ['-DTA_LINUX_INSTALL']
 else
-    exec_name = 'TailsAdventure'
     exec_dir = meson.build_root() + '/output'
     assets_dir = meson.build_root() + '/output/assets'
     cpp_args = []
@@ -40,7 +38,7 @@ if(static)
 endif
 
 executable(
-    exec_name, sources,
+    'tails-adventure', sources,
     win_subsystem: 'windows',
     dependencies: deps,
     cpp_args: cpp_args,
@@ -52,6 +50,6 @@ executable(
 
 install_subdir('assets', install_dir: assets_dir, strip_directory: true)
 if(linux_install)
-    install_data('res/tails_adventure.desktop', install_dir: '/usr/share/applications')
+    install_data('res/tails-adventure.desktop', install_dir: '/usr/share/applications')
     install_data('res/tails-adventure.png', install_dir: '/usr/share/icons')
 endif
