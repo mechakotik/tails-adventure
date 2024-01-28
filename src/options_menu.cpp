@@ -129,7 +129,7 @@ public:
 
 class TA_MapKeyboardOption : public TA_Option {
 private:
-    const std::vector<std::string> buttons{"up", "down", "left", "right", "a", "b", "lb", "rb", "start"};
+    const std::array<std::string, 9> buttons{"up", "down", "left", "right", "a", "b", "lb", "rb", "start"};
 
     bool locked = false;
     int button = 0;
@@ -174,7 +174,7 @@ public:
 
 class TA_MapGamepadOption : public TA_Option {
 private:
-    const std::vector<std::string> buttons{"a", "b", "lb", "rb", "start"};
+    const std::array<std::string, 5> buttons{"a", "b", "lb", "rb", "start"};
 
     bool locked = false;
     int button = 0;
@@ -239,17 +239,17 @@ void TA_OptionsMenu::load(TA_Controller* controller)
     inactiveFont.setMapping("abcdefghijklmnopqrstuvwxyz XY.?-0123456789SABF");
 
     options.resize(groups.size());
-    options[0].push_back(new TA_ResolutionOption());
-    options[0].push_back(new TA_VSyncOption());
-    options[0].push_back(new TA_MaxFPSOption());
+    options[0].push_back(std::make_unique<TA_ResolutionOption>());
+    options[0].push_back(std::make_unique<TA_VSyncOption>());
+    options[0].push_back(std::make_unique<TA_MaxFPSOption>(TA_MaxFPSOption()));
 
-    options[1].push_back(new TA_MapKeyboardOption());
-    options[1].push_back(new TA_MapGamepadOption());
-    options[1].push_back(new TA_RumbleOption());
+    options[1].push_back(std::make_unique<TA_MapKeyboardOption>());
+    options[1].push_back(std::make_unique<TA_MapGamepadOption>());
+    options[1].push_back(std::make_unique<TA_RumbleOption>());
 
-    options[2].push_back(new TA_VolumeOption("main", "main_volume"));
-    options[2].push_back(new TA_VolumeOption("music", "music_volume"));
-    options[2].push_back(new TA_VolumeOption("sfx", "sfx_volume"));
+    options[2].push_back(std::make_unique<TA_VolumeOption>("main", "main_volume"));
+    options[2].push_back(std::make_unique<TA_VolumeOption>("music", "music_volume"));
+    options[2].push_back(std::make_unique<TA_VolumeOption>("sfx", "sfx_volume"));
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);

@@ -1,6 +1,7 @@
 #ifndef TA_OPTIONS_MENU_H
 #define TA_OPTIONS_MENU_H
 
+#include <memory>
 #include "controller.h"
 #include "font.h"
 #include "sound.h"
@@ -50,7 +51,7 @@ private:
 
     State state = STATE_SELECTING_GROUP;
     std::vector<std::string> groups{"video", "controls", "sound"};
-    std::vector<std::vector<TA_Option*>> options;
+    std::vector<std::vector<std::unique_ptr<TA_Option>>> options;
     TA_Sound switchSound, selectSound, backSound, errorSound;
     int group = 0, option = 0;
 
