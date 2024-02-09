@@ -42,6 +42,9 @@ bool TA_ScreenStateMachine::update()
         currentScreen -> quit();
         delete currentScreen;
 
+        if(currentState != TA_SCREENSTATE_GAME) {
+            TA::save::saveToLatest();
+        }
         TA::save::writeToFile();
 
         switch(neededState)
