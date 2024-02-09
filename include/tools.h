@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include "SDL2/SDL.h"
 
 enum TA_Direction {
@@ -34,6 +35,7 @@ namespace TA
     const double epsilon = 1e-5;
 
     extern std::string levelPath, previousLevelPath;
+    extern std::set<std::string> arguments;
 
     std::string readStringFromFile(std::string filename);
     void drawScreenRect(int r, int g, int b, int a);

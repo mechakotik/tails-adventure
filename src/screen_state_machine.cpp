@@ -11,9 +11,16 @@
 
 void TA_ScreenStateMachine::init()
 {
-    currentState = TA_SCREENSTATE_DEVMENU;
+    if(TA::arguments.count("--devmenu")) {
+        currentState = TA_SCREENSTATE_DEVMENU;
+        currentScreen = new TA_DevmenuScreen();
+    }
+    else {
+        currentState = TA_SCREENSTATE_TITLE;
+        currentScreen = new TA_TitleScreen();
+    }
+
     neededState = TA_SCREENSTATE_CURRENT;
-    currentScreen = new TA_DevmenuScreen();
     currentScreen -> init();
 }
 

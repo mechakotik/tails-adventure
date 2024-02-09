@@ -16,6 +16,7 @@ namespace TA
     double elapsedTime;
 
     std::string levelPath = "", previousLevelPath = "";
+    std::set<std::string> arguments;
 
     namespace random
     {
