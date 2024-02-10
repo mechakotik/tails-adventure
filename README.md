@@ -48,6 +48,9 @@ pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 ming
 
 # Arch Linux
 sudo pacman -S base-devel meson sdl2 sdl2_image sdl2_mixer tinyxml2
+
+# Debian / Ubuntu
+sudo apt install build-essential meson libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libtinyxml2-dev
 ```
 
 Then clone this repository and run following commands in repository root directory:
