@@ -18,7 +18,8 @@ bool TA_Bridge::update()
 {
     switch(state) {
         case TA_BRIDGE_STATE_IDLE:
-            if(objectSet->checkCollision(collisionHitbox) & TA_COLLISION_CHARACTER) {
+            if((objectSet->checkCollision(collisionHitbox) & TA_COLLISION_CHARACTER) &&
+                objectSet->getLinks().character->isOnGround()) {
                 state = TA_BRIDGE_STATE_DELAY;
                 timer = 0;
             }
@@ -61,5 +62,5 @@ TA_CollisionType TA_Bridge::getCollisionType()
     if(state == TA_BRIDGE_STATE_FALLING) {
         return TA_COLLISION_TRANSPARENT;
     }
-    return TA_COLLISION_SOLID;
+    return TA_COLLISION_HALF_SOLID;
 }
