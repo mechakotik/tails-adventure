@@ -12,7 +12,7 @@ void TA_Ring::load(TA_Point newPosition, double startSpeed)
     TA_Sprite::loadAnimationsFromFile("objects/ring_animations.xml");
     TA_Sprite::setAnimation("ring");
     hitbox.setRectangle({0, 0}, {7, 7});
-    ringSound.load("sound/ring.ogg", TA_SOUND_CHANNEL_SFX1);
+    ringSound.load("sound/ring.ogg", TA_SOUND_CHANNEL_SFX2);
 }
 
 bool TA_Ring::checkPawnCollision(TA_Polygon &hitbox)
