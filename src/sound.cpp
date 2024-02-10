@@ -10,6 +10,7 @@ void TA::sound::update()
     Mix_Volume(TA_SOUND_CHANNEL_MUSIC, TA::save::getParameter("music_volume") * 16);
     Mix_Volume(TA_SOUND_CHANNEL_SFX1, TA::save::getParameter("sfx_volume") * 16);
     Mix_Volume(TA_SOUND_CHANNEL_SFX2, TA::save::getParameter("sfx_volume") * 16);
+    Mix_Volume(TA_SOUND_CHANNEL_SFX3, TA::save::getParameter("sfx_volume") * 16);
 }
 
 bool TA::sound::isPlaying(TA_SoundChannel channel)
