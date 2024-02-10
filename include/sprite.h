@@ -34,7 +34,7 @@ private:
     TA_Texture texture;
     int frameWidth, frameHeight;
     int frame = 0;
-    TA_Point position, scale{1, 1};
+    TA_Point position;
     TA_Camera *camera = nullptr;
 
     std::map<std::string, TA_Animation> loadedAnimations;
@@ -42,7 +42,6 @@ private:
     int animationFrame = 0;
     double animationTimer = 0;
     bool flip = false, hidden = false, updateAnimationNeeded = true, loaded = false;
-    bool noPixelAspectRatio = false;
     bool doUpdateAnimation = true;
     int alpha = 255;
     std::string animationName;
@@ -57,7 +56,6 @@ public:
     void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}
     void setAlpha(int newAlpha);
     void setCamera(TA_Camera *newCamera) {camera = newCamera;}
-    void setScale(TA_Point newScale) {scale = newScale;}
     void setColorMod(int r, int g, int b);
     void setColorMod(int w) {setColorMod(w, w, w);}
     void setFlip(bool newFlip) {flip = newFlip;}
@@ -73,7 +71,6 @@ public:
     bool isAnimated();
     int getAnimationFrame();
     int getCurrentFrame();
-    void disablePixelAspectRatio() {noPixelAspectRatio = true;}
     std::string getAnimationName() {return (isAnimated() ? animationName : "");}
     void updateAnimation();
     void setUpdateAnimation(bool enabled) {doUpdateAnimation = enabled;}

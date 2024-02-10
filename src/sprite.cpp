@@ -86,16 +86,10 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
         screenPosition = camera->getRelative(position);
     }
 
-    dstRect.x = screenPosition.x * TA::widthMultiplier + 0.5;
-    dstRect.y = screenPosition.y * TA::heightMultiplier + 0.5;
-    dstRect.w = srcRect.w * (noPixelAspectRatio ? TA::heightMultiplier : TA::widthMultiplier);
-    dstRect.h = srcRect.h * TA::heightMultiplier;
-    if(!TA::equal(scale.x, 1)) {
-        dstRect.w *= scale.x;
-    }
-    if(!TA::equal(scale.y, 1)) {
-        dstRect.h *= scale.y;
-    }
+    dstRect.x = screenPosition.x * TA::scaleFactor;
+    dstRect.y = screenPosition.y * TA::scaleFactor;
+    dstRect.w = srcRect.w * TA::scaleFactor;
+    dstRect.h = srcRect.h * TA::scaleFactor;
     
     if(!hidden) {
         SDL_SetTextureAlphaMod(texture.SDLTexture, alpha);

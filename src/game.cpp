@@ -108,17 +108,17 @@ void TA_Game::updateWindowSize()
     SDL_GetWindowSize(TA::window, &windowWidth, &windowHeight);
     TA::screenWidth = baseHeight * windowWidth / windowHeight;
     TA::screenHeight = baseHeight;
-    TA::widthMultiplier = TA::heightMultiplier = (windowWidth + TA::screenWidth - 1) / TA::screenWidth;
+    TA::scaleFactor = (windowWidth + TA::screenWidth - 1) / TA::screenWidth;
 
-    if(targetWidth < TA::screenWidth * TA::widthMultiplier || targetHeight < TA::screenHeight * TA::heightMultiplier) {
-        targetWidth = std::max(targetWidth, TA::screenWidth * TA::widthMultiplier);
-        targetHeight = std::max(targetHeight, TA::screenHeight * TA::heightMultiplier);
+    if(targetWidth < TA::screenWidth * TA::scaleFactor || targetHeight < TA::screenHeight * TA::scaleFactor) {
+        targetWidth = std::max(targetWidth, TA::screenWidth * TA::scaleFactor);
+        targetHeight = std::max(targetHeight, TA::screenHeight * TA::scaleFactor);
 
         if(targetTexture != nullptr) {
             SDL_DestroyTexture(targetTexture);
         }
         targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, targetWidth, targetHeight);
-        SDL_SetTextureScaleMode(targetTexture, SDL_ScaleModeBest);
+        SDL_SetTextureScaleMode(targetTexture, SDL_ScaleModeNearest);
     }
 }
 
@@ -191,7 +191,7 @@ void TA_Game::update()
     SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
     SDL_RenderClear(TA::renderer);
 
-    SDL_Rect srcRect{0, 0, TA::screenWidth * TA::widthMultiplier, TA::screenHeight * TA::heightMultiplier};
+    SDL_Rect srcRect{0, 0, TA::screenWidth * TA::scaleFactor, TA::screenHeight * TA::scaleFactor};
     SDL_Rect dstRect{0, 0, windowWidth, windowHeight};
     SDL_RenderCopy(TA::renderer, targetTexture, &srcRect, &dstRect);
     SDL_RenderPresent(TA::renderer);

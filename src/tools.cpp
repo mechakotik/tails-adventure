@@ -12,7 +12,7 @@ namespace TA
     SDL_Window *window;
     SDL_Renderer *renderer;
 
-    int screenWidth, screenHeight, widthMultiplier, heightMultiplier;
+    int screenWidth, screenHeight, scaleFactor;
     double elapsedTime;
 
     std::string levelPath = "", previousLevelPath = "";

@@ -28,7 +28,7 @@ namespace TA
     extern SDL_Window *window;
     extern SDL_Renderer *renderer;
 
-    extern int screenWidth, screenHeight, widthMultiplier, heightMultiplier;
+    extern int screenWidth, screenHeight, scaleFactor;
     extern double elapsedTime;
 
     const double pi = atan(double(1)) * 4;
