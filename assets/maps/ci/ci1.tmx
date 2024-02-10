@@ -314,28 +314,12 @@
    </objectgroup>
   </tile>
   <tile id="72">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="12">
-     <properties>
-      <property name="type" type="int" value="3"/>
-     </properties>
-     <polygon points="0,0 16,0 16,4 0,4"/>
-    </object>
-   </objectgroup>
    <animation>
     <frame tileid="72" duration="500"/>
     <frame tileid="74" duration="500"/>
    </animation>
   </tile>
   <tile id="73">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="12">
-     <properties>
-      <property name="type" type="int" value="3"/>
-     </properties>
-     <polygon points="0,0 16,0 16,4 0,4"/>
-    </object>
-   </objectgroup>
    <animation>
     <frame tileid="73" duration="500"/>
     <frame tileid="75" duration="500"/>
