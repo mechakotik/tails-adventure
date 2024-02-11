@@ -72,7 +72,7 @@ void TA_Character::updateAir()
         if(jump && !jumpReleased && !links.controller->isPressed(TA_BUTTON_A)) {
             jumpReleased = true;
         }
-        if(jumpReleased) {
+        if(jumpReleased && !spring) {
             jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
         }
 
