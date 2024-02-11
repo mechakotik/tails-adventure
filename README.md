@@ -1,4 +1,6 @@
-<h1 align="center">Tails Adventure Remake</h1>
+<h1 align="center">
+  <img width="50%" src="https://github.com/mechakotik/tails-adventure/assets/43793572/cb300eb2-4f5f-42f3-97e8-e54e48810aa9">
+</h1>
 
 <div align="center">
 
@@ -6,7 +8,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/mechakotik/TailsAdventure/total?color=red)
 [![Telegram](https://img.shields.io/badge/Telegram-blue.svg?style=flat&logo=Telegram&logoColor=white)](https://t.me/tailsadventure)
 
-<img width="48%" alt="pf" src="https://github.com/TA-Remake/TailsAdventure/assets/43793572/7a9a6597-2c18-4e7a-9637-2c043673bab3"><img width="48%" alt="pm2" src="https://github.com/TA-Remake/TailsAdventure/assets/43793572/144954c7-a9fb-425e-9f4d-795b7ca591f0">
+<img width="48%" alt="pf" src="https://github.com/mechakotik/tails-adventure/assets/43793572/7a9a6597-2c18-4e7a-9637-2c043673bab3"><img width="48%" alt="pm2" src="https://github.com/mechakotik/tails-adventure/assets/43793572/144954c7-a9fb-425e-9f4d-795b7ca591f0">
 
 </div>
 
@@ -66,3 +68,11 @@ meson setup build -Dlinux_install=true && cd build
 meson compile
 sudo meson install
 ```
+
+## Disclaimer
+
+Tails Adventure Remake is a non-profit fan game project. It is not affiliated with SEGA, Sonic Team or Aspect in any way. The developers of this project have no intent to infringe said copyrights or registered trademarks. No financial gain is made from this project.
+
+Sonic the Hedgehog is a trademark of SEGA. All copyrights and registered trademarks regarding Sonic the Hedgehog belong to SEGA. Original Tails Adventure assets used in this project are property of SEGA, Sonic Team, Aspect and their respective owners.
+
+The source code is published under GNU GPL-3.0 license.
