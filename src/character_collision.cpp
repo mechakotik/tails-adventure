@@ -270,14 +270,13 @@ void TA_Character::updateClimb()
     updateClimbPosition(16);
 }
 
-void TA_Character::updateObjectCollision()
+void TA_Character::updateSpringCollision()
 {
     TA_Polygon hitbox;
     hitbox.setPosition(position);
     hitbox.setRectangle({topLeft.x + 0.01, bottomRight.y}, bottomRight + TA_Point(-0.01, 0.01));
-    int flags = links.objectSet->checkCollision(hitbox);
 
-    if(flags & TA_COLLISION_SPRING) {
+    if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_SPRING) {
         jumpSound.play();
         jumpSpeed = springYsp;
         jump = spring = true;
@@ -285,8 +284,15 @@ void TA_Character::updateObjectCollision()
         jumpTime = 0;
         ground = false;
     }
+}
 
-    bool newWater = (flags & TA_COLLISION_WATER);
+void TA_Character::updateWaterCollision()
+{
+    TA_Polygon hitbox;
+    hitbox.setPosition(position);
+    hitbox.setRectangle(topLeft, bottomRight);
+
+    bool newWater = (links.objectSet->checkCollision(hitbox) & TA_COLLISION_WATER);
     if(water != newWater && newWater == (velocity.y > 0) && !ground) {
         links.objectSet->spawnObject<TA_Splash>(position + TA_Point(14, 22));
     }

@@ -106,7 +106,8 @@ private:
     void updateClimb();
     void updateClimbAnimation();
     void updateThrowAnimation();
-    void updateObjectCollision();
+    void updateSpringCollision();
+    void updateWaterCollision();
     void updateRemoteRobotReturn();
 
     void updateTool();

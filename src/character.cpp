@@ -124,7 +124,8 @@ void TA_Character::update()
 
     setPosition(position);
     setFlip(flip);
-    updateObjectCollision();
+    updateSpringCollision();
+    updateWaterCollision();
     updateTool();
     updateFollowPosition();
     if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT || state == STATE_HAMMER) {
