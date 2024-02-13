@@ -72,6 +72,9 @@
 	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="48" rightx="175" y="704"/>
 	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="240" rightx="383" y="704"/>
 
+	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="704" rightx="735" y="512"/>
+	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="704" rightx="735" y="624"/>
+
 	<object name="wind" top="208" left="48" bottom="272" right="112" xsp="0" ysp="-2"/>
 	<object name="wind" top="272" left="48" bottom="368" right="112" xsp="2" ysp="-2"/>
 	<object name="wind" top="368" left="32" bottom="496" right="64" xsp="0" ysp="-2"/>
@@ -85,12 +88,29 @@
 	<object name="wind" top="544" left="368" bottom="576" right="416" xsp="0" ysp="-2"/>
 
 	<object name="bat_robot" x="300" y="128"/>
+	<object name="bat_robot" x="428" y="480"/>
+	<object name="bat_robot" x="284" y="656"/>
+	<object name="bat_robot" x="76" y="656"/>
+	<object name="bat_robot" x="188" y="656"/>
+	<object name="bat_robot" x="684" y="704"/>
+	<object name="bat_robot" x="748" y="592"/>
+	<object name="bat_robot" x="668" y="464"/>
+	<object name="bat_robot" x="748" y="464"/>
 
 	<object name="nezu" x="192" y="176"/>
 	<object name="nezu" x="448" y="96"/>
 	<object name="nezu" x="560" y="96"/>
 	<object name="nezu" x="672" y="96"/>
+	<object name="nezu" x="496" y="560"/>
+	<object name="nezu" x="448" y="608"/>
+	<object name="nezu" x="304" y="784"/>
+	<object name="nezu" x="96" y="784"/>
+	<object name="nezu" x="240" y="880"/>
+	<object name="nezu" x="416" y="880"/>
 
     <object name="drill_mole" x="524" y="246"/>
     <object name="drill_mole" x="604" y="246"/>
+    <object name="drill_mole" x="596" y="552"/>
+
+	<object name="pushable_spring" x="720" y="864"/>
 </objects>
