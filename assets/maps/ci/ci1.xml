@@ -110,7 +110,7 @@
 
     <object name="drill_mole" x="524" y="246"/>
     <object name="drill_mole" x="604" y="246"/>
-    <object name="drill_mole" x="596" y="552"/>
+    <object name="drill_mole" x="596" y="550"/>
 
 	<object name="pushable_spring" x="720" y="864"/>
 </objects>
