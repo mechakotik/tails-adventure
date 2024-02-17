@@ -297,8 +297,8 @@ void TA_Character::updateWaterCollision()
         links.objectSet->spawnObject<TA_Splash>(position + TA_Point(14, 22));
     }
     if(water && !newWater && velocity.y < 0 && !spring) {
-        jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * (water ? 0.7 : 1);
-        jumpReleased = jump;
+        jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * 0.8;
+        jumpReleased = false;
         jump = true;
         jumpTime = 0;
     }

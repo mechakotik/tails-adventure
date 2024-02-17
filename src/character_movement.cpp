@@ -130,7 +130,7 @@ void TA_Character::updateHelitail()
     process(velocity.x, vector.x * topSpeed);
     process(velocity.y, vector.y * topSpeed);
 
-    if(links.controller->isJustPressed(TA_BUTTON_A) || water) {
+    if(links.controller->isJustPressed(TA_BUTTON_A) || (water && !remoteRobot)) {
         jump = helitail = false;
     }
 
