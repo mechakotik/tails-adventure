@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="61" height="59" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="90" columns="10">
-  <image source="ci1.png" width="160" height="144"/>
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="180" columns="10">
+  <image source="ci1.png" width="160" height="288"/>
   <tile id="0">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
@@ -100,12 +100,36 @@
     </object>
    </objectgroup>
   </tile>
+  <tile id="22">
+   <animation>
+    <frame tileid="22" duration="150"/>
+    <frame tileid="112" duration="150"/>
+   </animation>
+  </tile>
   <tile id="25">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="30">
+   <animation>
+    <frame tileid="30" duration="150"/>
+    <frame tileid="120" duration="150"/>
+   </animation>
+  </tile>
+  <tile id="31">
+   <animation>
+    <frame tileid="31" duration="150"/>
+    <frame tileid="121" duration="150"/>
+   </animation>
+  </tile>
+  <tile id="32">
+   <animation>
+    <frame tileid="32" duration="150"/>
+    <frame tileid="122" duration="150"/>
+   </animation>
   </tile>
   <tile id="33">
    <objectgroup draworder="index" id="2">
@@ -148,6 +172,12 @@
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="41">
+   <animation>
+    <frame tileid="41" duration="150"/>
+    <frame tileid="131" duration="150"/>
+   </animation>
   </tile>
   <tile id="42">
    <objectgroup draworder="index" id="2">
@@ -200,6 +230,18 @@
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="52">
+   <animation>
+    <frame tileid="52" duration="150"/>
+    <frame tileid="142" duration="150"/>
+   </animation>
+  </tile>
+  <tile id="53">
+   <animation>
+    <frame tileid="53" duration="150"/>
+    <frame tileid="143" duration="150"/>
+   </animation>
   </tile>
   <tile id="54">
    <objectgroup draworder="index" id="2">
@@ -305,6 +347,12 @@
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="70">
+   <animation>
+    <frame tileid="70" duration="150"/>
+    <frame tileid="160" duration="150"/>
+   </animation>
   </tile>
   <tile id="71">
    <objectgroup draworder="index" id="2">
