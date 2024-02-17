@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+	<object name="spawn_point" x="-4" y="89"/>
+	<object name="sound" loop="sound/vt.ogg"/>
+</objects>
