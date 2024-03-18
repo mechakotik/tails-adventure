@@ -80,14 +80,14 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
         srcRect.h = frameHeight;
     }
     
-    SDL_Rect dstRect;
-    TA_Point screenPosition = position;
+    TA_Point cameraPosition;
     if(camera != nullptr) {
-        screenPosition = camera->getRelative(position);
+        cameraPosition = camera->getPosition();
     }
 
-    dstRect.x = screenPosition.x * TA::scaleFactor;
-    dstRect.y = screenPosition.y * TA::scaleFactor;
+    SDL_Rect dstRect;
+    dstRect.x = int(position.x * TA::scaleFactor + 0.5) - int(cameraPosition.x * TA::scaleFactor + 0.5);
+    dstRect.y = int(position.y * TA::scaleFactor + 0.5) - int(cameraPosition.y * TA::scaleFactor + 0.5);
     dstRect.w = srcRect.w * TA::scaleFactor;
     dstRect.h = srcRect.h * TA::scaleFactor;
     
