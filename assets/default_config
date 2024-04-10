@@ -1,4 +1,5 @@
 resolution 4
+pixel_ar 0
 vsync 1
 fps_limit 0
 rumble 1

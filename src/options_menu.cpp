@@ -30,6 +30,23 @@ public:
     }
 };
 
+class TA_PixelAROption : public TA_Option {
+public:
+    std::string getName() override {return "pixel ar";}
+
+    std::string getValue() override {
+        int value = TA::save::getParameter("pixel_ar");
+        return (value == 1 ? "gg" : "off");
+    }
+
+    TA_MoveSoundId move(int delta) override {
+        int value = TA::save::getParameter("pixel_ar");
+        value = 1 - value;
+        TA::save::setParameter("pixel_ar", value);
+        return TA_MOVE_SOUND_SWITCH;
+    }
+};
+
 class TA_VSyncOption : public TA_Option {
 public:
     std::string getName() override {return "v-sync";}
@@ -240,6 +257,7 @@ void TA_OptionsMenu::load(TA_Controller* controller)
 
     options.resize(groups.size());
     options[0].push_back(std::make_unique<TA_ResolutionOption>());
+    options[0].push_back(std::make_unique<TA_PixelAROption>());
     options[0].push_back(std::make_unique<TA_VSyncOption>());
     options[0].push_back(std::make_unique<TA_MaxFPSOption>(TA_MaxFPSOption()));
 
