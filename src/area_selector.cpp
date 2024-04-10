@@ -14,10 +14,11 @@ void TA_AreaSelector::load()
 
 void TA_AreaSelector::appendPoints()
 {
-    points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122, 97)));
-    points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106, 89)));
-    points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146, 73)));
-    points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146, 41)));
+    double xOffset = (TA::screenWidth - 256) / 2;
+    points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 97)));
+    points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106 + xOffset, 89)));
+    points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73)));
+    points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41)));
     currentPoint = points[TA::save::getSaveParameter("map_selection")];
 }
 

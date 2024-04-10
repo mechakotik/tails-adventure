@@ -1,8 +1,11 @@
 #include "ingame_map.h"
+#include "tools.h"
 
 void TA_InGameMap::load()
 {
+    double xOffset = (TA::screenWidth - 256) / 2;
     tilemap.load("worldmap/map.tmx");
+    tilemap.setPosition({xOffset, 0});
 
     namePlateSprite.load("worldmap/name_plate.png");
     namePlateSprite.setPosition(16, 120);
@@ -16,8 +19,8 @@ void TA_InGameMap::load()
         dolphinSprites[pos].setAnimation("dolphin");
     }
 
-    dolphinSprites[0].setPosition(76, 24);
-    dolphinSprites[1].setPosition(172, 48);
+    dolphinSprites[0].setPosition(76 + xOffset, 24);
+    dolphinSprites[1].setPosition(172 + xOffset, 48);
 }
 
 void TA_InGameMap::draw()
