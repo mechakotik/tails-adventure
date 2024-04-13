@@ -125,7 +125,7 @@ void TA_MapPoint::draw()
     if(!active) {
         return;
     }
-    timer = std::fmod(timer + TA::elapsedTime, lightTime * 2);
+    timer = fmod(timer + TA::elapsedTime, lightTime * 2);
     if(timer < lightTime) {
         sprite.setAlpha(255 * timer / appearTime);
     }

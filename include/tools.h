@@ -37,11 +37,9 @@ namespace TA
     extern std::string levelPath, previousLevelPath;
     extern std::set<std::string> arguments;
 
-    std::string readStringFromFile(std::string filename);
     void drawScreenRect(int r, int g, int b, int a);
     void drawShadow(int factor);
     bool equal(double a, double b);
-    void addPathPrefix(std::string &path);
     double linearInterpolation(double left, double right, double pos);
     int getFPSLimit();
 

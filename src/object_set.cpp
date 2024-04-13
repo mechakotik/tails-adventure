@@ -9,7 +9,7 @@
 #include "objects/dead_kukku.h"
 #include "objects/pushable_object.h"
 #include "error.h"
-#include "tools.h"
+#include "filesystem.h"
 #include "tinyxml2.h"
 #include "hud.h"
 #include "objects/transition.h"
@@ -54,7 +54,7 @@ TA_Point TA_Object::getDistanceToCharacter()
 void TA_ObjectSet::load(std::string filename)
 {
     tinyxml2::XMLDocument file;
-    file.Parse(TA::readStringFromFile(filename).c_str());
+    file.Parse(TA::filesystem::readAsset(filename).c_str());
 
     for(tinyxml2::XMLElement *element = file.FirstChildElement("objects")->FirstChildElement("object");
         element != nullptr; element = element->NextSiblingElement("object"))
@@ -261,7 +261,7 @@ void TA_ObjectSet::load(std::string filename)
         }
 
         else {
-            TA::printWarning("Unknown object %s", name.c_str());
+            TA::handleError("Unknown object %s", name.c_str());
         }
     }
 

@@ -30,30 +30,6 @@ namespace TA
     }
 }
 
-std::string TA::readStringFromFile(std::string filename)
-{
-    TA::addPathPrefix(filename);
-    SDL_RWops *input = SDL_RWFromFile(filename.c_str(), "rb");
-    if(input == nullptr) {
-        TA::handleSDLError("Open %s failed", filename.c_str());
-    }
-    int dataBytes = SDL_RWseek(input, 0, SEEK_END);
-    SDL_RWseek(input, 0, SEEK_SET);
-    char* data = new char[dataBytes];
-    SDL_RWread(input, data, 1, dataBytes);
-
-    std::string str(dataBytes + 1, 0);
-    for(int pos = 0; pos < dataBytes; pos ++) {
-        str[pos] = data[pos];
-    }
-    str += '\0';
-    delete[] data;
-    if(SDL_RWclose(input) != 0) {
-        TA::handleSDLError("Close %s failed", filename.c_str());
-    }
-    return str;
-}
-
 void TA::drawScreenRect(int r, int g, int b, int a)
 {
     SDL_DisplayMode displayMode;
@@ -96,19 +72,6 @@ long long TA::random::next()
 long long TA::random::max()
 {
     return std::numeric_limits<long long>::max();
-}
-
-void TA::addPathPrefix(std::string &path)
-{
-    #ifdef TA_LINUX_INSTALL
-        const std::string prefix = "/usr/share/tails-adventure/";
-    #else
-        const std::string prefix = "assets/";
-    #endif
-
-    if(path.length() < prefix.length() || path.substr(0, prefix.length()) != prefix) {\
-        path = prefix + path;
-    }
 }
 
 double TA::linearInterpolation(double left, double right, double pos)

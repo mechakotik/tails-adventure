@@ -12,8 +12,9 @@ sdl2_mixer_dep = dependency('sdl2_mixer', static: static)
 tinyxml2_dep = dependency('tinyxml2', static: static)
 deps = [sdl2_dep, sdl2_image_dep, sdl2_mixer_dep, tinyxml2_dep]
 
-sources = files()
-subdir('src')
+fs = import('fs')
+sources_list = fs.read('src/sources.list').strip().split('\n')
+sources = files(sources_list)
 
 if host_machine.system() == 'windows'
     windows = import('windows')

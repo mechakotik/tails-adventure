@@ -33,7 +33,7 @@ private:
 public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, int range, bool flip);
-    bool update();
+    bool update() override;
     TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
 };
 
@@ -46,7 +46,7 @@ private:
 public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, bool newDirection);
-    bool update();
+    bool update() override;
     TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
 };
 

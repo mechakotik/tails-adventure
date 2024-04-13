@@ -16,7 +16,7 @@ private:
     void updateAttack();
     TA_Point getDistanceToCharacter();
     bool shouldBeDestroyed();
-    void destroy();
+    void destroy() override;
 
     enum State {
         STATE_IDLE,

@@ -14,7 +14,7 @@ private:
 public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
-    bool update();
+    bool update() override;
     TA_CollisionType getCollisionType() override {return TA_COLLISION_TRANSPARENT;}
 };
 

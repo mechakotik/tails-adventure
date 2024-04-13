@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include "resource_manager.h"
 #include "error.h"
+#include "filesystem.h"
 #include "tools.h"
 
 namespace TA { namespace resmgr {
@@ -11,7 +12,9 @@ namespace TA { namespace resmgr {
 
 SDL_Texture* TA::resmgr::loadTexture(std::string filename)
 {
-    TA::addPathPrefix(filename);
+    filename = TA::filesystem::getAssetsPath() + "/" + filename;
+    TA::filesystem::fixPath(filename);
+
     if(!textureMap.count(filename)) {
         SDL_Surface *surface = IMG_Load(filename.c_str());
         if(surface == nullptr) {
@@ -25,18 +28,22 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename)
         textureMap[filename] = texture;
         SDL_FreeSurface(surface);
     }
+
     return textureMap[filename];
 }
 
 Mix_Chunk* TA::resmgr::loadChunk(std::string filename)
 {
-    TA::addPathPrefix(filename);
+    filename = TA::filesystem::getAssetsPath() + "/" + filename;
+    TA::filesystem::fixPath(filename);
+
     if(!chunkMap.count(filename)) {
         chunkMap[filename] = Mix_LoadWAV(filename.c_str());
         if(chunkMap[filename] == nullptr) {
             TA::handleSDLError("%s load failed", filename.c_str());
         }
     }
+
     return chunkMap[filename];
 }
 

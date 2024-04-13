@@ -21,7 +21,7 @@ private:
     void updateAttack();
     bool updateFall();
     void placeBomb();
-    void destroy();
+    void destroy() override;
 
     enum State {
         STATE_IDLE,
@@ -38,7 +38,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    TA_CollisionType getCollisionType() {return TA_COLLISION_DAMAGE;}
+    TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
 };
 
 class TA_NezuBomb : public TA_Object {

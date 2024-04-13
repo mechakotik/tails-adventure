@@ -13,7 +13,7 @@ private:
     bool shouldThrowRock();
     void throwRock();
     bool shouldBeDestroyed();
-    void destroy();
+    void destroy() override;
     
     TA_Point getRockPosition();
     TA_Point getRockVelocity();

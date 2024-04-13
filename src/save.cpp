@@ -1,8 +1,9 @@
 #include <map>
-#include <fstream>
+#include <sstream>
 #include <filesystem>
+#include <vector>
 #include "save.h"
-#include "tools.h"
+#include "filesystem.h"
 #include "error.h"
 
 namespace TA { namespace save {
@@ -23,50 +24,55 @@ namespace TA { namespace save {
     };
 }}
 
-void TA::save::addOptionsFromFile(std::string filename)
+void TA::save::addOptionsFromFile(std::string path)
 {
-    std::ifstream fin(filename);
-    if(!fin.is_open()) {
+    if(!TA::filesystem::fileExists(path)) {
+        TA::printWarning("Save file %s was not found, skipping", path.c_str());
         return;
     }
 
+    std::string options = TA::filesystem::readFile(path);
+    std::stringstream stream;
+    stream << options;
+
     std::string name;
     long long value;
-    while(fin >> name >> value) {
+    while(stream >> name >> value) {
         saveMap[name] = value;
     }
-    fin.close();
 }
 
 void TA::save::load()
 {
-    std::string defaultConfigPath = "default_config";
-    TA::addPathPrefix(defaultConfigPath);
+    std::string defaultConfigPath = TA::filesystem::getAssetsPath() + "/default_config";
     addOptionsFromFile(defaultConfigPath);
     addOptionsFromFile(getSaveFileName());
 }
 
 void TA::save::writeToFile()
 {
-    std::ofstream fout(getSaveFileName());
-    if(!fout.is_open()) {
-        return;
+    std::stringstream output;
+    for(auto [key, value] : saveMap) {
+        output << key << ' ' << value << std::endl;
     }
 
-    for(auto [key, value] : saveMap) {
-        fout << key << ' ' << value << std::endl;
-    }
-    fout.close();
+    std::string name = getSaveFileName();
+    TA::filesystem::writeFile(name, output.str());
 }
 
 std::string TA::save::getSaveFileName()
 {
-    #ifdef TA_LINUX_INSTALL
-        std::string path = std::string(getenv("HOME")) + "/.local/share/tails-adventure/";
-        std::filesystem::create_directories(path);
-        return path + "config";
+    #ifdef __ANDROID__
+        std::string path = SDL_AndroidGetInternalStoragePath();
+        return path + "/config";
     #else
-        return "config";
+        #ifdef TA_LINUX_INSTALL
+            std::string path = std::string(getenv("HOME")) + "/.local/share/tails-adventure";
+            std::filesystem::create_directories(path);
+            return path + "/config";
+        #else
+            return "config";
+        #endif
     #endif
 }
 

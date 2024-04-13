@@ -15,11 +15,12 @@ namespace TA {
     void handleError(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_ERROR, APP_NAME, format, args...);
+            __android_log_print(ANDROID_LOG_ERROR, APP_NAME, format, args...);
         #else
-        std::printf(format, args...);
-        std::printf("\n");
+            std::printf(format, args...);
+            std::printf("\n");
         #endif
+        
         exit(0);
     }
 
@@ -27,12 +28,13 @@ namespace TA {
     void handleSDLError(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_ERROR, APP_NAME, format, args...);
-        __android_log_print(ANDROID_LOG_ERROR, APP_NAME, "%s", SDL_GetError());
+            __android_log_print(ANDROID_LOG_ERROR, APP_NAME, format, args...);
+            __android_log_print(ANDROID_LOG_ERROR, APP_NAME, "%s", SDL_GetError());
         #else
-        std::printf(format, args...);
-        std::printf("\n%s\n", SDL_GetError());
+            std::printf(format, args...);
+            std::printf("\n%s\n", SDL_GetError());
         #endif
+        
         exit(0);
     }
 
@@ -40,10 +42,10 @@ namespace TA {
     void printLog(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_DEBUG, APP_NAME, format, args...);
+            __android_log_print(ANDROID_LOG_DEBUG, APP_NAME, format, args...);
         #else
-        std::printf(format, args...);
-        std::printf("\n");
+            std::printf(format, args...);
+            std::printf("\n");
         #endif
     }
 
@@ -51,10 +53,10 @@ namespace TA {
     void printWarning(const char* format, T... args)
     {
         #ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_WARN, APP_NAME, format, args...);
+            __android_log_print(ANDROID_LOG_WARN, APP_NAME, format, args...);
         #else
-        std::printf(format, args...);
-        std::printf("\n");
+            std::printf(format, args...);
+            std::printf("\n");
         #endif
     }
 }

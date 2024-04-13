@@ -4,13 +4,14 @@
 #include "tilemap.h"
 #include "tinyxml2.h"
 #include "error.h"
+#include "filesystem.h"
 #include "tools.h"
 #include "character.h"
 
 void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parser
 {
     tinyxml2::XMLDocument xmlFile;
-    xmlFile.Parse(TA::readStringFromFile(filename).c_str());
+    xmlFile.Parse(TA::filesystem::readAsset(filename).c_str());
     tinyxml2::XMLElement *xmlRoot = xmlFile.FirstChildElement("map");
     
     width = xmlRoot->IntAttribute("width");

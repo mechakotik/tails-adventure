@@ -19,7 +19,7 @@ private:
     std::pair<State, double> getStateAndTime();
     void updatePosition() override;
     bool shouldBeDestroyed();
-    void destroy();
+    void destroy() override;
 
     double startY;
     double timer = 0;

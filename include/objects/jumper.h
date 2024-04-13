@@ -25,7 +25,7 @@ private:
     bool isCloseToCharacter();
     bool checkPawnCollision(TA_Polygon &hitbox) override;
     bool shouldBeDestroyed();
-    void destroy();
+    void destroy() override;
 
     State state = STATE_IDLE;
     TA_Point velocity;

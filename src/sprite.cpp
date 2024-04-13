@@ -6,6 +6,7 @@
 #include "tinyxml2.h"
 #include "sprite.h"
 #include "error.h"
+#include "filesystem.h"
 #include "tools.h"
 #include "resource_manager.h"
 
@@ -131,7 +132,7 @@ void TA_Sprite::updateAnimation()
 void TA_Sprite::loadAnimationsFromFile(std::string filename)
 {
     tinyxml2::XMLDocument animationXml;
-    animationXml.Parse(TA::readStringFromFile(filename).c_str());
+    animationXml.Parse(TA::filesystem::readAsset(filename).c_str());
     tinyxml2::XMLElement *currentElement = animationXml.RootElement()->FirstChildElement("animation");
 
     while(currentElement != nullptr) {

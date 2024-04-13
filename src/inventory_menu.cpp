@@ -210,7 +210,7 @@ void TA_InventoryMenu::updateAlpha()
     inventoryPointerSprite.setAlpha(globalAlpha);
 
     arrowTimer += TA::elapsedTime;
-    arrowTimer = std::fmod(arrowTimer, (arrowIdleTime + arrowTransitionTime) * 2);
+    arrowTimer = fmod(arrowTimer, (arrowIdleTime + arrowTransitionTime) * 2);
     int arrowAlpha = 0;
 
     if(arrowTimer < arrowTransitionTime) {

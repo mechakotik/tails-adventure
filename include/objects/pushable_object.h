@@ -13,8 +13,8 @@ private:
 public:
     using TA_Object::TA_Object;
     void load(std::string filename, TA_Point newPosition);
-    bool update();
-    TA_CollisionType getCollisionType() {return TA_COLLISION_PUSHABLE;}
+    bool update() override;
+    TA_CollisionType getCollisionType() override {return TA_COLLISION_PUSHABLE;}
     bool checkPawnCollision(TA_Polygon &hitbox) override;
 };
 
