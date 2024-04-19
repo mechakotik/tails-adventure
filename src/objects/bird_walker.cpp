@@ -382,7 +382,7 @@ bool TA_BirdWalker::update()
 
     int flashAlpha = 0;
     if(flashTimer < damageFlashTime * 4) {
-        flashAlpha = 255 * (1 - int(flashTimer / damageFlashTime) % 2);
+        flashAlpha = TA::linearInterpolation(0, 128, flashTimer / damageFlashTime);
     }
     headFlashSprite.setAlpha(flashAlpha);
     bodyFlashSprite.setAlpha(flashAlpha);
