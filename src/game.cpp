@@ -177,7 +177,7 @@ void TA_Game::update()
         }
     }
 
-    TA::printLog("FPS %f", 60 / TA::elapsedTime);
+    //TA::printLog("FPS %f", 60 / TA::elapsedTime);
     TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
     //TA::elapsedTime /= 10;
     startTime = currentTime;
