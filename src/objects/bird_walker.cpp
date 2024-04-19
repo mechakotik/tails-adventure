@@ -123,12 +123,15 @@ bool TA_BirdWalker::update()
 
     auto initAiming = [&] () {
         timer = 0;
-
-        aimPosition.x = objectSet->getCharacterPosition().x - 2;
-        aimPosition.x = std::max(aimPosition.x, objectSet->getLinks().camera->getPosition().x + aimBorder);
-        aimPosition.x = std::min(aimPosition.x, objectSet->getLinks().camera->getPosition().x + TA::screenWidth - aimBorder);
         aimPosition.y = floorY - 20;
 
+        if(objectSet->getCharacterPosition().x < objectSet->getLinks().camera->getPosition().x + TA::screenWidth / 2) {
+            aimPosition.x = objectSet->getLinks().camera->getPosition().x + TA::screenWidth - aimBorder - 12;
+        }
+        else {
+            aimPosition.x = objectSet->getLinks().camera->getPosition().x + aimBorder;
+        }
+        
         aimSprite.setPosition(aimPosition);
         aimSprite.setAnimation(flip ? "aiming" : "aiming_flip");
         state = TA_BIRD_WALKER_STATE_AIMING;
