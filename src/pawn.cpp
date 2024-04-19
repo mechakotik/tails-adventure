@@ -32,16 +32,26 @@ void TA_Pawn::moveByX()
         hitbox.setRectangle(topLeft, bottomRight);
     }
 
-    double left = 0, right = 1, eps = 1e-5;
-    while((right - left) * std::abs(velocity.x) > eps) {
-        double mid = (left + right) / 2;
-        hitbox.setPosition({position.x + mid * velocity.x, position.y});
+    auto isOutside = [&] (double factor) {
+        hitbox.setPosition({position.x + factor * velocity.x, position.y});
+        return !checkPawnCollision(hitbox);
+    };
 
-        if(checkPawnCollision(hitbox)) {
-            right = mid;
-        }
-        else {
-            left = mid;
+    double left = 0, right = 1, eps = 1e-5;
+    if(!isOutside(eps * 2)) {
+        left = right = 0;
+    }
+    else if(isOutside(1)) {
+        left = right = 1;
+    }
+    else {
+        while((right - left) * std::abs(velocity.x) > eps) {
+            double mid = (left + right) / 2;
+            if (isOutside(mid)) {
+                left = mid;
+            } else {
+                right = mid;
+            }
         }
     }
 
@@ -61,16 +71,25 @@ void TA_Pawn::moveByY()
     TA_Polygon hitbox;
     hitbox.setRectangle(topLeft, bottomRight);
 
+    auto isOutside = [&] (double factor) {
+        hitbox.setPosition({position.x, position.y + velocity.y * factor});
+        return !checkPawnCollision(hitbox);
+    };
+
     double left = 0, right = 1, eps = 1e-5;
+    if(!isOutside(eps * 2)) {
+        left = right = 0;
+    }
+    else if(isOutside(1)) {
+        left = right = 1;
+    }
     while((right - left) * std::abs(velocity.y) > eps) {
         double mid = (left + right) / 2;
-        hitbox.setPosition({position.x, position.y + velocity.y * mid});
-
-        if(checkPawnCollision(hitbox)) {
-            right = mid;
+        if(isOutside(mid)) {
+            left = mid;
         }
         else {
-            left = mid;
+            right = mid;
         }
     }
 
