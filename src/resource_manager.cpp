@@ -24,7 +24,6 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename)
         if(texture == nullptr) {
             TA::handleSDLError("%s", "Failed to create texture from surface");
         }
-        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
         textureMap[filename] = texture;
         SDL_FreeSurface(surface);
     }

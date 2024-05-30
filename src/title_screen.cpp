@@ -8,20 +8,21 @@
 void TA_TitleScreen::init()
 {
     backgroundSprite.load("title_screen/title_screen.png");
-    backgroundSprite.setPosition(TA::screenWidth / 2 - 80, 0);
-    pressStartSprite.load("title_screen/press_start.png");
-    pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104);
+    backgroundSprite.setPosition(TA::screenWidth / 2 - backgroundSprite.getWidth() / 2, 0);
 
-    menuSprite.load("title_screen/menu.png");
-    menuSprite.setPosition(TA::screenWidth / 2 - menuSprite.getWidth() / 2, 96);
-    selectorSprite.load("title_screen/selector.png");
-    selectorSprite.setPosition(TA::screenWidth / 2 - selectorSprite.getWidth() / 2, 112);
+    #ifdef __ANDROID__
+        pressStartSprite.load("title_screen/touch_to_start.png");
+    #else
+        pressStartSprite.load("title_screen/press_start.png");
+    #endif
+    pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104);
 
     titleScreenSound.load("sound/title_screen.ogg", TA_SOUND_CHANNEL_MUSIC, 0);
     enterSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX1, 0);
-    switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX2, 0);
     titleScreenSound.play();
+
     controller.load();
+    button.setRectangle(TA_Point(0, 0), TA_Point(TA::screenWidth, TA::screenHeight));
 }
 
 TA_ScreenState TA_TitleScreen::update()
@@ -29,6 +30,7 @@ TA_ScreenState TA_TitleScreen::update()
     TA::drawScreenRect(0, 0, 102, 255);
     backgroundSprite.draw();
     controller.update();
+    button.update();
 
     switch(state) {
         case STATE_PRESS_START:
@@ -36,12 +38,6 @@ TA_ScreenState TA_TitleScreen::update()
             break;
         case STATE_HIDE_PRESS_START:
             updateHidePressStart();
-            break;
-        case STATE_SHOW_MENU:
-            updateShowMenu();
-            break;
-        case STATE_MENU:
-            updateMenu();
             break;
         case STATE_EXIT:
             updateExit();
@@ -65,22 +61,24 @@ void TA_TitleScreen::updatePressStart()
     timer = std::fmod(timer, (idleTime + transitionTime) * 2);
 
     if(timer < transitionTime) {
-        menuAlpha = 255 * timer / transitionTime;
+        alpha = 255 * timer / transitionTime;
     }
     else if(timer < transitionTime + idleTime) {
-        menuAlpha = 255;
+        alpha = 255;
     }
     else if(timer < transitionTime * 2 + idleTime) {
-        menuAlpha = 255 - 255 * (timer - (idleTime + transitionTime)) / transitionTime;
+        alpha = 255 - 255 * (timer - (idleTime + transitionTime)) / transitionTime;
     }
     else {
-        menuAlpha = 0;
+        alpha = 0;
     }
 
-    pressStartSprite.setAlpha(menuAlpha);
+    pressStartSprite.setAlpha(alpha);
     pressStartSprite.draw();
 
-    if(controller.isJustPressed(TA_BUTTON_PAUSE)) {
+    if(controller.isJustPressed(TA_BUTTON_PAUSE) || button.isPressed()) {
+        TA::save::repairSave("save_0");
+        TA::save::setCurrentSave("save_0");
         state = STATE_HIDE_PRESS_START;
         enterSound.play();
     }
@@ -89,77 +87,27 @@ void TA_TitleScreen::updatePressStart()
 void TA_TitleScreen::updateHidePressStart()
 {
     const double disappearTime = 5;
-    menuAlpha -= 255 * (disappearTime / TA::elapsedTime);
+    alpha += 255 * (disappearTime / TA::elapsedTime);
 
-    pressStartSprite.setAlpha(menuAlpha);
+    pressStartSprite.setAlpha(alpha);
     pressStartSprite.draw();
 
-    if(menuAlpha < 0) {
-        state = STATE_SHOW_MENU;
-        menuAlpha = 0;
-    }
-}
-
-void TA_TitleScreen::updateShowMenu()
-{
-    const double showTime = 5;
-    menuAlpha += 255 * TA::elapsedTime / showTime;
-
-    menuSprite.setAlpha(menuAlpha);
-    selectorSprite.setAlpha(menuAlpha);
-
-    menuSprite.draw();
-    selectorSprite.draw();
-
-    if(menuAlpha >= 255) {
-        state = STATE_MENU;
-        menuAlpha = 255;
-    }
-}
-
-void TA_TitleScreen::updateMenu()
-{
-    if(controller.isJustChangedDirection()) {
-        TA_Direction direction = controller.getDirection();
-        if(direction == TA_DIRECTION_UP && selection == 1) {
-            selection = 0;
-            switchSound.play();
-        }
-        else if(direction == TA_DIRECTION_DOWN && selection == 0) {
-            selection = 1;
-            switchSound.play();
-        }
-    }
-
-    if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B) || controller.isJustPressed(TA_BUTTON_PAUSE)) {
-        if(selection == 0) {
-            TA::save::createSave("save_0");
-        }
-        else {
-            TA::save::repairSave("save_0");
-        }
-        TA::save::setCurrentSave("save_0");
-        enterSound.play();
+    if(alpha >= 255) {
         state = STATE_EXIT;
         timer = 0;
+        alpha = 255;
     }
-
-    selectorSprite.setPosition(TA::screenWidth / 2 - selectorSprite.getWidth() / 2, 96 + 16 * selection);
-    menuSprite.draw();
-    selectorSprite.draw();
 }
 
 void TA_TitleScreen::updateExit()
 {
     const double exitTime = 20;
+    pressStartSprite.draw();
 
     timer += TA::elapsedTime;
     if(timer > exitTime) {
         shouldExit = true;
     }
-
-    menuSprite.draw();
-    selectorSprite.draw();
 }
 
 void TA_TitleScreen::quit()
