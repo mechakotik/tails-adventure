@@ -23,8 +23,21 @@ TA_Direction TA_AbstractController::getDirection()
     return TA_DIRECTION_LEFT;
 }
 
+void TA_Controller::load()
+{
+    #ifdef __ANDROID__
+        onscreen.load();
+    #endif
+
+    update();
+}
+
 void TA_Controller::update()
 {
+    #ifdef __ANDROID__
+        onscreen.update();
+    #endif
+
     if(getDirection() != currentDirection) {
         currentDirection = getDirection();
         justChanged = true;
@@ -32,6 +45,13 @@ void TA_Controller::update()
     else {
         justChanged = false;
     }
+}
+
+void TA_Controller::draw()
+{
+    #ifdef __ANDROID__
+        onscreen.draw();
+    #endif
 }
 
 TA_Point TA_Controller::getDirectionVector()
@@ -52,10 +72,10 @@ TA_Direction TA_Controller::getDirection()
 
 bool TA_Controller::isPressed(TA_FunctionButton button)
 {
-    return keyboard.isPressed(button) || gamepad.isPressed(button);
+    return keyboard.isPressed(button) || gamepad.isPressed(button) || onscreen.isPressed(button);
 }
 
 bool TA_Controller::isJustPressed(TA_FunctionButton button)
 {
-    return keyboard.isJustPressed(button) || gamepad.isJustPressed(button);
+    return keyboard.isJustPressed(button) || gamepad.isJustPressed(button) || onscreen.isJustPressed(button);
 }

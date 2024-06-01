@@ -45,6 +45,7 @@ TA_ScreenState TA_GameScreen::update()
     tilemap.draw(1);
     objectSet.draw(2);
     hud.draw();
+    controller.draw();
 
     if(hud.getTransition() != TA_SCREENSTATE_CURRENT) {
         return hud.getTransition();

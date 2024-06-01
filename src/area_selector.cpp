@@ -92,6 +92,7 @@ void TA_AreaSelector::draw()
         points[pos]->draw();
     }
     tailsIcon.draw();
+    controller.draw();
 }
 
 std::string TA_AreaSelector::getSelectionName()

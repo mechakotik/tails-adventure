@@ -49,6 +49,7 @@ src/keyboard.cpp
 src/main.cpp
 src/map_screen.cpp
 src/object_set.cpp
+src/onscreen_controller.cpp
 src/options_menu.cpp
 src/pawn.cpp
 src/resource_manager.cpp
