@@ -2,13 +2,23 @@
 
 void TA_OnscreenController::load()
 {
-    sprites[TA_BUTTON_A].load("controls/a_button.png");
+    sprites[TA_BUTTON_A].load("controls/a_button.png", 20, 22);
+    sprites[TA_BUTTON_B].load("controls/b_button.png", 20, 22);
+
+    arrowSprites[TA_DIRECTION_UP].load("controls/up_button.png", 18, 20);
+    arrowSprites[TA_DIRECTION_DOWN].load("controls/down_button.png", 18, 20);
+    arrowSprites[TA_DIRECTION_LEFT].load("controls/left_button.png", 18, 20);
+    arrowSprites[TA_DIRECTION_RIGHT].load("controls/right_button.png", 18, 20);
+    
     updatePositions();
 }
 
 void TA_OnscreenController::update()
 {
     updatePositions();
+    for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
+        arrowButtons[pos].update();
+    }
     for(int pos = 0; pos < TA_BUTTON_MAX; pos ++) {
         buttons[pos].update();
     }
@@ -16,25 +26,54 @@ void TA_OnscreenController::update()
 
 void TA_OnscreenController::draw()
 {
+    for(int pos = 0; pos < TA_DIRECTION_MAX; pos ++) {
+        arrowSprites[pos].setFrame(arrowButtons[pos].isPressed() ? 1 : 0);
+        arrowSprites[pos].draw();
+    }
     for(int pos = 0; pos < TA_BUTTON_MAX; pos ++) {
+        sprites[pos].setFrame(buttons[pos].isPressed() ? 1 : 0);
         sprites[pos].draw();
     }
 }
 
 void TA_OnscreenController::updatePositions()
 {
-    setFunctionButtonPosition(TA_BUTTON_A, TA_Point(TA::screenWidth - 20, TA::screenHeight - 20));
+    setButtonPosition(TA_BUTTON_A, TA_Point(TA::screenWidth - 35, TA::screenHeight - 25));
+    setButtonPosition(TA_BUTTON_B, TA_Point(TA::screenWidth - 25, TA::screenHeight - 50));
+
+    setArrowButtonPosition(TA_DIRECTION_UP, TA_Point(40, TA::screenHeight - 55));
+    setArrowButtonPosition(TA_DIRECTION_DOWN, TA_Point(40, TA::screenHeight - 25));
+    setArrowButtonPosition(TA_DIRECTION_LEFT, TA_Point(25, TA::screenHeight - 40));
+    setArrowButtonPosition(TA_DIRECTION_RIGHT, TA_Point(55, TA::screenHeight - 40));
 }
 
-void TA_OnscreenController::setFunctionButtonPosition(TA_FunctionButton button, TA_Point center)
+void TA_OnscreenController::setButtonPosition(TA_FunctionButton button, TA_Point center)
 {
     buttons[button].setCircle(center, 12);
     sprites[button].setPosition(center - TA_Point(sprites[button].getWidth() / 2, sprites[button].getHeight() / 2));
 }
 
+void TA_OnscreenController::setArrowButtonPosition(TA_Direction button, TA_Point center)
+{
+    arrowButtons[button].setCircle(center, 12);
+    arrowSprites[button].setPosition(center - TA_Point(arrowSprites[button].getWidth() / 2, arrowSprites[button].getHeight() / 2));
+}
+
 TA_Point TA_OnscreenController::getDirectionVector()
 {
-    return TA_Point(0, 0);
+    if(arrowButtons[TA_DIRECTION_UP].isPressed()) {
+        return {0, -1};
+    }
+    if(arrowButtons[TA_DIRECTION_DOWN].isPressed()) {
+        return {0, 1};
+    }
+    if(arrowButtons[TA_DIRECTION_LEFT].isPressed()) {
+        return {-1, 0};
+    }
+    if(arrowButtons[TA_DIRECTION_RIGHT].isPressed()) {
+        return {1, 0};
+    }
+    return {0, 0};
 }
 
 bool TA_OnscreenController::isPressed(TA_FunctionButton button)

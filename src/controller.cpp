@@ -4,25 +4,6 @@
 #include "error.h"
 #include "tools.h"
 
-TA_Direction TA_AbstractController::getDirection()
-{
-    TA_Point vector = getDirectionVector();
-    if(vector.length() < analogDeadZone) {
-        return TA_DIRECTION_MAX;
-    }
-    double angle = atan2(vector.y, vector.x) * 180 / (atan(1) * 4);
-    if(-90 - verticalRange <= angle && angle <= -90 + verticalRange) {
-        return TA_DIRECTION_UP;
-    }
-    if(90 - verticalRange <= angle && angle <= 90 + verticalRange) {
-        return TA_DIRECTION_DOWN;
-    }
-    if(vector.x > 0) {
-        return TA_DIRECTION_RIGHT;
-    }
-    return TA_DIRECTION_LEFT;
-}
-
 void TA_Controller::load()
 {
     #ifdef __ANDROID__
@@ -56,18 +37,31 @@ void TA_Controller::draw()
 
 TA_Point TA_Controller::getDirectionVector()
 {
-    if(gamepad.getDirection() != TA_DIRECTION_MAX) {
-        return gamepad.getDirectionVector();
+    for(TA_Point vector : {onscreen.getDirectionVector(), gamepad.getDirectionVector()}) {
+        if(abs(vector.x) > analogDeadZone || abs(vector.y) > analogDeadZone) {
+            return vector;
+        }
     }
     return keyboard.getDirectionVector();
 }
 
 TA_Direction TA_Controller::getDirection()
 {
-    if(gamepad.getDirection() != TA_DIRECTION_MAX) {
-        return gamepad.getDirection();
+    TA_Point vector = getDirectionVector();
+    if(vector.length() < analogDeadZone) {
+        return TA_DIRECTION_MAX;
     }
-    return keyboard.getDirection();
+    double angle = atan2(vector.y, vector.x) * 180 / (atan(1) * 4);
+    if(-90 - verticalRange <= angle && angle <= -90 + verticalRange) {
+        return TA_DIRECTION_UP;
+    }
+    if(90 - verticalRange <= angle && angle <= 90 + verticalRange) {
+        return TA_DIRECTION_DOWN;
+    }
+    if(vector.x > 0) {
+        return TA_DIRECTION_RIGHT;
+    }
+    return TA_DIRECTION_LEFT;
 }
 
 bool TA_Controller::isPressed(TA_FunctionButton button)

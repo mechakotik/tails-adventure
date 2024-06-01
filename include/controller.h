@@ -10,8 +10,6 @@
 
 class TA_AbstractController {
 private:
-    double analogDeadZone = 0.25;
-    double verticalRange = 30;
 
 public:
     virtual void load() {}
@@ -21,8 +19,6 @@ public:
     virtual TA_Point getDirectionVector() {return TA_Point(0, 0);}
     virtual bool isPressed(TA_FunctionButton button) {return false;}
     virtual bool isJustPressed(TA_FunctionButton button) {return false;}
-
-    TA_Direction getDirection();
 };
 
 class TA_GamepadController : public TA_AbstractController {
@@ -42,10 +38,11 @@ public:
 class TA_OnscreenController : public TA_AbstractController {
 private:
     void updatePositions();
-    void setFunctionButtonPosition(TA_FunctionButton button, TA_Point center);
+    void setButtonPosition(TA_FunctionButton button, TA_Point center);
+    void setArrowButtonPosition(TA_Direction button, TA_Point center);
 
-    std::array<TA_Button, TA_BUTTON_MAX> buttons;
-    std::array<TA_Sprite, TA_BUTTON_MAX> sprites;
+    std::array<TA_Button, TA_BUTTON_MAX> buttons, arrowButtons;
+    std::array<TA_Sprite, TA_BUTTON_MAX> sprites, arrowSprites;
 
 public:
     void load() override;
@@ -59,6 +56,9 @@ public:
 
 class TA_Controller {
 private:
+    const double analogDeadZone = 0.25;
+    const double verticalRange = 30;
+
     TA_GamepadController gamepad;
     TA_KeyboardController keyboard;
     TA_OnscreenController onscreen;

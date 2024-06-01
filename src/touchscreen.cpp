@@ -28,37 +28,21 @@ void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event)
 
 void TA_Button::update()
 {
-    if(mode) {
-        bool flag = false;
-        for(auto finger : TA::touchscreen::currentFingers) {
-            TA_Point point = finger.second;
-            if(inside(point)) {
-                touchPosition = point;
-                if(TA::touchscreen::justPressedFingers.count(finger.first)) {
-                    pressed = true;
-                }
-                else if(pressed) {
-                    hold = true;
-                }
-                flag = true;
-            }
-        }
-        if(!flag) {
-            pressed = hold = false;
-        }
-    }
-    else {
-        pressed = hold = false;
-        for(auto finger : TA::touchscreen::currentFingers) {
-            TA_Point point = finger.second;
-            if(inside(point)) {
-                touchPosition = point;
-                if(!justCreated && !TA::touchscreen::justPressedFingers.count(finger.first)) {
-                    hold = true;
-                }
+    bool flag = false;
+    for(auto finger : TA::touchscreen::currentFingers) {
+        TA_Point point = finger.second;
+        if(inside(point)) {
+            touchPosition = point;
+            if(TA::touchscreen::justPressedFingers.count(finger.first)) {
                 pressed = true;
             }
+            else if(pressed) {
+                hold = true;
+            }
+            flag = true;
         }
     }
-    justCreated = false;
+    if(!flag) {
+        pressed = hold = false;
+    }
 }

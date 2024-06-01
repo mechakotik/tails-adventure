@@ -53,6 +53,7 @@ TA_ScreenState TA_HouseScreen::update()
 
     updateCurtain();
     draw();
+    controller.draw();
 
     if(shouldExit) {
         TA::save::setSaveParameter("map_selection", 0);
