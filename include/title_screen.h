@@ -26,7 +26,7 @@ private:
     TA_Sprite backgroundSprite, pressStartSprite;
     TA_Sound titleScreenSound, enterSound;
     TA_Controller controller;
-    TA_Button button;
+    TA_OnscreenButton button;
 
 public:
     void init() override;

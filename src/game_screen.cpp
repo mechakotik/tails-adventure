@@ -11,6 +11,7 @@ void TA_GameScreen::init()
     links.controller = &controller;
 
     controller.load();
+    controller.setMode(TA_ONSCREEN_CONTROLLER_GAME);
     character.load(links);
     objectSet.setLinks(links);
     tilemap.load(TA::levelPath + ".tmx");

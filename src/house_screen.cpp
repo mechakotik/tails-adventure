@@ -11,6 +11,7 @@ void TA_HouseScreen::init()
     font.load("fonts/item.png", 8, 8);
     font.setMapping("abcdefghijklmnopqrstuvwxyz .*");
     controller.load();
+    controller.setMode(TA_ONSCREEN_CONTROLLER_DPAD);
 
     music.load("sound/house.ogg", TA_SOUND_CHANNEL_MUSIC, true);
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);

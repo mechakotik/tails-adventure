@@ -10,16 +10,24 @@ namespace TA { namespace touchscreen {
     void update();
 } }
 
-class TA_Button : public TA_Polygon {
-private:
+class TA_OnscreenButton : public TA_Polygon {
+protected:
     bool pressed = false, hold = false;
     TA_Point touchPosition;
 
 public:
-    void update();
+    virtual void update();
     bool isPressed() {return pressed;}
     bool isJustPressed() {return pressed && !hold;}
     TA_Point getTouchPosition() {return touchPosition;}
+};
+
+class TA_OnscreenStick : public TA_OnscreenButton {
+private:
+    int fingerId = -1;
+
+public:
+    void update() override;
 };
 
 #endif // TA_TOUCHSCREEN_H

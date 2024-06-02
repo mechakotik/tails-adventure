@@ -26,7 +26,7 @@ void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event)
     }
 }
 
-void TA_Button::update()
+void TA_OnscreenButton::update()
 {
     bool flag = false;
     for(auto finger : TA::touchscreen::currentFingers) {
@@ -44,5 +44,29 @@ void TA_Button::update()
     }
     if(!flag) {
         pressed = hold = false;
+    }
+}
+
+void TA_OnscreenStick::update()
+{
+    if(fingerId == -1) {
+        for(auto finger : TA::touchscreen::currentFingers) {
+            TA_Point point = finger.second;
+            if(inside(point)) {
+                pressed = true;
+                fingerId = finger.first;
+                touchPosition = point;
+            }
+        }
+    }
+    else {
+        if(TA::touchscreen::currentFingers.count(fingerId)) {
+            touchPosition = TA::touchscreen::currentFingers[fingerId];
+            hold = true;
+        }
+        else {
+            fingerId = -1;
+            pressed = hold = false;
+        }
     }
 }

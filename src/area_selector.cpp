@@ -4,6 +4,7 @@
 void TA_AreaSelector::load()
 {
     controller.load();
+    controller.setMode(TA_ONSCREEN_CONTROLLER_DPAD);
     appendPoints();
     addSelectedArea();
     setActivePoints();
