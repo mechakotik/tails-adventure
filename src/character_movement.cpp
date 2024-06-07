@@ -22,6 +22,8 @@ void TA_Character::physicsStep()
         velocity.y += grv * (water ? 0.5 : 1) * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxJumpSpeed * (water ? 0.5 : 1));
     }
+
+    //TA::printLog("%f %f", position.x, position.y);
 }
 
 void TA_Character::initHelitail()
