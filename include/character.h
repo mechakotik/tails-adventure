@@ -120,7 +120,7 @@ private:
     void changeMusic();
 
     int getEmeraldsCount();
-    int getMaxRings() {return 10 + 5 * getEmeraldsCount();}
+    int getMaxRings() {return 8 + 2 * getEmeraldsCount();}
     double getMaxHelitailTime();
 
 public:

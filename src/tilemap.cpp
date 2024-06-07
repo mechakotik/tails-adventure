@@ -83,7 +83,7 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
                     collisionType = TA_COLLISION_HALF_SOLID;
                 }
                 else if(tileset[tileId].type == 2) {
-                    collisionType = TA_COLLISION_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_DAMAGE_X2;
+                    collisionType = TA_COLLISION_SOLID | TA_COLLISION_DAMAGE;
                 }
                 else if(tileset[tileId].type == 3) {
                     collisionType = TA_COLLISION_WATER;
@@ -328,5 +328,5 @@ TA_Tilemap::Hitbox TA_Tilemap::getSpikesDamageHitbox(int type)
 
     TA_Polygon polygon;
     polygon.setRectangle(topLeft, bottomRight);
-    return {polygon, TA_COLLISION_DAMAGE | TA_COLLISION_DAMAGE_X2};
+    return {polygon, TA_COLLISION_DAMAGE};
 }
