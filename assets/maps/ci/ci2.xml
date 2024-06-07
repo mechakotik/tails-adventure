@@ -39,6 +39,13 @@
 	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="208" rightx="255" y="1520"/>
 	<object name="bridge" path="maps/vt/bridge.png" particle_path="maps/vt/rock.png" leftx="208" rightx="255" y="1568"/>
 
+	<object name="wind" top="512" left="352" bottom="736" right="384" xsp="0" ysp="-2"/>
+	<object name="wind" top="688" left="304" bottom="736" right="352" xsp="2" ysp="0"/>
+	<object name="wind" top="576" left="64" bottom="832" right="96" xsp="0" ysp="2"/>
+	<object name="wind" top="672" left="176" bottom="848" right="208" xsp="0" ysp="-2"/>
+	<object name="wind" top="1472" left="320" bottom="1936" right="400" xsp="0" ysp="-2"/>
+	<object name="wind" top="1904" left="288" bottom="1936" right="368" xsp="2" ysp="0"/>
+
 	<object name="bat_robot" x="220" y="112"/>
 	<object name="bat_robot" x="268" y="144"/>
 	<object name="bat_robot" x="252" y="240"/>
