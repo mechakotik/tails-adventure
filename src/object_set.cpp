@@ -28,6 +28,7 @@
 #include "objects/jumper.h"
 #include "objects/wind.h"
 #include "objects/speedy.h"
+#include "objects/mecha_golem.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -258,6 +259,10 @@ void TA_ObjectSet::load(std::string filename)
 
         else if(name == "speedy") {
             spawnObject<TA_Speedy>();
+        }
+
+        else if(name == "mecha_golem") {
+            spawnObject<TA_MechaGolem>();
         }
 
         else {

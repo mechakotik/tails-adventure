@@ -13,6 +13,7 @@ src/objects/flame.cpp
 src/objects/hover_pod.cpp
 src/objects/item_box.cpp
 src/objects/jumper.cpp
+src/objects/mecha_golem.cpp
 src/objects/moving_platform.cpp
 src/objects/nezu.cpp
 src/objects/particle.cpp
