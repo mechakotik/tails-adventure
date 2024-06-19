@@ -31,7 +31,7 @@ private:
     const double invincibleTime = 30;
     const double deathTime = 180, deathExplosionDelay = 6;
     const double jumpWaitTime = 60;
-    const double damageFlashTime = 4;
+    const double damageFlashTime = 5;
 
     void updatePosition() override;
     void insertBorderHitboxes();
