@@ -19,6 +19,14 @@ private:
         STATE_P1_WAIT,
     };
 
+    enum Hitbox {
+        HITBOX_WALL_LEFT,
+        HITBOX_WALL_RIGHT,
+        HITBOX_BODY,
+        HITBOX_WEAK,
+        HITBOX_MAX
+    };
+
     State state = STATE_IDLE;
 
     void updateIdle();
@@ -26,10 +34,8 @@ private:
 
     void updateDamage();
     void updateHitboxes();
-    void insertBorderHitboxes();
 
     TA_Sprite headSprite, bodySprite, leftFootSprite, rightFootSprite, headFlashSprite;
-    TA_Polygon weakHitbox;
     TA_Sound hitSound;
 
     double invincibleTimer = invincibleTime;

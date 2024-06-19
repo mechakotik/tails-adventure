@@ -19,6 +19,7 @@ void TA_MechaGolem::load()
 
     position = {double(128 + TA::screenWidth - 61), 112};
     objectSet->getLinks().camera->setLockPosition({128, 0});
+    hitboxVector.assign(HITBOX_MAX, HitboxVectorElement());
 }
 
 bool TA_MechaGolem::update()
@@ -57,7 +58,7 @@ void TA_MechaGolem::updateDamage()
         return;
     }
 
-    if((objectSet->checkCollision(weakHitbox) & (TA_COLLISION_EXPLOSION_FIRST | TA_COLLISION_HAMMER)) == 0) {
+    if((objectSet->checkCollision(hitboxVector[HITBOX_WEAK].hitbox) & (TA_COLLISION_EXPLOSION_FIRST | TA_COLLISION_HAMMER)) == 0) {
         return;
     }
 
@@ -67,28 +68,13 @@ void TA_MechaGolem::updateDamage()
 
 void TA_MechaGolem::updateHitboxes()
 {
-    hitboxVector.clear();
-    if(state != STATE_IDLE) {
-        insertBorderHitboxes();
-    }
+    hitboxVector[HITBOX_WALL_LEFT].hitbox.setRectangle(TA_Point(112, 0), TA_Point(128, 112));
+    hitboxVector[HITBOX_WALL_RIGHT].hitbox.setRectangle(TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 112));
+    hitboxVector[HITBOX_WALL_LEFT].collisionType = hitboxVector[HITBOX_WALL_RIGHT].collisionType = (state == STATE_IDLE ? TA_COLLISION_TRANSPARENT : TA_COLLISION_SOLID);
 
-    HitboxVectorElement element;
-    element.hitbox.setRectangle(position + TA_Point(5, -44), position + TA_Point(52, -16));
-    element.collisionType = TA_COLLISION_DAMAGE;
-    hitboxVector.push_back(element);
-
-    weakHitbox.setRectangle(position + TA_Point(6, -55), position + TA_Point(24, -42));
-    hitboxVector.push_back({weakHitbox, TA_COLLISION_DAMAGE});
-}
-
-void TA_MechaGolem::insertBorderHitboxes()
-{
-    TA_Polygon borderHitbox;
-    borderHitbox.setRectangle(TA_Point(112, 0), TA_Point(128, 112));
-    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
-
-    borderHitbox.setRectangle(TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 112));
-    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+    hitboxVector[HITBOX_BODY].hitbox.setRectangle(position + TA_Point(5, -44), position + TA_Point(52, -16));
+    hitboxVector[HITBOX_WEAK].hitbox.setRectangle(position + TA_Point(8, -55), position + TA_Point(24, -42));
+    hitboxVector[HITBOX_BODY].collisionType = hitboxVector[HITBOX_WEAK].collisionType = TA_COLLISION_DAMAGE;
 }
 
 void TA_MechaGolem::draw()
