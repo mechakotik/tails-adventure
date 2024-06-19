@@ -9,7 +9,67 @@ namespace TA { namespace resmgr {
     std::unordered_map<std::string, SDL_Texture*> textureMap;
     std::unordered_map<std::string, Mix_Chunk*> chunkMap;
     std::unordered_map<std::string, std::string> assetMap;
+
+    void preloadTextures();
+    void preloadChunks();
 }}
+
+void TA::resmgr::preload()
+{
+    preloadTextures();
+    preloadChunks();
+}
+
+void TA::resmgr::preloadTextures()
+{
+    const std::vector<std::string> names {
+        "bomb",
+        "enemy_bomb",
+        "enemy_rock",
+        "leaf",
+        "nezu_bomb",
+        "ring",
+        "rock",
+        "splash",
+        "walker_bullet"
+    };
+
+    for(std::string name : names) {
+        loadTexture("objects/" + name + ".png");
+    }
+}
+
+void TA::resmgr::preloadChunks()
+{
+    const std::vector<std::string> names {
+        "break",
+        "damage",
+        "death",
+        "enter",
+        "explosion",
+        "fall",
+        "find_item",
+        "fly",
+        "hammer",
+        "hit",
+        "item_switch",
+        "jump",
+        "land",
+        "open",
+        "remote_robot_fly",
+        "remote_robot_step",
+        "ring",
+        "select_item",
+        "select",
+        "shoot",
+        "switch",
+        "teleport"
+    };
+
+    for(std::string name : names) {
+        loadChunk("sound/" + name + ".ogg");
+    }
+}
 
 SDL_Texture* TA::resmgr::loadTexture(std::string filename)
 {

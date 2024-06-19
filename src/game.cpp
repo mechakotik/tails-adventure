@@ -42,6 +42,7 @@ TA_Game::TA_Game()
     TA::random::init(seed);
     
     TA::gamepad::init();
+    TA::resmgr::preload();
 
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
