@@ -4,8 +4,8 @@
 
 void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type)
 {
-    TA_Sprite::load("effects/explosion.png", 16, 16);
-    TA_Sprite::loadAnimationsFromFile("effects/animations.xml");
+    TA_Sprite::load("objects/explosion.png", 16, 16);
+    TA_Sprite::loadAnimationsFromFile("objects/explosion.xml");
     TA_Sprite::setPosition(position);
     TA_Sprite::setAnimation("explosion");
 

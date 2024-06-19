@@ -26,6 +26,7 @@ void TA::resmgr::preloadTextures()
         "bomb",
         "enemy_bomb",
         "enemy_rock",
+        "explosion",
         "leaf",
         "nezu_bomb",
         "ring",
