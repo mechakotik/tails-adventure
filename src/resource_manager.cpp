@@ -8,6 +8,7 @@
 namespace TA { namespace resmgr {
     std::unordered_map<std::string, SDL_Texture*> textureMap;
     std::unordered_map<std::string, Mix_Chunk*> chunkMap;
+    std::unordered_map<std::string, std::string> assetMap;
 }}
 
 SDL_Texture* TA::resmgr::loadTexture(std::string filename)
@@ -44,6 +45,18 @@ Mix_Chunk* TA::resmgr::loadChunk(std::string filename)
     }
 
     return chunkMap[filename];
+}
+
+std::string TA::resmgr::loadAsset(std::string filename)
+{
+    filename = TA::filesystem::getAssetsPath() + "/" + filename;
+    TA::filesystem::fixPath(filename);
+
+    if(!assetMap.count(filename)) {
+        assetMap[filename] = TA::filesystem::readFile(filename);
+    }
+
+    return assetMap[filename];
 }
 
 void TA::resmgr::quit()

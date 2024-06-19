@@ -10,6 +10,7 @@
 #include "objects/pushable_object.h"
 #include "error.h"
 #include "filesystem.h"
+#include "resource_manager.h"
 #include "tinyxml2.h"
 #include "hud.h"
 #include "objects/transition.h"
@@ -55,7 +56,7 @@ TA_Point TA_Object::getDistanceToCharacter()
 void TA_ObjectSet::load(std::string filename)
 {
     tinyxml2::XMLDocument file;
-    file.Parse(TA::filesystem::readAsset(filename).c_str());
+    file.Parse(TA::resmgr::loadAsset(filename).c_str());
 
     for(tinyxml2::XMLElement *element = file.FirstChildElement("objects")->FirstChildElement("object");
         element != nullptr; element = element->NextSiblingElement("object"))

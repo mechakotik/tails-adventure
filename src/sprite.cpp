@@ -132,7 +132,7 @@ void TA_Sprite::updateAnimation()
 void TA_Sprite::loadAnimationsFromFile(std::string filename)
 {
     tinyxml2::XMLDocument animationXml;
-    animationXml.Parse(TA::filesystem::readAsset(filename).c_str());
+    animationXml.Parse(TA::resmgr::loadAsset(filename).c_str());
     tinyxml2::XMLElement *currentElement = animationXml.RootElement()->FirstChildElement("animation");
 
     while(currentElement != nullptr) {
