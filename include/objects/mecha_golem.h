@@ -14,9 +14,16 @@ private:
     const double invincibleTime = 30;
     const double damageFlashTime = 5;
 
+    const double waitTime = 30;
+    const double goTime = 30;
+    const double goDistance = 16;
+    const double stepHeight = 8;
+
     enum State {
         STATE_IDLE,
-        STATE_P1_WAIT,
+        STATE_WAIT,
+        STATE_GO_LEFT,
+        STATE_GO_RIGHT,
     };
 
     enum Hitbox {
@@ -30,7 +37,8 @@ private:
     State state = STATE_IDLE;
 
     void updateIdle();
-    void updateP1Wait();
+    void updateWait();
+    void updateGo(int direction);
 
     void updateDamage();
     void updateHitboxes();
@@ -38,6 +46,8 @@ private:
     TA_Sprite headSprite, bodySprite, leftFootSprite, rightFootSprite, headFlashSprite;
     TA_Sound hitSound;
 
+    double timer = 0;
+    double startX = 0;
     double invincibleTimer = invincibleTime;
 };
 
