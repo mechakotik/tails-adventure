@@ -26,7 +26,7 @@ gamepad_map_start 6
 default_save/item_mask 1
 default_save/area_mask 3
 default_save/boss_mask 0
-default_save/rings 10
+default_save/rings 8
 default_save/item_slot0 0
 default_save/item_slot1 -1
 default_save/item_slot2 -1
@@ -35,7 +35,7 @@ default_save/item_position 0
 default_save/map_selection 0
 default_save/latest_item_mask 1
 default_save/latest_boss_mask 0
-default_save/latest_rings 10
+default_save/latest_rings 8
 default_save/latest_item_slot0 0
 default_save/latest_item_slot1 -1
 default_save/latest_item_slot2 -1

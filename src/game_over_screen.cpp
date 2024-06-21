@@ -16,10 +16,10 @@ void TA_GameOverScreen::init()
 void TA_GameOverScreen::setMaxRings()
 {
     long long itemMask = TA::save::getSaveParameter("item_mask");
-    int rings = 10;
+    int rings = 8;
     for(int num = 29; num <= 34; num ++) {
         if(itemMask & (1ll << num)) {
-            rings += 10;
+            rings += 2;
         }
     }
     TA::save::setSaveParameter("rings", rings);
