@@ -19,9 +19,14 @@ private:
     const double goDistance = 16;
     const double stepHeight = 8;
     const double armMoveMaxDistance = 64;
-    const double armMoveTime = 15;
+    const double armMoveTime = 16;
     const double phaseChangeTime = 180;
     const double phaseChangeExplosionInterval = 6;
+    
+    const double armBite1Time = 16;
+    const double armBite2Time = 20;
+    const double armBite3Time = 16;
+    const double armBite4Time = 12;
 
     enum State {
         STATE_IDLE,
@@ -31,7 +36,10 @@ private:
         STATE_ARM_MOVE,
         STATE_ARM_MOVE_BACK,
         STATE_ARM_CIRCLE,
-        STATE_ARM_BITE,
+        STATE_ARM_BITE1,
+        STATE_ARM_BITE2,
+        STATE_ARM_BITE3,
+        STATE_ARM_BITE4,
         STATE_PHASE_CHANGE
     };
 
@@ -57,6 +65,11 @@ private:
     void updateArmMoveBack();
     void updatePhaseChange();
     TA_Point getOptimalArmTarget();
+
+    void updateArmBite1();
+    void updateArmBite2();
+    void updateArmBite3();
+    void updateArmBite4();
 
     void updateDamage();
     void updateHitboxes();

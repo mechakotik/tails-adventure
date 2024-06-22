@@ -1,4 +1,5 @@
 #include "mecha_golem.h"
+#include "mecha_golem_bomb.h"
 #include "explosion.h"
 #include <algorithm>
 
@@ -54,11 +55,24 @@ bool TA_MechaGolem::update()
         case STATE_PHASE_CHANGE:
             updatePhaseChange();
             break;
+        case STATE_ARM_BITE1:
+            updateArmBite1();
+            break;
+        case STATE_ARM_BITE2:
+            updateArmBite2();
+            break;
+        case STATE_ARM_BITE3:
+            updateArmBite3();
+            break;
+        case STATE_ARM_BITE4:
+            updateArmBite4();
+            break;
         default:
             break;
     }
 
-    if(state != STATE_ARM_MOVE && state != STATE_ARM_MOVE_BACK && state != STATE_ARM_CIRCLE && state != STATE_ARM_BITE) {
+    if(state != STATE_ARM_MOVE && state != STATE_ARM_MOVE_BACK && state != STATE_ARM_CIRCLE &&
+        state != STATE_ARM_BITE1 && state != STATE_ARM_BITE2 && state != STATE_ARM_BITE3 && state != STATE_ARM_BITE4) {
         armPosition = position + TA_Point(-11, -42);
         armSprite.setAnimation("idle");
     }
@@ -93,17 +107,28 @@ void TA_MechaGolem::updateWait()
     }
 
     // TODO: check point to line distance here
-    double distance = objectSet->getCharacterPosition().getDistance(position + TA_Point(-11, -42));
-    if(distance < armMoveMaxDistance) {
-        if(TA::random::next() % 3 == 0) {
-            initGo();
+    if(!secondPhase) {
+        double distance = objectSet->getCharacterPosition().getDistance(position + TA_Point(-11, -42));
+        if(distance < armMoveMaxDistance) {
+            if(TA::random::next() % 3 == 0) {
+                initGo();
+            }
+            else {
+                initArmMove();
+            }
         }
         else {
-            initArmMove();
+            initGo();
         }
     }
     else {
-        initGo();
+        if(TA::random::next() % 2 == 0) {
+            initGo();
+        }
+        else {
+            timer = 0;
+            state = STATE_ARM_BITE1;
+        }
     }
 }
 
@@ -235,8 +260,8 @@ void TA_MechaGolem::initPhaseChange()
 
     for(int delay = 0; delay < phaseChangeTime * 2 / 3; delay += phaseChangeExplosionInterval) {
         TA_Point explosionPosition = position + TA_Point(5, -56);
-        explosionPosition.x += TA::random::next() % 16;
-        explosionPosition.y += TA::random::next() % 24;
+        explosionPosition.x += TA::random::next() % 8;
+        explosionPosition.y += TA::random::next() % 16;
         objectSet->spawnObject<TA_Explosion>(explosionPosition, delay, TA_EXPLOSION_NEUTRAL);
     }
 }
@@ -254,6 +279,69 @@ void TA_MechaGolem::updatePhaseChange()
     if(timer > phaseChangeTime / 3) {
         headSprite.setAnimation("laugh");
     }
+}
+
+void TA_MechaGolem::updateArmBite1()
+{
+    timer += TA::elapsedTime;
+    if(timer > armBite1Time) {
+        timer = 0;
+        state = STATE_ARM_BITE2;
+        return;
+    }
+
+    armSprite.setAnimation("attack");
+    TA_Point startPosition = position + TA_Point(-11, -42);
+    TA_Point endPosition = position + TA_Point(-11, -82);
+    armPosition = startPosition + (endPosition - startPosition) * (timer / armBite1Time);
+}
+
+void TA_MechaGolem::updateArmBite2()
+{
+    TA_Point startPosition = position + TA_Point(-11, -82);
+    TA_Point endPosition = position + TA_Point(-32, -15);
+    timer += TA::elapsedTime;
+
+    if(timer > armBite2Time) {
+        timer = 0;
+        state = STATE_ARM_BITE3;
+        armPosition = endPosition;
+        objectSet->getLinks().camera->shake(24);
+
+        TA_Point bombPosition;
+        bombPosition.x = objectSet->getCharacterPosition().x - 8;
+        bombPosition.y = -34;
+        objectSet->spawnObject<TA_MechaGolemBomb>(bombPosition);
+
+        return;
+    }
+
+    armSprite.setAnimation("bite");
+    double angle = TA::pi / 2 + (timer / armBite2Time) * (timer / armBite2Time) * (TA::pi / 2);
+    armPosition.x = startPosition.x + (endPosition.x - startPosition.x) * (-cos(angle));
+    armPosition.y = endPosition.y + (endPosition.y - startPosition.y) * (-sin(angle));
+}
+
+void TA_MechaGolem::updateArmBite3()
+{
+    timer += TA::elapsedTime;
+    if(timer > armBite3Time) {
+        timer = 0;
+        state = STATE_ARM_BITE4;
+    }
+}
+
+void TA_MechaGolem::updateArmBite4()
+{
+    timer += TA::elapsedTime;
+    if(timer > armBite4Time) {
+        timer = 0;
+        state = STATE_WAIT;
+    }
+
+    TA_Point startPosition = position + TA_Point(-32, -15);
+    TA_Point endPosition = position + TA_Point(-11, -42);
+    armPosition = startPosition + (endPosition - startPosition) * (timer / armBite4Time);
 }
 
 void TA_MechaGolem::updateDamage()
