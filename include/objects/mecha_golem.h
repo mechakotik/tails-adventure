@@ -27,6 +27,7 @@ private:
     const double armBite2Time = 20;
     const double armBite3Time = 16;
     const double armBite4Time = 12;
+    const double armCircleTime = 60;
 
     enum State {
         STATE_IDLE,
@@ -52,7 +53,7 @@ private:
         HITBOX_MAX
     };
 
-    State state = STATE_IDLE;
+    State state = STATE_IDLE, previousState = STATE_IDLE;
 
     void initGo();
     void initArmMove();
@@ -70,6 +71,7 @@ private:
     void updateArmBite2();
     void updateArmBite3();
     void updateArmBite4();
+    void updateArmCircle();
 
     void updateDamage();
     void updateHitboxes();

@@ -55,6 +55,9 @@ bool TA_MechaGolem::update()
         case STATE_PHASE_CHANGE:
             updatePhaseChange();
             break;
+        case STATE_ARM_CIRCLE:
+            updateArmCircle();
+            break;
         case STATE_ARM_BITE1:
             updateArmBite1();
             break;
@@ -79,6 +82,10 @@ bool TA_MechaGolem::update()
 
     if(!secondPhase) {
         headSprite.setAnimation("idle");
+    }
+
+    if(state != STATE_WAIT) {
+        previousState = state;
     }
 
     updateDamage();
@@ -109,25 +116,20 @@ void TA_MechaGolem::updateWait()
     // TODO: check point to line distance here
     if(!secondPhase) {
         double distance = objectSet->getCharacterPosition().getDistance(position + TA_Point(-11, -42));
-        if(distance < armMoveMaxDistance) {
-            if(TA::random::next() % 3 == 0) {
-                initGo();
-            }
-            else {
-                initArmMove();
-            }
+        if(distance < armMoveMaxDistance && previousState != STATE_ARM_MOVE_BACK) {
+            initArmMove();
         }
         else {
             initGo();
         }
     }
     else {
-        if(TA::random::next() % 2 == 0) {
-            initGo();
+        if(previousState == STATE_GO_LEFT || previousState == STATE_GO_RIGHT) {
+            timer = 0;
+            state = (TA::random::next() % 2 == 0 ? STATE_ARM_BITE1 : STATE_ARM_CIRCLE);
         }
         else {
-            timer = 0;
-            state = STATE_ARM_BITE1;
+            initGo();
         }
     }
 }
@@ -279,6 +281,29 @@ void TA_MechaGolem::updatePhaseChange()
     if(timer > phaseChangeTime / 3) {
         headSprite.setAnimation("laugh");
     }
+}
+
+void TA_MechaGolem::updateArmCircle()
+{
+    timer += TA::elapsedTime;
+    if(timer > armCircleTime) {
+        timer = 0;
+        state = STATE_WAIT;
+        return;
+    }
+
+    TA_Point center = position + TA_Point(-24, -64);
+    double radius = center.getDistance(position + TA_Point(-11, -42));
+
+    double baseAngle = acos((position.x - 11 - center.x) / radius);
+    double angle = baseAngle + (timer / armCircleTime) * TA::pi * 2;
+    if(angle > TA::pi * 2) {
+        angle -= TA::pi * 2;
+    }
+
+    armPosition.x = center.x + radius * cos(angle);
+    armPosition.y = center.y + radius * sin(angle);
+    armSprite.setAnimation("attack");
 }
 
 void TA_MechaGolem::updateArmBite1()
