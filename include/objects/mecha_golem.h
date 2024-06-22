@@ -20,6 +20,8 @@ private:
     const double stepHeight = 8;
     const double armMoveMaxDistance = 64;
     const double armMoveTime = 15;
+    const double phaseChangeTime = 180;
+    const double phaseChangeExplosionInterval = 6;
 
     enum State {
         STATE_IDLE,
@@ -29,7 +31,8 @@ private:
         STATE_ARM_MOVE,
         STATE_ARM_MOVE_BACK,
         STATE_ARM_CIRCLE,
-        STATE_ARM_BITE
+        STATE_ARM_BITE,
+        STATE_PHASE_CHANGE
     };
 
     enum Hitbox {
@@ -43,13 +46,16 @@ private:
 
     State state = STATE_IDLE;
 
+    void initGo();
+    void initArmMove();
+    void initPhaseChange();
+
     void updateIdle();
     void updateWait();
-    void initGo();
-    void updateGo(int direction);
-    void initArmMove();
+    void updateGo();
     void updateArmMove();
     void updateArmMoveBack();
+    void updatePhaseChange();
     TA_Point getOptimalArmTarget();
 
     void updateDamage();
@@ -60,11 +66,13 @@ private:
     TA_Sprite armSprite, armPartSprite;
     TA_Sound hitSound;
 
+    TA_Point armPosition, armTarget;
     double timer = 0;
     double startX = 0;
-    double invincibleTimer = invincibleTime;
 
-    TA_Point armPosition, armTarget;
+    double invincibleTimer = invincibleTime;
+    int health = 16;
+    bool secondPhase = false;
 };
 
 #endif

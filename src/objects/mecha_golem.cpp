@@ -1,4 +1,5 @@
 #include "mecha_golem.h"
+#include "explosion.h"
 #include <algorithm>
 
 void TA_MechaGolem::load()
@@ -11,6 +12,9 @@ void TA_MechaGolem::load()
     rightFootSprite.setFrame(1);
     armSprite.load("objects/mecha_golem/arm.png", 16, 16);
     armPartSprite.load("objects/mecha_golem/arm_part.png");
+
+    headSprite.loadAnimationsFromFile("objects/mecha_golem/head.xml");
+    armSprite.loadAnimationsFromFile("objects/mecha_golem/arm.xml");
 
     TA_Camera* camera = objectSet->getLinks().camera;
     headSprite.setCamera(camera);
@@ -38,10 +42,8 @@ bool TA_MechaGolem::update()
             updateWait();
             break;
         case STATE_GO_LEFT:
-            updateGo(-1);
-            break;
         case STATE_GO_RIGHT:
-            updateGo(1);
+            updateGo();
             break;
         case STATE_ARM_MOVE:
             updateArmMove();
@@ -49,12 +51,20 @@ bool TA_MechaGolem::update()
         case STATE_ARM_MOVE_BACK:
             updateArmMoveBack();
             break;
+        case STATE_PHASE_CHANGE:
+            updatePhaseChange();
+            break;
         default:
             break;
     }
 
     if(state != STATE_ARM_MOVE && state != STATE_ARM_MOVE_BACK && state != STATE_ARM_CIRCLE && state != STATE_ARM_BITE) {
         armPosition = position + TA_Point(-11, -42);
+        armSprite.setAnimation("idle");
+    }
+
+    if(!secondPhase) {
+        headSprite.setAnimation("idle");
     }
 
     updateDamage();
@@ -72,6 +82,11 @@ void TA_MechaGolem::updateIdle()
 
 void TA_MechaGolem::updateWait()
 {
+    if(health <= 8 && !secondPhase) {
+        initPhaseChange();
+        return;
+    }
+
     timer += TA::elapsedTime;
     if(timer < waitTime) {
         return;
@@ -110,12 +125,21 @@ void TA_MechaGolem::initGo()
     else {
         state = (TA::random::next() % 4 == 0 ? STATE_GO_RIGHT : STATE_GO_LEFT);
     }
+
+    if(state == STATE_GO_RIGHT) {
+        headSprite.setAnimation("turn_back");
+    }
 }
 
-void TA_MechaGolem::updateGo(int direction)
+void TA_MechaGolem::updateGo()
 {
+    int direction = (state == STATE_GO_LEFT ? -1 : 1);
     timer += TA::elapsedTime;
+
     if(timer > goTime) {
+        if(state == STATE_GO_RIGHT) {
+            headSprite.setAnimation("turn_forward");
+        }
         position.x = startX + goDistance * direction;
         timer = 0;
         state = STATE_WAIT;
@@ -159,6 +183,7 @@ void TA_MechaGolem::initArmMove()
     timer = 0;
     armTarget = getOptimalArmTarget();
     state = STATE_ARM_MOVE;
+    armSprite.setAnimation("attack");
 }
 
 void TA_MechaGolem::updateArmMove()
@@ -202,6 +227,35 @@ TA_Point TA_MechaGolem::getOptimalArmTarget()
     return targets[0];
 }
 
+void TA_MechaGolem::initPhaseChange()
+{
+    timer = 0;
+    state = STATE_PHASE_CHANGE;
+    secondPhase = true;
+
+    for(int delay = 0; delay < phaseChangeTime * 2 / 3; delay += phaseChangeExplosionInterval) {
+        TA_Point explosionPosition = position + TA_Point(5, -56);
+        explosionPosition.x += TA::random::next() % 16;
+        explosionPosition.y += TA::random::next() % 24;
+        objectSet->spawnObject<TA_Explosion>(explosionPosition, delay, TA_EXPLOSION_NEUTRAL);
+    }
+}
+
+void TA_MechaGolem::updatePhaseChange()
+{
+    timer += TA::elapsedTime;
+    if(timer > phaseChangeTime) {
+        timer = 0;
+        headSprite.setAnimation("idle2");
+        state = STATE_WAIT;
+        return;
+    }
+
+    if(timer > phaseChangeTime / 3) {
+        headSprite.setAnimation("laugh");
+    }
+}
+
 void TA_MechaGolem::updateDamage()
 {
     if(invincibleTimer <= invincibleTime) {
@@ -215,6 +269,7 @@ void TA_MechaGolem::updateDamage()
 
     hitSound.play();
     invincibleTimer = 0;
+    health --;
 }
 
 void TA_MechaGolem::updateHitboxes()

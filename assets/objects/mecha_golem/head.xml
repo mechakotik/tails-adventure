@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animations>
+	<animation name="idle">
+		0
+	</animation>
+	<animation name="idle2">
+		1
+	</animation>
+	<animation name="laugh" delay="6">
+		1,2
+	</animation>
+	<animation name="turn_back" delay="6" repeatTimes="1">
+		3,4
+	</animation>
+	<animation name="turn_forward" delay="6" repeatTimes="1">
+		3,1
+	</animation>
+</animations>
