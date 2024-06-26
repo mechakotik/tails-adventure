@@ -209,7 +209,7 @@ void TA_ObjectSet::load(std::string filename)
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             int number = element->IntAttribute("number");
             std::string itemName = element->Attribute("item_name");
-            spawnObject<TA_ItemBox>(position, number, itemName);
+            spawnObject<TA_ItemBox>(position, TA_Point(0, 0), number, itemName);
         }
 
         else if(name == "drill_mole") {
@@ -318,6 +318,9 @@ void TA_ObjectSet::draw(int priority)
 
 void TA_ObjectSet::updateMusic()
 {
+    if(musicHalted) {
+        return;
+    }
     if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
         if(bossMusic) {
             bossLoopSound.play();
@@ -383,6 +386,12 @@ void TA_ObjectSet::setMusic(std::string begin, std::string loop)
     if(!bossMusic) {
         playAreaMusic();
     }
+}
+
+void TA_ObjectSet::haltMusic()
+{
+    Mix_HaltChannel(TA_SOUND_CHANNEL_MUSIC);
+    musicHalted = true;
 }
 
 TA_ObjectSet::~TA_ObjectSet()

@@ -1,6 +1,7 @@
 #include "mecha_golem.h"
 #include "mecha_golem_bomb.h"
 #include "explosion.h"
+#include "item_box.h"
 #include <algorithm>
 
 void TA_MechaGolem::load()
@@ -27,6 +28,8 @@ void TA_MechaGolem::load()
     armPartSprite.setCamera(camera);
 
     hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX3);
+    smallExplosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX3);
+    explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
     position = {double(128 + TA::screenWidth - 61), 112};
     objectSet->getLinks().camera->setLockPosition({128, 0});
@@ -70,7 +73,14 @@ bool TA_MechaGolem::update()
         case STATE_ARM_BITE4:
             updateArmBite4();
             break;
-        default:
+        case STATE_BLOW:
+            updateBlow();
+            break;
+        case STATE_FALL:
+            updateFall();
+            break;
+        case STATE_DEFEATED:
+            updateDefeated();
             break;
     }
 
@@ -103,8 +113,12 @@ void TA_MechaGolem::updateIdle()
 
 void TA_MechaGolem::updateWait()
 {
-    if(health <= 8 && !secondPhase) {
+    if(health <= 16 && !secondPhase) {
         initPhaseChange();
+        return;
+    }
+    if(health <= 0) {
+        initBlow();
         return;
     }
 
@@ -126,7 +140,16 @@ void TA_MechaGolem::updateWait()
     else {
         if(previousState == STATE_GO_LEFT || previousState == STATE_GO_RIGHT) {
             timer = 0;
-            state = (TA::random::next() % 2 == 0 ? STATE_ARM_BITE1 : STATE_ARM_CIRCLE);
+            double characterX = objectSet->getCharacterPosition().x;
+            if(TA::random::next() % 4 == 0) {
+                initGo();
+            }
+            else if(characterX < position.x && characterX > position.x - 48) {
+                state = STATE_ARM_CIRCLE;
+            }
+            else {
+                state = STATE_ARM_BITE1;
+            }
         }
         else {
             initGo();
@@ -147,10 +170,10 @@ void TA_MechaGolem::initGo()
         state = STATE_GO_LEFT;
     }
     else if(position.x + bodySprite.getWidth() / 2 < objectSet->getCharacterPosition().x) {
-        state = (TA::random::next() % 4 == 0 ? STATE_GO_LEFT : STATE_GO_RIGHT);
+        state = STATE_GO_RIGHT;
     }
     else {
-        state = (TA::random::next() % 4 == 0 ? STATE_GO_RIGHT : STATE_GO_LEFT);
+        state = STATE_GO_LEFT;
     }
 
     if(state == STATE_GO_RIGHT) {
@@ -292,7 +315,7 @@ void TA_MechaGolem::updateArmCircle()
         return;
     }
 
-    TA_Point center = position + TA_Point(-24, -64);
+    TA_Point center = position + TA_Point(-20, -60);
     double radius = center.getDistance(position + TA_Point(-11, -42));
 
     double baseAngle = acos((position.x - 11 - center.x) / radius);
@@ -369,6 +392,74 @@ void TA_MechaGolem::updateArmBite4()
     armPosition = startPosition + (endPosition - startPosition) * (timer / armBite4Time);
 }
 
+void TA_MechaGolem::initBlow()
+{
+    objectSet->haltMusic();
+    objectSet->spawnObject<TA_Explosion>(position + TA_Point(-11, -42), 32, TA_EXPLOSION_NEUTRAL);
+    objectSet->spawnObject<TA_Explosion>(position + TA_Point(-7, -38), 36, TA_EXPLOSION_NEUTRAL);
+    objectSet->spawnObject<TA_Explosion>(position + TA_Point(-3, -34), 40, TA_EXPLOSION_NEUTRAL);
+
+    objectSet->spawnObject<TA_Explosion>(position + TA_Point(5, -12), 80);
+    objectSet->spawnObject<TA_Explosion>(position + TA_Point(26, -12), 80);
+
+    timer = 0;
+    state = STATE_BLOW;
+}
+
+void TA_MechaGolem::updateBlow()
+{
+    double prev = timer;
+    timer += TA::elapsedTime;
+
+    if(prev <= 32 && timer > 32) {
+        smallExplosionSound.play();
+    }
+    if(prev <= 80 && timer > 80) {
+        smallExplosionSound.play();
+    }
+
+    if(timer > 90) {
+        timer = 0;
+        state = STATE_FALL;
+    }
+}
+
+void TA_MechaGolem::updateFall()
+{
+    speed += gravity * TA::elapsedTime;
+    position.y += speed * TA::elapsedTime;
+
+    if(position.y >= 123) {
+        position.y = 123;
+        state = STATE_DEFEATED;
+        headSprite.setAnimation("defeated");
+
+        for(int delay = 0; delay < defeatedTime; delay += defeatedExplosionInterval) {
+            TA_Point explosionPosition;
+            explosionPosition.x = position.x + TA::random::next() % 41;
+            explosionPosition.y = position.y - 57 + TA::random::next() % 30;
+            objectSet->spawnObject<TA_Explosion>(explosionPosition, delay, TA_EXPLOSION_NEUTRAL);
+        }
+    }
+}
+
+void TA_MechaGolem::updateDefeated()
+{
+    if(timer > defeatedTime) {
+        return;
+    }
+    double prev = timer;
+    timer += TA::elapsedTime;
+    
+    if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3)) {
+        explosionSound.play();
+    }
+
+    if(prev < defeatedTime / 3 && timer >= defeatedTime / 3) {
+        objectSet->spawnObject<TA_ItemBox>(position + TA_Point(8, -32), TA_Point(-1, -2), 22, " anti-air \n missile  ");
+    }
+}
+
 void TA_MechaGolem::updateDamage()
 {
     if(invincibleTimer <= invincibleTime) {
@@ -377,6 +468,9 @@ void TA_MechaGolem::updateDamage()
     }
 
     if((objectSet->checkCollision(hitboxVector[HITBOX_WEAK].hitbox) & (TA_COLLISION_EXPLOSION_FIRST | TA_COLLISION_HAMMER)) == 0) {
+        return;
+    }
+    if(state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED) {
         return;
     }
 
@@ -392,12 +486,13 @@ void TA_MechaGolem::updateHitboxes()
     hitboxVector[HITBOX_WALL_RIGHT].hitbox.setRectangle(TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 112));
     hitboxVector[HITBOX_WALL_LEFT].collisionType = hitboxVector[HITBOX_WALL_RIGHT].collisionType = (state == STATE_IDLE ? TA_COLLISION_TRANSPARENT : TA_COLLISION_SOLID);
 
+    TA_CollisionType type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE);
     hitboxVector[HITBOX_BODY].hitbox.setRectangle(position + TA_Point(5, -44), position + TA_Point(52, -16));
     hitboxVector[HITBOX_WEAK].hitbox.setRectangle(position + TA_Point(8, -55), position + TA_Point(24, -42));
-    hitboxVector[HITBOX_BODY].collisionType = hitboxVector[HITBOX_WEAK].collisionType = TA_COLLISION_DAMAGE;
+    hitboxVector[HITBOX_BODY].collisionType = hitboxVector[HITBOX_WEAK].collisionType = type;
 
     hitboxVector[HITBOX_ARM].hitbox.setRectangle(armPosition + TA_Point(4, 4), armPosition + TA_Point(12, 12));
-    hitboxVector[HITBOX_ARM].collisionType = TA_COLLISION_DAMAGE;
+    hitboxVector[HITBOX_ARM].collisionType = type;
 }
 
 void TA_MechaGolem::draw()
@@ -414,9 +509,15 @@ void TA_MechaGolem::draw()
     headFlashSprite.setFrame(headSprite.getCurrentFrame() + 5);
 
     bodySprite.draw();
-    headSprite.draw();
-    leftFootSprite.draw();
-    rightFootSprite.draw();
+    if(!(state == STATE_DEFEATED && timer > defeatedTime * 2 / 3)) {
+        headSprite.draw();
+    }
+
+    if(!(state == STATE_FALL || state == STATE_DEFEATED || (state == STATE_BLOW && timer > 88))) {
+        leftFootSprite.draw();
+        rightFootSprite.draw();
+    }
+    
     drawArm();
 
     if(invincibleTimer < damageFlashTime * 4 && int(invincibleTimer / damageFlashTime) % 2 == 0) {
@@ -426,6 +527,10 @@ void TA_MechaGolem::draw()
 
 void TA_MechaGolem::drawArm()
 {
+    if(state == STATE_FALL || state == STATE_DEFEATED || (state == STATE_BLOW && timer > 40)) {
+        return;
+    }
+
     armSprite.setPosition(armPosition);
     armSprite.draw();
 

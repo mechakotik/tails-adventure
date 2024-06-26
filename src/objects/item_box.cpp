@@ -5,9 +5,10 @@
 #include "character.h"
 #include "error.h"
 
-void TA_ItemBox::load(TA_Point position, int itemNumber, std::string itemName)
+void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName)
 {
     this->position = position;
+    this->velocity = velocity;
     this->itemNumber = itemNumber;
     this->itemName = itemName;
 
@@ -67,7 +68,6 @@ void TA_ItemBox::updateIdle()
     int flags = objectSet->checkCollision(hitbox);
 
     if((flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) == 0) {
-        velocity = {0, 0};
         state = STATE_FALL;
         return;
     }
@@ -88,6 +88,7 @@ void TA_ItemBox::updateFall()
 
     if(flags & TA_GROUND_COLLISION) {
         state = STATE_IDLE;
+        velocity = {0, 0};
     }
 }
 
@@ -226,7 +227,7 @@ int TA_ItemBox::getDrawPriority()
 void TA_ItemLabel::load(TA_Point position, std::string name)
 {
     font.load("fonts/item.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz ");
+    font.setMapping("abcdefghijklmnopqrstuvwxyz XY.?-0123456789SABF");
 
     position.x -= font.getTextWidth(name) / 2 - 8;
     this->position = position;

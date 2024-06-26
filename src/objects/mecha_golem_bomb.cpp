@@ -11,7 +11,7 @@ void TA_MechaGolemBomb::load(TA_Point position)
 bool TA_MechaGolemBomb::update()
 {
     speed = std::min(maxSpeed, speed + gravity * TA::elapsedTime);
-    position.y += speed;
+    position.y += speed * TA::elapsedTime;
     updatePosition();
 
     if(position.y >= 80) {

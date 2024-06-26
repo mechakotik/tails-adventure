@@ -304,7 +304,7 @@ void TA_Speedy::updateEndSequencePhase4()
         endSequencePhase = 5;
         velocity = {2, 0};
         setAnimation("show");
-        objectSet->spawnObject<TA_ItemBox>(position + TA_Point(4, 16), 33, "  chaos  \n emerald ");
+        objectSet->spawnObject<TA_ItemBox>(position + TA_Point(4, 16), TA_Point(0, 0), 33, "  chaos  \n emerald ");
         return;
     }
 

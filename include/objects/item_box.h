@@ -43,7 +43,7 @@ private:
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position, int itemNumber, std::string itemName);
+    void load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName);
     bool update() override;
     int getDrawPriority() override;
     bool checkPawnCollision(TA_Polygon &hitbox) override;

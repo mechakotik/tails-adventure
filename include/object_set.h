@@ -54,6 +54,7 @@ private:
     std::string loopMusicPath = "";
     bool spawnFlip = false, firstSpawnPointSet = false, bossMusic = false;
     bool paused = false;
+    bool musicHalted = false;
 
 public:
     ~TA_ObjectSet();
@@ -83,6 +84,7 @@ public:
     void playBossMusic();
     std::string getCurrentLoopMusic() {return loopMusicPath;}
     void setMusic(std::string begin, std::string loop);
+    void haltMusic();
 
     template<class T, typename... P>
     void spawnObject(P... params) {

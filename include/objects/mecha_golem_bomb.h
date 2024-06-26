@@ -12,7 +12,7 @@ public:
 
 private:
     const double gravity = 0.125;
-    const double maxSpeed = 1;
+    const double maxSpeed = 2.5;
 
     double speed = 0;
 };
