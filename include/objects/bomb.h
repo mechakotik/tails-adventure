@@ -64,12 +64,14 @@ public:
 
 class TA_NapalmBomb : public TA_Bomb {
 private:
+    bool shouldExplode() override;
     void explode() override;
 
 public:
     using TA_Bomb::TA_Bomb;
     void load(TA_Point newPosition, bool newDirection, TA_BombMode mode) override;
     bool update() override;
+    TA_CollisionType getCollisionType() override {return TA_COLLISION_TRANSPARENT;}
 };
 
 #endif // TA_BOMB_H

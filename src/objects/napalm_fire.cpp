@@ -10,6 +10,14 @@ void TA_NapalmFire::load(TA_Point position, double xsp)
     TA_Sprite::loadAnimationsFromFile("objects/napalm_fire.xml");
     TA_Sprite::setAnimation("fire");
 
+    TA_Polygon explosionHitbox;
+    explosionHitbox.setRectangle(TA_Point(0, 0), TA_Point(8, 28));
+    hitboxVector.push_back({explosionHitbox, TA_COLLISION_EXPLOSION});
+
+    TA_Polygon napalmHitbox;
+    napalmHitbox.setRectangle(TA_Point(-4, -16), TA_Point(4, 0));
+    hitboxVector.push_back({napalmHitbox, TA_COLLISION_NAPALM});
+
     updatePosition();
 }
 
@@ -24,7 +32,7 @@ bool TA_NapalmFire::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_NapalmFire::update()
 {
-    int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
+    int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime, true);
     if(flags & TA_WALL_COLLISION) {
         velocity.x = 0;
     }
