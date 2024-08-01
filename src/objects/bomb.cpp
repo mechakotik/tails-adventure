@@ -3,6 +3,7 @@
 #include "objects/explosion.h"
 #include "character.h"
 #include "error.h"
+#include "napalm_fire.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
     TA_Sprite::load("objects/bomb.png", 16, 16);
@@ -85,16 +86,26 @@ bool TA_Bomb::update()
         if(moveFlags & TA_CEIL_COLLISION) {
             velocity.y = std::max(double(0), velocity.y);
         }
-
-        hitbox.setPosition(position);
-        int flags = objectSet->checkCollision(hitbox);
-        if((flags & destroyFlags) || shouldExplode()) {
+        if(shouldExplode()) {
             explode();
+            destroyed = true;
+            timer = 0;
         }
     }
 
     setPosition(position);
     return true;
+}
+
+bool TA_Bomb::shouldExplode()
+{
+    hitbox.setPosition(position);
+    int flags = objectSet->checkCollision(hitbox);
+
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_PUSHABLE)) {
+        return true;
+    }
+    return false;
 }
 
 void TA_Bomb::explode()
@@ -106,9 +117,6 @@ void TA_Bomb::explode()
         explosionSound.play();
         objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
     }
-
-    destroyed = true;
-    timer = 0;
 }
 
 void TA_Bomb::draw()
@@ -123,10 +131,10 @@ void TA_RemoteBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mo
     topLeft = TA_Point(1, 4);
     bottomRight = TA_Point(14, 16);
     speed = 1;
-    destroyFlags = TA_COLLISION_DAMAGE;
     startVelocity = {1.35 * speed, -1 * speed};
     startCrouchVelocity = {1 * speed, -0.7 * speed};
     crouchThrowHeight = 0;
+    
     TA_Bomb::load(newPosition, newDirection, mode);
     setAnimation("remote");
 }
@@ -137,6 +145,11 @@ bool TA_RemoteBomb::shouldExplode()
         return true;
     }
     if(timer > waitTime) {
+        return true;
+    }
+    
+    hitbox.setPosition(position);
+    if(objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
         return true;
     }
     return false;
@@ -160,5 +173,28 @@ bool TA_RemoteBomb::update()
         timer = 0;
     }
 
+    return TA_Bomb::update();
+}
+
+void TA_NapalmBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode)
+{
+    topLeft = {4, 4};
+    bottomRight = {12, 12};
+    startVelocity = {1.35 * speed, -1 * speed};
+    startCrouchVelocity = {1 * speed, -0.7 * speed};
+    crouchThrowHeight = 0;
+
+    TA_Bomb::load(newPosition, newDirection, mode);
+    setAnimation("napalm");
+    hitbox.setRectangle(topLeft + TA_Point(1, 0), bottomRight + TA_Point(-1, 0.5));
+}
+
+void TA_NapalmBomb::explode()
+{
+    objectSet->spawnObject<TA_NapalmFire>(position + TA_Point(4, -15), velocity.x);
+}
+
+bool TA_NapalmBomb::update()
+{
     return TA_Bomb::update();
 }

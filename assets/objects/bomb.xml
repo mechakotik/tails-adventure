@@ -3,4 +3,7 @@
 	<animation name="remote" delay="12">
 		0,1
 	</animation>
+	<animation name="napalm" delay="8">
+		2,3
+	</animation>
 </animations>

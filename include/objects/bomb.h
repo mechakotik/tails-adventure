@@ -5,6 +5,8 @@
 #include "geometry.h"
 #include "sound.h"
 
+// TODO: clean up this code
+
 enum TA_BombMode : int {
     TA_BOMB_MODE_DEFAULT,
     TA_BOMB_MODE_AIR,
@@ -24,12 +26,10 @@ private:
     double timer = 0;
 
 protected:
-    virtual bool shouldExplode() {return false;}
-    void explode();
+    virtual bool shouldExplode();
+    virtual void explode();
 
     double speed = 1.15, crouchThrowHeight = -6;
-    int destroyFlags = TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_PUSHABLE;
-
     TA_Point topLeft{3, 4}, bottomRight{12, 14};
     TA_Point startVelocity = {2 * speed, -1 * speed};
     TA_Point startCrouchVelocity = {1.35 * speed, -0.7 * speed};
@@ -54,8 +54,17 @@ private:
 
     double timer = 0;
 
-protected:
     bool shouldExplode() override;
+
+public:
+    using TA_Bomb::TA_Bomb;
+    void load(TA_Point newPosition, bool newDirection, TA_BombMode mode) override;
+    bool update() override;
+};
+
+class TA_NapalmBomb : public TA_Bomb {
+private:
+    void explode() override;
 
 public:
     using TA_Bomb::TA_Bomb;

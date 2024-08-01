@@ -25,10 +25,13 @@ void TA_Character::updateTool()
     
     switch(links.hud->getCurrentItem()) {
         case TOOL_BOMB:
-            spawnBomb(false);
+            spawnBomb(BOMB_REGULAR);
             break;
         case TOOL_REMOTE_BOMB:
-            spawnBomb(true);
+            spawnBomb(BOMB_REMOTE);
+            break;
+        case TOOL_NAPALM_BOMB:
+            spawnBomb(BOMB_NAPALM);
             break;
         case TOOL_REMOTE_ROBOT:
             spawnRemoteRobot();
@@ -51,11 +54,14 @@ void TA_Character::updateTool()
     }
 }
 
-void TA_Character::spawnBomb(bool remote)
+void TA_Character::spawnBomb(BombType type)
 {
     auto spawn = [&] (TA_Point position, bool flip, TA_BombMode mode) {
-        if(remote) {
+        if(type == BOMB_REMOTE) {
             links.objectSet->spawnObject<TA_RemoteBomb>(position, flip, mode);
+        }
+        else if(type == BOMB_NAPALM) {
+            links.objectSet->spawnObject<TA_NapalmBomb>(position, flip, mode);
         }
         else {
             links.objectSet->spawnObject<TA_Bomb>(position, flip, mode);

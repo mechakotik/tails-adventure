@@ -16,6 +16,7 @@ src/objects/jumper.cpp
 src/objects/mecha_golem_bomb.cpp
 src/objects/mecha_golem.cpp
 src/objects/moving_platform.cpp
+src/objects/napalm_fire.cpp
 src/objects/nezu.cpp
 src/objects/particle.cpp
 src/objects/pushable_object.cpp

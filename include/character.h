@@ -10,17 +10,18 @@
 
 class TA_Character : public TA_Pawn {
 private:
-    enum TA_CharacterTool {
+    enum CharacterTool {
         TOOL_BOMB = 0,
         TOOL_REMOTE_BOMB = 2,
         TOOL_TELEPORT_DEVICE = 3,
         TOOL_REMOTE_ROBOT = 6,
         TOOL_SPEED_BOOTS = 7,
+        TOOL_NAPALM_BOMB = 13,
         TOOL_RADIO = 18,
         TOOL_HAMMER = 19
     };
 
-    enum TA_CharacterState {
+    enum CharacterState {
         STATE_NORMAL, // TODO: create ground, air, helitail state
         STATE_CLIMB_LOW,
         STATE_CLIMB_HIGH,
@@ -32,6 +33,12 @@ private:
         STATE_TELEPORT,
         STATE_HAMMER,
         STATE_DEAD
+    };
+
+    enum BombType {
+        BOMB_REGULAR,
+        BOMB_REMOTE,
+        BOMB_NAPALM
     };
 
     const double jmp = -3.75;
@@ -67,7 +74,7 @@ private:
     TA_Sound flySound, remoteRobotFlySound;
     TA_Sound damageSound, hammerSound, deathSound, teleportSound;
 
-    TA_CharacterState state = STATE_NORMAL;
+    CharacterState state = STATE_NORMAL;
 
     TA_Sprite remoteRobotControlSprite;
     TA_Point remoteRobotInitialPosition;
@@ -111,7 +118,7 @@ private:
     void updateRemoteRobotReturn();
 
     void updateTool();
-    void spawnBomb(bool remote);
+    void spawnBomb(BombType type);
     void spawnRemoteRobot();
     void initHammer();
     void updateHammer();

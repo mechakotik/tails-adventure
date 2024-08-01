@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+	<object name="spawn_point" x="0" y="560"/>
+	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+</objects>

@@ -81,4 +81,6 @@
 	<object name="drill_mole" x="116" y="1030"/>
 	<object name="drill_mole" x="68" y="1142"/>
 	<object name="drill_mole" x="292" y="1206"/>
+
+	<object name="item_box" tile_x="8" tile_y="97" number="13" item_name=" napalm &#10;  bomb  "/>
 </objects>
