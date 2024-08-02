@@ -30,6 +30,7 @@
 #include "objects/wind.h"
 #include "objects/speedy.h"
 #include "objects/mecha_golem.h"
+#include "objects/grass_block.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -264,6 +265,12 @@ void TA_ObjectSet::load(std::string filename)
 
         else if(name == "mecha_golem") {
             spawnObject<TA_MechaGolem>();
+        }
+
+        else if(name == "grass_block") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            std::string path = element->Attribute("path");
+            spawnObject<TA_GrassBlock>(position, path);
         }
 
         else {

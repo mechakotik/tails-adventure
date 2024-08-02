@@ -186,7 +186,7 @@ void TA_NapalmBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mo
 
     TA_Bomb::load(newPosition, newDirection, mode);
     setAnimation("napalm");
-    hitbox.setRectangle(topLeft + TA_Point(-0.5, 0), bottomRight + TA_Point(0.5, 0.5));
+    hitbox.setRectangle(topLeft + TA_Point(0.5, 0), bottomRight + TA_Point(-0.5, 0.5));
 }
 
 bool TA_NapalmBomb::shouldExplode()

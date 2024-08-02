@@ -15,6 +15,17 @@
 	<object name="breakable_block" x="1312" y="336"/>
 	<object name="breakable_block" x="1264" y="384" drops_ring="true"/>
 	<object name="breakable_block" x="1280" y="384" drops_ring="true"/>
+
+	<object name="grass_block" tile_x="71" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="71" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="72" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="72" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="73" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="73" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="74" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="74" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="75" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="75" tile_y="24" path="maps/pf/pf_grass.png"/>
 	
 	<object name="walker" x="544" y="272" range="40" direction="left"/>
 	<object name="walker" x="1072" y="272" range="90" direction="left"/>

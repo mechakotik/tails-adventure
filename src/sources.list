@@ -10,6 +10,7 @@ src/objects/drill_mole.cpp
 src/objects/explosion.cpp
 src/objects/fire.cpp
 src/objects/flame.cpp
+src/objects/grass_block.cpp
 src/objects/hover_pod.cpp
 src/objects/item_box.cpp
 src/objects/jumper.cpp
