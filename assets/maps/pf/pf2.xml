@@ -4,6 +4,7 @@
 	<object name="spawn_point" previous="maps/pf/pf3" x="1946" y="185" direction="left"/>
 	<object name="level_transition" path="maps/pf/pf1" top="0" bottom="256" left="0" right="2"/>
 	<object name="level_transition" path="maps/pf/pf3" top="160" bottom="224" left="1982" right="1984"/>
+	<object name="map_transition" selection="5" top="384" bottom="416" left="1184" right="1200"/>
 	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
 
 	<object name="breakable_block" x="1792" y="48"/>
@@ -42,4 +43,29 @@
     <object name="item_box" x="248" y="272" number="7" item_name=" speed  &#10; boots  "/>
     <object name="item_box" x="1144" y="208" number="18" item_name=" radio  &#10;        "/>
     <object name="item_box" x="1880" y="64" number="31" item_name="  chaos  &#10; emerald "/>
+
+	<object name="grass_block" tile_x="57" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="57" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="57" tile_y="25" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="58" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="58" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="58" tile_y="25" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="59" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="59" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="59" tile_y="25" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="60" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="60" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="60" tile_y="25" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="61" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="61" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="61" tile_y="25" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="62" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="62" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="62" tile_y="25" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="63" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="63" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="63" tile_y="25" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="64" tile_y="23" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="64" tile_y="24" path="maps/pf/pf_grass.png"/>
+	<object name="grass_block" tile_x="64" tile_y="25" path="maps/pf/pf_grass.png"/>
 </objects>

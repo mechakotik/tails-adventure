@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
-	<object name="spawn_point" x="0" y="560"/>
+	<object name="spawn_point" x="-2" y="585"/>
 	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+	<object name="map_transition" selection="5" top="512" bottom="624" left="0" right="2"/>
+
+	<object name="grass_block" tile_x="28" tile_y="35" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="28" tile_y="36" path="maps/cf/cf_grass.png"/>
+
+	<object name="grass_block" tile_x="31" tile_y="34" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="31" tile_y="35" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="31" tile_y="36" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="32" tile_y="34" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="32" tile_y="35" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="32" tile_y="36" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="33" tile_y="34" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="33" tile_y="35" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="33" tile_y="36" path="maps/cf/cf_grass.png"/>
+
+	<object name="grass_block" tile_x="47" tile_y="33" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="47" tile_y="34" path="maps/cf/cf_grass.png"/>
+
+	<object name="grass_block" tile_x="51" tile_y="34" path="maps/cf/cf_grass.png"/>
+	<object name="grass_block" tile_x="51" tile_y="35" path="maps/cf/cf_grass.png"/>
+
+	<object name="breakable_block" tile_x="9" tile_y="4" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="10" tile_y="4" path="maps/cf/cf_block.png"/>
+
+	<object name="pushable_spring" x="424" y="432"/>
+	<object name="pushable_spring" x="664" y="256"/>
+	<object name="pushable_spring" x="360" y="208"/>
+	<object name="pushable_rock" x="1112" y="320"/>
+
+	<object name="wind" top="384" left="672" bottom="416" right="736" xsp="0" ysp="1"/>
+	<object name="wind" top="384" left="864" bottom="448" right="1056" xsp="0" ysp="1"/>
+	<object name="wind" top="192" left="816" bottom="304" right="1072" xsp="-1" ysp="0"/>
+	<object name="wind" top="160" left="512" bottom="256" right="560" xsp="-0" ysp="1"/>
+
+    <object name="item_box" tile_x="3" tile_y="2" number="32" item_name="  chaos  &#10; emerald "/>
+    <object name="item_box" x="776" y="256" number="14" item_name=" triple &#10;  bomb  "/>
 </objects>

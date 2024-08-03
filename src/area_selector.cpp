@@ -21,6 +21,7 @@ void TA_AreaSelector::appendPoints()
     points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73)));
     points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41)));
     points.push_back(new TA_MapPoint(4, "cavern\nisland", "maps/ci/ci1", TA_Point(182 + xOffset, 33)));
+    points.push_back(new TA_MapPoint(4, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49)));
     currentPoint = points[TA::save::getSaveParameter("map_selection")];
 }
 
@@ -48,6 +49,7 @@ void TA_AreaSelector::setPointNeighbours()
 
     points[1]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
     points[1]->setNeighbour(TA_DIRECTION_RIGHT, points[2]);
+    points[1]->setNeighbour(TA_DIRECTION_UP, points[5]);
 
     points[2]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
     points[2]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
@@ -58,6 +60,8 @@ void TA_AreaSelector::setPointNeighbours()
     points[3]->setNeighbour(TA_DIRECTION_UP, points[4]);
 
     points[4]->setNeighbour(TA_DIRECTION_LEFT, points[3]);
+
+    points[5]->setNeighbour(TA_DIRECTION_DOWN, points[1]);
 }
 
 void TA_AreaSelector::loadTailsIcon()
