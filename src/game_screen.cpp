@@ -3,7 +3,15 @@
 
 void TA_GameScreen::init()
 {
-    links.character = &character;
+    isSeaFox = ((int)TA::levelPath.size() >= 7 && TA::levelPath.substr(0, 7) == "maps/lr");
+
+    if(isSeaFox) {
+        links.seaFox = &seaFox;
+    }
+    else {
+        links.character = &character;
+    }
+
     links.tilemap = &tilemap;
     links.camera = &camera;
     links.objectSet = &objectSet;
@@ -12,13 +20,27 @@ void TA_GameScreen::init()
 
     controller.load();
     controller.setMode(TA_ONSCREEN_CONTROLLER_GAME);
-    character.load(links);
+
+    if(isSeaFox) {
+        seaFox.load(links);
+    }
+    else {
+        character.load(links);
+    }
+    
     objectSet.setLinks(links);
     tilemap.load(TA::levelPath + ".tmx");
     tilemap.setCamera(&camera);
     hud.load(links);
     objectSet.load(TA::levelPath + ".xml");
-    character.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());
+
+    if(isSeaFox) {
+
+    }
+    else {
+        character.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());
+    }
+    
     TA::previousLevelPath = TA::levelPath;
 }
 
@@ -29,19 +51,41 @@ TA_ScreenState TA_GameScreen::update()
     objectSet.updateMusic();
 
     if(!hud.isPaused()) {
-        character.handleInput();
+        if(!isSeaFox) {
+            character.handleInput();
+        }
         objectSet.update();
-        character.update();
-        camera.update(character.isOnGround(), character.isJumpingOnSpring() || character.isOnStrongWind() || character.isUsingSpeedBoots());
+
+        if(isSeaFox) {
+            seaFox.update();
+            camera.update(false, false);
+        }
+        else {
+            character.update();
+            camera.update(character.isOnGround(), character.isJumpingOnSpring() || character.isOnStrongWind() || character.isUsingSpeedBoots());
+        }
     }
 
-    character.setPaused(hud.isPaused());
+    if(isSeaFox) {
+
+    }
+    else {
+        character.setPaused(hud.isPaused());
+    }
+
     tilemap.setUpdateAnimation(!hud.isPaused());
     objectSet.setPaused(hud.isPaused());
 
     tilemap.draw(0);
     objectSet.draw(0);
-    character.draw();
+
+    if(isSeaFox) {
+        seaFox.draw();
+    }
+    else {
+        character.draw();
+    }
+    
     objectSet.draw(1);
     tilemap.draw(1);
     objectSet.draw(2);
@@ -51,10 +95,10 @@ TA_ScreenState TA_GameScreen::update()
     if(hud.getTransition() != TA_SCREENSTATE_CURRENT) {
         return hud.getTransition();
     }
-    if(character.gameOver()) {
+    if(!isSeaFox && character.gameOver()) {
         return TA_SCREENSTATE_GAMEOVER;
     }
-    if(character.isTeleported()) {
+    if(!isSeaFox && character.isTeleported()) {
         TA::save::saveToLatest();
         return TA_SCREENSTATE_HOUSE;
     }

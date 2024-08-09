@@ -230,6 +230,10 @@ void TA_Hud::drawRingsCounter()
 
 void TA_Hud::drawFlightBar()
 {
+    if(!links.character) {
+        return;
+    }
+    
     double flightTime = links.character->getFlightTime();
     if(links.character->displayFlightTimeBar() && flightTime < 1) {
         flightBarX = std::min(flightBarRight, flightBarX + flightBarSpeed * TA::elapsedTime);

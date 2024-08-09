@@ -17,6 +17,7 @@ void TA_DevmenuScreen::init()
     levels.emplace_back("maps/ci/ci2");
     levels.emplace_back("maps/ci/ci3");
     levels.emplace_back("maps/cf/cf1");
+    levels.emplace_back("maps/lr/lr1");
     normalFont.load("fonts/devmenu.png", 7, 9);
     normalFont.setMapping(mapping);
     selectedFont.load("fonts/devmenu_selected.png", 7, 9);

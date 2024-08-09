@@ -59,6 +59,7 @@ src/pawn.cpp
 src/resource_manager.cpp
 src/save.cpp
 src/screen_state_machine.cpp
+src/sea_fox.cpp
 src/sound.cpp
 src/sprite.cpp
 src/tilemap.cpp
