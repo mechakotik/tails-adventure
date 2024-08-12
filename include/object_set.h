@@ -76,7 +76,7 @@ public:
     TA_ScreenState getTransition() {return transition;}
     bool hasCollisionType(TA_CollisionType type) {return hitboxContainer.hasCollisionType(type);}
     bool enemyShouldDropRing() {return TA::random::next() % 4 == 0;}
-    void resetInstaShield() {links.character->resetInstaShield();}
+    void resetInstaShield() {if(links.character) links.character->resetInstaShield();} // TODO: figure out what it is
     bool isPaused() {return paused;}
     void setPaused(bool enabled) {paused = enabled;}
 

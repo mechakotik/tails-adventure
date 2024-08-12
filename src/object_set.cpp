@@ -11,6 +11,7 @@
 #include "error.h"
 #include "filesystem.h"
 #include "resource_manager.h"
+#include "sea_fox.h"
 #include "tinyxml2.h"
 #include "hud.h"
 #include "objects/transition.h"
@@ -353,6 +354,10 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidT
 
     if(links.character && links.character->isUsingHammer() && links.character->getHammerHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_HAMMER;
+    }
+
+    if(links.seaFox && links.seaFox->getDrillHitbox()->intersects(hitbox)) {
+        flags |= TA_COLLISION_DRILL;
     }
 }
 

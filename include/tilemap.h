@@ -18,11 +18,12 @@ enum TA_CollisionType {
     TA_COLLISION_PUSHABLE = (1 << 5),
     TA_COLLISION_SPRING = (1 << 6),
     TA_COLLISION_BOMB = (1 << 7),
-    TA_COLLISION_EXPLOSION_FIRST = (1 << 8),
+    TA_COLLISION_EXPLOSION_FIRST = (1 << 8), // TODO: is this really needed?
     TA_COLLISION_MOVING_PLATFORM = (1 << 9),
     TA_COLLISION_HAMMER = (1 << 10),
     TA_COLLISION_WATER = (1 << 11),
-    TA_COLLISION_NAPALM = (1 << 12)
+    TA_COLLISION_NAPALM = (1 << 12),
+    TA_COLLISION_DRILL = (1 << 13)
 };
 
 class TA_Tilemap {

@@ -2,5 +2,61 @@
 <objects>
 	<object name="spawn_point" x="0" y="0"/>
 	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
-</objects>
 
+	<object name="breakable_block" tile_x="51" tile_y="16" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="51" tile_y="17" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="51" tile_y="18" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="51" tile_y="19" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="51" tile_y="20" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="51" tile_y="21" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="51" tile_y="22" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="51" tile_y="23" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+
+	<object name="breakable_block" tile_x="52" tile_y="16" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="17" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="18" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="19" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="20" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="21" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="22" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="23" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+
+	<object name="breakable_block" tile_x="53" tile_y="16" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="17" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="18" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="19" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="20" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="21" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="22" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="23" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+
+	<object name="breakable_block" tile_x="54" tile_y="17" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="54" tile_y="18" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="54" tile_y="19" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="54" tile_y="20" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="54" tile_y="21" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="54" tile_y="22" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="54" tile_y="23" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+
+	<object name="breakable_block" tile_x="55" tile_y="17" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="55" tile_y="18" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="55" tile_y="19" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="55" tile_y="20" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="55" tile_y="21" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="55" tile_y="22" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="55" tile_y="23" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+
+	<object name="breakable_block" tile_x="41" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="41" tile_y="12" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="41" tile_y="13" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="42" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="42" tile_y="12" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="43" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="44" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="45" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="46" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="46" tile_y="12" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="47" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="47" tile_y="12" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+	<object name="breakable_block" tile_x="47" tile_y="13" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+</objects>

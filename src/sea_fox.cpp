@@ -19,6 +19,8 @@ void TA_SeaFox::update()
 
     updateDirection();
     updateFollowPosition();
+    updateDrill();
+
     setFlip(flip);
 }
 
@@ -44,7 +46,7 @@ void TA_SeaFox::physicsStep()
         updateSpeed(velocity.y, 0, verticalDrag);
     }
 
-    moveAndCollide(TA_Point(4, 4), TA_Point(28, 30), velocity * TA::elapsedTime, false);
+    moveAndCollide(TA_Point(8, 4), TA_Point(24, 30), velocity * TA::elapsedTime, false);
     TA_Sprite::setPosition(position);
 }
 
@@ -75,4 +77,15 @@ void TA_SeaFox::updateFollowPosition()
 {
     followPosition = position + TA_Point(getWidth() / 2, getHeight() / 2) - TA_Point(TA::screenWidth / 2, TA::screenHeight / 2);
     followPosition.x += (flip ? -1 : 1) * (TA::screenWidth * 0.15);
+}
+
+void TA_SeaFox::updateDrill()
+{
+    if(flip) {
+        drillHitbox.setRectangle(TA_Point(2, 10), TA_Point(16, 24));
+    }
+    else {
+        drillHitbox.setRectangle(TA_Point(24, 10), TA_Point(30, 24));
+    }
+    drillHitbox.setPosition(position);
 }
