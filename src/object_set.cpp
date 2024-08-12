@@ -343,12 +343,15 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidT
     if(hitbox.empty()) {
         return;
     }
+
     flags = links.tilemap->checkCollision(hitbox, halfSolidTop);
     flags |= hitboxContainer.getCollisionFlags(hitbox);
-    if(links.character->getHitbox()->intersects(hitbox)) {
+
+    if(links.character && links.character->getHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
     }
-    if(links.character->isUsingHammer() && links.character->getHammerHitbox()->intersects(hitbox)) {
+
+    if(links.character && links.character->isUsingHammer() && links.character->getHammerHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_HAMMER;
     }
 }

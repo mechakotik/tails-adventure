@@ -58,7 +58,7 @@ TA_ScreenState TA_GameScreen::update()
 
         if(isSeaFox) {
             seaFox.update();
-            camera.update(false, false);
+            camera.update(true, false);
         }
         else {
             character.update();
