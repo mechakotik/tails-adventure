@@ -1,6 +1,8 @@
 #include "sea_fox.h"
 #include "controller.h"
 #include "object_set.h"
+#include "bullet.h"
+#include "hud.h"
 
 void TA_SeaFox::load(TA_Links links)
 {
@@ -20,6 +22,7 @@ void TA_SeaFox::update()
     updateDirection();
     updateFollowPosition();
     updateDrill();
+    updateItem();
 
     setFlip(flip);
 }
@@ -88,4 +91,36 @@ void TA_SeaFox::updateDrill()
         drillHitbox.setRectangle(TA_Point(24, 10), TA_Point(30, 24));
     }
     drillHitbox.setPosition(position);
+}
+
+void TA_SeaFox::updateItem()
+{
+    if(vulcanGunTimer < vulcanGunTime) {
+        updateVulcanGun();
+        return;
+    }
+    if(!links.controller->isJustPressed(TA_BUTTON_B)) {
+        return;
+    }
+
+    switch(links.hud->getCurrentItem()) {
+        case ITEM_VULCAN_GUN:
+            vulcanGunTimer = 0;
+            break;
+        default:
+            break;
+    }
+}
+
+void TA_SeaFox::updateVulcanGun()
+{
+    int prev = vulcanGunTimer / vulcanGunInterval;
+    vulcanGunTimer += TA::elapsedTime;
+    int cur = vulcanGunTimer / vulcanGunInterval;
+
+    if(prev != cur) {
+        TA_Point bulletPosition = position + TA_Point((flip ? 0 : 26), 20);
+        TA_Point bulletVelocity = TA_Point((flip ? -5 : 5), 0);
+        links.objectSet->spawnObject<TA_VulcanGunBullet>(bulletPosition, bulletVelocity);
+    }
 }

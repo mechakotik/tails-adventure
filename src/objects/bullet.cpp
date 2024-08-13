@@ -1,5 +1,6 @@
 #include "bullet.h"
 #include "tools.h"
+#include "explosion.h"
 
 void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVelocity, int frameWidth, int frameHeight)
 {
@@ -21,7 +22,8 @@ bool TA_Bullet::update()
     updatePosition();
 
     int flags = objectSet->checkCollision(hitbox);
-    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID)) {
+    if(flags & getCollisionFlags()) {
+        onDestroy();
         return false;
     }
     return true;
@@ -54,4 +56,25 @@ bool TA_BirdWalkerBullet::update()
             break;
     }
     return TA_Bullet::update();
+}
+
+void TA_VulcanGunBullet::load(TA_Point position, TA_Point velocity)
+{
+    TA_Bullet::load("objects/vulcan_gun_bullet.png", position, velocity, 6, 6);
+    TA_Sprite::loadAnimationsFromFile("objects/vulcan_gun_bullet.xml");
+    TA_Sprite::setAnimation("bullet");
+}
+
+bool TA_VulcanGunBullet::update()
+{
+    timer += TA::elapsedTime;
+    if(timer > existTime) {
+        return false;
+    }
+    return TA_Bullet::update();
+}
+
+void TA_VulcanGunBullet::onDestroy()
+{
+    objectSet->spawnObject<TA_Explosion>(position - TA_Point(5, 5), 0, TA_EXPLOSION_CHARACTER);
 }

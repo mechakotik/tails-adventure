@@ -90,17 +90,18 @@ void TA_Hud::updatePauseMenu()
         setPauseMenuAlpha(255);
     }
 
+    std::string itemPositionKey = (links.seaFox ? "seafox_item_position" : "item_position");
     if(links.controller->isJustChangedDirection()) {
         TA_Direction direction = links.controller->getDirection();
         if(direction == TA_DIRECTION_LEFT && itemPosition >= 1) {
             switchSound.play();
             itemPosition --;
-            TA::save::setSaveParameter("item_position", itemPosition);
+            TA::save::setSaveParameter(itemPositionKey, itemPosition);
         }
         else if(direction == TA_DIRECTION_RIGHT && itemPosition <= 2) {
             switchSound.play();
             itemPosition ++;
-            TA::save::setSaveParameter("item_position", itemPosition);
+            TA::save::setSaveParameter(itemPositionKey, itemPosition);
         }
         else if(direction == TA_DIRECTION_UP && pauseMenuSelection >= 1) {
             switchSound.play();
@@ -192,7 +193,8 @@ void TA_Hud::updateCurrentItem()
         itemSwitchSound.play();
     }
 
-    TA::save::setSaveParameter("item_position", itemPosition);
+    std::string itemPositionKey = (links.seaFox ? "seafox_item_position" : "item_position");
+    TA::save::setSaveParameter(itemPositionKey, itemPosition);
 }
 
 void TA_Hud::draw()
@@ -205,7 +207,8 @@ void TA_Hud::draw()
 
 void TA_Hud::drawCurrentItem()
 {
-    item = TA::save::getSaveParameter("item_slot" + std::to_string(itemPosition));
+    std::string itemKey = (links.seaFox ? "seafox_item_slot" : "item_slot") + std::to_string(itemPosition);
+    item = TA::save::getSaveParameter(itemKey);
     if(item == -1) {
         item = 38;
     }
@@ -262,7 +265,8 @@ void TA_Hud::drawPauseMenu()
         int startX = TA::screenWidth / 2 - 41;
 
         for(int num = 0; num < 4; num ++) {
-            int item = TA::save::getSaveParameter("item_slot" + std::to_string(num));
+            std::string itemKey = (links.seaFox ? "seafox_item_slot" : "item_slot") + std::to_string(num);
+            int item = TA::save::getSaveParameter(itemKey);
             if(item == -1) {
                 item = 38;
             }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animations>
+	<animation name="bullet" delay="3">
+		0,1
+	</animation>
+</animations>

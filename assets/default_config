@@ -23,7 +23,7 @@ gamepad_map_lb 9
 gamepad_map_rb 10
 gamepad_map_start 6
 
-default_save/item_mask 1
+default_save/item_mask 17
 default_save/area_mask 3
 default_save/boss_mask 0
 default_save/rings 8
@@ -32,6 +32,11 @@ default_save/item_slot1 -1
 default_save/item_slot2 -1
 default_save/item_slot3 -1
 default_save/item_position 0
+default_save/seafox_item_slot0 4
+default_save/seafox_item_slot1 -1
+default_save/seafox_item_slot2 -1
+default_save/seafox_item_slot3 -1
+default_save/seafox_item_position 0
 default_save/map_selection 0
 default_save/latest_item_mask 1
 default_save/latest_boss_mask 0
@@ -41,3 +46,4 @@ default_save/latest_item_slot1 -1
 default_save/latest_item_slot2 -1
 default_save/latest_item_slot3 -1
 default_save/latest_item_position 0
+

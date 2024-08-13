@@ -7,6 +7,10 @@ class TA_Bullet : public TA_Object {
 private:
     TA_Point velocity;
 
+protected:
+    virtual int getCollisionFlags() {return TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID;}
+    virtual void onDestroy() {}
+
 public:
     using TA_Object::TA_Object;
     void load(std::string filename, TA_Point newPosition, TA_Point newVelocity, int frameWidth = -1, int frameHeight = -1);
@@ -20,6 +24,22 @@ public:
     using TA_Bullet::TA_Bullet;
     void load(TA_Point newPosition, TA_Point newVelocity);
     bool update() override;
+};
+
+class TA_VulcanGunBullet : public TA_Bullet {
+private:
+    const double existTime = 15;
+
+    int getCollisionFlags() override {return TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE;}
+
+    double timer = 0;
+
+public:
+    using TA_Bullet::TA_Bullet;
+    void load(TA_Point position, TA_Point velocity);
+    bool update() override;
+    void onDestroy() override;
+    TA_CollisionType getCollisionType() override {return TA_COLLISION_BOMB;}
 };
 
 #endif // TA_BULLET_H
