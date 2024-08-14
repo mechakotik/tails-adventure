@@ -32,6 +32,7 @@
 #include "objects/speedy.h"
 #include "objects/mecha_golem.h"
 #include "objects/grass_block.h"
+#include "objects/mini_sub.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -274,6 +275,11 @@ void TA_ObjectSet::load(std::string filename)
             spawnObject<TA_GrassBlock>(position, path);
         }
 
+        else if(name == "mini_sub") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_MiniSub>(position);
+        }
+
         else {
             TA::handleError("Unknown object %s", name.c_str());
         }
@@ -351,6 +357,9 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidT
     if(links.character && links.character->getHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
     }
+    else if(links.seaFox && links.seaFox->getHitbox()->intersects(hitbox)) {
+        flags |= TA_COLLISION_CHARACTER;
+    }
 
     if(links.character && links.character->isUsingHammer() && links.character->getHammerHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_HAMMER;
@@ -370,7 +379,10 @@ int TA_ObjectSet::checkCollision(TA_Polygon &hitbox)
 
 TA_Point TA_ObjectSet::getCharacterPosition()
 {
-    return links.character->getPosition() + TA_Point(24, 24);
+    if(links.character) {
+        return links.character->getPosition() + TA_Point(24, 24);
+    }
+    return links.seaFox->getPosition() + TA_Point(16, 16);
 }
 
 void TA_ObjectSet::playAreaMusic()

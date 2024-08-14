@@ -59,4 +59,11 @@
 	<object name="breakable_block" tile_x="47" tile_y="11" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
 	<object name="breakable_block" tile_x="47" tile_y="12" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
 	<object name="breakable_block" tile_x="47" tile_y="13" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
+
+	<object name="mini_sub" tile_x="16" tile_y="8"/>
+	<object name="mini_sub" tile_x="14" tile_y="9"/>
+	<object name="mini_sub" tile_x="23" tile_y="10"/>
+	<object name="mini_sub" tile_x="23" tile_y="14"/>
+	<object name="mini_sub" tile_x="46" tile_y="16"/>
+	<object name="mini_sub" tile_x="46" tile_y="18"/>
 </objects>

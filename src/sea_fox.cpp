@@ -13,6 +13,8 @@ void TA_SeaFox::load(TA_Links links)
     TA_Sprite::loadAnimationsFromFile("tails/seafox.xml");
     TA_Sprite::setCamera(links.camera);
     TA_Sprite::setAnimation("idle");
+
+    hitbox.setRectangle(TA_Point(8, 4), TA_Point(24, 30));
 }
 
 void TA_SeaFox::update()
@@ -23,6 +25,14 @@ void TA_SeaFox::update()
     updateFollowPosition();
     updateDrill();
     updateItem();
+    updateDamage();
+
+    if(invincibleTimer < invincibleTime) {
+        setAlpha(200);
+    }
+    else {
+        setAlpha(255);
+    }
 
     setFlip(flip);
 }
@@ -122,5 +132,19 @@ void TA_SeaFox::updateVulcanGun()
         TA_Point bulletPosition = position + TA_Point((flip ? 0 : 26), 20);
         TA_Point bulletVelocity = TA_Point((flip ? -5 : 5), 0);
         links.objectSet->spawnObject<TA_VulcanGunBullet>(bulletPosition, bulletVelocity);
+    }
+}
+
+void TA_SeaFox::updateDamage()
+{
+    if(invincibleTimer < invincibleTime) {
+        invincibleTimer += TA::elapsedTime;
+        return;
+    }
+
+    hitbox.setPosition(position);
+    if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
+        velocity = velocity * -1;
+        invincibleTimer = 0;
     }
 }

@@ -13,8 +13,9 @@ private:
     const double verticalDrag = double(1) / 32;
     const double horizontalDrag = double(1) / 196;
     const double inputDrag = double(1) / 20;
-    const double vulcanGunTime = 40;
+    const double vulcanGunTime = 30;
     const double vulcanGunInterval = 6;
+    const double invincibleTime = 120;
 
     void physicsStep();
     void updateDirection();
@@ -22,20 +23,23 @@ private:
     void updateDrill();
     void updateItem();
     void updateVulcanGun();
+    void updateDamage();
     bool checkPawnCollision(TA_Polygon &hitbox) override;
 
     TA_Links links;
     TA_Point velocity{0, 0};
     TA_Point followPosition;
-    TA_Polygon drillHitbox;
+    TA_Polygon hitbox, drillHitbox;
     bool flip = false, neededFlip = false;
 
     double vulcanGunTimer = vulcanGunTime + 1;
+    double invincibleTimer = invincibleTime + 1;
     
 public:
     void load(TA_Links links);
     void update();
     
+    TA_Polygon* getHitbox() {return &hitbox;}
     TA_Polygon* getDrillHitbox() {return &drillHitbox;}
 };
 
