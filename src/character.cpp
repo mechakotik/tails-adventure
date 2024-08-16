@@ -6,6 +6,7 @@
 #include "gamepad.h"
 #include "save.h"
 #include "hud.h"
+#include "object_set.h"
 
 void TA_Character::load(TA_Links newLinks)
 {
@@ -27,12 +28,12 @@ void TA_Character::load(TA_Links newLinks)
     remoteRobotControlSprite.loadAnimationsFromFile("tails/animations.xml");
     remoteRobotControlSprite.setAnimation("control_remote_robot");
     remoteRobotControlSprite.setCamera(links.camera);
-
     rings = TA::save::getSaveParameter("rings");
 }
 
 void TA_Character::handleInput()
 {
+    rings = TA::save::getSaveParameter("rings");
     hidden = nextFrameHidden;
     if(hidden) {
         return;
@@ -57,6 +58,7 @@ void TA_Character::handleInput()
 
 void TA_Character::update()
 {
+    rings = TA::save::getSaveParameter("rings");
     if(hidden) {
         return;
     }
@@ -315,31 +317,6 @@ void TA_Character::updateRemoteRobotReturn()
     updateFollowPosition();
 }
 
-void TA_Character::addRings(int count)
-{
-    rings += count;
-    rings = std::min(rings, getMaxRings());
-    TA::save::setSaveParameter("rings", rings);
-}
-
-void TA_Character::addRingsToMaximum()
-{
-    rings = getMaxRings();
-    TA::save::setSaveParameter("rings", rings);
-}
-
-int TA_Character::getEmeraldsCount()
-{
-    long long itemMask = TA::save::getSaveParameter("item_mask");
-    int count = 0;
-    for(int item = 29; item <= 34; item ++) {
-        if(itemMask & (1ll << item)) {
-            count ++;
-        }
-    }
-    return count;
-}
-
 void TA_Character::setRaiseState()
 {
     state = STATE_RAISE_ITEM;
@@ -383,7 +360,7 @@ double TA_Character::getMaxHelitailTime()
     if(TA::levelPath == "maps/pm/pm4") {
         return 1e6;
     }
-    return 140 + 70 * getEmeraldsCount();
+    return 140 + 70 * links.objectSet->getEmeraldsCount();
 }
 
 bool TA_Character::displayFlightTimeBar()

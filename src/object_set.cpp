@@ -11,6 +11,7 @@
 #include "error.h"
 #include "filesystem.h"
 #include "resource_manager.h"
+#include "save.h"
 #include "sea_fox.h"
 #include "tinyxml2.h"
 #include "hud.h"
@@ -419,6 +420,32 @@ void TA_ObjectSet::haltMusic()
 {
     Mix_HaltChannel(TA_SOUND_CHANNEL_MUSIC);
     musicHalted = true;
+}
+
+
+void TA_ObjectSet::addRings(int count)
+{
+    int rings = TA::save::getSaveParameter("rings");
+    rings += count;
+    rings = std::min(rings, getMaxRings());
+    TA::save::setSaveParameter("rings", rings);
+}
+
+void TA_ObjectSet::addRingsToMaximum()
+{
+    TA::save::setSaveParameter("rings", getMaxRings());
+}
+
+int TA_ObjectSet::getEmeraldsCount()
+{
+    long long itemMask = TA::save::getSaveParameter("item_mask");
+    int count = 0;
+    for(int item = 29; item <= 34; item ++) {
+        if(itemMask & (1ll << item)) {
+            count ++;
+        }
+    }
+    return count;
 }
 
 TA_ObjectSet::~TA_ObjectSet()

@@ -144,6 +144,7 @@ void TA_SeaFox::updateDamage()
 
     hitbox.setPosition(position);
     if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
+        links.objectSet->addRings(-2);
         velocity = velocity * -1;
         invincibleTimer = 0;
     }

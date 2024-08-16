@@ -187,7 +187,7 @@ void TA_ItemBox::addItemToCharacter()
         addItemToFirstFreeSlot();
     }
     if(itemNumber >= 29) {
-        objectSet->getLinks().character->addRingsToMaximum();
+        objectSet->addRingsToMaximum();
     }
 }
 

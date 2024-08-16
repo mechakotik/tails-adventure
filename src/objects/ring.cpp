@@ -42,7 +42,7 @@ bool TA_Ring::update()
     objectSet->checkCollision(hitbox, flags);
     if(flags & TA_COLLISION_CHARACTER) {
         ringSound.play();
-        objectSet->getLinks().character->addRings(1);
+        objectSet->addRings(1);
         return false;
     }
 

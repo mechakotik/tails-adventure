@@ -94,8 +94,7 @@ private:
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     double timer = 0, lookTime = 0, teleportTime = 0;
     double deltaX = 0;
-    int rings = 10;
-    int currentTool = TOOL_BOMB;
+    int rings, currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
 
     void physicsStep();
@@ -125,9 +124,6 @@ private:
     void initTeleport();
     void updateTeleport();
     void changeMusic();
-
-    int getEmeraldsCount();
-    int getMaxRings() {return 8 + 2 * getEmeraldsCount();}
     double getMaxHelitailTime();
 
 public:
@@ -148,8 +144,6 @@ public:
     TA_Point getVelocity() {return velocity;}
     double getJumpTime() {return jumpTime;}
 
-    void addRings(int count);
-    void addRingsToMaximum();
     void setCharacterPosition(TA_Point position);
 
     bool displayFlightTimeBar();

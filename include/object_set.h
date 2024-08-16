@@ -86,6 +86,11 @@ public:
     void setMusic(std::string begin, std::string loop);
     void haltMusic();
 
+    int getEmeraldsCount();
+    int getMaxRings() {return 8 + 2 * getEmeraldsCount();}
+    void addRings(int count);
+    void addRingsToMaximum();
+
     template<class T, typename... P>
     void spawnObject(P... params) {
         auto *object = new T(this);

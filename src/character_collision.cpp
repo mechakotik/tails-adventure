@@ -128,7 +128,7 @@ void TA_Character::updateCollisions()
             velocity.y = hurtYsp;
             damageSound.play();
             TA::gamepad::rumble(0.75, 0.75, 20);
-            addRings(-2);
+            links.objectSet->addRings(-2);
         };
         TA_Polygon leftHalf, rightHalf; {
             double middleX = (topLeft.x + bottomRight.x) / 2;
