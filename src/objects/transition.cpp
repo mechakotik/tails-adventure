@@ -20,7 +20,7 @@ void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, int selection)
 bool TA_Transition::update()
 {
     int flags = objectSet->checkCollision(hitbox);
-    if((flags & TA_COLLISION_CHARACTER) && !objectSet->getLinks().character->isRemoteRobot()) {
+    if((flags & TA_COLLISION_CHARACTER) && (!objectSet->getLinks().character || !objectSet->getLinks().character->isRemoteRobot())) {
         if(screenState == TA_SCREENSTATE_GAME) {
             TA::levelPath = levelPath;
         }

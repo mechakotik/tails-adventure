@@ -2,6 +2,8 @@
 <objects>
 	<object name="spawn_point" x="12" y="84"/>
 	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+	<object name="map_transition" top="0" bottom="224" left="0" right="2"/>
+	<object name="level_transition" path="maps/lr/lr2" top="304" bottom="416" left="1022" right="1024"/>
 
 	<object name="breakable_block" tile_x="51" tile_y="16" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
 	<object name="breakable_block" tile_x="51" tile_y="17" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>

@@ -43,7 +43,7 @@ void TA_SeaFox::update()
     }
 
     setFlip(flip);
-    TA::printLog("%f %f", position.x, position.y);
+    //TA::printLog("%f %f", position.x, position.y);
 }
 
 void TA_SeaFox::physicsStep()
