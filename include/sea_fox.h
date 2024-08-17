@@ -39,6 +39,7 @@ public:
     void load(TA_Links links);
     void update();
     
+    void setSpawnPoint(TA_Point position, bool flip);
     TA_Polygon* getHitbox() {return &hitbox;}
     TA_Polygon* getDrillHitbox() {return &drillHitbox;}
 };

@@ -3,11 +3,11 @@
 #include "object_set.h"
 #include "bullet.h"
 #include "hud.h"
+#include "error.h"
 
 void TA_SeaFox::load(TA_Links links)
 {
     this->links = links;
-    links.camera->setFollowPosition(&followPosition);
 
     TA_Sprite::load("tails/seafox.png", 32, 32);
     TA_Sprite::loadAnimationsFromFile("tails/seafox.xml");
@@ -15,6 +15,14 @@ void TA_SeaFox::load(TA_Links links)
     TA_Sprite::setAnimation("idle");
 
     hitbox.setRectangle(TA_Point(8, 4), TA_Point(24, 30));
+}
+
+void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip)
+{
+    this->position = position;
+    this->flip = flip;
+    updateFollowPosition();
+    links.camera->setFollowPosition(&followPosition);
 }
 
 void TA_SeaFox::update()
@@ -35,6 +43,7 @@ void TA_SeaFox::update()
     }
 
     setFlip(flip);
+    TA::printLog("%f %f", position.x, position.y);
 }
 
 void TA_SeaFox::physicsStep()

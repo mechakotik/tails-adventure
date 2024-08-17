@@ -35,7 +35,7 @@ void TA_GameScreen::init()
     objectSet.load(TA::levelPath + ".xml");
 
     if(isSeaFox) {
-
+        seaFox.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());
     }
     else {
         character.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());

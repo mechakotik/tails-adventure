@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
-	<object name="spawn_point" x="0" y="0"/>
+	<object name="spawn_point" x="12" y="84"/>
 	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
 
 	<object name="breakable_block" tile_x="51" tile_y="16" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
