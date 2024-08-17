@@ -48,7 +48,6 @@ TA_ScreenState TA_GameScreen::update()
 {
     controller.update();
     hud.update();
-    objectSet.updateMusic();
 
     if(!hud.isPaused()) {
         if(!isSeaFox) {

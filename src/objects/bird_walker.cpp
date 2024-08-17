@@ -154,7 +154,7 @@ bool TA_BirdWalker::update()
         case TA_BIRD_WALKER_STATE_IDLE: {
             if(objectSet->getLinks().camera->isLocked()) {
                 updatePosition();
-                objectSet->playBossMusic();
+                TA::sound::playMusic("sound/boss.vgm");
                 initAiming();
             }
             break;
@@ -358,7 +358,7 @@ bool TA_BirdWalker::update()
             if(timer > deathTime) {
                 objectSet->getLinks().camera->unlock();
                 TA::sound::fadeOutChannel(TA_SOUND_CHANNEL_SFX3, 0);
-                objectSet->playAreaMusic();
+                TA::sound::playMusic("sound/pf.vgm");
 
                 long long bossMask = TA::save::getSaveParameter("boss_mask");
                 bossMask |= (1ll << 0);

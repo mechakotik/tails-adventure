@@ -24,7 +24,7 @@ private:
     bool shouldExit = false;
 
     TA_Sprite backgroundSprite, pressStartSprite;
-    TA_Sound titleScreenSound, enterSound;
+    TA_Sound enterSound;
     TA_Controller controller;
     TA_OnscreenButton button;
 

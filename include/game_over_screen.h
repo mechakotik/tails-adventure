@@ -12,7 +12,6 @@ private:
 
     TA_Controller controller;
     TA_Sprite gameOverSprite;
-    TA_Sound music;
 
 public:
     void init() override;

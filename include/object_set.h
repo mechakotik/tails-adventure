@@ -50,11 +50,8 @@ private:
     TA_HitboxContainer hitboxContainer;
     TA_Point spawnPoint;
     TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
-    TA_Sound areaBeginSound, areaLoopSound, bossBeginSound, bossLoopSound;
-    std::string loopMusicPath = "";
-    bool spawnFlip = false, firstSpawnPointSet = false, bossMusic = false;
+    bool spawnFlip = false, firstSpawnPointSet = false;
     bool paused = false;
-    bool musicHalted = false;
 
 public:
     ~TA_ObjectSet();
@@ -68,7 +65,6 @@ public:
     void load(std::string filename);
     void update();
     void draw(int priority);
-    void updateMusic();
 
     void checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop = -1e9);
     int checkCollision(TA_Polygon &hitbox);
@@ -79,12 +75,6 @@ public:
     void resetInstaShield() {if(links.character) links.character->resetInstaShield();} // TODO: figure out what it is
     bool isPaused() {return paused;}
     void setPaused(bool enabled) {paused = enabled;}
-
-    void playAreaMusic();
-    void playBossMusic();
-    std::string getCurrentLoopMusic() {return loopMusicPath;}
-    void setMusic(std::string begin, std::string loop);
-    void haltMusic();
 
     int getEmeraldsCount();
     int getMaxRings() {return 8 + 2 * getEmeraldsCount();}

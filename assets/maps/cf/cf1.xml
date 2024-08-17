@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="-2" y="585"/>
-	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+	<object name="sound" path="sound/cf.vgm"/>
 	<object name="map_transition" selection="5" top="512" bottom="624" left="0" right="2"/>
 
 	<object name="grass_block" tile_x="28" tile_y="35" path="maps/cf/cf_grass.png"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="42" y="73"/>
-	<object name="sound" loop="sound/vt.ogg"/>
+	<object name="sound" path="sound/vt.vgm"/>
 	<object name="level_transition" path="maps/ci/ci2" top="0" left="0" bottom="96" right="2"/>
 	<object name="mecha_golem"/>
 </objects>

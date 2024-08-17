@@ -3,7 +3,7 @@
 	<object name="spawn_point" x="-6" y="1913"/>
 	<object name="spawn_point" previous="maps/pm/pm2" x="405" y="25" direction="left"/>
 	<object name="spawn_point" previous="maps/pm/pm3" x="405" y="1097" direction="left"/>
-	<object name="sound" begin="sound/pm_begin.ogg" loop="sound/pm_loop.ogg"/>
+	<object name="sound" path="sound/pm.vgm"/>
 	<object name="map_transition" selection="3" top="1888" bottom="1952" left="0" right="2"/>
 	<object name="level_transition" path="maps/pm/pm2" top="0" bottom="64" left="446" right="448"/>
 	<object name="level_transition" path="maps/pm/pm3" top="1088" bottom="1136" left="446" right="448"/>

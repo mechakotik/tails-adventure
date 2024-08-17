@@ -17,7 +17,6 @@ void TA_Character::load(TA_Links newLinks)
     remoteRobotFlySound.load("sound/remote_robot_fly.ogg", TA_SOUND_CHANNEL_SFX1);
     damageSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);
     hammerSound.load("sound/hammer.ogg", TA_SOUND_CHANNEL_SFX3);
-    deathSound.load("sound/death.ogg", TA_SOUND_CHANNEL_MUSIC);
     teleportSound.load("sound/teleport.ogg", TA_SOUND_CHANNEL_SFX3);
 
     TA_Pawn::load("tails/tails.png", 48, 48);

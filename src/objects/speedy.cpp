@@ -117,7 +117,7 @@ void TA_Speedy::initIdle()
 void TA_Speedy::updateIdle()
 {
     if(objectSet->getCharacterPosition().y < 3776) {
-        objectSet->playBossMusic();
+        TA::sound::playMusic("sound/boss.vgm");
         initAttack();
     }
 }
@@ -205,7 +205,7 @@ void TA_Speedy::initEndSequence()
 {
     state = STATE_END_SEQUENCE;
     position = objectSet->getLinks().camera->getPosition() + TA_Point(240, -34);
-    objectSet->playAreaMusic();
+    TA::sound::playMusic("sound/pm.vgm");
     endSequencePhase = 0;
 
     objectSet->getLinks().character->setHide(true);

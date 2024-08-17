@@ -7,6 +7,7 @@
 
 namespace TA { namespace resmgr {
     std::unordered_map<std::string, SDL_Texture*> textureMap;
+    std::unordered_map<std::string, Mix_Music*> musicMap;
     std::unordered_map<std::string, Mix_Chunk*> chunkMap;
     std::unordered_map<std::string, std::string> assetMap;
 
@@ -91,6 +92,21 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename)
     }
 
     return textureMap[filename];
+}
+
+Mix_Music* TA::resmgr::loadMusic(std::string filename)
+{
+    filename = TA::filesystem::getAssetsPath() + "/" + filename;
+    TA::filesystem::fixPath(filename);
+
+    if(!musicMap.count(filename)) {
+        musicMap[filename] = Mix_LoadMUS(filename.c_str());
+        if(musicMap[filename] == nullptr) {
+            TA::handleSDLError("%s load failed", filename.c_str());
+        }
+    }
+
+    return musicMap[filename];
 }
 
 Mix_Chunk* TA::resmgr::loadChunk(std::string filename)

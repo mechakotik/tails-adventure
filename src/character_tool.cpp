@@ -198,23 +198,25 @@ bool TA_Character::isTeleported()
 
 void TA_Character::changeMusic()
 {
-    struct LevelMusic {
-        std::string begin, loop;
+    const std::vector<std::string> music{
+        "sound/bf.vgm",
+        "sound/boss.vgm",
+        "sound/cc.vgm",
+        "sound/cf.vgm",
+        "sound/final.vgm",
+        "sound/house.vgm",
+        "sound/lr.vgm",
+        "sound/map.vgm",
+        "sound/password.vgm",
+        "sound/pf.vgm",
+        "sound/pm.vgm",
+        "sound/sea_fox.vgm",
+        "sound/radio.vgm",
+        "sound/title.vgm",
+        "sound/vt.vgm"
     };
 
-    std::vector<LevelMusic> music;
-    music.push_back({"sound/map_begin.ogg", "sound/map_loop.ogg"});
-    music.push_back({"", "sound/house.ogg"});
-    music.push_back({"sound/pf_begin.ogg", "sound/pf_loop.ogg"});
-    music.push_back({"", "sound/vt.ogg"});
-    music.push_back({"sound/pm_begin.ogg", "sound/pm_loop.ogg"});
-
-    while(true) {
-        int pos = TA::random::next() % (int)music.size();
-        if(links.objectSet->getCurrentLoopMusic() == music[pos].loop) {
-            continue;
-        }
-        links.objectSet->setMusic(music[pos].begin, music[pos].loop);
-        break;
-    }
+    // TODO: don't play current music
+    int pos = TA::random::next() % (int)music.size();
+    TA::sound::playMusic(music[pos]);
 }

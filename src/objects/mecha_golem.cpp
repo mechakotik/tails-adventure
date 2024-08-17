@@ -107,7 +107,7 @@ void TA_MechaGolem::updateIdle()
 {
     if(objectSet->getLinks().camera->isLocked()) {
         state = STATE_WAIT;
-        objectSet->playBossMusic();
+        TA::sound::playMusic("sound/boss.vgm");
     }
 }
 
@@ -394,7 +394,7 @@ void TA_MechaGolem::updateArmBite4()
 
 void TA_MechaGolem::initBlow()
 {
-    objectSet->haltMusic();
+    TA::sound::fadeOutMusic(0);
     objectSet->spawnObject<TA_Explosion>(position + TA_Point(-11, -42), 32, TA_EXPLOSION_NEUTRAL);
     objectSet->spawnObject<TA_Explosion>(position + TA_Point(-7, -38), 36, TA_EXPLOSION_NEUTRAL);
     objectSet->spawnObject<TA_Explosion>(position + TA_Point(-3, -34), 40, TA_EXPLOSION_NEUTRAL);

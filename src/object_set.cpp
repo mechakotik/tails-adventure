@@ -176,12 +176,7 @@ void TA_ObjectSet::load(std::string filename)
         }
 
         else if(name == "sound") {
-            if(element->Attribute("begin")) {
-                setMusic(element->Attribute("begin"), element->Attribute("loop"));
-            }
-            else {
-                setMusic("", element->Attribute("loop"));
-            }
+            TA::sound::playMusic(element->Attribute("path"));
         }
 
         else if(name == "nezu") {
@@ -285,9 +280,6 @@ void TA_ObjectSet::load(std::string filename)
             TA::handleError("Unknown object %s", name.c_str());
         }
     }
-
-    bossBeginSound.load("sound/boss_begin.ogg", TA_SOUND_CHANNEL_MUSIC);
-    bossLoopSound.load("sound/boss_loop.ogg", TA_SOUND_CHANNEL_MUSIC, true);
 }
 
 void TA_ObjectSet::update()
@@ -331,21 +323,6 @@ void TA_ObjectSet::draw(int priority)
     }
 }
 
-void TA_ObjectSet::updateMusic()
-{
-    if(musicHalted) {
-        return;
-    }
-    if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_MUSIC)) {
-        if(bossMusic) {
-            bossLoopSound.play();
-        }
-        else {
-            areaLoopSound.play();
-        }
-    }
-}
-
 void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop)
 {
     if(hitbox.empty()) {
@@ -385,43 +362,6 @@ TA_Point TA_ObjectSet::getCharacterPosition()
     }
     return links.seaFox->getPosition() + TA_Point(16, 16);
 }
-
-void TA_ObjectSet::playAreaMusic()
-{
-    bossMusic = false;
-    if(areaBeginSound.empty()) {
-        areaLoopSound.play();
-    }
-    else {
-        areaBeginSound.play();
-    }
-}
-
-void TA_ObjectSet::playBossMusic()
-{
-    bossMusic = true;
-    bossBeginSound.play();
-}
-
-void TA_ObjectSet::setMusic(std::string begin, std::string loop)
-{
-    areaBeginSound.clear();
-    if(begin != "") {
-        areaBeginSound.load(begin, TA_SOUND_CHANNEL_MUSIC);
-    }
-    areaLoopSound.load(loop, TA_SOUND_CHANNEL_MUSIC, true);
-    loopMusicPath = loop;
-    if(!bossMusic) {
-        playAreaMusic();
-    }
-}
-
-void TA_ObjectSet::haltMusic()
-{
-    Mix_HaltChannel(TA_SOUND_CHANNEL_MUSIC);
-    musicHalted = true;
-}
-
 
 void TA_ObjectSet::addRings(int count)
 {

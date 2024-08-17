@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="-5" y="73"/>
-	<object name="sound" loop="sound/vt.ogg"/>
+	<object name="sound" path="sound/vt.vgm"/>
 	<object name="level_transition" path="maps/vt/vt1" top="48" bottom="112" left="0" right="2"/>
 	<object name="map_transition" selection="3" top="48" bottom="112" left="1966" right="1968"/>
 	

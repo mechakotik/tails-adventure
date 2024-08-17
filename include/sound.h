@@ -6,7 +6,6 @@
 
 enum TA_SoundChannel
 {
-    TA_SOUND_CHANNEL_MUSIC,
     TA_SOUND_CHANNEL_SFX1,
     TA_SOUND_CHANNEL_SFX2,
     TA_SOUND_CHANNEL_SFX3,
@@ -14,9 +13,12 @@ enum TA_SoundChannel
 };
 
 namespace TA { namespace sound {
+    void playMusic(std::string filename, int repeat = -1);
     void update();
     bool isPlaying(TA_SoundChannel channel);
+    bool isMusicPlaying();
     void fadeOut(int time);
+    void fadeOutMusic(int time);
     void fadeOutChannel(TA_SoundChannel channel, int time);
 }}
 

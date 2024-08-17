@@ -13,11 +13,10 @@ void TA_HouseScreen::init()
     controller.load();
     controller.setMode(TA_ONSCREEN_CONTROLLER_DPAD);
 
-    music.load("sound/house.ogg", TA_SOUND_CHANNEL_MUSIC, true);
+    TA::sound::playMusic("sound/house.vgm");
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
     selectSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
-    music.play();
 
     inventoryMenu.load(&controller);
     optionsMenu.load(&controller);

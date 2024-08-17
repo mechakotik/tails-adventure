@@ -5,7 +5,7 @@
 	<object name="level_transition" path="maps/pf/pf1" top="0" bottom="256" left="0" right="2"/>
 	<object name="level_transition" path="maps/pf/pf3" top="160" bottom="224" left="1982" right="1984"/>
 	<object name="map_transition" selection="5" top="384" bottom="416" left="1184" right="1200"/>
-	<object name="sound" begin="sound/pf_begin.ogg" loop="sound/pf_loop.ogg"/>
+	<object name="sound" path="sound/pf.vgm"/>
 
 	<object name="breakable_block" x="1792" y="48"/>
 	<object name="breakable_block" x="1808" y="48"/>

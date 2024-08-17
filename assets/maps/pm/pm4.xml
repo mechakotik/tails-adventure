@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="68" y="3977"/>
-	<object name="sound" begin="sound/pm_begin.ogg" loop="sound/pm_loop.ogg"/>
+	<object name="sound" path="sound/pm.vgm"/>
 	<object name="level_transition" path="maps/pm/pm3" top="3888" bottom="4016" left="0" right="2"/>
 
 	<object name="wind" left="32" top="2640" right="176" bottom="2704" xsp="0" ysp="-1"/>

@@ -2,7 +2,7 @@
 <objects>
 	<object name="spawn_point" x="-4" y="89"/>
 	<object name="spawn_point" previous="maps/ci/ci3" x="-4" y="1833"/>
-	<object name="sound" loop="sound/vt.ogg"/>
+	<object name="sound" path="sound/vt.vgm"/>
 
 	<object name="level_transition" path="maps/ci/ci1" top="64" left="0" bottom="128" right="2"/>
 	<object name="level_transition" path="maps/ci/ci3" top="1808" left="0" bottom="1872" right="2"/>
