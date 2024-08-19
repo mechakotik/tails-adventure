@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="6" y="370"/>
+	<object name="spawn_point" previous="maps/lr/lr7" x="2008" y="364" direction="left"/>
 	<object name="sound" path="sound/lr.vgm"/>
 	<object name="level_transition" path="maps/lr/lr1" top="336" bottom="416" left="0" right="2"/>
-	<object name="level_transition" path="maps/lr/lr3" top="352" bottom="400" left="2046" right="2048"/>
+	<object name="level_transition" path="maps/lr/lr7" top="352" bottom="400" left="2046" right="2048"/>
 
 	<object name="breakable_block" tile_x="97" tile_y="6" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
 	<object name="breakable_block" tile_x="97" tile_y="7" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>
