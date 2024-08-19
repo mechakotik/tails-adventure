@@ -14,13 +14,13 @@ void TA_SeaFox::load(TA_Links links)
     TA_Sprite::setCamera(links.camera);
     TA_Sprite::setAnimation("idle");
 
-    hitbox.setRectangle(TA_Point(8, 4), TA_Point(24, 30));
+    hitbox.setRectangle(TA_Point(9, 4), TA_Point(23, 30));
 }
 
 void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip)
 {
     this->position = position;
-    this->flip = flip;
+    this->flip = this->neededFlip = flip;
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
 }
@@ -68,7 +68,7 @@ void TA_SeaFox::physicsStep()
         updateSpeed(velocity.y, 0, verticalDrag);
     }
 
-    moveAndCollide(TA_Point(8, 4), TA_Point(24, 30), velocity * TA::elapsedTime, false);
+    moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), velocity * TA::elapsedTime, false);
     TA_Sprite::setPosition(position);
 }
 

@@ -5,7 +5,7 @@
 
 class TA_MiniSub : public TA_Object {
 private:
-    const double speed = 1.5;
+    const double speed = 1;
 
     void updateIdle();
     void updateAttack();
