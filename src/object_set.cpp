@@ -34,6 +34,7 @@
 #include "objects/mecha_golem.h"
 #include "objects/grass_block.h"
 #include "objects/mini_sub.h"
+#include "objects/enemy_mine.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -274,6 +275,11 @@ void TA_ObjectSet::load(std::string filename)
         else if(name == "mini_sub") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             spawnObject<TA_MiniSub>(position);
+        }
+
+        else if(name == "mine") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_EnemyMine>(position);
         }
 
         else {

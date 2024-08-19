@@ -7,6 +7,7 @@ src/objects/bridge.cpp
 src/objects/bullet.cpp
 src/objects/dead_kukku.cpp
 src/objects/drill_mole.cpp
+src/objects/enemy_mine.cpp
 src/objects/explosion.cpp
 src/objects/fire.cpp
 src/objects/flame.cpp

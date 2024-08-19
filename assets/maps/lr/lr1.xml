@@ -68,4 +68,8 @@
 	<object name="mini_sub" tile_x="23" tile_y="14"/>
 	<object name="mini_sub" tile_x="46" tile_y="16"/>
 	<object name="mini_sub" tile_x="46" tile_y="18"/>
+
+	<object name="mine" x="536" y="272"/>
+	<object name="mine" x="568" y="304"/>
+	<object name="mine" x="600" y="272"/>
 </objects>
