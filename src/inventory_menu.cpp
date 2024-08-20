@@ -1,5 +1,6 @@
 #include "inventory_menu.h"
 #include "save.h"
+#include <iostream>
 
 void TA_InventoryMenu::load(TA_Controller* controller)
 {
@@ -18,36 +19,47 @@ void TA_InventoryMenu::load(TA_Controller* controller)
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
     backSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
-
-    fillItemMatrix();
 }
 
 void TA_InventoryMenu::fillItemMatrix()
 {
-    items[0][0] = {0, "regular bomb"};
-    items[0][1] = {14, "triple bomb"};
-    items[1][0] = {1, "large bomb"};
-    items[1][1] = {15, "wrench"};
-    items[2][0] = {2, "remote bomb"};
-    items[2][1] = {16, "helmet"};
-    items[3][0] = {13, "napalm bomb"};
-    items[3][1] = {6, "remote robot"};
-    items[4][0] = {19, "hammer"};
-    items[4][1] = {8, "super glove"};
-    items[5][0] = {3, "teleport device"};
-    items[5][1] = {9, "fang"};
-    items[6][0] = {5, "night vision"};
-    items[6][1] = {10, "knuckles"};
-    items[7][0] = {7, "speed boots"};
-    items[7][1] = {11, "sonic"};
-    items[8][0] = {17, "item radar"};
-    items[8][1] = {33, "purple c.emerald"};
-    items[9][0] = {18, "radio"};
-    items[9][1] = {31, "red c.emerald"};
-    items[10][0] = {32, "blue c.emerald"};
-    items[10][1] = {30, "white c.emerald"};
-    items[11][0] = {29, "green c.emerald"};
-    items[11][1] = {34, "yellow c.emerald"};
+    if(TA::save::getSaveParameter("sea_fox")) {
+        items[0][0] = {4, "vulcan gun"};
+        items[0][1] = {22, "anti-air missile"};
+        items[1][0] = {12, "proton torpedo"};
+        items[1][1] = {23, "spark"};
+        items[2][0] = {20, "extra speed"};
+        items[2][1] = {24, "mine"};
+        items[3][0] = {21, "extra armor"};
+        items[3][1] = {25, "rocket booster"};
+    }
+
+    else {
+        items[0][0] = {0, "regular bomb"};
+        items[0][1] = {14, "triple bomb"};
+        items[1][0] = {1, "large bomb"};
+        items[1][1] = {15, "wrench"};
+        items[2][0] = {2, "remote bomb"};
+        items[2][1] = {16, "helmet"};
+        items[3][0] = {13, "napalm bomb"};
+        items[3][1] = {6, "remote robot"};
+        items[4][0] = {19, "hammer"};
+        items[4][1] = {8, "super glove"};
+        items[5][0] = {3, "teleport device"};
+        items[5][1] = {9, "fang"};
+        items[6][0] = {5, "night vision"};
+        items[6][1] = {10, "knuckles"};
+        items[7][0] = {7, "speed boots"};
+        items[7][1] = {11, "sonic"};
+        items[8][0] = {17, "item radar"};
+        items[8][1] = {33, "purple c.emerald"};
+        items[9][0] = {18, "radio"};
+        items[9][1] = {31, "red c.emerald"};
+        items[10][0] = {32, "blue c.emerald"};
+        items[10][1] = {30, "white c.emerald"};
+        items[11][0] = {29, "green c.emerald"};
+        items[11][1] = {34, "yellow c.emerald"};
+    }
 
     for(int x = 0; x < 12; x ++) {
         for(int y = 0; y < 2; y ++) {
@@ -114,7 +126,7 @@ void TA_InventoryMenu::updateItemSelection()
                 selectionX = std::max(0, selectionX - 1);
                 break;
             case TA_DIRECTION_RIGHT:
-                selectionX = std::min(11, selectionX + 1);
+                selectionX = std::min((TA::save::getSaveParameter("sea_fox") ? 3 : 11), selectionX + 1);
                 break;
             default:
                 break;
@@ -288,14 +300,20 @@ void TA_InventoryMenu::drawInventory()
 
 int TA_InventoryMenu::getInventoryItem(int slot)
 {
-    std::string paramName = "item_slot" + std::to_string(slot);
+    std::string paramName = getParameterName(slot);
     return TA::save::getSaveParameter(paramName);
 }
 
 void TA_InventoryMenu::setInventoryItem(int slot, int index)
 {
-    std::string paramName = "item_slot" + std::to_string(slot);
+    std::string paramName = getParameterName(slot);
     TA::save::setSaveParameter(paramName, index);
+}
+
+std::string TA_InventoryMenu::getParameterName(int slot)
+{
+    bool seaFox = TA::save::getSaveParameter("sea_fox");
+    return (seaFox ? "seafox_item_slot" : "item_slot") + std::to_string(slot);
 }
 
 void TA_InventoryMenu::drawSelectionName()
@@ -347,6 +365,9 @@ void TA_InventoryMenu::drawPointer()
 
 void TA_InventoryMenu::drawArrows()
 {
+    if(TA::save::getSaveParameter("sea_fox")) {
+        return;
+    }
     if(selectionX >= 4) {
         arrowSprite.setPosition(getLeftX() + 8, 57);
         arrowSprite.setFrame(0);
@@ -364,6 +385,8 @@ void TA_InventoryMenu::show()
     if(shown) {
         return;
     }
+
+    fillItemMatrix();
     showTimeLeft = transitionTime;
     hideTimeLeft = -1;
     shown = true;

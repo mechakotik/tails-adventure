@@ -6,6 +6,9 @@ void TA_HouseScreen::init()
 {
     interfaceSprite.load("house/interface.png");
     houseSprite.load("house/house.png");
+    houseSeaFoxSprite.load("house/house_seafox.png");
+    clawSprite.load("house/claw.png");
+    seaFoxSprite.load("house/seafox.png");
     curtainSprite.load("house/curtain.png");
 
     font.load("fonts/item.png", 8, 8);
@@ -67,7 +70,26 @@ void TA_HouseScreen::updatePositions()
     double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
     interfaceSprite.setPosition(leftX, 0);
     houseSprite.setPosition(leftX + 8, 32);
+    houseSeaFoxSprite.setPosition(leftX + 8, 32);
     curtainSprite.setPosition(leftX + 8, 32);
+
+    if(clawDirection) {
+        clawX += TA::elapsedTime;
+        if(clawX > 106) {
+            clawX = 106;
+            clawDirection = false;
+        }
+    }
+    else {
+        clawX -= TA::elapsedTime;
+        if(clawX < 40) {
+            clawX = 40;
+            clawDirection = true;
+        }
+    }
+
+    clawSprite.setPosition(leftX + clawX, 32);
+    seaFoxSprite.setPosition(leftX + 65, 45);
 }
 
 void TA_HouseScreen::updateSelector()
@@ -131,7 +153,7 @@ bool TA_HouseScreen::shouldDoTransition()
         return false;
     }
 
-    if(selectionX == 0 && selectionY == 1) {
+    if(selectionX == 0 && selectionY == 1 && !isSeaFoxAvailable()) {
         errorSound.play();
         return false;
     }
@@ -140,10 +162,21 @@ bool TA_HouseScreen::shouldDoTransition()
     return true;
 }
 
+bool TA_HouseScreen::isSeaFoxAvailable()
+{
+    long long itemMask = TA::save::getSaveParameter("item_mask");
+    return itemMask & (1ll << 33);
+}
+
 void TA_HouseScreen::applyTransition()
 {
     if(selectionX == 0 && selectionY == 0) {
         inventoryOpen = !inventoryOpen;
+    }
+    else if(selectionX == 0 && selectionY == 1) {
+        bool seaFox = TA::save::getSaveParameter("sea_fox");
+        seaFox = !seaFox;
+        TA::save::setSaveParameter("sea_fox", seaFox);
     }
     else if(selectionX == 1 && selectionY == 0) {
         optionsOpen = !optionsOpen;
@@ -168,7 +201,14 @@ void TA_HouseScreen::draw()
         optionsMenu.draw();
     }
     else {
-        houseSprite.draw();
+        if(TA::save::getSaveParameter("sea_fox")) {
+            houseSeaFoxSprite.draw();
+            clawSprite.draw();
+            seaFoxSprite.draw();
+        }
+        else {
+            houseSprite.draw();
+        }
     }
 
     drawSelector();
@@ -178,7 +218,13 @@ void TA_HouseScreen::draw()
 void TA_HouseScreen::drawSelector()
 {
     TA_Point position = interfaceSprite.getPosition() + TA_Point(32, 8);
-    std::string text = ".equip.param\n.dock .exit";
+    std::string text;
+    if(TA::save::getSaveParameter("sea_fox")) {
+        text = ".equip.param\n.house.exit";
+    }
+    else {
+        text = ".equip.param\n.dock .exit";
+    }
 
     if(selectionX == 0) {
         if(selectionY == 0) {

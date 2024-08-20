@@ -27,6 +27,7 @@ private:
 
     int getInventoryItem(int slot);
     void setInventoryItem(int slot, int value);
+    std::string getParameterName(int slot);
     int getLeftX() {return TA::screenWidth / 2 - 80;}
     bool characterHasItem(int item);
     bool canPlaceItem(int item);

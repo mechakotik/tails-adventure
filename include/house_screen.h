@@ -19,6 +19,7 @@ private:
     void updateCurtain();
     bool shouldDoTransition();
     void applyTransition();
+    bool isSeaFoxAvailable();
 
     void draw();
     void drawSelector();
@@ -27,7 +28,7 @@ private:
 
     TA_InventoryMenu inventoryMenu;
     TA_OptionsMenu optionsMenu;
-    TA_Sprite interfaceSprite, houseSprite, curtainSprite;
+    TA_Sprite interfaceSprite, houseSprite, curtainSprite, houseSeaFoxSprite, clawSprite, seaFoxSprite;
     TA_Font font;
     TA_Controller controller;
     TA_Sound switchSound, errorSound, selectSound;
@@ -36,6 +37,9 @@ private:
     double curtainTimeLeft = -1;
     bool inventoryOpen = false, optionsOpen = false;
     bool shouldMove = false, shouldExit = false;
+
+    double clawX = 40;
+    bool clawDirection = true;
 
 public:
     void init() override;
