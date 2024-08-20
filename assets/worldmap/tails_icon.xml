@@ -3,4 +3,7 @@
 	<animation name="blink" delay="15">
 		0,1
 	</animation>
+	<animation name="seafox" delay="15">
+		2,3
+	</animation>
 </animations>

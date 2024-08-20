@@ -16,27 +16,40 @@ void TA_AreaSelector::load()
 void TA_AreaSelector::appendPoints()
 {
     double xOffset = (TA::screenWidth - 256) / 2;
-    points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 97)));
-    points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106 + xOffset, 89)));
-    points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73)));
-    points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41)));
-    points.push_back(new TA_MapPoint(4, "cavern\nisland", "maps/ci/ci1", TA_Point(182 + xOffset, 33)));
-    points.push_back(new TA_MapPoint(4, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49)));
+
+    if(TA::save::getSaveParameter("sea_fox")) {
+        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 88)));
+        points.push_back(new TA_MapPoint(1, " lake\n rocky", "maps/lr/lr1", TA_Point(131 + xOffset, 111)));
+    }
+    else {
+        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 97)));
+        points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106 + xOffset, 89)));
+        points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73)));
+        points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41)));
+        points.push_back(new TA_MapPoint(4, "cavern\nisland", "maps/ci/ci1", TA_Point(182 + xOffset, 33)));
+        points.push_back(new TA_MapPoint(4, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49)));
+    }
+
     currentPoint = points[TA::save::getSaveParameter("map_selection")];
 }
 
 void TA_AreaSelector::addSelectedArea()
 {
     long long areaMask = TA::save::getSaveParameter("area_mask");
-    areaMask |= (1ll << TA::save::getSaveParameter("map_selection"));
+    int index = (1ll << TA::save::getSaveParameter("map_selection"));
+    if(TA::save::getSaveParameter("sea_fox")) {
+        index += 9;
+    }
+    areaMask |= (1ll << index);
     TA::save::setSaveParameter("area_mask", areaMask);
 }
 
 void TA_AreaSelector::setActivePoints()
 {
     int mask = TA::save::getSaveParameter("area_mask");
+    int add = (TA::save::getSaveParameter("sea_fox") ? 9 : 0);
     for(int level = 0; level < (int)points.size(); level ++) {
-        if(mask & (1 << level)) {
+        if(mask & (1 << (level + add))) {
             points[level]->activate();
         }
     }
@@ -44,31 +57,38 @@ void TA_AreaSelector::setActivePoints()
 
 void TA_AreaSelector::setPointNeighbours()
 {
-    points[0]->setNeighbour(TA_DIRECTION_UP, points[1]);
-    points[0]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
+    if(TA::save::getSaveParameter("sea_fox")) {
+        points[0]->setNeighbour(TA_DIRECTION_DOWN, points[1]);
+        points[1]->setNeighbour(TA_DIRECTION_UP, points[0]);
+    }
 
-    points[1]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
-    points[1]->setNeighbour(TA_DIRECTION_RIGHT, points[2]);
-    points[1]->setNeighbour(TA_DIRECTION_UP, points[5]);
+    else {
+        points[0]->setNeighbour(TA_DIRECTION_UP, points[1]);
+        points[0]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
 
-    points[2]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
-    points[2]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
-    points[2]->setNeighbour(TA_DIRECTION_UP, points[3]);
+        points[1]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
+        points[1]->setNeighbour(TA_DIRECTION_RIGHT, points[2]);
+        points[1]->setNeighbour(TA_DIRECTION_UP, points[5]);
 
-    points[3]->setNeighbour(TA_DIRECTION_DOWN, points[2]);
-    points[3]->setNeighbour(TA_DIRECTION_RIGHT, points[4]);
-    points[3]->setNeighbour(TA_DIRECTION_UP, points[4]);
+        points[2]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
+        points[2]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
+        points[2]->setNeighbour(TA_DIRECTION_UP, points[3]);
 
-    points[4]->setNeighbour(TA_DIRECTION_LEFT, points[3]);
+        points[3]->setNeighbour(TA_DIRECTION_DOWN, points[2]);
+        points[3]->setNeighbour(TA_DIRECTION_RIGHT, points[4]);
+        points[3]->setNeighbour(TA_DIRECTION_UP, points[4]);
 
-    points[5]->setNeighbour(TA_DIRECTION_DOWN, points[1]);
+        points[4]->setNeighbour(TA_DIRECTION_LEFT, points[3]);
+
+        points[5]->setNeighbour(TA_DIRECTION_DOWN, points[1]);
+    }
 }
 
 void TA_AreaSelector::loadTailsIcon()
 {
-    tailsIcon.load("worldmap/tails_icon.png", 7, 7);
+    tailsIcon.load("worldmap/tails_icon.png", 8, 16);
     tailsIcon.loadAnimationsFromFile("worldmap/tails_icon.xml");
-    tailsIcon.setAnimation("blink");
+    tailsIcon.setAnimation(TA::save::getSaveParameter("sea_fox") ? "seafox" : "blink");
 }
 
 TA_ScreenState TA_AreaSelector::update()
@@ -98,8 +118,10 @@ TA_ScreenState TA_AreaSelector::update()
 
 void TA_AreaSelector::draw()
 {
-    for(int pos = 1; pos < (int)points.size(); pos ++) {
-        points[pos]->draw();
+    if(!TA::save::getSaveParameter("sea_fox")) {
+        for(int pos = 1; pos < (int)points.size(); pos ++) {
+            points[pos]->draw();
+        }
     }
     tailsIcon.draw();
     controller.draw();
