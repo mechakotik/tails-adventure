@@ -3,18 +3,19 @@
 #include "character.h"
 #include "save.h"
 
-void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, std::string newLevelPath)
+void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, std::string levelPath)
 {
     hitbox.setRectangle(topLeft, bottomRight);
     screenState = TA_SCREENSTATE_GAME;
-    levelPath = newLevelPath;
+    this->levelPath = levelPath;
 }
 
-void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, int selection)
+void TA_Transition::load(TA_Point topLeft, TA_Point bottomRight, int selection, bool seaFox)
 {
     hitbox.setRectangle(topLeft, bottomRight);
     screenState = TA_SCREENSTATE_MAP;
     this->selection = selection;
+    this->seaFox = seaFox;
 }
 
 bool TA_Transition::update()
@@ -26,6 +27,7 @@ bool TA_Transition::update()
         }
         else {
             TA::save::setSaveParameter("map_selection", selection);
+            TA::save::setSaveParameter("sea_fox", seaFox);
         }
         objectSet->setTransition(screenState);
     }

@@ -36,7 +36,7 @@ void TA_AreaSelector::appendPoints()
 void TA_AreaSelector::addSelectedArea()
 {
     long long areaMask = TA::save::getSaveParameter("area_mask");
-    int index = (1ll << TA::save::getSaveParameter("map_selection"));
+    int index = TA::save::getSaveParameter("map_selection");
     if(TA::save::getSaveParameter("sea_fox")) {
         index += 9;
     }
