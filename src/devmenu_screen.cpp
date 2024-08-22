@@ -17,6 +17,7 @@ void TA_DevmenuScreen::init()
     levels.emplace_back("maps/ci/ci2");
     levels.emplace_back("maps/ci/ci3");
     levels.emplace_back("maps/cf/cf1");
+    levels.emplace_back("maps/cf/cf2");
     levels.emplace_back("maps/lr/lr1");
     levels.emplace_back("maps/lr/lr2");
     levels.emplace_back("maps/lr/lr7");

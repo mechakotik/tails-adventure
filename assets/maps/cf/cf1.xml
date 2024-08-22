@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects>
 	<object name="spawn_point" x="-2" y="585"/>
+	<object name="spawn_point" previous="maps/cf/cf2" x="1172" y="232" direction="left"/>
 	<object name="sound" path="sound/cf.vgm"/>
 	<object name="map_transition" selection="5" top="512" bottom="624" left="0" right="2"/>
+	<object name="level_transition" path="maps/cf/cf2" top="224" bottom="272" left="1214" right="1216"/>
 
 	<object name="grass_block" tile_x="28" tile_y="35" path="maps/cf/cf_grass.png"/>
 	<object name="grass_block" tile_x="28" tile_y="36" path="maps/cf/cf_grass.png"/>

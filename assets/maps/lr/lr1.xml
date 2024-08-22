@@ -3,7 +3,7 @@
 	<object name="spawn_point" x="12" y="84"/>
 	<object name="spawn_point" previous="maps/lr/lr2" x="987" y="371" direction="left"/>
 	<object name="sound" path="sound/lr.vgm"/>
-	<object name="map_transition" top="0" bottom="224" left="0" right="2"/>
+	<object name="map_transition" selection="1" top="0" bottom="224" left="0" right="2"/>
 	<object name="level_transition" path="maps/lr/lr2" top="304" bottom="416" left="1022" right="1024"/>
 
 	<object name="breakable_block" tile_x="51" tile_y="16" path="maps/lr/lr_block.png" particle_path="maps/lr/lr_rock.png"/>

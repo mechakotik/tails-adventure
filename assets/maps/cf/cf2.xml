@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects>
+	<object name="spawn_point" x="-5" y="41"/>
+	<object name="sound" path="sound/cf.vgm"/>
+	<object name="level_transition" path="maps/cf/cf1" top="0" bottom="80" left="0" right="2"/>
+</objects>
