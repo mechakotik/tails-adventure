@@ -3,4 +3,46 @@
 	<object name="spawn_point" x="-5" y="41"/>
 	<object name="sound" path="sound/cf.vgm"/>
 	<object name="level_transition" path="maps/cf/cf1" top="0" bottom="80" left="0" right="2"/>
+	<object name="map_transition" selection="5" top="462" bottom="464" left="272" right="1120"/>
+
+	<object name="breakable_block" tile_x="31" tile_y="3" path="maps/cf/cf_block.png" drops_ring="true"/>
+	<object name="breakable_block" tile_x="40" tile_y="8" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="64" tile_y="2" path="maps/cf/cf_block.png"/>
+
+	<object name="breakable_block" tile_x="52" tile_y="11" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="12" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="52" tile_y="13" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="11" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="12" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="53" tile_y="13" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="54" tile_y="11" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="55" tile_y="11" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="56" tile_y="11" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="56" tile_y="12" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="56" tile_y="13" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="57" tile_y="11" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="57" tile_y="12" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="57" tile_y="13" path="maps/cf/cf_block.png"/>
+
+	<object name="breakable_block" tile_x="74" tile_y="8" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="74" tile_y="9" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="75" tile_y="8" path="maps/cf/cf_block.png"/>
+	<object name="breakable_block" tile_x="75" tile_y="9" path="maps/cf/cf_block.png"/>
+
+	<object name="walker" x="292" y="48" range="256"/>
+	<object name="walker" x="708" y="48" range="60"/>
+
+	<object name="hover_pod" x="868" y="32" range="220"/>
+
+	<object name="pushable_spring" x="1064" y="160"/>
+
+	<object name="wind" top="224" bottom="400" left="184" right="216" xsp="0" ysp="-1"/>
+	<object name="wind" top="336" bottom="416" left="624" right="832" xsp="0" ysp="-1"/>
+	<object name="wind" top="240" bottom="336" left="704" right="736" xsp="0" ysp="-1"/>
+	<object name="wind" top="224" bottom="336" left="1008" right="1040" xsp="0" ysp="1"/>
+	<object name="wind" top="336" bottom="464" left="1056" right="1152" xsp="0" ysp="1"/>
+	<object name="wind" top="64" bottom="96" left="1104" right="1136" xsp="0" ysp="1"/>
+
+	<object name="item_box" x="872" y="208" number="11" item_name=" sonic &#10;       "/>
+	<object name="item_box" x="952" y="48" number="12" item_name=" proton  &#10; torpedo "/>
 </objects>
