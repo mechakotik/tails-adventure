@@ -32,6 +32,7 @@ private:
 
     int getCollisionFlags() override {return TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE;}
 
+    TA_Sound explosionSound;
     double timer = 0;
 
 public:

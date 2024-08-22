@@ -11,6 +11,7 @@ void TA_BreakableBlock::load(std::string path, std::string newParticlePath, TA_P
     setPosition(position);
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(getWidth(), getHeight()));
     hitbox.setPosition(position);
+    breakSound.load("sound/break.ogg", TA_SOUND_CHANNEL_SFX2);
 }
 
 bool TA_BreakableBlock::update()
@@ -24,6 +25,7 @@ bool TA_BreakableBlock::update()
     }
     else if(objectSet->getLinks().seaFox && flags & (TA_COLLISION_DRILL)) {
         shouldBreak = true;
+        breakSound.play();
     }
 
     if(shouldBreak) { // TODO: particles positions should depend on block size

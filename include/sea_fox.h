@@ -3,6 +3,7 @@
 
 #include "pawn.h"
 #include "links.h"
+#include "sound.h"
 
 class TA_SeaFox : public TA_Pawn {
 private:
@@ -13,8 +14,8 @@ private:
     const double verticalDrag = double(1) / 32;
     const double horizontalDrag = double(1) / 196;
     const double inputDrag = double(1) / 20;
-    const double vulcanGunTime = 30;
-    const double vulcanGunInterval = 6;
+    const double vulcanGunTime = 27;
+    const double vulcanGunInterval = 5;
     const double invincibleTime = 120;
     const double gravity = double(1) / 16;
 
@@ -31,6 +32,7 @@ private:
     TA_Point velocity{0, 0};
     TA_Point followPosition;
     TA_Polygon hitbox, drillHitbox;
+    TA_Sound bulletSound, damageSound;
     bool flip = false, neededFlip = false;
 
     double vulcanGunTimer = vulcanGunTime + 1;

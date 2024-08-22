@@ -63,6 +63,7 @@ void TA_VulcanGunBullet::load(TA_Point position, TA_Point velocity)
     TA_Bullet::load("objects/vulcan_gun_bullet.png", position, velocity, 6, 6);
     TA_Sprite::loadAnimationsFromFile("objects/vulcan_gun_bullet.xml");
     TA_Sprite::setAnimation("bullet");
+    explosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX2);
 }
 
 bool TA_VulcanGunBullet::update()
@@ -77,4 +78,5 @@ bool TA_VulcanGunBullet::update()
 void TA_VulcanGunBullet::onDestroy()
 {
     objectSet->spawnObject<TA_Explosion>(position - TA_Point(5, 5), 0, TA_EXPLOSION_CHARACTER);
+    explosionSound.play();
 }

@@ -14,6 +14,9 @@ void TA_SeaFox::load(TA_Links links)
     TA_Sprite::setCamera(links.camera);
     TA_Sprite::setAnimation("idle");
 
+    bulletSound.load("sound/bullet.ogg", TA_SOUND_CHANNEL_SFX3);
+    damageSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);
+
     hitbox.setRectangle(TA_Point(9, 4), TA_Point(23, 30));
 
     if(TA::levelPath=="maps/lr/lr1") { // TODO: set water level in area XML
@@ -141,6 +144,7 @@ void TA_SeaFox::updateItem()
             vulcanGunTimer = 0;
             break;
         default:
+            damageSound.play();
             break;
     }
 }
@@ -155,6 +159,7 @@ void TA_SeaFox::updateVulcanGun()
         TA_Point bulletPosition = position + TA_Point((flip ? 0 : 26), 20);
         TA_Point bulletVelocity = TA_Point((flip ? -5 : 5), 0);
         links.objectSet->spawnObject<TA_VulcanGunBullet>(bulletPosition, bulletVelocity);
+        bulletSound.play();
     }
 }
 
@@ -170,5 +175,6 @@ void TA_SeaFox::updateDamage()
         links.objectSet->addRings(-2);
         velocity = velocity * -1;
         invincibleTimer = 0;
+        damageSound.play();
     }
 }
