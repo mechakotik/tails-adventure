@@ -50,9 +50,6 @@ public:
 class TA_RemoteBomb : public TA_Bomb {
 private:
     const double friction = 0.0125;
-    const double waitTime = 20;
-
-    double timer = 0;
 
     bool shouldExplode() override;
 

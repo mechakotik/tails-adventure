@@ -162,9 +162,6 @@ bool TA_RemoteBomb::shouldExplode()
     if(objectSet->getLinks().character->getBombDestroySignal()) {
         return true;
     }
-    if(timer > waitTime) {
-        return true;
-    }
     
     hitbox.setPosition(position);
     if(objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
@@ -182,13 +179,6 @@ bool TA_RemoteBomb::update()
         else {
             velocity.x = std::min(double(0), velocity.x + friction * speed * speed * TA::elapsedTime);
         }
-    }
-
-    if(TA::equal(velocity.x, 0) && TA::equal(velocity.y, 0)) {
-        timer += TA::elapsedTime;
-    }
-    else {
-        timer = 0;
     }
 
     return TA_Bomb::update();

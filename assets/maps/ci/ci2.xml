@@ -51,13 +51,13 @@
 	<object name="wind" top="1904" left="288" bottom="1936" right="368" xsp="2" ysp="0"/>
 
 	<object name="conveyor_belt" top="1232" bottom="1248" left="160" right="240" direction="right"/>
-	<object name="conveyor_belt" top="1296" bottom="1312" left="112" right="176" direction="left"/>
-	<object name="conveyor_belt" top="1312" bottom="1328" left="176" right="208" direction="left"/>
+	<object name="conveyor_belt" top="1296" bottom="1312" left="112" right="176" direction="right"/>
+	<object name="conveyor_belt" top="1312" bottom="1328" left="176" right="208" direction="right"/>
 
 	<object name="conveyor_belt" top="1216" bottom="1232" left="336" right="384" direction="right"/>
-	<object name="conveyor_belt" top="1264" bottom="1280" left="352" right="400" direction="right"/>
+	<object name="conveyor_belt" top="1264" bottom="1280" left="352" right="400" direction="left"/>
 	<object name="conveyor_belt" top="1312" bottom="1328" left="336" right="384" direction="right"/>
-	<object name="conveyor_belt" top="1360" bottom="1376" left="352" right="400" direction="right"/>
+	<object name="conveyor_belt" top="1360" bottom="1376" left="352" right="400" direction="left"/>
 
 	<object name="bat_robot" x="220" y="112"/>
 	<object name="bat_robot" x="268" y="144"/>
