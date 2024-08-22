@@ -76,10 +76,28 @@ bool TA_Bomb::update()
 
     if(timer >= moveTime) {
         velocity.y += grv * speed * speed * TA::elapsedTime;
-        int moveFlags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
+
+        TA_Point velocityAdd = TA_Point(0, 0);
+        if(ground) {
+            int flags = objectSet->checkCollision(hitbox);
+            if(flags & TA_COLLISION_CONVEYOR_BELT_LEFT) {
+                velocityAdd = TA_Point(-1, 0);
+            }
+            if(flags & TA_COLLISION_CONVEYOR_BELT_RIGHT) {
+                velocityAdd = TA_Point(1, 0);
+            }
+        }
+
+        int moveFlags = moveAndCollide(topLeft, bottomRight, (velocity + velocityAdd) * TA::elapsedTime, ground);
+
         if(moveFlags & TA_GROUND_COLLISION) {
             velocity.y = std::min(double(0), velocity.y);
+            ground = true;
         }
+        else {
+            ground = false;
+        }
+
         if(moveFlags & TA_WALL_COLLISION) {
             velocity.x = 0;
         }

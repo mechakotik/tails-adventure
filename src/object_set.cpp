@@ -35,6 +35,7 @@
 #include "objects/grass_block.h"
 #include "objects/mini_sub.h"
 #include "objects/enemy_mine.h"
+#include "objects/conveyor_belt.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -280,6 +281,13 @@ void TA_ObjectSet::load(std::string filename)
         else if(name == "mine") {
             TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
             spawnObject<TA_EnemyMine>(position);
+        }
+
+        else if(name == "conveyor_belt") {
+            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
+            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
+            bool direction = element->Attribute("direction", "right");
+            spawnObject<TA_ConveyorBelt>(topLeft, bottomRight, direction);
         }
 
         else {

@@ -76,6 +76,16 @@ void TA_Character::updateCollisions()
         positionDelta = (velocity + windVelocity) * TA::elapsedTime;
     }
 
+    if(ground) {
+        int flags = links.objectSet->checkCollision(hitbox);
+        if(flags & TA_COLLISION_CONVEYOR_BELT_LEFT) {
+            positionDelta.x -= 0.8 * TA::elapsedTime;
+        }
+        if(flags & TA_COLLISION_CONVEYOR_BELT_RIGHT) {
+            positionDelta.x += 0.8 * TA::elapsedTime;
+        }
+    }
+
     int flags = moveAndCollide(topLeft, bottomRight, positionDelta, ground);
 
     if(flags & TA_COLLISION_ERROR) {

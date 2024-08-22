@@ -23,7 +23,9 @@ enum TA_CollisionType {
     TA_COLLISION_HAMMER = (1 << 10),
     TA_COLLISION_WATER = (1 << 11),
     TA_COLLISION_NAPALM = (1 << 12),
-    TA_COLLISION_DRILL = (1 << 13)
+    TA_COLLISION_DRILL = (1 << 13),
+    TA_COLLISION_CONVEYOR_BELT_LEFT = (1 << 14),
+    TA_COLLISION_CONVEYOR_BELT_RIGHT = (1 << 15)
 };
 
 class TA_Tilemap {

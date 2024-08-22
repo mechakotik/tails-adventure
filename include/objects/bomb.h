@@ -22,7 +22,7 @@ private:
     TA_Sound explosionSound;
     TA_BombMode mode;
 
-    bool direction, destroyed = false;
+    bool direction, ground = false, destroyed = false;
     double timer = 0;
 
 protected:
