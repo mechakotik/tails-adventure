@@ -157,6 +157,7 @@ public:
     bool isUsingSpeedBoots() {return usingSpeedBoots;}
     bool isUsingHammer() {return state == STATE_HAMMER;}
     bool isInWater() {return water;}
+    bool isGettingItem() {return state == STATE_UNPACK_ITEM || state == STATE_RAISE_ITEM || getAnimationName() == "release";}
 
     void setUnpackState() {state = STATE_UNPACK_ITEM;}
     void setRaiseState();

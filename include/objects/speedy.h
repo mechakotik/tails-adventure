@@ -12,6 +12,7 @@ private:
     const double flyUpSpeed = 5;
     const double flyUpPhase1Speed = 2;
     const double flyUpPhase2Speed = 7;
+    const double flyAwayAcceleration = 0.125;
 
     enum State {
         STATE_SHOW,
@@ -19,7 +20,10 @@ private:
         STATE_ATTACK,
         STATE_FLY_UP_SIMPLE,
         STATE_FLY_UP,
-        STATE_END_SEQUENCE
+        STATE_END_SEQUENCE,
+        STATE_WAIT_ITEM,
+        STATE_FLY_AWAY,
+        STATE_TRANSITION
     } state = STATE_SHOW;
 
     bool isComplete();
@@ -35,6 +39,8 @@ private:
     void updateAttack();
     void updateFlyUpSimple();
     void updateFlyUp();
+    void updateWaitItem();
+    void updateFlyAway();
 
     void updateEndSequence();
     void updateEndSequencePhase0();
@@ -45,6 +51,7 @@ private:
     void updateEndSequencePhase5();
 
     void updateFlip();
+    void doTransition();
 
     TA_Point velocity;
     double timer = 0;
@@ -54,7 +61,7 @@ private:
     double flyUpPhase2Y;
 
     TA_Sprite characterPlaceholder;
-    TA_Point cpPosition;
+    TA_Point cpPosition, cpVelocity;
 
 public:
     using TA_Object::TA_Object;

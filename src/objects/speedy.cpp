@@ -4,6 +4,7 @@
 #include "item_box.h"
 #include "save.h"
 #include "transition.h"
+#include "error.h"
 
 void TA_Speedy::load()
 {
@@ -47,7 +48,7 @@ void TA_Speedy::initShow()
 
 bool TA_Speedy::update()
 {
-    if(isComplete()) {
+    if(state == STATE_SHOW && isComplete()) {
         return false;
     }
 
@@ -70,6 +71,15 @@ bool TA_Speedy::update()
         case STATE_END_SEQUENCE:
             updateEndSequence();
             break;
+        case STATE_WAIT_ITEM:
+            updateWaitItem();
+            break;
+        case STATE_FLY_AWAY:
+            updateFlyAway();
+            break;
+        case STATE_TRANSITION:
+            doTransition();
+            return false;
     }
 
     updatePosition();
@@ -212,9 +222,6 @@ void TA_Speedy::initEndSequence()
     cpPosition = objectSet->getLinks().character->getPosition();
     characterPlaceholder.setAnimation("helitail");
     characterPlaceholder.setFlip(false);
-
-    objectSet->spawnObject<TA_Transition>(TA_Point(0, 16), TA_Point(2, 240), 3);
-    objectSet->spawnObject<TA_Transition>(TA_Point(254, 16), TA_Point(256, 240), 3);
 }
 
 void TA_Speedy::updateEndSequence()
@@ -323,6 +330,33 @@ void TA_Speedy::updateEndSequencePhase5()
         endSequencePhase = 6;
         objectSet->getLinks().character->setCharacterPosition(cpPosition);
         objectSet->getLinks().character->setHide(false);
+        state = STATE_WAIT_ITEM;
+    }
+}
+
+void TA_Speedy::updateWaitItem()
+{
+    if(!(isComplete() && !objectSet->getLinks().character->isGettingItem())) {
+        return;
+    }
+
+    state = STATE_FLY_AWAY;
+    objectSet->getLinks().character->setHide(true);
+    cpPosition = objectSet->getLinks().character->getPosition();
+    cpVelocity = TA_Point(1, 0);
+    characterPlaceholder.setPosition(cpPosition);
+    characterPlaceholder.setAnimation("helitail");
+    characterPlaceholder.setFlip(false);
+}
+
+void TA_Speedy::updateFlyAway()
+{
+    cpVelocity.y -= flyAwayAcceleration * TA::elapsedTime;
+    cpPosition = cpPosition + cpVelocity * TA::elapsedTime;
+    characterPlaceholder.setPosition(cpPosition);
+
+    if(cpPosition.y < -48) {
+        state = STATE_TRANSITION;
     }
 }
 
@@ -337,6 +371,12 @@ void TA_Speedy::updateFlip()
     else {
         setFlip(getAnimationFrame() >= 2);
     }
+}
+
+void TA_Speedy::doTransition()
+{
+    TA::save::setSaveParameter("sea_fox", true);
+    objectSet->setTransition(TA_SCREENSTATE_HOUSE);
 }
 
 TA_CollisionType TA_Speedy::getCollisionType()
