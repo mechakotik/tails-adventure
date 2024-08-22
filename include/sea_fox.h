@@ -16,6 +16,7 @@ private:
     const double vulcanGunTime = 30;
     const double vulcanGunInterval = 6;
     const double invincibleTime = 120;
+    const double gravity = double(1) / 16;
 
     void physicsStep();
     void updateDirection();
@@ -34,6 +35,7 @@ private:
 
     double vulcanGunTimer = vulcanGunTime + 1;
     double invincibleTimer = invincibleTime + 1;
+    double waterLevel = -64;
     
 public:
     void load(TA_Links links);

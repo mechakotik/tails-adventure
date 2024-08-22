@@ -15,6 +15,10 @@ void TA_SeaFox::load(TA_Links links)
     TA_Sprite::setAnimation("idle");
 
     hitbox.setRectangle(TA_Point(9, 4), TA_Point(23, 30));
+
+    if(TA::levelPath=="maps/lr/lr1") { // TODO: set water level in area XML
+        waterLevel = 96;
+    }
 }
 
 void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip)
@@ -58,14 +62,24 @@ void TA_SeaFox::physicsStep()
         }
     };
 
+    bool underwater = (position.y + 30 > waterLevel);
+
     if(links.controller->getDirection() != TA_DIRECTION_MAX) {
         TA_Point vector = links.controller->getDirectionVector();
         updateSpeed(velocity.x, vector.x, inputDrag);
-        updateSpeed(velocity.y, vector.y, inputDrag);
+        if(underwater) {
+            updateSpeed(velocity.y, vector.y, inputDrag);
+        }
     }
     else {
         updateSpeed(velocity.x, 0, horizontalDrag);
-        updateSpeed(velocity.y, 0, verticalDrag);
+        if(underwater) {
+            updateSpeed(velocity.y, 0, verticalDrag);
+        }
+    }
+
+    if(!underwater) {
+        velocity.y = std::min(double(1), velocity.y + gravity * TA::elapsedTime);
     }
 
     moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), velocity * TA::elapsedTime, false);
