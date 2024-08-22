@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="28" height="124" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="110" columns="10">
-  <image source="ci2.png" width="160" height="176"/>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="28" height="124" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="120" columns="10">
+  <image source="ci2.png" width="160" height="192"/>
   <tile id="0">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
@@ -247,6 +247,12 @@
     </object>
    </objectgroup>
   </tile>
+  <tile id="45">
+   <animation>
+    <frame tileid="45" duration="150"/>
+    <frame tileid="108" duration="150"/>
+   </animation>
+  </tile>
   <tile id="50">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
@@ -267,6 +273,12 @@
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="53">
+   <animation>
+    <frame tileid="53" duration="150"/>
+    <frame tileid="109" duration="150"/>
+   </animation>
   </tile>
   <tile id="56">
    <objectgroup draworder="index" id="2">
@@ -365,6 +377,12 @@
     </object>
    </objectgroup>
   </tile>
+  <tile id="70">
+   <animation>
+    <frame tileid="70" duration="150"/>
+    <frame tileid="110" duration="150"/>
+   </animation>
+  </tile>
   <tile id="71">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
@@ -378,6 +396,18 @@
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="82">
+   <animation>
+    <frame tileid="82" duration="150"/>
+    <frame tileid="111" duration="150"/>
+   </animation>
+  </tile>
+  <tile id="83">
+   <animation>
+    <frame tileid="83" duration="150"/>
+    <frame tileid="112" duration="150"/>
+   </animation>
   </tile>
   <tile id="84">
    <objectgroup draworder="index" id="2">
@@ -542,8 +572,8 @@
 8,73,8,73,8,73,8,77,79,80,83,84,81,46,70,8,8,8,34,35,1,16,58,55,55,62,1,1,
 8,75,8,75,8,75,8,8,46,70,46,70,77,83,84,81,8,8,22,1,1,45,58,55,55,62,27,1,
 8,75,8,75,8,75,8,8,46,70,46,70,8,46,70,8,34,34,35,16,1,16,58,55,55,62,30,1,
-17,18,17,18,17,18,53,55,54,71,54,71,55,54,71,55,35,2,3,2,3,2,58,55,55,62,27,1,
-23,24,23,24,23,24,58,55,55,55,55,55,55,55,55,55,64,68,69,69,69,69,65,48,48,62,30,1,
+17,18,17,18,17,18,53,55,46,70,46,70,55,46,70,55,35,2,3,2,3,2,58,55,55,62,27,1,
+23,24,23,24,23,24,58,55,54,71,54,71,55,54,71,55,64,68,69,69,69,69,65,48,48,62,30,1,
 1,1,1,1,1,1,58,55,55,48,48,48,48,48,48,55,55,55,55,55,55,55,55,48,48,62,1,1,
 1,1,1,1,1,27,58,55,55,48,48,48,48,48,48,55,55,55,55,55,55,55,55,48,48,62,27,1,
 1,1,1,1,1,36,43,67,66,67,66,67,66,67,66,67,66,67,66,67,66,67,66,67,66,35,7,1,
@@ -673,8 +703,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,100,59,59,95,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,100,59,59,95,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,34,0,0,0,0,0,100,59,59,95,0,0,
-0,0,0,0,0,0,53,89,90,89,90,89,90,89,90,89,35,0,0,0,0,0,100,59,59,95,0,0,
-0,0,0,0,0,0,100,59,59,59,59,59,59,59,59,59,97,99,98,98,98,98,96,59,59,95,0,0,
+0,0,0,0,0,0,53,0,0,0,0,0,0,0,0,0,35,0,0,0,0,0,100,59,59,95,0,0,
+0,0,0,0,0,0,58,89,90,89,90,89,90,89,90,89,97,99,98,98,98,98,96,59,59,95,0,0,
 0,0,0,0,0,0,100,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,95,0,0,
 0,0,0,0,0,0,100,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,95,0,0,
 0,0,0,0,0,0,43,93,94,93,94,93,94,93,94,93,94,93,94,93,94,93,94,93,94,35,0,0,
