@@ -37,30 +37,36 @@ void TA_Camera::update(bool ground, bool spring)
         return current;
     };
 
-    TA_Point previousPosition = position;
+    TA_Point previousPosition = position, watchPosition = *followPosition;
+    bool offset = true;
+    if(locked && (lockedX || lockedY) && lockPosition.getDistance(position) < 64) {
+        watchPosition = lockPosition;
+        offset = false;
+    }
+
     if(!lockedX) {
-        if(position.x < followPosition->x - xOffset) {
-            position.x = move(position.x, followPosition->x  - xOffset);
+        if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
+            position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
         }
-        else if(position.x > followPosition->x + xOffset) {
-            position.x = move(position.x, followPosition->x + xOffset);
+        else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
+            position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
         }
     }
     if(!lockedY) {
-        if(position.y < followPosition->y - yBottomOffset) {
-            position.y = move(position.y, followPosition->y  - yBottomOffset);
+        if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
+            position.y = move(position.y, watchPosition.y  - (offset ? yBottomOffset : 0));
         }
-        else if(position.y > followPosition->y + yTopOffset) {
-            position.y = move(position.y, followPosition->y + yTopOffset);
+        else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
+            position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
         }
     }
 
     if(locked && lockPosition.getDistance(position) <= maxLockDistance) {
-        if(!lockedX && TA::sign(previousPosition.x - lockPosition.x) != TA::sign(position.x - lockPosition.x)) {
+        if(!lockedX && (TA::sign(previousPosition.x - lockPosition.x) != TA::sign(position.x - lockPosition.x) || abs(position.x - lockPosition.x) < 0.5)) {
             position.x = lockPosition.x;
             lockedX = true;
         }
-        if(!lockedY && TA::sign(previousPosition.y - lockPosition.y) != TA::sign(position.y - lockPosition.y)) {
+        if(!lockedY && (TA::sign(previousPosition.y - lockPosition.y) != TA::sign(position.y - lockPosition.y) || abs(position.y - lockPosition.y) < 0.5)) {
             position.y = lockPosition.y;
             lockedY = true;
         }
