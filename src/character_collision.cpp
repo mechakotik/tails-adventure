@@ -32,7 +32,7 @@ void TA_Character::updateCollisions()
         topLeft = TA_Point(18, 9);
     }
     else if(crouch) {
-        topLeft = TA_Point(18, 24);
+        topLeft = TA_Point(18, 22);
     }
     else {
         topLeft = TA_Point(18, 12);
