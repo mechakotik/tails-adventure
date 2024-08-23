@@ -27,18 +27,24 @@ bool TA_MiniSub::update()
     }
 
     updatePosition();
+
+    if(timer > minExistTime && !objectSet->isVisible(hitbox)) {
+        return false;
+    }
     return true;
 }
 
 void TA_MiniSub::updateIdle()
 {
-    TA_Point distance = getDistanceToCharacter();
-    if(distance.x > -160 && distance.x < 0 && abs(distance.y) <= 90) {
+    if(objectSet->isVisible(hitbox)) {
         idle = false;
+        flip = (position.x < objectSet->getCharacterPosition().x);
+        setFlip(flip);
     }
 }
 
 void TA_MiniSub::updateAttack()
 {
-    position.x -= speed * TA::elapsedTime;
+    position.x -= speed * TA::elapsedTime * (flip ? -1 : 1);
+    timer += TA::elapsedTime;
 }

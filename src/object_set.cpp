@@ -403,6 +403,14 @@ int TA_ObjectSet::getEmeraldsCount()
     return count;
 }
 
+bool TA_ObjectSet::isVisible(TA_Polygon &hitbox)
+{
+    TA_Point cameraPosition = links.camera->getPosition();
+    TA_Polygon cameraRect;
+    cameraRect.setRectangle(cameraPosition - TA_Point(5, 5), cameraPosition + TA_Point(TA::screenWidth + 5, TA::screenHeight + 5));
+    return cameraRect.intersects(hitbox);
+}
+
 TA_ObjectSet::~TA_ObjectSet()
 {
     for(TA_Object *currentObject : objects) {

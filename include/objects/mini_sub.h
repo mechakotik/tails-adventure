@@ -5,12 +5,14 @@
 
 class TA_MiniSub : public TA_Object {
 private:
-    const double speed = 1;
+    const double speed = 1.5;
+    const double minExistTime = 240;
 
     void updateIdle();
     void updateAttack();
 
-    bool idle = true;
+    bool idle = true, flip = false;
+    double timer = 0;
 
 public:
     using TA_Object::TA_Object;

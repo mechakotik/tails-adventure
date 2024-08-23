@@ -75,6 +75,7 @@ public:
     void resetInstaShield() {if(links.character) links.character->resetInstaShield();} // TODO: figure out what it is
     bool isPaused() {return paused;}
     void setPaused(bool enabled) {paused = enabled;}
+    bool isVisible(TA_Polygon &hitbox);
 
     int getEmeraldsCount();
     int getMaxRings() {return 8 + 2 * getEmeraldsCount();}
