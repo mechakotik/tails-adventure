@@ -186,9 +186,6 @@ void TA_Character::updateClimb()
     if(helitail && TA::levelPath == "maps/pm/pm4") {
         return;
     }
-    if((!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0)) && TA::levelPath.substr(0, 7) == "maps/ci") {
-        return;
-    }
 
     auto updateClimbPosition = [&](int height) {
         if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
@@ -241,7 +238,8 @@ void TA_Character::updateClimb()
             }
             
             hitbox.setPosition(climbPosition + TA_Point(0, 0.01));
-            if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_MOVING_PLATFORM) {
+            int collisionFlags = links.objectSet->checkCollision(hitbox);
+            if(collisionFlags & TA_COLLISION_MOVING_PLATFORM) {
                 return;
             }
 
@@ -250,6 +248,12 @@ void TA_Character::updateClimb()
             if(flags == TA_GROUND_COLLISION) {
                 ground = true;
                 jump = spring = wall = false;
+                if(water && !(collisionFlags & TA_COLLISION_WATER)) {
+                    links.objectSet->spawnObject<TA_Splash>(position + TA_Point(14, (height == 32 ? 6 : 22)));
+                    waterSound.play();
+                    water = false;
+                }
+
                 climbTime = 0;
                 if(height == 32) {
                     setAnimation("climb_high");
