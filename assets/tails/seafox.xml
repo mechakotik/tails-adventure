@@ -4,6 +4,9 @@
 		8,9
 	</animation>
 	<animation name="rotate" delay="6" repeatTimes="1">
-	  14,15
+		14,15
+	</animation>
+	<animation name="dead" delay="6">
+		8,14,15,8,14,15
 	</animation>
 </animations>

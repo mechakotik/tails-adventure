@@ -8,6 +8,9 @@ void TA_GameOverScreen::init()
     controller.load();
     TA::sound::playMusic("sound/game_over.vgm", 0);
     setMaxRings();
+
+    TA::save::setSaveParameter("map_position", 0);
+    TA::save::setSaveParameter("sea_fox", false);
 }
 
 void TA_GameOverScreen::setMaxRings()

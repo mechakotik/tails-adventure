@@ -94,7 +94,7 @@ TA_ScreenState TA_GameScreen::update()
     if(hud.getTransition() != TA_SCREENSTATE_CURRENT) {
         return hud.getTransition();
     }
-    if(!isSeaFox && character.gameOver()) {
+    if((!isSeaFox && character.gameOver()) || (isSeaFox && seaFox.gameOver())) {
         return TA_SCREENSTATE_GAMEOVER;
     }
     if(!isSeaFox && character.isTeleported()) {

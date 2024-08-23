@@ -4,6 +4,7 @@
 #include "bullet.h"
 #include "hud.h"
 #include "error.h"
+#include "save.h"
 
 void TA_SeaFox::load(TA_Links links)
 {
@@ -34,6 +35,12 @@ void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip)
 
 void TA_SeaFox::update()
 {
+    if(dead) {
+        updateDead();
+        setFlip(flip);
+        return;
+    }
+
     physicsStep();
 
     updateDirection();
@@ -41,13 +48,6 @@ void TA_SeaFox::update()
     updateDrill();
     updateItem();
     updateDamage();
-
-    if(invincibleTimer < invincibleTime) {
-        setAlpha(200);
-    }
-    else {
-        setAlpha(255);
-    }
 
     setFlip(flip);
     //TA::printLog("%f %f", position.x, position.y);
@@ -167,14 +167,35 @@ void TA_SeaFox::updateDamage()
 {
     if(invincibleTimer < invincibleTime) {
         invincibleTimer += TA::elapsedTime;
+        setAlpha(200);
         return;
     }
 
     hitbox.setPosition(position);
+    setAlpha(255);
+
     if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
         links.objectSet->addRings(-2);
-        velocity = velocity * -1;
-        invincibleTimer = 0;
-        damageSound.play();
+        if(TA::save::getSaveParameter("rings") <= 0) {
+            TA::sound::playMusic("sound/death.vgm", 0);
+            setAnimation("dead");
+            dead = true;
+        }
+        else {
+            velocity = velocity * -1;
+            invincibleTimer = 0;
+            damageSound.play();
+        }
     }
+}
+
+void TA_SeaFox::updateDead()
+{
+    velocity.x = 0;
+    velocity.y += gravity * TA::elapsedTime;
+    position = position + velocity * TA::elapsedTime;
+    TA_Sprite::setPosition(position);
+
+    deadTimer += TA::elapsedTime;
+    flip = (getAnimationFrame() >= 3);
 }

@@ -18,6 +18,7 @@ private:
     const double vulcanGunInterval = 5;
     const double invincibleTime = 120;
     const double gravity = double(1) / 16;
+    const double deadTime = 120;
 
     void physicsStep();
     void updateDirection();
@@ -26,6 +27,7 @@ private:
     void updateItem();
     void updateVulcanGun();
     void updateDamage();
+    void updateDead();
     bool checkPawnCollision(TA_Polygon &hitbox) override;
 
     TA_Links links;
@@ -33,11 +35,12 @@ private:
     TA_Point followPosition;
     TA_Polygon hitbox, drillHitbox;
     TA_Sound bulletSound, damageSound;
-    bool flip = false, neededFlip = false;
+    bool flip = false, neededFlip = false, dead = false;
 
     double vulcanGunTimer = vulcanGunTime + 1;
     double invincibleTimer = invincibleTime + 1;
     double waterLevel = -64;
+    double deadTimer = 0;
     
 public:
     void load(TA_Links links);
@@ -46,6 +49,7 @@ public:
     void setSpawnPoint(TA_Point position, bool flip);
     TA_Polygon* getHitbox() {return &hitbox;}
     TA_Polygon* getDrillHitbox() {return &drillHitbox;}
+    bool gameOver() {return dead && deadTimer >= deadTime;}
 };
 
 #endif // TA_SEA_FOX_H

@@ -20,7 +20,12 @@ namespace TA { namespace save {
         "item_slot1",
         "item_slot2",
         "item_slot3",
-        "item_position"
+        "item_position",
+        "seafox_item_slot0",
+        "seafox_item_slot1",
+        "seafox_item_slot2",
+        "seafox_item_slot3",
+        "seafox_item_position"
     };
 }}
 
