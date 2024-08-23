@@ -141,6 +141,9 @@ void TA::resmgr::quit()
     for(std::pair<std::string, SDL_Texture*> element : textureMap) {
         SDL_DestroyTexture(element.second);
     }
+    for(std::pair<std::string, Mix_Music*> element : musicMap) {
+        Mix_FreeMusic(element.second);
+    }
     for(std::pair<std::string, Mix_Chunk*> element : chunkMap) {
         Mix_FreeChunk(element.second);
     }

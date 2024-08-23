@@ -212,8 +212,13 @@ TA_Game::~TA_Game()
     TA::gamepad::quit();
     TA::resmgr::quit();
     TA::eventLog::quit();
+
     SDL_DestroyTexture(targetTexture);
     SDL_DestroyRenderer(TA::renderer);
     SDL_DestroyWindow(TA::window);
+    
     SDL_Quit();
+    IMG_Quit();
+    Mix_CloseAudio();
+    Mix_Quit();
 }
