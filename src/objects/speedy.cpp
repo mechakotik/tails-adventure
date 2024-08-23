@@ -8,13 +8,12 @@
 
 void TA_Speedy::load()
 {
-    objectSet->getLinks().camera->setLockPosition({0, 112});
-
     if(isComplete()) {
         objectSet->spawnObject<TA_Transition>(TA_Point(254, 3888), TA_Point(256, 4016), 3, false);
         return;
     }
 
+    objectSet->getLinks().camera->setLockPosition({0, 112});
     loadSprite();
     initShow();
 }

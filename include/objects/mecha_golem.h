@@ -47,7 +47,8 @@ private:
         STATE_PHASE_CHANGE,
         STATE_BLOW,
         STATE_FALL,
-        STATE_DEFEATED
+        STATE_DEFEATED,
+        STATE_WAIT_ITEM,
     };
 
     enum Hitbox {
@@ -82,6 +83,10 @@ private:
     void updateArmBite3();
     void updateArmBite4();
     void updateArmCircle();
+
+    bool isComplete();
+    bool canDoTransition();
+    void doTransition();
 
     void updateDamage();
     void updateHitboxes();

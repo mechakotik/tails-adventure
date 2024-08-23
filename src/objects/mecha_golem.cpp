@@ -2,10 +2,17 @@
 #include "mecha_golem_bomb.h"
 #include "explosion.h"
 #include "item_box.h"
+#include "save.h"
+#include "transition.h"
 #include <algorithm>
 
 void TA_MechaGolem::load()
 {
+    if(isComplete()) {
+        objectSet->spawnObject<TA_Transition>(TA_Point(510, 0), TA_Point(512, 144), 4, false);
+        return;
+    }
+
     headSprite.load("objects/mecha_golem/head.png", 24, 32);
     headFlashSprite.load("objects/mecha_golem/head.png", 24, 32);
     bodySprite.load("objects/mecha_golem/body.png");
@@ -38,6 +45,10 @@ void TA_MechaGolem::load()
 
 bool TA_MechaGolem::update()
 {
+    if(isComplete() && state != STATE_WAIT_ITEM) {
+        return false;
+    }
+
     switch(state) {
         case STATE_IDLE:
             updateIdle();
@@ -82,6 +93,12 @@ bool TA_MechaGolem::update()
         case STATE_DEFEATED:
             updateDefeated();
             break;
+        case STATE_WAIT_ITEM:
+            if(canDoTransition()) {
+                doTransition();
+                return false;
+            }
+            break;
     }
 
     if(state != STATE_ARM_MOVE && state != STATE_ARM_MOVE_BACK && state != STATE_ARM_CIRCLE &&
@@ -101,6 +118,12 @@ bool TA_MechaGolem::update()
     updateDamage();
     updateHitboxes();
     return true;
+}
+
+bool TA_MechaGolem::isComplete()
+{
+    long long itemMask = TA::save::getSaveParameter("item_mask");
+    return itemMask & (1ll << 22);
 }
 
 void TA_MechaGolem::updateIdle()
@@ -446,6 +469,7 @@ void TA_MechaGolem::updateFall()
 void TA_MechaGolem::updateDefeated()
 {
     if(timer > defeatedTime) {
+        state = STATE_WAIT_ITEM;
         return;
     }
     double prev = timer;
@@ -458,6 +482,18 @@ void TA_MechaGolem::updateDefeated()
     if(prev < defeatedTime / 3 && timer >= defeatedTime / 3) {
         objectSet->spawnObject<TA_ItemBox>(position + TA_Point(8, -32), TA_Point(-1, -2), 22, " anti-air \n missile  ");
     }
+}
+
+bool TA_MechaGolem::canDoTransition()
+{
+    return isComplete() && !objectSet->getLinks().character->isGettingItem();
+}
+
+void TA_MechaGolem::doTransition()
+{
+    TA::save::setSaveParameter("map_selection", 4);
+    TA::save::setSaveParameter("sea_fox", false);
+    objectSet->setTransition(TA_SCREENSTATE_MAP);
 }
 
 void TA_MechaGolem::updateDamage()
@@ -509,11 +545,11 @@ void TA_MechaGolem::draw()
     headFlashSprite.setFrame(headSprite.getCurrentFrame() + 5);
 
     bodySprite.draw();
-    if(!(state == STATE_DEFEATED && timer > defeatedTime * 2 / 3)) {
+    if(!(state == STATE_WAIT_ITEM || (state == STATE_DEFEATED && timer > defeatedTime * 2 / 3))) {
         headSprite.draw();
     }
 
-    if(!(state == STATE_FALL || state == STATE_DEFEATED || (state == STATE_BLOW && timer > 88))) {
+    if(!(state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM || (state == STATE_BLOW && timer > 88))) {
         leftFootSprite.draw();
         rightFootSprite.draw();
     }
@@ -527,7 +563,7 @@ void TA_MechaGolem::draw()
 
 void TA_MechaGolem::drawArm()
 {
-    if(state == STATE_FALL || state == STATE_DEFEATED || (state == STATE_BLOW && timer > 40)) {
+    if(state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM || (state == STATE_BLOW && timer > 40)) {
         return;
     }
 
