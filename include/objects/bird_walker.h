@@ -20,7 +20,7 @@ enum TA_BirdWalkerState {
 
 class TA_BirdWalker : public TA_Object {
 private:
-    const double aimingTime = 90, aimBorder = 32;
+    const double aimingTime = 30, aimBorder = 32;
     const double flyingTime = 25;
     const double crouchTime = 6;
     const double coolDownTime = 60;
@@ -37,7 +37,7 @@ private:
     void insertBorderHitboxes();
     void updateDamage();
 
-    TA_Sprite headSprite, bodySprite, feetSprite, aimSprite;
+    TA_Sprite headSprite, bodySprite, feetSprite;
     TA_Sprite headFlashSprite, bodyFlashSprite, feetFlashSprite;
 
     TA_BirdWalkerState state = TA_BIRD_WALKER_STATE_IDLE;

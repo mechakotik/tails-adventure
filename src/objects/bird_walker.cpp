@@ -19,7 +19,6 @@ void TA_BirdWalker::load(double newFloorY)
     bodyFlashSprite.load("objects/bird_walker/body.png", 40, 32);
     feetSprite.load("objects/bird_walker/feet.png", 24, 28);
     feetFlashSprite.load("objects/bird_walker/feet.png", 24, 28);
-    aimSprite.load("objects/bird_walker/aim.png", 17, 16);
 
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX2);
     fallSound.load("sound/fall.ogg", TA_SOUND_CHANNEL_SFX2);
@@ -30,7 +29,6 @@ void TA_BirdWalker::load(double newFloorY)
 
     headSprite.loadAnimationsFromFile("objects/bird_walker/head.xml");
     feetSprite.loadAnimationsFromFile("objects/bird_walker/feet.xml");
-    aimSprite.loadAnimationsFromFile("objects/bird_walker/aim.xml");
 
     headSprite.setCamera(objectSet->getLinks().camera);
     bodySprite.setCamera(objectSet->getLinks().camera);
@@ -38,7 +36,6 @@ void TA_BirdWalker::load(double newFloorY)
     headFlashSprite.setCamera(objectSet->getLinks().camera);
     bodyFlashSprite.setCamera(objectSet->getLinks().camera);
     feetFlashSprite.setCamera(objectSet->getLinks().camera);
-    aimSprite.setCamera(objectSet->getLinks().camera);
 
     TA_Polygon bodyHitbox;
     bodyHitbox.setRectangle({6, -61}, {33, -29});
@@ -132,8 +129,6 @@ bool TA_BirdWalker::update()
             aimPosition.x = objectSet->getLinks().camera->getPosition().x + aimBorder;
         }
         
-        aimSprite.setPosition(aimPosition);
-        aimSprite.setAnimation(flip ? "aiming" : "aiming_flip");
         state = TA_BIRD_WALKER_STATE_AIMING;
     };
 
@@ -430,9 +425,6 @@ void TA_BirdWalker::draw()
     headSprite.draw();
     bodySprite.draw();
     feetSprite.draw();
-    if(state == TA_BIRD_WALKER_STATE_AIMING) {
-        aimSprite.draw();
-    }
 
     headFlashSprite.draw();
     bodyFlashSprite.draw();
