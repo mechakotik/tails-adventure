@@ -1,78 +1,85 @@
 <h1 align="center">
-  <img width="50%" src="https://github.com/mechakotik/tails-adventure/assets/43793572/cb300eb2-4f5f-42f3-97e8-e54e48810aa9">
+  Tails Adventure Remake
 </h1>
 
 <div align="center">
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/TA-Remake/TailsAdventure?style=flat&label=latest&color=&logo=Git&logoColor=white)
-![GitHub all releases](https://img.shields.io/github/downloads/mechakotik/TailsAdventure/total?color=red)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/mechakotik/tails-adventure?style=flat&label=latest&color=&logo=Git&logoColor=white)
+![GitHub all releases](https://img.shields.io/github/downloads/mechakotik/tails-adventure/total?color=red)
 [![Telegram](https://img.shields.io/badge/Telegram-blue.svg?style=flat&logo=Telegram&logoColor=white)](https://t.me/tailsadventure)
-
-<img width="48%" alt="pf" src="https://github.com/mechakotik/tails-adventure/assets/43793572/7a9a6597-2c18-4e7a-9637-2c043673bab3"><img width="48%" alt="pm2" src="https://github.com/mechakotik/tails-adventure/assets/43793572/144954c7-a9fb-425e-9f4d-795b7ca591f0">
 
 </div>
 
-Tails Adventure is a Sonic the Hedgehog spin-off adventure game, released for Sega Game Gear in 1995. Unlike classic Sonic gameplay, Tails Adventure is a slow-paced platformer with focus on solving puzzles, backtracking and collecting items, much like metroidvania games.
+Tails Adventure is Sonic the Hedgehog spin-off game, released for Game Gear and featuring Tails in a solo role. Opposed to other SMS and GG Sonic titles, which try to bring famous fast-paced Sonic gameplay in 8-bit world, Tails Adventure is metroidvania-like game focusing on exploration, collecting items and backtracking. It's a really unique "hidden gem" of the series, which couldn't get attention it deserves due to low popularity of Game Gear.
 
-This project tries to completely rewrite Tails Adventure to provide a better way to play it on modern platforms, as well as implement some improvements to original gameplay.
 
-## Improvements
-- Higher difficulty that original
-- 16:9 widescreen
-- Displays pixels on "fractional" positions for smoother gameplay
-- Gamepad controls with analog stick support
-- Supports high refresh rate displays
+This project tries to bring Tails Adventure experience to modern platforms, pushing away Game Gear limitations and implementing some quality of life improvements:
+- More difficult but more fair gameplay, improved enemies and bosses
+- Smooth and responsive character physics
+- Support for modern displays with varying aspect ratios and refresh rates
+- Game runs in your native resolution and displays sprites on "fractional" positions for smoother gameplay
+- Keyboard and gamepad controls with customizable keybinds and analog stick support
 - Save system without password
 - Pause menu and options menu
 
+Also, it was made from the ground up in C++ without using any game engines to be less bloated, have maximum performance and portability. Latest demo includes playable Poloy Forest, Volcanic Tunnel, Polly Mt. 1, Lake Rocky, Cavern Island and Caron Forest.
+
 ## Get it
 
-| Platform | Description |
-| ------------- | ------------- |
-| Windows | Download latest binary release from [Releases](https://github.com/mechakotik/TailsAdventure/releases) |
-| Arch Linux | Install [tails-adventure](https://aur.archlinux.org/packages/tails-adventure) package from AUR |
-| Windows/Linux | Build from source (see tutorial below) |
+Binary releases for Windows and Linux (amd64) are available at [Releases](https://github.com/mechakotik/tails-adventure/releases). If your platform is not supported or binary release is not working properly, you may build Tails Adventure Remake from source (don't worry, it's not as hard as you might think).
 
-## Building from source
+## Building for Linux
 
-To build this project, you need to install C++ compiler, Meson build system and following libraries:
+To build Tails Adventure Remake, you need to install C++ compiler, Meson build system and following libraries:
 
-- [SDL2](https://github.com/libsdl-org/SDL/tree/SDL2)
-- [SDL2_image](https://github.com/libsdl-org/SDL_image/tree/SDL2)
-- [SDL2_mixer](https://github.com/libsdl-org/SDL_mixer/tree/SDL2)
-- [tinyxml2](https://github.com/leethomason/tinyxml2)
+- SDL2
+- SDL2_image
+- SDL2_mixer **(2.8.0 or newer)**
+- tinyxml2
 
-The installation process is specific for your OS and package manager, here are a few examples:
+The installation process varies through different distros and package managers, here is a few examples:
 
-```bash
-# MSYS2 MINGW64 (Windows)
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-tinyxml2
-
-# Arch Linux
-sudo pacman -S base-devel meson sdl2 sdl2_image sdl2_mixer tinyxml2
-
-# Debian / Ubuntu
+```sh
+# Debian and its derives
 sudo apt install build-essential meson libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libtinyxml2-dev
+
+# Arch and its derives
+sudo pacman -S base-devel meson sdl2 sdl2_image sdl2_mixer tinyxml2
 ```
 
-Then clone this repository and run following commands in repository root directory:
+After installing required libraries, run following commands to clone repository, build and install Tails Adventure Remake:
 
-```bash
-# To build "portable" version in build/output directory
+```sh
+git clone https://github.com/mechakotik/tails-adventure
+cd tails-adventure
 meson setup build && cd build
 meson compile
-meson install
-
-# Or to install game on Linux system
-meson setup build -Dlinux_install=true && cd build
-meson compile
-sudo meson install
+sudo meson install -Dlinux_install=true
 ```
 
-## Disclaimer
+This will install Tails Adventure Remake system-wide and you'll be able to see it in your applications menu. To uninstall, run this command in `tails-adventure/build` directory:
 
-Tails Adventure Remake is a non-profit fan game project. It is not affiliated with SEGA, Sonic Team or Aspect in any way. The developers of this project have no intent to infringe said copyrights or registered trademarks. No financial gain is made from this project.
+```sh
+sudo ninja uninstall
+```
 
-Sonic the Hedgehog is a trademark of SEGA. All copyrights and registered trademarks regarding Sonic the Hedgehog belong to SEGA. Original Tails Adventure assets used in this project are property of SEGA, Sonic Team, Aspect and their respective owners.
+## Building for Windows
 
-The source code is published under GNU GPL-3.0 license.
+To build for Windows, you need to install [MSYS2](https://www.msys2.org). After installing, run this command in MSYS2 MINGW64 shell to update packages:
+
+```sh
+pacman -Syu
+```
+
+If it asks to restart shell, restart it and run this command again. After MSYS2 is fully updated, run following commands in MSYS2 MINGW64 shell to install dependencies, clone repository and build Tails Adventure Remake:
+
+```sh
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-tinyxml2
+git clone https://github.com/mechakotik/tails-adventure
+cd tails-adventure
+meson setup build && cd build
+meson compile
+meson install -Dstatic=true
+```
+
+Build result will be located in `tails-adventure/build/output` directory.
