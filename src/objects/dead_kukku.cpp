@@ -9,7 +9,7 @@ void TA_DeadKukku::load(TA_Point newPosition)
     TA_Sprite::loadAnimationsFromFile("objects/pf_enemies_animations.xml");
     TA_Sprite::setAnimation("death");
     position = newPosition;
-    objectSet->spawnObject<TA_Explosion>(position + TA_Point(double(TA::random::next() % 16) - 4, double(TA::random::next() % 16) - 8), 0);
+    objectSet->spawnObject<TA_Explosion>(position + TA_Point(double(TA::random::next() % 16) - 4, double(TA::random::next() % 16) - 8), 0, TA_EXPLOSION_NEUTRAL);
     if(objectSet->enemyShouldDropRing()) {
         objectSet->spawnObject<TA_Ring>(position + TA_Point(8, 24), -2.5);
     }
