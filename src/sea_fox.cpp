@@ -176,6 +176,7 @@ void TA_SeaFox::updateDamage()
 
     if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
         links.objectSet->addRings(-2);
+        TA::gamepad::rumble(0.75, 0.75, 20);
         if(TA::save::getSaveParameter("rings") <= 0) {
             TA::sound::playMusic("sound/death.vgm", 0);
             setAnimation("dead");

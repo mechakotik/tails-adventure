@@ -34,7 +34,7 @@ void TA_MechaGolem::load()
     armSprite.setCamera(camera);
     armPartSprite.setCamera(camera);
 
-    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX3);
+    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX2);
     smallExplosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX3);
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
@@ -305,6 +305,7 @@ void TA_MechaGolem::initPhaseChange()
     timer = 0;
     state = STATE_PHASE_CHANGE;
     secondPhase = true;
+    explosionSound.play();
 
     for(int delay = 0; delay < phaseChangeTime * 2 / 3; delay += phaseChangeExplosionInterval) {
         TA_Point explosionPosition = position + TA_Point(5, -56);
@@ -378,6 +379,7 @@ void TA_MechaGolem::updateArmBite2()
         state = STATE_ARM_BITE3;
         armPosition = endPosition;
         objectSet->getLinks().camera->shake(24);
+        TA::gamepad::rumble(0.75, 0, 20);
 
         TA_Point bombPosition;
         bombPosition.x = objectSet->getCharacterPosition().x - 8;
