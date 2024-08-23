@@ -27,7 +27,7 @@ bool TA_Transition::update()
         }
         else {
             TA::save::setSaveParameter("map_selection", selection);
-            TA::save::setSaveParameter("sea_fox", seaFox);
+            TA::save::setSaveParameter("seafox", seaFox);
         }
         objectSet->setTransition(screenState);
     }

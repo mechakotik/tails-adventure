@@ -17,7 +17,7 @@ void TA_AreaSelector::appendPoints()
 {
     double xOffset = (TA::screenWidth - 256) / 2;
 
-    if(TA::save::getSaveParameter("sea_fox")) {
+    if(TA::save::getSaveParameter("seafox")) {
         points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 88)));
         points.push_back(new TA_MapPoint(1, " lake\n rocky", "maps/lr/lr1", TA_Point(131 + xOffset, 111)));
     }
@@ -37,7 +37,7 @@ void TA_AreaSelector::addSelectedArea()
 {
     long long areaMask = TA::save::getSaveParameter("area_mask");
     int index = TA::save::getSaveParameter("map_selection");
-    if(TA::save::getSaveParameter("sea_fox")) {
+    if(TA::save::getSaveParameter("seafox")) {
         index += 9;
     }
     areaMask |= (1ll << index);
@@ -47,7 +47,7 @@ void TA_AreaSelector::addSelectedArea()
 void TA_AreaSelector::setActivePoints()
 {
     int mask = TA::save::getSaveParameter("area_mask");
-    int add = (TA::save::getSaveParameter("sea_fox") ? 9 : 0);
+    int add = (TA::save::getSaveParameter("seafox") ? 9 : 0);
     for(int level = 0; level < (int)points.size(); level ++) {
         if(mask & (1 << (level + add))) {
             points[level]->activate();
@@ -57,7 +57,7 @@ void TA_AreaSelector::setActivePoints()
 
 void TA_AreaSelector::setPointNeighbours()
 {
-    if(TA::save::getSaveParameter("sea_fox")) {
+    if(TA::save::getSaveParameter("seafox")) {
         points[0]->setNeighbour(TA_DIRECTION_DOWN, points[1]);
         points[1]->setNeighbour(TA_DIRECTION_UP, points[0]);
     }
@@ -88,7 +88,7 @@ void TA_AreaSelector::loadTailsIcon()
 {
     tailsIcon.load("worldmap/tails_icon.png", 8, 16);
     tailsIcon.loadAnimationsFromFile("worldmap/tails_icon.xml");
-    tailsIcon.setAnimation(TA::save::getSaveParameter("sea_fox") ? "seafox" : "blink");
+    tailsIcon.setAnimation(TA::save::getSaveParameter("seafox") ? "seafox" : "blink");
 }
 
 TA_ScreenState TA_AreaSelector::update()
@@ -118,7 +118,7 @@ TA_ScreenState TA_AreaSelector::update()
 
 void TA_AreaSelector::draw()
 {
-    if(!TA::save::getSaveParameter("sea_fox")) {
+    if(!TA::save::getSaveParameter("seafox")) {
         for(int pos = 1; pos < (int)points.size(); pos ++) {
             points[pos]->draw();
         }

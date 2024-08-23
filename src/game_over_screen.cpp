@@ -10,7 +10,7 @@ void TA_GameOverScreen::init()
     setMaxRings();
 
     TA::save::setSaveParameter("map_position", 0);
-    TA::save::setSaveParameter("sea_fox", false);
+    TA::save::setSaveParameter("seafox", false);
 }
 
 void TA_GameOverScreen::setMaxRings()

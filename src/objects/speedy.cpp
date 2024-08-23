@@ -374,7 +374,7 @@ void TA_Speedy::updateFlip()
 
 void TA_Speedy::doTransition()
 {
-    TA::save::setSaveParameter("sea_fox", true);
+    TA::save::setSaveParameter("seafox", true);
     objectSet->setTransition(TA_SCREENSTATE_HOUSE);
 }
 

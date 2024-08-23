@@ -23,7 +23,7 @@ void TA_InventoryMenu::load(TA_Controller* controller)
 
 void TA_InventoryMenu::fillItemMatrix()
 {
-    if(TA::save::getSaveParameter("sea_fox")) {
+    if(TA::save::getSaveParameter("seafox")) {
         items[0][0] = {4, "vulcan gun"};
         items[0][1] = {22, "anti-air missile"};
         items[1][0] = {12, "proton torpedo"};
@@ -126,7 +126,7 @@ void TA_InventoryMenu::updateItemSelection()
                 selectionX = std::max(0, selectionX - 1);
                 break;
             case TA_DIRECTION_RIGHT:
-                selectionX = std::min((TA::save::getSaveParameter("sea_fox") ? 3 : 11), selectionX + 1);
+                selectionX = std::min((TA::save::getSaveParameter("seafox") ? 3 : 11), selectionX + 1);
                 break;
             default:
                 break;
@@ -312,7 +312,7 @@ void TA_InventoryMenu::setInventoryItem(int slot, int index)
 
 std::string TA_InventoryMenu::getParameterName(int slot)
 {
-    bool seaFox = TA::save::getSaveParameter("sea_fox");
+    bool seaFox = TA::save::getSaveParameter("seafox");
     return (seaFox ? "seafox_item_slot" : "item_slot") + std::to_string(slot);
 }
 
@@ -365,7 +365,7 @@ void TA_InventoryMenu::drawPointer()
 
 void TA_InventoryMenu::drawArrows()
 {
-    if(TA::save::getSaveParameter("sea_fox")) {
+    if(TA::save::getSaveParameter("seafox")) {
         return;
     }
     if(selectionX >= 4) {

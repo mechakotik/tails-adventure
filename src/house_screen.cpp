@@ -174,9 +174,9 @@ void TA_HouseScreen::applyTransition()
         inventoryOpen = !inventoryOpen;
     }
     else if(selectionX == 0 && selectionY == 1) {
-        bool seaFox = TA::save::getSaveParameter("sea_fox");
+        bool seaFox = TA::save::getSaveParameter("seafox");
         seaFox = !seaFox;
-        TA::save::setSaveParameter("sea_fox", seaFox);
+        TA::save::setSaveParameter("seafox", seaFox);
     }
     else if(selectionX == 1 && selectionY == 0) {
         optionsOpen = !optionsOpen;
@@ -201,7 +201,7 @@ void TA_HouseScreen::draw()
         optionsMenu.draw();
     }
     else {
-        if(TA::save::getSaveParameter("sea_fox")) {
+        if(TA::save::getSaveParameter("seafox")) {
             houseSeaFoxSprite.draw();
             clawSprite.draw();
             seaFoxSprite.draw();
@@ -219,7 +219,7 @@ void TA_HouseScreen::drawSelector()
 {
     TA_Point position = interfaceSprite.getPosition() + TA_Point(32, 8);
     std::string text;
-    if(TA::save::getSaveParameter("sea_fox")) {
+    if(TA::save::getSaveParameter("seafox")) {
         text = ".equip.param\n.house.exit";
     }
     else {

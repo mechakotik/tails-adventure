@@ -148,7 +148,7 @@ void TA_ObjectSet::load(std::string filename)
             TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
             TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
             int selection = element->IntAttribute("selection");
-            bool seaFox = element->Attribute("sea_fox", "true");
+            bool seaFox = element->Attribute("seafox", "true");
             spawnObject<TA_Transition>(topLeft, bottomRight, selection, seaFox);
         }
 

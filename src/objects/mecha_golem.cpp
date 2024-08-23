@@ -492,7 +492,7 @@ bool TA_MechaGolem::canDoTransition()
 void TA_MechaGolem::doTransition()
 {
     TA::save::setSaveParameter("map_selection", 4);
-    TA::save::setSaveParameter("sea_fox", false);
+    TA::save::setSaveParameter("seafox", false);
     objectSet->setTransition(TA_SCREENSTATE_MAP);
 }
 
