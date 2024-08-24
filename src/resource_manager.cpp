@@ -46,7 +46,6 @@ void TA::resmgr::preloadChunks()
     const std::vector<std::string> names {
         "break",
         "damage",
-        "death",
         "enter",
         "explosion",
         "fall",
