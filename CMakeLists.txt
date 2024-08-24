@@ -1,0 +1,57 @@
+cmake_minimum_required(VERSION 3.28)
+project(tails-adventure)
+
+option(TA_STATIC OFF)
+option(TA_LINUX_INSTALL OFF)
+
+set(BUILD_SHARED_LIBS OFF)
+set(SDL_STATIC ON)
+set(SDL2IMAGE_VENDORED ON)
+set(SDL2MIXER_VENDORED ON)
+set(SDL2_DISABLE_INSTALL ON)
+set(SDL2IMAGE_INSTALL OFF)
+set(SDL2MIXER_INSTALL OFF)
+
+set(SDL2MIXER_GME ON)
+
+add_subdirectory(external/SDL EXCLUDE_FROM_ALL)
+add_subdirectory(external/SDL_image EXCLUDE_FROM_ALL)
+add_subdirectory(external/SDL_mixer EXCLUDE_FROM_ALL)
+
+file(STRINGS "src/sources.list" TA_SOURCES)
+add_executable(tails-adventure ${TA_SOURCES} external/tinyxml2/tinyxml2.cpp)
+
+if(TARGET SDL2::SDL2main)
+    target_link_libraries(tails-adventure PRIVATE SDL2::SDL2main)
+endif()
+
+target_link_libraries(tails-adventure PRIVATE
+    SDL2::SDL2-static
+    SDL2_image::SDL2_image-static
+    SDL2_mixer::SDL2_mixer-static
+)
+target_include_directories(tails-adventure PRIVATE
+    include
+    include/objects
+    external/tinyxml2
+)
+
+if(WIN32)
+    target_compile_options(tails-adventure PRIVATE -mwindows)
+    target_link_options(tails-adventure PRIVATE -mwindows)
+endif()
+
+if(TA_STATIC)
+    target_link_options(tails-adventure PRIVATE -static)
+endif()
+
+if(TA_LINUX_INSTALL)
+    target_compile_options(tails-adventure PRIVATE -DTA_LINUX_INSTALL)
+    install(TARGETS tails-adventure DESTINATION /usr/bin)
+    install(DIRECTORY assets/ DESTINATION /usr/share/tails-adventure)
+    install(FILES res/tails-adventure.desktop DESTINATION /usr/share/applications)
+    install(FILES res/tails-adventure.png DESTINATION /usr/share/icons)
+else()
+    install(TARGETS tails-adventure DESTINATION ${CMAKE_BINARY_DIR}/output)
+    install(DIRECTORY assets DESTINATION ${CMAKE_BINARY_DIR}/output)
+endif()

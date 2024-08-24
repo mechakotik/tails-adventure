@@ -24,7 +24,7 @@ gamepad_map_rb 10
 gamepad_map_start 6
 
 default_save/item_mask 17
-default_save/area_mask 515
+default_save/area_mask 1539
 default_save/boss_mask 0
 default_save/rings 8
 default_save/item_slot0 0
