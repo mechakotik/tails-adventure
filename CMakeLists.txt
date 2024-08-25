@@ -70,13 +70,17 @@ target_include_directories(tails-adventure PRIVATE
     external/tinyxml2
 )
 
+if(TA_STATIC)
+    if(WIN32)
+        target_link_options(tails-adventure PRIVATE -static)
+    else()
+        target_link_options(tails-adventure PRIVATE -static-libgcc -static-libstdc++)
+    endif()
+endif()
+
 if(WIN32)
     target_compile_options(tails-adventure PRIVATE -mwindows)
     target_link_options(tails-adventure PRIVATE -mwindows)
-endif()
-
-if(TA_STATIC)
-    target_link_options(tails-adventure PRIVATE -static)
 endif()
 
 if(TA_LINUX_INSTALL)
