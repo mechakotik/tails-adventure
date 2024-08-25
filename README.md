@@ -12,7 +12,6 @@
 
 Tails Adventure is Sonic the Hedgehog spin-off game, released for Game Gear and featuring Tails in a solo role. Opposed to other SMS and GG Sonic titles, which try to bring famous fast-paced Sonic gameplay in 8-bit world, Tails Adventure is metroidvania-like game focusing on exploration, collecting items and backtracking. It's a really unique "hidden gem" of the series, which couldn't get attention it deserves due to low popularity of Game Gear.
 
-
 This project tries to bring Tails Adventure experience to modern platforms, pushing away Game Gear limitations and implementing some quality of life improvements:
 - More difficult but more fair gameplay, improved enemies and bosses
 - Smooth and responsive character physics
@@ -30,21 +29,14 @@ Binary releases for Windows and Linux (amd64) are available at [Releases](https:
 
 ## Building for Linux
 
-To build Tails Adventure Remake, you need to install C++ compiler, Meson build system and following libraries:
-
-- SDL2
-- SDL2_image
-- SDL2_mixer **(2.8.0 or newer)**
-- tinyxml2
-
-The installation process varies through different distros and package managers, here is a few examples:
+To build Tails Adventure Remake, you need to install C++ compiler, Make and CMake. The installation process varies through different distros and package managers, here is a few examples:
 
 ```sh
 # Debian and its derives
-sudo apt install build-essential meson libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libtinyxml2-dev
+sudo apt install build-essential cmake
 
 # Arch and its derives
-sudo pacman -S base-devel meson sdl2 sdl2_image sdl2_mixer tinyxml2
+sudo pacman -S gcc make cmake
 ```
 
 After installing required libraries, run following commands to clone repository, build and install Tails Adventure Remake:
@@ -52,15 +44,16 @@ After installing required libraries, run following commands to clone repository,
 ```sh
 git clone https://github.com/mechakotik/tails-adventure
 cd tails-adventure
-meson setup build && cd build
-meson compile
-sudo meson install -Dlinux_install=true
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_LINUX_INSTALL=true
+cmake --build . -j12
+sudo cmake --install .
 ```
 
 This will install Tails Adventure Remake system-wide and you'll be able to see it in your applications menu. To uninstall, run this command in `tails-adventure/build` directory:
 
 ```sh
-sudo ninja uninstall
+sudo make uninstall
 ```
 
 ## Building for Windows
@@ -74,12 +67,13 @@ pacman -Syu
 If it asks to restart shell, restart it and run this command again. After MSYS2 is fully updated, run following commands in MSYS2 MINGW64 shell to install dependencies, clone repository and build Tails Adventure Remake:
 
 ```sh
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-tinyxml2
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-cmake
 git clone https://github.com/mechakotik/tails-adventure
 cd tails-adventure
-meson setup build && cd build
-meson compile
-meson install -Dstatic=true
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=true
+cmake --build . -j12
+cmake --install .
 ```
 
 Build result will be located in `tails-adventure/build/output` directory.
