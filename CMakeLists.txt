@@ -31,7 +31,6 @@ set(SDL2IMAGE_XPM OFF)
 set(SDL2IMAGE_XV OFF)
 
 set(SDL2MIXER_GME ON)
-set(SDL2MIXER_VORBIS ON)
 set(SDL2MIXER_FLAC OFF)
 set(SDL2MIXER_MOD OFF)
 set(SDL2MIXER_MP3 OFF)
@@ -44,8 +43,17 @@ add_subdirectory(external/SDL EXCLUDE_FROM_ALL)
 add_subdirectory(external/SDL_image EXCLUDE_FROM_ALL)
 add_subdirectory(external/SDL_mixer EXCLUDE_FROM_ALL)
 
+if(WIN32)
+    enable_language("RC")
+    set(WIN32_RESOURCES res/icon.rc)
+endif()
+
 file(STRINGS "src/sources.list" TA_SOURCES)
-add_executable(tails-adventure ${TA_SOURCES} external/tinyxml2/tinyxml2.cpp)
+add_executable(tails-adventure
+    ${TA_SOURCES}
+    external/tinyxml2/tinyxml2.cpp
+    ${WIN32_RESOURCES}
+)
 
 if(TARGET SDL2::SDL2main)
     target_link_libraries(tails-adventure PRIVATE SDL2::SDL2main)
