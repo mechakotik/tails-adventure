@@ -1,5 +1,6 @@
 #include "enemy_mine.h"
 #include "explosion.h"
+#include <cmath>
 
 void TA_EnemyMine::load(TA_Point position)
 {

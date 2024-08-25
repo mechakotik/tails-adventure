@@ -26,8 +26,3 @@ SDL_LAYER_PATH=app/src/main/java/org/libsdl/app
 rm -rf ${SDL_LAYER_PATH}
 mkdir -p ${SDL_LAYER_PATH}
 cp -r app/jni/SDL/android-project/${SDL_LAYER_PATH} ${SDL_LAYER_PATH}/..
-
-# Make include "SDL2/SDL.h" work
-ln -s . app/jni/SDL/include/SDL2
-ln -s . app/jni/SDL_image/include/SDL2
-ln -s . app/jni/SDL_mixer/include/SDL2

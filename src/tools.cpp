@@ -2,7 +2,7 @@
 #include <vector>
 #include <limits>
 #include <fstream>
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "tools.h"
 #include "error.h"
 #include "save.h"

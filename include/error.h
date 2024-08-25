@@ -6,7 +6,7 @@
 #endif
 
 #include <cstdio>
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #define APP_NAME "com.mechakotik.tailsadventure"
 

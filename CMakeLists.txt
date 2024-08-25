@@ -4,6 +4,7 @@ project(tails-adventure)
 option(TA_STATIC OFF)
 option(TA_LINUX_INSTALL OFF)
 
+set(CMAKE_CXX_STANDART 20)
 set(BUILD_SHARED_LIBS OFF)
 set(SDL_STATIC ON)
 set(SDL2IMAGE_VENDORED ON)
@@ -67,6 +68,9 @@ target_link_libraries(tails-adventure PRIVATE
 target_include_directories(tails-adventure PRIVATE
     include
     include/objects
+    external/SDL/include
+    external/SDL_image/include
+    external/SDL_mixer/include
     external/tinyxml2
 )
 

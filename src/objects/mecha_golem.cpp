@@ -5,6 +5,7 @@
 #include "save.h"
 #include "transition.h"
 #include <algorithm>
+#include <cmath>
 
 void TA_MechaGolem::load()
 {

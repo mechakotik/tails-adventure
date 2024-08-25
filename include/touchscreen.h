@@ -1,7 +1,7 @@
 #ifndef TA_TOUCHSCREEN_H
 #define TA_TOUCHSCREEN_H
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "geometry.h"
 #include "tools.h"
 

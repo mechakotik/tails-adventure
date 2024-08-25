@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <sstream>
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "tilemap.h"
 #include "tinyxml2.h"
 #include "error.h"
