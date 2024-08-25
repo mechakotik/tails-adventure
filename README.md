@@ -42,11 +42,11 @@ sudo pacman -S gcc make cmake
 After installing required libraries, run following commands to clone repository, build and install Tails Adventure Remake:
 
 ```sh
-git clone https://github.com/mechakotik/tails-adventure
+git clone --recurse-submodules https://github.com/mechakotik/tails-adventure
 cd tails-adventure
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_LINUX_INSTALL=true
-cmake --build . -j12
+cmake --build .
 sudo cmake --install .
 ```
 
@@ -68,11 +68,11 @@ If it asks to restart shell, restart it and run this command again. After MSYS2 
 
 ```sh
 pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-cmake
-git clone https://github.com/mechakotik/tails-adventure
+git clone --recurse-submodules https://github.com/mechakotik/tails-adventure
 cd tails-adventure
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=true
-cmake --build . -j12
+cmake --build .
 cmake --install .
 ```
 
