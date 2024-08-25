@@ -1,4 +1,21 @@
 ==========
+demo-2.0.0
+==========
+
+- New levels: Lake Rocky, Cavern Island and Caron Forest
+- New items: Vulcan Gun and Napalm Bomb
+- Changed max rings formula
+- Changed Bird Walker behavior
+- Improved camera locking
+- 8:9 pixel aspect ratio like on Game Gear (optional)
+- Fixes for non-standart screen aspect ratios
+- Music is now in VGM format
+- Optimized collision algorithm
+- Sound effects and common textures are now preloaded for lower latency
+- Added binary release for Linux amd64
+- Moved to CMake and vendored libraries
+
+==========
 demo-1.5.0
 ==========
 
