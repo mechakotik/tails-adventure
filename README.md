@@ -29,14 +29,14 @@ Binary releases for Windows and Linux (amd64) are available at [Releases](https:
 
 ## Building for Linux
 
-To build Tails Adventure Remake, you need to install C++ compiler, Make and CMake. The installation process varies through different distros and package managers, here is a few examples:
+To build Tails Adventure Remake, you need to install C++ compiler, Make, CMake and git. The installation process varies through different distros and package managers, here is a few examples:
 
 ```sh
 # Debian and its derives
-sudo apt install build-essential cmake
+sudo apt install build-essential cmake git
 
 # Arch and its derives
-sudo pacman -S gcc make cmake
+sudo pacman -S gcc make cmake git
 ```
 
 After installing required libraries, run following commands to clone repository, build and install Tails Adventure Remake:
@@ -67,7 +67,7 @@ pacman -Syu
 If it asks to restart shell, restart it and run this command again. After MSYS2 is fully updated, run following commands in MSYS2 MINGW64 shell to install dependencies, clone repository and build Tails Adventure Remake:
 
 ```sh
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-cmake
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-cmake mingw-w64-x86_64-git
 git clone --recurse-submodules https://github.com/mechakotik/tails-adventure
 cd tails-adventure
 mkdir build && cd build
