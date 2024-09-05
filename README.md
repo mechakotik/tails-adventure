@@ -67,7 +67,7 @@ pacman -Syu
 If it asks to restart shell, restart it and run this command again. After MSYS2 is fully updated, run following commands in MSYS2 MINGW64 shell to install dependencies, clone repository and build Tails Adventure Remake:
 
 ```sh
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-cmake mingw-w64-x86_64-git
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-ninja mingw-w64-ucrt-x86_64-cmake git
 git clone --recurse-submodules https://github.com/mechakotik/tails-adventure
 cd tails-adventure
 mkdir build && cd build
