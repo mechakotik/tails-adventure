@@ -1,6 +1,14 @@
+#include <filesystem>
 #include <SDL.h>
 #include "filesystem.h"
 #include "error.h"
+
+#ifdef _WIN32
+#include "windows.h"
+#elif __linux__
+#include <limits.h>
+#include <unistd.h>
+#endif
 
 void TA::filesystem::fixPath(std::string &path)
 {
@@ -56,16 +64,29 @@ std::string TA::filesystem::readAsset(std::string path)
     return readFile(prefix + "/" + path);
 }
 
-const std::string TA::filesystem::getAssetsPath()
+std::string TA::filesystem::getAssetsPath()
 {
     #ifdef __ANDROID__
         return ".";
+    #elifdef TA_LINUX_INSTALL
+        return "/usr/share/tails-adventure";
     #else
-        #ifdef TA_LINUX_INSTALL
-            return "/usr/share/tails-adventure";
-        #else
-            return "assets";
-        #endif
+        return getExecutableDirectory() + "/assets";
+    #endif
+}
+
+std::string TA::filesystem::getExecutableDirectory()
+{
+    #ifdef _WIN32
+        char buffer[MAX_PATH];
+        GetModuleFileNmae(NULL, buffer, MAX_PATH);
+        std::string path(buffer);
+        return path.substr(0, path.find_last_of("\\/"));
+    #else
+        char buffer[PATH_MAX];
+        ssize_t count = readlink("/proc/self/exe", buffer, PATH_MAX);
+        std::string path(buffer, (count > 0 ? count : 0));
+        return path.substr(0, path.find_last_of("/"));
     #endif
 }
 

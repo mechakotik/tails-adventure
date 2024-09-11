@@ -8,7 +8,8 @@ namespace TA::filesystem {
     bool fileExists(std::string path);
     std::string readFile(std::string path);
     std::string readAsset(std::string path);
-    const std::string getAssetsPath();
+    std::string getAssetsPath();
+    std::string getExecutableDirectory();
     void writeFile(std::string path, std::string value);
 }
 

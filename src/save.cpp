@@ -76,7 +76,7 @@ std::string TA::save::getSaveFileName()
             std::filesystem::create_directories(path);
             return path + "/config";
         #else
-            return "config";
+            return TA::filesystem::getExecutableDirectory() + "/config";
         #endif
     #endif
 }
