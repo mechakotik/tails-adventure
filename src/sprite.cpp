@@ -13,7 +13,10 @@
 void TA_Texture::load(std::string filename)
 {
     SDLTexture = TA::resmgr::loadTexture(filename);
-    SDL_QueryTexture(SDLTexture, NULL, NULL, &width, &height);
+    float floatWidth, floatHeight;
+    SDL_GetTextureSize(SDLTexture, &floatWidth, &floatHeight);
+    width = int(floatWidth + 0.5);
+    height = int(floatHeight + 0.5);
 }
 
 void TA_Animation::create(std::vector<int> newFrames, int newDelay, int newRepeatTimes)
@@ -94,8 +97,11 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect)
     
     if(!hidden) {
         SDL_SetTextureAlphaMod(texture.SDLTexture, alpha);
-        SDL_RendererFlip flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-        SDL_RenderCopyEx(TA::renderer, texture.SDLTexture, &srcRect, &dstRect, 0, nullptr, flipFlags);
+        SDL_FlipMode flipFlags = (flip? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+        SDL_FRect srcFRect, dstFRect;
+        SDL_RectToFRect(&srcRect, &srcFRect);
+        SDL_RectToFRect(&dstRect, &dstFRect);
+        SDL_RenderTextureRotated(TA::renderer, texture.SDLTexture, &srcFRect, &dstFRect, 0, nullptr, flipFlags);
     }
     updateAnimationNeeded = true;
 }

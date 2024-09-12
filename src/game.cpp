@@ -1,8 +1,8 @@
 #include <chrono>
 #include <thread>
 
-#include "SDL_image.h"
-#include "SDL_mixer.h"
+#include "SDL3_image/SDL_image.h"
+#include "SDL3_mixer/SDL_mixer.h"
 
 #include "game.h"
 #include "error.h"
@@ -50,7 +50,7 @@ TA_Game::TA_Game()
 
 void TA_Game::initSDL()
 {
-    if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+    if(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD | SDL_INIT_EVENTS | SDL_INIT_SENSOR) < 0) {
         TA::handleSDLError("%s", "SDL init failed");
     }
     if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
@@ -60,40 +60,37 @@ void TA_Game::initSDL()
     if(Mix_Init(MIX_INIT_OGG) != MIX_INIT_OGG) {
         TA::handleSDLError("%s", "SDL_mixer init failed");
     }
-    if(Mix_OpenAudio(soundFrequency, MIX_DEFAULT_FORMAT, TA_SOUND_CHANNEL_MAX, soundChunkSize) == -1) {
+    SDL_AudioSpec audioSpec;
+    audioSpec.channels = TA_SOUND_CHANNEL_MAX;
+    audioSpec.format = MIX_DEFAULT_FORMAT;
+    audioSpec.freq = 44100;
+    if(Mix_OpenAudio(0, &audioSpec) == -1) {
         TA::handleSDLError("%s", "Mix_OpenAudio failed");
     }
-
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
-    SDL_ShowCursor(SDL_DISABLE);
+    SDL_HideCursor();
 }
 
 void TA_Game::createWindow()
 {
-    int windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP;
-    TA::window = SDL_CreateWindow("Tails Adventure", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, defaultWindowWidth, defaultWindowHeight, windowFlags);
+    TA::window = SDL_CreateWindow("Tails Adventure", defaultWindowWidth, defaultWindowHeight, SDL_WINDOW_FULLSCREEN);
     if(TA::window == nullptr) {
         TA::handleSDLError("%s", "Failed to create window");
     }
 
-    int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE;
-    if(TA::save::getParameter("vsync")) {
-        rendererFlags |= SDL_RENDERER_PRESENTVSYNC;
-        vsync = true;
-    }
-    TA::renderer = SDL_CreateRenderer(TA::window, -1, rendererFlags);
+    TA::renderer = SDL_CreateRenderer(TA::window, NULL);
     if(TA::renderer == nullptr) {
         TA::handleSDLError("%s", "Failed to create renderer");
     }
 
     updateWindowSize();
     SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderVSync(TA::renderer, TA::save::getParameter("vsync"));
 }
 
 void TA_Game::toggleFullscreen()
 {
     fullscreen = !fullscreen;
-    SDL_SetWindowFullscreen(TA::window, (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
+    SDL_SetWindowFullscreen(TA::window, fullscreen);
     updateWindowSize();
 }
 
@@ -121,7 +118,7 @@ void TA_Game::updateWindowSize()
             SDL_DestroyTexture(targetTexture);
         }
         targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, targetWidth, targetHeight);
-        SDL_SetTextureScaleMode(targetTexture, SDL_ScaleModeNearest);
+        SDL_SetTextureScaleMode(targetTexture, SDL_SCALEMODE_NEAREST);
     }
 }
 
@@ -136,14 +133,14 @@ bool TA_Game::process()
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
+        if (event.type == SDL_EVENT_QUIT) {
             return false;
         }
-        else if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION || event.type == SDL_FINGERUP) {
+        else if (event.type == SDL_EVENT_FINGER_DOWN || event.type == SDL_EVENT_FINGER_MOTION || event.type == SDL_EVENT_FINGER_UP) {
             TA::touchscreen::handleEvent(event.tfinger);
         }
-        else if(event.type == SDL_CONTROLLERDEVICEADDED || event.type == SDL_CONTROLLERDEVICEREMOVED) {
-            TA::gamepad::handleEvent(event.cdevice);
+        else if(event.type == SDL_EVENT_GAMEPAD_ADDED || event.type == SDL_EVENT_GAMEPAD_REMOVED) {
+            TA::gamepad::handleEvent(event.gdevice);
         }
     }
 
@@ -195,9 +192,9 @@ void TA_Game::update()
     SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
     SDL_RenderClear(TA::renderer);
 
-    SDL_Rect srcRect{0, 0, TA::screenWidth * TA::scaleFactor, TA::screenHeight * TA::scaleFactor};
-    SDL_Rect dstRect{0, 0, windowWidth, windowHeight};
-    SDL_RenderCopy(TA::renderer, targetTexture, &srcRect, &dstRect);
+    SDL_FRect srcRect{0, 0, TA::screenWidth * TA::scaleFactor, TA::screenHeight * TA::scaleFactor};
+    SDL_FRect dstRect{0, 0, windowWidth, windowHeight};
+    SDL_RenderTexture(TA::renderer, targetTexture, &srcRect, &dstRect);
     SDL_RenderPresent(TA::renderer);
 
     int fpsLimit = TA::getFPSLimit();

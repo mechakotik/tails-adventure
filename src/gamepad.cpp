@@ -9,11 +9,11 @@ namespace TA { namespace gamepad {
     TA_Point getDpadDirectionVector();
     TA_Point getStickDirectionVector();
 
-    std::array<SDL_GameControllerButton, TA_BUTTON_MAX> mapping;
-    std::array<SDL_GameControllerButton, TA_DIRECTION_MAX> directionMapping;
+    std::array<SDL_GamepadButton, TA_BUTTON_MAX> mapping;
+    std::array<SDL_GamepadButton, TA_DIRECTION_MAX> directionMapping;
 
-    SDL_GameController *controller = nullptr;
-    std::array<bool, SDL_CONTROLLER_BUTTON_MAX> pressed, justPressed;
+    SDL_Gamepad *controller = nullptr;
+    std::array<bool, SDL_GAMEPAD_BUTTON_COUNT> pressed, justPressed;
     bool isConnected = false;
 }}
 
@@ -22,13 +22,13 @@ bool TA::gamepad::connected()
     return isConnected;
 }
 
-void TA::gamepad::handleEvent(SDL_ControllerDeviceEvent event)
+void TA::gamepad::handleEvent(SDL_GamepadDeviceEvent event)
 {
-    if(event.type == SDL_CONTROLLERDEVICEADDED && !isConnected) {
+    if(event.type == SDL_EVENT_GAMEPAD_ADDED && !isConnected) {
         isConnected = true;
         init(event.which);
     }
-    else if(event.type == SDL_CONTROLLERDEVICEREMOVED) {
+    else if(event.type == SDL_EVENT_GAMEPAD_REMOVED) {
         isConnected = false;
         quit();
     }
@@ -36,7 +36,7 @@ void TA::gamepad::handleEvent(SDL_ControllerDeviceEvent event)
 
 void TA::gamepad::init(int index)
 {
-    controller = SDL_GameControllerOpen(index);
+    controller = SDL_OpenGamepad(index);
     if(controller == nullptr) {
         isConnected = false;
         return;
@@ -45,14 +45,14 @@ void TA::gamepad::init(int index)
         isConnected = true;
     }
     
-    SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt");
+    SDL_AddGamepadMappingsFromFile("gamecontrollerdb.txt");
     updateMapping();
 }
 
 void TA::gamepad::updateMapping()
 {
     auto getMap = [] (std::string name) {
-        return (SDL_GameControllerButton)TA::save::getParameter("gamepad_map_" + name);
+        return (SDL_GamepadButton)TA::save::getParameter("gamepad_map_" + name);
     };
 
     mapping[TA_BUTTON_A] = getMap("a");
@@ -61,10 +61,10 @@ void TA::gamepad::updateMapping()
     mapping[TA_BUTTON_LB] = getMap("lb");
     mapping[TA_BUTTON_RB] = getMap("rb");
 
-    directionMapping[TA_DIRECTION_UP] = SDL_CONTROLLER_BUTTON_DPAD_UP;
-    directionMapping[TA_DIRECTION_DOWN] = SDL_CONTROLLER_BUTTON_DPAD_DOWN;
-    directionMapping[TA_DIRECTION_LEFT] = SDL_CONTROLLER_BUTTON_DPAD_LEFT;
-    directionMapping[TA_DIRECTION_RIGHT] = SDL_CONTROLLER_BUTTON_DPAD_RIGHT;
+    directionMapping[TA_DIRECTION_UP] = SDL_GAMEPAD_BUTTON_DPAD_UP;
+    directionMapping[TA_DIRECTION_DOWN] = SDL_GAMEPAD_BUTTON_DPAD_DOWN;
+    directionMapping[TA_DIRECTION_LEFT] = SDL_GAMEPAD_BUTTON_DPAD_LEFT;
+    directionMapping[TA_DIRECTION_RIGHT] = SDL_GAMEPAD_BUTTON_DPAD_RIGHT;
 }
 
 void TA::gamepad::update()
@@ -72,20 +72,20 @@ void TA::gamepad::update()
     if(!connected()) {
         return;
     }
-    SDL_GameControllerUpdate();
+    SDL_UpdateGamepads();
     updateMapping();
 
-    for(int button = 0; button < SDL_CONTROLLER_BUTTON_MAX; button ++) {
-        if(SDL_GameControllerGetButton(controller, (SDL_GameControllerButton)button)) {
-            if(!pressed[button]) {
-                pressed[button] = justPressed[button] = true;
+    for(int button = 0; button < SDL_GAMEPAD_BUTTON_COUNT; button ++) {
+        if(SDL_GetGamepadButton(controller, (SDL_GamepadButton)button)) {
+            if(!pressed[(int)button]) {
+                pressed[(int)button] = justPressed[(int)button] = true;
             }
             else {
-                justPressed[button] = false;
+                justPressed[(int)button] = false;
             }
         }
         else {
-            pressed[button] = justPressed[button] = false;
+            pressed[(int)button] = justPressed[(int)button] = false;
         }
     }
 }
@@ -105,7 +105,7 @@ TA_Point TA::gamepad::getDirectionVector()
 bool TA::gamepad::isDpadPressed()
 {
     for(int direction = 0; direction < TA_DIRECTION_MAX; direction ++) {
-        if(SDL_GameControllerGetButton(controller, directionMapping[direction])) {
+        if(SDL_GetGamepadButton(controller, directionMapping[direction])) {
             return true;
         }
     }
@@ -147,13 +147,13 @@ TA_Point TA::gamepad::getDpadDirectionVector()
 
 TA_Point TA::gamepad::getStickDirectionVector()
 {
-    auto getAxis = [&](double &x, SDL_GameControllerAxis index) {
-        x = SDL_GameControllerGetAxis(controller, index);
+    auto getAxis = [&](double &x, SDL_GamepadAxis index) {
+        x = SDL_GetGamepadAxis(controller, index);
         x /= 32768;
     };
     TA_Point vector;
-    getAxis(vector.x, SDL_CONTROLLER_AXIS_LEFTX);
-    getAxis(vector.y, SDL_CONTROLLER_AXIS_LEFTY);
+    getAxis(vector.x, SDL_GAMEPAD_AXIS_LEFTX);
+    getAxis(vector.y, SDL_GAMEPAD_AXIS_LEFTY);
     return vector;
 }
 
@@ -167,14 +167,14 @@ bool TA::gamepad::isJustPressed(TA_FunctionButton button)
     return isControllerButtonJustPressed(mapping[button]);
 }
 
-bool TA::gamepad::isControllerButtonPressed(SDL_GameControllerButton button)
+bool TA::gamepad::isControllerButtonPressed(SDL_GamepadButton button)
 {
-    return connected() && pressed[button];
+    return connected() && pressed[(int)button];
 }
 
-bool TA::gamepad::isControllerButtonJustPressed(SDL_GameControllerButton button)
+bool TA::gamepad::isControllerButtonJustPressed(SDL_GamepadButton button)
 {
-    return connected() && justPressed[button];
+    return connected() && justPressed[(int)button];
 }
 
 void TA::gamepad::rumble(double lowFreqStrength, double highFreqStrength, int time)
@@ -182,10 +182,10 @@ void TA::gamepad::rumble(double lowFreqStrength, double highFreqStrength, int ti
     if(!connected() || !TA::save::getParameter("rumble")) {
         return;
     }
-    SDL_GameControllerRumble(controller, 0xFFFF * lowFreqStrength, 0xFFFF * highFreqStrength, time * 1000 / 60);
+    SDL_RumbleGamepad(controller, 0xFFFF * lowFreqStrength, 0xFFFF * highFreqStrength, time * 1000 / 60);
 }
 
 void TA::gamepad::quit()
 {
-    SDL_GameControllerClose(controller);
+    SDL_CloseGamepad(controller);
 }

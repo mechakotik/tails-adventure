@@ -2,7 +2,7 @@
 #include <vector>
 #include <limits>
 #include <fstream>
-#include "SDL.h"
+#include "SDL3/SDL.h"
 #include "tools.h"
 #include "error.h"
 #include "save.h"
@@ -32,10 +32,7 @@ namespace TA
 
 void TA::drawScreenRect(int r, int g, int b, int a)
 {
-    SDL_DisplayMode displayMode;
-    SDL_GetCurrentDisplayMode(0, &displayMode);
-
-    SDL_Rect rect;
+    SDL_FRect rect;
     rect.x = rect.y = 0;
     rect.w = rect.h = 10000;
 

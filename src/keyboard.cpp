@@ -1,22 +1,22 @@
-#include "SDL2/SDL_scancode.h"
+#include "SDL3/SDL.h"
 #include "keyboard.h"
 #include "save.h"
 
 namespace TA { namespace keyboard {
     std::array<SDL_Scancode, TA_BUTTON_MAX> mapping;
     std::array<SDL_Scancode, TA_DIRECTION_MAX> directionMapping;
-    std::array<bool, SDL_NUM_SCANCODES> pressed, justPressed;
+    std::array<bool, SDL_SCANCODE_COUNT> pressed, justPressed;
     
-    std::array<bool, SDL_NUM_SCANCODES> getKeyboardState();
+    std::array<bool, SDL_SCANCODE_COUNT> getKeyboardState();
     void updateMapping();
 }}
 
 void TA::keyboard::update()
 {
     updateMapping();
-    std::array<bool, SDL_NUM_SCANCODES> keyboardState = getKeyboardState();
+    std::array<bool, SDL_SCANCODE_COUNT> keyboardState = getKeyboardState();
 
-    for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+    for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
         if(keyboardState[button]) {
             justPressed[button] = !pressed[button];
             pressed[button] = true;
@@ -45,11 +45,11 @@ void TA::keyboard::updateMapping()
     directionMapping[TA_DIRECTION_RIGHT] = getMap("right");
 }
 
-std::array<bool, SDL_NUM_SCANCODES> TA::keyboard::getKeyboardState()
+std::array<bool, SDL_SCANCODE_COUNT> TA::keyboard::getKeyboardState()
 {
     if(TA::eventLog::isReading()) {
-        std::array<bool, SDL_NUM_SCANCODES> state;
-        for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+        std::array<bool, SDL_SCANCODE_COUNT> state;
+        for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
             state[button] = TA::eventLog::read();
         }
 
@@ -57,19 +57,21 @@ std::array<bool, SDL_NUM_SCANCODES> TA::keyboard::getKeyboardState()
     }
 
     else {
-        std::array<bool, SDL_NUM_SCANCODES> state;
-        const uint8_t* keyState = SDL_GetKeyboardState(NULL);
+        std::array<bool, SDL_SCANCODE_COUNT> state;
+        int* keyState = new int[SDL_SCANCODE_COUNT];
+        SDL_GetKeyboardState(keyState);
 
-        for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+        for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
             state[button] = keyState[button];
         }
 
         if(TA::eventLog::isWriting()) {
-            for(int button = 0; button < SDL_NUM_SCANCODES; button ++) {
+            for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
                 TA::eventLog::write(state[button]);
             }
         }
 
+        delete keyState;
         return state;
     }
 }

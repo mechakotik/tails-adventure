@@ -1,5 +1,5 @@
 #include <unordered_map>
-#include <SDL_image.h>
+#include "SDL3_image/SDL_image.h"
 #include "resource_manager.h"
 #include "error.h"
 #include "filesystem.h"
@@ -88,7 +88,7 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename)
         }
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
         textureMap[filename] = texture;
-        SDL_FreeSurface(surface);
+        SDL_DestroySurface(surface);
     }
 
     return textureMap[filename];

@@ -15,14 +15,14 @@ void TA::touchscreen::update()
 
 void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event)
 {
-    if(event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION) {
-        if(event.type == SDL_FINGERDOWN) {
-            justPressedFingers.insert(event.fingerId);
+    if(event.type == SDL_EVENT_FINGER_DOWN || event.type == SDL_EVENT_FINGER_MOTION) {
+        if(event.type == SDL_EVENT_FINGER_DOWN) {
+            justPressedFingers.insert(event.fingerID);
         }
-        currentFingers[event.fingerId] = {event.x * TA::screenWidth, event.y * TA::screenHeight};
+        currentFingers[event.fingerID] = {event.x * TA::screenWidth, event.y * TA::screenHeight};
     }
     else {
-        currentFingers.erase(event.fingerId);
+        currentFingers.erase(event.fingerID);
     }
 }
 

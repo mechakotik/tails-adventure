@@ -1,4 +1,4 @@
-#include "SDL2/SDL_scancode.h"
+#include "SDL3/SDL.h"
 #include "options_menu.h"
 #include "save.h"
 
@@ -170,7 +170,7 @@ public:
     }
 
     TA_MoveSoundId updateLocked() override {
-        for(int scancode = 0; scancode < SDL_NUM_SCANCODES; scancode ++) {
+        for(int scancode = 0; scancode < SDL_SCANCODE_COUNT; scancode ++) {
             if(scancode == SDL_SCANCODE_ESCAPE || scancode == SDL_SCANCODE_RALT) {
                 continue;
             }
@@ -215,8 +215,8 @@ public:
     }
 
     TA_MoveSoundId updateLocked() override {
-        for(int id = 0; id < SDL_CONTROLLER_BUTTON_MAX; id ++) {
-            if(TA::gamepad::isControllerButtonJustPressed(SDL_GameControllerButton(id))) {
+        for(int id = 0; id < SDL_GAMEPAD_BUTTON_COUNT; id ++) {
+            if(TA::gamepad::isControllerButtonJustPressed(SDL_GamepadButton(id))) {
                 TA::save::setParameter("gamepad_map_" + buttons[button], id);
                 button ++;
                 if(button >= (int)buttons.size()) {

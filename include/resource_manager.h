@@ -2,8 +2,8 @@
 #define TA_RESOURCE_MANAGER_H
 
 #include <string>
-#include <SDL.h>
-#include <SDL_mixer.h>
+#include "SDL3/SDL.h"
+#include "SDL3_mixer/SDL_mixer.h"
 
 namespace TA { namespace resmgr {
     void preload();

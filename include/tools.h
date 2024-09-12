@@ -5,7 +5,7 @@
 #include <vector>
 #include <set>
 #include <cmath>
-#include "SDL.h"
+#include "SDL3/SDL.h"
 
 enum TA_Direction {
     TA_DIRECTION_UP,
