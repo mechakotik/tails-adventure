@@ -58,8 +58,7 @@ std::array<bool, SDL_SCANCODE_COUNT> TA::keyboard::getKeyboardState()
 
     else {
         std::array<bool, SDL_SCANCODE_COUNT> state;
-        int* keyState = new int[SDL_SCANCODE_COUNT];
-        SDL_GetKeyboardState(keyState);
+        const SDL_bool* keyState = SDL_GetKeyboardState(NULL);
 
         for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
             state[button] = keyState[button];
@@ -71,7 +70,6 @@ std::array<bool, SDL_SCANCODE_COUNT> TA::keyboard::getKeyboardState()
             }
         }
 
-        delete keyState;
         return state;
     }
 }
