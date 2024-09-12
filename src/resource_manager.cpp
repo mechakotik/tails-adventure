@@ -87,6 +87,7 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename)
             TA::handleSDLError("%s", "Failed to create texture from surface");
         }
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+        SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
         textureMap[filename] = texture;
         SDL_DestroySurface(surface);
     }
