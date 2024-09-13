@@ -1,5 +1,5 @@
-#ifndef TA_SCREENSTATEMACHINE_H
-#define TA_SCREENSTATEMACHINE_H
+#ifndef TA_SCREEN_STATE_MACHINE_H
+#define TA_SCREEN_STATE_MACHINE_H
 
 #include "screen.h"
 
@@ -19,4 +19,4 @@ public:
     ~TA_ScreenStateMachine();
 };
 
-#endif // TA_SCREENSTATEMACHINE_H
+#endif // TA_SCREEN_STATE_MACHINE_H
