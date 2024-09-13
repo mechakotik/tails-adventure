@@ -1,4 +1,7 @@
 #include "screen_state_machine.h"
+
+#include <data_select_screen.h>
+
 #include "intro_screen.h"
 #include "title_screen.h"
 #include "game_screen.h"
@@ -76,6 +79,9 @@ bool TA_ScreenStateMachine::update()
                 break;
             case TA_SCREENSTATE_GAMEOVER:
                 currentScreen = new TA_GameOverScreen();
+                break;
+            case TA_SCREENSTATE_DATA_SELECT:
+                currentScreen = new TA_DataSelectScreen();
                 break;
             default:
                 TA::handleError("%s", "Invalid new screen state");

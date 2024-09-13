@@ -38,6 +38,7 @@ src/character_movement.cpp
 src/character_tool.cpp
 src/character.cpp
 src/controller.cpp
+src/data_select_screen.cpp
 src/devmenu_screen.cpp
 src/filesystem.cpp
 src/font.cpp
