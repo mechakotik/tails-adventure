@@ -45,7 +45,7 @@ After installing required libraries, run following commands to clone repository,
 git clone --recurse-submodules https://github.com/mechakotik/tails-adventure
 cd tails-adventure
 mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_LINUX_INSTALL=true
+cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_UNIX_INSTALL=true
 cmake --build .
 sudo cmake --install .
 ```

@@ -46,7 +46,7 @@ TA_ScreenState TA_TitleScreen::update()
     }
 
     if(shouldExit) {
-        return TA_SCREENSTATE_MAP;
+        return TA_SCREENSTATE_MAIN_MENU;
     }
     return TA_SCREENSTATE_CURRENT;
 }

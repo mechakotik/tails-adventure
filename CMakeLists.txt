@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.25)
 project(tails-adventure)
 
-option(TA_STATIC OFF)
-option(TA_LINUX_INSTALL OFF)
+option(TA_STATIC "Statically link libgcc and libstdc++" OFF)
+option(TA_UNIX_INSTALL "Install on Unix filesystem" OFF)
+option(TA_SANITIZE "Build with sanitizers" OFF)
 
 set(CMAKE_CXX_STANDART 20)
 set(BUILD_SHARED_LIBS OFF)
@@ -95,13 +96,18 @@ if(TA_STATIC)
     endif()
 endif()
 
+if(TA_SANITIZE)
+    add_compile_options(-fsanitize=address,leak,undefined)
+    add_link_options(-fsanitize=address,leak,undefined)
+endif()
+
 if(WIN32)
     target_compile_options(tails-adventure PRIVATE -mwindows)
     target_link_options(tails-adventure PRIVATE -mwindows)
 endif()
 
-if(TA_LINUX_INSTALL)
-    target_compile_options(tails-adventure PRIVATE -DTA_LINUX_INSTALL)
+if(TA_UNIX_INSTALL)
+    target_compile_options(tails-adventure PRIVATE -DTA_UNIX_INSTALL)
     install(TARGETS tails-adventure DESTINATION /usr/bin)
     install(DIRECTORY assets/ DESTINATION /usr/share/tails-adventure)
     install(FILES res/tails-adventure.desktop DESTINATION /usr/share/applications)

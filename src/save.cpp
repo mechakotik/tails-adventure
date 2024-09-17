@@ -71,7 +71,7 @@ std::string TA::save::getSaveFileName()
         std::string path = SDL_AndroidGetInternalStoragePath();
         return path + "/config";
     #else
-        #ifdef TA_LINUX_INSTALL
+        #ifdef TA_UNIX_INSTALL
             std::string path = std::string(getenv("HOME")) + "/.local/share/tails-adventure";
             std::filesystem::create_directories(path);
             return path + "/config";

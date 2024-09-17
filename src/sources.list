@@ -38,7 +38,7 @@ src/character_movement.cpp
 src/character_tool.cpp
 src/character.cpp
 src/controller.cpp
-src/data_select_screen.cpp
+src/data_select_section.cpp
 src/devmenu_screen.cpp
 src/filesystem.cpp
 src/font.cpp
@@ -55,6 +55,7 @@ src/intro_screen.cpp
 src/inventory_menu.cpp
 src/keyboard.cpp
 src/main.cpp
+src/main_menu_screen.cpp
 src/map_screen.cpp
 src/object_set.cpp
 src/onscreen_controller.cpp

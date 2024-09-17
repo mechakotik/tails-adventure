@@ -69,7 +69,7 @@ std::string TA::filesystem::getAssetsPath()
 {
     #ifdef __ANDROID__
         return ".";
-    #elifdef TA_LINUX_INSTALL
+    #elifdef TA_UNIX_INSTALL
         return "/usr/share/tails-adventure";
     #else
         return getExecutableDirectory() + "/assets";
