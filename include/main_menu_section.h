@@ -18,7 +18,7 @@ public:
     virtual void setAlpha(int alpha) {}
     virtual void draw() {}
 
-private:
+protected:
     TA_Controller *controller;
 };
 

@@ -75,9 +75,9 @@ double TA::linearInterpolation(double left, double right, double pos)
 {
     pos = fmod(pos, 2);
     if(pos < 1) {
-        return left + (right - left) / pos;
+        return left + (right - left) * pos;
     }
-    return right - (right - left) / (pos - 1);
+    return right - (right - left) * (pos - 1);
 }
 
 void TA::eventLog::openRead(std::string filename)

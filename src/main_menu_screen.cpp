@@ -13,8 +13,18 @@ void TA_MainMenuScreen::init()
 
 TA_ScreenState TA_MainMenuScreen::update()
 {
-    neededState = sections[state]->update();
-    sections[state]->draw();
+    controller.update();
+
+    if(state == neededState) {
+        neededState = sections[state]->update();
+        sections[state]->draw();
+    }
+    else {
+        if(neededState == TA_MAIN_MENU_EXIT) {
+            sections[state]->draw();
+            return TA_SCREENSTATE_MAP;
+        }
+    }
 
     return TA_SCREENSTATE_CURRENT;
 }
