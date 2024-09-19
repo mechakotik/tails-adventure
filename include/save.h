@@ -15,6 +15,7 @@ namespace TA { namespace save {
     void repairSave(std::string saveName);
     void loadFromLatest();
     void saveToLatest();
+    bool saveExists(int save);
 }}
 
 #endif // TA_SAVE_H

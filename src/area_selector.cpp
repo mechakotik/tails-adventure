@@ -40,8 +40,12 @@ void TA_AreaSelector::addSelectedArea()
     if(TA::save::getSaveParameter("seafox")) {
         index += 9;
     }
-    areaMask |= (1ll << index);
-    TA::save::setSaveParameter("area_mask", areaMask);
+
+    if((areaMask & (1ll << index)) == 0) {
+        areaMask |= (1ll << index);
+        TA::save::setSaveParameter("area_mask", areaMask);
+        TA::save::setSaveParameter("last_unlocked", index);
+    }
 }
 
 void TA_AreaSelector::setActivePoints()

@@ -47,4 +47,5 @@ default_save/latest_item_slot1 -1
 default_save/latest_item_slot2 -1
 default_save/latest_item_slot3 -1
 default_save/latest_item_position 0
-
+default_save/time 0
+default_save/last_unlocked 1

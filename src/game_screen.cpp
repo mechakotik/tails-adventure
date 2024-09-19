@@ -42,10 +42,14 @@ void TA_GameScreen::init()
     }
     
     TA::previousLevelPath = TA::levelPath;
+    timer = TA::save::getSaveParameter("time");
 }
 
 TA_ScreenState TA_GameScreen::update()
 {
+    timer += TA::elapsedTime;
+    TA::save::setSaveParameter("time", timer);
+
     controller.update();
     hud.update();
 

@@ -3,6 +3,7 @@
 
 #include "main_menu_section.h"
 #include "sound.h"
+#include "font.h"
 
 class TA_DataSelectSection : public TA_MainMenuSection {
 public:
@@ -20,9 +21,12 @@ private:
     const double loadTime = 60;
 
     void updateSelection();
+    int getSavePercent(int save);
+    std::string getSaveTime(int save);
 
-    TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite;
+    TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite;
     TA_Sound switchSound, loadSaveSound;
+    TA_Font font;
     double timer = 0, selectorTimer = 0;
 
     double position = 0;

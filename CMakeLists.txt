@@ -5,7 +5,7 @@ option(TA_STATIC "Statically link libgcc and libstdc++" OFF)
 option(TA_UNIX_INSTALL "Install on Unix filesystem" OFF)
 option(TA_SANITIZE "Build with sanitizers" OFF)
 
-set(CMAKE_CXX_STANDART 20)
+set(CMAKE_CXX_STANDARD 20)
 set(BUILD_SHARED_LIBS OFF)
 set(SDL_STATIC ON)
 set(SDL_DISABLE_INSTALL ON)

@@ -160,3 +160,9 @@ void TA::save::loadFromLatest()
         setSaveParameter(name, getSaveParameter("latest_" + name));
     }
 }
+
+bool TA::save::saveExists(int save)
+{
+    std::string saveName = "save_" + std::to_string(save);
+    return saveMap.count(saveName + "/item_mask");
+}
