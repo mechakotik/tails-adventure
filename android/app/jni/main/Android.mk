@@ -14,9 +14,6 @@ LOCAL_C_INCLUDES := ${LOCAL_PATH}/include \
 LOCAL_SRC_FILES := $(shell cat ${LOCAL_PATH}/src/sources.list) \
                     ${LOCAL_PATH}/../tinyxml2/tinyxml2.cpp
 
-LOCAL_SHARED_LIBRARIES := SDL3 SDL3_image SDL3_mixer
-
-LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -lOpenSLES -llog -landroid
+LOCAL_STATIC_LIBRARIES := SDL3_static SDL3_image_static SDL3_mixer_static
 
 include $(BUILD_SHARED_LIBRARY)
-
