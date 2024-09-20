@@ -2,6 +2,7 @@
 #define TA_OPTIONS_MENU_H
 
 #include <memory>
+#include "main_menu_section.h"
 #include "controller.h"
 #include "font.h"
 #include "sound.h"
@@ -23,9 +24,8 @@ public:
     virtual TA_MoveSoundId updateLocked() {return TA_MOVE_SOUND_EMPTY;}
 };
 
-class TA_OptionsMenu {
+class TA_OptionsSection : public TA_MainMenuSection {
 private:
-    const double transitionTime = 10;
     const double listTransitionTime = 5;
 
     void updateGroupSelector();
@@ -37,6 +37,7 @@ private:
 
     void drawGroupList();
     void drawOptionList();
+    void drawHighlight(double y);
 
     enum State {
         STATE_SELECTING_GROUP,
@@ -44,26 +45,21 @@ private:
         STATE_QUIT
     };
 
-    TA_Controller* controller;
-    TA_Font activeFont, inactiveFont;
-    double transitionTimeLeft = -1, listTransitionTimeLeft = -1;
-    bool shown = false;
+    TA_Font font;
+    double listTransitionTimeLeft = -1;
 
     State state = STATE_SELECTING_GROUP;
     std::vector<std::string> groups{"video", "controls", "sound"};
     std::vector<std::vector<std::unique_ptr<TA_Option>>> options;
     TA_Sound switchSound, selectSound, backSound, errorSound;
-    int group = 0, option = 0;
+    int group = 0, option = 0, alpha = 255, baseAlpha = 255;
 
 public:
-    TA_OptionsMenu() {}
-    void load(TA_Controller* controller);
-    bool update();
-    void draw();
-    void reset();
-    void show();
-    void hide();
-    bool isShown() {return shown || transitionTimeLeft > 0;}
+    using TA_MainMenuSection::TA_MainMenuSection;
+    void load() override;
+    TA_MainMenuState update() override;
+    void draw() override;
+    void setAlpha(int alpha) override {baseAlpha = alpha;}
 };
 
 #endif // TA_OPTIONS_MENU_H

@@ -23,8 +23,11 @@ private:
     void updateSelection();
     int getSavePercent(int save);
     std::string getSaveTime(int save);
+    TA_MainMenuState processSelection();
+    void drawCustomEntries();
+    void drawSaveEntries();
 
-    TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite;
+    TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite, optionsSprite;
     TA_Sound switchSound, loadSaveSound;
     TA_Font font;
     double timer = 0, selectorTimer = 0;

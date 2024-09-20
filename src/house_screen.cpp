@@ -22,7 +22,6 @@ void TA_HouseScreen::init()
     selectSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
 
     inventoryMenu.load(&controller);
-    optionsMenu.load(&controller);
 }
 
 TA_ScreenState TA_HouseScreen::update()
@@ -40,15 +39,6 @@ TA_ScreenState TA_HouseScreen::update()
                 inventoryMenu.show();
             }
         }
-        else if(optionsOpen) {
-            shouldMove |= !optionsMenu.update();
-            if(shouldMove) {
-                optionsMenu.hide();
-            }
-            else {
-                optionsMenu.show();
-            }
-        }
         else {
             updateSelector();
         }
@@ -60,7 +50,7 @@ TA_ScreenState TA_HouseScreen::update()
 
     if(shouldExit) {
         TA::save::setSaveParameter("map_selection", 0);
-        return TA_SCREENSTATE_MAP;
+        return (selectionY == 0 ? TA_SCREENSTATE_MAIN_MENU : TA_SCREENSTATE_MAP);
     }
     return TA_SCREENSTATE_CURRENT;
 }
@@ -146,9 +136,6 @@ bool TA_HouseScreen::shouldDoTransition()
     if(inventoryOpen) {
         return !inventoryMenu.isShown();
     }
-    if(optionsOpen) {
-        return !optionsMenu.isShown();
-    }
     if(!controller.isJustPressed(TA_BUTTON_A)) {
         return false;
     }
@@ -178,13 +165,7 @@ void TA_HouseScreen::applyTransition()
         seaFox = !seaFox;
         TA::save::setSaveParameter("seafox", seaFox);
     }
-    else if(selectionX == 1 && selectionY == 0) {
-        optionsOpen = !optionsOpen;
-        if(optionsOpen) {
-            optionsMenu.reset();
-        }
-    }
-    else if(selectionX == 1 && selectionY == 1) {
+    else {
         shouldExit = true;
     }
 }
@@ -196,9 +177,6 @@ void TA_HouseScreen::draw()
 
     if(inventoryOpen) {
         inventoryMenu.draw();
-    }
-    else if(optionsOpen) {
-        optionsMenu.draw();
     }
     else {
         if(TA::save::getSaveParameter("seafox")) {
@@ -220,10 +198,10 @@ void TA_HouseScreen::drawSelector()
     TA_Point position = interfaceSprite.getPosition() + TA_Point(32, 8);
     std::string text;
     if(TA::save::getSaveParameter("seafox")) {
-        text = ".equip.param\n.house.exit";
+        text = ".equip.cont \n.house.exit";
     }
     else {
-        text = ".equip.param\n.dock .exit";
+        text = ".equip.cont \n.dock .exit";
     }
 
     if(selectionX == 0) {

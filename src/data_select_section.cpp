@@ -6,10 +6,9 @@ void TA_DataSelectSection::load()
 {
     entrySprite.load("data_select/entry.png");
     selectorRedSprite.load("data_select/selector.png", 48, 72);
-    selectorRedSprite.setFrame(0);
     selectorWhiteSprite.load("data_select/selector.png", 48, 72);
-    selectorWhiteSprite.setFrame(1);
     previewSprite.load("data_select/preview.png", 46, 45);
+    optionsSprite.load("data_select/options.png");
 
     font.load("fonts/pause_menu.png", 8, 8);
     font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:");
@@ -31,12 +30,22 @@ TA_MainMenuState TA_DataSelectSection::update()
     updateSelection();
 
     if(controller->isJustPressed(TA_BUTTON_A) || controller->isJustPressed(TA_BUTTON_PAUSE)) {
-        TA::save::repairSave("save_" + std::to_string(selection));
-        TA::save::setCurrentSave("save_" + std::to_string(selection));
-        loadSaveSound.play();
-        locked = true;
+        return processSelection();
     }
 
+    return TA_MAIN_MENU_DATA_SELECT;
+}
+
+TA_MainMenuState TA_DataSelectSection::processSelection()
+{
+    if(selection == 0) {
+        return TA_MAIN_MENU_OPTIONS;
+    }
+
+    TA::save::repairSave("save_" + std::to_string(selection - 1));
+    TA::save::setCurrentSave("save_" + std::to_string(selection - 1));
+    loadSaveSound.play();
+    locked = true;
     return TA_MAIN_MENU_DATA_SELECT;
 }
 
@@ -45,7 +54,7 @@ void TA_DataSelectSection::updateSelection()
     // menuStart + selection * menuOffset + 24 - need = TA::screenWidth / 2
     double need = menuStart + selection * menuOffset + 24 - (double)TA::screenWidth / 2;
     need = std::max(need, double(0));
-    need = std::min(need, menuStart + 8 * menuOffset - TA::screenWidth);
+    need = std::min(need, menuStart + 9 * menuOffset - TA::screenWidth);
 
     if(!TA::equal(position, need)) {
         if(position > need) {
@@ -60,7 +69,7 @@ void TA_DataSelectSection::updateSelection()
             selection --;
             switchSound.play();
         }
-        if(selection + 1 < 8 && controller->getDirection() == TA_DIRECTION_RIGHT) {
+        if(selection + 1 < 9 && controller->getDirection() == TA_DIRECTION_RIGHT) {
             selection ++;
             switchSound.play();
         }
@@ -70,31 +79,54 @@ void TA_DataSelectSection::updateSelection()
 void TA_DataSelectSection::draw()
 {
     selectorTimer += TA::elapsedTime;
-
     selectorRedSprite.setAlpha(alpha);
     selectorWhiteSprite.setAlpha(TA::linearInterpolation(0, alpha, selectorTimer / selectorBlinkTime));
-    entrySprite.setAlpha(alpha);
-    font.setAlpha(alpha);
 
-    for(int num = 0; num < 8; num ++) {
-        TA_Point entryPosition{menuStart + num * menuOffset - position, (double)TA::screenHeight / 2 - entrySprite.getHeight() / 2};
-        entrySprite.setPosition(entryPosition);
-        entrySprite.draw();
+    drawCustomEntries();
+    drawSaveEntries();
 
-        if(TA::save::saveExists(num)) {
-            previewSprite.setPosition(entryPosition + TA_Point(1, 1));
-            previewSprite.setFrame(TA::save::getParameter("save_" + std::to_string(num) + "/last_unlocked") - 1);
-            previewSprite.draw();
-        }
-
-        font.drawText(entryPosition + TA_Point(11, 49), std::to_string(getSavePercent(num)) + "%");
-        font.drawText(entryPosition + TA_Point(11, 59), getSaveTime(num), TA_Point(-2, 0));
+    if(selection >= 1) {
+        selectorRedSprite.setFrame(0);
+        selectorWhiteSprite.setFrame(1);
+    }
+    else {
+        selectorRedSprite.setFrame(2);
+        selectorWhiteSprite.setFrame(3);
     }
 
     selectorRedSprite.setPosition(menuStart + selection * menuOffset - position, TA::screenHeight / 2 - selectorRedSprite.getHeight() / 2);
     selectorWhiteSprite.setPosition(selectorRedSprite.getPosition());
     selectorRedSprite.draw();
     selectorWhiteSprite.draw();
+}
+
+void TA_DataSelectSection::drawCustomEntries()
+{
+    optionsSprite.setAlpha(alpha);
+    optionsSprite.setPosition(menuStart - position, (double)TA::screenHeight / 2 - entrySprite.getHeight() / 2);
+    optionsSprite.draw();
+}
+
+void TA_DataSelectSection::drawSaveEntries()
+{
+    entrySprite.setAlpha(alpha);
+    previewSprite.setAlpha(alpha);
+    font.setAlpha(255 * ((double)alpha / 255) * ((double)alpha / 255));
+
+    for(int num = 0; num < 8; num ++) {
+        TA_Point entryPosition{menuStart + (num + 1) * menuOffset - position, (double)TA::screenHeight / 2 - entrySprite.getHeight() / 2};
+        entrySprite.setPosition(entryPosition);
+        entrySprite.draw();
+
+        if(TA::save::saveExists(num)) {
+            //previewSprite.setPosition(entryPosition + TA_Point(1, 1));
+            //previewSprite.setFrame(TA::save::getParameter("save_" + std::to_string(num) + "/last_unlocked") - 1);
+            //previewSprite.draw();
+        }
+
+        font.drawText(entryPosition + TA_Point(11, 50), std::to_string(getSavePercent(num)) + "%");
+        font.drawText(entryPosition + TA_Point(11, 60), getSaveTime(num), TA_Point(-2, 0));
+    }
 }
 
 int TA_DataSelectSection::getSavePercent(int save)

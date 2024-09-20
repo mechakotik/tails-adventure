@@ -1,5 +1,5 @@
 #include "SDL3/SDL.h"
-#include "options_menu.h"
+#include "options_section.h"
 #include "save.h"
 
 class TA_ResolutionOption : public TA_Option {
@@ -247,13 +247,10 @@ class TA_RumbleOption : public TA_Option {
     }
 };
 
-void TA_OptionsMenu::load(TA_Controller* controller)
+void TA_OptionsSection::load()
 {
-    this->controller = controller;
-    activeFont.load("fonts/item.png", 8, 8);
-    activeFont.setMapping("abcdefghijklmnopqrstuvwxyz XY.?-0123456789SABF");
-    inactiveFont.load("fonts/item_inactive.png", 8, 8);
-    inactiveFont.setMapping("abcdefghijklmnopqrstuvwxyz XY.?-0123456789SABF");
+    font.load("fonts/pause_menu.png", 8, 8);
+    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:");
 
     options.resize(groups.size());
     options[0].push_back(std::make_unique<TA_ResolutionOption>());
@@ -275,10 +272,10 @@ void TA_OptionsMenu::load(TA_Controller* controller)
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX3);
 }
 
-bool TA_OptionsMenu::update()
+TA_MainMenuState TA_OptionsSection::update()
 {
     if(listTransitionTimeLeft > 0) {
-        return true;
+        return TA_MAIN_MENU_OPTIONS;
     }
 
     switch(state) {
@@ -289,13 +286,15 @@ bool TA_OptionsMenu::update()
             updateOptionSelector();
             break;
         case STATE_QUIT:
-            return false;
+            state = STATE_SELECTING_GROUP;
+            group = 0;
+            return TA_MAIN_MENU_DATA_SELECT;
     }
 
-    return true;
+    return TA_MAIN_MENU_OPTIONS;
 }
 
-void TA_OptionsMenu::updateGroupSelector()
+void TA_OptionsSection::updateGroupSelector()
 {
     if(controller->isJustChangedDirection()) {
         TA_Direction direction = controller->getDirection();
@@ -322,7 +321,7 @@ void TA_OptionsMenu::updateGroupSelector()
     }
 }
 
-void TA_OptionsMenu::updateOptionSelector()
+void TA_OptionsSection::updateOptionSelector()
 {
     if(options[group][option]->isLocked()) {
         playMoveSound(options[group][option]->updateLocked());
@@ -373,7 +372,7 @@ void TA_OptionsMenu::updateOptionSelector()
     }
 }
 
-void TA_OptionsMenu::playMoveSound(TA_MoveSoundId id)
+void TA_OptionsSection::playMoveSound(TA_MoveSoundId id)
 {
     switch(id) {
         case TA_MOVE_SOUND_SWITCH:
@@ -390,7 +389,7 @@ void TA_OptionsMenu::playMoveSound(TA_MoveSoundId id)
     }
 }
 
-void TA_OptionsMenu::draw()
+void TA_OptionsSection::draw()
 {
     updateAlpha();
 
@@ -402,54 +401,60 @@ void TA_OptionsMenu::draw()
     }
 }
 
-void TA_OptionsMenu::drawGroupList()
+void TA_OptionsSection::drawGroupList()
 {
     TA_Point textPosition{(double)getLeftX() + 16, 36};
     for(int pos = 0; pos < (int)groups.size(); pos ++) {
         if(pos == group) {
-            activeFont.drawText(textPosition, groups[pos]);
+            drawHighlight(textPosition.y - 1);
         }
-        else {
-            inactiveFont.drawText(textPosition, groups[pos]);
-        }
-        textPosition.y += 10;
+        font.drawText(textPosition, groups[pos]);
+        textPosition.y += 16;
     }
 }
 
-void TA_OptionsMenu::drawOptionList()
+void TA_OptionsSection::drawOptionList()
 {
     double lx = getLeftX() + 16, rx = getLeftX() + 144, y = 36;
     for(int pos = 0; pos < (int)options[group].size(); pos ++) {
         std::string left = options[group][pos]->getName();
         std::string right = options[group][pos]->getValue();
-        int offset = activeFont.getTextWidth(right, {-1, 0});
+        int offset = font.getTextWidth(right, {-1, 0});
 
         if(pos == option) {
-            activeFont.drawText({lx, y}, left, {-1, 0});
-            activeFont.drawText({rx - offset, y}, right, {-1, 0});
+            drawHighlight(y - 1);
         }
-        else {
-            inactiveFont.drawText({lx, y}, left, {-1, 0});
-            inactiveFont.drawText({rx - offset, y}, right, {-1, 0});
-        }
-        y += 10;
+        font.drawText({lx, y}, left, {-1, 0});
+        font.drawText({rx - offset, y}, right, {-1, 0});
+
+        y += 16;
     }
 }
 
-void TA_OptionsMenu::updateAlpha()
+void TA_OptionsSection::drawHighlight(double y)
 {
-    double alpha = 0;
+    SDL_FRect rect = {(float)getLeftX() + 4, (float)y, 152, 11};
 
-    if(transitionTimeLeft > 0) {
-        transitionTimeLeft -= TA::elapsedTime;
-        if(shown) {
-            alpha = 255 - 255 * transitionTimeLeft / transitionTime;
-        }
-        else {
-            alpha = 255 * transitionTimeLeft / transitionTime;
-        }
+    for(int num = 0; num < 4; num ++) {
+        SDL_SetRenderDrawColor(TA::renderer, num * 28 * alpha / 255, num * 24 * alpha / 255, num * 28 * alpha / 255, 255);
+
+        SDL_FRect targetRect = rect;
+        targetRect.x *= TA::scaleFactor;
+        targetRect.y *= TA::scaleFactor;
+        targetRect.w *= TA::scaleFactor;
+        targetRect.h *= TA::scaleFactor;
+
+        SDL_RenderFillRect(TA::renderer, &targetRect);
+        rect.x += 2;
+        rect.w -= 4;
     }
-    else if(listTransitionTimeLeft > 0) {
+}
+
+void TA_OptionsSection::updateAlpha()
+{
+    alpha = baseAlpha;
+
+    if(listTransitionTimeLeft > 0) {
         bool flag1 = (listTransitionTimeLeft > listTransitionTime);
         listTransitionTimeLeft -= TA::elapsedTime;
         bool flag2 = (listTransitionTimeLeft > listTransitionTime);
@@ -458,43 +463,12 @@ void TA_OptionsMenu::updateAlpha()
             state = (state == STATE_SELECTING_GROUP ? STATE_SELECTING_OPTION : STATE_SELECTING_GROUP);
         }
         if(listTransitionTimeLeft > listTransitionTime) {
-            alpha = 255 * (listTransitionTimeLeft - listTransitionTime) / listTransitionTime;
+            alpha *= (listTransitionTimeLeft - listTransitionTime) / listTransitionTime;
         }
         else {
-            alpha = 255 - 255 * listTransitionTimeLeft / listTransitionTime;
+            alpha *= (1 - listTransitionTimeLeft / listTransitionTime);
         }
     }
-    else if(shown) {
-        alpha = 255;
-    }
-    else {
-        alpha = 0;
-    }
 
-    activeFont.setAlpha(alpha);
-    inactiveFont.setAlpha(alpha);
-}
-
-void TA_OptionsMenu::reset()
-{
-    state = STATE_SELECTING_GROUP;
-    group = 0;
-}
-
-void TA_OptionsMenu::show()
-{
-    if(shown) {
-        return;
-    }
-    shown = true;
-    transitionTimeLeft = transitionTime;
-}
-
-void TA_OptionsMenu::hide()
-{
-    if(!shown) {
-        return;
-    }
-    shown = false;
-    transitionTimeLeft = transitionTime;
+    font.setAlpha(alpha);
 }

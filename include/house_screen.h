@@ -7,7 +7,6 @@
 #include "controller.h"
 #include "sound.h"
 #include "inventory_menu.h"
-#include "options_menu.h"
 
 class TA_HouseScreen : public TA_Screen {
 private:
@@ -27,7 +26,6 @@ private:
     void drawCurtain(double factor);
 
     TA_InventoryMenu inventoryMenu;
-    TA_OptionsMenu optionsMenu;
     TA_Sprite interfaceSprite, houseSprite, curtainSprite, houseSeaFoxSprite, clawSprite, seaFoxSprite;
     TA_Font font;
     TA_Controller controller;
@@ -35,7 +33,7 @@ private:
 
     int selectionX = 1, selectionY = 1;
     double curtainTimeLeft = -1;
-    bool inventoryOpen = false, optionsOpen = false;
+    bool inventoryOpen = false;
     bool shouldMove = false, shouldExit = false;
 
     double clawX = 40;
