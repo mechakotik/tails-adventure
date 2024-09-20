@@ -68,7 +68,7 @@ void TA::save::writeToFile()
 std::string TA::save::getSaveFileName()
 {
     #ifdef __ANDROID__
-        std::string path = SDL_AndroidGetInternalStoragePath();
+        std::string path = SDL_GetAndroidInternalStoragePath();
         return path + "/config";
     #else
         #ifdef TA_UNIX_INSTALL

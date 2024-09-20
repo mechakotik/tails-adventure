@@ -23,7 +23,6 @@ bool TA::filesystem::fileExists(std::string path)
     fixPath(path);
     SDL_IOStream *file = SDL_IOFromFile(path.c_str(), "rb");
     if(file == nullptr) {
-        TA::printLog("! %s", SDL_GetError());
         return false;
     }
 

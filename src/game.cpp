@@ -192,8 +192,8 @@ void TA_Game::update()
     SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
     SDL_RenderClear(TA::renderer);
 
-    SDL_FRect srcRect{0, 0, TA::screenWidth * TA::scaleFactor, TA::screenHeight * TA::scaleFactor};
-    SDL_FRect dstRect{0, 0, windowWidth, windowHeight};
+    SDL_FRect srcRect{0, 0, (float)TA::screenWidth * TA::scaleFactor, (float)TA::screenHeight * TA::scaleFactor};
+    SDL_FRect dstRect{0, 0, (float)windowWidth, (float)windowHeight};
     SDL_RenderTexture(TA::renderer, targetTexture, &srcRect, &dstRect);
     SDL_RenderPresent(TA::renderer);
 

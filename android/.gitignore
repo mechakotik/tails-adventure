@@ -1,13 +1,12 @@
 # External dependencies
-app/jni/SDL/
-app/jni/SDL_image/
-app/jni/SDL_mixer/
-app/jni/tinyxml2/
 app/src/main/java/org/libsdl/app/
 
 # Gradle files
 .gradle/
+gradle/
 build/
+gradlew
+gradlew.bat
 
 # Local configuration file (sdk path, etc)
 local.properties
