@@ -19,22 +19,27 @@ private:
     const double scrollSpeed = 12;
     const double selectorBlinkTime = 15;
     const double loadTime = 60;
+    const double scrollSlowdown = 0.125;
 
+    void updateScroll();
     void updateSelection();
+    bool updateTouchscreenSelection();
     int getSavePercent(int save);
     std::string getSaveTime(int save);
     TA_MainMenuState processSelection();
     void drawCustomEntries();
     void drawSaveEntries();
+    void drawSelector();
 
     TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite, optionsSprite;
     TA_Sound switchSound, loadSaveSound;
     TA_Font font;
     double timer = 0, selectorTimer = 0;
 
-    double position = 0;
+    std::array<TA_OnscreenButton, 9> buttons;
+    double position = 0, scrollVelocity = 0;
     int selection = 0, alpha = 255;
-    bool locked = false;
+    bool locked = false, touchscreen = false;
 };
 
 #endif // DATA_SELECT_SECTION_H

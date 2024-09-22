@@ -15,6 +15,12 @@ void TA_DataSelectSection::load()
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     loadSaveSound.load("sound/load_save.ogg", TA_SOUND_CHANNEL_SFX1);
+
+    for(int pos = 0; pos < 9; pos ++) {
+        TA_Point topLeft{menuStart + menuOffset * pos, (double)TA::screenHeight / 2 - entrySprite.getHeight() / 2};
+        TA_Point bottomRight = topLeft + TA_Point(48, (pos == 0 ? 48 : 72));
+        buttons[pos].setRectangle(topLeft, bottomRight);
+    }
 }
 
 TA_MainMenuState TA_DataSelectSection::update()
@@ -27,10 +33,23 @@ TA_MainMenuState TA_DataSelectSection::update()
         return TA_MAIN_MENU_DATA_SELECT;
     }
 
-    updateSelection();
+    #ifdef __ANDROID__
+        touchscreen = !TA::gamepad::connected();
+    #else
+        touchscreen = false;
+    #endif
 
-    if(controller->isJustPressed(TA_BUTTON_A) || controller->isJustPressed(TA_BUTTON_PAUSE)) {
-        return processSelection();
+    if(touchscreen) {
+        updateScroll();
+        if(updateTouchscreenSelection()) {
+            return processSelection();
+        }
+    }
+    else {
+        updateSelection();
+        if(controller->isJustPressed(TA_BUTTON_A) || controller->isJustPressed(TA_BUTTON_PAUSE)) {
+            return processSelection();
+        }
     }
 
     return TA_MAIN_MENU_DATA_SELECT;
@@ -47,6 +66,25 @@ TA_MainMenuState TA_DataSelectSection::processSelection()
     loadSaveSound.play();
     locked = true;
     return TA_MAIN_MENU_DATA_SELECT;
+}
+
+void TA_DataSelectSection::updateScroll()
+{
+    if(TA::touchscreen::isScrolling()) {
+        scrollVelocity = TA::touchscreen::getScrollVector().x;
+    }
+    else if(!TA::equal(scrollVelocity, 0)) {
+        if(scrollVelocity > 0) {
+            scrollVelocity = std::max((double)0, scrollVelocity - scrollSlowdown * TA::elapsedTime);
+        }
+        else {
+            scrollVelocity = std::min((double)0, scrollVelocity + scrollSlowdown * TA::elapsedTime);
+        }
+    }
+
+    position += scrollVelocity;
+    position = std::max(position, double(0));
+    position = std::min(position, menuStart + 9 * menuOffset - TA::screenWidth);
 }
 
 void TA_DataSelectSection::updateSelection()
@@ -76,28 +114,33 @@ void TA_DataSelectSection::updateSelection()
     }
 }
 
+bool TA_DataSelectSection::updateTouchscreenSelection()
+{
+    for(int pos = 0; pos < 9; pos ++) {
+        buttons[pos].setPosition({-position, 0});
+        buttons[pos].update();
+
+        if(buttons[pos].isJustPressed() && !TA::touchscreen::isScrolling()) {
+            scrollVelocity = 0;
+        }
+        else if(buttons[pos].isReleased()) {
+            selection = pos;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 void TA_DataSelectSection::draw()
 {
-    selectorTimer += TA::elapsedTime;
-    selectorRedSprite.setAlpha(alpha);
-    selectorWhiteSprite.setAlpha(TA::linearInterpolation(0, alpha, selectorTimer / selectorBlinkTime));
-
     drawCustomEntries();
     drawSaveEntries();
 
-    if(selection >= 1) {
-        selectorRedSprite.setFrame(0);
-        selectorWhiteSprite.setFrame(1);
+    if(!touchscreen) {
+        drawSelector();
     }
-    else {
-        selectorRedSprite.setFrame(2);
-        selectorWhiteSprite.setFrame(3);
-    }
-
-    selectorRedSprite.setPosition(menuStart + selection * menuOffset - position, TA::screenHeight / 2 - selectorRedSprite.getHeight() / 2);
-    selectorWhiteSprite.setPosition(selectorRedSprite.getPosition());
-    selectorRedSprite.draw();
-    selectorWhiteSprite.draw();
 }
 
 void TA_DataSelectSection::drawCustomEntries()
@@ -127,6 +170,27 @@ void TA_DataSelectSection::drawSaveEntries()
         font.drawText(entryPosition + TA_Point(11, 50), std::to_string(getSavePercent(num)) + "%");
         font.drawText(entryPosition + TA_Point(11, 60), getSaveTime(num), TA_Point(-2, 0));
     }
+}
+
+void TA_DataSelectSection::drawSelector()
+{
+    selectorTimer += TA::elapsedTime;
+    selectorRedSprite.setAlpha(alpha);
+    selectorWhiteSprite.setAlpha(TA::linearInterpolation(0, alpha, selectorTimer / selectorBlinkTime));
+
+    if(selection >= 1) {
+        selectorRedSprite.setFrame(0);
+        selectorWhiteSprite.setFrame(1);
+    }
+    else {
+        selectorRedSprite.setFrame(2);
+        selectorWhiteSprite.setFrame(3);
+    }
+
+    selectorRedSprite.setPosition(menuStart + selection * menuOffset - position, TA::screenHeight / 2 - selectorRedSprite.getHeight() / 2);
+    selectorWhiteSprite.setPosition(selectorRedSprite.getPosition());
+    selectorRedSprite.draw();
+    selectorWhiteSprite.draw();
 }
 
 int TA_DataSelectSection::getSavePercent(int save)
