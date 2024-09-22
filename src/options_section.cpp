@@ -270,10 +270,20 @@ void TA_OptionsSection::load()
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
     backSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX3);
+
+    double y = 32;
+    for(int pos = 0; pos < 4; pos ++) {
+        buttons[pos].setRectangle({(double)getLeftX() - 32, y}, {(double)getLeftX() + 192, y + 17});
+        y += 20;
+    }
 }
 
 TA_MainMenuState TA_OptionsSection::update()
 {
+    for(int pos = 0; pos < 4; pos ++) {
+        buttons[pos].update();
+    }
+
     if(listTransitionTimeLeft > 0) {
         return TA_MAIN_MENU_OPTIONS;
     }
@@ -308,7 +318,15 @@ void TA_OptionsSection::updateGroupSelector()
         }
     }
 
-    if(controller->isJustPressed(TA_BUTTON_A)) {
+    bool selected = false;
+    for(int pos = 0; pos < 4; pos ++) {
+        if(buttons[pos].isReleased()) {
+            group = pos;
+            selected = true;
+        }
+    }
+
+    if(selected || controller->isJustPressed(TA_BUTTON_A)) {
         listTransitionTimeLeft = listTransitionTime * 2;
         option = 0;
         selectSound.play();
@@ -359,6 +377,13 @@ void TA_OptionsSection::updateOptionSelector()
         }
     }
 
+    for(int pos = 0; pos < 4; pos ++) {
+        if(buttons[pos].isReleased()) {
+            sound = options[group][pos]->move(1);
+            TA::save::writeToFile();
+        }
+    }
+
     if(controller->isJustPressed(TA_BUTTON_A)) {
         sound = options[group][option]->move(1);
         TA::save::writeToFile();
@@ -404,36 +429,40 @@ void TA_OptionsSection::draw()
 void TA_OptionsSection::drawGroupList()
 {
     TA_Point textPosition{(double)getLeftX() + 16, 36};
+    bool touchscreen = controller->isTouchscreen();
+
     for(int pos = 0; pos < (int)groups.size(); pos ++) {
-        if(pos == group) {
-            drawHighlight(textPosition.y - 1);
+        if((!touchscreen && pos == group) || (touchscreen && buttons[pos].isPressed())) {
+            drawHighlight(textPosition.y - 3);
         }
         font.drawText(textPosition, groups[pos]);
-        textPosition.y += 16;
+        textPosition.y += 20;
     }
 }
 
 void TA_OptionsSection::drawOptionList()
 {
     double lx = getLeftX() + 16, rx = getLeftX() + 144, y = 36;
+    bool touchscreen = controller->isTouchscreen();
+
     for(int pos = 0; pos < (int)options[group].size(); pos ++) {
         std::string left = options[group][pos]->getName();
         std::string right = options[group][pos]->getValue();
         int offset = font.getTextWidth(right, {-1, 0});
 
-        if(pos == option) {
-            drawHighlight(y - 1);
+        if((!touchscreen && pos == option) || (touchscreen && buttons[pos].isPressed())) {
+            drawHighlight(y - 3);
         }
         font.drawText({lx, y}, left, {-1, 0});
         font.drawText({rx - offset, y}, right, {-1, 0});
 
-        y += 16;
+        y += 20;
     }
 }
 
 void TA_OptionsSection::drawHighlight(double y)
 {
-    SDL_FRect rect = {(float)getLeftX() + 4, (float)y, 152, 11};
+    SDL_FRect rect = {(float)getLeftX() + 4, (float)y, 152, 15};
 
     for(int num = 0; num < 4; num ++) {
         SDL_SetRenderDrawColor(TA::renderer, num * 28 * alpha / 255, num * 24 * alpha / 255, num * 28 * alpha / 255, 255);

@@ -80,6 +80,7 @@ public:
     bool isPressed(TA_FunctionButton button);
     bool isJustPressed(TA_FunctionButton button);
     bool isJustChangedDirection() {return justChanged;}
+    bool isTouchscreen();
 };
 
 #endif // TA_CONTROLLER_H

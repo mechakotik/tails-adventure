@@ -73,3 +73,12 @@ bool TA_Controller::isJustPressed(TA_FunctionButton button)
 {
     return keyboard.isJustPressed(button) || gamepad.isJustPressed(button) || onscreen.isJustPressed(button);
 }
+
+bool TA_Controller::isTouchscreen()
+{
+    #ifdef __ANDROID__
+        return !TA::gamepad::connected();
+    #else
+        return false;
+    #endif
+}

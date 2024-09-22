@@ -3,7 +3,6 @@
 
 #include "SDL3/SDL.h"
 #include "geometry.h"
-#include "tools.h"
 
 namespace TA { namespace touchscreen {
     void handleEvent(SDL_TouchFingerEvent event);
@@ -32,8 +31,8 @@ private:
 
 public:
     void update();
-    bool isPressed() {return pressed;}
-    bool isJustPressed() {return pressed && !hold;}
+    bool isPressed() {return fingerId != -1;}
+    bool isJustPressed() {return fingerId != -1 && !hold;}
     TA_Point getTouchPosition() {return touchPosition;}
 };
 

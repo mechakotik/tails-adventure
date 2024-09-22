@@ -33,13 +33,7 @@ TA_MainMenuState TA_DataSelectSection::update()
         return TA_MAIN_MENU_DATA_SELECT;
     }
 
-    #ifdef __ANDROID__
-        touchscreen = !TA::gamepad::connected();
-    #else
-        touchscreen = false;
-    #endif
-
-    if(touchscreen) {
+    if(controller->isTouchscreen()) {
         updateScroll();
         if(updateTouchscreenSelection()) {
             return processSelection();
@@ -132,13 +126,12 @@ bool TA_DataSelectSection::updateTouchscreenSelection()
     return false;
 }
 
-
 void TA_DataSelectSection::draw()
 {
     drawCustomEntries();
     drawSaveEntries();
 
-    if(!touchscreen) {
+    if(!controller->isTouchscreen()) {
         drawSelector();
     }
 }

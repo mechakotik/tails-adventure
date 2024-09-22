@@ -52,6 +52,7 @@ private:
     std::vector<std::string> groups{"video", "controls", "sound"};
     std::vector<std::vector<std::unique_ptr<TA_Option>>> options;
     TA_Sound switchSound, selectSound, backSound, errorSound;
+    std::array<TA_OnscreenButton, 4> buttons;
     int group = 0, option = 0, alpha = 255, baseAlpha = 255;
 
 public:

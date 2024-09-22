@@ -39,7 +39,7 @@ private:
     std::array<TA_OnscreenButton, 9> buttons;
     double position = 0, scrollVelocity = 0;
     int selection = 0, alpha = 255;
-    bool locked = false, touchscreen = false;
+    bool locked = false;
 };
 
 #endif // DATA_SELECT_SECTION_H

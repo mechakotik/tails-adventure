@@ -1,7 +1,7 @@
 #include <map>
 #include <set>
 #include "touchscreen.h"
-#include "error.h"
+#include "tools.h"
 
 namespace TA { namespace touchscreen {
     struct Finger {
@@ -99,7 +99,6 @@ void TA_OnscreenStick::update()
         for(auto finger : TA::touchscreen::currentFingers) {
             TA_Point point = finger.second.position;
             if(inside(point)) {
-                pressed = true;
                 fingerId = finger.first;
                 touchPosition = point;
             }
@@ -112,7 +111,7 @@ void TA_OnscreenStick::update()
         }
         else {
             fingerId = -1;
-            pressed = hold = false;
+            hold = false;
         }
     }
 }
