@@ -4,7 +4,6 @@
 void TA_AreaSelector::load()
 {
     controller.load();
-    controller.setMode(TA_ONSCREEN_CONTROLLER_DPAD);
     appendPoints();
     addSelectedArea();
     setActivePoints();
@@ -107,10 +106,17 @@ TA_ScreenState TA_AreaSelector::update()
         }
     }
 
+    for(int pos = 0; pos < (int)points.size(); pos ++) {
+        if(currentPoint != points[pos] && points[pos]->updateButton()) {
+            currentPoint = points[pos];
+            switchSound.play();
+        }
+    }
+
     TA::save::setSaveParameter("map_selection", currentPoint->getIndex());
     tailsIcon.setPosition(currentPoint->getPosition() + TA_Point(-2, 8));
 
-    if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B)) {
+    if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B) || currentPoint->updateButton()) {
         TA::levelPath = currentPoint->getPath();
         if(TA::levelPath == "") {
             return TA_SCREENSTATE_HOUSE;
@@ -155,6 +161,13 @@ TA_MapPoint::TA_MapPoint(int index, std::string name, std::string path, TA_Point
 
     sprite.load("worldmap/selection.png");
     sprite.setPosition(position);
+    button.setRectangle(position - TA_Point(4, 4), position + TA_Point(16, 16));
+}
+
+bool TA_MapPoint::updateButton()
+{
+    button.update();
+    return button.isJustPressed();
 }
 
 void TA_MapPoint::draw()

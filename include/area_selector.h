@@ -36,6 +36,7 @@ private:
     const double lightTime = 15, appearTime = 3;
 
     TA_Sprite sprite;
+    TA_OnscreenButton button;
     TA_Point position;
     std::string name = "", path = "";
     std::array<TA_MapPoint*, TA_DIRECTION_MAX> neighbours;
@@ -48,6 +49,7 @@ public:
     TA_MapPoint(int index, std::string name, std::string path, TA_Point position);
     void setNeighbour(TA_Direction direction, TA_MapPoint* neighbour) {neighbours[direction] = neighbour;}
     void activate() {active = true;}
+    bool updateButton();
     void draw();
 
     TA_Point getPosition() {return position;}
