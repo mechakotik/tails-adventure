@@ -52,8 +52,10 @@ private:
     std::vector<std::string> groups{"video", "controls", "sound"};
     std::vector<std::vector<std::unique_ptr<TA_Option>>> options;
     TA_Sound switchSound, selectSound, backSound, errorSound;
-    std::array<TA_OnscreenButton, 4> buttons;
     int group = 0, option = 0, alpha = 255, baseAlpha = 255;
+
+    std::array<TA_OnscreenButton, 4> buttons;
+    TA_OnscreenButton backButton;
 
 public:
     using TA_MainMenuSection::TA_MainMenuSection;

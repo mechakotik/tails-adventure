@@ -276,10 +276,13 @@ void TA_OptionsSection::load()
         buttons[pos].setRectangle({(double)getLeftX() - 32, y}, {(double)getLeftX() + 192, y + 17});
         y += 20;
     }
+
+    backButton.setRectangle({0, 0}, {128, 32});
 }
 
 TA_MainMenuState TA_OptionsSection::update()
 {
+    backButton.update();
     for(int pos = 0; pos < 4; pos ++) {
         buttons[pos].update();
     }
@@ -333,7 +336,7 @@ void TA_OptionsSection::updateGroupSelector()
         return;
     }
 
-    if(controller->isJustPressed(TA_BUTTON_B)) {
+    if(controller->isJustPressed(TA_BUTTON_B) || backButton.isReleased()) {
         state = STATE_QUIT;
         backSound.play();
     }
@@ -391,7 +394,7 @@ void TA_OptionsSection::updateOptionSelector()
 
     playMoveSound(sound);
 
-    if(controller->isJustPressed(TA_BUTTON_B)) {
+    if(controller->isJustPressed(TA_BUTTON_B) || backButton.isReleased()) {
         listTransitionTimeLeft = listTransitionTime * 2;
         backSound.play();
     }

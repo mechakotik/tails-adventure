@@ -6,6 +6,7 @@
 void TA_MainMenuScreen::init()
 {
     TA::sound::playMusic("sound/password.vgm");
+    titleSprite.load("data_select/title.png", 112, 9);
     controller.load();
 
     sections[TA_MAIN_MENU_DATA_SELECT] = std::make_unique<TA_DataSelectSection>(TA_DataSelectSection(&controller));
@@ -20,6 +21,7 @@ void TA_MainMenuScreen::init()
 TA_ScreenState TA_MainMenuScreen::update()
 {
     controller.update();
+    updateTitle();
 
     if(state == neededState) {
         neededState = sections[state]->update();
@@ -50,4 +52,28 @@ TA_ScreenState TA_MainMenuScreen::update()
     }
 
     return TA_SCREENSTATE_CURRENT;
+}
+
+void TA_MainMenuScreen::updateTitle()
+{
+    const double titleY = 10, shift = 8;
+
+    if(state == neededState) {
+        titleSprite.setPosition(0, titleY);
+        titleSprite.setFrame(state);
+        titleSprite.setAlpha(255);
+    }
+    else if(timer < transitionTime) {
+        titleSprite.setPosition(-shift * timer / transitionTime, titleY);
+        titleSprite.setFrame(state);
+        titleSprite.setAlpha(255 - 255 * timer / transitionTime);
+    }
+    else {
+        double delta = 1 - std::min(double(1), (timer - transitionTime) / transitionTime);
+        titleSprite.setPosition(-shift * delta, titleY);
+        titleSprite.setFrame(neededState);
+        titleSprite.setAlpha(255 - 255 * delta);
+    }
+
+    titleSprite.draw();
 }

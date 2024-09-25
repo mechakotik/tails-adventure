@@ -13,9 +13,12 @@ public:
 private:
     const double transitionTime = 5;
 
+    void updateTitle();
+
     TA_Controller controller = TA_Controller();
     std::array<std::unique_ptr<TA_MainMenuSection>, TA_MAIN_MENU_MAX> sections;
     TA_MainMenuState state, neededState;
+    TA_Sprite titleSprite;
     double timer = 0;
 };
 
