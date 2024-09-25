@@ -29,11 +29,14 @@ private:
     TA_MainMenuState processSelection();
     void drawCustomEntries();
     void drawSaveEntries();
+    void drawSplash();
     void drawSelector();
+    std::string generateSplash();
 
     TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite, optionsSprite;
     TA_Sound switchSound, loadSaveSound;
-    TA_Font font;
+    TA_Font font, splashFont;
+    std::string splash;
     double timer = 0, selectorTimer = 0;
 
     std::array<TA_OnscreenButton, 9> buttons;

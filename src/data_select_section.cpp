@@ -12,6 +12,8 @@ void TA_DataSelectSection::load()
 
     font.load("fonts/pause_menu.png", 8, 8);
     font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:");
+    splashFont.load("fonts/splash.png", 7, 9);
+    splashFont.setMapping(" !" + std::string{'"'} + "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[a]^_`abcdefghijklmnopqrstuvwxyz{|}~");
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     loadSaveSound.load("sound/load_save.ogg", TA_SOUND_CHANNEL_SFX1);
@@ -21,6 +23,8 @@ void TA_DataSelectSection::load()
         TA_Point bottomRight = topLeft + TA_Point(48, (pos == 0 ? 48 : 72));
         buttons[pos].setRectangle(topLeft, bottomRight);
     }
+
+    splash = generateSplash();
 }
 
 TA_MainMenuState TA_DataSelectSection::update()
@@ -130,6 +134,7 @@ void TA_DataSelectSection::draw()
 {
     drawCustomEntries();
     drawSaveEntries();
+    drawSplash();
 
     if(!controller->isTouchscreen()) {
         drawSelector();
@@ -163,6 +168,12 @@ void TA_DataSelectSection::drawSaveEntries()
         font.drawText(entryPosition + TA_Point(11, 50), std::to_string(getSavePercent(num)) + "%");
         font.drawText(entryPosition + TA_Point(11, 60), getSaveTime(num), TA_Point(-2, 0));
     }
+}
+
+void TA_DataSelectSection::drawSplash()
+{
+    splashFont.setAlpha(alpha);
+    splashFont.drawTextCentered(120, splash, TA_Point(-1, 0));
 }
 
 void TA_DataSelectSection::drawSelector()
@@ -214,4 +225,19 @@ std::string TA_DataSelectSection::getSaveTime(int save)
         return std::to_string(hours) + ":0" + std::to_string(minutes);
     }
     return std::to_string(hours) + ":" + std::to_string(minutes);
+}
+
+std::string TA_DataSelectSection::generateSplash()
+{
+    const std::vector<std::string> splashes {
+        "test splash",
+        "Gentoo maint btw",
+        "Install Gentoo",
+        "Also try Sonic Forces",
+        "Forsy polutshe budut - arsedos",
+        "Made with SDL3 o_o",
+        "One Piece wa jitsuzai suru!"
+    };
+
+    return splashes[TA::random::next() % (int)splashes.size()];
 }

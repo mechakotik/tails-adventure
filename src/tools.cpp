@@ -56,6 +56,9 @@ void TA::random::init(unsigned long long seed)
 {
     seed = std::max(seed, 1ull);
     x = seed;
+    for(int it = 0; it < 10; it ++) {
+        next();
+    }
 }
 
 long long TA::random::next()
