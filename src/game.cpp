@@ -29,7 +29,7 @@ TA_Game::TA_Game()
 
 void TA_Game::initSDL()
 {
-    if(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD | SDL_INIT_EVENTS | SDL_INIT_SENSOR) < 0) {
+    if(!SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD | SDL_INIT_EVENTS | SDL_INIT_SENSOR)) {
         TA::handleSDLError("%s", "SDL init failed");
     }
     if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
@@ -43,7 +43,7 @@ void TA_Game::initSDL()
     audioSpec.channels = TA_SOUND_CHANNEL_MAX;
     audioSpec.format = MIX_DEFAULT_FORMAT;
     audioSpec.freq = 44100;
-    if(Mix_OpenAudio(0, &audioSpec) == -1) {
+    if(!Mix_OpenAudio(0, &audioSpec)) {
         TA::handleSDLError("%s", "Mix_OpenAudio failed");
     }
     SDL_HideCursor();
