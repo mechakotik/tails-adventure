@@ -60,6 +60,7 @@ public:
         int value = TA::save::getParameter("vsync");
         value = 1 - value;
         TA::save::setParameter("vsync", value);
+        SDL_SetRenderVSync(TA::renderer, value);
 
         if(value == 1) {
             TA::save::setParameter("fps_limit", 0);
