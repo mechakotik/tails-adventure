@@ -196,12 +196,6 @@ void TA_Game::update()
     SDL_FRect dstRect{0, 0, (float)windowWidth, (float)windowHeight};
     SDL_RenderTexture(TA::renderer, targetTexture, &srcRect, &dstRect);
     SDL_RenderPresent(TA::renderer);
-
-    int fpsLimit = TA::getFPSLimit();
-    if(!vsync && fpsLimit != 0) {
-        auto endTime = currentTime + std::chrono::nanoseconds(int(1e9 / fpsLimit));
-        while(std::chrono::high_resolution_clock::now() < endTime) {}
-    }
 }
 
 TA_Game::~TA_Game()

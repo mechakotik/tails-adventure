@@ -42,7 +42,6 @@ namespace TA
     void drawShadow(int factor);
     bool equal(double a, double b);
     double linearInterpolation(double left, double right, double pos);
-    int getFPSLimit();
 
     template<typename T>
     T sign(T a) {

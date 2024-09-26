@@ -124,12 +124,3 @@ void TA::eventLog::quit()
         output.close();
     }
 }
-
-int TA::getFPSLimit()
-{
-    int value = TA::save::getParameter("fps_limit");
-    if(value == 0) {
-        return 0;
-    }
-    return value + 29;
-}

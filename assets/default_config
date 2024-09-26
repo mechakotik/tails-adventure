@@ -1,7 +1,6 @@
 resolution 4
 pixel_ar 1
 vsync 1
-fps_limit 0
 scale_mode 0
 rumble 1
 main_volume 8

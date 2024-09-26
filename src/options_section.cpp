@@ -61,11 +61,6 @@ public:
         value = 1 - value;
         TA::save::setParameter("vsync", value);
         SDL_SetRenderVSync(TA::renderer, value);
-
-        if(value == 1) {
-            TA::save::setParameter("fps_limit", 0);
-        }
-
         return TA_MOVE_SOUND_SWITCH;
     }
 };
@@ -84,40 +79,6 @@ public:
         value = 1 - value;
         TA::save::setParameter("scale_mode", value);
         return TA_MOVE_SOUND_SWITCH;
-    }
-};
-
-class TA_MaxFPSOption : public TA_Option {
-public:
-    std::string getName() override {return "fps limit";}
-
-    std::string getValue() override {
-        int value = TA::getFPSLimit();
-        if(value == 0) {
-            return "off";
-        }
-        return std::to_string(value);
-    }
-
-    TA_MoveSoundId move(int delta) override {
-        int value = TA::save::getParameter("fps_limit");
-        value += delta;
-
-        TA_MoveSoundId result = TA_MOVE_SOUND_SWITCH;
-        if(value < 0) {
-            value = 0;
-            result = TA_MOVE_SOUND_ERROR;
-        }
-        if(value > 4971) {
-            value = 4971;
-            result = TA_MOVE_SOUND_ERROR;
-        }
-
-        if(value >= 1) {
-            TA::save::setParameter("vsync", 0);
-        }
-        TA::save::setParameter("fps_limit", value);
-        return result;
     }
 };
 
@@ -271,11 +232,12 @@ void TA_OptionsSection::load()
     font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:");
 
     options.resize(groups.size());
-    options[0].push_back(std::make_unique<TA_ResolutionOption>());
+    #ifndef __ANDROID__
+        options[0].push_back(std::make_unique<TA_ResolutionOption>());
+    #endif
     options[0].push_back(std::make_unique<TA_PixelAROption>());
-    options[0].push_back(std::make_unique<TA_VSyncOption>());
-    options[0].push_back(std::make_unique<TA_MaxFPSOption>(TA_MaxFPSOption()));
     options[0].push_back(std::make_unique<TA_ScaleModeOption>());
+    options[0].push_back(std::make_unique<TA_VSyncOption>());
 
     options[1].push_back(std::make_unique<TA_MapKeyboardOption>());
     options[1].push_back(std::make_unique<TA_MapGamepadOption>());
