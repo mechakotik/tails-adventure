@@ -29,6 +29,17 @@ void TA_Hud::load(TA_Links newLinks)
     pauseMenuFrameSprite.load("hud/pause_menu_frame.png");
     pauseMenuFrameSprite.setPosition(TA::screenWidth / 2 - 52, 42);
 
+    leftSprite.load("hud/items.png", 16, 16);
+    leftSprite.setFrame(40);
+    rightSprite.load("hud/items.png", 16, 16);
+    rightSprite.setFrame(41);
+    pauseSprite.load("hud/items.png", 16, 16);
+    pauseSprite.setFrame(42);
+
+    leftButton.setRectangle({0, 0}, {16, 16});
+    rightButton.setRectangle({0, 0}, {16, 16});
+    pauseButton.setRectangle({0, 0}, {16, 16});
+
     itemPosition = TA::save::getSaveParameter("item_position");
     flightBarSprite.load("hud/flightbar.png");
     rings = TA::save::getSaveParameter("rings");
@@ -51,7 +62,9 @@ void TA_Hud::update()
 void TA_Hud::updatePause()
 {
     if(!paused) {
-        if(links.controller->isJustPressed(TA_BUTTON_PAUSE)) {
+        pauseButton.setPosition(TA_Point(TA::screenWidth - 70, 4));
+        pauseButton.update();
+        if(links.controller->isJustPressed(TA_BUTTON_PAUSE) || pauseButton.isJustPressed()) {
             pauseSound.play();
             paused = true;
             timer = 0;
@@ -180,11 +193,16 @@ void TA_Hud::updateRingsCounter()
 
 void TA_Hud::updateCurrentItem()
 {
+    leftButton.setPosition(TA_Point(TA::screenWidth - 50, 4));
+    rightButton.setPosition(TA_Point(TA::screenWidth - 18, 4));
+    leftButton.update();
+    rightButton.update();
+
     int direction = 0;
-    if(links.controller->isJustPressed(TA_BUTTON_LB)) {
+    if(links.controller->isJustPressed(TA_BUTTON_LB) || leftButton.isJustPressed()) {
         direction = -1;
     }
-    else if(links.controller->isJustPressed(TA_BUTTON_RB)) {
+    else if(links.controller->isJustPressed(TA_BUTTON_RB) || rightButton.isJustPressed()) {
         direction = 1;
     }
     if(direction != 0) {
@@ -201,6 +219,9 @@ void TA_Hud::draw()
 {
     drawCurrentItem();
     drawRingsCounter();
+    if(links.controller->isTouchscreen()) {
+        drawTouchControls();
+    }
     drawFlightBar();
     drawPauseMenu();
 }
@@ -216,7 +237,25 @@ void TA_Hud::drawCurrentItem()
     if(!itemSprite.isAnimated()) {
         itemSprite.setFrame(item);
     }
+
+    if(links.controller->isTouchscreen()) {
+        itemSprite.setPosition(TA::screenWidth - 34, 4);
+    }
+    else {
+        itemSprite.setPosition(2, 22);
+    }
     itemSprite.draw();
+}
+
+void TA_Hud::drawTouchControls()
+{
+    leftSprite.setPosition(TA::screenWidth - 50, 4);
+    rightSprite.setPosition(TA::screenWidth - 18, 4);
+    pauseSprite.setPosition(TA::screenWidth - 70, 4);
+
+    leftSprite.draw();
+    rightSprite.draw();
+    pauseSprite.draw();
 }
 
 void TA_Hud::drawRingsCounter()

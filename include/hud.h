@@ -7,6 +7,7 @@
 #include "sound.h"
 #include "font.h"
 #include "screen_state_machine.h"
+#include "touchscreen.h"
 
 class TA_Hud {
 private:
@@ -15,7 +16,8 @@ private:
     const double ringAddTime = 6, fadeTime = 6;
 
     TA_Links links;
-    TA_Sprite ringMonitor, itemSprite, flightBarSprite;
+    TA_Sprite ringMonitor, itemSprite, flightBarSprite, leftSprite, rightSprite, pauseSprite;
+    TA_OnscreenButton leftButton, rightButton, pauseButton;
     std::array<TA_Sprite, 2> ringDigits;
     TA_Sound switchSound, itemSwitchSound, pauseSound;
     int item = 0, itemPosition = 0, rings;
@@ -40,6 +42,7 @@ private:
 
     void drawFlightBar();
     void drawCurrentItem();
+    void drawTouchControls();
     void drawRingsCounter();
     void drawPauseMenu();
 
