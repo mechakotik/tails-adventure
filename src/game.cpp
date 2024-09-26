@@ -17,30 +17,9 @@
 TA_Game::TA_Game()
 {
     TA::save::load();
-
     initSDL();
     createWindow();
-
-    //TA::eventLog::openWrite("event_log");
-
-    unsigned long long seed = std::chrono::steady_clock::now().time_since_epoch().count();
-    union SeedConverter {
-        unsigned long long a;
-        long long b;
-    } seedConverter;
-
-    if(TA::eventLog::isReading()) {
-        seedConverter.b = TA::eventLog::read();
-        seed = seedConverter.a;
-    }
-    else {
-        if(TA::eventLog::isWriting()) {
-            seedConverter.a = seed;
-            TA::eventLog::write(seedConverter.b);
-        }
-    }
-    TA::random::init(seed);
-    
+    TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
     TA::gamepad::init();
     TA::resmgr::preload();
 
@@ -157,23 +136,7 @@ bool TA_Game::process()
 void TA_Game::update()
 {
     currentTime = std::chrono::high_resolution_clock::now();
-
-    union TimeConverter {
-        double a;
-        long long b;
-    } timeConverter;
-
-    if(TA::eventLog::isReading()) {
-        timeConverter.b = TA::eventLog::read();
-        TA::elapsedTime = timeConverter.a;
-    }
-    else {
-        TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
-        if(TA::eventLog::isWriting()) {
-            timeConverter.a = TA::elapsedTime;
-            TA::eventLog::write(timeConverter.b);
-        }
-    }
+    TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
 
     //TA::printLog("FPS %f", 60 / TA::elapsedTime);
     TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
@@ -203,7 +166,6 @@ TA_Game::~TA_Game()
 {
     TA::gamepad::quit();
     TA::resmgr::quit();
-    TA::eventLog::quit();
 
     SDL_DestroyTexture(targetTexture);
     SDL_DestroyRenderer(TA::renderer);

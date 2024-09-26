@@ -47,31 +47,12 @@ void TA::keyboard::updateMapping()
 
 std::array<bool, SDL_SCANCODE_COUNT> TA::keyboard::getKeyboardState()
 {
-    if(TA::eventLog::isReading()) {
-        std::array<bool, SDL_SCANCODE_COUNT> state;
-        for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
-            state[button] = TA::eventLog::read();
-        }
-
-        return state;
+    std::array<bool, SDL_SCANCODE_COUNT> state;
+    const bool* keyState = SDL_GetKeyboardState(NULL);
+    for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
+        state[button] = keyState[button];
     }
-
-    else {
-        std::array<bool, SDL_SCANCODE_COUNT> state;
-        const bool* keyState = SDL_GetKeyboardState(NULL);
-
-        for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
-            state[button] = keyState[button];
-        }
-
-        if(TA::eventLog::isWriting()) {
-            for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
-                TA::eventLog::write(state[button]);
-            }
-        }
-
-        return state;
-    }
+    return state;
 }
 
 bool TA::keyboard::isPressed(TA_FunctionButton button)

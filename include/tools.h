@@ -54,17 +54,6 @@ namespace TA
         long long next();
         long long max();
     }
-
-    namespace eventLog
-    {
-        void openRead(std::string filename);
-        void openWrite(std::string filename);
-        bool isReading();
-        bool isWriting();
-        void write(long long x);
-        void quit();
-        long long read();
-    }
 }
 
 #endif // TA_TOOLS_H
