@@ -118,7 +118,6 @@ void TA_Game::updateWindowSize()
             SDL_DestroyTexture(targetTexture);
         }
         targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, targetWidth, targetHeight);
-        SDL_SetTextureScaleMode(targetTexture, SDL_SCALEMODE_NEAREST);
     }
 }
 
@@ -180,6 +179,7 @@ void TA_Game::update()
     //TA::elapsedTime /= 10;
     startTime = currentTime;
 
+    SDL_SetTextureScaleMode(targetTexture, TA::save::getParameter("scale_mode") ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
     SDL_SetRenderTarget(TA::renderer, targetTexture);
     SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
     SDL_RenderClear(TA::renderer);

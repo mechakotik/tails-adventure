@@ -70,6 +70,23 @@ public:
     }
 };
 
+class TA_ScaleModeOption : public TA_Option {
+public:
+    std::string getName() override {return "scale mode";}
+
+    std::string getValue() override {
+        int value = TA::save::getParameter("scale_mode");
+        return (value == 1 ? "smooth" : "sharp");
+    }
+
+    TA_MoveSoundId move(int delta) override {
+        int value = TA::save::getParameter("scale_mode");
+        value = 1 - value;
+        TA::save::setParameter("scale_mode", value);
+        return TA_MOVE_SOUND_SWITCH;
+    }
+};
+
 class TA_MaxFPSOption : public TA_Option {
 public:
     std::string getName() override {return "fps limit";}
@@ -258,6 +275,7 @@ void TA_OptionsSection::load()
     options[0].push_back(std::make_unique<TA_PixelAROption>());
     options[0].push_back(std::make_unique<TA_VSyncOption>());
     options[0].push_back(std::make_unique<TA_MaxFPSOption>(TA_MaxFPSOption()));
+    options[0].push_back(std::make_unique<TA_ScaleModeOption>());
 
     options[1].push_back(std::make_unique<TA_MapKeyboardOption>());
     options[1].push_back(std::make_unique<TA_MapGamepadOption>());
