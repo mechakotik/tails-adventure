@@ -84,7 +84,8 @@ void TA_Game::createWindow()
 
     updateWindowSize();
     SDL_SetRenderDrawBlendMode(TA::renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderVSync(TA::renderer, TA::save::getParameter("vsync"));
+    int vsync = TA::save::getParameter("vsync");
+    SDL_SetRenderVSync(TA::renderer, (vsync == 2 ? -1 : vsync));
 }
 
 void TA_Game::toggleFullscreen()

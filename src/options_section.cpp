@@ -53,14 +53,23 @@ public:
 
     std::string getValue() override {
         int value = TA::save::getParameter("vsync");
-        return (value == 1 ? "on" : "off");
+        switch(value) {
+            case 0:
+                return "off";
+            case 1:
+                return "on";
+            case 2:
+                return "adapt";
+            default:
+                return "";
+        }
     }
 
     TA_MoveSoundId move(int delta) override {
         int value = TA::save::getParameter("vsync");
-        value = 1 - value;
+        value = (value + 1) % 3;
         TA::save::setParameter("vsync", value);
-        SDL_SetRenderVSync(TA::renderer, value);
+        SDL_SetRenderVSync(TA::renderer, (value == 2 ? -1 : value));
         return TA_MOVE_SOUND_SWITCH;
     }
 };
