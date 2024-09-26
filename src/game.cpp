@@ -208,9 +208,9 @@ TA_Game::~TA_Game()
     SDL_DestroyTexture(targetTexture);
     SDL_DestroyRenderer(TA::renderer);
     SDL_DestroyWindow(TA::window);
-    
-    SDL_Quit();
+
     IMG_Quit();
     Mix_CloseAudio();
     Mix_Quit();
+    SDL_Quit();
 }
