@@ -202,7 +202,7 @@ void TA_Hud::setHudAlpha(int alpha)
     links.controller->setAlpha(alpha);
     ringMonitor.setAlpha(alpha);
     flightBarSprite.setAlpha(alpha);
-    
+
     itemSprite.setAlpha(alpha);
     leftSprite.setAlpha(alpha);
     rightSprite.setAlpha(alpha);

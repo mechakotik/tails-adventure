@@ -48,7 +48,7 @@ private:
     const double topX = 1;
     const double minJumpSpeed = -2.5;
     const double maxJumpSpeed = 3;
-    const double releaseJumpSpeed = -1.8;
+    const double releaseJumpSpeed = -1.5;
     const double helitailAcc = 0.1;
     const double helitailTop = 1;
     const double hurtXsp = 1;
