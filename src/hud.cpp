@@ -108,40 +108,52 @@ void TA_Hud::updatePauseMenu()
         setPauseMenuAlpha(255);
     }
 
+    if(links.controller->isTouchscreen()) {
+        updatePauseMenuInputTouch();
+    }
+    else {
+        updatePauseMenuInputController();
+    }
+}
+
+void TA_Hud::updatePauseMenuInputController()
+{
+    if(links.controller->isJustPressed(TA_BUTTON_PAUSE) ||
+        links.controller->isJustPressed(TA_BUTTON_A) ||
+        links.controller->isJustPressed(TA_BUTTON_B)) {
+        pauseMenuSelect();
+        return;
+    }
+
+    if(!links.controller->isJustChangedDirection()) {
+        return;
+    }
+
+    TA_Direction direction = links.controller->getDirection();
     std::string itemPositionKey = (links.seaFox ? "seafox_item_position" : "item_position");
-    if(links.controller->isJustChangedDirection()) {
-        TA_Direction direction = links.controller->getDirection();
-        if(direction == TA_DIRECTION_LEFT && itemPosition >= 1) {
-            switchSound.play();
-            itemPosition --;
-            TA::save::setSaveParameter(itemPositionKey, itemPosition);
-        }
-        else if(direction == TA_DIRECTION_RIGHT && itemPosition <= 2) {
-            switchSound.play();
-            itemPosition ++;
-            TA::save::setSaveParameter(itemPositionKey, itemPosition);
-        }
-        else if(direction == TA_DIRECTION_UP && pauseMenuSelection >= 1) {
-            switchSound.play();
-            pauseMenuSelection --;
-        }
-        else if(direction == TA_DIRECTION_DOWN && pauseMenuSelection <= 1) {
-            switchSound.play();
-            pauseMenuSelection ++;
-        }
-    }
 
-    int startX = TA::screenWidth / 2 - 45;
-    for(int pos = 0; pos < 4; pos ++) {
-        itemButtons[pos].setPosition({static_cast<double>(startX + pos * 26), 36});
-        itemButtons[pos].update();
-        if(itemButtons[pos].isJustPressed()) {
-            switchSound.play();
-            itemPosition = pos;
-            TA::save::setSaveParameter(itemPositionKey, itemPosition);
-        }
+    if(direction == TA_DIRECTION_LEFT && itemPosition >= 1) {
+        switchSound.play();
+        itemPosition --;
+        TA::save::setSaveParameter(itemPositionKey, itemPosition);
     }
+    else if(direction == TA_DIRECTION_RIGHT && itemPosition <= 2) {
+        switchSound.play();
+        itemPosition ++;
+        TA::save::setSaveParameter(itemPositionKey, itemPosition);
+    }
+    else if(direction == TA_DIRECTION_UP && pauseMenuSelection >= 1) {
+        switchSound.play();
+        pauseMenuSelection --;
+    }
+    else if(direction == TA_DIRECTION_DOWN && pauseMenuSelection <= 1) {
+        switchSound.play();
+        pauseMenuSelection ++;
+    }
+}
 
+void TA_Hud::updatePauseMenuInputTouch()
+{
     for(int pos = 0; pos < 3; pos ++) {
         menuButtons[pos].setPosition({TA::screenWidth / 2 - static_cast<double>(pauseMenuFrameSprite.getWidth() / 2), static_cast<double>(63 + 17 * pos)});
         menuButtons[pos].update();
@@ -152,10 +164,17 @@ void TA_Hud::updatePauseMenu()
         }
     }
 
-    if(links.controller->isJustPressed(TA_BUTTON_PAUSE) ||
-        links.controller->isJustPressed(TA_BUTTON_A) ||
-        links.controller->isJustPressed(TA_BUTTON_B)) {
-        pauseMenuSelect();
+    std::string itemPositionKey = (links.seaFox ? "seafox_item_position" : "item_position");
+    int startX = TA::screenWidth / 2 - 45;
+
+    for(int pos = 0; pos < 4; pos ++) {
+        itemButtons[pos].setPosition({static_cast<double>(startX + pos * 26), 36});
+        itemButtons[pos].update();
+        if(itemButtons[pos].isJustPressed()) {
+            switchSound.play();
+            itemPosition = pos;
+            TA::save::setSaveParameter(itemPositionKey, itemPosition);
+        }
     }
 }
 
@@ -180,9 +199,14 @@ void TA_Hud::pauseMenuSelect()
 
 void TA_Hud::setHudAlpha(int alpha)
 {
+    links.controller->setAlpha(alpha);
     ringMonitor.setAlpha(alpha);
-    itemSprite.setAlpha(alpha);
     flightBarSprite.setAlpha(alpha);
+    
+    itemSprite.setAlpha(alpha);
+    leftSprite.setAlpha(alpha);
+    rightSprite.setAlpha(alpha);
+    pauseSprite.setAlpha(alpha);
 
     for(int digit = 0; digit < 2; digit ++) {
         ringDigits[digit].setAlpha(alpha);

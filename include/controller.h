@@ -50,6 +50,7 @@ public:
     void update();
     void draw();
     void setMode(TA_OnscreenControllerMode newMode) {mode = newMode;}
+    void setAlpha(int alpha);
 
     TA_Point getDirectionVector();
     bool isPressed(TA_FunctionButton button);
@@ -73,6 +74,7 @@ public:
     void update();
     void draw();
     void setMode(TA_OnscreenControllerMode mode) {onscreen.setMode(mode);}
+    void setAlpha(int alpha) {onscreen.setAlpha(alpha);}
 
     TA_Point getDirectionVector();
     TA_Direction getDirection();

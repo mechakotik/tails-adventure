@@ -118,6 +118,15 @@ void TA_OnscreenController::setArrowButtonPosition(TA_Direction button, TA_Point
     arrowSprites[button].setPosition(center - TA_Point(arrowSprites[button].getWidth() / 2, arrowSprites[button].getHeight() / 2));
 }
 
+void TA_OnscreenController::setAlpha(int alpha)
+{
+    for(int button = 0; button < TA_BUTTON_MAX; button ++) {
+        sprites[button].setAlpha(alpha);
+    }
+    stickSprite.setAlpha(alpha);
+    pointerSprite.setAlpha(alpha);
+}
+
 TA_Point TA_OnscreenController::getDirectionVector()
 {
     if(mode != TA_ONSCREEN_CONTROLLER_DPAD) {

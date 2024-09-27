@@ -37,6 +37,8 @@ private:
     void updateCurrentItem();
     void updatePause();
     void updatePauseMenu();
+    void updatePauseMenuInputController();
+    void updatePauseMenuInputTouch();
     void pauseMenuSelect();
 
     void setHudAlpha(int alpha);
