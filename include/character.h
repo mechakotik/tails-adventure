@@ -63,6 +63,7 @@ private:
     const double hammerFallSpeed = 0.2;
     const double waterFriction = 0.75;
     const double waterFlowAcc = 0.15;
+    const double maxCoyoteTime = 10;
 
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
@@ -93,6 +94,7 @@ private:
     double jumpSpeed = 0, jumpTime = 0;
     double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     double timer = 0, lookTime = 0, teleportTime = 0;
+    double coyoteTime = 0;
     double deltaX = 0;
     int rings, currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;

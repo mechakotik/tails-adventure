@@ -218,8 +218,11 @@ void TA_Character::updateAnimation()
                 setAnimation("jump_down");
             }
         }
-        else {
-            if(getAnimationName() != "throw_air") {
+        else if(getAnimationName() != "throw_air") {
+            if(coyoteTime < maxCoyoteTime) {
+                setAnimation("jump_down");
+            }
+            else {
                 setAnimation("fall");
             }
         }

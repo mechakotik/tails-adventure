@@ -42,6 +42,7 @@ void TA_Character::updateGround()
 {
     horizontalMove();
     jump = spring = false;
+    coyoteTime = 0;
     lookUp = (links.controller->getDirection() == TA_DIRECTION_UP);
     crouch = (links.controller->getDirection() == TA_DIRECTION_DOWN);
     if(lookUp || crouch) {
@@ -65,7 +66,9 @@ void TA_Character::updateGround()
 
 void TA_Character::updateAir()
 {
+    coyoteTime += TA::elapsedTime;
     horizontalMove();
+
     if(jump) {
         jumpSpeed += grv * (water ? 0.5 : 1) * TA::elapsedTime;
         jumpSpeed = std::min(jumpSpeed, maxJumpSpeed);
@@ -91,11 +94,20 @@ void TA_Character::updateAir()
             initHelitail();
         }
     }
+
     else {
         velocity.y += grv * (water ? 0.5 : 1) * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxJumpSpeed);
         if(water && velocity.y > maxJumpSpeed * 0.5) {
             velocity.y = std::max(maxJumpSpeed * 0.5, velocity.y - waterFriction * TA::elapsedTime);
+        }
+
+        if(links.controller->isPressed(TA_BUTTON_A) && coyoteTime < maxCoyoteTime) {
+            jumpSound.play();
+            jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * (water ? 0.7 : 1);
+            jump = true;
+            jumpReleased = false;
+            jumpTime = 0;
         }
     }
 }
