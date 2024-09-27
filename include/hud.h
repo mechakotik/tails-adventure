@@ -26,7 +26,9 @@ private:
 
     TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
     TA_Sprite pauseMenuItemSprite, pointerSprite, pauseMenuFrameSprite;
-    TA_Font pauseMenuFont, pauseMenuInactiveFont;
+    std::array<TA_OnscreenButton, 4> itemButtons;
+    std::array<TA_OnscreenButton, 3> menuButtons;
+    TA_Font pauseMenuFont;
     int pauseMenuSelection = 0;
     double pauseMenuAlpha = 0;
     bool paused = false, exitPause = false;
@@ -45,6 +47,7 @@ private:
     void drawTouchControls();
     void drawRingsCounter();
     void drawPauseMenu();
+    void drawHighlight(double y);
 
 public:
     void load(TA_Links newLinks);

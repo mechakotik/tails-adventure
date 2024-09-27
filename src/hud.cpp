@@ -24,10 +24,8 @@ void TA_Hud::load(TA_Links newLinks)
     pointerSprite.load("house/pointer.png");
     pauseMenuFont.load("fonts/pause_menu.png", 8, 8);
     pauseMenuFont.setMapping("abcdefghijklmnopqrstuvwxyz .*");
-    pauseMenuInactiveFont.load("fonts/pause_menu_inactive.png", 8, 8);
-    pauseMenuInactiveFont.setMapping("abcdefghijklmnopqrstuvwxyz .*");
     pauseMenuFrameSprite.load("hud/pause_menu_frame.png");
-    pauseMenuFrameSprite.setPosition(TA::screenWidth / 2 - 52, 42);
+    pauseMenuFrameSprite.setPosition(TA::screenWidth / 2 - pauseMenuFrameSprite.getWidth() / 2, 29);
 
     leftSprite.load("hud/items.png", 16, 16);
     leftSprite.setFrame(40);
@@ -39,6 +37,13 @@ void TA_Hud::load(TA_Links newLinks)
     leftButton.setRectangle({0, 0}, {16, 16});
     rightButton.setRectangle({0, 0}, {16, 16});
     pauseButton.setRectangle({0, 0}, {16, 16});
+
+    for(int pos = 0; pos < 4; pos ++) {
+        itemButtons[pos].setRectangle({0, 0}, {20, 20});
+    }
+    for(int pos = 0; pos < 3; pos ++) {
+        menuButtons[pos].setRectangle({0, 0}, {125, 17});
+    }
 
     itemPosition = TA::save::getSaveParameter("item_position");
     flightBarSprite.load("hud/flightbar.png");
@@ -126,6 +131,27 @@ void TA_Hud::updatePauseMenu()
         }
     }
 
+    int startX = TA::screenWidth / 2 - 45;
+    for(int pos = 0; pos < 4; pos ++) {
+        itemButtons[pos].setPosition({static_cast<double>(startX + pos * 26), 36});
+        itemButtons[pos].update();
+        if(itemButtons[pos].isJustPressed()) {
+            switchSound.play();
+            itemPosition = pos;
+            TA::save::setSaveParameter(itemPositionKey, itemPosition);
+        }
+    }
+
+    for(int pos = 0; pos < 3; pos ++) {
+        menuButtons[pos].setPosition({TA::screenWidth / 2 - static_cast<double>(pauseMenuFrameSprite.getWidth() / 2), static_cast<double>(63 + 17 * pos)});
+        menuButtons[pos].update();
+        if(menuButtons[pos].isReleased()) {
+            pauseMenuSelection = pos;
+            pauseMenuSelect();
+            return;
+        }
+    }
+
     if(links.controller->isJustPressed(TA_BUTTON_PAUSE) ||
         links.controller->isJustPressed(TA_BUTTON_A) ||
         links.controller->isJustPressed(TA_BUTTON_B)) {
@@ -169,7 +195,6 @@ void TA_Hud::setPauseMenuAlpha(int alpha)
     pointerSprite.setAlpha(alpha);
     pauseMenuAlpha = alpha;
     pauseMenuFont.setAlpha(alpha);
-    pauseMenuInactiveFont.setAlpha(alpha);
     pauseMenuFrameSprite.setAlpha(alpha);
 }
 
@@ -301,7 +326,7 @@ void TA_Hud::drawPauseMenu()
     pauseMenuFrameSprite.draw();
 
     {
-        int startX = TA::screenWidth / 2 - 41;
+        int startX = TA::screenWidth / 2 - 47;
 
         for(int num = 0; num < 4; num ++) {
             std::string itemKey = (links.seaFox ? "seafox_item_slot" : "item_slot") + std::to_string(num);
@@ -310,12 +335,12 @@ void TA_Hud::drawPauseMenu()
                 item = 38;
             }
 
-            pauseMenuItemSprite.setPosition(startX + num * 22, 48);
+            pauseMenuItemSprite.setPosition(startX + num * 26, 38);
             pauseMenuItemSprite.setFrame(item);
             pauseMenuItemSprite.draw();
         }
 
-        pointerSprite.setPosition(startX + itemPosition * 22 - 1, 46);
+        pointerSprite.setPosition(startX + itemPosition * 26 - 1, 36);
         pointerSprite.draw();
     }
 
@@ -325,12 +350,31 @@ void TA_Hud::drawPauseMenu()
         "quit game"
     };
 
+    bool touchscreen = links.controller->isTouchscreen();
     for(int pos = 0; pos < (int)menu.size(); pos ++) {
-        if(pos == pauseMenuSelection) {
-            pauseMenuFont.drawTextCentered(70 + 10 * pos, menu[pos], {-1, 0});
+        if((!touchscreen && pauseMenuSelection == pos) || (touchscreen && menuButtons[pos].isPressed())) {
+            drawHighlight(60 + 17 * pos);
         }
-        else {
-            pauseMenuInactiveFont.drawTextCentered(70 + 10 * pos, menu[pos], {-1, 0});
-        }
+        pauseMenuFont.drawTextCentered(63 + 17 * pos, menu[pos], {-1, 0});
+    }
+}
+
+void TA_Hud::drawHighlight(double y)
+{
+    SDL_FRect rect = {(float)TA::screenWidth / 2 - 54, (float)y, 110, 15};
+
+    for(int num = 0; num < 4; num ++) {
+        int squareAlpha = static_cast<int>(255 * pauseMenuAlpha / 255 * pauseMenuAlpha / 255);
+        SDL_SetRenderDrawColor(TA::renderer, num * 28, num * 24, num * 28, squareAlpha);
+
+        SDL_FRect targetRect = rect;
+        targetRect.x *= TA::scaleFactor;
+        targetRect.y *= TA::scaleFactor;
+        targetRect.w *= TA::scaleFactor;
+        targetRect.h *= TA::scaleFactor;
+
+        SDL_RenderFillRect(TA::renderer, &targetRect);
+        rect.x += 2;
+        rect.w -= 4;
     }
 }

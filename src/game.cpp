@@ -76,7 +76,7 @@ void TA_Game::toggleFullscreen()
 
 void TA_Game::updateWindowSize()
 {
-    double pixelAR = (TA::save::getParameter("pixel_ar") == 0 ? 1 : double(7)/8);
+    double pixelAR = (TA::save::getParameter("pixel_ar") == 0 ? 1 : double(7) / 8);
 
     if(!fullscreen) {
         int factor = TA::save::getParameter("resolution");
@@ -99,6 +99,8 @@ void TA_Game::updateWindowSize()
         }
         targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, targetWidth, targetHeight);
     }
+
+    SDL_SetTextureScaleMode(targetTexture, TA::save::getParameter("scale_mode") ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
 }
 
 bool TA_Game::process()
@@ -115,7 +117,7 @@ bool TA_Game::process()
         if (event.type == SDL_EVENT_QUIT) {
             return false;
         }
-        else if (event.type == SDL_EVENT_FINGER_DOWN || event.type == SDL_EVENT_FINGER_MOTION || event.type == SDL_EVENT_FINGER_UP) {
+        if (event.type == SDL_EVENT_FINGER_DOWN || event.type == SDL_EVENT_FINGER_MOTION || event.type == SDL_EVENT_FINGER_UP) {
             TA::touchscreen::handleEvent(event.tfinger);
         }
         else if(event.type == SDL_EVENT_GAMEPAD_ADDED || event.type == SDL_EVENT_GAMEPAD_REMOVED) {
@@ -143,7 +145,6 @@ void TA_Game::update()
     //TA::elapsedTime /= 10;
     startTime = currentTime;
 
-    SDL_SetTextureScaleMode(targetTexture, TA::save::getParameter("scale_mode") ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
     SDL_SetRenderTarget(TA::renderer, targetTexture);
     SDL_SetRenderDrawColor(TA::renderer, 0, 0, 0, 255);
     SDL_RenderClear(TA::renderer);
