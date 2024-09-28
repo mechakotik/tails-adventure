@@ -11,10 +11,7 @@ void TA_HouseScreen::init()
     seaFoxSprite.load("house/seafox.png");
     curtainSprite.load("house/curtain.png");
     selectorSprite.load("house/selector.png", 16, 12);
-
     controller.load();
-    controller.setMode(TA_ONSCREEN_CONTROLLER_DPAD);
-
     TA::sound::playMusic("sound/house.vgm");
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
@@ -34,6 +31,10 @@ TA_ScreenState TA_HouseScreen::update()
 
     if(curtainTimeLeft <= 0) {
         if(inventoryOpen) {
+            if(controller.isTouchscreen()) {
+                updateSelectorTouch();
+                shouldMove |= buttons[3].isReleased();
+            }
             shouldMove |= !inventoryMenu.update();
             if(shouldMove) {
                 inventoryMenu.hide();
@@ -117,7 +118,7 @@ void TA_HouseScreen::updateSelectorTouch()
     for(int pos = 0; pos < 4; pos ++) {
         buttons[pos].setPosition({leftX + 31 + 23 * pos, 0});
         buttons[pos].update();
-        if(buttons[pos].isReleased()) {
+        if(buttons[pos].isReleased() && !inventoryOpen) {
             selection = pos;
         }
     }
@@ -226,7 +227,18 @@ void TA_HouseScreen::drawSelector()
         if(pos > 1 || (pos == 1 && TA::save::getSaveParameter("seafox"))) {
             frame ++;
         }
-        if((!touchscreen && selection == pos) || (touchscreen && buttons[pos].isPressed())) {
+
+        if(inventoryOpen) {
+            if(pos == 3 && touchscreen) {
+                if(buttons[pos].isPressed()) {
+                    frame += 5;
+                }
+            }
+            else {
+                frame += 10;
+            }
+        }
+        else if((!touchscreen && selection == pos) || (touchscreen && buttons[pos].isPressed())) {
             frame += 5;
         }
 
