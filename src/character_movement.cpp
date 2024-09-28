@@ -102,7 +102,7 @@ void TA_Character::updateAir()
             velocity.y = std::max(maxJumpSpeed * 0.5, velocity.y - waterFriction * TA::elapsedTime);
         }
 
-        if(links.controller->isPressed(TA_BUTTON_A) && coyoteTime < maxCoyoteTime) {
+        if(links.controller->isJustPressed(TA_BUTTON_A) && coyoteTime < maxCoyoteTime) {
             jumpSound.play();
             jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * (water ? 0.7 : 1);
             jump = true;
