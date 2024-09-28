@@ -5,6 +5,11 @@ option(TA_STATIC "Statically link libgcc and libstdc++" OFF)
 option(TA_UNIX_INSTALL "Install on Unix filesystem" OFF)
 option(TA_SANITIZE "Build with sanitizers" OFF)
 
+if(TA_SANITIZE)
+    add_compile_options(-fsanitize=address,leak,undefined)
+    add_link_options(-fsanitize=address,leak,undefined)
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 set(BUILD_SHARED_LIBS OFF)
 set(SDL_STATIC ON)
@@ -94,11 +99,6 @@ if(TA_STATIC)
     else()
         target_link_options(tails-adventure PRIVATE -static-libgcc -static-libstdc++)
     endif()
-endif()
-
-if(TA_SANITIZE)
-    add_compile_options(-fsanitize=address,leak,undefined)
-    add_link_options(-fsanitize=address,leak,undefined)
 endif()
 
 if(WIN32)
