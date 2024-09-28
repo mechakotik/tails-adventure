@@ -10,9 +10,8 @@ void TA_HouseScreen::init()
     clawSprite.load("house/claw.png");
     seaFoxSprite.load("house/seafox.png");
     curtainSprite.load("house/curtain.png");
+    selectorSprite.load("house/selector.png", 16, 12);
 
-    font.load("fonts/item.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz .*");
     controller.load();
     controller.setMode(TA_ONSCREEN_CONTROLLER_DPAD);
 
@@ -20,6 +19,10 @@ void TA_HouseScreen::init()
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
     selectSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
+
+    for(int pos = 0; pos < 4; pos ++) {
+        buttons[pos].setRectangle({0, 0}, {23, 32});
+    }
 
     inventoryMenu.load(&controller);
 }
@@ -50,7 +53,7 @@ TA_ScreenState TA_HouseScreen::update()
 
     if(shouldExit) {
         TA::save::setSaveParameter("map_selection", 0);
-        return (selectionY == 0 ? TA_SCREENSTATE_MAIN_MENU : TA_SCREENSTATE_MAP);
+        return (selection == 2 ? TA_SCREENSTATE_MAIN_MENU : TA_SCREENSTATE_MAP);
     }
     return TA_SCREENSTATE_CURRENT;
 }
@@ -84,32 +87,39 @@ void TA_HouseScreen::updatePositions()
 
 void TA_HouseScreen::updateSelector()
 {
+    if(controller.isTouchscreen()) {
+        updateSelectorTouch();
+    }
+    else {
+        updateSelectorController();
+    }
+}
+
+void TA_HouseScreen::updateSelectorController()
+{
     if(!controller.isJustChangedDirection()) {
         return;
     }
-
     TA_Direction direction = controller.getDirection();
-    std::pair<int, int> prevSelection{selectionX, selectionY};
-
-    switch(direction) {
-        case TA_DIRECTION_UP:
-            selectionY = std::max(0, selectionY - 1);
-            break;
-        case TA_DIRECTION_DOWN:
-            selectionY = std::min(1, selectionY + 1);
-            break;
-        case TA_DIRECTION_LEFT:
-            selectionX = std::max(0, selectionX - 1);
-            break;
-        case TA_DIRECTION_RIGHT:
-            selectionX = std::min(1, selectionX + 1);
-            break;
-        default:
-            break;
-    }
-
-    if(prevSelection != std::make_pair(selectionX, selectionY)) {
+    if(direction == TA_DIRECTION_LEFT && selection - 1 >= 0) {
+        selection --;
         switchSound.play();
+    }
+    else if(direction == TA_DIRECTION_RIGHT && selection + 1 < 4) {
+        selection ++;
+        switchSound.play();
+    }
+}
+
+void TA_HouseScreen::updateSelectorTouch()
+{
+    double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
+    for(int pos = 0; pos < 4; pos ++) {
+        buttons[pos].setPosition({leftX + 31 + 23 * pos, 0});
+        buttons[pos].update();
+        if(buttons[pos].isReleased()) {
+            selection = pos;
+        }
     }
 }
 
@@ -136,11 +146,24 @@ bool TA_HouseScreen::shouldDoTransition()
     if(inventoryOpen) {
         return !inventoryMenu.isShown();
     }
-    if(!controller.isJustPressed(TA_BUTTON_A)) {
+
+    bool touchscreen = controller.isTouchscreen();
+    if(!touchscreen && !controller.isJustPressed(TA_BUTTON_A)) {
         return false;
     }
+    if(touchscreen) {
+        bool pressed = false;
+        for(int pos = 0; pos < 4; pos ++) {
+            if(buttons[pos].isReleased()) {
+                pressed = true;
+            }
+        }
+        if(!pressed) {
+            return false;
+        }
+    }
 
-    if(selectionX == 0 && selectionY == 1 && !isSeaFoxAvailable()) {
+    if(selection == 1 && !isSeaFoxAvailable()) {
         errorSound.play();
         return false;
     }
@@ -157,10 +180,10 @@ bool TA_HouseScreen::isSeaFoxAvailable()
 
 void TA_HouseScreen::applyTransition()
 {
-    if(selectionX == 0 && selectionY == 0) {
+    if(selection == 0) {
         inventoryOpen = !inventoryOpen;
     }
-    else if(selectionX == 0 && selectionY == 1) {
+    else if(selection == 1) {
         bool seaFox = TA::save::getSaveParameter("seafox");
         seaFox = !seaFox;
         TA::save::setSaveParameter("seafox", seaFox);
@@ -195,33 +218,22 @@ void TA_HouseScreen::draw()
 
 void TA_HouseScreen::drawSelector()
 {
-    TA_Point position = interfaceSprite.getPosition() + TA_Point(32, 8);
-    std::string text;
-    if(TA::save::getSaveParameter("seafox")) {
-        text = ".equip.cont \n.house.exit";
-    }
-    else {
-        text = ".equip.cont \n.dock .exit";
-    }
+    double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
+    bool touchscreen = controller.isTouchscreen();
 
-    if(selectionX == 0) {
-        if(selectionY == 0) {
-            text[0] = '*';
+    for(int pos = 0; pos < 4; pos ++) {
+        int frame = pos;
+        if(pos > 1 || (pos == 1 && TA::save::getSaveParameter("seafox"))) {
+            frame ++;
         }
-        else {
-            text[13] = '*';
+        if((!touchscreen && selection == pos) || (touchscreen && buttons[pos].isPressed())) {
+            frame += 5;
         }
-    }
-    else {
-        if(selectionY == 0) {
-            text[6] = '*';
-        }
-        else {
-            text[19] = '*';
-        }
-    }
 
-    font.drawText(position, text);
+        selectorSprite.setPosition(leftX + 37 + pos * 23, 10);
+        selectorSprite.setFrame(frame);
+        selectorSprite.draw();
+    }
 }
 
 void TA_HouseScreen::drawCurtain()

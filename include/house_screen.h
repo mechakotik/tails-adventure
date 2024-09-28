@@ -15,6 +15,8 @@ private:
 
     void updatePositions();
     void updateSelector();
+    void updateSelectorController();
+    void updateSelectorTouch();
     void updateCurtain();
     bool shouldDoTransition();
     void applyTransition();
@@ -26,12 +28,12 @@ private:
     void drawCurtain(double factor);
 
     TA_InventoryMenu inventoryMenu;
-    TA_Sprite interfaceSprite, houseSprite, curtainSprite, houseSeaFoxSprite, clawSprite, seaFoxSprite;
-    TA_Font font;
+    TA_Sprite interfaceSprite, houseSprite, selectorSprite, curtainSprite, houseSeaFoxSprite, clawSprite, seaFoxSprite;
+    std::array<TA_OnscreenButton, 4> buttons;
     TA_Controller controller;
     TA_Sound switchSound, errorSound, selectSound;
 
-    int selectionX = 1, selectionY = 1;
+    int selection = 3;
     double curtainTimeLeft = -1;
     bool inventoryOpen = false;
     bool shouldMove = false, shouldExit = false;

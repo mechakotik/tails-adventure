@@ -1,4 +1,3 @@
-#include <SDL3/SDL_main.h>
 #include "game.h"
 #include "tools.h"
 
