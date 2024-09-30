@@ -25,10 +25,17 @@ void TA_InGameMap::load()
 
 void TA_InGameMap::draw()
 {
+    drawBackground();
     tilemap.draw(0);
     for(int pos = 0; pos < 2; pos ++) {
         dolphinSprites[pos].draw();
     }
+}
+
+void TA_InGameMap::drawBackground()
+{
+    TA::drawScreenRect(17, 136, 221, 255);
+    TA::drawRect({0, 0}, {static_cast<double>(TA::screenWidth), 9}, 187, 238, 238, 255);
 }
 
 void TA_InGameMap::drawSelectionName(std::string name)

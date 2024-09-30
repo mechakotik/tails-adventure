@@ -4,8 +4,6 @@
 #include <fstream>
 #include "SDL3/SDL.h"
 #include "tools.h"
-#include "error.h"
-#include "save.h"
 
 namespace TA
 {
@@ -30,16 +28,23 @@ namespace TA
     }
 }
 
-void TA::drawScreenRect(int r, int g, int b, int a)
+void TA::drawRect(TA_Point topLeft, TA_Point bottomRight, int r, int g, int b, int a)
 {
     SDL_FRect rect;
-    rect.x = rect.y = 0;
-    rect.w = rect.h = 10000;
+    rect.x = topLeft.x * TA::scaleFactor;
+    rect.y = topLeft.y * TA::scaleFactor;
+    rect.w = (bottomRight.x - topLeft.x) * TA::scaleFactor;
+    rect.h = (bottomRight.y - topLeft.y) * TA::scaleFactor;
 
     a = std::max(a, 0);
     a = std::min(a, 255);
     SDL_SetRenderDrawColor(TA::renderer, r, g, b, a);
     SDL_RenderFillRect(TA::renderer, &rect);
+}
+
+void TA::drawScreenRect(int r, int g, int b, int a)
+{
+    drawRect(TA_Point(-16, -16), TA_Point(TA::screenWidth + 16, TA::screenHeight + 16), r, g, b, a);
 }
 
 void TA::drawShadow(int factor)

@@ -6,6 +6,7 @@
 #include <set>
 #include <cmath>
 #include "SDL3/SDL.h"
+#include "geometry.h"
 
 enum TA_Direction {
     TA_DIRECTION_UP,
@@ -38,6 +39,7 @@ namespace TA
     extern std::string levelPath, previousLevelPath;
     extern std::set<std::string> arguments;
 
+    void drawRect(TA_Point topLeft, TA_Point bottomRight, int r, int g, int b, int a);
     void drawScreenRect(int r, int g, int b, int a);
     void drawShadow(int factor);
     bool equal(double a, double b);

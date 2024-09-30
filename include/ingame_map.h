@@ -13,6 +13,8 @@ private:
     TA_Font font;
     std::array<TA_Sprite, 2> dolphinSprites;
 
+    void drawBackground();
+
 public:
     void load();
     void draw();
