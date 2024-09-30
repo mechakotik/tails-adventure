@@ -19,6 +19,21 @@ void TA_InventoryMenu::load(TA_Controller* controller)
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
     backSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
+
+    loadOnscreenButtons();
+}
+
+void TA_InventoryMenu::loadOnscreenButtons()
+{
+    for(int x = 0; x < 4; x ++) {
+        for(int y = 0; y < 2; y ++) {
+            buttons[x][y].setRectangle({0, 0}, {32, 24});
+        }
+        buttons[x][2].setRectangle({0, 0}, {22, 24});
+    }
+
+    leftButton.setRectangle({0, 0}, {32, 32});
+    rightButton.setRectangle({0, 0}, {32, 32});
 }
 
 void TA_InventoryMenu::fillItemMatrix()
@@ -71,6 +86,7 @@ void TA_InventoryMenu::fillItemMatrix()
 bool TA_InventoryMenu::update()
 {
     if(showTimeLeft <= 0 && hideTimeLeft <= 0 && listTransitionTimeLeft <= 0) {
+        updateOnscreenButtons();
         if(selectingSlot) {
             return updateSlotSelection();
         }
@@ -78,6 +94,47 @@ bool TA_InventoryMenu::update()
     }
 
     return true;
+}
+
+void TA_InventoryMenu::updateOnscreenButtons()
+{
+    for(int x = 0; x < 4; x ++) {
+        for(int y = 0; y < 2; y ++) {
+            buttons[x][y].setPosition(TA_Point(getLeftX() + 16 + 32 * x, (y == 0 ? 36 : 60)));
+            buttons[x][y].update();
+        }
+        buttons[x][2].setPosition(TA_Point(getLeftX() + 36 + 22 * x, 97));
+        buttons[x][2].update();
+    }
+
+    leftButton.setPosition(TA_Point(getLeftX() - 16, 47));
+    leftButton.update();
+    rightButton.setPosition(TA_Point(getLeftX() + 144, 47));
+    rightButton.update();
+
+    for(int pos = 0; pos < 4; pos ++) {
+        if(buttons[pos][2].isReleased()) {
+            selectSound.play();
+            selectionSlot = pos;
+            selectingSlot = false;
+        }
+    }
+
+    int page = selectionX / 4;
+    if(leftButton.isReleased() && page - 1 >= 0) {
+        prevSelection = {selectionX, selectionY};
+        selectionX = (page - 1) * 4;
+        selectionY = 0;
+        listTransitionTimeLeft = listTransitionTime * 2;
+        switchSound.play();
+    }
+    else if(rightButton.isReleased() && page + 1 < 3) {
+        prevSelection = {selectionX, selectionY};
+        selectionX = (page + 1) * 4;
+        selectionY = 0;
+        listTransitionTimeLeft = listTransitionTime * 2;
+        switchSound.play();
+    }
 }
 
 bool TA_InventoryMenu::updateSlotSelection()
@@ -140,7 +197,19 @@ void TA_InventoryMenu::updateItemSelection()
         }
     }
 
-    if(controller->isJustPressed(TA_BUTTON_A)) {
+    bool shouldPlaceItem = controller->isJustPressed(TA_BUTTON_A);
+    for(int x = 0; x < 4; x ++) {
+        for(int y = 0; y < 2; y ++) {
+            int page = selectionX / 4;
+            if(buttons[x][y].isReleased()) {
+                selectionX = page * 4 + x;
+                selectionY = y;
+                shouldPlaceItem = true;
+            }
+        }
+    }
+
+    if(shouldPlaceItem) {
         if(canPlaceItem(items[selectionX][selectionY].number)) {
             placeItem(selectionSlot, items[selectionX][selectionY].number);
             selectSound.play();
@@ -148,8 +217,11 @@ void TA_InventoryMenu::updateItemSelection()
         else {
             errorSound.play();
         }
-        selectingSlot = true;
+        if(!controller->isTouchscreen()) {
+            selectingSlot = true;
+        }
     }
+
     if(controller->isJustPressed(TA_BUTTON_B)) {
         selectingSlot = true;
         backSound.play();
@@ -347,19 +419,56 @@ bool TA_InventoryMenu::characterHasItem(int item)
 
 void TA_InventoryMenu::drawPointer()
 {
+    if(controller->isTouchscreen()) {
+        drawPointerTouchscreen();
+    }
+    else {
+        drawPointerController();
+    }
+}
+
+void TA_InventoryMenu::drawPointerController()
+{
     TA_Point inventoryPosition = TA_Point(getLeftX() + 39 + 22 * selectionSlot, 101);
     inventoryPointerSprite.setPosition(inventoryPosition - TA_Point(1, 2));
     inventoryPointerSprite.draw();
 
-    if(!selectingSlot) {
-        int pointerX = selectionX, pointerY = selectionY;
-        if(listTransitionTimeLeft > listTransitionTime) {
-            std::tie(pointerX, pointerY) = prevSelection;
-        }
+    if(selectingSlot) {
+        return;
+    }
 
-        TA_Point listPosition = TA_Point(getLeftX() + 24 + 32 * (pointerX % 4), (pointerY == 0? 40 : 64));
-        pointerSprite.setPosition(listPosition - TA_Point(1, 2));
-        pointerSprite.draw();
+    int pointerX = selectionX, pointerY = selectionY;
+    if(listTransitionTimeLeft > listTransitionTime) {
+        std::tie(pointerX, pointerY) = prevSelection;
+    }
+
+    TA_Point listPosition = TA_Point(getLeftX() + 24 + 32 * (pointerX % 4), (pointerY == 0? 40 : 64));
+    pointerSprite.setPosition(listPosition - TA_Point(1, 2));
+    pointerSprite.draw();
+}
+
+void TA_InventoryMenu::drawPointerTouchscreen()
+{
+    for(int pos = 0; pos < 4; pos ++) {
+        if((selectingSlot && buttons[pos][2].isPressed()) || (!selectingSlot && pos == selectionSlot)) {
+            TA_Point position = TA_Point(getLeftX() + 39 + 22 * pos, 101);
+            inventoryPointerSprite.setPosition(position - TA_Point(1, 2));
+            inventoryPointerSprite.draw();
+        }
+    }
+
+    if(selectingSlot) {
+        return;
+    }
+
+    for(int x = 0; x < 4; x ++) {
+        for(int y = 0; y < 2; y ++) {
+            if(buttons[x][y].isPressed()) {
+                TA_Point position = TA_Point(getLeftX() + 24 + 32 * x, (y == 0? 40 : 64));
+                pointerSprite.setPosition(position - TA_Point(1, 2));
+                pointerSprite.draw();
+            }
+        }
     }
 }
 

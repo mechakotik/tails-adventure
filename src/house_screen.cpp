@@ -33,7 +33,10 @@ TA_ScreenState TA_HouseScreen::update()
         if(inventoryOpen) {
             if(controller.isTouchscreen()) {
                 updateSelectorTouch();
-                shouldMove |= buttons[3].isReleased();
+                if(buttons[3].isReleased()) {
+                    selectSound.play();
+                    shouldMove = true;
+                }
             }
             shouldMove |= !inventoryMenu.update();
             if(shouldMove) {

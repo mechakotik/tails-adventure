@@ -14,15 +14,19 @@ private:
     const double listTransitionTime = 10;
 
     void fillItemMatrix();
+    void loadOnscreenButtons();
 
     bool updateSlotSelection();
     void updateItemSelection();
+    void updateOnscreenButtons();
     void updateAlpha();
 
     void drawItemList();
     void drawInventory();
     void drawSelectionName();
     void drawPointer();
+    void drawPointerController();
+    void drawPointerTouchscreen();
     void drawArrows();
 
     int getInventoryItem(int slot);
@@ -46,6 +50,9 @@ private:
     TA_Sprite inventoryItemSprite, inventoryPointerSprite;
     TA_Sound switchSound, selectSound, backSound, errorSound;
     TA_Font font;
+
+    std::array<std::array<TA_OnscreenButton, 3>, 4> buttons;
+    TA_OnscreenButton leftButton, rightButton;
 
     int selectionX = 0, selectionY = 0, selectionSlot = 0;
     std::pair<int, int> prevSelection;
