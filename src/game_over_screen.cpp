@@ -1,6 +1,7 @@
 #include "game_over_screen.h"
 #include "tools.h"
 #include "save.h"
+#include "sound.h"
 
 void TA_GameOverScreen::init()
 {
@@ -8,6 +9,7 @@ void TA_GameOverScreen::init()
     controller.load();
     TA::sound::playMusic("sound/game_over.vgm", 0);
     setMaxRings();
+    button.setRectangle(TA_Point(0, 0), TA_Point(TA::screenWidth, TA::screenHeight));
 
     TA::save::setSaveParameter("map_position", 0);
     TA::save::setSaveParameter("seafox", false);
@@ -32,7 +34,8 @@ TA_ScreenState TA_GameOverScreen::update()
     gameOverSprite.draw();
 
     controller.update();
-    if(controller.isJustPressed(TA_BUTTON_PAUSE) || !TA::sound::isMusicPlaying()) {
+    button.update();
+    if(controller.isJustPressed(TA_BUTTON_PAUSE) || button.isJustPressed() || !TA::sound::isMusicPlaying()) {
         return TA_SCREENSTATE_TITLE;
     }
     return TA_SCREENSTATE_CURRENT;

@@ -4,7 +4,6 @@
 #include "screen_state_machine.h"
 #include "sprite.h"
 #include "controller.h"
-#include "sound.h"
 
 class TA_GameOverScreen : public TA_Screen {
 private:
@@ -12,6 +11,7 @@ private:
 
     TA_Controller controller;
     TA_Sprite gameOverSprite;
+    TA_OnscreenButton button;
 
 public:
     void init() override;
