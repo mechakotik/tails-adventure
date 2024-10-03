@@ -137,10 +137,7 @@ void TA_DataSelectSection::draw()
     drawCustomEntries();
     drawSaveEntries();
     drawSplash();
-
-    if(!controller->isTouchscreen()) {
-        drawSelector();
-    }
+    drawSelector();
 }
 
 void TA_DataSelectSection::drawCustomEntries()
@@ -184,7 +181,24 @@ void TA_DataSelectSection::drawSelector()
     selectorRedSprite.setAlpha(alpha);
     selectorWhiteSprite.setAlpha(TA::linearInterpolation(0, alpha, selectorTimer / selectorBlinkTime));
 
-    if(selection >= 1) {
+    int selectorPosition = -1;
+    if(controller->isTouchscreen() && !locked) {
+        selectorRedSprite.setAlpha(255);
+        selectorWhiteSprite.setAlpha(0);
+        for(int pos = 0; pos < 9; pos ++) {
+            if(buttons[pos].isPressed()) {
+                selectorPosition = pos;
+            }
+        }
+    }
+    else {
+        selectorPosition = selection;
+    }
+    if(selectorPosition == -1) {
+        return;
+    }
+
+    if(selectorPosition >= 1) {
         selectorRedSprite.setFrame(0);
         selectorWhiteSprite.setFrame(1);
     }
@@ -193,7 +207,7 @@ void TA_DataSelectSection::drawSelector()
         selectorWhiteSprite.setFrame(3);
     }
 
-    selectorRedSprite.setPosition(menuStart + selection * menuOffset - position, TA::screenHeight / 2 - selectorRedSprite.getHeight() / 2);
+    selectorRedSprite.setPosition(menuStart + selectorPosition * menuOffset - position, TA::screenHeight / 2 - selectorRedSprite.getHeight() / 2);
     selectorWhiteSprite.setPosition(selectorRedSprite.getPosition());
     selectorRedSprite.draw();
     selectorWhiteSprite.draw();
