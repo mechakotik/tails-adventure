@@ -16,6 +16,7 @@ void TA_DataSelectSection::load()
     splashFont.setMapping(" !" + std::string{'"'} + "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[a]^_`abcdefghijklmnopqrstuvwxyz{|}~");
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
+    selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX1);
     loadSaveSound.load("sound/load_save.ogg", TA_SOUND_CHANNEL_SFX1);
 
     for(int pos = 0; pos < 9; pos ++) {
@@ -56,6 +57,7 @@ TA_MainMenuState TA_DataSelectSection::update()
 TA_MainMenuState TA_DataSelectSection::processSelection()
 {
     if(selection == 0) {
+        selectSound.play();
         return TA_MAIN_MENU_OPTIONS;
     }
 
