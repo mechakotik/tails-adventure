@@ -8,14 +8,12 @@
 void TA_TitleScreen::init()
 {
     backgroundSprite.load("title_screen/title_screen.png");
-    backgroundSprite.setPosition(TA::screenWidth / 2 - backgroundSprite.getWidth() / 2, 0);
 
     #ifdef __ANDROID__
         pressStartSprite.load("title_screen/touch_to_start.png");
     #else
         pressStartSprite.load("title_screen/press_start.png");
     #endif
-    pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104);
 
     TA::sound::playMusic("sound/title.vgm");
     enterSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX1, 0);
@@ -26,6 +24,9 @@ void TA_TitleScreen::init()
 
 TA_ScreenState TA_TitleScreen::update()
 {
+    backgroundSprite.setPosition(TA::screenWidth / 2 - backgroundSprite.getWidth() / 2, 0);
+    pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104);
+
     TA::drawScreenRect(0, 0, 102, 255);
     backgroundSprite.draw();
     controller.update();
