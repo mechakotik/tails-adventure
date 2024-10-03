@@ -107,7 +107,7 @@ TA_ScreenState TA_AreaSelector::update()
     }
 
     for(int pos = 0; pos < (int)points.size(); pos ++) {
-        if(currentPoint != points[pos] && points[pos]->updateButton()) {
+        if(currentPoint != points[pos] && points[pos]->isActive() && points[pos]->updateButton()) {
             currentPoint = points[pos];
             switchSound.play();
         }
