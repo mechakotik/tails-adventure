@@ -150,6 +150,7 @@ public:
     }
 
     bool isLocked() override {return locked;}
+    void unlock() override {locked = false;}
 
     TA_MoveSoundId move(int delta) override {
         locked = true;
@@ -195,6 +196,7 @@ public:
     }
 
     bool isLocked() override {return locked;}
+    void unlock() override {locked = false;}
 
     TA_MoveSoundId move(int delta) override {
         locked = true;
@@ -335,6 +337,10 @@ void TA_OptionsSection::updateGroupSelector()
 void TA_OptionsSection::updateOptionSelector()
 {
     if(options[group][option]->isLocked()) {
+        if(backButton.isReleased()) {
+            options[group][option]->unlock();
+            backSound.play();
+        }
         playMoveSound(options[group][option]->updateLocked());
         return;
     }
