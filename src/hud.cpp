@@ -199,7 +199,7 @@ void TA_Hud::pauseMenuSelect()
 
 void TA_Hud::setHudAlpha(int alpha)
 {
-    links.controller->setAlpha(alpha);
+    links.controller->setAlpha(200 * alpha / 255);
     ringMonitor.setAlpha(alpha);
     flightBarSprite.setAlpha(alpha);
 

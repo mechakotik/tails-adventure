@@ -4,8 +4,6 @@ void TA_OnscreenController::load()
 {
     sprites[TA_BUTTON_A].load("controls/a_button.png", 20, 22);
     sprites[TA_BUTTON_B].load("controls/b_button.png", 20, 22);
-    sprites[TA_BUTTON_A].setAlpha(200);
-    sprites[TA_BUTTON_B].setAlpha(200);
 
     arrowSprites[TA_DIRECTION_UP].load("controls/up_button.png", 18, 20);
     arrowSprites[TA_DIRECTION_DOWN].load("controls/down_button.png", 18, 20);
@@ -14,8 +12,7 @@ void TA_OnscreenController::load()
 
     stickSprite.load("controls/stick.png");
     pointerSprite.load("controls/pointer.png");
-    stickSprite.setAlpha(200);
-    pointerSprite.setAlpha(200);
+    setAlpha(200);
     updatePositions();
 }
 
