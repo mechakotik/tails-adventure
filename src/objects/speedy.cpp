@@ -8,12 +8,17 @@
 
 void TA_Speedy::load()
 {
+    double leftX = 256 - static_cast<double>(TA::screenWidth) / 2;
+    objectSet->spawnObject<TA_Transition>(TA_Point(leftX, 3888), TA_Point(leftX + 2, 4016), "maps/pm/pm3");
+
+    objectSet->getLinks().camera->setLockPosition({leftX, 112});
+    objectSet->getLinks().camera->forceLockX();
+
     if(isComplete()) {
-        objectSet->spawnObject<TA_Transition>(TA_Point(254, 3888), TA_Point(256, 4016), 3, false);
+        objectSet->spawnObject<TA_Transition>(TA_Point(leftX + TA::screenWidth - 2, 3888), TA_Point(leftX + TA::screenWidth, 4016), 3, false);
         return;
     }
 
-    objectSet->getLinks().camera->setLockPosition({0, 112});
     loadSprite();
     initShow();
 }
@@ -38,7 +43,7 @@ void TA_Speedy::loadSprite()
 void TA_Speedy::initShow()
 {
     state = STATE_SHOW;
-    position = {200, 3883};
+    position = {328, 3883};
     velocity = startShowVelocity;
     setAnimation("show");
     objectSet->getLinks().character->setHide(true);
@@ -120,7 +125,7 @@ void TA_Speedy::updateShow()
 void TA_Speedy::initIdle()
 {
     state = STATE_IDLE;
-    position = {-32, 0};
+    position = {96, 0};
 }
 
 void TA_Speedy::updateIdle()
@@ -158,10 +163,10 @@ void TA_Speedy::updateAttack()
 void TA_Speedy::initFlyUp()
 {
     if(objectSet->getCharacterPosition().x > 128) {
-        position.x = 64;
+        position.x = 192;
     }
     else {
-        position.x = 168;
+        position.x = 296;
     }
     position.y = objectSet->getLinks().camera->getPosition().y + 176;
     velocity = TA_Point(0, -flyUpSpeed);
@@ -262,7 +267,7 @@ void TA_Speedy::updateEndSequencePhase0()
 
 void TA_Speedy::updateEndSequencePhase1()
 {
-    const double needX = 48;
+    const double needX = 176;
 
     if(cpPosition.x < needX) {
         cpPosition.x += TA::elapsedTime;
@@ -325,7 +330,7 @@ void TA_Speedy::updateEndSequencePhase5()
     position = position + velocity * TA::elapsedTime;
     double cameraY = objectSet->getLinks().camera->getPosition().y;
 
-    if(position.x > 260 || position.y < cameraY - 36) {
+    if(position.x > 388 || position.y < cameraY - 36) {
         endSequencePhase = 6;
         objectSet->getLinks().character->setCharacterPosition(cpPosition);
         objectSet->getLinks().character->setHide(false);
@@ -362,7 +367,7 @@ void TA_Speedy::updateFlyAway()
 void TA_Speedy::updateFlip()
 {
     if(state == STATE_FLY_UP && getCurrentFrame() == 7) {
-        setFlip(position.x < 128);
+        setFlip(position.x < 256);
     }
     else if(state == STATE_END_SEQUENCE) {
         setFlip(false);

@@ -6,7 +6,13 @@ void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
 {
     updateOffset();
     followPosition = newFollowPosition;
-    position = *followPosition - TA_Point(0, yBottomOffset);
+
+    if(!lockedX) {
+        position.x = (*followPosition).x;
+    }
+    if(!lockedY) {
+        position.y = (*followPosition).y - yBottomOffset;
+    }
 }
 
 void TA_Camera::setLockPosition(TA_Point newLockPosition)
@@ -14,6 +20,12 @@ void TA_Camera::setLockPosition(TA_Point newLockPosition)
     lockPosition = newLockPosition;
     locked = true;
     lockedX = lockedY = false;
+}
+
+void TA_Camera::forceLockX()
+{
+    position.x = lockPosition.x;
+    lockedX = true;
 }
 
 void TA_Camera::update(bool ground, bool spring)

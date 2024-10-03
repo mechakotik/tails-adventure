@@ -23,6 +23,7 @@ public:
     void update(bool ground, bool spring);
     void setFollowPosition(TA_Point *newFollowPosition);
     void setLockPosition(TA_Point newLockPosition);
+    void forceLockX();
     bool isLocked() {return locked && lockedX && lockedY;}
     void unlock() {locked = lockedX = lockedY = false;}
     void setBorder(TA_Rect newBorder) {border = newBorder;}
