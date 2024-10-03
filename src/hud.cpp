@@ -32,7 +32,6 @@ void TA_Hud::load(TA_Links newLinks)
     rightSprite.load("hud/items.png", 16, 16);
     rightSprite.setFrame(41);
     pauseSprite.load("hud/items.png", 16, 16);
-    pauseSprite.setFrame(42);
 
     leftButton.setRectangle({0, 0}, {16, 16});
     rightButton.setRectangle({0, 0}, {16, 16});
@@ -69,7 +68,8 @@ void TA_Hud::updatePause()
     if(!paused) {
         pauseButton.setPosition(TA_Point(TA::screenWidth - 70, 4));
         pauseButton.update();
-        if(links.controller->isJustPressed(TA_BUTTON_PAUSE) || pauseButton.isJustPressed()) {
+        pauseSprite.setFrame((pauseButton.isPressed() ? 43 : 42));
+        if(links.controller->isJustPressed(TA_BUTTON_PAUSE) || pauseButton.isReleased()) {
             pauseSound.play();
             paused = true;
             timer = 0;
