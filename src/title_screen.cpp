@@ -101,7 +101,7 @@ void TA_TitleScreen::updateHidePressStart()
 
 void TA_TitleScreen::updateExit()
 {
-    const double exitTime = 10;
+    const double exitTime = 14;
     pressStartSprite.draw();
 
     timer += TA::elapsedTime;
