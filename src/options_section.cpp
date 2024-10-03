@@ -307,14 +307,14 @@ void TA_OptionsSection::updateGroupSelector()
             group --;
             switchSound.play();
         }
-        else if(direction == TA_DIRECTION_DOWN && group < (int)groups.size() - 1) {
+        else if(direction == TA_DIRECTION_DOWN && group < static_cast<int>(groups.size()) - 1) {
             group ++;
             switchSound.play();
         }
     }
 
     bool selected = false;
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < static_cast<int>(options.size()); pos ++) {
         if(buttons[pos].isReleased()) {
             group = pos;
             selected = true;
@@ -376,7 +376,7 @@ void TA_OptionsSection::updateOptionSelector()
         }
     }
 
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < static_cast<int>(options[group].size()); pos ++) {
         if(buttons[pos].isReleased()) {
             sound = options[group][pos]->move(1);
             TA::save::writeToFile();
