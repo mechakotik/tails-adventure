@@ -7,7 +7,7 @@ void TA_DataSelectSection::load()
     entrySprite.load("data_select/entry.png");
     selectorRedSprite.load("data_select/selector.png", 48, 72);
     selectorWhiteSprite.load("data_select/selector.png", 48, 72);
-    previewSprite.load("data_select/preview.png", 46, 45);
+    previewSprite.load("data_select/preview.png", 46, 46);
     optionsSprite.load("data_select/options.png");
 
     font.load("fonts/pause_menu.png", 8, 8);
@@ -159,10 +159,13 @@ void TA_DataSelectSection::drawSaveEntries()
         entrySprite.draw();
 
         if(TA::save::saveExists(num)) {
-            //previewSprite.setPosition(entryPosition + TA_Point(1, 1));
-            //previewSprite.setFrame(TA::save::getParameter("save_" + std::to_string(num) + "/last_unlocked") - 1);
-            //previewSprite.draw();
+            previewSprite.setFrame(TA::save::getParameter("save_" + std::to_string(num) + "/last_unlocked"));
         }
+        else {
+            previewSprite.setFrame(0);
+        }
+        previewSprite.setPosition(entryPosition + TA_Point(1, 1));
+        previewSprite.draw();
 
         font.drawText(entryPosition + TA_Point(11, 50), std::to_string(getSavePercent(num)) + "%");
         font.drawText(entryPosition + TA_Point(11, 60), getSaveTime(num), TA_Point(-2, 0));

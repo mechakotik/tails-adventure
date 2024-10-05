@@ -26,7 +26,7 @@ void TA_AreaSelector::appendPoints()
         points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73)));
         points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41)));
         points.push_back(new TA_MapPoint(4, "cavern\nisland", "maps/ci/ci1", TA_Point(182 + xOffset, 33)));
-        points.push_back(new TA_MapPoint(4, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49)));
+        points.push_back(new TA_MapPoint(5, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49)));
     }
 
     currentPoint = points[TA::save::getSaveParameter("map_selection")];
