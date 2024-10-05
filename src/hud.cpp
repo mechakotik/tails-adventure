@@ -33,9 +33,9 @@ void TA_Hud::load(TA_Links newLinks)
     rightSprite.setFrame(41);
     pauseSprite.load("hud/items.png", 16, 16);
 
-    leftButton.setRectangle({0, 0}, {16, 16});
-    rightButton.setRectangle({0, 0}, {16, 16});
-    pauseButton.setRectangle({0, 0}, {16, 16});
+    leftButton.setRectangle({0, 0}, {24, 24});
+    rightButton.setRectangle({0, 0}, {24, 24});
+    pauseButton.setRectangle({0, 0}, {16, 24});
 
     for(int pos = 0; pos < 4; pos ++) {
         itemButtons[pos].setRectangle({0, 0}, {20, 20});
@@ -66,7 +66,7 @@ void TA_Hud::update()
 void TA_Hud::updatePause()
 {
     if(!paused) {
-        pauseButton.setPosition(TA_Point(TA::screenWidth - 70, 4));
+        pauseButton.setPosition(TA_Point(TA::screenWidth - 72, 0));
         pauseButton.update();
         pauseSprite.setFrame((pauseButton.isPressed() ? 43 : 42));
         if(links.controller->isJustPressed(TA_BUTTON_PAUSE) || pauseButton.isReleased()) {
@@ -242,8 +242,8 @@ void TA_Hud::updateRingsCounter()
 
 void TA_Hud::updateCurrentItem()
 {
-    leftButton.setPosition(TA_Point(TA::screenWidth - 50, 4));
-    rightButton.setPosition(TA_Point(TA::screenWidth - 18, 4));
+    leftButton.setPosition(TA_Point(TA::screenWidth - 52, 0));
+    rightButton.setPosition(TA_Point(TA::screenWidth - 28, 0));
     leftButton.update();
     rightButton.update();
 
@@ -288,7 +288,7 @@ void TA_Hud::drawCurrentItem()
     }
 
     if(links.controller->isTouchscreen()) {
-        itemSprite.setPosition(TA::screenWidth - 34, 4);
+        itemSprite.setPosition(TA::screenWidth - 36, 4);
     }
     else {
         itemSprite.setPosition(2, 22);
@@ -298,9 +298,9 @@ void TA_Hud::drawCurrentItem()
 
 void TA_Hud::drawTouchControls()
 {
-    leftSprite.setPosition(TA::screenWidth - 50, 4);
-    rightSprite.setPosition(TA::screenWidth - 18, 4);
-    pauseSprite.setPosition(TA::screenWidth - 70, 4);
+    leftSprite.setPosition(TA::screenWidth - 52, 4);
+    rightSprite.setPosition(TA::screenWidth - 20, 4);
+    pauseSprite.setPosition(TA::screenWidth - 72, 4);
 
     leftSprite.draw();
     rightSprite.draw();
