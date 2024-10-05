@@ -17,6 +17,7 @@ public:
     virtual TA_MainMenuState update() {return TA_MAIN_MENU_EXIT;}
     virtual void setAlpha(int alpha) {}
     virtual void draw() {}
+    virtual void reset() {}
 
 protected:
     TA_Controller *controller;

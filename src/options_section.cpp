@@ -296,7 +296,6 @@ TA_MainMenuState TA_OptionsSection::update()
             break;
         case STATE_QUIT:
             state = STATE_SELECTING_GROUP;
-            group = 0;
             return TA_MAIN_MENU_DATA_SELECT;
     }
 

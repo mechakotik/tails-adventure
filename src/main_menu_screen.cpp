@@ -43,6 +43,7 @@ TA_ScreenState TA_MainMenuScreen::update()
                 sections[neededState]->draw();
             }
             else {
+                sections[state]->reset();
                 state = neededState;
                 timer = 0;
                 sections[state]->setAlpha(255);

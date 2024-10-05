@@ -66,6 +66,7 @@ public:
     TA_MainMenuState update() override;
     void draw() override;
     void setAlpha(int alpha) override {baseAlpha = alpha;}
+    void reset() override {group = 0;}
 };
 
 #endif // TA_OPTIONS_MENU_H

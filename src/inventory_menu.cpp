@@ -87,6 +87,9 @@ bool TA_InventoryMenu::update()
 {
     if(showTimeLeft <= 0 && hideTimeLeft <= 0 && listTransitionTimeLeft <= 0) {
         updateOnscreenButtons();
+        if(controller->isTouchscreen()) {
+            selectingSlot = false;
+        }
         if(selectingSlot) {
             return updateSlotSelection();
         }
