@@ -18,6 +18,7 @@ public:
     virtual void setAlpha(int alpha) {}
     virtual void draw() {}
     virtual void reset() {}
+    virtual ~TA_MainMenuSection() = default;
 
 protected:
     TA_Controller *controller;

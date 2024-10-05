@@ -24,6 +24,8 @@ public:
     virtual bool isLocked() {return false;}
     virtual TA_MoveSoundId updateLocked() {return TA_MOVE_SOUND_EMPTY;}
     virtual void unlock() {}
+
+    virtual ~TA_Option() = default;
 };
 
 class TA_OptionsSection : public TA_MainMenuSection {
