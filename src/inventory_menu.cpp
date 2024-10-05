@@ -116,7 +116,7 @@ void TA_InventoryMenu::updateOnscreenButtons()
     rightButton.update();
 
     for(int pos = 0; pos < 4; pos ++) {
-        if(buttons[pos][2].isReleased()) {
+        if(buttons[pos][2].isReleased() && selectionSlot != pos) {
             selectSound.play();
             selectionSlot = pos;
             selectingSlot = false;
