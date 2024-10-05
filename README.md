@@ -77,3 +77,15 @@ cmake --install .
 ```
 
 Build result will be located in `tails-adventure/build/output` directory.
+
+## Building for Android
+
+The Android project is located in `android` directory. However, some of the necessary files that are not part of Tails Adventure Remake are missing and need to be copied from SDL sources.
+
+If you have a Unix-like environment, you may use `setup.sh` shell script in `android` directory, it will automatically copy all the needed files. If you are not able to run shell scripts, you'll have to copy all the files mentioned in the script manually.
+
+After copying the necessary files, you may just open `android` directory as a project in Android Studio and build using it.
+
+## Contributing
+
+Contributions are welcome! Just be sure to follow project's code style and write clear descriptions of changes that you are making. To get started, you may search for TODO in source code.
