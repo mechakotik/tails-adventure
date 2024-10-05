@@ -104,11 +104,11 @@ public:
 
     std::string getValue() override {
         int value = TA::save::getParameter(param);
-        std::string bar(10, 'B');
-        bar[0] = 'S';
+        std::string bar(10, 'E');
+        bar[0] = 'C';
         bar[9] = 'F';
         for(int i = 1; i <= value; i ++) {
-            bar[i] = 'A';
+            bar[i] = 'D';
         }
         return bar;
     }
@@ -130,6 +130,8 @@ public:
         TA::save::setParameter(param, value);
         return result;
     }
+
+    constexpr bool hasNegativeMove() override {return true;}
 };
 
 class TA_MapKeyboardOption : public TA_Option {
@@ -240,7 +242,7 @@ class TA_RumbleOption : public TA_Option {
 void TA_OptionsSection::load()
 {
     font.load("fonts/pause_menu.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:");
+    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+"); // TODO: generalize font mappings
 
     options.resize(groups.size());
     #ifndef __ANDROID__
@@ -265,7 +267,8 @@ void TA_OptionsSection::load()
 
     double y = 32;
     for(int pos = 0; pos < 4; pos ++) {
-        buttons[pos].setRectangle({(double)getLeftX() - 32, y}, {(double)getLeftX() + 192, y + 17});
+        buttons[pos][0].setRectangle({(double)getLeftX() - 32, y}, {(double)getLeftX() + 80, y + 17});
+        buttons[pos][1].setRectangle({(double)getLeftX() + 80, y}, {(double)getLeftX() + 192, y + 17});
         y += 20;
     }
 
@@ -276,7 +279,8 @@ TA_MainMenuState TA_OptionsSection::update()
 {
     backButton.update();
     for(int pos = 0; pos < 4; pos ++) {
-        buttons[pos].update();
+        buttons[pos][0].update();
+        buttons[pos][1].update();
     }
 
     if(listTransitionTimeLeft > 0) {
@@ -315,7 +319,7 @@ void TA_OptionsSection::updateGroupSelector()
 
     bool selected = false;
     for(int pos = 0; pos < static_cast<int>(options.size()); pos ++) {
-        if(buttons[pos].isReleased()) {
+        if(buttons[pos][0].isReleased() || buttons[pos][1].isReleased()) {
             group = pos;
             selected = true;
         }
@@ -377,7 +381,17 @@ void TA_OptionsSection::updateOptionSelector()
     }
 
     for(int pos = 0; pos < static_cast<int>(options[group].size()); pos ++) {
-        if(buttons[pos].isReleased()) {
+        if(options[group][pos]->hasNegativeMove()) {
+            if(buttons[pos][0].isReleased()) {
+                sound = options[group][pos]->move(-1);
+                TA::save::writeToFile();
+            }
+            if(buttons[pos][1].isReleased()) {
+                sound = options[group][pos]->move(1);
+                TA::save::writeToFile();
+            }
+        }
+        else if(buttons[pos][0].isReleased() || buttons[pos][1].isReleased()) {
             sound = options[group][pos]->move(1);
             TA::save::writeToFile();
         }
@@ -431,7 +445,7 @@ void TA_OptionsSection::drawGroupList()
     bool touchscreen = controller->isTouchscreen();
 
     for(int pos = 0; pos < (int)groups.size(); pos ++) {
-        if((!touchscreen && pos == group) || (touchscreen && buttons[pos].isPressed())) {
+        if((!touchscreen && pos == group) || (touchscreen && (buttons[pos][0].isPressed() || buttons[pos][1].isPressed()))) {
             drawHighlight(textPosition.y - 3);
         }
         font.drawText(textPosition, groups[pos]);
@@ -449,33 +463,56 @@ void TA_OptionsSection::drawOptionList()
         std::string right = options[group][pos]->getValue();
         int offset = font.getTextWidth(right, {-1, 0});
 
-        if((!touchscreen && pos == option) || (touchscreen && buttons[pos].isPressed())) {
+        if(touchscreen) {
+            if(options[group][pos]->hasNegativeMove()) {
+                if(buttons[pos][0].isPressed()) {
+                    drawHighlight(lx - 28, y - 3, 25);
+                }
+                if(buttons[pos][1].isPressed()) {
+                    drawHighlight(rx + 4, y - 3, 25);
+                }
+            }
+            else if(buttons[pos][0].isPressed() || buttons[pos][1].isPressed()) {
+                drawHighlight(y - 3);
+            }
+        }
+        else if(pos == option) {
             drawHighlight(y - 3);
         }
+
         font.drawText({lx, y}, left, {-1, 0});
         font.drawText({rx - offset, y}, right, {-1, 0});
+        if(touchscreen && options[group][pos]->hasNegativeMove()) {
+            font.drawText({lx - 20, y}, "-");
+            font.drawText({rx + 12, y}, "+");
+        }
 
         y += 20;
     }
 }
 
-void TA_OptionsSection::drawHighlight(double y)
+void TA_OptionsSection::drawHighlight(double x, double y, double width)
 {
-    SDL_FRect rect = {(float)getLeftX() + 4, (float)y, 152, 15};
+    SDL_FRect rect = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), 15};
 
     for(int num = 0; num < 4; num ++) {
         SDL_SetRenderDrawColor(TA::renderer, num * 28 * alpha / 255, num * 24 * alpha / 255, num * 28 * alpha / 255, 255);
 
         SDL_FRect targetRect = rect;
-        targetRect.x *= TA::scaleFactor;
-        targetRect.y *= TA::scaleFactor;
-        targetRect.w *= TA::scaleFactor;
-        targetRect.h *= TA::scaleFactor;
+        targetRect.x *= static_cast<float>(TA::scaleFactor);
+        targetRect.y *= static_cast<float>(TA::scaleFactor);
+        targetRect.w *= static_cast<float>(TA::scaleFactor);
+        targetRect.h *= static_cast<float>(TA::scaleFactor);
 
         SDL_RenderFillRect(TA::renderer, &targetRect);
         rect.x += 2;
         rect.w -= 4;
     }
+}
+
+void TA_OptionsSection::drawHighlight(double y)
+{
+    drawHighlight(getLeftX() + 4, y, 152);
 }
 
 void TA_OptionsSection::updateAlpha()
