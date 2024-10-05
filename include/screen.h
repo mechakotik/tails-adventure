@@ -21,7 +21,7 @@ class TA_Screen {
 public:
     virtual void init() {}
     virtual TA_ScreenState update() {return TA_SCREENSTATE_CURRENT;}
-    virtual void quit() {}
+    virtual void quit() {} // TODO: is this really needed?
     virtual ~TA_Screen() = default;
 };
 

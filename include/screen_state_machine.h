@@ -1,12 +1,13 @@
 #ifndef TA_SCREEN_STATE_MACHINE_H
 #define TA_SCREEN_STATE_MACHINE_H
 
+#include <memory>
 #include "screen.h"
 
 class TA_ScreenStateMachine {
 private:
     TA_ScreenState currentState, neededState;
-    TA_Screen *currentScreen;
+    std::unique_ptr<TA_Screen> currentScreen;
     double transitionTimer = 0;
     bool changeState = false, quitNeeded = false;
 

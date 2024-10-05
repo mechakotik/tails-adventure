@@ -15,11 +15,11 @@ void TA_ScreenStateMachine::init()
 {
     if(TA::arguments.count("--devmenu")) {
         currentState = TA_SCREENSTATE_DEVMENU;
-        currentScreen = new TA_DevmenuScreen();
+        currentScreen = std::make_unique<TA_DevmenuScreen>();
     }
     else {
         currentState = TA_SCREENSTATE_TITLE;
-        currentScreen = new TA_TitleScreen();
+        currentScreen = std::make_unique<TA_TitleScreen>();
     }
 
     neededState = TA_SCREENSTATE_CURRENT;
@@ -49,7 +49,6 @@ bool TA_ScreenStateMachine::update()
     if(changeState) {
         TA::drawShadow(255);
         currentScreen -> quit();
-        delete currentScreen;
 
         if(currentState != TA_SCREENSTATE_GAME) {
             TA::save::saveToLatest();
@@ -59,28 +58,28 @@ bool TA_ScreenStateMachine::update()
         switch(neededState)
         {
             case TA_SCREENSTATE_INTRO:
-                currentScreen = new TA_IntroScreen();
+                currentScreen = std::make_unique<TA_IntroScreen>();
                 break;
             case TA_SCREENSTATE_TITLE:
-                currentScreen = new TA_TitleScreen();
+                currentScreen = std::make_unique<TA_TitleScreen>();
                 break;
             case TA_SCREENSTATE_GAME:
-                currentScreen = new TA_GameScreen();
+                currentScreen = std::make_unique<TA_GameScreen>();
                 break;
             case TA_SCREENSTATE_DEVMENU:
-                currentScreen = new TA_DevmenuScreen();
+                currentScreen = std::make_unique<TA_DevmenuScreen>();
                 break;
             case TA_SCREENSTATE_MAP:
-                currentScreen = new TA_MapScreen();
+                currentScreen = std::make_unique<TA_MapScreen>();
                 break;
             case TA_SCREENSTATE_HOUSE:
-                currentScreen = new TA_HouseScreen();
+                currentScreen = std::make_unique<TA_HouseScreen>();
                 break;
             case TA_SCREENSTATE_GAMEOVER:
-                currentScreen = new TA_GameOverScreen();
+                currentScreen = std::make_unique<TA_GameOverScreen>();
                 break;
             case TA_SCREENSTATE_MAIN_MENU:
-                currentScreen = new TA_MainMenuScreen();
+                currentScreen = std::make_unique<TA_MainMenuScreen>();
                 break;
             default:
                 TA::handleError("%s", "Invalid new screen state");
@@ -105,5 +104,4 @@ bool TA_ScreenStateMachine::update()
 TA_ScreenStateMachine::~TA_ScreenStateMachine()
 {
     currentScreen->quit();
-    delete currentScreen;
 }
