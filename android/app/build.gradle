@@ -5,13 +5,13 @@ plugins {
 def buildWithCMake = project.hasProperty('BUILD_WITH_CMAKE');
 
 android {
-    namespace "org.libsdl.app"
+    namespace "com.mechakotik.tailsadventure"
     compileSdkVersion 34
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 34
         versionCode 1
-        versionName "1.0"
+        versionName "0.2.1"
         externalNativeBuild {
             ndkBuild {
                 arguments "APP_PLATFORM=android-19"
