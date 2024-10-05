@@ -61,6 +61,9 @@ TA_MainMenuState TA_DataSelectSection::processSelection()
         return TA_MAIN_MENU_OPTIONS;
     }
 
+    if(!TA::save::saveExists(selection - 1)) {
+        createdSave = selection - 1;
+    }
     TA::save::repairSave("save_" + std::to_string(selection - 1));
     TA::save::setCurrentSave("save_" + std::to_string(selection - 1));
     loadSaveSound.play();
@@ -158,7 +161,7 @@ void TA_DataSelectSection::drawSaveEntries()
         entrySprite.setPosition(entryPosition);
         entrySprite.draw();
 
-        if(TA::save::saveExists(num)) {
+        if(TA::save::saveExists(num) && num != createdSave) {
             previewSprite.setFrame(TA::save::getParameter("save_" + std::to_string(num) + "/last_unlocked"));
         }
         else {
@@ -218,19 +221,19 @@ void TA_DataSelectSection::drawSelector()
 
 int TA_DataSelectSection::getSavePercent(int save)
 {
-    if(!TA::save::saveExists(save)) {
+    if(!TA::save::saveExists(save) || save == createdSave) {
         return 0;
     }
 
     std::string saveName = "save_" + std::to_string(save);
     int areaCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/area_mask"));
     int itemCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/item_mask"));
-    return 50 * (double(areaCount - 4) / 11 + double(itemCount - 2) / 30);
+    return 50 * (double(areaCount - 3) / 12 + double(itemCount - 2) / 30);
 }
 
 std::string TA_DataSelectSection::getSaveTime(int save)
 {
-    if(!TA::save::saveExists(save)) {
+    if(!TA::save::saveExists(save) || save == createdSave) {
         return "--:--";
     }
 

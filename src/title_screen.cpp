@@ -77,8 +77,6 @@ void TA_TitleScreen::updatePressStart()
     pressStartSprite.draw();
 
     if(controller.isJustPressed(TA_BUTTON_PAUSE) || button.isPressed()) {
-        TA::save::repairSave("save_0");
-        TA::save::setCurrentSave("save_0");
         state = STATE_HIDE_PRESS_START;
         enterSound.play();
     }

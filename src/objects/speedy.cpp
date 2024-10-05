@@ -379,6 +379,10 @@ void TA_Speedy::updateFlip()
 
 void TA_Speedy::doTransition()
 {
+    long long areaMask = TA::save::getSaveParameter("area_mask");
+    areaMask |= (1ll << 10);
+    TA::save::setSaveParameter("area_mask", areaMask);
+    TA::save::setSaveParameter("last_unlocked", 10);
     TA::save::setSaveParameter("seafox", true);
     objectSet->setTransition(TA_SCREENSTATE_HOUSE);
 }

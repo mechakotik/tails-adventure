@@ -189,6 +189,8 @@ void TA_ItemBox::addItemToCharacter()
     if(itemNumber >= 29) {
         objectSet->addRingsToMaximum();
     }
+
+    TA::save::writeToFile();
 }
 
 void TA_ItemBox::addItemToFirstFreeSlot()

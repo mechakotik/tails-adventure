@@ -49,10 +49,6 @@ bool TA_ScreenStateMachine::update()
     if(changeState) {
         TA::drawShadow(255);
         currentScreen -> quit();
-
-        if(currentState != TA_SCREENSTATE_GAME) {
-            TA::save::saveToLatest();
-        }
         TA::save::writeToFile();
 
         switch(neededState)
