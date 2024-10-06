@@ -79,7 +79,7 @@ std::string TA::filesystem::getExecutableDirectory()
 {
     #ifdef _WIN32
         char buffer[MAX_PATH];
-        GetModuleFileNmae(NULL, buffer, MAX_PATH);
+        GetModuleFileName(NULL, buffer, MAX_PATH);
         std::string path(buffer);
         return path.substr(0, path.find_last_of("\\/"));
     #else
