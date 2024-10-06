@@ -1,23 +1,39 @@
-==========
-demo-2.0.0
-==========
+=======================
+        v0.2.1
+=======================
+
+- Added Android release
+- New data select and options menu
+- Adapted interface for touchscreen
+- Adapted game for different screen aspect ratios
+- Improved player controls
+- Migrated to SDL3
+- Added adaptive V-Sync
+- Added smooth/sharp scale mode switch
+- Removed software FPS cap
+- New versioning system
+
+=======================
+  v0.2.0 (demo-2.0.0)
+=======================
 
 - New levels: Lake Rocky, Cavern Island and Caron Forest
 - New items: Vulcan Gun and Napalm Bomb
 - Changed max rings formula
 - Changed Bird Walker behavior
 - Improved camera locking
-- 8:9 pixel aspect ratio like on Game Gear (optional)
+- 8:7 pixel aspect ratio like on Game Gear (optional)
 - Fixes for non-standart screen aspect ratios
+- Most dependent libraries are now statically linked, reduced game size to ~10MB
 - Music is now in VGM format
 - Optimized collision algorithm
 - Sound effects and common textures are now preloaded for lower latency
 - Added binary release for Linux amd64
 - Moved to CMake and vendored libraries
 
-==========
-demo-1.5.0
-==========
+=======================
+  v0.1.5 (demo-1.5.0)
+=======================
 
 - Better player controls in the air
 - Chaos emerald now adds 5 to max rings
@@ -26,18 +42,18 @@ demo-1.5.0
 - tails-adventure is now available on AUR
 - Minor bugfixes
 
-==========
-demo-1.4.0
-==========
+=======================
+  v0.1.4 (demo-1.4.0)
+=======================
 
 - Source code is now open
 - Initial Linux support (build from source for your distro)
 - Added pause menu with item switching
 - Removed exit on ESC
 
-==========
-demo-1.3.0
-==========
+=======================
+  v0.1.3 (demo-1.3.0)
+=======================
 
 - Game progress is now saved
 - Removed updater
@@ -46,9 +62,9 @@ demo-1.3.0
 - Changed Teleport Device location
 - Added more flight animations
 
-==========
-demo-1.2.0
-==========
+=======================
+  v0.1.2 (demo-1.2.0)
+=======================
 
 - Added options menu
 - Added software FPS cap
@@ -57,14 +73,14 @@ demo-1.2.0
 - Added Speed Boots
 - Remade Insta-Shield
 
-==========
-demo-1.1.0
-==========
+=======================
+  v0.1.1 (demo-1.1.0)
+=======================
 
 - Added updater
 
-==========
-demo-1.0.0
-==========
+=======================
+  v0.1.0 (demo-1.0.0)
+=======================
 
 First demo featuring first 3 areas - Poloy Forest, Volcanic Tunnel and Polly Mt. 1.
