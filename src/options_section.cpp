@@ -343,6 +343,7 @@ void TA_OptionsSection::updateOptionSelector()
         if(backButton.isReleased()) {
             options[group][option]->unlock();
             backSound.play();
+            return;
         }
         playMoveSound(options[group][option]->updateLocked());
         return;
@@ -382,15 +383,18 @@ void TA_OptionsSection::updateOptionSelector()
     for(int pos = 0; pos < static_cast<int>(options[group].size()); pos ++) {
         if(options[group][pos]->hasNegativeMove()) {
             if(buttons[pos][0].isReleased()) {
+                option = pos;
                 sound = options[group][pos]->move(-1);
                 TA::save::writeToFile();
             }
             if(buttons[pos][1].isReleased()) {
+                option = pos;
                 sound = options[group][pos]->move(1);
                 TA::save::writeToFile();
             }
         }
         else if(buttons[pos][0].isReleased() || buttons[pos][1].isReleased()) {
+            option = pos;
             sound = options[group][pos]->move(1);
             TA::save::writeToFile();
         }
