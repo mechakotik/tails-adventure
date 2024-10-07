@@ -10,6 +10,7 @@ namespace TA { namespace gamepad {
     void init(int index = 0);
     void update();
     bool connected();
+    bool oncePressed();
     void quit();
 
     TA_Point getDirectionVector();

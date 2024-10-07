@@ -77,7 +77,7 @@ bool TA_Controller::isJustPressed(TA_FunctionButton button)
 bool TA_Controller::isTouchscreen()
 {
     #ifdef __ANDROID__
-        return !TA::gamepad::connected();
+        return !(TA::gamepad::connected() && TA::gamepad::oncePressed());
     #else
         return false;
     #endif

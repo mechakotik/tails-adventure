@@ -15,11 +15,17 @@ namespace TA { namespace gamepad {
     SDL_Gamepad *controller = nullptr;
     std::array<bool, SDL_GAMEPAD_BUTTON_COUNT> pressed, justPressed;
     bool isConnected = false;
+    bool isOncePressed = false;
 }}
 
 bool TA::gamepad::connected()
 {
     return isConnected;
+}
+
+bool TA::gamepad::oncePressed()
+{
+    return isOncePressed;
 }
 
 void TA::gamepad::handleEvent(SDL_GamepadDeviceEvent event)
@@ -79,6 +85,7 @@ void TA::gamepad::update()
         if(SDL_GetGamepadButton(controller, (SDL_GamepadButton)button)) {
             if(!pressed[(int)button]) {
                 pressed[(int)button] = justPressed[(int)button] = true;
+                isOncePressed = true;
             }
             else {
                 justPressed[(int)button] = false;
