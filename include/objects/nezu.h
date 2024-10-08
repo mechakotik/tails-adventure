@@ -38,7 +38,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
+    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
 };
 
 class TA_NezuBomb : public TA_Object {

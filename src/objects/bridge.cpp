@@ -57,7 +57,7 @@ bool TA_Bridge::update()
     return true;
 }
 
-TA_CollisionType TA_Bridge::getCollisionType()
+int TA_Bridge::getCollisionType()
 {
     if(state == TA_BRIDGE_STATE_FALLING) {
         return TA_COLLISION_TRANSPARENT;

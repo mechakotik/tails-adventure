@@ -43,7 +43,7 @@ public:
     void draw() override;
 
     bool checkPawnCollision(TA_Polygon &hitbox) override;
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_BOMB;}
+    int getCollisionType() override {return TA_COLLISION_BOMB;}
     int getDrawPriority() override {return 1;}
 };
 
@@ -68,7 +68,7 @@ public:
     using TA_Bomb::TA_Bomb;
     void load(TA_Point newPosition, bool newDirection, TA_BombMode mode) override;
     bool update() override;
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_TRANSPARENT;}
+    int getCollisionType() override {return TA_COLLISION_TRANSPARENT;}
 };
 
 #endif // TA_BOMB_H

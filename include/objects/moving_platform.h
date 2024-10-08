@@ -22,7 +22,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point startPosition, TA_Point endPosition, bool idle = true);
     bool update() override;
-    TA_CollisionType getCollisionType() override;
+    int getCollisionType() override;
 };
 
 #endif // TA_MOVING_PLATFORM_H

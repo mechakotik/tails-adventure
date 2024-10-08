@@ -22,7 +22,7 @@ public:
     bool update() override;
     void draw() override;
     int getDrawPriority() override {return 1;}
-    TA_CollisionType getCollisionType() override;
+    int getCollisionType() override;
 };
 
 #endif // TA_EXPLOSION_H

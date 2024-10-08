@@ -4,12 +4,10 @@
 #include <vector>
 #include "geometry.h"
 #include "pawn.h"
-#include "camera.h"
 #include "tilemap.h"
 #include "hitbox_container.h"
 #include "screen.h"
 #include "links.h"
-#include "sound.h"
 #include "tools.h"
 #include "character.h"
 
@@ -18,7 +16,7 @@ enum TA_BombMode : int;
 
 class TA_Object : public TA_Pawn {
 private:
-    virtual bool checkPawnCollision(TA_Polygon &rv) override {return false;}
+    bool checkPawnCollision(TA_Polygon &rv) override {return false;}
 
 protected:
     virtual void updatePosition();
@@ -29,14 +27,14 @@ public:
 
     struct HitboxVectorElement {
         TA_Polygon hitbox;
-        TA_CollisionType collisionType;
+        int collisionType;
     };
     std::vector<HitboxVectorElement> hitboxVector;
 
     TA_Object(TA_ObjectSet *newObjectSet);
     virtual bool update() {return false;}
     virtual bool checkCollision(TA_Polygon rv) {return getCollisionType() != TA_COLLISION_TRANSPARENT && hitbox.intersects(rv);}
-    virtual TA_CollisionType getCollisionType() {return TA_COLLISION_TRANSPARENT;}
+    virtual int getCollisionType() {return TA_COLLISION_TRANSPARENT;}
     virtual int getDrawPriority() {return 0;}
     TA_Point getDistanceToCharacter();
     virtual void destroy() {}

@@ -34,7 +34,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, int range, bool flip);
     bool update() override;
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
+    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
 };
 
 class TA_WalkerBullet : public TA_Object { // TODO: reimplement TA_WalkerBullet as inheritor of TA_Bullet
@@ -47,7 +47,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, bool newDirection);
     bool update() override;
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_DAMAGE;}
+    int getCollisionType() override {return TA_COLLISION_DAMAGE;}
 };
 
 #endif // TA_WALKER_H

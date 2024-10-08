@@ -27,7 +27,7 @@ private:
     void lazyClear(Chunk &chunk);
 
 public:
-    void add(TA_Polygon &hitbox, TA_CollisionType type);
+    void add(TA_Polygon &hitbox, int type);
     int getCollisionFlags(TA_Polygon &hitbox);
     bool hasCollisionType(TA_CollisionType type) {return collisionTypeMask & type;}
     void clear();

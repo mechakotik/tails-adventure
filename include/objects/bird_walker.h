@@ -49,7 +49,7 @@ private:
     int bulletCounter = 0;
 
     double invincibleTimeLeft = -1;
-    int health = 10;
+    int health = 8;
 
     std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, flipHitboxVector;
     TA_Polygon weakHitbox;
@@ -62,7 +62,7 @@ public:
     bool update() override;
     void draw() override;
     int getDrawPriority() override {return 1;}
-    TA_CollisionType getCollisionType() override {return TA_COLLISION_SOLID;}
+    int getCollisionType() override {return TA_COLLISION_SOLID;}
 };
 
 #endif // TA_BIRD_WALKER_H

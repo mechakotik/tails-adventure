@@ -90,7 +90,7 @@ bool TA_MovingPlatform::exceedsBorder()
     }
 }
 
-TA_CollisionType TA_MovingPlatform::getCollisionType()
+int TA_MovingPlatform::getCollisionType()
 {
     if(idle) {
         return TA_COLLISION_SOLID;

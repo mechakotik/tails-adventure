@@ -27,7 +27,7 @@ bool TA_Explosion::update()
     return true;
 }
 
-TA_CollisionType TA_Explosion::getCollisionType()
+int TA_Explosion::getCollisionType()
 {
     int collisionType = TA_COLLISION_TRANSPARENT;
     if(type == TA_EXPLOSION_CHARACTER) {

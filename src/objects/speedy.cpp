@@ -387,7 +387,7 @@ void TA_Speedy::doTransition()
     objectSet->setTransition(TA_SCREENSTATE_HOUSE);
 }
 
-TA_CollisionType TA_Speedy::getCollisionType()
+int TA_Speedy::getCollisionType()
 {
     if(state == STATE_ATTACK) {
         return TA_COLLISION_DAMAGE;

@@ -524,12 +524,13 @@ void TA_MechaGolem::updateHitboxes()
     hitboxVector[HITBOX_WALL_LEFT].hitbox.setRectangle(TA_Point(112, 0), TA_Point(128, 112));
     hitboxVector[HITBOX_WALL_RIGHT].hitbox.setRectangle(TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 112));
     hitboxVector[HITBOX_WALL_LEFT].collisionType = hitboxVector[HITBOX_WALL_RIGHT].collisionType = (state == STATE_IDLE ? TA_COLLISION_TRANSPARENT : TA_COLLISION_SOLID);
-
-    TA_CollisionType type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE);
+    
+    int type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE | TA_COLLISION_TARGET);
     hitboxVector[HITBOX_BODY].hitbox.setRectangle(position + TA_Point(5, -44), position + TA_Point(52, -16));
     hitboxVector[HITBOX_WEAK].hitbox.setRectangle(position + TA_Point(8, -55), position + TA_Point(24, -42));
     hitboxVector[HITBOX_BODY].collisionType = hitboxVector[HITBOX_WEAK].collisionType = type;
 
+    type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE);
     hitboxVector[HITBOX_ARM].hitbox.setRectangle(armPosition + TA_Point(4, 4), armPosition + TA_Point(12, 12));
     hitboxVector[HITBOX_ARM].collisionType = type;
 }

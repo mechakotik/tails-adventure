@@ -120,7 +120,7 @@ bool TA_Bomb::shouldExplode()
     hitbox.setPosition(position);
     int flags = objectSet->checkCollision(hitbox);
 
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE | TA_COLLISION_PUSHABLE)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE)) {
         return true;
     }
     return false;
@@ -164,7 +164,7 @@ bool TA_RemoteBomb::shouldExplode()
     }
     
     hitbox.setPosition(position);
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
+    if(objectSet->checkCollision(hitbox) & TA_COLLISION_TARGET) {
         return true;
     }
     return false;

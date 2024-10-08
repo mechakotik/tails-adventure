@@ -38,18 +38,18 @@ void TA_BirdWalker::load(double newFloorY)
     feetFlashSprite.setCamera(objectSet->getLinks().camera);
 
     TA_Polygon bodyHitbox;
-    bodyHitbox.setRectangle({6, -61}, {33, -29});
-    defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
-    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
+    bodyHitbox.setRectangle({6, -61}, {33, -36});
+    defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
+    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
 
-    bodyHitbox.setRectangle({13, -29}, {30, 0});
-    defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
-    bodyHitbox.setRectangle({9, -29}, {26, 0});
-    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
+    bodyHitbox.setRectangle({13, -36}, {30, 0});
+    defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
+    bodyHitbox.setRectangle({9, -36}, {26, 0});
+    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
 
     bodyHitbox.setRectangle({12, -74}, {26, -61});
-    defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
-    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE});
+    defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
+    flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
 
     hitbox.setPosition(TA_Point(0, 0));
     hitbox.setRectangle(TA_Point(TA::screenWidth + 576, 0), TA_Point(TA::screenWidth + 592, 448));
@@ -83,10 +83,10 @@ void TA_BirdWalker::updatePosition()
     }
 
     if(flip) {
-        weakHitbox.setRectangle({4, -61}, {8, 0});
+        weakHitbox.setRectangle({4, -61}, {8, -36});
     }
     else {
-        weakHitbox.setRectangle({31, -61}, {35, 0});
+        weakHitbox.setRectangle({31, -61}, {35, -36});
     }
     weakHitbox.setPosition(position);
 

@@ -1,6 +1,6 @@
 #include "hitbox_container.h"
 
-void TA_HitboxContainer::add(TA_Polygon &hitbox, TA_CollisionType type)
+void TA_HitboxContainer::add(TA_Polygon &hitbox, int type)
 {
     if(type == TA_COLLISION_TRANSPARENT) {
         return;
