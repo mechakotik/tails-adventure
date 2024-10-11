@@ -153,7 +153,7 @@ void TA_Character::updateAnimation()
         setAlpha(255);
     }
     else if(rings >= 0 && invincibleTimeLeft > 0) {
-        setAlpha(255 - 55 * invincibleTimeLeft / invincibleTime);
+        setAlpha(180);
     }
     else {
         setAlpha(255);

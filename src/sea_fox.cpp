@@ -167,7 +167,7 @@ void TA_SeaFox::updateDamage()
 {
     if(invincibleTimer < invincibleTime) {
         invincibleTimer += TA::elapsedTime;
-        setAlpha(200);
+        setAlpha(180);
         return;
     }
 
