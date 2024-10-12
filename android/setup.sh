@@ -15,3 +15,5 @@ cp -r ${TEMPLATE_PATH}/gradle gradle/..
 cp ${TEMPLATE_PATH}/gradlew .
 cp ${TEMPLATE_PATH}/gradlew.bat .
 
+rm ../assets/gamecontrollerdb.txt
+cp ../external/SDL_GameControllerDB/gamecontrollerdb.txt ../assets/
