@@ -4,6 +4,7 @@ project(tails-adventure)
 option(TA_STATIC "Statically link libgcc and libstdc++" OFF)
 option(TA_UNIX_INSTALL "Install on Unix filesystem" OFF)
 option(TA_SANITIZE "Build with sanitizers" OFF)
+option(TA_CLANG_TIDY "Run clang-tidy alongside with building" OFF)
 
 if(TA_SANITIZE)
     add_compile_options(-fsanitize=address,leak,undefined)
@@ -74,6 +75,11 @@ add_executable(tails-adventure
     external/tinyxml2/tinyxml2.cpp
     ${WIN32_RESOURCES}
 )
+
+if(TA_CLANG_TIDY)
+    find_program(CLANG_TIDY NAMES "clang-tidy")
+    set_target_properties(tails-adventure PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY}")
+endif()
 
 if(TARGET SDL2::SDL2main)
     target_link_libraries(tails-adventure PRIVATE SDL3::SDL3main)

@@ -1,0 +1,86 @@
+---
+UseColor: true
+Checks: >
+  *,
+  -altera-id-dependent-backward-branch,
+  -altera-struct-pack-align,
+  -altera-unroll-loops,
+  boost-*,
+  bugprone-*,
+  -bugprone-chained-comparison,
+  -bugprone-easily-swappable-parameters,
+  cert-*,
+  -cert-dcl21-cpp,
+  clang-analyzer-*,
+  -clang-analyzer-cplusplus.NewDelete,
+  -clang-analyzer-cplusplus.NewDeleteLeaks,
+  concurrency-*,
+  cppcoreguidelines-*,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-pro-type-vararg,
+  google-*,
+  hicpp-avoid-goto,
+  -llvm-include-order,
+  llvm-namespace-comment,
+  -llvm-header-guard,
+  -llvmlibc-callee-namespace,
+  -llvmlibc-implementation-in-namespace,
+  -llvmlibc-inline-function-decl,
+  -llvmlibc-restrict-system-libc-headers,
+  misc-*,
+  -misc-no-recursion,
+  modernize-*,
+  -modernize-use-trailing-return-type,
+  performance-*,
+  readability-*,
+  -readability-identifier-length,
+  readability-implicit-bool-conversion,
+  -readability-magic-numbers,
+  -fuchsia-default-arguments-calls,
+  -fuchsia-overloaded-operator,
+  -fuchsia-default-arguments-declarations
+HeaderFilterRegex: '.*'
+WarningsAsErrors: '*'
+CheckOptions:
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypeAliasCase
+    value: CamelCase
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: '_'
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.GlobalConstantPrefix
+    value: k
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.StaticConstantPrefix
+    value: k
+  - key: readability-identifier-naming.StaticConstantCase
+    value: CamelCase
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: CamelCase
+  - key: readability-identifier-naming.ConstexprVariablePrefix
+    value: k
+  - key: google-runtime-int.TypeSuffix
+    value: _t
+  - key: readability-identifier-naming.TypeTemplateParameterCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypeTemplateParameterIgnoredRegexp
+    value: ^expr-type$
+  - key: readability-identifier-naming.FunctionIgnoredRegexp
+    value: ^(begin|end)$
+  - key: readability-identifier-naming.TypeAliasIgnoredRegexp
+    value: ^(iterator_category|value_type|difference_type|pointer|reference|iterator_type|iterator_concept)$
