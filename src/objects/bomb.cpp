@@ -48,11 +48,7 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon &hitbox)
 bool TA_Bomb::update()
 {
     if(destroyed) {
-        timer += TA::elapsedTime;
-        if(timer > destroyedTime) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     int moveTime = (mode == TA_BOMB_MODE_DEFAULT ? 6 : 8);

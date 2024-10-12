@@ -127,7 +127,7 @@ bool TA_Jumper::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_Jumper::shouldBeDestroyed()
 {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_BOMB | TA_COLLISION_EXPLOSION | TA_COLLISION_HAMMER)) {
+    if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
         return true;
     }
     return false;

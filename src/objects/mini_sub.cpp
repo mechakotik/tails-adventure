@@ -21,7 +21,7 @@ bool TA_MiniSub::update()
         updateAttack();
     }
 
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_CHARACTER | TA_COLLISION_EXPLOSION)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_CHARACTER | TA_COLLISION_ATTACK)) {
         objectSet->spawnObject<TA_DeadKukku>(position);
         return false;
     }

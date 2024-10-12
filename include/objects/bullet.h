@@ -40,7 +40,7 @@ public:
     void load(TA_Point position, TA_Point velocity);
     bool update() override;
     void onDestroy() override;
-    int getCollisionType() override {return TA_COLLISION_BOMB;}
+    int getCollisionType() override {return TA_COLLISION_ATTACK;}
 };
 
 #endif // TA_BULLET_H

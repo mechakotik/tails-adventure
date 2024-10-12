@@ -20,7 +20,7 @@ bool TA_BreakableBlock::update()
     objectSet->checkCollision(hitbox, flags);
 
     bool shouldBreak = false;
-    if(objectSet->getLinks().character && flags & (TA_COLLISION_EXPLOSION | TA_COLLISION_HAMMER)) {
+    if(objectSet->getLinks().character && flags & TA_COLLISION_ATTACK) {
         shouldBreak = true;
     }
     else if(objectSet->getLinks().seaFox && flags & (TA_COLLISION_DRILL)) {

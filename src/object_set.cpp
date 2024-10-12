@@ -355,7 +355,7 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidT
     }
 
     if(links.character && links.character->isUsingHammer() && links.character->getHammerHitbox()->intersects(hitbox)) {
-        flags |= TA_COLLISION_HAMMER;
+        flags |= TA_COLLISION_ATTACK;
     }
 
     if(links.seaFox && links.seaFox->getDrillHitbox()->intersects(hitbox)) {

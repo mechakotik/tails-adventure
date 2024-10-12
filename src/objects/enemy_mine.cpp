@@ -28,7 +28,7 @@ bool TA_EnemyMine::update()
     position = startPosition + delta;
     updatePosition();
 
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_EXPLOSION | TA_COLLISION_CHARACTER)) {
+    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_ATTACK | TA_COLLISION_CHARACTER)) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(1, 1), 0, TA_EXPLOSION_ENEMY);
         return false;
     }

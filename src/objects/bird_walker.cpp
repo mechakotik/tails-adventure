@@ -397,7 +397,7 @@ void TA_BirdWalker::updateDamage()
     else if(state != TA_BIRD_WALKER_STATE_AIMING && state != TA_BIRD_WALKER_STATE_FLYING_UP &&
             state != TA_BIRD_WALKER_STATE_LANDING && state != TA_BIRD_WALKER_STATE_DEAD)
     {
-        if(objectSet->checkCollision(weakHitbox) & (TA_COLLISION_EXPLOSION_FIRST | TA_COLLISION_HAMMER)) {
+        if(objectSet->checkCollision(weakHitbox) & TA_COLLISION_ATTACK) {
             health --;
             invincibleTimeLeft = invincibleTime;
             flashTimer = 0;

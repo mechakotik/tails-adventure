@@ -506,7 +506,7 @@ void TA_MechaGolem::updateDamage()
         return;
     }
 
-    if((objectSet->checkCollision(hitboxVector[HITBOX_WEAK].hitbox) & (TA_COLLISION_EXPLOSION_FIRST | TA_COLLISION_HAMMER)) == 0) {
+    if((objectSet->checkCollision(hitboxVector[HITBOX_WEAK].hitbox) & TA_COLLISION_ATTACK) == 0) {
         return;
     }
     if(state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED) {

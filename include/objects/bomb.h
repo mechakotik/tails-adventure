@@ -17,7 +17,6 @@ enum TA_BombMode : int {
 class TA_Bomb : public TA_Object {
 private:
     const double grv = 0.125;
-    const double destroyedTime = 5;
 
     TA_Sound explosionSound;
     TA_BombMode mode;
@@ -68,7 +67,6 @@ public:
     using TA_Bomb::TA_Bomb;
     void load(TA_Point newPosition, bool newDirection, TA_BombMode mode) override;
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_TRANSPARENT;}
 };
 
 #endif // TA_BOMB_H
