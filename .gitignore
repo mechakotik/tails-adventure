@@ -2,4 +2,8 @@
 .idea/
 build/
 cmake-build-debug/
+cmake-build-debug-llvm/
+cmake-build-release/
+cmake-build-release-llvm/
 assets/gamecontrollerdb.txt
+

@@ -1,6 +1,7 @@
 #include "character.h"
 #include "hud.h"
 #include "objects/bomb.h"
+#include <algorithm>
 
 void TA_Character::updateTool()
 {
@@ -94,13 +95,20 @@ void TA_Character::spawnBomb(BombType type)
     }
 }
 
-void TA_Character::spawnRemoteRobot()
-{
-    if(!ground) {
+void TA_Character::spawnRemoteRobot() {
+    const std::vector<std::string> bossLevels {
+        "maps/pf/pf3",
+        "maps/pm/pm4",
+        "maps/ci/ci3"
+    };
+
+    if(!ground || std::find(bossLevels.begin(), bossLevels.end(), TA::levelPath) != bossLevels.end()) {
+        damageSound.play();
         return;
     }
     hitbox.setPosition(position + TA_Point(0, 0.01));
     if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_MOVING_PLATFORM) {
+        damageSound.play();
         return;
     }
     
