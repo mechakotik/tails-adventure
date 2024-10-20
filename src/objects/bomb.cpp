@@ -47,10 +47,6 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_Bomb::update()
 {
-    if(destroyed) {
-        return false;
-    }
-
     int moveTime = (mode == TA_BOMB_MODE_DEFAULT ? 6 : 8);
     bool flag1 = (timer <= moveTime);
     timer += TA::elapsedTime;
@@ -64,10 +60,6 @@ bool TA_Bomb::update()
             position = position + TA_Point(5 * (direction ? -1 : 1), crouchThrowHeight);
         }
         updatePosition();
-        if(checkPawnCollision(hitbox)) {
-            explode();
-            return true;
-        }
     }
 
     if(timer >= moveTime) {
@@ -102,8 +94,7 @@ bool TA_Bomb::update()
         }
         if(shouldExplode()) {
             explode();
-            destroyed = true;
-            timer = 0;
+            return false;
         }
     }
 
@@ -130,13 +121,6 @@ void TA_Bomb::explode()
         TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
         explosionSound.play();
         objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
-    }
-}
-
-void TA_Bomb::draw()
-{
-    if(!destroyed) {
-        TA_Sprite::draw();
     }
 }
 

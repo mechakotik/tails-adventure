@@ -21,7 +21,7 @@ private:
     TA_Sound explosionSound;
     TA_BombMode mode;
 
-    bool direction, ground = false, destroyed = false;
+    bool direction, ground = false;
     double timer = 0;
 
 protected:
@@ -39,7 +39,6 @@ public:
     using TA_Object::TA_Object;
     virtual void load(TA_Point newPosition, bool newDirection, TA_BombMode mode);
     bool update() override;
-    void draw() override;
 
     bool checkPawnCollision(TA_Polygon &hitbox) override;
     int getCollisionType() override {return TA_COLLISION_BOMB;}
