@@ -340,21 +340,18 @@ void TA_Character::setReleaseState()
 
 void TA_Character::setWindVelocity(TA_Point windVelocity)
 {
-    if((helitail && helitailTime > getMaxHelitailTime()) || windVelocity.y < -2.5) {
-        ground = jump = helitail = false;
-    }
-
     if(windVelocity.y > -2.5) {
         this->windVelocity = windVelocity;
+    }
+    else {
+        ground = jump = helitail = false;
+        velocity.y -= strongWindForce * TA::elapsedTime;
+        velocity.y = std::max(velocity.y, double(-5));
+        strongWind = true;
         if(hurt && rings >= 1) {
             hurt = false;
             invincibleTimeLeft = invincibleTime;
         }
-    }
-    else {
-        velocity.y -= strongWindForce * TA::elapsedTime;
-        velocity.y = std::max(velocity.y, double(-5));
-        strongWind = true;
     }
 }
 

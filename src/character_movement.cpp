@@ -207,6 +207,7 @@ void TA_Character::updateWaterFlow()
         }
     };
 
+    coyoteTime = maxCoyoteTime + 1;
     addAcceleration(velocity.y, windVelocity.y);
     if(TA::equal(windVelocity.x, 0)) {
         horizontalMove();
