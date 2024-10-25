@@ -3,7 +3,7 @@
 #include "save.h"
 #include "tools.h"
 
-namespace TA { namespace gamepad {
+namespace TA::gamepad {
     void updateMapping();
     bool isDpadPressed();
     TA_Point getDpadDirectionVector();
@@ -16,7 +16,7 @@ namespace TA { namespace gamepad {
     std::array<bool, SDL_GAMEPAD_BUTTON_COUNT> pressed, justPressed;
     bool isConnected = false;
     bool isOncePressed = false;
-}}
+}
 
 bool TA::gamepad::connected()
 {
@@ -78,7 +78,6 @@ void TA::gamepad::update()
     if(!connected()) {
         return;
     }
-    SDL_UpdateGamepads();
     updateMapping();
 
     for(int button = 0; button < SDL_GAMEPAD_BUTTON_COUNT; button ++) {
@@ -149,7 +148,7 @@ TA_Point TA::gamepad::getDpadDirectionVector()
     if(verticalDirection == -1 || horizontalDirection == -1) {
         return (verticalDirection != -1 ? vectors[verticalDirection] : vectors[horizontalDirection]);
     }
-    return {vectors[horizontalDirection].x * length, vectors[verticalDirection].y * length};
+    return (vectors[verticalDirection] + vectors[horizontalDirection]) * length;
 }
 
 TA_Point TA::gamepad::getStickDirectionVector()

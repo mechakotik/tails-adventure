@@ -38,7 +38,7 @@ void TA_Controller::draw()
 TA_Point TA_Controller::getDirectionVector()
 {
     for(TA_Point vector : {onscreen.getDirectionVector(), gamepad.getDirectionVector()}) {
-        if(abs(vector.x) > analogDeadZone || abs(vector.y) > analogDeadZone) {
+        if(vector.length() >= analogDeadZone) {
             return vector;
         }
     }

@@ -10,34 +10,22 @@ TA_Point::TA_Point(double newX, double newY)
 
 TA_Point TA_Point::operator+(const TA_Point &rv) const
 {
-    TA_Point res;
-    res.x = x + rv.x;
-    res.y = y + rv.y;
-    return res;
+    return {x + rv.x, y + rv.y};
 }
 
 TA_Point TA_Point::operator-(const TA_Point &rv) const
 {
-    TA_Point res;
-    res.x = x - rv.x;
-    res.y = y - rv.y;
-    return res;
+    return {x - rv.x, y - rv.y};
 }
 
 TA_Point TA_Point::operator*(const TA_Point &rv) const
 {
-    TA_Point res;
-    res.x = x * rv.x;
-    res.y = y * rv.y;
-    return res;
+    return {x * rv.x, y * rv.y};
 }
 
 TA_Point TA_Point::operator*(const double &rv) const
 {
-    TA_Point res;
-    res.x = x * rv;
-    res.y = y * rv;
-    return res;
+    return {x * rv, y * rv};
 }
 
 double TA_Point::length() const
