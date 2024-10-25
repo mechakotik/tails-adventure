@@ -31,7 +31,9 @@ void TA_Controller::update()
 void TA_Controller::draw()
 {
     #ifdef __ANDROID__
-        onscreen.draw();
+        if(!TA::gamepad::connected()) {
+            onscreen.draw();
+        }
     #endif
 }
 
