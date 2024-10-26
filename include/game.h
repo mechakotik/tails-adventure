@@ -4,6 +4,7 @@
 #include <chrono>
 #include "SDL3/SDL.h"
 #include "screen_state_machine.h"
+#include "font.h"
 
 class TA_Game {
 private:
@@ -25,6 +26,9 @@ private:
 
     int windowWidth, windowHeight, targetWidth = 0, targetHeight = 0;
     bool vsync = false, fullscreen = true;
+
+    TA_Font font;
+    int frame = 0, frameTimeSum = 0, prevFrameTime = 0;
 
 public:
     TA_Game();

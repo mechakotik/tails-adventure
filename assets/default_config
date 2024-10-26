@@ -3,6 +3,7 @@ pixel_ar 1
 vsync 1
 scale_mode 0
 rumble 1
+frame_time 0
 main_volume 8
 music_volume 8
 sfx_volume 8

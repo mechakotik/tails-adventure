@@ -23,6 +23,9 @@ TA_Game::TA_Game()
     TA::gamepad::init();
     TA::resmgr::preload();
 
+    font.load("fonts/pause_menu.png", 8, 8);
+    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+");
+
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();
 }
@@ -138,9 +141,8 @@ bool TA_Game::process()
 void TA_Game::update()
 {
     currentTime = std::chrono::high_resolution_clock::now();
-    TA::elapsedTime = (double)(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
+    TA::elapsedTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
 
-    //TA::printLog("FPS %f", 60 / TA::elapsedTime);
     TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
     //TA::elapsedTime /= 10;
     startTime = currentTime;
@@ -151,6 +153,17 @@ void TA_Game::update()
 
     if(screenStateMachine.update()) {
         startTime = std::chrono::high_resolution_clock::now();
+    }
+
+    if(TA::save::getParameter("frame_time")) {
+        int frameTime = static_cast<int>(std::chrono::duration_cast<std::chrono::microseconds>((std::chrono::high_resolution_clock::now() - startTime)).count());
+        frameTimeSum += frameTime;
+        frame += 1;
+        if(frame % 60 == 0) {
+            prevFrameTime = frameTimeSum / 60;
+            frame = frameTimeSum = 0;
+        }
+        font.drawText(TA_Point(TA::screenWidth - 36, 24), std::to_string(prevFrameTime));
     }
 
     SDL_SetRenderTarget(TA::renderer, nullptr);
