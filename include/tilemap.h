@@ -35,25 +35,23 @@ private:
     };
 
     struct Tile {
-        std::vector<Hitbox> hitboxes;
-        std::vector<int> animation;
-        int animationDelay, type = 0;
-    };
-
-    struct TilemapElement {
         TA_Sprite sprite;
-        int tileIndex;
+        std::vector<Hitbox> hitboxes;
+        int type = 0;
     };
 
     std::vector<Hitbox> getSpikesHitboxVector(int type);
     Hitbox getSpikesSolidHitbox(int type);
     Hitbox getSpikesDamageHitbox(int type);
 
-    std::vector<std::vector<std::vector<TilemapElement>>> tilemap;
+    std::vector<std::vector<std::vector<int>>> tilemap;
     std::vector<Tile> tileset;
     std::array<TA_Polygon, 3> borderPolygons;
     std::vector<int> collisionLayers;
+    TA_Camera* camera = nullptr;
+    TA_Point position;
     int width, height, tileWidth, tileHeight, layerCount;
+    bool updateAnimation = true;
 
 public:
     void load(std::string filename);

@@ -31,33 +31,33 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
     }
     tileset.assign(tileCount, Tile());
 
-    for(int pos = 0; pos < tileCount; pos ++) {
-        tileset[pos].animation = std::vector<int>{pos};
-        tileset[pos].animationDelay = 1;
-    }
-
-    std::string textureFilename = "";
-
     auto loadTileset = [&](tinyxml2::XMLElement *tilesetElement)
     {
-        textureFilename = filename;
+        std::string textureFilename = filename;
         while(!textureFilename.empty() && textureFilename.back() != '/') {
             textureFilename.pop_back();
         }
         textureFilename += tilesetElement->FirstChildElement("image")->Attribute("source");
 
+        for(size_t tile = 0; tile < tileCount; tile += 1) {
+            tileset[tile].sprite.load(textureFilename, tileWidth, tileHeight);
+            tileset[tile].sprite.setFrame(tile);
+        }
+
         for(tinyxml2::XMLElement *tileElement = tilesetElement->FirstChildElement("tile");
             tileElement != nullptr; tileElement = tileElement->NextSiblingElement("tile"))
         {
             int tileId = tileElement->IntAttribute("id");
+
             if(tileElement->FirstChildElement("animation") != nullptr) {
-                tileset[tileId].animation.clear();
+                TA_Animation animation;
                 int delayMs = tileElement->FirstChildElement("animation")->FirstChildElement("frame")->IntAttribute("duration");
-                tileset[tileId].animationDelay = int(delayMs * 60 / 1000 + 0.5);
+                animation.delay = int(delayMs * 60 / 1000 + 0.5);
                 for(tinyxml2::XMLElement *frameElement = tileElement->FirstChildElement("animation")->FirstChildElement("frame");
                     frameElement != nullptr; frameElement = frameElement->NextSiblingElement("frame")) {
-                    tileset[tileId].animation.push_back(frameElement->IntAttribute("tileid"));
+                    animation.frames.push_back(frameElement->IntAttribute("tileid"));
                 }
+                tileset[tileId].sprite.setAnimation(animation);
             }
 
             if(tileElement->FirstChildElement("objectgroup") != nullptr) {
@@ -115,14 +115,7 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
                 if(tileX != width - 1 || tileY != height - 1) {
                     mapStream >> temp;
                 }
-                tile --;
-                tilemap[layer][tileX][tileY].tileIndex = tile;
-                if(tile == -1) {
-                    continue;
-                }
-                tilemap[layer][tileX][tileY].sprite.load(textureFilename, tileWidth, tileHeight);
-                tilemap[layer][tileX][tileY].sprite.setPosition(tileX * tileWidth, tileY * tileHeight);
-                tilemap[layer][tileX][tileY].sprite.setAnimation(TA_Animation(tileset[tile].animation, tileset[tile].animationDelay, -1));
+                tilemap[layer][tileX][tileY] = tile - 1;
             }
         }
 
@@ -154,16 +147,34 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
 void TA_Tilemap::draw(int priority)
 {
     auto drawLayer = [&](int layer) {
-        for(int tileX = 0; tileX < width; tileX ++) {
-            for(int tileY = 0; tileY < height; tileY ++) {
-                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
-                    tilemap[layer][tileX][tileY].sprite.draw();
+        int lx = 0, rx = width - 1, ly = 0, ry = height - 1;
+        if(camera != nullptr && TA::equal(position.x, 0) && TA::equal(position.y, 0)) {
+            TA_Point cameraPos = camera->getPosition();
+            lx = std::max(0, static_cast<int>(cameraPos.x / tileWidth));
+            rx = std::min(width - 1, static_cast<int>((cameraPos.x + TA::screenWidth) / tileWidth + 1));
+            ly = std::max(0, static_cast<int>(cameraPos.y / tileWidth));
+            ry = std::min(height - 1, static_cast<int>((cameraPos.y + TA::screenHeight) / tileWidth + 1));
+        }
+
+        for(int tileX = lx; tileX <= rx; tileX ++) {
+            for(int tileY = ly; tileY < ry; tileY ++) {
+                if(tilemap[layer][tileX][tileY] != -1) {
+                    TA_Sprite& sprite = tileset[tilemap[layer][tileX][tileY]].sprite;
+                    sprite.setPosition(position + TA_Point(tileX * tileWidth, tileY * tileHeight));
+                    sprite.draw();
                 }
             }
         }
     };
 
     if(priority == 0) {
+        if(updateAnimation) {
+            for(size_t tile = 0; tile < tileset.size(); tile += 1) {
+                tileset[tile].sprite.setUpdateAnimation(true);
+                tileset[tile].sprite.updateAnimation();
+                tileset[tile].sprite.setUpdateAnimation(false);
+            }
+        }
         for(int layer = 0; layer < std::max(1, layerCount - 1); layer ++) {
             drawLayer(layer);
         }
@@ -175,30 +186,16 @@ void TA_Tilemap::draw(int priority)
 
 void TA_Tilemap::setCamera(TA_Camera *newCamera)
 {
+    camera = newCamera;
     newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth, height * tileHeight)});
-    for(int layer = 0; layer < layerCount; layer ++) {
-        for(int tileX = 0; tileX < width; tileX ++) {
-            for(int tileY = 0; tileY < height; tileY ++) {
-                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
-                    tilemap[layer][tileX][tileY].sprite.setCamera(newCamera);
-                }
-            }
-        }
+    for(size_t tile = 0; tile < tileset.size(); tile += 1) {
+        tileset[tile].sprite.setCamera(newCamera);
     }
 }
 
 void TA_Tilemap::setPosition(TA_Point position)
 {
-    for(int layer = 0; layer < layerCount; layer ++) {
-        for(int tileX = 0; tileX < width; tileX ++) {
-            for(int tileY = 0; tileY < height; tileY ++) {
-                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
-                    TA_Point tilePosition{position.x + tileX * tileWidth, position.y + tileY * tileHeight};
-                    tilemap[layer][tileX][tileY].sprite.setPosition(tilePosition);
-                }
-            }
-        }
-    }
+    this->position = position;
 }
 
 int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
@@ -227,7 +224,7 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
 
     auto checkCollisionWithTile = [&] (int layer, int tileX, int tileY)
     {
-        int tileId = tilemap[layer][tileX][tileY].tileIndex;
+        int tileId = tilemap[layer][tileX][tileY];
         if(tileId == -1) {
             return;
         }
@@ -260,15 +257,7 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
 
 void TA_Tilemap::setUpdateAnimation(bool enabled)
 {
-    for(int layer = 0; layer < layerCount; layer ++) {
-        for(int tileX = 0; tileX < width; tileX ++) {
-            for(int tileY = 0; tileY < height; tileY ++) {
-                if(tilemap[layer][tileX][tileY].tileIndex != -1) {
-                    tilemap[layer][tileX][tileY].sprite.setUpdateAnimation(enabled);
-                }
-            }
-        }
-    }
+    updateAnimation = enabled;
 }
 
 std::vector<TA_Tilemap::Hitbox> TA_Tilemap::getSpikesHitboxVector(int type)
