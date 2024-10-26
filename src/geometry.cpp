@@ -2,42 +2,6 @@
 #include "error.h"
 #include "tools.h"
 
-TA_Point::TA_Point(double newX, double newY)
-{
-    x = newX;
-    y = newY;
-}
-
-TA_Point TA_Point::operator+(const TA_Point &rv) const
-{
-    return {x + rv.x, y + rv.y};
-}
-
-TA_Point TA_Point::operator-(const TA_Point &rv) const
-{
-    return {x - rv.x, y - rv.y};
-}
-
-TA_Point TA_Point::operator*(const TA_Point &rv) const
-{
-    return {x * rv.x, y * rv.y};
-}
-
-TA_Point TA_Point::operator*(const double &rv) const
-{
-    return {x * rv, y * rv};
-}
-
-double TA_Point::length() const
-{
-    return sqrt(x * x + y * y);
-}
-
-double TA_Point::getDistance(TA_Point rv) const
-{
-    return sqrt((x - rv.x) * (x - rv.x) + (y - rv.y) * (y - rv.y));
-}
-
 double TA_Line::getLineEquation(TA_Point point) const
 {
     double res = (point.x - first.x) * (second.y - first.y) - (point.y - first.y) * (second.x - first.x);

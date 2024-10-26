@@ -2,17 +2,33 @@
 #define TA_GEOMETRY_H
 
 #include <vector>
+#include <cmath>
 
 struct TA_Point {
     double x = 0, y = 0;
-    TA_Point() {}
-    TA_Point(double newX, double newY);
-    TA_Point operator+(const TA_Point &rv) const;
-    TA_Point operator-(const TA_Point &rv) const;
-    TA_Point operator*(const TA_Point &rv) const;
-    TA_Point operator*(const double &rv) const;
-    double length() const;
-    double getDistance(TA_Point rv) const;
+
+    TA_Point() = default;
+    TA_Point(double newX, double newY): x(newX), y(newY) {}
+
+    TA_Point operator+(const TA_Point &rv) const {
+        return {x + rv.x, y + rv.y};
+    }
+    TA_Point operator-(const TA_Point &rv) const {
+        return {x - rv.x, y - rv.y};
+    }
+    TA_Point operator*(const TA_Point &rv) const {
+        return {x * rv.x, y * rv.y};
+    }
+    TA_Point operator*(const double &rv) const {
+        return {x * rv, y * rv};
+    }
+
+    [[nodiscard]] double length() const {
+        return std::sqrt(x * x + y * y);
+    }
+    [[nodiscard]] double getDistance(TA_Point rv) const {
+        return (*this - rv).length();
+    }
 };
 
 struct TA_Rect {
