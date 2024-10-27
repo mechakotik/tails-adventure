@@ -63,6 +63,10 @@ void TA_Character::update()
         return;
     }
 
+    if(invincibleTimeLeft >= 0) {
+        invincibleTimeLeft -= TA::elapsedTime;
+    }
+
     if(state == STATE_HAMMER) {
         updateHammer();
         return;

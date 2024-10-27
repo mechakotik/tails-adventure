@@ -167,9 +167,6 @@ void TA_Character::updateCollisions()
             }
         }
     }
-    else {
-        invincibleTimeLeft -= TA::elapsedTime;
-    }
 
     if(TA::levelPath.substr(0, 7) == "maps/ci" && (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
         ground = jump = jumpReleased = false;
