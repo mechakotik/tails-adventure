@@ -1,4 +1,16 @@
 =======================
+        v0.2.2
+=======================
+
+- Optimized tilemap rendering (2-4x performance boost)
+- Added support for more Android ABIs
+- Fixed gamepad controls
+- Fixed bombs exploding on particles
+- Fixed remote bombs exploding on spikes
+- Added option to display frame time (hidden)
+- Minor bugfixes
+
+=======================
         v0.2.1
 =======================
 
