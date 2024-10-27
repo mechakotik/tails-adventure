@@ -151,13 +151,13 @@ void TA_Tilemap::draw(int priority)
         if(camera != nullptr && TA::equal(position.x, 0) && TA::equal(position.y, 0)) {
             TA_Point cameraPos = camera->getPosition();
             lx = std::max(0, static_cast<int>(cameraPos.x / tileWidth));
-            rx = std::min(width - 1, static_cast<int>((cameraPos.x + TA::screenWidth) / tileWidth + 1));
+            rx = std::min(width - 1, static_cast<int>((cameraPos.x + TA::screenWidth) / tileWidth));
             ly = std::max(0, static_cast<int>(cameraPos.y / tileWidth));
-            ry = std::min(height - 1, static_cast<int>((cameraPos.y + TA::screenHeight) / tileWidth + 1));
+            ry = std::min(height - 1, static_cast<int>((cameraPos.y + TA::screenHeight) / tileWidth));
         }
 
         for(int tileX = lx; tileX <= rx; tileX ++) {
-            for(int tileY = ly; tileY < ry; tileY ++) {
+            for(int tileY = ly; tileY <= ry; tileY ++) {
                 if(tilemap[layer][tileX][tileY] != -1) {
                     TA_Sprite& sprite = tileset[tilemap[layer][tileX][tileY]].sprite;
                     sprite.setPosition(position + TA_Point(tileX * tileWidth, tileY * tileHeight));
