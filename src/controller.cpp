@@ -31,7 +31,7 @@ void TA_Controller::update()
 void TA_Controller::draw()
 {
     #ifdef __ANDROID__
-        if(!isTouchscreen()) {
+        if(isTouchscreen()) {
             onscreen.draw();
         }
     #endif
