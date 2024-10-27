@@ -46,7 +46,7 @@ void TA_MechaGolem::load()
 
 bool TA_MechaGolem::update()
 {
-    if(isComplete() && state != STATE_WAIT_ITEM) {
+    if(isComplete() && state != STATE_DEFEATED && state != STATE_WAIT_ITEM) {
         return false;
     }
 
@@ -495,7 +495,7 @@ bool TA_MechaGolem::canDoTransition()
 void TA_MechaGolem::doTransition()
 {
     TA::save::setSaveParameter("map_selection", 4);
-    TA::save::setSaveParameter("seafox", false);
+    TA::save::setSaveParameter("seafox", 0);
     objectSet->setTransition(TA_SCREENSTATE_MAP);
 }
 
