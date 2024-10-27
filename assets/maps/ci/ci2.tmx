@@ -253,6 +253,16 @@
     <frame tileid="108" duration="150"/>
    </animation>
   </tile>
+  <tile id="46">
+   <properties>
+    <property name="spikes" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="spikes" type="int" value="2"/>
+   </properties>
+  </tile>
   <tile id="50">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
@@ -279,6 +289,11 @@
     <frame tileid="53" duration="150"/>
     <frame tileid="109" duration="150"/>
    </animation>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="spikes" type="int" value="0"/>
+   </properties>
   </tile>
   <tile id="56">
    <objectgroup draworder="index" id="2">
