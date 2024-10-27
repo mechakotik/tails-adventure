@@ -54,7 +54,13 @@ void TA_Game::initSDL()
 
 void TA_Game::createWindow()
 {
-    TA::window = SDL_CreateWindow("Tails Adventure", defaultWindowWidth, defaultWindowHeight, SDL_WINDOW_FULLSCREEN);
+    SDL_WindowFlags windowFlags = SDL_WINDOW_FULLSCREEN;
+    #ifdef ANDROID
+        // Enforce OpenGL, workaround for https://github.com/libsdl-org/SDL/issues/10318
+        windowFlags |= SDL_WINDOW_OPENGL;
+    #endif
+
+    TA::window = SDL_CreateWindow("Tails Adventure", defaultWindowWidth, defaultWindowHeight, SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
     if(TA::window == nullptr) {
         TA::handleSDLError("%s", "Failed to create window");
     }
