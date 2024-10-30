@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.22)
 project(tails-adventure)
 
 option(TA_STATIC "Statically link libgcc and libstdc++" OFF)
@@ -9,10 +9,10 @@ option(TA_CLANG_TIDY "Run clang-tidy alongside with building" OFF)
 
 if(TA_LTO)
     include(CheckIPOSupported)
-    check_ipo_supported(RESULT LTO_SUPPORTED OUTPUT error)
+    check_ipo_supported(RESULT LTO_SUPPORTED)
     if(LTO_SUPPORTED)
         message(STATUS "LTO enabled")
-        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
     else()
         message(STATUS "LTO not supported by compiler")
     endif()
@@ -24,9 +24,11 @@ if(TA_SANITIZE)
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
-set(BUILD_SHARED_LIBS OFF)
-set(SDL_STATIC ON)
-set(SDL_DISABLE_INSTALL ON)
+if(NOT ANDROID)
+    set(BUILD_SHARED_LIBS OFF)
+    set(SDL_STATIC ON)
+    set(SDL_DISABLE_INSTALL ON)
+endif()
 
 set(SDLIMAGE_VENDORED ON)
 set(SDLIMAGE_DEPS_SHARED OFF)
@@ -72,9 +74,9 @@ set(USE_GME_NSFE OFF)
 set(USE_GME_SAP OFF)
 set(USE_GME_SPC OFF)
 
-add_subdirectory(external/SDL EXCLUDE_FROM_ALL)
-add_subdirectory(external/SDL_image EXCLUDE_FROM_ALL)
-add_subdirectory(external/SDL_mixer EXCLUDE_FROM_ALL)
+add_subdirectory(external/SDL)
+add_subdirectory(external/SDL_image)
+add_subdirectory(external/SDL_mixer)
 
 if(WIN32)
     enable_language("RC")
@@ -82,26 +84,44 @@ if(WIN32)
 endif()
 
 file(STRINGS "src/sources.list" TA_SOURCES)
-add_executable(tails-adventure
-    ${TA_SOURCES}
-    external/tinyxml2/tinyxml2.cpp
-    ${WIN32_RESOURCES}
-)
+
+if(ANDROID)
+    add_library(tails-adventure SHARED
+        ${TA_SOURCES}
+        external/tinyxml2/tinyxml2.cpp
+    )
+else()
+    add_executable(tails-adventure
+            ${TA_SOURCES}
+            external/tinyxml2/tinyxml2.cpp
+            ${WIN32_RESOURCES}
+    )
+endif()
 
 if(TA_CLANG_TIDY)
     find_program(CLANG_TIDY NAMES "clang-tidy")
     set_target_properties(tails-adventure PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY}")
 endif()
 
-if(TARGET SDL2::SDL2main)
+if(ANDROID)
+    find_library(NDK_LOG_LIB log)
+    target_link_libraries(tails-adventure PRIVATE
+        SDL3::SDL3
+        SDL3_image::SDL3_image
+        SDL3_mixer::SDL3_mixer
+        ${NDK_LOG_LIB}
+    )
+else()
+    target_link_libraries(tails-adventure PRIVATE
+        SDL3::SDL3-static
+        SDL3_image::SDL3_image-static
+        SDL3_mixer::SDL3_mixer-static
+    )
+endif()
+if(TARGET SDL3::SDL3main)
     target_link_libraries(tails-adventure PRIVATE SDL3::SDL3main)
 endif()
 
-target_link_libraries(tails-adventure PRIVATE
-    SDL3::SDL3-static
-    SDL3_image::SDL3_image-static
-    SDL3_mixer::SDL3_mixer-static
-)
 target_include_directories(tails-adventure PRIVATE
     include
     include/objects

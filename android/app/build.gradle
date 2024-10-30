@@ -2,8 +2,6 @@ plugins {
      id 'com.android.application'
 }
 
-def buildWithCMake = project.hasProperty('BUILD_WITH_CMAKE');
-
 android {
     namespace "com.mechakotik.tailsadventure"
     compileSdkVersion 34
@@ -13,10 +11,6 @@ android {
         versionCode 6
         versionName "0.2.2-3"
         externalNativeBuild {
-            ndkBuild {
-                arguments "APP_PLATFORM=android-19"
-                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
-            }
             cmake {
                 arguments "-DANDROID_PLATFORM=android-19", "-DANDROID_STL=c++_shared"
                 abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
@@ -38,15 +32,9 @@ android {
             jniLibs.srcDir 'libs'
         }
         externalNativeBuild {
-            if (buildWithCMake) {
-                cmake {
-                    path 'jni/CMakeLists.txt'
-                }
-            } else {
-                ndkBuild {
-                    path 'jni/Android.mk'
-                }
-            }
+		cmake {
+		    path 'jni/CMakeLists.txt'
+		}
         }
 
     }
