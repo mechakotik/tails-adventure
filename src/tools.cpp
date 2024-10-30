@@ -52,11 +52,6 @@ void TA::drawShadow(int factor)
     drawScreenRect(0, 0, 0, factor);
 }
 
-bool TA::equal(double a, double b)
-{
-    return std::abs(a - b) < TA::epsilon;
-}
-
 void TA::random::init(unsigned long long seed)
 {
     seed = std::max(seed, 1ull);

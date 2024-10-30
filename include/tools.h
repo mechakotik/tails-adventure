@@ -34,7 +34,6 @@ namespace TA
     extern double elapsedTime;
 
     const double pi = atan(double(1)) * 4;
-    const double epsilon = 1e-5;
 
     extern std::string levelPath, previousLevelPath;
     extern std::set<std::string> arguments;
@@ -42,7 +41,6 @@ namespace TA
     void drawRect(TA_Point topLeft, TA_Point bottomRight, int r, int g, int b, int a);
     void drawScreenRect(int r, int g, int b, int a);
     void drawShadow(int factor);
-    bool equal(double a, double b);
     double linearInterpolation(double left, double right, double pos);
 
     template<typename T>

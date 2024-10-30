@@ -46,7 +46,6 @@ src/game_over_screen.cpp
 src/game_screen.cpp
 src/game.cpp
 src/gamepad.cpp
-src/geometry.cpp
 src/hitbox_container.cpp
 src/house_screen.cpp
 src/hud.cpp

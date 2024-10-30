@@ -66,7 +66,8 @@ void TA_OnscreenController::updateStick()
     stick.update();
 
     if(stick.isPressed()) {
-        vector = stick.getTouchPosition() - stick.getVertex(0);
+        TA_Point center = TA_Point(35, TA::screenHeight - 37);
+        vector = stick.getTouchPosition() - center;
         vector.x /= stickSprite.getWidth() / 2;
         vector.y /= stickSprite.getHeight() / 2;
         if(vector.length() > 1) {
@@ -99,19 +100,19 @@ void TA_OnscreenController::updatePositions()
     else {
         TA_Point center = TA_Point(35, TA::screenHeight - 37);
         stickSprite.setPosition(center - TA_Point(stickSprite.getWidth() / 2, stickSprite.getHeight() / 2));
-        stick.setCircle(center, 60);
+        stick.setCircle({center, 60});
     }
 }
 
 void TA_OnscreenController::setButtonPosition(TA_FunctionButton button, TA_Point center)
 {
-    buttons[button].setCircle(center, 12);
+    buttons[button].setCircle({center, 12});
     sprites[button].setPosition(center - TA_Point(sprites[button].getWidth() / 2, sprites[button].getHeight() / 2));
 }
 
 void TA_OnscreenController::setArrowButtonPosition(TA_Direction button, TA_Point center)
 {
-    arrowButtons[button].setCircle(center, 12);
+    arrowButtons[button].setCircle({center, 12});
     arrowSprites[button].setPosition(center - TA_Point(arrowSprites[button].getWidth() / 2, arrowSprites[button].getHeight() / 2));
 }
 

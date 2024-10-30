@@ -3,7 +3,7 @@
 #include "touchscreen.h"
 #include "tools.h"
 
-namespace TA { namespace touchscreen {
+namespace TA::touchscreen {
     struct Finger {
         TA_Point position, startPosition;
     };
@@ -13,7 +13,7 @@ namespace TA { namespace touchscreen {
 
     TA_Point scrollVector;
     int scrollId = -1;
-} }
+}
 
 void TA::touchscreen::update()
 {
