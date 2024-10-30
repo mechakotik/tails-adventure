@@ -32,11 +32,10 @@ android {
             jniLibs.srcDir 'libs'
         }
         externalNativeBuild {
-		cmake {
-		    path 'jni/CMakeLists.txt'
-		}
+            cmake {
+                path 'jni/CMakeLists.txt'
+            }
         }
-
     }
     lint {
         abortOnError false
