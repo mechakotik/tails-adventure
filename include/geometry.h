@@ -118,7 +118,7 @@ public:
     }
 
     [[nodiscard]] bool inside(const TA_Point& point) const {
-        if(rect) {
+        if(isRectangle()) [[likely]] {
             return getTopLeft().x <= point.x && point.x <= getBottomRight().x &&
                    getTopLeft().y <= point.y && point.y <= getBottomRight().y;
         }
@@ -127,7 +127,7 @@ public:
         int count = 0;
 
         for(size_t pos = 0; pos < vertexList.size(); pos += 1) {
-            const TA_Line currentLine{vertexList[pos] + position, vertexList[(pos + 1) % vertexList.size()] + position};
+            const TA_Line currentLine{vertexList[pos], vertexList[(pos + 1) % vertexList.size()]};
             if(ray.intersects(currentLine)) {
                 count += 1;
             }
@@ -137,11 +137,11 @@ public:
     }
 
     [[nodiscard]] bool intersects(const TA_Polygon& rv) const {
-        if(empty() || rv.empty()) {
+        if(empty() || rv.empty()) [[unlikely]] {
             return false;
         }
 
-        if(isRectangle() && rv.isRectangle()) {
+        if(isRectangle() && rv.isRectangle()) [[likely]] {
             return getTopLeft().x < rv.getBottomRight().x && getBottomRight().x > rv.getTopLeft().x &&
                    getTopLeft().y < rv.getBottomRight().y && getBottomRight().y > rv.getTopLeft().y;
         }
