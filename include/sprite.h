@@ -13,8 +13,8 @@ class TA_Texture {
 public:
     virtual void load(std::string filename);
 
-    SDL_Texture *SDLTexture;
-    int width, height;
+    SDL_Texture *SDLTexture = nullptr;
+    int width = 0, height = 0;
 };
 
 class TA_Animation {
@@ -32,7 +32,7 @@ public:
 class TA_Sprite {
 private:
     TA_Texture texture;
-    int frameWidth, frameHeight;
+    int frameWidth = 0, frameHeight = 0;
     int frame = 0;
     TA_Point position;
     TA_Camera *camera = nullptr;

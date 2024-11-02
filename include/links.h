@@ -16,7 +16,7 @@ struct TA_Links {
     TA_Camera *camera = nullptr;
     TA_ObjectSet *objectSet = nullptr;
     TA_Controller *controller = nullptr;
-    TA_Hud *hud;
+    TA_Hud *hud = nullptr;
 };
 
 #endif // TA_LINKS_H

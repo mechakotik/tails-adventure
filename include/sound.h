@@ -12,7 +12,7 @@ enum TA_SoundChannel
     TA_SOUND_CHANNEL_MAX
 };
 
-namespace TA { namespace sound {
+namespace TA::sound {
     void playMusic(std::string filename, int repeat = -1);
     void update();
     bool isPlaying(TA_SoundChannel channel);
@@ -20,14 +20,14 @@ namespace TA { namespace sound {
     void fadeOut(int time);
     void fadeOutMusic(int time);
     void fadeOutChannel(TA_SoundChannel channel, int time);
-}}
+}
 
 class TA_Sound
 {
 private:
     Mix_Chunk *chunk = nullptr;
-    TA_SoundChannel channel;
-    bool loop;
+    TA_SoundChannel channel = TA_SOUND_CHANNEL_SFX1;
+    bool loop = false;
 
 public:
     void load(std::string filename, TA_SoundChannel channel, bool loop = false);
