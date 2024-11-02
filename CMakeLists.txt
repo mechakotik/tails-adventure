@@ -32,6 +32,12 @@ else()
     set(SDL_DISABLE_INSTALL ON)
 endif()
 
+add_subdirectory(external/SDL EXCLUDE_FROM_ALL)
+
+if(ANDROID)
+    set(BUILD_SHARED_LIBS OFF)
+endif()
+
 set(SDLIMAGE_VENDORED ON)
 set(SDLIMAGE_DEPS_SHARED OFF)
 set(SDLIMAGE_INSTALL OFF)
@@ -76,7 +82,6 @@ set(USE_GME_NSFE OFF)
 set(USE_GME_SAP OFF)
 set(USE_GME_SPC OFF)
 
-add_subdirectory(external/SDL EXCLUDE_FROM_ALL)
 add_subdirectory(external/SDL_image EXCLUDE_FROM_ALL)
 add_subdirectory(external/SDL_mixer EXCLUDE_FROM_ALL)
 

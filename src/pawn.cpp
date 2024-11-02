@@ -1,7 +1,7 @@
 #include <cassert>
 #include "pawn.h"
 #include "tools.h"
-#include "error.h"
+#include "geometry.h"
 
 int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground)
 {
@@ -10,11 +10,11 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     this->velocity = velocity;
     this->ground = ground;
 
-    if(!isGoodPosition(position)) {
+    if(!isGoodPosition(position)) [[unlikely]] {
         popOut();
-    }
-    if(!isGoodPosition(position)) {
-        return TA_COLLISION_ERROR;
+        if(!isGoodPosition(position)) [[unlikely]] {
+            return TA_COLLISION_ERROR;
+        }
     }
 
     moveByX();
