@@ -15,6 +15,7 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
     hitbox.setRectangle(topLeft - TA_Point(0.5, 0.5), bottomRight + TA_Point(0.5, 0.5));
 
     mode = newMode;
+    moveTime = (mode == TA_BOMB_MODE_DEFAULT ? 6 : 8);
     if(mode == TA_BOMB_MODE_AIR) {
         TA_Point addVelocity = objectSet->getLinks().character->getVelocity();
         addVelocity.x = abs(addVelocity.x);
@@ -47,7 +48,6 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon &hitbox)
 
 bool TA_Bomb::update()
 {
-    int moveTime = (mode == TA_BOMB_MODE_DEFAULT ? 6 : 8);
     bool flag1 = (timer <= moveTime);
     timer += TA::elapsedTime;
     bool flag2 = (timer >= moveTime);
@@ -193,7 +193,40 @@ void TA_NapalmBomb::explode()
     objectSet->spawnObject<TA_NapalmFire>(position + TA_Point(4, -15), velocity.x);
 }
 
-bool TA_NapalmBomb::update()
-{
+void TA_TripleBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mode) {
+    TA_Bomb::load(newPosition, newDirection, mode);
+    hitbox.setRectangle(topLeft - TA_Point(1.5, 1.5), bottomRight + TA_Point(1.5, 1.5));
+}
+
+bool TA_TripleBomb::update() {
+    if(active) {
+        const double newTimer = timer + TA::elapsedTime;
+        if(timer < explodeInterval && newTimer > explodeInterval) {
+            explode();
+            timer = newTimer;
+            return true;
+        }
+        timer = newTimer;
+    }
+    else if(!isInitSequence()) {
+        hitbox.setPosition(position);
+        int flags = objectSet->checkCollision(hitbox);
+        if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE)) {
+            active = true;
+            explode();
+            return true;
+        }
+    }
+
     return TA_Bomb::update();
+}
+
+bool TA_TripleBomb::shouldExplode() {
+    return active && timer > explodeInterval * 2;
+}
+
+void TA_TripleBomb::draw() {
+    if(!active) {
+        TA_Bomb::draw();
+    }
 }

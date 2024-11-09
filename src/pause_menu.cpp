@@ -89,7 +89,7 @@ void TA_PauseMenu::processControllerInput() {
 
 void TA_PauseMenu::processTouchInput() {
     for(int pos = 0; pos < 3; pos ++) {
-        menuButtons.at(pos).setPosition({(static_cast<double>(TA::screenWidth) / 2) - (static_cast<double>(frameSprite.getWidth()) / 2), static_cast<double>(63 + 17 * pos)});
+        menuButtons.at(pos).setPosition({(static_cast<double>(TA::screenWidth) / 2) - (static_cast<double>(frameSprite.getWidth()) / 2), static_cast<double>(63 + (17 * pos))});
         menuButtons.at(pos).update();
         if(menuButtons.at(pos).isReleased()) {
             selection = pos;

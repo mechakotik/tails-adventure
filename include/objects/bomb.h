@@ -22,11 +22,13 @@ private:
     TA_BombMode mode;
 
     bool direction, ground = false;
+    int moveTime = 0;
     double timer = 0;
 
 protected:
     virtual bool shouldExplode();
     virtual void explode();
+    [[nodiscard]] bool isInitSequence() const {return timer < moveTime;}
 
     double speed = 1.15, crouchThrowHeight = -6;
     TA_Point topLeft{3, 4}, bottomRight{12, 14};
@@ -58,14 +60,29 @@ public:
 };
 
 class TA_NapalmBomb : public TA_Bomb {
+public:
+    using TA_Bomb::TA_Bomb;
+    void load(TA_Point newPosition, bool newDirection, TA_BombMode mode) override;
+
 private:
     bool shouldExplode() override;
     void explode() override;
+};
 
+class TA_TripleBomb : public TA_Bomb {
 public:
     using TA_Bomb::TA_Bomb;
     void load(TA_Point newPosition, bool newDirection, TA_BombMode mode) override;
     bool update() override;
+    void draw() override;
+
+private:
+    static constexpr double explodeInterval = 7;
+
+    bool shouldExplode() override;
+
+    double timer = 0;
+    bool active = false;
 };
 
 #endif // TA_BOMB_H

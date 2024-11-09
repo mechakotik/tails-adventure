@@ -17,6 +17,7 @@ private:
         TOOL_REMOTE_ROBOT = 6,
         TOOL_SPEED_BOOTS = 7,
         TOOL_NAPALM_BOMB = 13,
+        TOOL_TRIPLE_BOMB = 14,
         TOOL_RADIO = 18,
         TOOL_HAMMER = 19
     };
@@ -38,7 +39,8 @@ private:
     enum BombType {
         BOMB_REGULAR,
         BOMB_REMOTE,
-        BOMB_NAPALM
+        BOMB_NAPALM,
+        BOMB_TRIPLE
     };
 
     const double jmp = -3.75;

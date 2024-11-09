@@ -34,6 +34,9 @@ void TA_Character::updateTool()
         case TOOL_NAPALM_BOMB:
             spawnBomb(BOMB_NAPALM);
             break;
+        case TOOL_TRIPLE_BOMB:
+            spawnBomb(BOMB_TRIPLE);
+            break;
         case TOOL_REMOTE_ROBOT:
             spawnRemoteRobot();
             break;
@@ -63,6 +66,9 @@ void TA_Character::spawnBomb(BombType type)
         }
         else if(type == BOMB_NAPALM) {
             links.objectSet->spawnObject<TA_NapalmBomb>(position, flip, mode);
+        }
+        else if(type == BOMB_TRIPLE) {
+            links.objectSet->spawnObject<TA_TripleBomb>(position, flip, mode);
         }
         else {
             links.objectSet->spawnObject<TA_Bomb>(position, flip, mode);
