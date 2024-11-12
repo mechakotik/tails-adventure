@@ -4,8 +4,9 @@
 
 <div align="center">
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/mechakotik/tails-adventure?style=flat&label=latest&color=&logo=Git&logoColor=white)
-![GitHub all releases](https://img.shields.io/github/downloads/mechakotik/tails-adventure/total?color=red)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/mechakotik/tails-adventure?style=flat&label=latest&color=&logo=Git&logoColor=white)](https://github.com/mechakotik/tails-adventure/releases)
+[![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Dcom.mechakotik.tailsadventure%26gl%3DUS%26hl%3Den%26l%3Dinstalls%26m%3D%24totalinstalls&logo=google-play&color=)](https://play.google.com/store/apps/details?id=com.mechakotik.tailsadventure)
+[![GitHub all releases](https://img.shields.io/github/downloads/mechakotik/tails-adventure/total?color=&logo=github)](https://github.com/mechakotik/tails-adventure/releases)
 [![Telegram](https://img.shields.io/badge/Telegram-blue.svg?style=flat&logo=Telegram&logoColor=white)](https://t.me/tailsadventure)
 
 </div>
