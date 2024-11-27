@@ -3,6 +3,7 @@
 #include "error.h"
 #include "save.h"
 #include "splash.h"
+#include "ring.h"
 
 bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
@@ -138,8 +139,16 @@ void TA_Character::updateCollisions()
             velocity.y = hurtYsp;
             damageSound.play();
             TA::gamepad::rumble(0.75, 0.75, 20);
-            links.objectSet->addRings(-2);
+
+            if(TA::save::getParameter("ring_drop")) {
+                dropRings();
+                links.objectSet->addRings(-std::min(rings, 4));
+            }
+            else {
+                links.objectSet->addRings(-2);
+            }
         };
+
         TA_Polygon leftHalf, rightHalf; {
             double middleX = (topLeft.x + bottomRight.x) / 2;
             leftHalf.setRectangle(topLeft - TA_Point(0.001, 0.001), {middleX, bottomRight.y + 0.001});
@@ -173,6 +182,22 @@ void TA_Character::updateCollisions()
     }
     
     hitbox.setPosition(position);
+}
+
+void TA_Character::dropRings() {
+    double ringAngle = 0.88357293382;
+    double ringSpeed = 2;
+    bool ringFlip = false;
+
+    for(int ring = 0; ring < std::min(rings, 4); ring++) {
+        TA_Point ringVelocity{std::cos(ringAngle) * ringSpeed, -std::sin(ringAngle) * ringSpeed};
+        if(ringFlip) {
+            ringVelocity.x *= -1;
+            ringAngle += 0.39269908169;
+        }
+        links.objectSet->spawnObject<TA_Ring>(position + TA_Point(20, 20), ringVelocity, 64);
+        ringFlip = !ringFlip;
+    }
 }
 
 void TA_Character::updateClimb()

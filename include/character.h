@@ -129,6 +129,7 @@ private:
     void updateTeleport();
     void changeMusic();
     double getMaxHelitailTime();
+    void dropRings();
 
 public:
     void load(TA_Links newLinks);

@@ -9,13 +9,16 @@ private:
     TA_Point velocity;
     TA_Sound ringSound;
     double timer = 0;
+    double delay = 0;
 
-    const int maxTime = 300;
-    const double grv = 0.125;
-    const double slowdown = 0.75;
+    static constexpr int maxTime = 300;
+    static constexpr double grv = 0.125;
+    static constexpr double slowdown = 0.75;
+    static constexpr double drag = 0.005;
 
 public:
     using TA_Object::TA_Object;
+    void load(TA_Point newPosition, TA_Point velocity, double delay = 0);
     void load(TA_Point newPosition, double startSpeed = -2);
     bool update() override;
     bool checkPawnCollision(TA_Polygon &hitbox) override;

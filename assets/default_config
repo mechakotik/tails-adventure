@@ -7,6 +7,7 @@ frame_time 0
 main_volume 8
 music_volume 8
 sfx_volume 8
+ring_drop 0
 
 keyboard_map_up 82
 keyboard_map_down 81
