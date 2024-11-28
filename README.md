@@ -34,6 +34,7 @@ Controls can be remapped with Options -> Controls -> Map keyboard / Map gamepad.
 | Previous item | A | LB |
 | Next item | D | RB |
 | Start | Enter | Start |
+| Toggle fullscreen | Right Alt + Enter | - |
 
 ## Implemented
 
