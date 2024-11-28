@@ -11,22 +11,43 @@
 
 </div>
 
-Tails Adventure is Sonic the Hedgehog spin-off game, released for Game Gear and featuring Tails in a solo role. Opposed to other SMS and GG Sonic titles, which try to bring famous fast-paced Sonic gameplay in 8-bit world, Tails Adventure is metroidvania-like game focusing on exploration, collecting items and backtracking. It's a really unique "hidden gem" of the series, which couldn't get attention it deserves due to low popularity of Game Gear.
+Tails Adventure is Sonic the Hedgehog spin-off game, released for Game Gear and featuring Tails in a solo role. Opposed to other Sonic titles with fast-paced gameplay, Tails Adventure is metroidvania game with emphasis on exploration, collecting items and backtracking. It's a really unique "hidden gem" of the series, which couldn't get attention it deserves due to low popularity of Game Gear.
 
-This project tries to bring Tails Adventure experience to modern platforms, pushing away Game Gear limitations and implementing some quality of life improvements:
-- More difficult but more fair gameplay, improved enemies and bosses
-- Smooth and responsive character physics
-- Support for modern displays with varying aspect ratios and refresh rates
-- Game runs in your native resolution and displays sprites on "fractional" positions for smoother gameplay
-- Keyboard and gamepad controls with customizable keybinds and analog stick support
-- Save system without password
-- Pause menu and options menu
+This project tries to bring Tails Adventure experience to modern platforms, pushing away Game Gear limitations and implementing some improvements:
+- **New features:** item hotswap menu, ring drop system
+- **Balance improvements:** rebalanced gameplay, enemies and bosses
+- **Smoother gameplay:** runs in your native resolution and refresh rate, displays subpixels
+- **Better controls:** customizable keyboard and gamepad mappings, analog input support
+- **Save system:** convenient data select menu in Sonic 3 style
 
-Also, it was made from the ground up in C++ without using any game engines to be less bloated, have maximum performance and portability. Latest demo includes playable Poloy Forest, Volcanic Tunnel, Polly Mt. 1, Lake Rocky, Cavern Island and Caron Forest.
+Also, it was made from the ground up in C++ without using any game engines to be less bloated, maximize performance and portability.
+
+## Default controls
+
+Controls can be remapped with Options -> Controls -> Map keyboard / Map gamepad.
+
+| Action | Keyboard | Gamepad |
+| ------ | -------- | ------- |
+| Move | Arrow keys | Left stick or D-Pad |
+| Jump (A) | Z | A |
+| Use item (B) | C | B |
+| Previous item | A | LB |
+| Next item | D | RB |
+| Start | Enter | Start |
+
+## Implemented
+
+**Levels (fully):** Poloy Forest, Polly Mt. 1, Cavern Island, Green Island.
+
+**Levels (partially):** Volcanic Tunnel, Lake Rocky.
+
+**Items:** Regular Bomb, Remote Bomb, Napalm Bomb, Triple Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio.
+
+**Sea Fox items:** Vulcan Gun.
 
 ## Get it
 
-Binary releases for Windows and Linux (amd64) are available at [Releases](https://github.com/mechakotik/tails-adventure/releases). If your platform is not supported or binary release is not working properly, you may build Tails Adventure Remake from source (don't worry, it's not as hard as you might think).
+Binary releases for Windows, Android and Linux (amd64) are available at [Releases](https://github.com/mechakotik/tails-adventure/releases). If your platform is not supported or binary release is not working properly, you may build Tails Adventure Remake from source (don't worry, it's not as hard as you might think).
 
 ## Building for Linux
 
