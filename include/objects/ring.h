@@ -10,6 +10,7 @@ private:
     TA_Sound ringSound;
     double timer = 0;
     double delay = 0;
+    bool collected = false;
 
     static constexpr int maxTime = 300;
     static constexpr double grv = 0.125;

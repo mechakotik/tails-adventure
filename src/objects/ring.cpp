@@ -16,20 +16,21 @@ void TA_Ring::load(TA_Point position, TA_Point velocity, double delay) {
     setPosition(position);
 }
 
-void TA_Ring::load(TA_Point position, double speed)
-{
+void TA_Ring::load(TA_Point position, double speed) {
     load(position, {0, speed}, 0);
 }
 
-bool TA_Ring::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_Ring::checkPawnCollision(TA_Polygon &hitbox) {
     int flags;
     objectSet->checkCollision(hitbox, flags);
     return flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID);
 }
 
-bool TA_Ring::update()
-{
+bool TA_Ring::update() {
+    if(collected) {
+        return isAnimated();
+    }
+
     velocity.y += grv * TA::elapsedTime;
     TA_Point topLeft{0, 0}, bottomRight{8, 8};
     int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
@@ -61,7 +62,10 @@ bool TA_Ring::update()
         if(flags & TA_COLLISION_CHARACTER) {
             ringSound.play();
             objectSet->addRings(1);
-            return false;
+            collected = true;
+            timer = 0;
+            setAnimation("flick");
+            return true;
         }
     }
 
