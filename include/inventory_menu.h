@@ -17,7 +17,7 @@ private:
     void loadOnscreenButtons();
 
     bool updateSlotSelection();
-    void updateItemSelection();
+    bool updateItemSelection();
     void updateOnscreenButtons();
     void updateAlpha();
 
@@ -57,6 +57,7 @@ private:
     int selectionX = 0, selectionY = 0, selectionSlot = 0;
     std::pair<int, int> prevSelection;
     bool selectingSlot = true, shown = false;
+    bool replace = false;
     double arrowTimer = 0, showTimeLeft = -1, hideTimeLeft = -1, listTransitionTimeLeft = -1;
 
 public:
@@ -67,6 +68,7 @@ public:
     void show();
     void hide();
     bool isShown() {return shown || hideTimeLeft > 0;}
+    void setReplace(bool replace) {this->replace = replace;}
 };
 
 #endif // TA_INVENTORY_MENU_H

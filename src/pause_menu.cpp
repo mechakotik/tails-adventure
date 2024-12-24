@@ -11,15 +11,84 @@
 #include "save.h"
 #include "sound.h"
 
-void TA_PauseMenu::load(const TA_Links& links) {
-    this->links = links;
+void TA_PauseMenu::load(TA_Links links) {
+    switchMenu.load(links);
+    inventoryMenu.load(links.controller);
+    inventoryMenu.setReplace(true);
 
+    frameSprite.load("hud/pause_menu_frame.png");
+    frameSprite.setPosition(static_cast<double>(TA::screenWidth - frameSprite.getWidth()) / 2, 29);
+
+    reset();
+}
+
+TA_PauseMenu::UpdateResult TA_PauseMenu::update() {
+    if(replace != replaceWanted) {
+        timer += TA::elapsedTime;
+        if(timer > transitionTime) {
+            replace = replaceWanted;
+            if(replace) {
+                inventoryMenu.show();
+            }
+        }
+        else {
+            if(replace) {
+                switchMenu.setAlpha(255 * timer / transitionTime);
+            }
+            else {
+                switchMenu.setAlpha(255 - 255 * timer / transitionTime);
+            }
+            return UpdateResult::CONTINUE;
+        }
+    }
+
+    timer = 0;
+    if(replace) {
+        if(!inventoryMenu.update()) {
+            inventoryMenu.hide();
+        }
+        if(!inventoryMenu.isShown()) {
+            replaceWanted = false;
+            switchMenu.setAlpha(0);
+        }
+        return UpdateResult::CONTINUE;
+    }
+
+    UpdateResult res = switchMenu.update();
+    if(res == UpdateResult::REPLACE) {
+        replaceWanted = true;
+        return UpdateResult::CONTINUE;
+    }
+    return res;
+}
+
+void TA_PauseMenu::setAlpha(int alpha) {
+    frameSprite.setAlpha(alpha);
+    switchMenu.setAlpha(alpha);
+    globalAlpha = alpha;
+}
+
+void TA_PauseMenu::reset() {
+    setAlpha(0);
+    switchMenu.reset();
+}
+
+void TA_PauseMenu::draw() {
+    TA::drawScreenRect(0, 0, 0, globalAlpha / 2);
+    frameSprite.draw();
+    if(replace && replaceWanted) {
+        inventoryMenu.draw();
+    }
+    else {
+        switchMenu.draw();
+    }
+}
+
+void TA_PauseMenu::SwitchMenu::load(TA_Links links) {
     itemSprite.load("hud/items.png", 16, 16);
     pointerSprite.load("house/pointer.png");
     font.load("fonts/pause_menu.png", 8, 8);
     font.setMapping("abcdefghijklmnopqrstuvwxyz .*");
-    frameSprite.load("hud/pause_menu_frame.png");
-    frameSprite.setPosition(static_cast<double>(TA::screenWidth - frameSprite.getWidth()) / 2, 29);
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     pauseSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX2);
@@ -31,10 +100,11 @@ void TA_PauseMenu::load(const TA_Links& links) {
         menuButtons.at(pos).setRectangle({0, 0}, {125, 17});
     }
 
+    this->links = links;
     reset();
 }
 
-TA_PauseMenu::UpdateResult TA_PauseMenu::update() {
+TA_PauseMenu::UpdateResult TA_PauseMenu::SwitchMenu::update() {
     result = UpdateResult::CONTINUE;
     if(links.controller->isTouchscreen()) {
         processTouchInput();
@@ -45,14 +115,12 @@ TA_PauseMenu::UpdateResult TA_PauseMenu::update() {
     return result;
 }
 
-void TA_PauseMenu::reset() {
-    setAlpha(0);
-
+void TA_PauseMenu::SwitchMenu::reset() {
     const std::string itemPositionKey = (links.seaFox == nullptr ? "item_position" : "seafox_item_position");
     itemPosition = static_cast<int>(TA::save::getSaveParameter(itemPositionKey));
 }
 
-void TA_PauseMenu::processControllerInput() {
+void TA_PauseMenu::SwitchMenu::processControllerInput() {
     if(links.controller->isJustPressed(TA_BUTTON_PAUSE) ||
         links.controller->isJustPressed(TA_BUTTON_A) ||
         links.controller->isJustPressed(TA_BUTTON_B)) {
@@ -87,9 +155,9 @@ void TA_PauseMenu::processControllerInput() {
     }
 }
 
-void TA_PauseMenu::processTouchInput() {
-    for(int pos = 0; pos < 3; pos ++) {
-        menuButtons.at(pos).setPosition({(static_cast<double>(TA::screenWidth) / 2) - (static_cast<double>(frameSprite.getWidth()) / 2), static_cast<double>(63 + (17 * pos))});
+void TA_PauseMenu::SwitchMenu::processTouchInput() {
+    for(int pos = 0; pos < 3; pos++) {
+        menuButtons.at(pos).setPosition({(static_cast<double>(TA::screenWidth) / 2) - 62, static_cast<double>(63 + (17 * pos))});
         menuButtons.at(pos).update();
         if(menuButtons.at(pos).isReleased()) {
             selection = pos;
@@ -111,13 +179,14 @@ void TA_PauseMenu::processTouchInput() {
     }
 }
 
-void TA_PauseMenu::select() {
+void TA_PauseMenu::SwitchMenu::select() {
     switch(selection) {
-        case 0: // continue
+        case 0:
             result = UpdateResult::RESUME;
             pauseSound.play();
             break;
-        case 1: // replace item
+        case 1:
+            result = UpdateResult::REPLACE;
             break;
         case 2:
             result = UpdateResult::QUIT;
@@ -127,18 +196,14 @@ void TA_PauseMenu::select() {
     }
 }
 
-void TA_PauseMenu::setAlpha(const int& alpha) {
+void TA_PauseMenu::SwitchMenu::setAlpha(int alpha) {
     itemSprite.setAlpha(alpha);
     pointerSprite.setAlpha(alpha);
     globalAlpha = alpha;
     font.setAlpha(alpha);
-    frameSprite.setAlpha(alpha);
 }
 
-void TA_PauseMenu::draw() {
-    TA::drawScreenRect(0, 0, 0, globalAlpha / 2);
-    frameSprite.draw();
-
+void TA_PauseMenu::SwitchMenu::draw() {
     {
         const double startX = (static_cast<double>(TA::screenWidth) / 2) - 47;
 
@@ -173,7 +238,7 @@ void TA_PauseMenu::draw() {
     }
 }
 
-void TA_PauseMenu::drawHighlight(const double& y) const {
+void TA_PauseMenu::SwitchMenu::drawHighlight(double y) const {
     SDL_FRect rect = {(static_cast<float>(TA::screenWidth) / 2) - 54, static_cast<float>(y), 110, 15};
 
     for(int num = 0; num < 4; num ++) {

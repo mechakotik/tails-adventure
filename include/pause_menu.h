@@ -2,6 +2,7 @@
 #define TA_PAUSE_MENU_H
 
 #include <array>
+#include "inventory_menu.h"
 #include "sprite.h"
 #include "touchscreen.h"
 #include "font.h"
@@ -13,31 +14,54 @@ public:
     enum class UpdateResult : char {
         CONTINUE,
         RESUME,
+        REPLACE,
         QUIT
     };
 
-    void load(const TA_Links& links);
+    void load(TA_Links links);
     UpdateResult update();
-    void setAlpha(const int& alpha);
+    void setAlpha(int alpha);
     void draw();
     void reset();
 
 private:
-    void processTouchInput();
-    void processControllerInput();
-    void select();
-    void drawHighlight(const double& y) const;
+    class SwitchMenu {
+    public:
+        void load(TA_Links links);
+        UpdateResult update();
+        void draw();
+        void setAlpha(int alpha);
+        void reset();
 
-    TA_Sprite itemSprite, pointerSprite, frameSprite;
-    TA_Links links;
-    std::array<TA_OnscreenButton, 4> itemButtons;
-    std::array<TA_OnscreenButton, 3> menuButtons;
-    TA_Font font;
-    TA_Sound switchSound, pauseSound;
+    private:
+        void processTouchInput();
+        void processControllerInput();
+        void select();
+        void drawHighlight(double y) const;
 
-    UpdateResult result = UpdateResult::CONTINUE;
-    int selection = 0, itemPosition = 0;
+        TA_InventoryMenu inventoryMenu;
+        TA_Sprite itemSprite, pointerSprite;
+        TA_Links links;
+        std::array<TA_OnscreenButton, 4> itemButtons;
+        std::array<TA_OnscreenButton, 3> menuButtons;
+        TA_Font font;
+        TA_Sound switchSound, pauseSound;
+
+        UpdateResult result = UpdateResult::CONTINUE;
+        int selection = 0, itemPosition = 0;
+        int globalAlpha = 0;
+    };
+
+    static constexpr double transitionTime = 6;
+
+    TA_Sprite frameSprite;
+    SwitchMenu switchMenu;
+    TA_InventoryMenu inventoryMenu;
     int globalAlpha = 0;
+
+    bool replace = false;
+    bool replaceWanted = false;
+    double timer = 0;
 };
 
 #endif // TA_PAUSE_MENU_H

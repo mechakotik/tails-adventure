@@ -1,6 +1,7 @@
 #include "inventory_menu.h"
+#include "controller.h"
 #include "save.h"
-#include <iostream>
+#include "sound.h"
 
 void TA_InventoryMenu::load(TA_Controller* controller)
 {
@@ -38,42 +39,42 @@ void TA_InventoryMenu::loadOnscreenButtons()
 
 void TA_InventoryMenu::fillItemMatrix()
 {
-    if(TA::save::getSaveParameter("seafox")) {
-        items[0][0] = {4, "vulcan gun"};
-        items[0][1] = {22, "anti-air missile"};
-        items[1][0] = {12, "proton torpedo"};
-        items[1][1] = {23, "spark"};
-        items[2][0] = {20, "extra speed"};
-        items[2][1] = {24, "mine"};
-        items[3][0] = {21, "extra armor"};
-        items[3][1] = {25, "rocket booster"};
+    if(TA::save::getSaveParameter("seafox") == 1) {
+        items[0][0] = {.number=4, .name="vulcan gun"};
+        items[0][1] = {.number=22, .name="anti-air missile"};
+        items[1][0] = {.number=12, .name="proton torpedo"};
+        items[1][1] = {.number=23, .name="spark"};
+        items[2][0] = {.number=20, .name="extra speed"};
+        items[2][1] = {.number=24, .name="mine"};
+        items[3][0] = {.number=21, .name="extra armor"};
+        items[3][1] = {.number=25, .name="rocket booster"};
     }
 
     else {
-        items[0][0] = {0, "regular bomb"};
-        items[0][1] = {14, "triple bomb"};
-        items[1][0] = {1, "large bomb"};
-        items[1][1] = {15, "wrench"};
-        items[2][0] = {2, "remote bomb"};
-        items[2][1] = {16, "helmet"};
-        items[3][0] = {13, "napalm bomb"};
-        items[3][1] = {6, "remote robot"};
-        items[4][0] = {19, "hammer"};
-        items[4][1] = {8, "super glove"};
-        items[5][0] = {3, "teleport device"};
-        items[5][1] = {9, "fang"};
-        items[6][0] = {5, "night vision"};
-        items[6][1] = {10, "knuckles"};
-        items[7][0] = {7, "speed boots"};
-        items[7][1] = {11, "sonic"};
-        items[8][0] = {17, "item radar"};
-        items[8][1] = {33, "purple c.emerald"};
-        items[9][0] = {18, "radio"};
-        items[9][1] = {31, "red c.emerald"};
-        items[10][0] = {32, "blue c.emerald"};
-        items[10][1] = {30, "white c.emerald"};
-        items[11][0] = {29, "green c.emerald"};
-        items[11][1] = {34, "yellow c.emerald"};
+        items[0][0] = {.number=0, .name="regular bomb"};
+        items[0][1] = {.number=14, .name="triple bomb"};
+        items[1][0] = {.number=1, .name="large bomb"};
+        items[1][1] = {.number=15, .name="wrench"};
+        items[2][0] = {.number=2, .name="remote bomb"};
+        items[2][1] = {.number=16, .name="helmet"};
+        items[3][0] = {.number=13, .name="napalm bomb"};
+        items[3][1] = {.number=6, .name="remote robot"};
+        items[4][0] = {.number=19, .name="hammer"};
+        items[4][1] = {.number=8, .name="super glove"};
+        items[5][0] = {.number=3, .name="teleport device"};
+        items[5][1] = {.number=9, .name="fang"};
+        items[6][0] = {.number=5, .name="night vision"};
+        items[6][1] = {.number=10, .name="knuckles"};
+        items[7][0] = {.number=7, .name="speed boots"};
+        items[7][1] = {.number=11, .name="sonic"};
+        items[8][0] = {.number=17, .name="item radar"};
+        items[8][1] = {.number=33, .name="purple c.emerald"};
+        items[9][0] = {.number=18, .name="radio"};
+        items[9][1] = {.number=31, .name="red c.emerald"};
+        items[10][0] = {.number=32, .name="blue c.emerald"};
+        items[10][1] = {.number=30, .name="white c.emerald"};
+        items[11][0] = {.number=29, .name="green c.emerald"};
+        items[11][1] = {.number=34, .name="yellow c.emerald"};
     }
 
     for(int x = 0; x < 12; x ++) {
@@ -93,9 +94,8 @@ bool TA_InventoryMenu::update()
         if(selectingSlot) {
             return updateSlotSelection();
         }
-        updateItemSelection();
+        return updateItemSelection();
     }
-
     return true;
 }
 
@@ -169,7 +169,7 @@ bool TA_InventoryMenu::updateSlotSelection()
     return true;
 }
 
-void TA_InventoryMenu::updateItemSelection()
+bool TA_InventoryMenu::updateItemSelection()
 {
     if(controller->isJustChangedDirection()) {
         TA_Direction direction = controller->getDirection();
@@ -220,15 +220,23 @@ void TA_InventoryMenu::updateItemSelection()
         else {
             errorSound.play();
         }
+        if(replace) {
+            return false;
+        }
         if(!controller->isTouchscreen()) {
             selectingSlot = true;
         }
     }
 
     if(controller->isJustPressed(TA_BUTTON_B)) {
+        if(replace) {
+            return false;
+        }
         selectingSlot = true;
         backSound.play();
     }
+
+    return true;
 }
 
 bool TA_InventoryMenu::canPlaceItem(int item)
@@ -266,8 +274,10 @@ void TA_InventoryMenu::draw()
 {
     updateAlpha();
     drawItemList();
-    drawInventory();
-    drawSelectionName();
+    if(!replace) {
+        drawInventory();
+        drawSelectionName();
+    }
     drawPointer();
     drawArrows();
 }
@@ -432,12 +442,13 @@ void TA_InventoryMenu::drawPointer()
 
 void TA_InventoryMenu::drawPointerController()
 {
-    TA_Point inventoryPosition = TA_Point(getLeftX() + 39 + 22 * selectionSlot, 101);
-    inventoryPointerSprite.setPosition(inventoryPosition - TA_Point(1, 2));
-    inventoryPointerSprite.draw();
-
-    if(selectingSlot) {
-        return;
+    if(!replace) {
+        TA_Point inventoryPosition = TA_Point(getLeftX() + 39 + 22 * selectionSlot, 101);
+        inventoryPointerSprite.setPosition(inventoryPosition - TA_Point(1, 2));
+        inventoryPointerSprite.draw();
+        if(selectingSlot) {
+            return;
+        }
     }
 
     int pointerX = selectionX, pointerY = selectionY;
@@ -503,6 +514,11 @@ void TA_InventoryMenu::show()
     hideTimeLeft = -1;
     shown = true;
     selectionSlot = selectionX = selectionY = 0;
+    if(replace) {
+        std::string param = (TA::save::getSaveParameter("seafox") == 1 ? "seafox_item_position" : "item_position");
+        selectionSlot = TA::save::getSaveParameter(param);
+        selectingSlot = false;
+    }
 }
 
 void TA_InventoryMenu::hide()
