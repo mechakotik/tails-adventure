@@ -2,6 +2,22 @@
 #include "options_section.h"
 #include "save.h"
 
+class TA_RingDropOption : public TA_Option {
+    std::string getName() override {return "ring drop";}
+
+    std::string getValue() override {
+        int value = TA::save::getParameter("ring_drop");
+        return (value ? "on" : "off");
+    }
+
+    TA_MoveSoundId move(int delta) override {
+        int value = TA::save::getParameter("ring_drop");
+        value = 1 - value;
+        TA::save::setParameter("ring_drop", value);
+        return TA_MOVE_SOUND_SWITCH;
+    }
+};
+
 class TA_ResolutionOption : public TA_Option {
 public:
     std::string getName() override {return "resolution";}
@@ -245,20 +261,22 @@ void TA_OptionsSection::load()
     font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+"); // TODO: generalize font mappings
 
     options.resize(groups.size());
+    options[0].push_back(std::make_unique<TA_RingDropOption>());
+
     #ifndef __ANDROID__
-        options[0].push_back(std::make_unique<TA_ResolutionOption>());
+        options[1].push_back(std::make_unique<TA_ResolutionOption>());
     #endif
-    options[0].push_back(std::make_unique<TA_PixelAROption>());
-    options[0].push_back(std::make_unique<TA_ScaleModeOption>());
-    options[0].push_back(std::make_unique<TA_VSyncOption>());
+    options[1].push_back(std::make_unique<TA_PixelAROption>());
+    options[1].push_back(std::make_unique<TA_ScaleModeOption>());
+    options[1].push_back(std::make_unique<TA_VSyncOption>());
 
-    options[1].push_back(std::make_unique<TA_MapKeyboardOption>());
-    options[1].push_back(std::make_unique<TA_MapGamepadOption>());
-    options[1].push_back(std::make_unique<TA_RumbleOption>());
+    options[2].push_back(std::make_unique<TA_MapKeyboardOption>());
+    options[2].push_back(std::make_unique<TA_MapGamepadOption>());
+    options[2].push_back(std::make_unique<TA_RumbleOption>());
 
-    options[2].push_back(std::make_unique<TA_VolumeOption>("main", "main_volume"));
-    options[2].push_back(std::make_unique<TA_VolumeOption>("music", "music_volume"));
-    options[2].push_back(std::make_unique<TA_VolumeOption>("sfx", "sfx_volume"));
+    options[3].push_back(std::make_unique<TA_VolumeOption>("main", "main_volume"));
+    options[3].push_back(std::make_unique<TA_VolumeOption>("music", "music_volume"));
+    options[3].push_back(std::make_unique<TA_VolumeOption>("sfx", "sfx_volume"));
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
