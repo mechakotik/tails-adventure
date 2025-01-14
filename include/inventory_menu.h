@@ -28,6 +28,7 @@ private:
     void drawPointerController();
     void drawPointerTouchscreen();
     void drawArrows();
+    void drawSlotNumber();
 
     int getInventoryItem(int slot);
     void setInventoryItem(int slot, int value);

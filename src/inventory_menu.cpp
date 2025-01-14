@@ -103,16 +103,26 @@ void TA_InventoryMenu::updateOnscreenButtons()
 {
     for(int x = 0; x < 4; x ++) {
         for(int y = 0; y < 2; y ++) {
-            buttons[x][y].setPosition(TA_Point(getLeftX() + 16 + 32 * x, (y == 0 ? 36 : 60)));
+            double screenX = getLeftX() + 16 + 32 * x;
+            double screenY = (y == 0 ? 36 : 60);
+            if(replace) {
+                screenY -= 2;
+            }
+            buttons[x][y].setPosition({screenX, screenY});
             buttons[x][y].update();
         }
         buttons[x][2].setPosition(TA_Point(getLeftX() + 36 + 22 * x, 97));
         buttons[x][2].update();
     }
 
-    leftButton.setPosition(TA_Point(getLeftX() - 16, 47));
+    if(replace) {
+        leftButton.setPosition(TA_Point(getLeftX() + 2, 79));
+        rightButton.setPosition(TA_Point(getLeftX() + 126, 79));
+    } else {
+        leftButton.setPosition(TA_Point(getLeftX() - 16, 47));
+        rightButton.setPosition(TA_Point(getLeftX() + 144, 47));
+    }
     leftButton.update();
-    rightButton.setPosition(TA_Point(getLeftX() + 144, 47));
     rightButton.update();
 
     for(int pos = 0; pos < 4; pos ++) {
@@ -280,6 +290,9 @@ void TA_InventoryMenu::draw()
     }
     drawPointer();
     drawArrows();
+    if(replace) {
+        drawSlotNumber();
+    }
 }
 
 void TA_InventoryMenu::updateAlpha()
@@ -353,7 +366,11 @@ void TA_InventoryMenu::drawItemList()
     for(int x = page * 4; x < (page + 1) * 4; x ++) {
         for(int y = 0; y < 2; y ++) {
             double screenX = getLeftX() + 24 + 32 * (x % 4);
-            itemSprite.setPosition(screenX, (y == 0? 40 : 64));
+            double screenY = (y == 0 ? 40 : 64);
+            if(replace) {
+                screenY -= 2;
+            }
+            itemSprite.setPosition(screenX, screenY);
 
             int index = items[x][y].number;
             if(characterHasItem(index)) {
@@ -456,7 +473,12 @@ void TA_InventoryMenu::drawPointerController()
         std::tie(pointerX, pointerY) = prevSelection;
     }
 
-    TA_Point listPosition = TA_Point(getLeftX() + 24 + 32 * (pointerX % 4), (pointerY == 0? 40 : 64));
+    double screenX = getLeftX() + 24 + 32 * (pointerX % 4);
+    double screenY = (pointerY == 0 ? 40 : 64);
+    if(replace) {
+        screenY -= 2;
+    }
+    TA_Point listPosition{screenX, screenY};
     pointerSprite.setPosition(listPosition - TA_Point(1, 2));
     pointerSprite.draw();
 }
@@ -492,15 +514,28 @@ void TA_InventoryMenu::drawArrows()
         return;
     }
     if(selectionX >= 4) {
-        arrowSprite.setPosition(getLeftX() + 8, 57);
+        if(replace) {
+            arrowSprite.setPosition(getLeftX() + 26, 89);
+        } else {
+            arrowSprite.setPosition(getLeftX() + 8, 57);
+        }
         arrowSprite.setFrame(0);
         arrowSprite.draw();
     }
     if(selectionX <= 7) {
-        arrowSprite.setPosition(getLeftX() + 144, 57);
+        if(replace) {
+            arrowSprite.setPosition(getLeftX() + 126, 89);
+        } else {
+            arrowSprite.setPosition(getLeftX() + 144, 57);
+        }
         arrowSprite.setFrame(1);
         arrowSprite.draw();
     }
+}
+
+void TA_InventoryMenu::drawSlotNumber() {
+    std::string text = "replace " + std::to_string(selectionSlot + 1);
+    font.drawTextCentered(91, text);
 }
 
 void TA_InventoryMenu::show()

@@ -91,10 +91,11 @@ void TA_PauseMenu::SwitchMenu::load(TA_Links links) {
     font.setMapping("abcdefghijklmnopqrstuvwxyz .*");
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
+    selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
     pauseSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX2);
 
     for(size_t pos = 0; pos < 4; pos += 1) {
-        itemButtons.at(pos).setRectangle({0, 0}, {20, 20});
+        itemButtons.at(pos).setRectangle({0, 0}, {32, 20});
     }
     for(size_t pos = 0; pos < 3; pos += 1) {
         menuButtons.at(pos).setRectangle({0, 0}, {125, 17});
@@ -167,10 +168,10 @@ void TA_PauseMenu::SwitchMenu::processTouchInput() {
     }
 
     const std::string itemPositionKey = (links.seaFox == nullptr ? "item_position" : "seafox_item_position");
-    const double startX = (static_cast<double>(TA::screenWidth) / 2) - 45;
+    const double startX = (static_cast<double>(TA::screenWidth) / 2) - 64;
 
     for(int pos = 0; pos < 4; pos += 1) {
-        itemButtons.at(pos).setPosition({startX + (pos * 26), 36});
+        itemButtons.at(pos).setPosition({startX + (pos * 32), 36});
         itemButtons.at(pos).update();
         if(itemButtons.at(pos).isJustPressed()) {
             switchSound.play();
@@ -187,6 +188,7 @@ void TA_PauseMenu::SwitchMenu::select() {
             break;
         case 1:
             result = UpdateResult::REPLACE;
+            selectSound.play();
             break;
         case 2:
             result = UpdateResult::QUIT;
@@ -205,7 +207,7 @@ void TA_PauseMenu::SwitchMenu::setAlpha(int alpha) {
 
 void TA_PauseMenu::SwitchMenu::draw() {
     {
-        const double startX = (static_cast<double>(TA::screenWidth) / 2) - 47;
+        const double startX = (static_cast<double>(TA::screenWidth) / 2) - 56;
 
         for(int num = 0; num < 4; num ++) {
             const std::string itemKey = (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
@@ -214,12 +216,12 @@ void TA_PauseMenu::SwitchMenu::draw() {
                 item = 38;
             }
 
-            itemSprite.setPosition(startX + (num * 26), 38);
+            itemSprite.setPosition(startX + (num * 32), 38);
             itemSprite.setFrame(item);
             itemSprite.draw();
         }
 
-        pointerSprite.setPosition(startX + (itemPosition * 26) - 1, 36);
+        pointerSprite.setPosition(startX + (itemPosition * 32) - 1, 36);
         pointerSprite.draw();
     }
 

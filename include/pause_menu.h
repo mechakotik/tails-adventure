@@ -45,7 +45,7 @@ private:
         std::array<TA_OnscreenButton, 4> itemButtons;
         std::array<TA_OnscreenButton, 3> menuButtons;
         TA_Font font;
-        TA_Sound switchSound, pauseSound;
+        TA_Sound switchSound, selectSound, pauseSound;
 
         UpdateResult result = UpdateResult::CONTINUE;
         int selection = 0, itemPosition = 0;
