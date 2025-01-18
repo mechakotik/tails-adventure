@@ -156,7 +156,7 @@ bool TA_WalkerBullet::update()
     hitbox.setPosition(position);
     int flags;
     objectSet->checkCollision(hitbox, flags);
-    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID)) {
+    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP)) {
         return false;
     }
     return true;

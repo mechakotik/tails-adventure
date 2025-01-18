@@ -43,7 +43,7 @@ bool TA_Bomb::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = 0;
     objectSet->checkCollision(hitbox, flags);
-    return (flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID) || (flags & TA_COLLISION_PUSHABLE);
+    return (flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP) || (flags & TA_COLLISION_PUSHABLE);
 }
 
 bool TA_Bomb::update()
@@ -107,7 +107,7 @@ bool TA_Bomb::shouldExplode()
     hitbox.setPosition(position);
     int flags = objectSet->checkCollision(hitbox);
 
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE)) {
         return true;
     }
     return false;
@@ -182,7 +182,7 @@ bool TA_NapalmBomb::shouldExplode()
     hitbox.setPosition(position);
     int flags = objectSet->checkCollision(hitbox);
 
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_PUSHABLE)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE)) {
         return true;
     }
     return false;
@@ -211,7 +211,7 @@ bool TA_TripleBomb::update() {
     else if(!isInitSequence()) {
         hitbox.setPosition(position);
         int flags = objectSet->checkCollision(hitbox);
-        if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE)) {
+        if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE)) {
             active = true;
             explode();
             return true;

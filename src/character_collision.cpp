@@ -4,18 +4,22 @@
 #include "save.h"
 #include "splash.h"
 #include "ring.h"
+#include "tilemap.h"
 
 bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
     int flags = 0;
     links.objectSet->checkCollision(checkHitbox, flags);
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE)) {
+    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE)) != 0) {
         return true;
     }
-    if(useHalfSolidTiles && (flags & TA_COLLISION_HALF_SOLID)) {
+    if(useSolidUpTiles && (flags & TA_COLLISION_SOLID_UP) != 0) {
         return true;
     }
-    if(useMovingPlatforms && (flags & TA_COLLISION_MOVING_PLATFORM)) {
+    if(useSolidDownTiles && (flags & TA_COLLISION_SOLID_DOWN) != 0) {
+        return true;
+    }
+    if(useMovingPlatforms && (flags & TA_COLLISION_MOVING_PLATFORM) != 0) {
         return true;
     }
     return false;
@@ -43,21 +47,30 @@ void TA_Character::updateCollisions()
     hitbox.setRectangle(topLeft, bottomRight);
 
     if(ground) {
-        useHalfSolidTiles = true;
-    }
-    else if(velocity.y > -0.01) {
-        if(!useHalfSolidTiles) {
-            useHalfSolidTiles = true;
+        useSolidUpTiles = useSolidDownTiles = true;
+    } else {
+        if(velocity.y > -0.01 && !useSolidUpTiles) {
+            useSolidUpTiles = true;
             TA_Polygon hitbox;
             hitbox.setRectangle(topLeft, bottomRight);
             hitbox.setPosition(position);
             if(checkPawnCollision(hitbox)) {
-                useHalfSolidTiles = false;
+                useSolidUpTiles = false;
             }
+        } else if(useSolidUpTiles) {
+            useSolidUpTiles = false;
         }
-    }
-    else {
-        useHalfSolidTiles = false;
+        if(velocity.y < 0.01 && !useSolidDownTiles) {
+            useSolidDownTiles = true;
+            TA_Polygon hitbox;
+            hitbox.setRectangle(topLeft, bottomRight);
+            hitbox.setPosition(position);
+            if(checkPawnCollision(hitbox)) {
+                useSolidDownTiles = false;
+            }
+        } else if(useSolidDownTiles) {
+            useSolidDownTiles = false;
+        }
     }
 
     updateClimb();
@@ -91,7 +104,7 @@ void TA_Character::updateCollisions()
 
     if(flags & TA_COLLISION_ERROR) {
         position = prevPosition;
-        useHalfSolidTiles = useMovingPlatforms = false;
+        useSolidUpTiles = useMovingPlatforms = false;
         flags = moveAndCollide(topLeft, bottomRight, positionDelta, ground);
     }
 

@@ -86,7 +86,7 @@ private:
     bool jump = false, jumpReleased = false, spring = false;
     bool hurt = false;
     bool lookUp = false, crouch = false;
-    bool useHalfSolidTiles = false, useMovingPlatforms = true;
+    bool useSolidUpTiles = false, useSolidDownTiles = false, useMovingPlatforms = true;
     bool remoteRobot = false;
     bool bombDestroySignal = false;
     bool strongWind = false;

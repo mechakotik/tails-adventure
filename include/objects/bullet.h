@@ -8,7 +8,7 @@ private:
     TA_Point velocity;
 
 protected:
-    virtual int getCollisionFlags() {return TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID;}
+    virtual int getCollisionFlags() {return TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP;}
     virtual void onDestroy() {}
 
 public:
@@ -30,7 +30,7 @@ class TA_VulcanGunBullet : public TA_Bullet {
 private:
     const double existTime = 15;
 
-    int getCollisionFlags() override {return TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_DAMAGE;}
+    int getCollisionFlags() override {return TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_DAMAGE;}
 
     TA_Sound explosionSound;
     double timer = 0;

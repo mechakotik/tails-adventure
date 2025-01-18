@@ -81,13 +81,13 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
 
                 int collisionType = TA_COLLISION_SOLID;
                 if(tileset[tileId].type == 1) {
-                    collisionType = TA_COLLISION_HALF_SOLID;
-                }
-                else if(tileset[tileId].type == 2) {
+                    collisionType = TA_COLLISION_SOLID_UP;
+                } else if(tileset[tileId].type == 2) {
                     collisionType = TA_COLLISION_SOLID | TA_COLLISION_DAMAGE;
-                }
-                else if(tileset[tileId].type == 3) {
+                } else if(tileset[tileId].type == 3) {
                     collisionType = TA_COLLISION_WATER;
+                } else if(tileset[tileId].type == 4) {
+                    collisionType = TA_COLLISION_SOLID_DOWN;
                 }
                 tileset[tileId].hitboxes.push_back({polygon, collisionType});
             }

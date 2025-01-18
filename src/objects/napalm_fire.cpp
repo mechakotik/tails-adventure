@@ -24,7 +24,7 @@ void TA_NapalmFire::load(TA_Point position, double xsp)
 bool TA_NapalmFire::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = objectSet->checkCollision(hitbox);
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID | TA_COLLISION_PUSHABLE)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE)) {
         return true;
     }
     return false;

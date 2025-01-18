@@ -122,7 +122,7 @@ bool TA_Nezu::updateFall()
     hitbox.setPosition(position);
 
     int flags = objectSet->checkCollision(hitbox);
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) {
         return false;
     }
     return true;
@@ -149,7 +149,7 @@ bool TA_Nezu::isBadPosition(TA_Point position)
     groundHitbox.setPosition(position);
     wallHitbox.setPosition(position);
 
-    const int solidMask = TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID;
+    const int solidMask = TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP;
     int flags = objectSet->checkCollision(groundHitbox);
     if((flags & solidMask) == 0) {
         return true;
@@ -176,7 +176,7 @@ bool TA_Nezu::isGoingToFall()
     groundHitbox.setRectangle(TA_Point(2, 15), TA_Point(14, 17));
     groundHitbox.setPosition(position);
 
-    if((objectSet->checkCollision(groundHitbox) & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) == 0) {
+    if((objectSet->checkCollision(groundHitbox) & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) == 0) {
         return true;
     }
     return false;

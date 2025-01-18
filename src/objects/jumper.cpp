@@ -119,7 +119,7 @@ bool TA_Jumper::isCloseToCharacter()
 bool TA_Jumper::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = objectSet->checkCollision(hitbox);
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) {
         return true;
     }
     return false;

@@ -67,7 +67,7 @@ void TA_ItemBox::updateIdle()
 
     int flags = objectSet->checkCollision(hitbox);
 
-    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) == 0) {
+    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) == 0) {
         state = STATE_FALL;
         return;
     }
@@ -95,7 +95,7 @@ void TA_ItemBox::updateFall()
 bool TA_ItemBox::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = objectSet->checkCollision(hitbox);
-    return (flags & (TA_COLLISION_SOLID | TA_COLLISION_HALF_SOLID)) != 0;
+    return (flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) != 0;
 }
 
 void TA_ItemBox::updateUnpack()

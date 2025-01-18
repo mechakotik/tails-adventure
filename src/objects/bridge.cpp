@@ -62,5 +62,5 @@ int TA_Bridge::getCollisionType()
     if(state == TA_BRIDGE_STATE_FALLING) {
         return TA_COLLISION_TRANSPARENT;
     }
-    return TA_COLLISION_HALF_SOLID;
+    return TA_COLLISION_SOLID_UP;
 }

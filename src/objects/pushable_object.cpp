@@ -41,7 +41,7 @@ bool TA_PushableObject::update()
 bool TA_PushableObject::checkPawnCollision(TA_Polygon &hitbox)
 {
     int flags = objectSet->checkCollision(hitbox);
-    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_HALF_SOLID)) {
+    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP)) {
         return true;
     }
     return false;
