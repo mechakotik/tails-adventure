@@ -13,4 +13,5 @@ SpaceBeforeParens: Never
 TabWidth: 4
 AccessModifierOffset: -4
 SpacesBeforeTrailingComments: 1
+IncludeBlocks: Merge
 ...
