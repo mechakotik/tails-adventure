@@ -166,13 +166,12 @@ void TA_SeaFox::updateVulcanGun()
 
 void TA_SeaFox::updateDamage()
 {
+    hitbox.setPosition(position);
     if(invincibleTimer < invincibleTime) {
         invincibleTimer += TA::elapsedTime;
         setAlpha(180);
         return;
     }
-
-    hitbox.setPosition(position);
     setAlpha(255);
 
     if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
