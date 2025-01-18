@@ -20,7 +20,7 @@ void TA_HitboxContainer::add(TA_Polygon &hitbox, int type)
     TA_Point topLeft = hitbox.getTopLeft(), bottomRight = hitbox.getBottomRight();
     int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize, bottom = bottomRight.y / chunkSize;
 
-    if(0 <= top && bottom <= size && 0 <= left && right < size && right - left <= 1 && bottom - top <= 1) {
+    if(0 <= top && bottom < size && 0 <= left && right < size && right - left <= 1 && bottom - top <= 1) {
         addToChunk(chunks[top][left]);
         if(right != left) {
             addToChunk(chunks[top][right]);
