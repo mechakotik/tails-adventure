@@ -155,7 +155,7 @@ void TA_Character::updateCollisions()
 
             if(TA::save::getParameter("ring_drop")) {
                 dropRings();
-                links.objectSet->addRings(-std::min(rings, 4));
+                links.objectSet->addRings(-4);
             }
             else {
                 links.objectSet->addRings(-2);
@@ -198,7 +198,7 @@ void TA_Character::updateCollisions()
 }
 
 void TA_Character::dropRings() {
-    if(rings <= 3) {
+    if(rings <= 4) {
         return;
     }
     TA_Point ringPosition = position + TA_Point(20, 20);

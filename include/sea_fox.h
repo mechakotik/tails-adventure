@@ -27,6 +27,7 @@ private:
     void updateItem();
     void updateVulcanGun();
     void updateDamage();
+    void dropRings();
     void updateDead();
     bool checkPawnCollision(TA_Polygon &hitbox) override;
 

@@ -5,6 +5,7 @@
 #include "hud.h"
 #include "error.h"
 #include "save.h"
+#include "ring.h"
 
 void TA_SeaFox::load(TA_Links links)
 {
@@ -175,19 +176,34 @@ void TA_SeaFox::updateDamage()
     setAlpha(255);
 
     if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
-        links.objectSet->addRings(-2);
+        if(TA::save::getParameter("ring_drop")) {
+            dropRings();
+            links.objectSet->addRings(-4);
+        } else {
+            links.objectSet->addRings(-2);
+        }
         TA::gamepad::rumble(0.75, 0.75, 20);
         if(TA::save::getSaveParameter("rings") <= 0) {
             TA::sound::playMusic("sound/death.vgm", 0);
             setAnimation("dead");
             dead = true;
-        }
-        else {
+        } else {
             velocity = velocity * -1;
             invincibleTimer = 0;
             damageSound.play();
         }
     }
+}
+
+void TA_SeaFox::dropRings() {
+    if(TA::save::getSaveParameter("rings") <= 4) {
+        return;
+    }
+    TA_Point ringPosition = position + TA_Point(20, 20);
+    links.objectSet->spawnObject<TA_Ring>(ringPosition, TA_Point(1.5, -1), 64);
+    links.objectSet->spawnObject<TA_Ring>(ringPosition, TA_Point(-1.5, -1), 64);
+    links.objectSet->spawnObject<TA_Ring>(ringPosition, TA_Point(0.75, -2), 64);
+    links.objectSet->spawnObject<TA_Ring>(ringPosition, TA_Point(-0.75, -2), 64);
 }
 
 void TA_SeaFox::updateDead()
