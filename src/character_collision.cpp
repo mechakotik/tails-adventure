@@ -57,7 +57,7 @@ void TA_Character::updateCollisions()
             if(checkPawnCollision(hitbox)) {
                 useSolidUpTiles = false;
             }
-        } else if(useSolidUpTiles) {
+        } else if(velocity.y <= -0.01) {
             useSolidUpTiles = false;
         }
         if(velocity.y < 0.01 && !useSolidDownTiles) {
@@ -68,7 +68,7 @@ void TA_Character::updateCollisions()
             if(checkPawnCollision(hitbox)) {
                 useSolidDownTiles = false;
             }
-        } else if(useSolidDownTiles) {
+        } else if(velocity.y >= 0.01) {
             useSolidDownTiles = false;
         }
     }
