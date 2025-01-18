@@ -14,6 +14,7 @@ private:
 
     static constexpr int maxTime = 300;
     static constexpr double grv = 0.125;
+    static constexpr double waterGrv = 0.05;
     static constexpr double slowdown = 0.75;
     static constexpr double drag = 0.005;
 

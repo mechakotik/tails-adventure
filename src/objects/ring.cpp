@@ -2,6 +2,7 @@
 #include "tools.h"
 #include "error.h"
 #include "character.h"
+#include "save.h"
 
 void TA_Ring::load(TA_Point position, TA_Point velocity, double delay) {
     this->position = position;
@@ -31,7 +32,8 @@ bool TA_Ring::update() {
         return isAnimated();
     }
 
-    velocity.y += grv * TA::elapsedTime;
+    double currentGrv = (TA::save::getSaveParameter("seafox") == 1 ? waterGrv : grv);
+    velocity.y += currentGrv * TA::elapsedTime;
     TA_Point topLeft{0, 0}, bottomRight{8, 8};
     int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
     setPosition(position);
