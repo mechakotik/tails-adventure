@@ -8,7 +8,7 @@
 bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
 {
     int flags = 0;
-    links.objectSet->checkCollision(checkHitbox, flags, checkHitbox.getPosition().y + 36);
+    links.objectSet->checkCollision(checkHitbox, flags);
     if(flags & (TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE)) {
         return true;
     }

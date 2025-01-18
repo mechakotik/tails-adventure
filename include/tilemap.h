@@ -60,7 +60,7 @@ public:
     void setPosition(TA_Point position);
     int getWidth() {return width * tileWidth;}
     int getHeight() {return height * tileHeight;}
-    int checkCollision(TA_Polygon &polygon, int halfSolidTop = -1e9);
+    int checkCollision(TA_Polygon &polygon);
     void setUpdateAnimation(bool enabled);
 };
 

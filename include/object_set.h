@@ -64,7 +64,7 @@ public:
     void update();
     void draw(int priority);
 
-    void checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop = -1e9);
+    void checkCollision(TA_Polygon &hitbox, int &flags);
     int checkCollision(TA_Polygon &hitbox);
     void setTransition(TA_ScreenState screenState) {transition = screenState;}
     TA_ScreenState getTransition() {return transition;}

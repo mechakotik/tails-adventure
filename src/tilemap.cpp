@@ -198,7 +198,7 @@ void TA_Tilemap::setPosition(TA_Point position)
     this->position = position;
 }
 
-int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
+int TA_Tilemap::checkCollision(TA_Polygon &polygon)
 {
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
 
@@ -231,8 +231,7 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon, int halfSolidTop)
 
         for(auto& hitbox : tileset[tileId].hitboxes) {
             hitbox.polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
-            if((tileset[tileId].type != 1 || (tileY + 1) * tileHeight >= halfSolidTop)
-                && polygon.intersects(hitbox.polygon)) {
+            if(polygon.intersects(hitbox.polygon)) {
                 flags |= hitbox.type;
             }
         }

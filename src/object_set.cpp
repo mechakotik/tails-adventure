@@ -338,13 +338,13 @@ void TA_ObjectSet::draw(int priority)
     }
 }
 
-void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags, int halfSolidTop)
+void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
 {
     if(hitbox.empty()) {
         return;
     }
 
-    flags = links.tilemap->checkCollision(hitbox, halfSolidTop);
+    flags = links.tilemap->checkCollision(hitbox);
     flags |= hitboxContainer.getCollisionFlags(hitbox);
 
     if(links.character && links.character->getHitbox()->intersects(hitbox)) {
