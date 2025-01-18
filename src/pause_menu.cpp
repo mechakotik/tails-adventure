@@ -119,13 +119,18 @@ TA_PauseMenu::UpdateResult TA_PauseMenu::SwitchMenu::update() {
 void TA_PauseMenu::SwitchMenu::reset() {
     const std::string itemPositionKey = (links.seaFox == nullptr ? "item_position" : "seafox_item_position");
     itemPosition = static_cast<int>(TA::save::getSaveParameter(itemPositionKey));
+    selection = 0;
 }
 
 void TA_PauseMenu::SwitchMenu::processControllerInput() {
     if(links.controller->isJustPressed(TA_BUTTON_PAUSE) ||
-        links.controller->isJustPressed(TA_BUTTON_A) ||
-        links.controller->isJustPressed(TA_BUTTON_B)) {
+        links.controller->isJustPressed(TA_BUTTON_A)) {
         select();
+        return;
+    }
+    if(links.controller->isJustPressed(TA_BUTTON_B)) {
+        result = UpdateResult::RESUME;
+        pauseSound.play();
         return;
     }
 
