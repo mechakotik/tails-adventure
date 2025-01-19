@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "save.h"
 
 void TA_OnscreenController::load()
 {
@@ -41,6 +42,9 @@ void TA_OnscreenController::update()
 void TA_OnscreenController::draw()
 {
     if(mode == TA_ONSCREEN_CONTROLLER_DISABLED) {
+        return;
+    }
+    if(TA::save::getParameter("hide_onscreen") == 1) {
         return;
     }
 

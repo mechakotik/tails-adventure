@@ -239,6 +239,22 @@ public:
     }
 };
 
+class TA_HideOnscreenOption : public TA_Option {
+    std::string getName() override {return "hide onscreen";}
+
+    std::string getValue() override {
+        int value = TA::save::getParameter("hide_onscreen");
+        return (value ? "on" : "off");
+    }
+
+    TA_MoveSoundId move(int delta) override {
+        int value = TA::save::getParameter("hide_onscreen");
+        value = 1 - value;
+        TA::save::setParameter("hide_onscreen", value);
+        return TA_MOVE_SOUND_SWITCH;
+    }
+};
+
 class TA_RumbleOption : public TA_Option {
     std::string getName() override {return "rumble";}
 
@@ -272,6 +288,9 @@ void TA_OptionsSection::load()
 
     options[2].push_back(std::make_unique<TA_MapKeyboardOption>());
     options[2].push_back(std::make_unique<TA_MapGamepadOption>());
+    #ifdef __ANDROID__
+        options[2].push_back(std::make_unique<TA_HideOnscreenOption>());
+    #endif
     options[2].push_back(std::make_unique<TA_RumbleOption>());
 
     options[3].push_back(std::make_unique<TA_VolumeOption>("main", "main_volume"));
