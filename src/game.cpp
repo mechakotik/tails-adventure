@@ -35,10 +35,6 @@ void TA_Game::initSDL()
     if(!SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD | SDL_INIT_EVENTS | SDL_INIT_SENSOR)) {
         TA::handleSDLError("%s", "SDL init failed");
     }
-    if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
-        TA::handleSDLError("%s", "SDL_image init failed");
-    }
-
     if(Mix_Init(MIX_INIT_OGG) != MIX_INIT_OGG) {
         TA::handleSDLError("%s", "SDL_mixer init failed");
     }
@@ -191,7 +187,6 @@ TA_Game::~TA_Game()
     SDL_DestroyRenderer(TA::renderer);
     SDL_DestroyWindow(TA::window);
 
-    IMG_Quit();
     Mix_CloseAudio();
     Mix_Quit();
     SDL_Quit();
