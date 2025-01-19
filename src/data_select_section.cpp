@@ -253,12 +253,12 @@ std::string TA_DataSelectSection::generateSplash()
 {
     const std::vector<std::string> splashes {
         "test splash",
-        "Gentoo maint btw",
+        "Free as in freedom",
         "Install Gentoo",
         "Also try Sonic Forces",
-        "Forsy polutshe budut - arsedos",
-        "Made with SDL3 o_o",
-        "One Piece wa jitsuzai suru!"
+        "Bleeding edge SDL3 o_o",
+        "One Piece wa jitsuzai suru!",
+        "Row Row Fight The Power",
     };
 
     return splashes[TA::random::next() % (int)splashes.size()];
