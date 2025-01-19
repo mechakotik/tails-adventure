@@ -87,10 +87,10 @@ void TA_InventoryMenu::fillItemMatrix()
 bool TA_InventoryMenu::update()
 {
     if(showTimeLeft <= 0 && hideTimeLeft <= 0 && listTransitionTimeLeft <= 0) {
-        updateOnscreenButtons();
         if(controller->isTouchscreen()) {
             selectingSlot = false;
         }
+        updateOnscreenButtons();
         if(selectingSlot) {
             return updateSlotSelection();
         }
@@ -111,8 +111,10 @@ void TA_InventoryMenu::updateOnscreenButtons()
             buttons[x][y].setPosition({screenX, screenY});
             buttons[x][y].update();
         }
-        buttons[x][2].setPosition(TA_Point(getLeftX() + 36 + 22 * x, 97));
-        buttons[x][2].update();
+        if(!replace) {
+            buttons[x][2].setPosition(TA_Point(getLeftX() + 36 + 22 * x, 97));
+            buttons[x][2].update();
+        }
     }
 
     if(replace) {
@@ -125,11 +127,13 @@ void TA_InventoryMenu::updateOnscreenButtons()
     leftButton.update();
     rightButton.update();
 
-    for(int pos = 0; pos < 4; pos ++) {
-        if(buttons[pos][2].isReleased() && selectionSlot != pos) {
-            selectSound.play();
-            selectionSlot = pos;
-            selectingSlot = false;
+    if(!replace) {
+        for(int pos = 0; pos < 4; pos ++) {
+            if(buttons[pos][2].isReleased() && selectionSlot != pos) {
+                selectSound.play();
+                selectionSlot = pos;
+                selectingSlot = false;
+            }
         }
     }
 
@@ -181,7 +185,7 @@ bool TA_InventoryMenu::updateSlotSelection()
 
 bool TA_InventoryMenu::updateItemSelection()
 {
-    if(controller->isJustChangedDirection()) {
+    if(!controller->isTouchscreen() && controller->isJustChangedDirection()) {
         TA_Direction direction = controller->getDirection();
         prevSelection = {selectionX, selectionY};
 
@@ -478,31 +482,33 @@ void TA_InventoryMenu::drawPointerController()
     if(replace) {
         screenY -= 2;
     }
-    TA_Point listPosition{screenX, screenY};
-    pointerSprite.setPosition(listPosition - TA_Point(1, 2));
+    pointerSprite.setPosition(screenX - 1, screenY - 2);
     pointerSprite.draw();
 }
 
 void TA_InventoryMenu::drawPointerTouchscreen()
 {
-    for(int pos = 0; pos < 4; pos ++) {
-        if((selectingSlot && buttons[pos][2].isPressed()) || (!selectingSlot && pos == selectionSlot)) {
-            TA_Point position = TA_Point(getLeftX() + 39 + 22 * pos, 101);
-            inventoryPointerSprite.setPosition(position - TA_Point(1, 2));
-            inventoryPointerSprite.draw();
+    if(!replace) {
+        for(int pos = 0; pos < 4; pos ++) {
+            if((selectingSlot && buttons[pos][2].isPressed()) || (!selectingSlot && pos == selectionSlot)) {
+                TA_Point position = TA_Point(getLeftX() + 39 + 22 * pos, 101);
+                inventoryPointerSprite.setPosition(position - TA_Point(1, 2));
+                inventoryPointerSprite.draw();
+            }
         }
     }
-
-    if(selectingSlot) {
-        return;
-    }
-
-    for(int x = 0; x < 4; x ++) {
-        for(int y = 0; y < 2; y ++) {
-            if(buttons[x][y].isPressed()) {
-                TA_Point position = TA_Point(getLeftX() + 24 + 32 * x, (y == 0? 40 : 64));
-                pointerSprite.setPosition(position - TA_Point(1, 2));
-                pointerSprite.draw();
+    if(!selectingSlot) {
+        for(int x = 0; x < 4; x ++) {
+            for(int y = 0; y < 2; y ++) {
+                if(buttons[x][y].isPressed()) {
+                    double screenX = getLeftX() + 24 + 32 * x;
+                    double screenY = (y == 0 ? 40 : 64);
+                    if(replace) {
+                        screenY -= 2;
+                    }
+                    pointerSprite.setPosition(screenX - 1, screenY - 2);
+                    pointerSprite.draw();
+                }
             }
         }
     }

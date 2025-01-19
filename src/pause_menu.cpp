@@ -181,6 +181,7 @@ void TA_PauseMenu::SwitchMenu::processTouchInput() {
         if(itemButtons.at(pos).isJustPressed()) {
             switchSound.play();
             TA::save::setSaveParameter(itemPositionKey, pos);
+            itemPosition = pos;
         }
     }
 }
