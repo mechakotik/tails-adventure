@@ -8,10 +8,10 @@
 
 class TA_InventoryMenu {
 private:
-    const double transitionTime = 10;
+    const double transitionTime = 6;
     const double arrowIdleTime = 15;
     const double arrowTransitionTime = 5;
-    const double listTransitionTime = 10;
+    const double listTransitionTime = 6;
 
     void fillItemMatrix();
     void loadOnscreenButtons();
