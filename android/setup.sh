@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TEMPLATE_PATH=app/jni/SDL/android-project
+TEMPLATE_PATH=../external/SDL/android-project
 SDL_LAYER_PATH=app/src/main/java/org/libsdl/app
 
 rm -r ${SDL_LAYER_PATH}
