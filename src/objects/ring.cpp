@@ -1,7 +1,8 @@
 #include "ring.h"
 #include "tools.h"
 #include "error.h"
-#include "character.h"
+#include "pawn.h"
+#include "tilemap.h"
 #include "save.h"
 
 void TA_Ring::load(TA_Point position, TA_Point velocity, double delay) {
@@ -21,6 +22,11 @@ void TA_Ring::load(TA_Point position, double speed) {
     load(position, {0, speed}, 0);
 }
 
+void TA_Ring::loadStationary(TA_Point position) {
+    load(position, {0, 0}, 0);
+    stationary = true;
+}
+
 bool TA_Ring::checkPawnCollision(TA_Polygon &hitbox) {
     int flags;
     objectSet->checkCollision(hitbox, flags);
@@ -32,36 +38,37 @@ bool TA_Ring::update() {
         return isAnimated();
     }
 
-    double currentGrv = (TA::save::getSaveParameter("seafox") == 1 ? waterGrv : grv);
-    velocity.y += currentGrv * TA::elapsedTime;
-    TA_Point topLeft{0, 0}, bottomRight{8, 8};
-    int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
-    setPosition(position);
+    if(!stationary) {
+        double currentGrv = (TA::save::getSaveParameter("seafox") == 1 ? waterGrv : grv);
+        velocity.y += currentGrv * TA::elapsedTime;
+        TA_Point topLeft{0, 0}, bottomRight{8, 8};
+        int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
+        setPosition(position);
 
-    if(velocity.x > 0) {
-        velocity.x = std::max(0.0, velocity.x - drag * TA::elapsedTime);
-    }
-    else {
-        velocity.x = std::min(0.0, velocity.x + drag * TA::elapsedTime);
-    }
-
-    if((flags & TA_GROUND_COLLISION) && velocity.y > 0) {
-        velocity.y *= -slowdown;
-        if(velocity.y > -0.5) {
-            velocity.y = 0;
+        if(velocity.x > 0) {
+            velocity.x = std::max(0.0, velocity.x - drag * TA::elapsedTime);
         }
-    }
-    if(flags & TA_WALL_COLLISION) {
-        velocity.x *= -1;
-    }
-    if((flags & TA_CEIL_COLLISION) && velocity.y < 0) {
-        velocity.y *= -1;
+        else {
+            velocity.x = std::min(0.0, velocity.x + drag * TA::elapsedTime);
+        }
+
+        if((flags & TA_GROUND_COLLISION) != 0 && velocity.y > 0) {
+            velocity.y *= -slowdown;
+            if(velocity.y > -0.5) {
+                velocity.y = 0;
+            }
+        }
+        if((flags & TA_WALL_COLLISION) != 0) {
+            velocity.x *= -1;
+        }
+        if((flags & TA_CEIL_COLLISION) != 0 && velocity.y < 0) {
+            velocity.y *= -1;
+        }
     }
 
     if(timer > delay) {
         hitbox.setPosition(position);
-        objectSet->checkCollision(hitbox, flags);
-        if(flags & TA_COLLISION_CHARACTER) {
+        if((objectSet->checkCollision(hitbox) & TA_COLLISION_CHARACTER) != 0) {
             ringSound.play();
             objectSet->addRings(1);
             collected = true;
@@ -72,7 +79,7 @@ bool TA_Ring::update() {
     }
 
     timer += TA::elapsedTime;
-    if(timer > maxTime) {
+    if(!stationary && timer > maxTime) {
         return false;
     }
     return true;

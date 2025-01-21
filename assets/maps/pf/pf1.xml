@@ -47,6 +47,8 @@
 	<object name="pushable_rock" x="1272" y="320"/>
 	<object name="pushable_spring" x="1768" y="384"/>
 
+	<object name="ring" x="1636" y="136"/>
+
 	<object name="wind" top="16" left="1696" bottom="352" right="1824" xsp="0" ysp="-1"/>
 
     <object name="item_box" x="800" y="384" number="23" item_name=" spark  &#10;        "/>

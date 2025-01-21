@@ -47,6 +47,11 @@
 
 	<object name="bomb_thrower" x="1744" y="357" left_x="1728" right_x="1744"/>
 
+	<object name="ring" x="940" y="376"/>
+	<object name="ring" x="988" y="376"/>
+	<object name="ring" x="1132" y="376"/>
+	<object name="ring" x="1180" y="376"/>
+
 	<object name="wind" top="224" left="64" bottom="272" right="176" xsp="-0.8" ysp="-0.8"/>
 	<object name="wind" top="80" left="16" bottom="192" right="256" xsp="0.8" ysp="-0.8"/>
 	<object name="wind" top="0" left="464" bottom="272" right="752" xsp="0" ysp="1"/>

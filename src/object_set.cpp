@@ -291,6 +291,13 @@ void TA_ObjectSet::load(std::string filename)
             spawnObject<TA_ConveyorBelt>(topLeft, bottomRight, direction);
         }
 
+        else if(name == "ring") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            auto* ring = new TA_Ring(this);
+            ring->loadStationary(position);
+            spawnedObjects.push_back(ring);
+        }
+
         else {
             TA::handleError("Unknown object %s", name.c_str());
         }

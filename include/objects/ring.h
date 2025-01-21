@@ -10,6 +10,7 @@ private:
     TA_Sound ringSound;
     double timer = 0;
     double delay = 0;
+    bool stationary = false;
     bool collected = false;
 
     static constexpr int maxTime = 300;
@@ -20,8 +21,9 @@ private:
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point newPosition, TA_Point velocity, double delay = 0);
-    void load(TA_Point newPosition, double startSpeed = -2);
+    void load(TA_Point position, TA_Point velocity, double delay = 0);
+    void load(TA_Point position, double startSpeed = -2);
+    void loadStationary(TA_Point position);
     bool update() override;
     bool checkPawnCollision(TA_Polygon &hitbox) override;
     int getDrawPriority() override {return 1;}

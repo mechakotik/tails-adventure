@@ -82,7 +82,7 @@ public:
 
     template<class T, typename... P>
     void spawnObject(P... params) {
-        auto *object = new T(this);
+        auto* object = new T(this);
         object->load(params...);
         spawnedObjects.push_back(object);
     }
