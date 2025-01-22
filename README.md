@@ -38,7 +38,7 @@ Controls can be remapped with Options -> Controls -> Map keyboard / Map gamepad.
 
 ## Implemented
 
-**Levels (fully):** Poloy Forest, Polly Mt. 1, Cavern Island, Green Island.
+**Levels (fully):** Poloy Forest, Polly Mt. 1, Cavern Island, Caron Forest.
 
 **Levels (partially):** Volcanic Tunnel, Lake Rocky.
 
