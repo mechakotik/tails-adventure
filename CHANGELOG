@@ -1,4 +1,17 @@
 =======================
+        v0.2.3
+=======================
+
+- Added item hotswap menu
+- Added ring collect animation
+- Added stationary rings
+- Added option to hide onscreen controls
+- New item: Triple Bomb
+- Refactored and optimized geometric algorithms
+- Moved Android project to CMake
+- Added support for link time optimization
+
+=======================
         v0.2.2
 =======================
 
