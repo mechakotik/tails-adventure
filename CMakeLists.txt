@@ -3,7 +3,7 @@ project(tails-adventure)
 
 option(TA_STATIC "Statically link libgcc and libstdc++" OFF)
 option(TA_UNIX_INSTALL "Install on Unix filesystem" OFF)
-option(TA_LTO "Enable link time optimization" OFF)
+option(TA_LTO "Enable link time optimization" ON)
 option(TA_SANITIZE "Build with sanitizers" OFF)
 option(TA_CLANG_TIDY "Run clang-tidy alongside with building" OFF)
 
