@@ -244,6 +244,7 @@ bool TA_InventoryMenu::updateItemSelection()
 
     if(controller->isJustPressed(TA_BUTTON_B)) {
         if(replace) {
+            backSound.play();
             return false;
         }
         selectingSlot = true;
