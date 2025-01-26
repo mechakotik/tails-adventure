@@ -36,6 +36,7 @@
 #include "objects/mini_sub.h"
 #include "objects/enemy_mine.h"
 #include "objects/conveyor_belt.h"
+#include "objects/beehive.h"
 
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
@@ -296,6 +297,11 @@ void TA_ObjectSet::load(std::string filename)
             auto* ring = new TA_Ring(this);
             ring->loadStationary(position);
             spawnedObjects.push_back(ring);
+        }
+
+        else if(name == "beehive") {
+            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+            spawnObject<TA_BeeHive>(position);
         }
 
         else {

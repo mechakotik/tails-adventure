@@ -28,7 +28,16 @@
 	<object name="grass_block" tile_x="34" tile_y="17" path="maps/gi/gi_grass.png"/>
 	<object name="grass_block" tile_x="34" tile_y="18" path="maps/gi/gi_grass.png"/>
 	<object name="grass_block" tile_x="34" tile_y="19" path="maps/gi/gi_grass.png"/>
-	
+
+	<object name="beehive" x="168" y="224"/>
+	<object name="beehive" x="344" y="160"/>
+	<object name="beehive" x="696" y="16"/>
+	<object name="beehive" x="1064" y="16"/>
+	<object name="beehive" x="1112" y="192"/>
+	<object name="beehive" x="1240" y="208"/>
+	<object name="beehive" x="1400" y="288"/>
+	<object name="beehive" x="1792" y="288"/>
+
 	<object name="pushable_spring" x="728" y="240"/>
 </objects>
 
