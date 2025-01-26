@@ -4,14 +4,14 @@
 	<object name="sound" path="sound/pm.vgm"/>
 	
 	<object name="breakable_block" tile_x="93" tile_y="23" path="maps/gi/gi_block.png"/>
-	<object name="breakable_block" tile_x="94" tile_y="23" path="maps/gi/gi_block.png"/>
+	<object name="breakable_block" tile_x="94" tile_y="23" path="maps/gi/gi_block.png" drops_ring="true"/>
 	<object name="breakable_block" tile_x="96" tile_y="23" path="maps/gi/gi_block.png"/>
 	<object name="breakable_block" tile_x="96" tile_y="24" path="maps/gi/gi_block.png"/>
 	<object name="breakable_block" tile_x="98" tile_y="23" path="maps/gi/gi_block.png"/>
-	<object name="breakable_block" tile_x="99" tile_y="23" path="maps/gi/gi_block.png"/>
+	<object name="breakable_block" tile_x="99" tile_y="23" path="maps/gi/gi_block.png" drops_ring="true"/>
 	
 	<object name="breakable_block" tile_x="98" tile_y="17" path="maps/gi/gi_block.png"/>
-	<object name="breakable_block" tile_x="99" tile_y="17" path="maps/gi/gi_block.png"/>
+	<object name="breakable_block" tile_x="99" tile_y="17" path="maps/gi/gi_block.png" drops_ring="true"/>
 	<object name="breakable_block" tile_x="99" tile_y="16" path="maps/gi/gi_block.png"/>
 	
 	<object name="breakable_block" tile_x="98" tile_y="10" path="maps/gi/gi_block.png"/>
