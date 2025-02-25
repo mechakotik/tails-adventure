@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <tmxpp.hpp>
 #include "sprite.h"
 #include "camera.h"
 #include "geometry.h"
@@ -41,6 +42,9 @@ private:
         int type = 0;
     };
 
+    void loadTileset(const tmx::Tileset& tiles);
+    void loadLayer(int id, const tmx::Layer& layer);
+
     std::vector<Hitbox> getSpikesHitboxVector(int type);
     Hitbox getSpikesSolidHitbox(int type);
     Hitbox getSpikesDamageHitbox(int type);
@@ -49,6 +53,7 @@ private:
     std::vector<Tile> tileset;
     std::array<TA_Polygon, 3> borderPolygons;
     std::vector<int> collisionLayers;
+    std::filesystem::path filename;
     TA_Camera* camera = nullptr;
     TA_Point position;
     int width, height, tileWidth, tileHeight, layerCount;

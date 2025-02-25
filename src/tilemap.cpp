@@ -1,26 +1,33 @@
+#include "tilemap.h"
+#include <error.h>
 #include <algorithm>
 #include <sstream>
-#include "SDL3/SDL.h"
-#include "tilemap.h"
-#include "tinyxml2.h"
-#include "error.h"
-#include "filesystem.h"
+#include <tmxpp.hpp>
+#include "character.h"
 #include "resource_manager.h"
 #include "tools.h"
-#include "character.h"
 
-void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parser
-{
-    tinyxml2::XMLDocument xmlFile;
-    xmlFile.Parse(TA::resmgr::loadAsset(filename).c_str());
-    tinyxml2::XMLElement *xmlRoot = xmlFile.FirstChildElement("map");
-    
-    width = xmlRoot->IntAttribute("width");
-    height = xmlRoot->IntAttribute("height");
-    layerCount = xmlRoot->IntAttribute("nextlayerid") - 1;
-    tileWidth = xmlRoot->FirstChildElement("tileset")->IntAttribute("tilewidth");
-    tileHeight = xmlRoot->FirstChildElement("tileset")->IntAttribute("tileheight");
-    int tileCount = xmlRoot->FirstChildElement("tileset")->IntAttribute("tilecount");
+void TA_Tilemap::load(std::string filename) {
+    this->filename = filename;
+    tmx::Map map;
+    try {
+        map.parseFromData(TA::resmgr::loadAsset(filename));
+    } catch(std::exception& e) {
+        TA::handleError("Failed to load %s: %s", filename, e.what());
+    }
+
+    width = map.width();
+    height = map.height();
+    layerCount = map.layers().size();
+    tileWidth = map.tileWidth();
+    tileHeight = map.tileHeight();
+
+    if(map.tilesets().size() != 1) {
+        TA::handleError("Failed to load %s: multiple tilesets are not supported", filename);
+    }
+    if(map.tilesets()[0].source() != "") {
+        TA::handleError("Failed to load %s: external tilesets are not supported", filename);
+    }
 
     tilemap.resize(layerCount);
     for(int layer = 0; layer < layerCount; layer ++) {
@@ -29,110 +36,10 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
             tilemap[layer][pos].resize(height);
         }
     }
-    tileset.assign(tileCount, Tile());
 
-    auto loadTileset = [&](tinyxml2::XMLElement *tilesetElement)
-    {
-        std::string textureFilename = filename;
-        while(!textureFilename.empty() && textureFilename.back() != '/') {
-            textureFilename.pop_back();
-        }
-        textureFilename += tilesetElement->FirstChildElement("image")->Attribute("source");
-
-        for(size_t tile = 0; tile < tileCount; tile += 1) {
-            tileset[tile].sprite.load(textureFilename, tileWidth, tileHeight);
-            tileset[tile].sprite.setFrame(tile);
-        }
-
-        for(tinyxml2::XMLElement *tileElement = tilesetElement->FirstChildElement("tile");
-            tileElement != nullptr; tileElement = tileElement->NextSiblingElement("tile"))
-        {
-            int tileId = tileElement->IntAttribute("id");
-
-            if(tileElement->FirstChildElement("animation") != nullptr) {
-                TA_Animation animation;
-                int delayMs = tileElement->FirstChildElement("animation")->FirstChildElement("frame")->IntAttribute("duration");
-                animation.delay = int(delayMs * 60 / 1000 + 0.5);
-                for(tinyxml2::XMLElement *frameElement = tileElement->FirstChildElement("animation")->FirstChildElement("frame");
-                    frameElement != nullptr; frameElement = frameElement->NextSiblingElement("frame")) {
-                    animation.frames.push_back(frameElement->IntAttribute("tileid"));
-                }
-                tileset[tileId].sprite.setAnimation(animation);
-            }
-
-            if(tileElement->FirstChildElement("objectgroup") != nullptr) {
-                tinyxml2::XMLElement *object = tileElement->FirstChildElement("objectgroup")->FirstChildElement("object");
-                std::stringstream pointStream;
-                pointStream << object->FirstChildElement("polygon")->Attribute("points");
-                TA_Point currentPoint, startPoint;
-                startPoint.x = object->IntAttribute("x");
-                startPoint.y = object->IntAttribute("y");
-
-                TA_Polygon polygon;
-                char temp;
-
-                while(pointStream >> currentPoint.x) {
-                    pointStream >> temp >> currentPoint.y;
-                    polygon.addVertex(currentPoint + startPoint);
-                }
-                if(object->FirstChildElement("properties") != nullptr) {
-                    tileset[tileId].type = object->FirstChildElement("properties")->FirstChildElement("property")->IntAttribute("value");
-                }
-
-                int collisionType = TA_COLLISION_SOLID;
-                if(tileset[tileId].type == 1) {
-                    collisionType = TA_COLLISION_SOLID_UP;
-                } else if(tileset[tileId].type == 2) {
-                    collisionType = TA_COLLISION_SOLID | TA_COLLISION_DAMAGE;
-                } else if(tileset[tileId].type == 3) {
-                    collisionType = TA_COLLISION_WATER;
-                } else if(tileset[tileId].type == 4) {
-                    collisionType = TA_COLLISION_SOLID_DOWN;
-                }
-                tileset[tileId].hitboxes.push_back({polygon, collisionType});
-            }
-
-            if(tileElement->FirstChildElement("properties") != nullptr) {
-                int type = tileElement->FirstChildElement("properties")->FirstChildElement("property")->IntAttribute("value");
-                tileset[tileId].hitboxes = getSpikesHitboxVector(type);
-            }
-        }
-    };
-
-    int currentLayer = 0;
-
-    auto loadLayer = [&](tinyxml2::XMLElement *layerElement)
-    {
-        int layer = currentLayer;
-        currentLayer ++;
-        std::stringstream mapStream;
-        mapStream << layerElement->FirstChildElement("data")->GetText();
-        for(int tileY = 0; tileY < height; tileY ++ ) {
-            for(int tileX = 0; tileX < width; tileX ++) {
-                int tile;
-                char temp;
-                mapStream >> tile;
-                if(tileX != width - 1 || tileY != height - 1) {
-                    mapStream >> temp;
-                }
-                tilemap[layer][tileX][tileY] = tile - 1;
-            }
-        }
-
-        tinyxml2::XMLElement *propertyElement = layerElement->FirstChildElement("properties");
-        if(propertyElement != nullptr) {
-            propertyElement = propertyElement->FirstChildElement("property");
-            if(propertyElement != nullptr && std::strcmp(propertyElement->Attribute("name"), "collision") == 0) {
-                collisionLayers.push_back(layer);
-            }
-        }
-    };
-
-    loadTileset(xmlRoot->FirstChildElement("tileset"));
-    tinyxml2::XMLElement *layerElement = xmlRoot->FirstChildElement("layer");
-    for(int layer = 0; layer < layerCount; layer ++) {
-        loadLayer(layerElement);
-        layerElement = layerElement->NextSiblingElement("layer");
+    loadTileset(map.tilesets()[0]);
+    for(int pos = 0; pos < map.layers().size(); pos++) {
+        loadLayer(pos, map.layers()[pos]);
     }
 
     borderPolygons[0].setRectangle(TA_Point(0, -16), TA_Point(width * tileWidth, 0));
@@ -144,8 +51,83 @@ void TA_Tilemap::load(std::string filename) // TODO: rewrite this with TMX parse
     }
 }
 
-void TA_Tilemap::draw(int priority)
-{
+void TA_Tilemap::loadTileset(const tmx::Tileset& tiles) {
+    tileset.assign(tiles.tileCount(), Tile());
+    std::filesystem::path textureFilename = filename.parent_path() / tiles.image().source();
+
+    for(size_t tile = 0; tile < tiles.tileCount(); tile += 1) {
+        tileset[tile].sprite.load(textureFilename, tileWidth, tileHeight);
+        tileset[tile].sprite.setFrame(tile);
+    }
+
+    for(const tmx::Tile& tile : tiles.tiles()) {
+        if(!tile.animation().empty()) {
+            TA_Animation animation;
+            int delayMs = tile.animation().at(0).duration;
+            animation.delay = static_cast<int>((static_cast<double>(delayMs) * 60 / 1000) + 0.5);
+            animation.frames.resize(tile.animation().size());
+            for(int i = 0; i < tile.animation().size(); i++) {
+                animation.frames[i] = tile.animation().at(i).id;
+            }
+            tileset[tile.id()].sprite.setAnimation(animation);
+        }
+
+        if(tile.hasProperty("spikes")) {
+            tileset[tile.id()].hitboxes = getSpikesHitboxVector(tile.property("spikes").intValue());
+        }
+
+        if(tile.objectGroup().objects().empty()) {
+            continue;
+        }
+        if(tile.objectGroup().objects().size() > 1) {
+            TA::printWarning("Multiple objects in tile are not supported, using the first object");
+        }
+        tmx::Object object = tile.objectGroup().objects()[0];
+        if(object.type() != tmx::Object::Type::POLYGON) {
+            TA::printWarning("Object shape is not polygon, ignoring it");
+            continue;
+        }
+
+        TA_Point start{object.position().x, object.position().y};
+        TA_Polygon polygon;
+        for(int i = 0; i < object.polygon().size(); i++) {
+            TA_Point cur{object.polygon()[i].x, object.polygon()[i].y};
+            polygon.addVertex(start + cur);
+        }
+
+        if(object.hasProperty("type")) {
+            tileset[tile.id()].type = object.property("type").intValue();
+        }
+        int collisionType = TA_COLLISION_SOLID;
+        if(tileset[tile.id()].type == 1) {
+            collisionType = TA_COLLISION_SOLID_UP;
+        } else if(tileset[tile.id()].type == 2) {
+            collisionType = TA_COLLISION_SOLID | TA_COLLISION_DAMAGE;
+        } else if(tileset[tile.id()].type == 3) {
+            collisionType = TA_COLLISION_WATER;
+        } else if(tileset[tile.id()].type == 4) {
+            collisionType = TA_COLLISION_SOLID_DOWN;
+        }
+        tileset[tile.id()].hitboxes.push_back({polygon, collisionType});
+    }
+}
+
+void TA_Tilemap::loadLayer(int id, const tmx::Layer& layer) {
+    if(layer.type() != tmx::Layer::Type::TILE) {
+        TA::printWarning("Layer is not tile layer, ignoring it");
+        return;
+    }
+    for(int x = 0; x < width; x++) {
+        for(int y = 0; y < height; y++) {
+            tilemap[id][x][y] = layer.tileLayer().at(x, y) - 1;
+        }
+    }
+    if(layer.tileLayer().hasProperty("collision") && layer.tileLayer().property("collision").boolValue()) {
+        collisionLayers.push_back(id);
+    }
+}
+
+void TA_Tilemap::draw(int priority) {
     auto drawLayer = [&](int layer) {
         int lx = 0, rx = width - 1, ly = 0, ry = height - 1;
         if(camera != nullptr && TA::equal(position.x, 0) && TA::equal(position.y, 0)) {
@@ -184,8 +166,7 @@ void TA_Tilemap::draw(int priority)
     }
 }
 
-void TA_Tilemap::setCamera(TA_Camera *newCamera)
-{
+void TA_Tilemap::setCamera(TA_Camera *newCamera) {
     camera = newCamera;
     newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth, height * tileHeight)});
     for(size_t tile = 0; tile < tileset.size(); tile += 1) {
@@ -193,13 +174,11 @@ void TA_Tilemap::setCamera(TA_Camera *newCamera)
     }
 }
 
-void TA_Tilemap::setPosition(TA_Point position)
-{
+void TA_Tilemap::setPosition(TA_Point position) {
     this->position = position;
 }
 
-int TA_Tilemap::checkCollision(TA_Polygon &polygon)
-{
+int TA_Tilemap::checkCollision(TA_Polygon &polygon) {
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
 
     for(int pos = 0; pos < polygon.size(); pos ++) {
@@ -222,8 +201,7 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon)
 
     int flags = 0;
 
-    auto checkCollisionWithTile = [&] (int layer, int tileX, int tileY)
-    {
+    auto checkCollisionWithTile = [&] (int layer, int tileX, int tileY) {
         int tileId = tilemap[layer][tileX][tileY];
         if(tileId == -1) {
             return;
@@ -254,21 +232,18 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon)
     return flags;
 }
 
-void TA_Tilemap::setUpdateAnimation(bool enabled)
-{
+void TA_Tilemap::setUpdateAnimation(bool enabled) {
     updateAnimation = enabled;
 }
 
-std::vector<TA_Tilemap::Hitbox> TA_Tilemap::getSpikesHitboxVector(int type)
-{
+std::vector<TA_Tilemap::Hitbox> TA_Tilemap::getSpikesHitboxVector(int type) {
     std::vector<Hitbox> hitboxes;
     hitboxes.push_back(getSpikesSolidHitbox(type));
     hitboxes.push_back(getSpikesDamageHitbox(type));
     return hitboxes;
 }
 
-TA_Tilemap::Hitbox TA_Tilemap::getSpikesSolidHitbox(int type)
-{
+TA_Tilemap::Hitbox TA_Tilemap::getSpikesSolidHitbox(int type) {
     TA_Point topLeft, bottomRight;
     switch(type) {
         case 0:
@@ -293,8 +268,7 @@ TA_Tilemap::Hitbox TA_Tilemap::getSpikesSolidHitbox(int type)
     return {polygon, TA_COLLISION_SOLID};
 }
 
-TA_Tilemap::Hitbox TA_Tilemap::getSpikesDamageHitbox(int type)
-{
+TA_Tilemap::Hitbox TA_Tilemap::getSpikesDamageHitbox(int type) {
     TA_Point topLeft, bottomRight;
     switch(type) {
         case 0:
