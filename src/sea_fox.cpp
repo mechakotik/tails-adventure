@@ -11,10 +11,9 @@ void TA_SeaFox::load(TA_Links links)
 {
     this->links = links;
 
-    TA_Sprite::load("tails/seafox.png", 32, 32);
-    TA_Sprite::loadAnimationsFromFile("tails/seafox.xml");
-    TA_Sprite::setCamera(links.camera);
-    TA_Sprite::setAnimation("idle");
+    loadFromToml("tails/seafox.toml");
+    setCamera(links.camera);
+    setAnimation("idle");
 
     bulletSound.load("sound/bullet.ogg", TA_SOUND_CHANNEL_SFX3);
     damageSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);

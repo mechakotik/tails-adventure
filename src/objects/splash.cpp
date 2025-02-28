@@ -2,9 +2,8 @@
 
 void TA_Splash::load(TA_Point newPosition)
 {
-    TA_Sprite::load("objects/splash.png", 16, 16);
-    TA_Sprite::loadAnimationsFromFile("objects/splash.xml");
-    TA_Sprite::setAnimation("splash");
+    loadFromToml("objects/splash.toml");
+    setAnimation("splash");
 
     position = newPosition;
     int top = int((position.y + 6) / 16) * 16 - 6;

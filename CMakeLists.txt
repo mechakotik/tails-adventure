@@ -85,6 +85,7 @@ set(USE_GME_SPC OFF)
 add_subdirectory(external/SDL_image EXCLUDE_FROM_ALL)
 add_subdirectory(external/SDL_mixer EXCLUDE_FROM_ALL)
 add_subdirectory(external/tmxpp EXCLUDE_FROM_ALL)
+add_subdirectory(external/toml11 EXCLUDE_FROM_ALL)
 
 if(WIN32)
     enable_language("RC")
@@ -118,6 +119,7 @@ if(ANDROID)
         SDL3_image::SDL3_image
         SDL3_mixer::SDL3_mixer
         tmxpp
+        toml11::toml11
         ${NDK_LOG_LIB}
     )
 else()
@@ -126,6 +128,7 @@ else()
         SDL3_image::SDL3_image-static
         SDL3_mixer::SDL3_mixer-static
         tmxpp
+        toml11::toml11
     )
 endif()
 if(TARGET SDL3::SDL3main)
@@ -140,6 +143,7 @@ target_include_directories(tails-adventure PRIVATE
     external/SDL_mixer/include
     external/tmxpp/include
     external/tinyxml2
+    external/toml11/include
 )
 
 if(TA_STATIC)

@@ -110,10 +110,9 @@ bool TA_StrongWind::shouldBlow()
 
 void TA_Leaf::load(TA_Point position, TA_Point velocity)
 {
-    TA_Sprite::load("objects/leaf.png", 8, 8);
-    TA_Sprite::loadAnimationsFromFile("objects/leaf.xml");
-    TA_Sprite::setAnimation("leaf");
-    TA_Sprite::setCamera(nullptr);
+    loadFromToml("objects/leaf.toml");
+    setAnimation("leaf");
+    setCamera(nullptr);
 
     this->position = position;
     this->velocity = velocity;

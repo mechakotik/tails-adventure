@@ -8,9 +8,8 @@ void TA_DrillMole::load(TA_Point position)
     this->position = position;
     startY = position.y;
 
-    TA_Sprite::load("objects/drill_mole.png", 23, 26);
-    TA_Sprite::loadAnimationsFromFile("objects/drill_mole.xml");
-    TA_Sprite::setAnimation("drill_mole");
+    loadFromToml("objects/drill_mole.toml");
+    setAnimation("drill_mole");
 
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(14, 26));
     TA_Object::updatePosition();

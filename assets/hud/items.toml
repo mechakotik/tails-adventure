@@ -1,0 +1,19 @@
+[sprite]
+image = "items.png"
+width = 16
+height = 16
+
+[animations.ring_monitor]
+frames = [26, 27, 28]
+delay = 6
+
+[animations.item_switch_left]
+frames = [37, 36, 35]
+delay = 3
+repeat = 1
+
+[animations.item_switch_right]
+frames = [35, 36, 37]
+delay = 3
+repeat = 1
+

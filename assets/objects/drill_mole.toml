@@ -1,0 +1,9 @@
+[sprite]
+image = "drill_mole.png"
+width = 23
+height = 26
+
+[animations.drill_mole]
+frames = [0, 1]
+delay = 12
+

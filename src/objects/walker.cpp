@@ -4,8 +4,7 @@
 
 void TA_Walker::load(TA_Point newPosition, int range, bool flip)
 {
-    TA_Sprite::load("objects/pf_enemies.png", 24, 32);
-    TA_Sprite::loadAnimationsFromFile("objects/pf_enemies_animations.xml");
+    loadFromToml("objects/pf_enemies.toml");
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(18, 26));
 
     position = newPosition;

@@ -1,0 +1,12 @@
+[sprite]
+image = "nezu.png"
+width = 16
+height = 16
+
+[animations]
+idle = 0
+
+[animations.walk]
+frames = [1, 2]
+delay = 6
+

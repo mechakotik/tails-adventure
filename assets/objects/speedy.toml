@@ -1,0 +1,21 @@
+[sprite]
+image = "speedy.png"
+width = 24
+height = 32
+
+[animations]
+show = 7
+
+[animations.attack]
+frames = [2, 3, 3, 2]
+delay = 4
+
+[animations.fly_up]
+frames = [5, 6, 6, 5]
+delay = 4
+
+[animations.throw]
+frames = [7, 4, 7, 4, 7, 4]
+delay = 12
+repeat = 1
+

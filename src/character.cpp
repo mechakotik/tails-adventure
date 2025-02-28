@@ -20,12 +20,10 @@ void TA_Character::load(TA_Links newLinks)
     teleportSound.load("sound/teleport.ogg", TA_SOUND_CHANNEL_SFX3);
     waterSound.load("sound/water.ogg", TA_SOUND_CHANNEL_SFX1);
 
-    TA_Pawn::load("tails/tails.png", 48, 48);
-    loadAnimationsFromFile("tails/animations.xml");
+    loadFromToml("tails/tails.toml");
     setCamera(links.camera);
 
-    remoteRobotControlSprite.load("tails/tails.png", 48, 48);
-    remoteRobotControlSprite.loadAnimationsFromFile("tails/animations.xml");
+    remoteRobotControlSprite.loadFromToml("tails/tails.toml");
     remoteRobotControlSprite.setAnimation("control_remote_robot");
     remoteRobotControlSprite.setCamera(links.camera);
     rings = TA::save::getSaveParameter("rings");

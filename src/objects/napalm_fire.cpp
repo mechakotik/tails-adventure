@@ -6,9 +6,8 @@ void TA_NapalmFire::load(TA_Point position, double xsp)
     this->position = position;
     velocity = {xsp, 0};
 
-    TA_Sprite::load("objects/napalm_fire.png", 8, 31);
-    TA_Sprite::loadAnimationsFromFile("objects/napalm_fire.xml");
-    TA_Sprite::setAnimation("fire");
+    loadFromToml("objects/napalm_fire.toml");
+    setAnimation("fire");
 
     TA_Polygon explosionHitbox;
     explosionHitbox.setRectangle(TA_Point(0, 0), TA_Point(8, 28));

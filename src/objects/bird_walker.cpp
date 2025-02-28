@@ -13,12 +13,12 @@ void TA_BirdWalker::load(double newFloorY)
     }
 
     floorY = newFloorY;
-    headSprite.load("objects/bird_walker/head.png", 27, 16);
-    headFlashSprite.load("objects/bird_walker/head.png", 27, 16);
+    headSprite.loadFromToml("objects/bird_walker/head.toml");
+    headFlashSprite.loadFromToml("objects/bird_walker/head.toml");
     bodySprite.load("objects/bird_walker/body.png", 40, 32);
     bodyFlashSprite.load("objects/bird_walker/body.png", 40, 32);
-    feetSprite.load("objects/bird_walker/feet.png", 24, 28);
-    feetFlashSprite.load("objects/bird_walker/feet.png", 24, 28);
+    feetSprite.loadFromToml("objects/bird_walker/feet.toml");
+    feetFlashSprite.loadFromToml("objects/bird_walker/feet.toml");
 
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX2);
     fallSound.load("sound/fall.ogg", TA_SOUND_CHANNEL_SFX2);
@@ -26,9 +26,6 @@ void TA_BirdWalker::load(double newFloorY)
     shootSound.load("sound/shoot.ogg", TA_SOUND_CHANNEL_SFX2);
     hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX3);
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
-
-    headSprite.loadAnimationsFromFile("objects/bird_walker/head.xml");
-    feetSprite.loadAnimationsFromFile("objects/bird_walker/feet.xml");
 
     headSprite.setCamera(objectSet->getLinks().camera);
     bodySprite.setCamera(objectSet->getLinks().camera);

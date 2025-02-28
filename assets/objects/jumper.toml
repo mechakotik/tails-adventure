@@ -1,0 +1,14 @@
+[sprite]
+image = "jumper.png"
+width = 16
+height = 31
+
+[animations.jump]
+frames = [1, 2]
+delay = 6
+
+[animations.aim]
+frames = [0, 1, 0, 1, 0]
+delay = 12
+repeat = 1
+

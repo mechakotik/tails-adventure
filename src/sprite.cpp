@@ -1,14 +1,15 @@
-#include <vector>
-#include <numeric>
+#include "sprite.h"
 #include <algorithm>
 #include <cmath>
-#include <sstream>
-#include "tinyxml2.h"
-#include "sprite.h"
+#include <filesystem>
+#include <numeric>
+#include <toml.hpp>
+#include <vector>
 #include "error.h"
 #include "filesystem.h"
-#include "tools.h"
 #include "resource_manager.h"
+#include "tinyxml2.h"
+#include "tools.h"
 
 void TA_Texture::load(std::string filename)
 {
@@ -57,6 +58,55 @@ void TA_Sprite::load(std::string filename, int newFrameWidth, int newFrameHeight
 
     animation = TA_Animation(0);
     loaded = true;
+}
+
+void TA_Sprite::loadFromToml(std::filesystem::path path) {
+    try {
+        tryLoadFromToml(path);
+    } catch(std::exception& e) {
+        TA::handleError("Failed to load %s:\n%s", path, e.what());
+    }
+}
+
+void TA_Sprite::tryLoadFromToml(std::filesystem::path path) {
+    toml::value table = toml::parse_str(TA::resmgr::loadAsset(path));
+    texture.load(path.parent_path() / table.at("sprite").at("image").as_string());
+    if(table.at("sprite").contains("width")) {
+        frameWidth = static_cast<int>(table.at("sprite").at("width").as_integer());
+    } else {
+        frameWidth = texture.width;
+    }
+    if(table.at("sprite").contains("height")) {
+        frameHeight = static_cast<int>(table.at("sprite").at("height").as_integer());
+    } else {
+        frameHeight = texture.height;
+    }
+
+    animation = TA_Animation(0);
+    loaded = true;
+    if(!table.contains("animations")) {
+        return;
+    }
+
+    for(const auto& [key, value] : table.at("animations").as_table()) {
+        TA_Animation animation;
+        if(value.is_integer()) {
+            animation.frames = {static_cast<int>(value.as_integer())};
+        } else if(value.is_table()) {
+            const auto& frames = value.at("frames").as_array();
+            animation.frames.resize(frames.size());
+            for(int i = 0; i < frames.size(); i++) {
+                animation.frames[i] = static_cast<int>(frames.at(i).as_integer());
+            }
+            if(value.contains("delay")) {
+                animation.delay = static_cast<int>(value.at("delay").as_integer());
+            }
+            if(value.contains("repeat")) {
+                animation.repeatTimes = static_cast<int>(value.at("repeat").as_integer());
+            }
+        }
+        loadedAnimations[key] = animation;
+    }
 }
 
 void TA_Sprite::draw()
@@ -135,7 +185,7 @@ void TA_Sprite::updateAnimation()
     updateAnimationNeeded = false;
 }
 
-void TA_Sprite::loadAnimationsFromFile(std::string filename)
+/*void TA_Sprite::loadAnimationsFromFile(std::string filename)
 {
     tinyxml2::XMLDocument animationXml;
     animationXml.Parse(TA::resmgr::loadAsset(filename).c_str());
@@ -158,7 +208,7 @@ void TA_Sprite::loadAnimationsFromFile(std::string filename)
         loadedAnimations[name] = TA_Animation(frames, delay, repeatTimes);
         currentElement = currentElement->NextSiblingElement("animation");
     }
-}
+}*/
 
 void TA_Sprite::setAnimation(TA_Animation newAnimation)
 {

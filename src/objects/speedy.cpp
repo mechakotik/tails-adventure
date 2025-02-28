@@ -31,12 +31,10 @@ bool TA_Speedy::isComplete()
 
 void TA_Speedy::loadSprite()
 {
-    TA_Sprite::load("objects/speedy.png", 24, 32);
-    TA_Sprite::loadAnimationsFromFile("objects/speedy.xml");
+    loadFromToml("objects/speedy.toml");
     hitbox.setRectangle(TA_Point(6, 10), TA_Point(20, 30));
 
-    characterPlaceholder.load("tails/tails.png", 48, 48);
-    characterPlaceholder.loadAnimationsFromFile("tails/animations.xml");
+    characterPlaceholder.loadFromToml("tails/tails.toml");
     characterPlaceholder.setCamera(objectSet->getLinks().camera);
 }
 

@@ -5,9 +5,8 @@
 
 void TA_BatRobot::load(TA_Point newPosition)
 {
-    TA_Sprite::load("objects/bat_robot.png", 24, 16);
-    TA_Sprite::loadAnimationsFromFile("objects/bat_robot.xml");
-    TA_Sprite::setAnimation("idle");
+    loadFromToml("objects/bat_robot.toml");
+    setAnimation("idle");
 
     position = newPosition;
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(18, 14));

@@ -1,0 +1,13 @@
+[sprite]
+image = "tails_icon.png"
+width = 8
+height = 16
+
+[animations.blink]
+frames = [0, 1]
+delay = 15
+
+[animations.seafox]
+frames = [2, 3]
+delay = 15
+

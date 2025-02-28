@@ -14,17 +14,14 @@ void TA_MechaGolem::load()
         return;
     }
 
-    headSprite.load("objects/mecha_golem/head.png", 24, 32);
-    headFlashSprite.load("objects/mecha_golem/head.png", 24, 32);
+    headSprite.loadFromToml("objects/mecha_golem/head.toml");
+    headFlashSprite.loadFromToml("objects/mecha_golem/head.toml");
     bodySprite.load("objects/mecha_golem/body.png");
     leftFootSprite.load("objects/mecha_golem/feet.png", 16, 11);
     rightFootSprite.load("objects/mecha_golem/feet.png", 16, 11);
     rightFootSprite.setFrame(1);
-    armSprite.load("objects/mecha_golem/arm.png", 16, 16);
+    armSprite.loadFromToml("objects/mecha_golem/arm.toml");
     armPartSprite.load("objects/mecha_golem/arm_part.png");
-
-    headSprite.loadAnimationsFromFile("objects/mecha_golem/head.xml");
-    armSprite.loadAnimationsFromFile("objects/mecha_golem/arm.xml");
 
     TA_Camera* camera = objectSet->getLinks().camera;
     headSprite.setCamera(camera);

@@ -1,0 +1,10 @@
+[sprite]
+image = "explosion.png"
+width = 16
+height = 16
+
+[animations.explosion]
+frames = [0, 1, 2, 3]
+delay = 4
+repeat = 1
+

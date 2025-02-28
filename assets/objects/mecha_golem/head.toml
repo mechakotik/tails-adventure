@@ -1,0 +1,24 @@
+[sprite]
+image = "head.png"
+width = 24
+height = 32
+
+[animations]
+idle = 0
+idle2 = 1
+defeated = 2
+
+[animations.laugh]
+frames = [1, 2]
+delay = 6
+
+[animations.turn_back]
+frames = [3, 4]
+delay = 6
+repeat = 1
+
+[animations.turn_forward]
+frames = [3, 1]
+delay = 6
+repeat = 1
+

@@ -7,8 +7,7 @@
 void TA_Hud::load(TA_Links newLinks)
 {
     links = newLinks;
-    ringMonitor.load("hud/items.png", 16, 16);
-    ringMonitor.loadAnimationsFromFile("hud/items.xml");
+    ringMonitor.loadFromToml("hud/items.toml");
     ringMonitor.setAnimation("ring_monitor");
     ringMonitor.setPosition(2, 4);
 
@@ -17,15 +16,14 @@ void TA_Hud::load(TA_Links newLinks)
         ringDigits[pos].setPosition(20 + 6 * pos, 6);
     }
 
-    itemSprite.load("hud/items.png", 16, 16);
-    itemSprite.loadAnimationsFromFile("hud/items.xml");
+    itemSprite.loadFromToml("hud/items.toml");
     itemSprite.setPosition(2, 22);
 
-    leftSprite.load("hud/items.png", 16, 16);
+    leftSprite.loadFromToml("hud/items.toml");
     leftSprite.setFrame(40);
-    rightSprite.load("hud/items.png", 16, 16);
+    rightSprite.loadFromToml("hud/items.toml");
     rightSprite.setFrame(41);
-    pauseSprite.load("hud/items.png", 16, 16);
+    pauseSprite.loadFromToml("hud/items.toml");
 
     leftButton.setRectangle({0, 0}, {24, 24});
     rightButton.setRectangle({0, 0}, {24, 24});

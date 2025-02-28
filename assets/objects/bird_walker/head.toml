@@ -1,0 +1,22 @@
+[sprite]
+image = "head.png"
+width = 27
+height = 16
+
+[animations]
+idle = 0
+idle_flip = 3
+
+[animations.laugh]
+frames = [0, 1]
+delay = 6
+
+[animations.turn]
+frames = [0, 2, 3]
+delay = 6
+repeat = 1
+
+[animations.laugh_flip]
+frames = [3, 4]
+delay = 6
+

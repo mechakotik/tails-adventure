@@ -4,8 +4,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <filesystem>
 #include "SDL3/SDL.h"
-#include "SDL3_image/SDL_image.h"
 #include "geometry.h"
 #include "camera.h"
 
@@ -46,8 +46,11 @@ private:
     int alpha = 255;
     std::string animationName;
 
+    void tryLoadFromToml(std::filesystem::path path);
+
 public:
     void load(std::string filename, int frameWidth = -1, int frameHeight = -1);
+    void loadFromToml(std::filesystem::path path);
 
     virtual void draw();
     void drawFrom(SDL_Rect srcRect);
@@ -64,7 +67,7 @@ public:
     bool getFlip() {return flip;}
     TA_Point getPosition() {return position;}
 
-    void loadAnimationsFromFile(std::string filename);
+    //void loadAnimationsFromFile(std::string filename);
     void setAnimation(std::string name);
     void setAnimation(TA_Animation newAnimation);
     void setFrame(int newFrame);

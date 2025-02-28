@@ -1,0 +1,10 @@
+[sprite]
+image = "splash.png"
+width = 16
+height = 16
+
+[animations.splash]
+frames = [0, 1, 2, 3]
+delay = 8
+repeat = 1
+

@@ -6,10 +6,9 @@ void TA_RockThrower::load(TA_Point position, bool direction)
     this->position = position;
     this->direction = direction;
 
-    TA_Sprite::load("objects/rock_thrower.png", 16, 29);
-    TA_Sprite::loadAnimationsFromFile("objects/rock_thrower.xml");
-    TA_Sprite::setFlip(direction);
-    TA_Sprite::setAnimation("idle");
+    loadFromToml("objects/rock_thrower.toml");
+    setFlip(direction);
+    setAnimation("idle");
 
     hitbox.setRectangle(TA_Point(2, 1), TA_Point(14, 29));
     updatePosition();
@@ -118,9 +117,8 @@ void TA_EnemyRock::load(TA_Point position, TA_Point velocity)
     this->position = position;
     this->velocity = velocity;
 
-    TA_Sprite::load("objects/enemy_rock.png", 6, 7);
-    TA_Sprite::loadAnimationsFromFile("objects/enemy_rock.xml");
-    TA_Sprite::setAnimation("rock");
+    loadFromToml("objects/enemy_rock.toml");
+    setAnimation("rock");
 
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(6, 7));
     updatePosition();

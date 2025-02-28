@@ -1,0 +1,16 @@
+[sprite]
+image = "beehive.png"
+width = 16
+height = 16
+
+[animations]
+beehive = 0
+
+[animations.bee]
+frames = [3, 4]
+delay = 6
+
+[animations.strong_bee]
+frames = [1, 2]
+delay = 6
+

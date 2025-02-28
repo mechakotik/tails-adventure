@@ -1,0 +1,9 @@
+[sprite]
+image = "enemy_rock.png"
+width = 6
+height = 7
+
+[animations.rock]
+frames = [0, 1]
+delay = 6
+

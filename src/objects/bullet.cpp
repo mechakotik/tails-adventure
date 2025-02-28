@@ -2,14 +2,9 @@
 #include "tools.h"
 #include "explosion.h"
 
-void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVelocity, int frameWidth, int frameHeight)
+void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVelocity)
 {
-    if(frameWidth != -1) {
-        TA_Sprite::load(filename, frameWidth, frameHeight);
-    }
-    else {
-        TA_Sprite::load(filename);
-    }
+    loadFromToml(filename);
     position = newPosition;
     velocity = newVelocity;
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(getWidth(), getHeight()));
@@ -31,9 +26,8 @@ bool TA_Bullet::update()
 
 void TA_BirdWalkerBullet::load(TA_Point newPosition, TA_Point newVelocity)
 {
-    TA_Bullet::load("objects/bird_walker/bullet.png", newPosition, newVelocity, 16, 16);
-    TA_Sprite::loadAnimationsFromFile("objects/bird_walker/bullet.xml");
-    TA_Sprite::setAnimation("bullet");
+    TA_Bullet::load("objects/bird_walker/bullet.toml", newPosition, newVelocity);
+    setAnimation("bullet");
 }
 
 bool TA_BirdWalkerBullet::update()
@@ -60,9 +54,8 @@ bool TA_BirdWalkerBullet::update()
 
 void TA_VulcanGunBullet::load(TA_Point position, TA_Point velocity)
 {
-    TA_Bullet::load("objects/vulcan_gun_bullet.png", position, velocity, 6, 6);
-    TA_Sprite::loadAnimationsFromFile("objects/vulcan_gun_bullet.xml");
-    TA_Sprite::setAnimation("bullet");
+    TA_Bullet::load("objects/vulcan_gun_bullet.toml", position, velocity);
+    setAnimation("bullet");
     explosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX2);
 }
 

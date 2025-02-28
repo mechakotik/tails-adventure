@@ -1,0 +1,10 @@
+[sprite]
+image = "fire.png"
+width = 24
+height = 8
+
+[animations.fire]
+frames = [1, 2, 1, 2, 3, 2, 3, 2, 1, 2, 1, 0]
+delay = 6
+repeat = 1
+

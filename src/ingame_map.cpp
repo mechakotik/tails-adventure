@@ -14,9 +14,7 @@ void TA_InGameMap::load()
     font.setMapping("abcdefghijklmnopqrstuvwxyz '.12");
 
     for(int pos = 0; pos < 2; pos ++) {
-        dolphinSprites[pos].load("worldmap/dolphin.png", 16, 16);
-        dolphinSprites[pos].loadAnimationsFromFile("worldmap/dolphin.xml");
-        dolphinSprites[pos].setAnimation("dolphin");
+        dolphinSprites[pos].loadFromToml("worldmap/dolphin.toml");
     }
 
     dolphinSprites[0].setPosition(76 + xOffset, 24);

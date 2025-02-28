@@ -4,10 +4,9 @@
 
 void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type)
 {
-    TA_Sprite::load("objects/explosion.png", 16, 16);
-    TA_Sprite::loadAnimationsFromFile("objects/explosion.xml");
-    TA_Sprite::setPosition(position);
-    TA_Sprite::setAnimation("explosion");
+    loadFromToml("objects/explosion.toml");
+    setPosition(position);
+    setAnimation("explosion");
 
     this->type = type;
     delay = newDelay;
@@ -18,7 +17,7 @@ void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type)
 bool TA_Explosion::update()
 {
     timer += TA::elapsedTime;
-    if(!TA_Sprite::isAnimated()) {
+    if(!isAnimated()) {
         return false;
     }
     return true;

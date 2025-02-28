@@ -13,7 +13,7 @@ protected:
 
 public:
     using TA_Object::TA_Object;
-    void load(std::string filename, TA_Point newPosition, TA_Point newVelocity, int frameWidth = -1, int frameHeight = -1);
+    void load(std::string filename, TA_Point newPosition, TA_Point newVelocity);
     bool update() override;
     int getCollisionType() override {return TA_COLLISION_DAMAGE;}
     int getDrawPriority() override {return 1;}

@@ -1,0 +1,21 @@
+[sprite]
+image = "pf_enemies.png"
+width = 24
+height = 32
+
+[animations]
+death = 4
+walker_idle = 5
+
+[animations.hover_pod]
+frames = [0, 1]
+delay = 6
+
+[animations.walker]
+frames = [2, 3]
+delay = 10
+
+[animations.walker_fire]
+frames = [2, 3]
+delay = 4
+

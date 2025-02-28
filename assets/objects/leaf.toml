@@ -1,0 +1,9 @@
+[sprite]
+image = "leaf.png"
+width = 8
+height = 8
+
+[animations.leaf]
+frames = [0, 1]
+delay = 12
+

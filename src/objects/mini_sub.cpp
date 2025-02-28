@@ -3,9 +3,8 @@
 
 void TA_MiniSub::load(TA_Point position)
 {
-    TA_Sprite::load("objects/mini_sub.png", 24, 32);
-    TA_Sprite::loadAnimationsFromFile("objects/mini_sub.xml");
-    TA_Sprite::setAnimation("mini_sub");
+    loadFromToml("objects/mini_sub.toml");
+    setAnimation("mini_sub");
 
     hitbox.setRectangle(TA_Point(5, 2), TA_Point(19, 30));
     this->position = position;

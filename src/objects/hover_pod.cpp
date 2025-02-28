@@ -4,9 +4,8 @@
 
 void TA_HoverPod::load(TA_Point newPosition, int range, bool flip)
 {
-    TA_Sprite::load("objects/pf_enemies.png", 24, 32);
-    TA_Sprite::loadAnimationsFromFile("objects/pf_enemies_animations.xml");
-    TA_Sprite::setAnimation("hover_pod");
+    loadFromToml("objects/pf_enemies.toml");
+    setAnimation("hover_pod");
     hitbox.setRectangle(TA_Point(4, 1), TA_Point(20, 30));
 
     position = newPosition;

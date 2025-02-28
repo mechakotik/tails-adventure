@@ -7,9 +7,8 @@ void TA_Nezu::load(TA_Point position)
 {
     this->position = position;
 
-    TA_Sprite::load("objects/nezu.png", 16, 16);
-    TA_Sprite::loadAnimationsFromFile("objects/nezu.xml");
-    TA_Sprite::setAnimation("idle");
+    loadFromToml("objects/nezu.toml");
+    setAnimation("idle");
 
     hitbox.setRectangle(TA_Point(2, 3), TA_Point(13, 14));
     updatePosition();

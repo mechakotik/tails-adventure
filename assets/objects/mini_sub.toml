@@ -1,0 +1,9 @@
+[sprite]
+image = "mini_sub.png"
+width = 24
+height = 32
+
+[animations.mini_sub]
+frames = [0, 1]
+delay = 6
+

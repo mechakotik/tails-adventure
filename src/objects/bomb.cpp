@@ -6,8 +6,7 @@
 #include "napalm_fire.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
-    TA_Sprite::load("objects/bomb.png", 16, 16);
-    TA_Sprite::loadAnimationsFromFile("objects/bomb.xml");
+    loadFromToml("objects/bomb.toml");
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
     position = newPosition;

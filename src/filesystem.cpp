@@ -45,11 +45,10 @@ std::string TA::filesystem::readFile(std::string path)
     char* data = new char[dataBytes];
     SDL_ReadIO(file, data, dataBytes);
 
-    std::string str(dataBytes + 1, 0);
+    std::string str(dataBytes, 0);
     for(int pos = 0; pos < dataBytes; pos ++) {
         str[pos] = data[pos];
     }
-    str[dataBytes] = '\0';
     delete[] data;
 
     if(!SDL_CloseIO(file)) {

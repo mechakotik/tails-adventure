@@ -1,0 +1,119 @@
+[sprite]
+image = "tails.png"
+width = 48
+height = 48
+
+[animations]
+idle = 0
+jump_up = 7
+jump_down = 8
+hurt = 32
+look_up = 23
+crouch = 24
+remote_robot_idle = 41
+unpack = 73
+
+[animations.walk]
+frames = [3, 4, 5, 6, 1, 2]
+delay = 6
+
+[animations.push]
+frames = [9, 10, 11, 12]
+delay = 12
+
+[animations.climb]
+frames = [26, 27, 28, 29]
+delay = 6
+repeat = 1
+
+[animations.climb_high]
+frames = [30, 31, 28, 29]
+delay = 6
+repeat = 1
+
+[animations.throw]
+frames = [19, 20, 21, 22]
+delay = 6
+repeat = 1
+
+[animations.helitail]
+frames = [13, 14, 15]
+delay = 6
+
+[animations.helitail_full]
+frames = [94, 95, 96]
+delay = 6
+
+[animations.helitail_tired]
+frames = [16, 17, 18]
+delay = 6
+
+[animations.death]
+frames = [33, 34, 35]
+delay = 12
+repeat = 1
+
+[animations.throw_crouch]
+frames = [39, 40]
+delay = 8
+repeat = 1
+
+[animations.remote_robot_walk]
+frames = [42, 43, 44, 45]
+delay = 6
+
+[animations.remote_robot_fly_init]
+frames = [46, 47, 48, 49, 50, 51, 52, 53, 54]
+delay = 6
+repeat = 1
+
+[animations.remote_robot_fly_loop]
+frames = [55, 56]
+delay = 6
+
+[animations.control_remote_robot]
+frames = [57, 58, 59, 58]
+delay = 6
+
+[animations.fall]
+frames = [60, 61, 62, 63, 64, 65]
+delay = 6
+
+[animations.throw_helitail]
+frames = [66, 67, 68]
+delay = 6
+repeat = 1
+
+[animations.throw_air]
+frames = [69, 70, 71, 72]
+delay = 6
+repeat = 1
+
+[animations.raise]
+frames = [78, 74, 75, 76, 77]
+delay = 8
+repeat = 1
+
+[animations.release]
+frames = [77, 76, 75, 74]
+delay = 8
+repeat = 1
+
+[animations.remote_robot_raise]
+frames = [41]
+delay = 32
+repeat = 1
+
+[animations.teleport]
+frames = [79, 80, 81, 82, 83, 84, 85]
+delay = 6
+
+[animations.shield]
+frames = [86, 87, 88, 89, 90, 91, 92, 93]
+delay = 2
+repeat = 1
+
+[animations.hammer]
+frames = [97, 98, 99, 100]
+delay = 6
+repeat = 1

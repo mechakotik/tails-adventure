@@ -89,8 +89,7 @@ void TA_AreaSelector::setPointNeighbours()
 
 void TA_AreaSelector::loadTailsIcon()
 {
-    tailsIcon.load("worldmap/tails_icon.png", 8, 16);
-    tailsIcon.loadAnimationsFromFile("worldmap/tails_icon.xml");
+    tailsIcon.loadFromToml("worldmap/tails_icon.toml");
     tailsIcon.setAnimation(TA::save::getSaveParameter("seafox") ? "seafox" : "blink");
 }
 

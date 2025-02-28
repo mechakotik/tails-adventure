@@ -16,3 +16,6 @@
 [submodule "external/tmxpp"]
 	path = external/tmxpp
 	url = https://github.com/mechakotik/tmxpp
+[submodule "external/toml11"]
+	path = external/toml11
+	url = https://github.com/ToruNiina/toml11

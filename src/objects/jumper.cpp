@@ -5,10 +5,7 @@
 void TA_Jumper::load(TA_Point position)
 {
     this->position = position;
-
-    TA_Sprite::load("objects/jumper.png", 16, 31);
-    TA_Sprite::loadAnimationsFromFile("objects/jumper.xml");
-
+    loadFromToml("objects/jumper.toml");
     hitbox.setRectangle(TA_Point(1, 1), TA_Point(15, 31));
     updatePosition();
 }

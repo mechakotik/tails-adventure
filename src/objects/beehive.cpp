@@ -6,8 +6,7 @@
 #include "geometry.h"
 
 void TA_BeeHive::load(TA_Point position) {
-    TA_Sprite::load("objects/beehive.png", 16, 16);
-    loadAnimationsFromFile("objects/beehive.xml");
+    loadFromToml("objects/beehive.toml");
     setAnimation("beehive");
 
     hitbox.setRectangle(TA_Point(2, 2), TA_Point(14, 14));
@@ -48,8 +47,7 @@ int TA_BeeHive::getCollisionType() {
 
 
 void TA_Bee::load(TA_Point position, TA_BeeHive* hive) {
-    TA_Sprite::load("objects/beehive.png", 16, 16);
-    loadAnimationsFromFile("objects/beehive.xml");
+    loadFromToml("objects/beehive.toml");
     setAnimation("bee");
 
     hitbox.setRectangle(TA_Point(4, 4), TA_Point(12, 12));
@@ -116,8 +114,7 @@ void TA_Bee::updateNormal() {
 }
 
 void TA_StrongBee::load(TA_Point position) {
-    TA_Sprite::load("objects/beehive.png", 16, 16);
-    loadAnimationsFromFile("objects/beehive.xml");
+    loadFromToml("objects/beehive.toml");
     setAnimation("strong_bee");
 
     hitbox.setRectangle(TA_Point(4, 4), TA_Point(12, 12));

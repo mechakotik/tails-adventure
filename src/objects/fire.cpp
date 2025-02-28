@@ -6,9 +6,8 @@ void TA_Fire::load(TA_Point position, bool flip)
     this->position = position;
     this->flip = flip;
 
-    TA_Sprite::load("objects/fire.png", 24, 8);
-    TA_Sprite::loadAnimationsFromFile("objects/fire.xml");
-    TA_Sprite::setFlip(flip);
+    loadFromToml("objects/fire.toml");
+    setFlip(flip);
 
     updateHitbox();
     updatePosition();

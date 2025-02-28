@@ -8,9 +8,7 @@ void TA_BombThrower::load(TA_Point position, double leftX, double rightX)
     this->leftX = leftX;
     this->rightX = rightX;
 
-    TA_Sprite::load("objects/bomb_thrower.png", 16, 27);
-    TA_Sprite::loadAnimationsFromFile("objects/bomb_thrower.xml");
-
+    loadFromToml("objects/bomb_thrower.toml");
     hitbox.setRectangle(TA_Point(1, 2), TA_Point(14, 26));
     updatePosition();
 }

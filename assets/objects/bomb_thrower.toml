@@ -1,0 +1,17 @@
+[sprite]
+image = "bomb_thrower.png"
+width = 16
+height = 27
+
+[animations]
+idle = 1
+
+[animations.walk]
+frames = [0, 1, 2, 1]
+delay = 6
+
+[animations.throw]
+frames = [3, 4]
+delay = 12
+repeat = 1
+

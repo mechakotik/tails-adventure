@@ -1,0 +1,18 @@
+[sprite]
+image = "seafox.png"
+width = 32
+height = 32
+
+[animations.idle]
+frames = [8, 9]
+delay = 6
+
+[animations.rotate]
+frames = [14, 15]
+delay = 6
+repeat = 1
+
+[animations.dead]
+frames = [8, 14, 15, 8, 14, 15]
+delay = 6
+

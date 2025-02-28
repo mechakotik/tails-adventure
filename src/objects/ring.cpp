@@ -10,9 +10,8 @@ void TA_Ring::load(TA_Point position, TA_Point velocity, double delay) {
     this->velocity = velocity;
     this->delay = delay;
 
-    TA_Sprite::load("objects/ring.png", 8, 8);
-    TA_Sprite::loadAnimationsFromFile("objects/ring_animations.xml");
-    TA_Sprite::setAnimation("ring");
+    loadFromToml("objects/ring.toml");
+    setAnimation("ring");
     hitbox.setRectangle({0, 0}, {7, 7});
     ringSound.load("sound/ring.ogg", TA_SOUND_CHANNEL_SFX2);
     setPosition(position);

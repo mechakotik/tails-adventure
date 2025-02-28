@@ -1,0 +1,10 @@
+[sprite]
+image = "napalm_fire.png"
+width = 8
+height = 31
+
+[animations.fire]
+frames = [0, 1, 2, 1, 2, 1, 2, 1, 0]
+delay = 4
+repeat = 1
+

@@ -1,0 +1,12 @@
+[sprite]
+image = "feet.png"
+width = 24
+height = 28
+
+[animations]
+idle = 0
+
+[animations.walk]
+frames = [1, 2, 3, 0]
+delay = 8
+
