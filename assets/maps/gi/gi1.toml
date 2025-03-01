@@ -1,0 +1,48 @@
+[level]
+music = "sound/pm.vgm"
+spawn = [
+	{ x=0, y=0 }
+]
+
+[objects.static]
+breakable_block = [
+	{ tile_x=93, tile_y=23, path="maps/gi/gi_block.png" },
+	{ tile_x=94, tile_y=23, path="maps/gi/gi_block.png", drops_ring=true },
+	{ tile_x=96, tile_y=23, path="maps/gi/gi_block.png" },
+	{ tile_x=96, tile_y=24, path="maps/gi/gi_block.png" },
+	{ tile_x=98, tile_y=23, path="maps/gi/gi_block.png" },
+	{ tile_x=99, tile_y=23, path="maps/gi/gi_block.png", drops_ring=true },
+	{ tile_x=98, tile_y=17, path="maps/gi/gi_block.png" },
+	{ tile_x=99, tile_y=17, path="maps/gi/gi_block.png", drops_ring=true },
+	{ tile_x=99, tile_y=16, path="maps/gi/gi_block.png" },
+	{ tile_x=98, tile_y=10, path="maps/gi/gi_block.png" },
+	{ tile_x=99, tile_y=10, path="maps/gi/gi_block.png" },
+	{ tile_x=99, tile_y=9, path="maps/gi/gi_block.png" },
+	{ tile_x=99, tile_y=8, path="maps/gi/gi_block.png" }
+]
+grass_block = [
+	{ tile_x=32, tile_y=17, path="maps/gi/gi_grass.png" },
+	{ tile_x=32, tile_y=18, path="maps/gi/gi_grass.png" },
+	{ tile_x=32, tile_y=19, path="maps/gi/gi_grass.png" },
+	{ tile_x=33, tile_y=17, path="maps/gi/gi_grass.png" },
+	{ tile_x=33, tile_y=18, path="maps/gi/gi_grass.png" },
+	{ tile_x=33, tile_y=19, path="maps/gi/gi_grass.png" },
+	{ tile_x=34, tile_y=17, path="maps/gi/gi_grass.png" },
+	{ tile_x=34, tile_y=18, path="maps/gi/gi_grass.png" },
+	{ tile_x=34, tile_y=19, path="maps/gi/gi_grass.png" }
+]
+pushable_spring = [
+	{ x=728, y=240 }
+]
+
+[objects.default]
+beehive = [
+	{ x=168, y=224 },
+	{ x=344, y=160 },
+	{ x=696, y=16 },
+	{ x=1064, y=16 },
+	{ x=1112, y=192 },
+	{ x=1240, y=208 },
+	{ x=1400, y=288 },
+	{ tile_x=112, tile_y=18 }
+]

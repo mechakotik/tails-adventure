@@ -32,7 +32,7 @@ void TA_GameScreen::init()
     tilemap.load(TA::levelPath + ".tmx");
     tilemap.setCamera(&camera);
     hud.load(links);
-    objectSet.load(TA::levelPath + ".xml");
+    objectSet.load(TA::levelPath + ".toml");
 
     if(isSeaFox) {
         seaFox.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());

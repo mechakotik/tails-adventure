@@ -1,0 +1,49 @@
+[level]
+music = "sound/lr.vgm"
+spawn = [
+	{ x=6, y=406 }
+]
+
+[objects.static]
+breakable_block = [
+	{ tile_x=37, tile_y=23, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=37, tile_y=24, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=37, tile_y=25, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=37, tile_y=26, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=37, tile_y=27, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=38, tile_y=23, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=38, tile_y=24, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=38, tile_y=25, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=38, tile_y=26, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=38, tile_y=27, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=39, tile_y=23, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=39, tile_y=24, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=39, tile_y=25, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=39, tile_y=26, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=39, tile_y=27, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=40, tile_y=23, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=40, tile_y=24, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=40, tile_y=25, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=40, tile_y=26, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=40, tile_y=27, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" }
+]
+level_transition = [
+	{ path="maps/lr/lr2", top=384, bottom=448, left=0, right=2 }
+]
+map_transition = [
+	{ selection=4, top=208, bottom=304, left=1022, right=1024 }
+]
+
+[objects.default]
+mine = [
+	{ x=728, y=144 },
+	{ x=792, y=144 }
+]
+mini_sub = [
+	{ tile_x=11, tile_y=24 },
+	{ tile_x=15, tile_y=24 },
+	{ tile_x=15, tile_y=26 },
+	{ tile_x=33, tile_y=23 },
+	{ tile_x=33, tile_y=25 },
+	{ tile_x=56, tile_y=16 }
+]

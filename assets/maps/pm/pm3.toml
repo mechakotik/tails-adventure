@@ -1,0 +1,74 @@
+[level]
+music = "sound/pm.vgm"
+spawn = [
+	{ x=68, y=360 },
+	{ x=1941, y=9, previous="maps/pm/pm4", flip=true }
+]
+
+[objects.static]
+breakable_block = [
+	{ path="maps/pm/block.png", tile_x=11, tile_y=12 },
+	{ path="maps/pm/block.png", tile_x=12, tile_y=12 },
+	{ path="maps/pm/block.png", tile_x=11, tile_y=13 },
+	{ path="maps/pm/block.png", tile_x=12, tile_y=13 },
+	{ path="maps/pm/block.png", tile_x=29, tile_y=20 },
+	{ path="maps/pm/block.png", tile_x=29, tile_y=21 },
+	{ path="maps/pm/block.png", tile_x=53, tile_y=5 },
+	{ path="maps/pm/block.png", tile_x=54, tile_y=5 },
+	{ path="maps/pm/block.png", tile_x=55, tile_y=5 },
+	{ path="maps/pm/block.png", tile_x=76, tile_y=21 },
+	{ path="maps/pm/block.png", tile_x=76, tile_y=22 },
+	{ path="maps/pm/block.png", tile_x=76, tile_y=23 }
+]
+item_box = [
+	{ x=376, y=256, number=8, item_name="  super  \n  glove  " }
+]
+level_transition = [
+	{ path="maps/pm/pm1", top=368, bottom=400, left=80, right=82 },
+	{ path="maps/pm/pm4", top=0, bottom=48, left=1982, right=1984 }
+]
+map_transition = [
+	{ selection=3, top=462, bottom=464, left=0, right=1984 }
+]
+wind = [
+	{ top=224, left=64, bottom=272, right=176, xsp=-0.8, ysp=-0.8 },
+	{ top=80, left=16, bottom=192, right=256, xsp=0.8, ysp=-0.8 },
+	{ top=0, left=464, bottom=272, right=752, xsp=0, ysp=1 },
+	{ top=144, left=1776, bottom=304, right=1872, xsp=0, ysp=-1 },
+	{ top=0, left=1712, bottom=144, right=1856, xsp=0, ysp=-1 }
+]
+
+[objects.default]
+bomb_thrower = [
+	{ x=1744, y=357, left_x=1728, right_x=1744 }
+]
+jumper = [
+	{ x=512, y=97 },
+	{ x=592, y=113 },
+	{ x=640, y=81 },
+	{ x=704, y=65 },
+	{ x=624, y=305 },
+	{ x=960, y=129 },
+	{ x=1024, y=129 },
+	{ x=1184, y=33 },
+	{ x=1280, y=33 },
+	{ x=1376, y=33 },
+	{ x=1424, y=49 },
+	{ x=1456, y=33 }
+]
+ring = [
+	{ x=940, y=376 },
+	{ x=988, y=376 },
+	{ x=1132, y=376 },
+	{ x=1180, y=376 }
+]
+rock_thrower = [
+	{ x=80, y=307, flip=true },
+	{ x=176, y=131 },
+	{ x=272, y=51 },
+	{ x=480, y=323, flip=true },
+	{ x=1600, y=131 },
+	{ x=1792, y=275 },
+	{ x=1728, y=35, flip=true },
+	{ x=1840, y=83 }
+]

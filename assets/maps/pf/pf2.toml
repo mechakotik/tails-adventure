@@ -1,0 +1,86 @@
+[level]
+music = "sound/pf.vgm"
+spawn = [
+	{ x=-7, y=217, previous="maps/pf/pf1" },
+	{ x=1946, y=185, previous="maps/pf/pf3", flip=true }
+]
+
+[objects.static]
+breakable_block = [
+	{ tile_x=112, tile_y=3 },
+	{ tile_x=113, tile_y=3 },
+	{ tile_x=114, tile_y=3 },
+	{ tile_x=112, tile_y=4 },
+	{ tile_x=113, tile_y=4 },
+	{ tile_x=114, tile_y=4 },
+	{ tile_x=117, tile_y=5 },
+	{ tile_x=118, tile_y=5 },
+	{ tile_x=117, tile_y=6 },
+	{ tile_x=118, tile_y=6 }
+]
+bridge = [
+	{ path="maps/pf/bridge.png", particle_path="maps/pf/bridge_part.png", leftx=336, rightx=447, y=176 }
+]
+grass_block = [
+	{ tile_x=57, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=57, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=57, tile_y=25, path="maps/pf/pf_grass.png" },
+	{ tile_x=58, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=58, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=58, tile_y=25, path="maps/pf/pf_grass.png" },
+	{ tile_x=59, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=59, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=59, tile_y=25, path="maps/pf/pf_grass.png" },
+	{ tile_x=60, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=60, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=60, tile_y=25, path="maps/pf/pf_grass.png" },
+	{ tile_x=61, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=61, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=61, tile_y=25, path="maps/pf/pf_grass.png" },
+	{ tile_x=62, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=62, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=62, tile_y=25, path="maps/pf/pf_grass.png" },
+	{ tile_x=63, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=63, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=63, tile_y=25, path="maps/pf/pf_grass.png" },
+	{ tile_x=64, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=64, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=64, tile_y=25, path="maps/pf/pf_grass.png" }
+]
+item_box = [
+	{ x=248, y=272, number=7, item_name=" speed  \n boots  " },
+	{ x=1144, y=208, number=18, item_name=" radio  \n        " },
+	{ x=1880, y=64, number=31, item_name="  chaos  \n emerald " }
+]
+level_transition = [
+	{ path="maps/pf/pf1", top=0, bottom=256, left=0, right=2 },
+	{ path="maps/pf/pf3", top=160, bottom=224, left=1982, right=1984 }
+]
+map_transition = [
+	{ selection=5, top=384, bottom=416, left=1184, right=1200 }
+]
+wind = [
+	{ top=0, left=672, bottom=208, right=816, xsp=-1, ysp=0 }
+]
+
+[objects.default]
+hover_pod = [
+	{ range=64, tile_x=24, tile_y=7 },
+	{ range=80, tile_x=46, tile_y=7 },
+	{ range=160, tile_x=50, tile_y=20 },
+	{ range=144, tile_x=71, tile_y=7 },
+	{ range=128, tile_x=105, tile_y=1 },
+	{ range=48, tile_x=88, tile_y=13 },
+	{ range=64, tile_x=89, tile_y=15 }
+]
+walker = [
+	{ tile_x=11, tile_y=11 },
+	{ range=112, tile_x=36, tile_y=9 },
+	{ x=580, y=320, range=32, flip=true },
+	{ range=96, tile_x=57, tile_y=9 },
+	{ x=1300, y=96 },
+	{ x=1372, y=16, range=40 },
+	{ range=12, tile_x=97, tile_y=8 },
+	{ x=1604, y=368, range=64 },
+	{ x=1844, y=272 }
+]

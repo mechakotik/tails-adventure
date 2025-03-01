@@ -1,0 +1,16 @@
+[level]
+music = "sound/pm.vgm"
+spawn = [
+	{ x=196, y=3977 }
+]
+
+[objects.static]
+speedy = [
+	{  }
+]
+wind = [
+	{ left=160, top=2640, right=304, bottom=2704, xsp=0, ysp=-1 },
+	{ left=160, top=1872, right=352, bottom=2560, xsp=0, ysp=-1 },
+	{ left=224, top=1120, right=288, bottom=1872, xsp=0, ysp=-1 },
+	{ left=192, top=288, right=320, bottom=896, xsp=0, ysp=-1 }
+]

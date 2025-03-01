@@ -1,19 +1,16 @@
+#include <toml.hpp>
 #include "object_set.h"
 #include "objects/explosion.h"
 #include "objects/bomb.h"
 #include "objects/breakable_block.h"
-#include "objects/particle.h"
 #include "objects/ring.h"
 #include "objects/walker.h"
 #include "objects/hover_pod.h"
-#include "objects/dead_kukku.h"
 #include "objects/pushable_object.h"
 #include "error.h"
-#include "filesystem.h"
 #include "resource_manager.h"
 #include "save.h"
 #include "sea_fox.h"
-#include "tinyxml2.h"
 #include "hud.h"
 #include "objects/transition.h"
 #include "objects/bridge.h"
@@ -38,6 +35,13 @@
 #include "objects/conveyor_belt.h"
 #include "objects/beehive.h"
 
+inline double asIntOrFloat(const toml::value& value) {
+    if(value.is_floating()) {
+        return value.as_floating();
+    }
+    return value.as_integer();
+}
+
 TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
 {
     objectSet = newObjectSet;
@@ -60,255 +64,251 @@ TA_Point TA_Object::getDistanceToCharacter()
     return characterPosition - centeredPosition;
 }
 
-void TA_ObjectSet::load(std::string filename)
-{
-    tinyxml2::XMLDocument file;
-    file.Parse(TA::resmgr::loadAsset(filename).c_str());
+void TA_ObjectSet::load(std::string filename) {
+    try {
+        tryLoad(filename);
+    } catch(std::exception &e) {
+        TA::handleError("%s load failed\n%s", filename, e.what());
+    }
+}
 
-    for(tinyxml2::XMLElement *element = file.FirstChildElement("objects")->FirstChildElement("object");
-        element != nullptr; element = element->NextSiblingElement("object"))
-    {
-        std::string name = element->Attribute("name");
-        if(element->IntAttribute("tile_x")) {
-            element->SetAttribute("x", element->IntAttribute("tile_x") * 16);
-        }
-        if(element->IntAttribute("tile_y")) {
-            element->SetAttribute("y", element->IntAttribute("tile_y") * 16);
-        }
+void TA_ObjectSet::tryLoad(std::string filename) {
+    toml::value table = toml::parse_str(TA::resmgr::loadAsset(filename));
+    if(table.contains("level") && table.at("level").contains("music")) {
+        TA::sound::playMusic(table.at("level").at("music").as_string());
+    }
 
-        if(name == "breakable_block") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            bool dropsRing = false;
-            if(element->Attribute("drops_ring", "true")) {
-                dropsRing = true;
-            }
-            std::string path = "maps/pf/pf_block.png", particlePath = "maps/pf/pf_rock.png";
-            if(element->Attribute("path")) {
-                path = element->Attribute("path");
-            }
-            if(element->Attribute("particle_path")) {
-                particlePath = element->Attribute("particle_path");
-            }
-            spawnObject<TA_BreakableBlock>(path, particlePath, position, dropsRing);
-        }
-
-        else if(name == "walker" || name == "hover_pod") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            int range = 0;
-            bool direction = true;
-            if (element->Attribute("range")) {
-                range = element->IntAttribute("range");
-            }
-            if (element->Attribute("direction", "right")) {
-                direction = false;
-            }
-            if(name == "walker") {
-                spawnObject<TA_Walker>(position, range, direction);
-            }
-            else {
-                spawnObject<TA_HoverPod>(position, range, direction);
-            }
-        }
-
-        else if(name == "pushable_rock" || name == "pushable_spring") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            if(name == "pushable_rock") {
-                spawnObject<TA_PushableRock>(position);
-            }
-            else {
-                spawnObject<TA_PushableSpring>(position);
-            }
-        }
-
-        else if(name == "spawn_point") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
+    if(table.contains("level") && table.at("level").contains("spawn")) {
+        for(const auto spawn : table.at("level").at("spawn").as_array()) {
+            TA_Point position(spawn.at("x").as_integer(), spawn.at("y").as_integer());
             std::string currentLevelPath = "";
-            if(element->Attribute("previous")) {
-                currentLevelPath = element->Attribute("previous");
+            if(spawn.contains("previous")) {
+                currentLevelPath = spawn.at("previous").as_string();
             }
             if(!firstSpawnPointSet || currentLevelPath == TA::previousLevelPath) {
                 spawnPoint = position;
-                if(element->Attribute("direction")) {
-                    spawnFlip = element->Attribute("direction", "left");
-                }
-                else {
-                    spawnFlip = false;
-                }
+                spawnFlip = spawn.contains("flip") && spawn.at("flip").as_boolean();
                 firstSpawnPointSet = true;
             }
         }
+    }
 
-        else if(name == "level_transition") {
-            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
-            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
-            std::string levelPath = element->Attribute("path");
-            spawnObject<TA_Transition>(topLeft, bottomRight, levelPath);
-        }
-
-        else if(name == "map_transition") {
-            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
-            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
-            int selection = element->IntAttribute("selection");
-            bool seaFox = element->Attribute("seafox", "true");
-            spawnObject<TA_Transition>(topLeft, bottomRight, selection, seaFox);
-        }
-
-        else if(name == "bridge") {
-            std::string path = element->Attribute("path");
-            std::string particlePath = element->Attribute("particle_path");
-            int left = element->IntAttribute("leftx");
-            int right = element->IntAttribute("rightx");
-            int y = element->IntAttribute("y");
-            for(int x = left; x <= right; x += 16) {
-                spawnObject<TA_Bridge>(TA_Point(x, y), path, particlePath);
+    if(table.contains("objects") && table.at("objects").contains("static")) {
+        for(const auto& [name, array] : table.at("objects").at("static").as_table()) {
+            for(const auto& object : array.as_array()) {
+                loadObject(name, object);
             }
         }
-
-        else if(name == "camera_lock_point") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            links.camera->setLockPosition(position);
-        }
-
-        else if(name == "bird_walker") {
-            double floorY = element->IntAttribute("floor_y");
-            spawnObject<TA_BirdWalker>(floorY);
-        }
-
-        else if(name == "bat_robot") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_BatRobot>(position);
-        }
-
-        else if(name == "sound") {
-            TA::sound::playMusic(element->Attribute("path"));
-        }
-
-        else if(name == "nezu") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_Nezu>(position);
-        }
-
-        else if(name == "flame") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            if(element->Attribute("speed")) {
-                double speed = element->DoubleAttribute("speed");
-                spawnObject<TA_FlameLauncher>(position, speed);
+    }
+    if(table.contains("objects") && table.at("objects").contains("default")) {
+        for(const auto& [name, array] : table.at("objects").at("default").as_table()) {
+            for(const auto& object : array.as_array()) {
+                loadObject(name, object);
             }
-            else {
-                spawnObject<TA_FlameLauncher>(position);
-            }
-        }
-
-        else if(name == "fire") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            bool direction = false;
-            if(element->Attribute("direction", "right")) {
-                direction = true;
-            }
-            spawnObject<TA_Fire>(position, direction);
-        }
-
-        else if(name == "item_box") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            int number = element->IntAttribute("number");
-            std::string itemName = element->Attribute("item_name");
-            spawnObject<TA_ItemBox>(position, TA_Point(0, 0), number, itemName);
-        }
-
-        else if(name == "drill_mole") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_DrillMole>(position);
-        }
-
-        else if(name == "moving_platform") {
-            TA_Point startPosition(element->IntAttribute("start_x"), element->IntAttribute("start_y"));
-            TA_Point endPosition(element->IntAttribute("end_x"), element->IntAttribute("end_y"));
-            if(element->Attribute("idle", "false")) {
-                spawnObject<TA_MovingPlatform>(startPosition, endPosition, false);
-            }
-            else {
-                spawnObject<TA_MovingPlatform>(startPosition, endPosition, true);
-            }
-        }
-
-        else if(name == "bomb_thrower") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            double leftX = element->IntAttribute("left_x"), rightX = element->IntAttribute("right_x");
-            spawnObject<TA_BombThrower>(position, leftX, rightX);
-        }
-
-        else if(name == "rock_thrower") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            bool direction = element->Attribute("direction", "right");
-            spawnObject<TA_RockThrower>(position, direction);
-        }
-
-        else if(name == "jumper") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_Jumper>(position);
-        }
-
-        else if(name == "wind") {
-            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
-            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
-            TA_Point velocity(element->DoubleAttribute("xsp"), element->DoubleAttribute("ysp"));
-            spawnObject<TA_Wind>(topLeft, bottomRight, velocity);
-        }
-        
-        else if(name == "strong_wind") {
-            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
-            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
-            spawnObject<TA_StrongWind>(topLeft, bottomRight);
-        }
-
-        else if(name == "speedy") {
-            spawnObject<TA_Speedy>();
-        }
-
-        else if(name == "mecha_golem") {
-            spawnObject<TA_MechaGolem>();
-        }
-
-        else if(name == "grass_block") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            std::string path = element->Attribute("path");
-            spawnObject<TA_GrassBlock>(position, path);
-        }
-
-        else if(name == "mini_sub") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_MiniSub>(position);
-        }
-
-        else if(name == "mine") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_EnemyMine>(position);
-        }
-
-        else if(name == "conveyor_belt") {
-            TA_Point topLeft(element->IntAttribute("left"), element->IntAttribute("top"));
-            TA_Point bottomRight(element->IntAttribute("right"), element->IntAttribute("bottom"));
-            bool direction = element->Attribute("direction", "right");
-            spawnObject<TA_ConveyorBelt>(topLeft, bottomRight, direction);
-        }
-
-        else if(name == "ring") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            auto* ring = new TA_Ring(this);
-            ring->loadStationary(position);
-            spawnedObjects.push_back(ring);
-        }
-
-        else if(name == "beehive") {
-            TA_Point position(element->IntAttribute("x"), element->IntAttribute("y"));
-            spawnObject<TA_BeeHive>(position);
-        }
-
-        else {
-            TA::handleError("Unknown object %s", name.c_str());
         }
     }
 }
+
+void TA_ObjectSet::loadObject(std::string name, toml::value object) {
+    TA_Point position{0, 0};
+    if(object.contains("tile_x")) {
+        position.x = static_cast<int>(object.at("tile_x").as_integer()) * 16;
+    } else if(object.contains("x")) {
+        position.x = static_cast<int>(object.at("x").as_integer());
+    }
+    if(object.contains("tile_y")) {
+        position.y = static_cast<int>(object.at("tile_y").as_integer()) * 16;
+    } else if(object.contains("y")) {
+        position.y = static_cast<int>(object.at("y").as_integer());
+    }
+
+    if(name == "breakable_block") {
+        bool dropsRing = object.contains("drops_ring") && object.at("drops_ring").as_boolean();
+        std::string path = "maps/pf/pf_block.png";
+        std::string particlePath = "maps/pf/pf_rock.png";
+        if(object.contains("path")) {
+            path = object.at("path").as_string();
+        }
+        if(object.contains("particle_path")) {
+            particlePath = object.at("particle_path").as_string();
+        }
+        spawnObject<TA_BreakableBlock>(path, particlePath, position, dropsRing);
+    }
+
+    else if(name == "walker" || name == "hover_pod") {
+        int range = 0;
+        bool direction = true;
+        if(object.contains("range")) {
+            range = object.at("range").as_integer();
+        }
+        if(object.contains("flip") && object.at("flip").as_boolean()) {
+            direction = false;
+        }
+        if(name == "walker") {
+            spawnObject<TA_Walker>(position, range, direction);
+        } else {
+            spawnObject<TA_HoverPod>(position, range, direction);
+        }
+    }
+
+    else if(name == "pushable_rock" || name == "pushable_spring") {
+        if(name == "pushable_rock") {
+            spawnObject<TA_PushableRock>(position);
+        } else {
+            spawnObject<TA_PushableSpring>(position);
+        }
+    }
+
+    else if(name == "level_transition") {
+        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
+        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
+        std::string levelPath = object.at("path").as_string();
+        spawnObject<TA_Transition>(topLeft, bottomRight, levelPath);
+    }
+
+    else if(name == "map_transition") {
+        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
+        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
+        int selection = object.at("selection").as_integer();
+        bool seaFox = object.contains("seafox") && object.at("seafox").as_boolean();
+        spawnObject<TA_Transition>(topLeft, bottomRight, selection, seaFox);
+    }
+
+    else if(name == "wind") {
+        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
+        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
+        TA_Point velocity(asIntOrFloat(object.at("xsp")), asIntOrFloat(object.at("ysp")));
+        spawnObject<TA_Wind>(topLeft, bottomRight, velocity);
+    }
+
+    else if(name == "item_box") {
+        int number = object.at("number").as_integer();
+        std::string itemName = object.at("item_name").as_string();
+        spawnObject<TA_ItemBox>(position, TA_Point(0, 0), number, itemName);
+    }
+
+    else if(name == "grass_block") {
+        std::string path = object.at("path").as_string();
+        spawnObject<TA_GrassBlock>(position, path);
+    }
+
+    else if(name == "ring") {
+        auto* ring = new TA_Ring(this);
+        ring->loadStationary(position);
+        spawnedObjects.push_back(ring);
+    }
+
+    else if(name == "bridge") {
+        std::string path = object.at("path").as_string();
+        std::string particlePath = object.at("particle_path").as_string();
+        int left = object.at("leftx").as_integer();
+        int right = object.at("rightx").as_integer();
+        int y = object.at("y").as_integer();
+        for(int x = left; x <= right; x += 16) {
+            spawnObject<TA_Bridge>(TA_Point(x, y), path, particlePath);
+        }
+    }
+
+    else if(name == "camera_lock_point") {
+        links.camera->setLockPosition(position);
+    }
+
+    else if(name == "bird_walker") {
+        int floorY = object.at("floor_y").as_integer();
+        spawnObject<TA_BirdWalker>(floorY);
+    }
+
+    else if(name == "bat_robot") {
+        spawnObject<TA_BatRobot>(position);
+    }
+
+    else if(name == "nezu") {
+        spawnObject<TA_Nezu>(position);
+    }
+
+    else if(name == "flame") {
+        if(object.contains("speed")) {
+            double speed = asIntOrFloat(object.at("speed"));
+            spawnObject<TA_FlameLauncher>(position, speed);
+        }
+        else {
+            spawnObject<TA_FlameLauncher>(position);
+        }
+    }
+
+    else if(name == "fire") {
+        bool flip = object.contains("flip") && object.at("flip").as_boolean();
+        spawnObject<TA_Fire>(position, flip);
+    }
+
+    else if(name == "drill_mole") {
+        spawnObject<TA_DrillMole>(position);
+    }
+
+    else if(name == "moving_platform") {
+        TA_Point startPosition(object.at("start_x").as_integer(), object.at("start_y").as_integer());
+        TA_Point endPosition(object.at("end_x").as_integer(), object.at("end_y").as_integer());
+        if(object.contains("idle") && !object.at("idle").as_boolean()) {
+            spawnObject<TA_MovingPlatform>(startPosition, endPosition, false);
+        }
+        else {
+            spawnObject<TA_MovingPlatform>(startPosition, endPosition, true);
+        }
+    }
+
+    else if(name == "bomb_thrower") {
+        double leftX = object.at("left_x").as_integer();
+        double rightX = object.at("right_x").as_integer();
+        spawnObject<TA_BombThrower>(position, leftX, rightX);
+    }
+
+    else if(name == "rock_thrower") {
+        bool flip = object.contains("flip") && object.at("flip").as_boolean();
+        spawnObject<TA_RockThrower>(position, flip);
+    }
+
+    else if(name == "jumper") {
+        spawnObject<TA_Jumper>(position);
+    }
+
+    else if(name == "strong_wind") {
+        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
+        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
+        spawnObject<TA_StrongWind>(topLeft, bottomRight);
+    }
+
+    else if(name == "speedy") {
+        spawnObject<TA_Speedy>();
+    }
+
+    else if(name == "mecha_golem") {
+        spawnObject<TA_MechaGolem>();
+    }
+
+    else if(name == "mini_sub") {
+        spawnObject<TA_MiniSub>(position);
+    }
+
+    else if(name == "mine") {
+        spawnObject<TA_EnemyMine>(position);
+    }
+
+    else if(name == "conveyor_belt") {
+        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
+        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
+        bool flip = object.contains("flip") && object.at("flip").as_boolean();
+        spawnObject<TA_ConveyorBelt>(topLeft, bottomRight, flip);
+    }
+
+    else if(name == "beehive") {
+        spawnObject<TA_BeeHive>(position);
+    }
+
+    else {
+        TA::handleError("Unknown object %s", name.c_str());
+    }
+}
+
 
 void TA_ObjectSet::update()
 {

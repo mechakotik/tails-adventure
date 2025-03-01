@@ -2,6 +2,7 @@
 #define TA_OBJECT_SET_H
 
 #include <vector>
+#include <toml.hpp>
 #include "geometry.h"
 #include "pawn.h"
 #include "tilemap.h"
@@ -43,6 +44,9 @@ public:
 
 class TA_ObjectSet {
 private:
+    void tryLoad(std::string filename);
+    void loadObject(std::string name, toml::value object);
+
     std::vector<TA_Object*> objects, spawnedObjects, deleteList;
     TA_Links links;
     TA_HitboxContainer hitboxContainer;

@@ -1,0 +1,73 @@
+[level]
+music = "sound/pf.vgm"
+spawn = [
+	{ x=60, y=201 },
+	{ x=2008, y=105, previous="maps/pf/pf2", flip=true }
+]
+
+[objects.static]
+breakable_block = [
+	{ tile_x=70, tile_y=16 },
+	{ tile_x=70, tile_y=17 },
+	{ tile_x=70, tile_y=18 },
+	{ tile_x=77, tile_y=21 },
+	{ tile_x=78, tile_y=21 },
+	{ tile_x=81, tile_y=21 },
+	{ tile_x=82, tile_y=21 },
+	{ drops_ring=true, tile_x=79, tile_y=24 },
+	{ drops_ring=true, tile_x=80, tile_y=24 },
+	{ tile_x=52, tile_y=22 },
+	{ tile_x=52, tile_y=23 },
+	{ tile_x=52, tile_y=24 }
+]
+grass_block = [
+	{ tile_x=71, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=71, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=72, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=72, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=73, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=73, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=74, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=74, tile_y=24, path="maps/pf/pf_grass.png" },
+	{ tile_x=75, tile_y=23, path="maps/pf/pf_grass.png" },
+	{ tile_x=75, tile_y=24, path="maps/pf/pf_grass.png" }
+]
+item_box = [
+	{ number=23, item_name=" spark  \n        ", tile_x=50, tile_y=24 }
+]
+level_transition = [
+	{ path="maps/pf/pf2", top=0, bottom=144, left=2046, right=2048 }
+]
+map_transition = [
+	{ selection=1, top=0, bottom=240, left=0, right=2 }
+]
+pushable_rock = [
+	{ x=1272, y=320 }
+]
+pushable_spring = [
+	{ x=1768, y=384 }
+]
+wind = [
+	{ top=16, left=1696, bottom=352, right=1824, xsp=0, ysp=-1 }
+]
+
+[objects.default]
+hover_pod = [
+	{ range=272, tile_x=23, tile_y=10 },
+	{ range=208, tile_x=47, tile_y=9 },
+	{ range=208, tile_x=95, tile_y=3 },
+	{ x=1712, y=8, range=128 }
+]
+ring = [
+	{ x=1636, y=136 }
+]
+walker = [
+	{ range=40, tile_x=34, tile_y=17 },
+	{ range=90, tile_x=67, tile_y=17 },
+	{ range=60, tile_x=76, tile_y=8 },
+	{ range=60, tile_x=76, tile_y=2 },
+	{ x=1708, y=144, flip=true },
+	{ x=1804, y=256 },
+	{ x=1848, y=368, range=48 },
+	{ x=1892, y=160, flip=true }
+]

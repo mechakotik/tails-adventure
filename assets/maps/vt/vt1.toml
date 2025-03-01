@@ -1,0 +1,94 @@
+[level]
+music = "sound/vt.vgm"
+spawn = [
+	{ x=-4, y=73 },
+	{ x=1924, y=57, previous="maps/vt/vt2", flip=true }
+]
+
+[objects.static]
+breakable_block = [
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=15, tile_y=3 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=15, tile_y=4 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=16, tile_y=3 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=16, tile_y=4 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=24, tile_y=5 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=25, tile_y=5 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=26, tile_y=5 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=27, tile_y=5 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=28, tile_y=6 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=28, tile_y=7 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=28, tile_y=8 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=22, tile_y=6 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=22, tile_y=7 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=22, tile_y=8 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=23, tile_y=6 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=23, tile_y=7 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=23, tile_y=8 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=16, tile_y=9 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=16, tile_y=10 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=16, tile_y=14 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=16, tile_y=15 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=19, tile_y=14 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=19, tile_y=15 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=20, tile_y=14 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=20, tile_y=15 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=35, tile_y=13 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=35, tile_y=14 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=35, tile_y=15 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=36, tile_y=13 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=36, tile_y=14 },
+	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=36, tile_y=15 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=37, tile_y=13 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=37, tile_y=14 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=37, tile_y=15 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=38, tile_y=13 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=38, tile_y=14 },
+	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=38, tile_y=15 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=73, tile_y=4 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=73, tile_y=5 },
+	{ path="maps/vt/block3.png", particle_path="maps/vt/rock.png", drops_ring=true, tile_x=73, tile_y=6 },
+	{ path="maps/vt/block4.png", particle_path="maps/vt/rock.png", tile_x=107, tile_y=6 },
+	{ path="maps/vt/block4.png", particle_path="maps/vt/rock.png", tile_x=108, tile_y=6 }
+]
+fire = [
+	{ x=1240, y=152, direction="left" }
+]
+item_box = [
+	{ x=968, y=112, number=19, item_name=" hammer \n        " },
+	{ x=1864, y=288, number=2, item_name=" remote \n  bomb  " }
+]
+level_transition = [
+	{ path="maps/vt/vt2", top=32, bottom=96, left=1966, right=1968 }
+]
+map_transition = [
+	{ selection=2, top=16, bottom=117, left=0, right=2 }
+]
+
+[objects.default]
+bat_robot = [
+	{ x=716, y=224 },
+	{ x=796, y=272 },
+	{ x=604, y=48 },
+	{ x=684, y=48 },
+	{ x=764, y=48 },
+	{ x=1468, y=160 },
+	{ x=1500, y=192 },
+	{ x=1580, y=176 }
+]
+flame = [
+	{ x=460, y=288 },
+	{ x=908, y=320, speed=2.75 },
+	{ x=972, y=320, speed=2.75 },
+	{ x=1036, y=320, speed=2.75 },
+	{ x=1324, y=112 },
+	{ x=1516, y=272 }
+]
+nezu = [
+	{ tile_x=25, tile_y=4 },
+	{ tile_x=21, tile_y=15 },
+	{ tile_x=86, tile_y=5 },
+	{ tile_x=107, tile_y=14 },
+	{ tile_x=113, tile_y=12 },
+	{ tile_x=108, tile_y=5 },
+	{ tile_x=114, tile_y=5 }
+]
