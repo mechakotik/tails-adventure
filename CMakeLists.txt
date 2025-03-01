@@ -82,6 +82,8 @@ set(USE_GME_NSFE OFF)
 set(USE_GME_SAP OFF)
 set(USE_GME_SPC OFF)
 
+set(TOML11_PRECOMPILE ON)
+
 add_subdirectory(external/SDL_image EXCLUDE_FROM_ALL)
 add_subdirectory(external/SDL_mixer EXCLUDE_FROM_ALL)
 add_subdirectory(external/tmxpp EXCLUDE_FROM_ALL)
