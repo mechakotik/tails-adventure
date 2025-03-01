@@ -97,16 +97,9 @@ endif()
 file(STRINGS "src/sources.list" TA_SOURCES)
 
 if(ANDROID)
-    add_library(tails-adventure SHARED
-        ${TA_SOURCES}
-        external/tinyxml2/tinyxml2.cpp
-    )
+    add_library(tails-adventure SHARED ${TA_SOURCES})
 else()
-    add_executable(tails-adventure
-            ${TA_SOURCES}
-            external/tinyxml2/tinyxml2.cpp
-            ${WIN32_RESOURCES}
-    )
+    add_executable(tails-adventure ${TA_SOURCES} ${WIN32_RESOURCES})
 endif()
 
 if(TA_CLANG_TIDY)

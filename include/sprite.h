@@ -67,7 +67,6 @@ public:
     bool getFlip() {return flip;}
     TA_Point getPosition() {return position;}
 
-    //void loadAnimationsFromFile(std::string filename);
     void setAnimation(std::string name);
     void setAnimation(TA_Animation newAnimation);
     void setFrame(int newFrame);

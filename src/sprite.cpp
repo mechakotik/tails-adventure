@@ -8,7 +8,6 @@
 #include "error.h"
 #include "filesystem.h"
 #include "resource_manager.h"
-#include "tinyxml2.h"
 #include "tools.h"
 
 void TA_Texture::load(std::string filename)
@@ -184,31 +183,6 @@ void TA_Sprite::updateAnimation()
     }
     updateAnimationNeeded = false;
 }
-
-/*void TA_Sprite::loadAnimationsFromFile(std::string filename)
-{
-    tinyxml2::XMLDocument animationXml;
-    animationXml.Parse(TA::resmgr::loadAsset(filename).c_str());
-    tinyxml2::XMLElement *currentElement = animationXml.RootElement()->FirstChildElement("animation");
-
-    while(currentElement != nullptr) {
-        std::string name = currentElement->Attribute("name");
-        std::vector<int> frames; {
-            std::stringstream framesStr;
-            framesStr << currentElement->GetText();
-            int currentFrame;
-            char temp;
-            while(framesStr >> currentFrame) {
-                frames.push_back(currentFrame);
-                framesStr >> temp;
-            }
-        }
-        int delay = currentElement->IntAttribute("delay", 1);
-        int repeatTimes = currentElement->IntAttribute("repeatTimes", -1);
-        loadedAnimations[name] = TA_Animation(frames, delay, repeatTimes);
-        currentElement = currentElement->NextSiblingElement("animation");
-    }
-}*/
 
 void TA_Sprite::setAnimation(TA_Animation newAnimation)
 {

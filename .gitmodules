@@ -7,9 +7,6 @@
 [submodule "external/SDL_mixer"]
 	path = external/SDL_mixer
 	url = https://github.com/libsdl-org/SDL_mixer
-[submodule "external/tinyxml2"]
-	path = external/tinyxml2
-	url = https://github.com/leethomason/tinyxml2
 [submodule "external/SDL_GameControllerDB"]
 	path = external/SDL_GameControllerDB
 	url = https://github.com/mdqinc/SDL_GameControllerDB
