@@ -8,14 +8,14 @@
 
 namespace TA {
     namespace save {
-        void addOptionsFromFile(std::string filename);
+        void addOptionsFromFile(std::filesystem::path path);
         std::string getSaveFileName();
         std::map<std::string, long long> saveMap;
         std::string currentSave = "";
     }
 }
 
-void TA::save::addOptionsFromFile(std::string path) {
+void TA::save::addOptionsFromFile(std::filesystem::path path) {
     if(!TA::filesystem::fileExists(path)) {
         TA::printWarning("Save file %s was not found, skipping", path.c_str());
         return;
@@ -33,7 +33,7 @@ void TA::save::addOptionsFromFile(std::string path) {
 }
 
 void TA::save::load() {
-    std::string defaultConfigPath = TA::filesystem::getAssetsPath() + "/default_config";
+    std::string defaultConfigPath = TA::filesystem::getAssetsPath() / "default_config";
     addOptionsFromFile(defaultConfigPath);
     addOptionsFromFile(getSaveFileName());
 }
@@ -58,7 +58,7 @@ std::string TA::save::getSaveFileName() {
     std::filesystem::create_directories(path);
     return path + "/config";
 #else
-    return TA::filesystem::getExecutableDirectory() + "/config";
+    return TA::filesystem::getExecutableDirectory() / "config";
 #endif
 #endif
 }

@@ -6,20 +6,11 @@
 #ifdef _WIN32
 #include "windows.h"
 #elif __linux__
-#include <limits.h>
+#include <climits>
 #include <unistd.h>
 #endif
 
-void TA::filesystem::fixPath(std::string& path) {
-    // SDL Android assets access breaks when adding ./ for some reason, so I'll
-    // just remove them
-    while((int)path.size() >= 2 && path.substr(0, 2) == "./") {
-        path.erase(0, 2);
-    }
-}
-
-bool TA::filesystem::fileExists(std::string path) {
-    fixPath(path);
+bool TA::filesystem::fileExists(std::filesystem::path path) {
     SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "rb");
     if(file == nullptr) {
         return false;
@@ -31,8 +22,7 @@ bool TA::filesystem::fileExists(std::string path) {
     return true;
 }
 
-std::string TA::filesystem::readFile(std::string path) {
-    fixPath(path);
+std::string TA::filesystem::readFile(std::filesystem::path path) {
     SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "rb");
     if(file == nullptr) {
         TA::handleSDLError("Open %s for read failed", path.c_str());
@@ -55,22 +45,21 @@ std::string TA::filesystem::readFile(std::string path) {
     return str;
 }
 
-std::string TA::filesystem::readAsset(std::string path) {
-    std::string prefix = getAssetsPath();
-    return readFile(prefix + "/" + path);
+std::string TA::filesystem::readAsset(std::filesystem::path path) {
+    return readFile(getAssetsPath() / path);
 }
 
-std::string TA::filesystem::getAssetsPath() {
+std::filesystem::path TA::filesystem::getAssetsPath() {
 #ifdef __ANDROID__
     return ".";
 #elifdef TA_UNIX_INSTALL
     return "/usr/share/tails-adventure";
 #else
-    return getExecutableDirectory() + "/assets";
+    return getExecutableDirectory() / "assets";
 #endif
 }
 
-std::string TA::filesystem::getExecutableDirectory() {
+std::filesystem::path TA::filesystem::getExecutableDirectory() {
 #ifdef _WIN32
     char buffer[MAX_PATH];
     GetModuleFileName(NULL, buffer, MAX_PATH);
@@ -84,8 +73,7 @@ std::string TA::filesystem::getExecutableDirectory() {
 #endif
 }
 
-void TA::filesystem::writeFile(std::string path, std::string value) {
-    fixPath(path);
+void TA::filesystem::writeFile(std::filesystem::path path, std::string value) {
     SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "wb");
     if(file == nullptr) {
         TA::handleSDLError("Open %s for write failed", path.c_str());

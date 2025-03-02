@@ -7,10 +7,10 @@
 
 namespace TA {
     namespace resmgr {
-        std::unordered_map<std::string, SDL_Texture*> textureMap;
-        std::unordered_map<std::string, Mix_Music*> musicMap;
-        std::unordered_map<std::string, Mix_Chunk*> chunkMap;
-        std::unordered_map<std::string, std::string> assetMap;
+        std::unordered_map<std::filesystem::path, SDL_Texture*> textureMap;
+        std::unordered_map<std::filesystem::path, Mix_Music*> musicMap;
+        std::unordered_map<std::filesystem::path, Mix_Chunk*> chunkMap;
+        std::unordered_map<std::filesystem::path, std::string> assetMap;
 
         void preloadTextures();
         void preloadChunks();
@@ -41,12 +41,11 @@ void TA::resmgr::preloadChunks() {
     }
 }
 
-SDL_Texture* TA::resmgr::loadTexture(std::string filename) {
-    filename = TA::filesystem::getAssetsPath() + "/" + filename;
-    TA::filesystem::fixPath(filename);
+SDL_Texture* TA::resmgr::loadTexture(std::filesystem::path path) {
+    path = TA::filesystem::getAssetsPath() / path;
 
-    if(!textureMap.count(filename)) {
-        SDL_Surface* surface = IMG_Load(filename.c_str());
+    if(!textureMap.count(path)) {
+        SDL_Surface* surface = IMG_Load(path.c_str());
         if(surface == nullptr) {
             TA::handleSDLError("%s", "Failed to load image");
         }
@@ -56,50 +55,45 @@ SDL_Texture* TA::resmgr::loadTexture(std::string filename) {
         }
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
         SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
-        textureMap[filename] = texture;
+        textureMap[path] = texture;
         SDL_DestroySurface(surface);
     }
 
-    return textureMap[filename];
+    return textureMap[path];
 }
 
-Mix_Music* TA::resmgr::loadMusic(std::string filename) {
-    filename = TA::filesystem::getAssetsPath() + "/" + filename;
-    TA::filesystem::fixPath(filename);
+Mix_Music* TA::resmgr::loadMusic(std::filesystem::path path) {
+    path = TA::filesystem::getAssetsPath() /  path;
 
-    if(!musicMap.count(filename)) {
-        musicMap[filename] = Mix_LoadMUS(filename.c_str());
-        if(musicMap[filename] == nullptr) {
-            TA::handleSDLError("%s load failed", filename.c_str());
+    if(!musicMap.count(path)) {
+        musicMap[path] = Mix_LoadMUS(path.c_str());
+        if(musicMap[path] == nullptr) {
+            TA::handleSDLError("%s load failed", path.c_str());
         }
     }
 
-    return musicMap[filename];
+    return musicMap[path];
 }
 
-Mix_Chunk* TA::resmgr::loadChunk(std::string filename) {
-    filename = TA::filesystem::getAssetsPath() + "/" + filename;
-    TA::filesystem::fixPath(filename);
+Mix_Chunk* TA::resmgr::loadChunk(std::filesystem::path path) {
+    path = TA::filesystem::getAssetsPath() / path;
 
-    if(!chunkMap.count(filename)) {
-        chunkMap[filename] = Mix_LoadWAV(filename.c_str());
-        if(chunkMap[filename] == nullptr) {
-            TA::handleSDLError("%s load failed", filename.c_str());
+    if(!chunkMap.contains(path)) {
+        chunkMap[path] = Mix_LoadWAV(path.c_str());
+        if(chunkMap[path] == nullptr) {
+            TA::handleSDLError("%s load failed", path.c_str());
         }
     }
 
-    return chunkMap[filename];
+    return chunkMap[path];
 }
 
-std::string TA::resmgr::loadAsset(std::string filename) {
-    filename = TA::filesystem::getAssetsPath() + "/" + filename;
-    TA::filesystem::fixPath(filename);
-
-    if(!assetMap.count(filename)) {
-        assetMap[filename] = TA::filesystem::readFile(filename);
+const std::string& TA::resmgr::loadAsset(std::filesystem::path path) {
+    path = TA::filesystem::getAssetsPath() / path;
+    if(!assetMap.contains(path)) {
+        assetMap[path] = TA::filesystem::readFile(path);
     }
-
-    return assetMap[filename];
+    return assetMap[path];
 }
 
 void TA::resmgr::quit() {
