@@ -9,11 +9,7 @@ private:
     const double gravity = 0.085;
     const double idleTime = 40;
 
-    enum State {
-        STATE_IDLE,
-        STATE_AIM,
-        STATE_JUMP
-    };
+    enum State { STATE_IDLE, STATE_AIM, STATE_JUMP };
 
     void updateIdle();
     void updateAim();
@@ -23,7 +19,7 @@ private:
     void setJumpVelocity();
     void updateDirection();
     bool isCloseToCharacter();
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
     bool shouldBeDestroyed();
     void destroy() override;
 
@@ -36,7 +32,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 #endif

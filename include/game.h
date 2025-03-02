@@ -3,8 +3,8 @@
 
 #include <chrono>
 #include "SDL3/SDL.h"
-#include "screen_state_machine.h"
 #include "font.h"
+#include "screen_state_machine.h"
 
 class TA_Game {
 private:
@@ -22,7 +22,7 @@ private:
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime, currentTime;
     TA_ScreenStateMachine screenStateMachine;
 
-    SDL_Texture *targetTexture = nullptr;
+    SDL_Texture* targetTexture = nullptr;
 
     int windowWidth, windowHeight, targetWidth = 0, targetHeight = 0;
     bool vsync = false, fullscreen = true;
@@ -37,4 +37,4 @@ public:
     void update();
 };
 
-#endif //TA_GAME_H
+#endif // TA_GAME_H

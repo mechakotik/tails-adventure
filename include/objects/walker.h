@@ -3,8 +3,7 @@
 
 #include "object_set.h"
 
-enum TA_WalkerState
-{
+enum TA_WalkerState {
     TA_WALKER_STATE_IDLE,
     TA_WALKER_STATE_MOVE,
     TA_WALKER_STATE_FIRE,
@@ -34,7 +33,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, int range, bool flip);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 class TA_WalkerBullet : public TA_Object { // TODO: reimplement TA_WalkerBullet as inheritor of TA_Bullet
@@ -47,7 +46,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, bool newDirection);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
 };
 
 #endif // TA_WALKER_H

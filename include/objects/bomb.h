@@ -1,18 +1,13 @@
 #ifndef TA_BOMB_H
 #define TA_BOMB_H
 
-#include "object_set.h"
 #include "geometry.h"
+#include "object_set.h"
 #include "sound.h"
 
 // TODO: clean up this code
 
-enum TA_BombMode : int {
-    TA_BOMB_MODE_DEFAULT,
-    TA_BOMB_MODE_AIR,
-    TA_BOMB_MODE_CROUCH,
-    TA_BOMB_MODE_HELITAIL
-};
+enum TA_BombMode : int { TA_BOMB_MODE_DEFAULT, TA_BOMB_MODE_AIR, TA_BOMB_MODE_CROUCH, TA_BOMB_MODE_HELITAIL };
 
 class TA_Bomb : public TA_Object {
 private:
@@ -28,7 +23,7 @@ private:
 protected:
     virtual bool shouldExplode();
     virtual void explode();
-    [[nodiscard]] bool isInitSequence() const {return timer < moveTime;}
+    [[nodiscard]] bool isInitSequence() const { return timer < moveTime; }
 
     double speed = 1.15, crouchThrowHeight = -6;
     TA_Point topLeft{3, 4}, bottomRight{12, 14};
@@ -42,9 +37,9 @@ public:
     virtual void load(TA_Point newPosition, bool newDirection, TA_BombMode mode);
     bool update() override;
 
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
-    int getCollisionType() override {return TA_COLLISION_BOMB;}
-    int getDrawPriority() override {return 1;}
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
+    int getCollisionType() override { return TA_COLLISION_BOMB; }
+    int getDrawPriority() override { return 1; }
 };
 
 class TA_RemoteBomb : public TA_Bomb {

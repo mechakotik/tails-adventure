@@ -14,14 +14,14 @@ public:
     using TA_Object::TA_Object;
     void load(std::string filename, TA_Point newPosition);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_PUSHABLE;}
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
+    int getCollisionType() override { return TA_COLLISION_PUSHABLE; }
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
 };
 
 class TA_PushableRock : public TA_PushableObject {
 public:
     using TA_PushableObject::TA_PushableObject;
-    void load(TA_Point newPosition) {TA_PushableObject::load("objects/rock.png", newPosition);}
+    void load(TA_Point newPosition) { TA_PushableObject::load("objects/rock.png", newPosition); }
 };
 
 class TA_PushableSpring : public TA_PushableObject {

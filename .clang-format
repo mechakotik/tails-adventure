@@ -1,7 +1,7 @@
 ﻿---
 BasedOnStyle: Google
 AlignAfterOpenBracket: DontAlign
-AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortLoopsOnASingleLine: false
 DerivePointerAlignment: false
@@ -14,4 +14,5 @@ TabWidth: 4
 AccessModifierOffset: -4
 SpacesBeforeTrailingComments: 1
 IncludeBlocks: Merge
+ColumnLimit: 120
 ...

@@ -3,11 +3,7 @@
 
 #include "object_set.h"
 
-enum TA_BridgeState {
-    TA_BRIDGE_STATE_IDLE,
-    TA_BRIDGE_STATE_DELAY,
-    TA_BRIDGE_STATE_FALLING
-};
+enum TA_BridgeState { TA_BRIDGE_STATE_IDLE, TA_BRIDGE_STATE_DELAY, TA_BRIDGE_STATE_FALLING };
 
 class TA_Bridge : public TA_Object {
 private:

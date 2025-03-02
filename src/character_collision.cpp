@@ -1,13 +1,12 @@
 #include "character.h"
-#include "object_set.h"
 #include "error.h"
+#include "object_set.h"
+#include "ring.h"
 #include "save.h"
 #include "splash.h"
-#include "ring.h"
 #include "tilemap.h"
 
-bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
-{
+bool TA_Character::checkPawnCollision(TA_Polygon& checkHitbox) {
     int flags = 0;
     links.objectSet->checkCollision(checkHitbox, flags);
     if((flags & (TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE)) != 0) {
@@ -25,21 +24,16 @@ bool TA_Character::checkPawnCollision(TA_Polygon &checkHitbox)
     return false;
 }
 
-void TA_Character::updateCollisions()
-{
+void TA_Character::updateCollisions() {
     if(remoteRobot) {
         topLeft = TA_Point(18, 27);
-    }
-    else if(hurt) {
+    } else if(hurt) {
         topLeft = TA_Point(18, 12);
-    }
-    else if(jump && velocity.y < 0) {
+    } else if(jump && velocity.y < 0) {
         topLeft = TA_Point(18, 9);
-    }
-    else if(crouch) {
+    } else if(crouch) {
         topLeft = TA_Point(18, 22);
-    }
-    else {
+    } else {
         topLeft = TA_Point(18, 12);
     }
     bottomRight = TA_Point(30, 39);
@@ -85,8 +79,7 @@ void TA_Character::updateCollisions()
     TA_Point positionDelta;
     if(TA::levelPath.substr(0, 7) == "maps/ci") {
         positionDelta = velocity * TA::elapsedTime;
-    }
-    else {
+    } else {
         positionDelta = (velocity + windVelocity) * TA::elapsedTime;
     }
 
@@ -112,8 +105,7 @@ void TA_Character::updateCollisions()
         ground = true;
         helitail = false;
         velocity.y = 0;
-    }
-    else {
+    } else {
         ground = false;
     }
 
@@ -127,17 +119,15 @@ void TA_Character::updateCollisions()
         if(jump) {
             jumpSpeed = std::max(jumpSpeed, double(-0.3));
             jumpReleased = true;
-        }
-        else {
+        } else {
             velocity.y = std::max(velocity.y, double(-0.3));
         }
-    }
-    else {
+    } else {
         ceiling = false;
     }
 
     if(!remoteRobot && !hurt && invincibleTimeLeft <= 0) {
-        auto handleDamage = [&] (TA_Polygon &hitbox, int sign) {
+        auto handleDamage = [&](TA_Polygon& hitbox, int sign) {
             if(hurt) {
                 return;
             }
@@ -156,13 +146,13 @@ void TA_Character::updateCollisions()
             if(TA::save::getParameter("ring_drop")) {
                 dropRings();
                 links.objectSet->addRings(-4);
-            }
-            else {
+            } else {
                 links.objectSet->addRings(-2);
             }
         };
 
-        TA_Polygon leftHalf, rightHalf; {
+        TA_Polygon leftHalf, rightHalf;
+        {
             double middleX = (topLeft.x + bottomRight.x) / 2;
             leftHalf.setRectangle(topLeft - TA_Point(0.001, 0.001), {middleX, bottomRight.y + 0.001});
             rightHalf.setRectangle({middleX, topLeft.y - 0.001}, bottomRight + TA_Point(0.001, 0.001));
@@ -172,13 +162,11 @@ void TA_Character::updateCollisions()
         if(flip) {
             handleDamage(rightHalf, -1);
             handleDamage(leftHalf, 1);
-        }
-        else {
+        } else {
             handleDamage(leftHalf, 1);
             handleDamage(rightHalf, -1);
         }
-    }
-    else if(hurt) {
+    } else if(hurt) {
         if(ground) {
             hurt = false;
             invincibleTimeLeft = invincibleTime;
@@ -193,7 +181,7 @@ void TA_Character::updateCollisions()
     if(TA::levelPath.substr(0, 7) == "maps/ci" && (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
         ground = jump = jumpReleased = false;
     }
-    
+
     hitbox.setPosition(position);
 }
 
@@ -208,8 +196,7 @@ void TA_Character::dropRings() {
     links.objectSet->spawnObject<TA_Ring>(ringPosition, TA_Point(-0.75, -2), 64);
 }
 
-void TA_Character::updateClimb()
-{
+void TA_Character::updateClimb() {
     if(remoteRobot || !wall || !TA::equal(deltaX, 0)) {
         return;
     }
@@ -225,12 +212,10 @@ void TA_Character::updateClimb()
         if(links.controller->getDirection() == TA_DIRECTION_LEFT) {
             climbPosition = climbPosition + TA_Point(-13, -height - (ground ? 0.025 : 0));
             setFlip(true);
-        }
-        else if(links.controller->getDirection() == TA_DIRECTION_RIGHT) {
+        } else if(links.controller->getDirection() == TA_DIRECTION_RIGHT) {
             climbPosition = climbPosition + TA_Point(13, -height - (ground ? 0.025 : 0));
             setFlip(false);
-        }
-        else {
+        } else {
             return;
         }
 
@@ -248,25 +233,23 @@ void TA_Character::updateClimb()
 
         if(collision != collisionMoved) {
             double left = 0, right = 1;
-            while (right - left > TA::epsilon) {
+            while(right - left > TA::epsilon) {
                 double mid = (left + right) / 2;
                 hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * mid));
-                if (checkPawnCollision(hitbox) == collision) {
+                if(checkPawnCollision(hitbox) == collision) {
                     left = mid;
-                }
-                else {
+                } else {
                     right = mid;
                 }
             }
-            
+
             hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * left));
             if(checkPawnCollision(hitbox)) {
                 climbPosition.y += velocity.y * right;
-            }
-            else {
+            } else {
                 climbPosition.y += velocity.y * left;
             }
-            
+
             hitbox.setPosition(climbPosition + TA_Point(0, 0.01));
             int collisionFlags = links.objectSet->checkCollision(hitbox);
             if(collisionFlags & TA_COLLISION_MOVING_PLATFORM) {
@@ -288,15 +271,13 @@ void TA_Character::updateClimb()
                 if(height == 32) {
                     setAnimation("climb_high");
                     state = STATE_CLIMB_HIGH;
-                }
-                else {
+                } else {
                     setAnimation("climb");
                     state = STATE_CLIMB_LOW;
                 }
                 if(links.controller->getDirection() == TA_DIRECTION_LEFT) {
                     position = climbPosition + TA_Point(13, height);
-                }
-                else {
+                } else {
                     position = climbPosition + TA_Point(-13, height);
                 }
                 velocity.y = 0;
@@ -308,8 +289,7 @@ void TA_Character::updateClimb()
     updateClimbPosition(16);
 }
 
-void TA_Character::updateSpringCollision()
-{
+void TA_Character::updateSpringCollision() {
     TA_Polygon hitbox;
     hitbox.setPosition(position);
     hitbox.setRectangle({topLeft.x + 0.01, bottomRight.y}, bottomRight + TA_Point(-0.01, 0.01));
@@ -324,8 +304,7 @@ void TA_Character::updateSpringCollision()
     }
 }
 
-void TA_Character::updateWaterCollision()
-{
+void TA_Character::updateWaterCollision() {
     TA_Polygon hitbox;
     hitbox.setPosition(position);
     hitbox.setRectangle(topLeft, bottomRight);

@@ -1,19 +1,18 @@
+#include "title_screen.h"
 #include <algorithm>
 #include <cmath>
-#include "title_screen.h"
-#include "tools.h"
 #include "error.h"
 #include "save.h"
+#include "tools.h"
 
-void TA_TitleScreen::init()
-{
+void TA_TitleScreen::init() {
     backgroundSprite.load("title_screen/title_screen.png");
 
-    #ifdef __ANDROID__
-        pressStartSprite.load("title_screen/touch_to_start.png");
-    #else
-        pressStartSprite.load("title_screen/press_start.png");
-    #endif
+#ifdef __ANDROID__
+    pressStartSprite.load("title_screen/touch_to_start.png");
+#else
+    pressStartSprite.load("title_screen/press_start.png");
+#endif
 
     TA::sound::playMusic("sound/title.vgm");
     enterSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX1, 0);
@@ -22,8 +21,7 @@ void TA_TitleScreen::init()
     button.setRectangle(TA_Point(0, 0), TA_Point(TA::screenWidth, TA::screenHeight));
 }
 
-TA_ScreenState TA_TitleScreen::update()
-{
+TA_ScreenState TA_TitleScreen::update() {
     backgroundSprite.setPosition(TA::screenWidth / 2 - backgroundSprite.getWidth() / 2, 0);
     pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104);
 
@@ -52,8 +50,7 @@ TA_ScreenState TA_TitleScreen::update()
     return TA_SCREENSTATE_CURRENT;
 }
 
-void TA_TitleScreen::updatePressStart()
-{
+void TA_TitleScreen::updatePressStart() {
     const double idleTime = 30;
     const double transitionTime = 5;
 
@@ -62,14 +59,11 @@ void TA_TitleScreen::updatePressStart()
 
     if(timer < transitionTime) {
         alpha = 255 * timer / transitionTime;
-    }
-    else if(timer < transitionTime + idleTime) {
+    } else if(timer < transitionTime + idleTime) {
         alpha = 255;
-    }
-    else if(timer < transitionTime * 2 + idleTime) {
+    } else if(timer < transitionTime * 2 + idleTime) {
         alpha = 255 - 255 * (timer - (idleTime + transitionTime)) / transitionTime;
-    }
-    else {
+    } else {
         alpha = 0;
     }
 
@@ -82,8 +76,7 @@ void TA_TitleScreen::updatePressStart()
     }
 }
 
-void TA_TitleScreen::updateHidePressStart()
-{
+void TA_TitleScreen::updateHidePressStart() {
     const double disappearTime = 5;
     alpha += 255 * (disappearTime / TA::elapsedTime);
 
@@ -97,8 +90,7 @@ void TA_TitleScreen::updateHidePressStart()
     }
 }
 
-void TA_TitleScreen::updateExit()
-{
+void TA_TitleScreen::updateExit() {
     const double exitTime = 14;
     pressStartSprite.draw();
 
@@ -108,7 +100,4 @@ void TA_TitleScreen::updateExit()
     }
 }
 
-void TA_TitleScreen::quit()
-{
-
-}
+void TA_TitleScreen::quit() {}

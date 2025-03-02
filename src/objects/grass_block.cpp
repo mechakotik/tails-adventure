@@ -1,7 +1,6 @@
 #include "grass_block.h"
 
-void TA_GrassBlock::load(TA_Point position, std::string texture)
-{
+void TA_GrassBlock::load(TA_Point position, std::string texture) {
     TA_Sprite::load(texture, 16, 16);
     this->position = position;
     breakSound.load("sound/break.ogg", TA_SOUND_CHANNEL_SFX2);
@@ -9,8 +8,7 @@ void TA_GrassBlock::load(TA_Point position, std::string texture)
     updatePosition();
 }
 
-bool TA_GrassBlock::update()
-{
+bool TA_GrassBlock::update() {
     if(objectSet->checkCollision(hitbox) & TA_COLLISION_NAPALM) {
         breakSound.play();
         return false;

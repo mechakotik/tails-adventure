@@ -1,14 +1,10 @@
 #ifndef TA_EXPLOSION_H
 #define TA_EXPLOSION_H
 
-#include "object_set.h"
 #include "geometry.h"
+#include "object_set.h"
 
-enum TA_ExplosionType {
-    TA_EXPLOSION_CHARACTER,
-    TA_EXPLOSION_ENEMY,
-    TA_EXPLOSION_NEUTRAL
-};
+enum TA_ExplosionType { TA_EXPLOSION_CHARACTER, TA_EXPLOSION_ENEMY, TA_EXPLOSION_NEUTRAL };
 
 class TA_Explosion : public TA_Object {
 private:
@@ -21,7 +17,7 @@ public:
     void load(TA_Point position, int newDelay = 0, TA_ExplosionType type = TA_EXPLOSION_CHARACTER);
     bool update() override;
     void draw() override;
-    int getDrawPriority() override {return 1;}
+    int getDrawPriority() override { return 1; }
     int getCollisionType() override;
 };
 

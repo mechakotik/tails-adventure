@@ -23,12 +23,7 @@ private:
     void placeBomb();
     void destroy() override;
 
-    enum State {
-        STATE_IDLE,
-        STATE_WALK,
-        STATE_ATTACK,
-        STATE_FALL
-    };
+    enum State { STATE_IDLE, STATE_WALK, STATE_ATTACK, STATE_FALL };
 
     State state = STATE_IDLE;
     bool direction = 0, bombPlaced = 0;
@@ -38,7 +33,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 class TA_NezuBomb : public TA_Object {

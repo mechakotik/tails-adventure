@@ -1,8 +1,7 @@
 #include "devmenu_screen.h"
 #include "save.h"
 
-void TA_DevmenuScreen::init()
-{
+void TA_DevmenuScreen::init() {
     controller.load();
     levels.emplace_back("maps/pf/pf1");
     levels.emplace_back("maps/pf/pf2");
@@ -28,11 +27,10 @@ void TA_DevmenuScreen::init()
     selectedFont.setMapping(mapping);
 }
 
-TA_ScreenState TA_DevmenuScreen::update()
-{
+TA_ScreenState TA_DevmenuScreen::update() {
     controller.update();
 
-    auto addMod = [&](int &x, int add, int min, int max) {
+    auto addMod = [&](int& x, int add, int min, int max) {
         x += add;
         if(x < min) {
             x = max;
@@ -64,8 +62,7 @@ TA_ScreenState TA_DevmenuScreen::update()
             if(controller.isJustChangedDirection()) {
                 if(controller.getDirection() == TA_DIRECTION_LEFT) {
                     addMod(levelPosition, -1, 0, int(levels.size()) - 1);
-                }
-                else if(controller.getDirection() == TA_DIRECTION_RIGHT) {
+                } else if(controller.getDirection() == TA_DIRECTION_RIGHT) {
                     addMod(levelPosition, 1, 0, int(levels.size()) - 1);
                 }
             }
@@ -74,8 +71,7 @@ TA_ScreenState TA_DevmenuScreen::update()
 
     if(menuPosition == TA_DEVMENU_ELEMENT_LEVEL) {
         selectedFont.drawTextCentered(22, "Level: " + levels[levelPosition], {-1, 0});
-    }
-    else {
+    } else {
         normalFont.drawTextCentered(22, "Level: " + levels[levelPosition], {-1, 0});
     }
 
@@ -88,7 +84,4 @@ TA_ScreenState TA_DevmenuScreen::update()
     return TA_SCREENSTATE_CURRENT;
 }
 
-void TA_DevmenuScreen::quit()
-{
-
-}
+void TA_DevmenuScreen::quit() {}

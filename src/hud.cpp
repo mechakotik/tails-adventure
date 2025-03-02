@@ -1,17 +1,16 @@
-#include <cmath>
 #include "hud.h"
+#include <cmath>
 #include "character.h"
 #include "save.h"
 #include "screen.h"
 
-void TA_Hud::load(TA_Links newLinks)
-{
+void TA_Hud::load(TA_Links newLinks) {
     links = newLinks;
     ringMonitor.loadFromToml("hud/items.toml");
     ringMonitor.setAnimation("ring_monitor");
     ringMonitor.setPosition(2, 4);
 
-    for(int pos = 0; pos < 2; pos ++) {
+    for(int pos = 0; pos < 2; pos++) {
         ringDigits[pos].load("hud/numbers.png", 6, 11);
         ringDigits[pos].setPosition(20 + 6 * pos, 6);
     }
@@ -40,8 +39,7 @@ void TA_Hud::load(TA_Links newLinks)
     pauseSound.load("sound/enter.ogg", TA_SOUND_CHANNEL_SFX2);
 }
 
-void TA_Hud::update()
-{
+void TA_Hud::update() {
     updatePause();
     if(!paused) {
         updateRingsCounter();
@@ -49,8 +47,7 @@ void TA_Hud::update()
     }
 }
 
-void TA_Hud::updatePause()
-{
+void TA_Hud::updatePause() {
     if(!paused) {
         pauseButton.setPosition(TA_Point(TA::screenWidth - 72, 0));
         pauseButton.update();
@@ -67,16 +64,14 @@ void TA_Hud::updatePause()
     updatePauseMenu();
 }
 
-void TA_Hud::updatePauseMenu()
-{
+void TA_Hud::updatePauseMenu() {
     timer += TA::elapsedTime;
 
     if(exitPause) {
         if(timer < fadeTime) {
             setHudAlpha(255 * timer / fadeTime);
             pauseMenu.setAlpha(255 - 255 * timer / fadeTime);
-        }
-        else {
+        } else {
             setHudAlpha(255);
             timer = 0;
             paused = exitPause = false;
@@ -106,8 +101,7 @@ void TA_Hud::updatePauseMenu()
     }
 }
 
-void TA_Hud::setHudAlpha(int alpha)
-{
+void TA_Hud::setHudAlpha(int alpha) {
     links.controller->setAlpha(200 * alpha / 255);
     ringMonitor.setAlpha(alpha);
     flightBarSprite.setAlpha(alpha);
@@ -117,13 +111,12 @@ void TA_Hud::setHudAlpha(int alpha)
     rightSprite.setAlpha(alpha);
     pauseSprite.setAlpha(alpha);
 
-    for(int digit = 0; digit < 2; digit ++) {
+    for(int digit = 0; digit < 2; digit++) {
         ringDigits[digit].setAlpha(alpha);
     }
 }
 
-void TA_Hud::updateRingsCounter()
-{
+void TA_Hud::updateRingsCounter() {
     int actualRings = TA::save::getSaveParameter("rings");
     actualRings = std::max(actualRings, 0);
     actualRings = std::min(actualRings, 99);
@@ -131,17 +124,15 @@ void TA_Hud::updateRingsCounter()
     timer += TA::elapsedTime;
     if(timer > ringAddTime) {
         if(rings < actualRings) {
-            rings ++;
-        }
-        else if(rings > actualRings) {
-            rings --;
+            rings++;
+        } else if(rings > actualRings) {
+            rings--;
         }
         timer = std::fmod(timer, ringAddTime);
     }
 }
 
-void TA_Hud::updateCurrentItem()
-{
+void TA_Hud::updateCurrentItem() {
     leftButton.setPosition(TA_Point(TA::screenWidth - 52, 0));
     rightButton.setPosition(TA_Point(TA::screenWidth - 28, 0));
     leftButton.update();
@@ -150,8 +141,7 @@ void TA_Hud::updateCurrentItem()
     int direction = 0;
     if(links.controller->isJustPressed(TA_BUTTON_LB) || leftButton.isJustPressed()) {
         direction = -1;
-    }
-    else if(links.controller->isJustPressed(TA_BUTTON_RB) || rightButton.isJustPressed()) {
+    } else if(links.controller->isJustPressed(TA_BUTTON_RB) || rightButton.isJustPressed()) {
         direction = 1;
     }
     if(direction != 0) {
@@ -164,8 +154,7 @@ void TA_Hud::updateCurrentItem()
     TA::save::setSaveParameter(itemPositionKey, itemPosition);
 }
 
-void TA_Hud::draw()
-{
+void TA_Hud::draw() {
     drawCurrentItem();
     drawRingsCounter();
     if(links.controller->isTouchscreen()) {
@@ -177,8 +166,7 @@ void TA_Hud::draw()
     }
 }
 
-void TA_Hud::drawCurrentItem()
-{
+void TA_Hud::drawCurrentItem() {
     std::string itemKey = (links.seaFox ? "seafox_item_slot" : "item_slot") + std::to_string(itemPosition);
     item = TA::save::getSaveParameter(itemKey);
     if(item == -1) {
@@ -191,15 +179,13 @@ void TA_Hud::drawCurrentItem()
 
     if(links.controller->isTouchscreen()) {
         itemSprite.setPosition(TA::screenWidth - 36, 4);
-    }
-    else {
+    } else {
         itemSprite.setPosition(2, 22);
     }
     itemSprite.draw();
 }
 
-void TA_Hud::drawTouchControls()
-{
+void TA_Hud::drawTouchControls() {
     leftSprite.setPosition(TA::screenWidth - 52, 4);
     rightSprite.setPosition(TA::screenWidth - 20, 4);
     pauseSprite.setPosition(TA::screenWidth - 72, 4);
@@ -209,8 +195,7 @@ void TA_Hud::drawTouchControls()
     pauseSprite.draw();
 }
 
-void TA_Hud::drawRingsCounter()
-{
+void TA_Hud::drawRingsCounter() {
     ringMonitor.draw();
     if(rings >= 10) {
         ringDigits[0].setFrame(rings / 10);
@@ -221,17 +206,15 @@ void TA_Hud::drawRingsCounter()
     ringDigits[1].draw();
 }
 
-void TA_Hud::drawFlightBar()
-{
+void TA_Hud::drawFlightBar() {
     if(!links.character) {
         return;
     }
-    
+
     double flightTime = links.character->getFlightTime();
     if(links.character->displayFlightTimeBar() && flightTime < 1) {
         flightBarX = std::min(flightBarRight, flightBarX + flightBarSpeed * TA::elapsedTime);
-    }
-    else {
+    } else {
         flightBarX = std::max(flightBarLeft, flightBarX - flightBarSpeed * TA::elapsedTime);
     }
 

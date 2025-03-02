@@ -1,10 +1,9 @@
-#include <cmath>
 #include "drill_mole.h"
+#include <cmath>
 #include "explosion.h"
 #include "ring.h"
 
-void TA_DrillMole::load(TA_Point position)
-{
+void TA_DrillMole::load(TA_Point position) {
     this->position = position;
     startY = position.y;
 
@@ -15,8 +14,7 @@ void TA_DrillMole::load(TA_Point position)
     TA_Object::updatePosition();
 }
 
-bool TA_DrillMole::update()
-{
+bool TA_DrillMole::update() {
     timer += TA::elapsedTime;
     timer = std::fmod(timer, 2 * (idleTime + moveTime));
     updatePosition();
@@ -28,8 +26,7 @@ bool TA_DrillMole::update()
     return true;
 }
 
-void TA_DrillMole::updatePosition()
-{
+void TA_DrillMole::updatePosition() {
     State state;
     double stateTime;
     std::tie(state, stateTime) = getStateAndTime();
@@ -52,8 +49,7 @@ void TA_DrillMole::updatePosition()
     TA_Object::updatePosition();
 }
 
-std::pair<TA_DrillMole::State, double> TA_DrillMole::getStateAndTime()
-{
+std::pair<TA_DrillMole::State, double> TA_DrillMole::getStateAndTime() {
     if(timer < idleTime) {
         return {STATE_IDLE_UP, timer / idleTime};
     }
@@ -66,8 +62,7 @@ std::pair<TA_DrillMole::State, double> TA_DrillMole::getStateAndTime()
     return {STATE_MOVE_UP, (timer - (2 * idleTime + moveTime)) / moveTime};
 }
 
-bool TA_DrillMole::shouldBeDestroyed()
-{
+bool TA_DrillMole::shouldBeDestroyed() {
     if(getStateAndTime().first != STATE_IDLE_UP) {
         return false;
     }
@@ -77,8 +72,7 @@ bool TA_DrillMole::shouldBeDestroyed()
     return false;
 }
 
-void TA_DrillMole::destroy()
-{
+void TA_DrillMole::destroy() {
     objectSet->spawnObject<TA_Explosion>(position + TA_Point(3, 5));
     objectSet->resetInstaShield();
     if(objectSet->enemyShouldDropRing()) {

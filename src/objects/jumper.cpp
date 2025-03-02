@@ -2,16 +2,14 @@
 #include "dead_kukku.h"
 #include "tools.h"
 
-void TA_Jumper::load(TA_Point position)
-{
+void TA_Jumper::load(TA_Point position) {
     this->position = position;
     loadFromToml("objects/jumper.toml");
     hitbox.setRectangle(TA_Point(1, 1), TA_Point(15, 31));
     updatePosition();
 }
 
-bool TA_Jumper::update()
-{
+bool TA_Jumper::update() {
     switch(state) {
         case STATE_IDLE:
             updateIdle();
@@ -33,38 +31,33 @@ bool TA_Jumper::update()
     return true;
 }
 
-void TA_Jumper::updateIdle()
-{
+void TA_Jumper::updateIdle() {
     setAnimation("jump");
     updateDirection();
-    
+
     if(isCloseToCharacter()) {
         timer += TA::elapsedTime;
         if(timer > idleTime) {
             initAim();
         }
-    }
-    else {
+    } else {
         timer = 0;
     }
 }
 
-void TA_Jumper::initAim()
-{
+void TA_Jumper::initAim() {
     state = STATE_AIM;
     setAnimation("aim");
 }
 
-void TA_Jumper::updateAim()
-{
+void TA_Jumper::updateAim() {
     if(!isAnimated()) {
         setJumpVelocity();
         state = STATE_JUMP;
     }
 }
 
-void TA_Jumper::setJumpVelocity()
-{
+void TA_Jumper::setJumpVelocity() {
     int tileDistance = (std::abs(getDistanceToCharacter().x) + 8) / 16;
     if(tileDistance > 3 && TA::random::next() % 3 == 0) {
         tileDistance = 3;
@@ -81,8 +74,7 @@ void TA_Jumper::setJumpVelocity()
     velocity.y = (deltaY - jumpTime * (jumpTime - 1) * gravity / 2) / jumpTime;
 }
 
-void TA_Jumper::updateJump()
-{
+void TA_Jumper::updateJump() {
     setAnimation("jump");
 
     velocity.y += gravity * TA::elapsedTime;
@@ -100,21 +92,18 @@ void TA_Jumper::updateJump()
     }
 }
 
-void TA_Jumper::updateDirection()
-{
+void TA_Jumper::updateDirection() {
     TA_Point distance = getDistanceToCharacter();
     direction = (distance.x > 0);
     setFlip(direction);
 }
 
-bool TA_Jumper::isCloseToCharacter()
-{
+bool TA_Jumper::isCloseToCharacter() {
     TA_Point distance = getDistanceToCharacter();
     return abs(distance.x) <= 128 && abs(distance.y) <= 96;
 }
 
-bool TA_Jumper::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_Jumper::checkPawnCollision(TA_Polygon& hitbox) {
     int flags = objectSet->checkCollision(hitbox);
     if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) {
         return true;
@@ -122,16 +111,14 @@ bool TA_Jumper::checkPawnCollision(TA_Polygon &hitbox)
     return false;
 }
 
-bool TA_Jumper::shouldBeDestroyed()
-{
+bool TA_Jumper::shouldBeDestroyed() {
     if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
         return true;
     }
     return false;
 }
 
-void TA_Jumper::destroy()
-{
+void TA_Jumper::destroy() {
     objectSet->spawnObject<TA_DeadKukku>(position - TA_Point(4, 1));
     objectSet->resetInstaShield();
 }

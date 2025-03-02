@@ -1,34 +1,30 @@
 #include "screen_state_machine.h"
-
-#include "intro_screen.h"
-#include "title_screen.h"
-#include "game_screen.h"
 #include "devmenu_screen.h"
-#include "map_screen.h"
-#include "house_screen.h"
-#include "game_over_screen.h"
-#include "main_menu_screen.h"
 #include "error.h"
+#include "game_over_screen.h"
+#include "game_screen.h"
+#include "house_screen.h"
+#include "intro_screen.h"
+#include "main_menu_screen.h"
+#include "map_screen.h"
 #include "save.h"
+#include "title_screen.h"
 
-void TA_ScreenStateMachine::init()
-{
+void TA_ScreenStateMachine::init() {
     if(TA::arguments.count("--devmenu")) {
         currentState = TA_SCREENSTATE_DEVMENU;
         currentScreen = std::make_unique<TA_DevmenuScreen>();
-    }
-    else {
+    } else {
         currentState = TA_SCREENSTATE_TITLE;
         currentScreen = std::make_unique<TA_TitleScreen>();
     }
 
     neededState = TA_SCREENSTATE_CURRENT;
-    currentScreen -> init();
+    currentScreen->init();
 }
 
-bool TA_ScreenStateMachine::update()
-{
-    TA_ScreenState returnedState = currentScreen -> update();
+bool TA_ScreenStateMachine::update() {
+    TA_ScreenState returnedState = currentScreen->update();
     if(returnedState == TA_SCREENSTATE_QUIT) {
         returnedState = TA_SCREENSTATE_CURRENT;
         quitNeeded = true;
@@ -48,11 +44,10 @@ bool TA_ScreenStateMachine::update()
 
     if(changeState) {
         TA::drawShadow(255);
-        currentScreen -> quit();
+        currentScreen->quit();
         TA::save::writeToFile();
 
-        switch(neededState)
-        {
+        switch(neededState) {
             case TA_SCREENSTATE_INTRO:
                 currentScreen = std::make_unique<TA_IntroScreen>();
                 break;
@@ -82,7 +77,7 @@ bool TA_ScreenStateMachine::update()
                 break;
         }
 
-        currentScreen -> init();
+        currentScreen->init();
         currentState = neededState;
         neededState = TA_SCREENSTATE_CURRENT;
         changeState = false;
@@ -97,7 +92,6 @@ bool TA_ScreenStateMachine::update()
     return false;
 }
 
-TA_ScreenStateMachine::~TA_ScreenStateMachine()
-{
+TA_ScreenStateMachine::~TA_ScreenStateMachine() {
     currentScreen->quit();
 }

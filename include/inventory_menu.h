@@ -1,10 +1,10 @@
 #ifndef TA_INVENTORY_MENU_H
 #define TA_INVENTORY_MENU_H
 
-#include "sprite.h"
 #include "controller.h"
 #include "font.h"
 #include "sound.h"
+#include "sprite.h"
 
 class TA_InventoryMenu {
 private:
@@ -33,7 +33,7 @@ private:
     int getInventoryItem(int slot);
     void setInventoryItem(int slot, int value);
     std::string getParameterName(int slot);
-    int getLeftX() {return TA::screenWidth / 2 - 80;}
+    int getLeftX() { return TA::screenWidth / 2 - 80; }
     bool characterHasItem(int item);
     bool canPlaceItem(int item);
     void placeItem(int slot, int item);
@@ -68,8 +68,8 @@ public:
     void draw();
     void show();
     void hide();
-    bool isShown() {return shown || hideTimeLeft > 0;}
-    void setReplace(bool replace) {this->replace = replace;}
+    bool isShown() { return shown || hideTimeLeft > 0; }
+    void setReplace(bool replace) { this->replace = replace; }
 };
 
 #endif // TA_INVENTORY_MENU_H

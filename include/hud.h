@@ -2,12 +2,11 @@
 #define TA_HUD_H
 
 #include <array>
-
-#include "pause_menu.h"
-#include "sprite.h"
 #include "links.h"
-#include "sound.h"
+#include "pause_menu.h"
 #include "screen.h"
+#include "sound.h"
+#include "sprite.h"
 #include "touchscreen.h"
 
 class TA_Hud {
@@ -47,9 +46,9 @@ public:
     void load(TA_Links newLinks);
     void update();
     void draw();
-    [[nodiscard]] int getCurrentItem() const {return item;}
-    [[nodiscard]] bool isPaused() const {return paused;}
-    [[nodiscard]] TA_ScreenState getTransition() const {return transition;}
+    [[nodiscard]] int getCurrentItem() const { return item; }
+    [[nodiscard]] bool isPaused() const { return paused; }
+    [[nodiscard]] TA_ScreenState getTransition() const { return transition; }
 };
 
 #endif // TA_HUD_H

@@ -1,9 +1,8 @@
-#include <algorithm>
 #include "camera.h"
+#include <algorithm>
 #include "tools.h"
 
-void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
-{
+void TA_Camera::setFollowPosition(TA_Point* newFollowPosition) {
     updateOffset();
     followPosition = newFollowPosition;
 
@@ -15,21 +14,18 @@ void TA_Camera::setFollowPosition(TA_Point *newFollowPosition)
     }
 }
 
-void TA_Camera::setLockPosition(TA_Point newLockPosition)
-{
+void TA_Camera::setLockPosition(TA_Point newLockPosition) {
     lockPosition = newLockPosition;
     locked = true;
     lockedX = lockedY = false;
 }
 
-void TA_Camera::forceLockX()
-{
+void TA_Camera::forceLockX() {
     position.x = lockPosition.x;
     lockedX = true;
 }
 
-void TA_Camera::update(bool ground, bool spring)
-{
+void TA_Camera::update(bool ground, bool spring) {
     updateOffset();
     double movementSpeed = airSpeed;
     if(ground) {
@@ -39,11 +35,10 @@ void TA_Camera::update(bool ground, bool spring)
         movementSpeed = springSpeed;
     }
 
-    auto move = [&] (double current, double need) {
+    auto move = [&](double current, double need) {
         if(current < need) {
             current = std::min(need, current + movementSpeed * TA::elapsedTime);
-        }
-        else {
+        } else {
             current = std::max(need, current - movementSpeed * TA::elapsedTime);
         }
         return current;
@@ -59,32 +54,32 @@ void TA_Camera::update(bool ground, bool spring)
     if(!lockedX) {
         if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
             position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
-        }
-        else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
+        } else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
             position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
         }
     }
     if(!lockedY) {
         if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
-            position.y = move(position.y, watchPosition.y  - (offset ? yBottomOffset : 0));
-        }
-        else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
+            position.y = move(position.y, watchPosition.y - (offset ? yBottomOffset : 0));
+        } else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
             position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
         }
     }
 
     if(locked && lockPosition.getDistance(position) <= maxLockDistance) {
-        if(!lockedX && (TA::sign(previousPosition.x - lockPosition.x) != TA::sign(position.x - lockPosition.x) || abs(position.x - lockPosition.x) < 0.5)) {
+        if(!lockedX && (TA::sign(previousPosition.x - lockPosition.x) != TA::sign(position.x - lockPosition.x) ||
+                           abs(position.x - lockPosition.x) < 0.5)) {
             position.x = lockPosition.x;
             lockedX = true;
         }
-        if(!lockedY && (TA::sign(previousPosition.y - lockPosition.y) != TA::sign(position.y - lockPosition.y) || abs(position.y - lockPosition.y) < 0.5)) {
+        if(!lockedY && (TA::sign(previousPosition.y - lockPosition.y) != TA::sign(position.y - lockPosition.y) ||
+                           abs(position.y - lockPosition.y) < 0.5)) {
             position.y = lockPosition.y;
             lockedY = true;
         }
     }
 
-    auto normalize = [&] (double current, double left, double right) {
+    auto normalize = [&](double current, double left, double right) {
         current = std::max(current, left);
         current = std::min(current, right);
         return current;
@@ -101,19 +96,16 @@ void TA_Camera::update(bool ground, bool spring)
             shakeDelta.x = (TA::random::next() % 2 == 0 ? -shakeRadius : shakeRadius);
             shakeDelta.y = (TA::random::next() % 2 == 0 ? -shakeRadius : shakeRadius);
         }
-    }
-    else {
+    } else {
         shakeDelta = {0, 0};
     }
 }
 
-void TA_Camera::updateOffset()
-{
+void TA_Camera::updateOffset() {
     if(TA::levelPath == "maps/pm/pm4") {
         yTopOffset = -8;
         yBottomOffset = 16;
-    }
-    else {
+    } else {
         yTopOffset = 8;
         yBottomOffset = 16;
     }

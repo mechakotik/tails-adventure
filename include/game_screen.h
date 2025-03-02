@@ -1,16 +1,16 @@
 #ifndef TA_GAME_SCREEN_H
 #define TA_GAME_SCREEN_H
 
-#include "screen.h"
-#include "tilemap.h"
 #include "camera.h"
-#include "geometry.h"
 #include "character.h"
-#include "sea_fox.h"
 #include "controller.h"
-#include "links.h"
+#include "geometry.h"
 #include "hud.h"
+#include "links.h"
 #include "object_set.h"
+#include "screen.h"
+#include "sea_fox.h"
+#include "tilemap.h"
 
 class TA_GameScreen : public TA_Screen {
 private:
@@ -31,6 +31,5 @@ public:
     TA_ScreenState update() override;
     void quit() override;
 };
-
 
 #endif // TA_GAME_SCREEN_H

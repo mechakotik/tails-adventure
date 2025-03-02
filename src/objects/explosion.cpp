@@ -1,9 +1,8 @@
 #include "explosion.h"
-#include "tools.h"
 #include "error.h"
+#include "tools.h"
 
-void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type)
-{
+void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type) {
     loadFromToml("objects/explosion.toml");
     setPosition(position);
     setAnimation("explosion");
@@ -14,8 +13,7 @@ void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type)
     hitbox.setPosition(position);
 }
 
-bool TA_Explosion::update()
-{
+bool TA_Explosion::update() {
     timer += TA::elapsedTime;
     if(!isAnimated()) {
         return false;
@@ -23,20 +21,17 @@ bool TA_Explosion::update()
     return true;
 }
 
-int TA_Explosion::getCollisionType()
-{
+int TA_Explosion::getCollisionType() {
     int collisionType = TA_COLLISION_TRANSPARENT;
     if(type == TA_EXPLOSION_CHARACTER && delay == 0) {
         collisionType |= TA_COLLISION_ATTACK;
-    }
-    else if(type == TA_EXPLOSION_ENEMY) {
+    } else if(type == TA_EXPLOSION_ENEMY) {
         collisionType = TA_COLLISION_DAMAGE;
     }
     return collisionType;
 }
 
-void TA_Explosion::draw()
-{
+void TA_Explosion::draw() {
     if(timer >= delay) {
         TA_Sprite::draw();
     }

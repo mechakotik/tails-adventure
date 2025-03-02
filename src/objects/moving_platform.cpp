@@ -1,8 +1,7 @@
 #include "moving_platform.h"
 #include "character.h"
 
-void TA_MovingPlatform::load(TA_Point startPosition, TA_Point endPosition, bool idle)
-{
+void TA_MovingPlatform::load(TA_Point startPosition, TA_Point endPosition, bool idle) {
     this->startPosition = startPosition;
     this->endPosition = endPosition;
     this->idle = idle;
@@ -13,12 +12,10 @@ void TA_MovingPlatform::load(TA_Point startPosition, TA_Point endPosition, bool 
     updatePosition();
 }
 
-bool TA_MovingPlatform::update()
-{
+bool TA_MovingPlatform::update() {
     if(idle) {
         updateIdle();
-    }
-    else {
+    } else {
         movePlatform();
         moveCharacter();
     }
@@ -26,15 +23,13 @@ bool TA_MovingPlatform::update()
     return true;
 }
 
-void TA_MovingPlatform::updateIdle()
-{
+void TA_MovingPlatform::updateIdle() {
     if(characterIsOnTop()) {
         idle = false;
     }
 }
 
-void TA_MovingPlatform::movePlatform()
-{
+void TA_MovingPlatform::movePlatform() {
     prevPosition = position;
     if(moveByX()) {
         position.x += TA::sign(endPosition.x - startPosition.x) * (reverse ? -1 : 1) * speed * TA::elapsedTime;
@@ -42,8 +37,7 @@ void TA_MovingPlatform::movePlatform()
             position.x = (reverse ? startPosition.x : endPosition.x);
             reverse = !reverse;
         }
-    }
-    else {
+    } else {
         position.y += TA::sign(endPosition.y - startPosition.y) * (reverse ? -1 : 1) * speed * TA::elapsedTime;
         if(exceedsBorder()) {
             position.y = (reverse ? startPosition.y : endPosition.y);
@@ -52,46 +46,39 @@ void TA_MovingPlatform::movePlatform()
     }
 }
 
-void TA_MovingPlatform::moveCharacter()
-{
+void TA_MovingPlatform::moveCharacter() {
     if(characterIsOnTop()) {
         objectSet->getLinks().character->addToPosition(position - prevPosition);
     }
 }
 
-bool TA_MovingPlatform::characterIsOnTop()
-{
+bool TA_MovingPlatform::characterIsOnTop() {
     TA_Polygon topHitbox;
     topHitbox.setRectangle(TA_Point(0, -0.01), TA_Point(32, 0.01));
     topHitbox.setPosition(prevPosition);
 
     if((objectSet->checkCollision(topHitbox) & TA_COLLISION_CHARACTER) &&
-        objectSet->getLinks().character->isOnGround() &&
-        !objectSet->getLinks().character->isClimbing()) {
+        objectSet->getLinks().character->isOnGround() && !objectSet->getLinks().character->isClimbing()) {
         return true;
     }
     return false;
 }
 
-bool TA_MovingPlatform::moveByX()
-{
+bool TA_MovingPlatform::moveByX() {
     return TA::equal(startPosition.y, endPosition.y);
 }
 
-bool TA_MovingPlatform::exceedsBorder()
-{
+bool TA_MovingPlatform::exceedsBorder() {
     if(moveByX()) {
         double startX = startPosition.x, endX = endPosition.x;
         return !(std::min(startX, endX) <= position.x && position.x <= std::max(startX, endX));
-    }
-    else {
+    } else {
         double startY = startPosition.y, endY = endPosition.y;
         return !(std::min(startY, endY) <= position.y && position.y <= std::max(startY, endY));
     }
 }
 
-int TA_MovingPlatform::getCollisionType()
-{
+int TA_MovingPlatform::getCollisionType() {
     if(idle) {
         return TA_COLLISION_SOLID;
     }

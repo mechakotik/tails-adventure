@@ -30,9 +30,9 @@ void TA_Tilemap::load(std::string filename) {
     }
 
     tilemap.resize(layerCount);
-    for(int layer = 0; layer < layerCount; layer ++) {
+    for(int layer = 0; layer < layerCount; layer++) {
         tilemap[layer].resize(width);
-        for(int pos = 0; pos < width; pos ++) {
+        for(int pos = 0; pos < width; pos++) {
             tilemap[layer][pos].resize(height);
         }
     }
@@ -44,7 +44,8 @@ void TA_Tilemap::load(std::string filename) {
 
     borderPolygons[0].setRectangle(TA_Point(0, -16), TA_Point(width * tileWidth, 0));
     borderPolygons[1].setRectangle(TA_Point(-16, 0), TA_Point(0, height * tileHeight));
-    borderPolygons[2].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
+    borderPolygons[2].setRectangle(
+        TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
 
     if(collisionLayers.empty()) {
         collisionLayers.push_back(0);
@@ -80,7 +81,9 @@ void TA_Tilemap::loadTileset(const tmx::Tileset& tiles) {
             continue;
         }
         if(tile.objectGroup().objects().size() > 1) {
-            TA::printWarning("Multiple objects in tile are not supported, using the first object");
+            TA::printWarning(
+                "Multiple objects in tile are not supported, using the first "
+                "object");
         }
         tmx::Object object = tile.objectGroup().objects()[0];
         if(object.type() != tmx::Object::Type::POLYGON) {
@@ -138,8 +141,8 @@ void TA_Tilemap::draw(int priority) {
             ry = std::min(height - 1, static_cast<int>((cameraPos.y + TA::screenHeight) / tileWidth));
         }
 
-        for(int tileX = lx; tileX <= rx; tileX ++) {
-            for(int tileY = ly; tileY <= ry; tileY ++) {
+        for(int tileX = lx; tileX <= rx; tileX++) {
+            for(int tileY = ly; tileY <= ry; tileY++) {
                 if(tilemap[layer][tileX][tileY] != -1) {
                     TA_Sprite& sprite = tileset[tilemap[layer][tileX][tileY]].sprite;
                     sprite.setPosition(position + TA_Point(tileX * tileWidth, tileY * tileHeight));
@@ -157,16 +160,15 @@ void TA_Tilemap::draw(int priority) {
                 tileset[tile].sprite.setUpdateAnimation(false);
             }
         }
-        for(int layer = 0; layer < std::max(1, layerCount - 1); layer ++) {
+        for(int layer = 0; layer < std::max(1, layerCount - 1); layer++) {
             drawLayer(layer);
         }
-    }
-    else if(priority == 1 && layerCount >= 2) {
+    } else if(priority == 1 && layerCount >= 2) {
         drawLayer(layerCount - 1);
     }
 }
 
-void TA_Tilemap::setCamera(TA_Camera *newCamera) {
+void TA_Tilemap::setCamera(TA_Camera* newCamera) {
     camera = newCamera;
     newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth, height * tileHeight)});
     for(size_t tile = 0; tile < tileset.size(); tile += 1) {
@@ -178,10 +180,10 @@ void TA_Tilemap::setPosition(TA_Point position) {
     this->position = position;
 }
 
-int TA_Tilemap::checkCollision(TA_Polygon &polygon) {
+int TA_Tilemap::checkCollision(TA_Polygon& polygon) {
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
 
-    for(int pos = 0; pos < polygon.size(); pos ++) {
+    for(int pos = 0; pos < polygon.size(); pos++) {
         TA_Point vertex = polygon.getVertex(pos);
         minX = std::min(minX, int(vertex.x / tileWidth));
         maxX = std::max(maxX, int(vertex.x / tileWidth));
@@ -189,7 +191,7 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon) {
         maxY = std::max(maxY, int(vertex.y / tileHeight));
     }
 
-    auto normalize = [&](int &value, int left, int right) {
+    auto normalize = [&](int& value, int left, int right) {
         value = std::max(value, left);
         value = std::min(value, right);
     };
@@ -201,7 +203,7 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon) {
 
     int flags = 0;
 
-    auto checkCollisionWithTile = [&] (int layer, int tileX, int tileY) {
+    auto checkCollisionWithTile = [&](int layer, int tileX, int tileY) {
         int tileId = tilemap[layer][tileX][tileY];
         if(tileId == -1) {
             return;
@@ -216,14 +218,14 @@ int TA_Tilemap::checkCollision(TA_Polygon &polygon) {
     };
 
     for(int layer : collisionLayers) {
-        for(int tileX = minX; tileX <= maxX; tileX ++) {
-            for(int tileY = minY; tileY <= maxY; tileY ++) {
+        for(int tileX = minX; tileX <= maxX; tileX++) {
+            for(int tileY = minY; tileY <= maxY; tileY++) {
                 checkCollisionWithTile(layer, tileX, tileY);
             }
         }
     }
 
-    for(int pos = 0; pos < (int)borderPolygons.size(); pos ++) {
+    for(int pos = 0; pos < (int)borderPolygons.size(); pos++) {
         if(borderPolygons[pos].intersects(polygon)) {
             flags |= TA_COLLISION_SOLID;
         }

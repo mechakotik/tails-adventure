@@ -1,9 +1,9 @@
 #include "beehive.h"
+#include "explosion.h"
+#include "geometry.h"
+#include "sprite.h"
 #include "tilemap.h"
 #include "tools.h"
-#include "explosion.h"
-#include "sprite.h"
-#include "geometry.h"
 
 void TA_BeeHive::load(TA_Point position) {
     loadFromToml("objects/beehive.toml");
@@ -44,7 +44,6 @@ int TA_BeeHive::getCollisionType() {
     }
     return TA_COLLISION_TRANSPARENT;
 }
-
 
 void TA_Bee::load(TA_Point position, TA_BeeHive* hive) {
     loadFromToml("objects/beehive.toml");

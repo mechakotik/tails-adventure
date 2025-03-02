@@ -1,10 +1,9 @@
 #include "bat_robot.h"
-#include "tools.h"
 #include "explosion.h"
 #include "ring.h"
+#include "tools.h"
 
-void TA_BatRobot::load(TA_Point newPosition)
-{
+void TA_BatRobot::load(TA_Point newPosition) {
     loadFromToml("objects/bat_robot.toml");
     setAnimation("idle");
 
@@ -13,15 +12,13 @@ void TA_BatRobot::load(TA_Point newPosition)
     updatePosition();
 }
 
-bool TA_BatRobot::checkPawnCollision(TA_Polygon &collisionHitbox)
-{
+bool TA_BatRobot::checkPawnCollision(TA_Polygon& collisionHitbox) {
     int flags = objectSet->checkCollision(collisionHitbox);
     return flags & TA_COLLISION_SOLID;
 }
 
-bool TA_BatRobot::update()
-{
-    switch (state) {
+bool TA_BatRobot::update() {
+    switch(state) {
         case STATE_IDLE: {
             setAnimation("idle");
             TA_Point characterPosition = objectSet->getCharacterPosition();
@@ -42,8 +39,7 @@ bool TA_BatRobot::update()
                 position.y += 0.1;
                 velocity = {TA::sign(characterPosition.x - position.x) * 0.5, findOptimalSpeed(deltaY)};
                 state = STATE_ATTACK;
-            }
-            else if(abs(characterPosition.x - centeredX) >= 82 || characterPosition.y - position.y >= 82) {
+            } else if(abs(characterPosition.x - centeredX) >= 82 || characterPosition.y - position.y >= 82) {
                 state = STATE_IDLE;
             }
             break;
@@ -77,8 +73,7 @@ bool TA_BatRobot::update()
     return true;
 }
 
-double TA_BatRobot::findOptimalSpeed(double deltaY)
-{
+double TA_BatRobot::findOptimalSpeed(double deltaY) {
     auto distance = [&](double jumpSpeed) {
         double t = -(jumpSpeed - gravity / 2) / gravity;
         return t * jumpSpeed + t * (t - 1) / 2 * gravity;
@@ -88,8 +83,7 @@ double TA_BatRobot::findOptimalSpeed(double deltaY)
         double mid = (left + right) / 2;
         if(distance(mid) < deltaY) {
             left = mid;
-        }
-        else {
+        } else {
             right = mid;
         }
     }

@@ -1,21 +1,18 @@
+#include "game.h"
 #include <chrono>
 #include <thread>
-
 #include "SDL3_image/SDL_image.h"
 #include "SDL3_mixer/SDL_mixer.h"
-
-#include "game.h"
 #include "error.h"
-#include "sound.h"
-#include "touchscreen.h"
-#include "tools.h"
 #include "gamepad.h"
-#include "resource_manager.h"
 #include "keyboard.h"
+#include "resource_manager.h"
 #include "save.h"
+#include "sound.h"
+#include "tools.h"
+#include "touchscreen.h"
 
-TA_Game::TA_Game()
-{
+TA_Game::TA_Game() {
     TA::save::load();
     initSDL();
     createWindow();
@@ -30,9 +27,9 @@ TA_Game::TA_Game()
     screenStateMachine.init();
 }
 
-void TA_Game::initSDL()
-{
-    if(!SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD | SDL_INIT_EVENTS | SDL_INIT_SENSOR)) {
+void TA_Game::initSDL() {
+    if(!SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD |
+                 SDL_INIT_EVENTS | SDL_INIT_SENSOR)) {
         TA::handleSDLError("%s", "SDL init failed");
     }
     if(Mix_Init(MIX_INIT_OGG) != MIX_INIT_OGG) {
@@ -48,8 +45,7 @@ void TA_Game::initSDL()
     SDL_HideCursor();
 }
 
-void TA_Game::createWindow()
-{
+void TA_Game::createWindow() {
     TA::window = SDL_CreateWindow("Tails Adventure", defaultWindowWidth, defaultWindowHeight, SDL_WINDOW_FULLSCREEN);
     if(TA::window == nullptr) {
         TA::handleSDLError("%s", "Failed to create window");
@@ -66,15 +62,13 @@ void TA_Game::createWindow()
     SDL_SetRenderVSync(TA::renderer, (vsync == 2 ? -1 : vsync));
 }
 
-void TA_Game::toggleFullscreen()
-{
+void TA_Game::toggleFullscreen() {
     fullscreen = !fullscreen;
     SDL_SetWindowFullscreen(TA::window, fullscreen);
     updateWindowSize();
 }
 
-void TA_Game::updateWindowSize()
-{
+void TA_Game::updateWindowSize() {
     double pixelAR = (TA::save::getParameter("pixel_ar") == 0 ? 1 : double(7) / 8);
 
     if(!fullscreen) {
@@ -96,14 +90,15 @@ void TA_Game::updateWindowSize()
         if(targetTexture != nullptr) {
             SDL_DestroyTexture(targetTexture);
         }
-        targetTexture = SDL_CreateTexture(TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, targetWidth, targetHeight);
+        targetTexture = SDL_CreateTexture(
+            TA::renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, targetWidth, targetHeight);
     }
 
-    SDL_SetTextureScaleMode(targetTexture, TA::save::getParameter("scale_mode") ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
+    SDL_SetTextureScaleMode(
+        targetTexture, TA::save::getParameter("scale_mode") ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
 }
 
-bool TA_Game::process()
-{
+bool TA_Game::process() {
     updateWindowSize();
 
     TA::touchscreen::update();
@@ -113,19 +108,20 @@ bool TA_Game::process()
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {
-        if (event.type == SDL_EVENT_QUIT) {
+        if(event.type == SDL_EVENT_QUIT) {
             return false;
         }
-        if (event.type == SDL_EVENT_FINGER_DOWN || event.type == SDL_EVENT_FINGER_MOTION || event.type == SDL_EVENT_FINGER_UP) {
+        if(event.type == SDL_EVENT_FINGER_DOWN || event.type == SDL_EVENT_FINGER_MOTION ||
+            event.type == SDL_EVENT_FINGER_UP) {
             TA::touchscreen::handleEvent(event.tfinger);
-        }
-        else if(event.type == SDL_EVENT_GAMEPAD_ADDED || event.type == SDL_EVENT_GAMEPAD_REMOVED) {
+        } else if(event.type == SDL_EVENT_GAMEPAD_ADDED || event.type == SDL_EVENT_GAMEPAD_REMOVED) {
             TA::gamepad::handleEvent(event.gdevice);
         }
     }
 
     if(TA::keyboard::isScancodePressed(SDL_SCANCODE_RALT) && TA::keyboard::isScancodePressed(SDL_SCANCODE_RETURN) &&
-        (TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RALT) || TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RETURN))) {
+        (TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RALT) ||
+            TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_RETURN))) {
         toggleFullscreen();
     }
     if(screenStateMachine.isQuitNeeded()) {
@@ -134,13 +130,14 @@ bool TA_Game::process()
     return true;
 }
 
-void TA_Game::update()
-{
+void TA_Game::update() {
     currentTime = std::chrono::high_resolution_clock::now();
-    TA::elapsedTime = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) / 1e6 * 60;
+    TA::elapsedTime =
+        static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) /
+        1e6 * 60;
 
     TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
-    //TA::elapsedTime /= 10;
+    // TA::elapsedTime /= 10;
     startTime = currentTime;
 
     SDL_SetRenderTarget(TA::renderer, targetTexture);
@@ -152,7 +149,9 @@ void TA_Game::update()
     }
 
     if(TA::save::getParameter("frame_time")) {
-        int frameTime = static_cast<int>(std::chrono::duration_cast<std::chrono::microseconds>((std::chrono::high_resolution_clock::now() - startTime)).count());
+        int frameTime = static_cast<int>(std::chrono::duration_cast<std::chrono::microseconds>(
+            (std::chrono::high_resolution_clock::now() - startTime))
+                .count());
         frameTimeSum += frameTime;
         frame += 1;
         if(frame % 60 == 0) {
@@ -172,8 +171,7 @@ void TA_Game::update()
     SDL_RenderPresent(TA::renderer);
 }
 
-TA_Game::~TA_Game()
-{
+TA_Game::~TA_Game() {
     TA::gamepad::quit();
     TA::resmgr::quit();
 

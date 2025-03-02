@@ -1,10 +1,9 @@
 #include "nezu.h"
 #include "explosion.h"
-#include "tools.h"
 #include "ring.h"
+#include "tools.h"
 
-void TA_Nezu::load(TA_Point position)
-{
+void TA_Nezu::load(TA_Point position) {
     this->position = position;
 
     loadFromToml("objects/nezu.toml");
@@ -14,8 +13,7 @@ void TA_Nezu::load(TA_Point position)
     updatePosition();
 }
 
-bool TA_Nezu::update()
-{
+bool TA_Nezu::update() {
     switch(state) {
         case STATE_IDLE:
             updateIdle();
@@ -45,8 +43,7 @@ bool TA_Nezu::update()
     return true;
 }
 
-void TA_Nezu::destroy()
-{
+void TA_Nezu::destroy() {
     objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
     objectSet->resetInstaShield();
     if(objectSet->enemyShouldDropRing()) {
@@ -54,8 +51,7 @@ void TA_Nezu::destroy()
     }
 }
 
-void TA_Nezu::updateIdle()
-{
+void TA_Nezu::updateIdle() {
     setAnimation("idle");
     setFlip(false);
     TA_Point distance = getDistanceToCharacter();
@@ -65,8 +61,7 @@ void TA_Nezu::updateIdle()
     }
 }
 
-void TA_Nezu::updateWalk()
-{
+void TA_Nezu::updateWalk() {
     setAnimation("walk");
     setFlip(direction);
 
@@ -76,17 +71,14 @@ void TA_Nezu::updateWalk()
         state = STATE_ATTACK;
         bombPlaced = false;
         timer = 0;
-    }
-    else if(abs(getDistanceToCharacter().x) >= 96) {
+    } else if(abs(getDistanceToCharacter().x) >= 96) {
         state = STATE_IDLE;
-    }
-    else {
+    } else {
         position = newPosition;
     }
 }
 
-void TA_Nezu::updateAttack()
-{
+void TA_Nezu::updateAttack() {
     setAnimation("idle");
     setFlip(false);
 
@@ -101,8 +93,7 @@ void TA_Nezu::updateAttack()
     }
 }
 
-void TA_Nezu::placeBomb()
-{
+void TA_Nezu::placeBomb() {
     TA_Point bombPosition = position + TA_Point(-2, 8);
     if(direction) {
         bombPosition.x += 14;
@@ -110,8 +101,7 @@ void TA_Nezu::placeBomb()
     objectSet->spawnObject<TA_NezuBomb>(bombPosition);
 }
 
-bool TA_Nezu::updateFall()
-{
+bool TA_Nezu::updateFall() {
     fallSpeed += gravity * TA::elapsedTime;
     fallSpeed = std::min(fallSpeed, maxFallSpeed);
     position.y += fallSpeed * TA::elapsedTime;
@@ -127,21 +117,18 @@ bool TA_Nezu::updateFall()
     return true;
 }
 
-TA_Point TA_Nezu::getDistanceToCharacter()
-{
+TA_Point TA_Nezu::getDistanceToCharacter() {
     TA_Point centeredPosition = position + TA_Point(8, 8);
     TA_Point characterPosition = objectSet->getCharacterPosition();
     return characterPosition - centeredPosition;
 }
 
-bool TA_Nezu::isBadPosition(TA_Point position)
-{
+bool TA_Nezu::isBadPosition(TA_Point position) {
     TA_Polygon groundHitbox, wallHitbox;
     if(direction) {
         groundHitbox.setRectangle(TA_Point(17, 18), TA_Point(18, 19));
         wallHitbox.setRectangle(TA_Point(16, 0), TA_Point(18, 10));
-    }
-    else {
+    } else {
         groundHitbox.setRectangle(TA_Point(-2, 18), TA_Point(-1, 19));
         wallHitbox.setRectangle(TA_Point(-2, 0), TA_Point(0, 10));
     }
@@ -160,8 +147,7 @@ bool TA_Nezu::isBadPosition(TA_Point position)
     return false;
 }
 
-bool TA_Nezu::isCloseToCharacter()
-{
+bool TA_Nezu::isCloseToCharacter() {
     TA_Point distance = getDistanceToCharacter();
     if(direction != (distance.x > 0)) {
         return false;
@@ -169,8 +155,7 @@ bool TA_Nezu::isCloseToCharacter()
     return abs(distance.x) <= 14 && abs(distance.y) <= 16;
 }
 
-bool TA_Nezu::isGoingToFall()
-{
+bool TA_Nezu::isGoingToFall() {
     TA_Polygon groundHitbox;
     groundHitbox.setRectangle(TA_Point(2, 15), TA_Point(14, 17));
     groundHitbox.setPosition(position);
@@ -181,15 +166,13 @@ bool TA_Nezu::isGoingToFall()
     return false;
 }
 
-void TA_NezuBomb::load(TA_Point position)
-{
+void TA_NezuBomb::load(TA_Point position) {
     this->position = position;
     TA_Sprite::load("objects/nezu_bomb.png");
     updatePosition();
 }
 
-bool TA_NezuBomb::update()
-{
+bool TA_NezuBomb::update() {
     timer += TA::elapsedTime;
     if(timer > waitTime) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 4), 0, TA_EXPLOSION_ENEMY);

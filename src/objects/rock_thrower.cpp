@@ -1,8 +1,7 @@
 #include "rock_thrower.h"
 #include "dead_kukku.h"
 
-void TA_RockThrower::load(TA_Point position, bool direction)
-{
+void TA_RockThrower::load(TA_Point position, bool direction) {
     this->position = position;
     this->direction = direction;
 
@@ -14,12 +13,10 @@ void TA_RockThrower::load(TA_Point position, bool direction)
     updatePosition();
 }
 
-bool TA_RockThrower::update()
-{
+bool TA_RockThrower::update() {
     if(idle) {
         updateIdle();
-    }
-    else {
+    } else {
         if(shouldThrowRock()) {
             throwRock();
         }
@@ -33,13 +30,11 @@ bool TA_RockThrower::update()
     return true;
 }
 
-void TA_RockThrower::updateIdle()
-{
+void TA_RockThrower::updateIdle() {
     TA_Point distance = getDistanceToCharacter();
     if(abs(distance.x) <= 128 && abs(distance.y) <= 64) {
         timer += TA::elapsedTime;
-    }
-    else {
+    } else {
         timer = 0;
     }
     if(timer > idleTime) {
@@ -48,8 +43,7 @@ void TA_RockThrower::updateIdle()
     }
 }
 
-bool TA_RockThrower::shouldThrowRock()
-{
+bool TA_RockThrower::shouldThrowRock() {
     int frame = getAnimationFrame();
     if(frame == prevFrame) {
         return false;
@@ -60,60 +54,51 @@ bool TA_RockThrower::shouldThrowRock()
     return frame == 0 || frame == 4 || frame == 10;
 }
 
-bool TA_RockThrower::isCloseToCharacter()
-{
+bool TA_RockThrower::isCloseToCharacter() {
     TA_Point distance = getDistanceToCharacter();
     return abs(distance.x) <= 160 && abs(distance.y) <= 120;
 }
 
-void TA_RockThrower::throwRock()
-{
+void TA_RockThrower::throwRock() {
     objectSet->spawnObject<TA_EnemyRock>(getRockPosition(), getRockVelocity());
 }
 
-TA_Point TA_RockThrower::getRockPosition()
-{
+TA_Point TA_RockThrower::getRockPosition() {
     if(direction) {
         return position + TA_Point(9, 13);
     }
     return position + TA_Point(1, 13);
 }
 
-TA_Point TA_RockThrower::getRockVelocity()
-{
+TA_Point TA_RockThrower::getRockVelocity() {
     TA_Point distance = getDistanceToCharacter();
     TA_Point velocity;
     velocity.x = speed * (direction ? 1 : -1);
 
     if(abs(distance.y) <= 32) {
         velocity.y = -2.25;
-    }
-    else if(distance.y < 0) {
+    } else if(distance.y < 0) {
         velocity.y = -3.5;
-    }
-    else {
+    } else {
         velocity.y = -0.75;
     }
 
     return velocity;
 }
 
-bool TA_RockThrower::shouldBeDestroyed()
-{
+bool TA_RockThrower::shouldBeDestroyed() {
     if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
         return true;
     }
     return false;
 }
 
-void TA_RockThrower::destroy()
-{
+void TA_RockThrower::destroy() {
     objectSet->spawnObject<TA_DeadKukku>(position - TA_Point(4, 1));
     objectSet->resetInstaShield();
 }
 
-void TA_EnemyRock::load(TA_Point position, TA_Point velocity)
-{
+void TA_EnemyRock::load(TA_Point position, TA_Point velocity) {
     this->position = position;
     this->velocity = velocity;
 
@@ -124,8 +109,7 @@ void TA_EnemyRock::load(TA_Point position, TA_Point velocity)
     updatePosition();
 }
 
-bool TA_EnemyRock::update()
-{
+bool TA_EnemyRock::update() {
     updateVelocity();
     updateCollision();
     updatePosition();
@@ -136,32 +120,27 @@ bool TA_EnemyRock::update()
     return true;
 }
 
-void TA_EnemyRock::updateVelocity()
-{
+void TA_EnemyRock::updateVelocity() {
     double add = (ground ? friction : airDrag) * TA::elapsedTime;
     if(velocity.x > add) {
         velocity.x -= add;
-    }
-    else if(velocity.x < -add) {
+    } else if(velocity.x < -add) {
         velocity.x += add;
-    }
-    else {
+    } else {
         velocity.x = 0;
     }
 
     if(ground) {
         velocity.y = 0;
-    }
-    else {
+    } else {
         velocity.y += gravity * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxFallSpeed);
     }
 }
 
-void TA_EnemyRock::updateCollision()
-{
+void TA_EnemyRock::updateCollision() {
     int flags = moveAndCollide(TA_Point(0, 0), TA_Point(6, 7), velocity * TA::elapsedTime, ground);
-    
+
     ground = ((flags & TA_GROUND_COLLISION) != 0);
     if(flags & TA_WALL_COLLISION) {
         velocity.x = 0;
@@ -171,8 +150,7 @@ void TA_EnemyRock::updateCollision()
     }
 }
 
-bool TA_EnemyRock::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_EnemyRock::checkPawnCollision(TA_Polygon& hitbox) {
     if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) {
         return true;
     }

@@ -2,8 +2,7 @@
 #include "dead_kukku.h"
 #include "tools.h"
 
-void TA_HoverPod::load(TA_Point newPosition, int range, bool flip)
-{
+void TA_HoverPod::load(TA_Point newPosition, int range, bool flip) {
     loadFromToml("objects/pf_enemies.toml");
     setAnimation("hover_pod");
     hitbox.setRectangle(TA_Point(4, 1), TA_Point(20, 30));
@@ -13,35 +12,31 @@ void TA_HoverPod::load(TA_Point newPosition, int range, bool flip)
     if(!flip) {
         rangeLeft = position.x;
         rangeRight = position.x + range;
-    }
-    else {
+    } else {
         rangeLeft = position.x - range;
         rangeRight = position.x;
     }
     updatePosition();
 }
 
-bool TA_HoverPod::update()
-{
+bool TA_HoverPod::update() {
     TA_Point characterPosition = objectSet->getCharacterPosition();
 
     if(idle) {
-        if (abs(position.x - characterPosition.x) <= 140 &&
-            abs(position.y - characterPosition.y) <= 90) {
+        if(abs(position.x - characterPosition.x) <= 140 && abs(position.y - characterPosition.y) <= 90) {
             idle = false;
         }
         return true;
     }
 
-    if (!direction) {
+    if(!direction) {
         position.x += speed * TA::elapsedTime;
-        if (position.x > rangeRight) {
+        if(position.x > rangeRight) {
             direction = true;
         }
-    }
-    else {
+    } else {
         position.x -= speed * TA::elapsedTime;
-        if (position.x < rangeLeft) {
+        if(position.x < rangeLeft) {
             direction = false;
         }
     }

@@ -3,8 +3,7 @@
 #include "save.h"
 #include "sound.h"
 
-void TA_InventoryMenu::load(TA_Controller* controller)
-{
+void TA_InventoryMenu::load(TA_Controller* controller) {
     this->controller = controller;
 
     itemSprite.load("hud/items.png", 16, 16);
@@ -24,10 +23,9 @@ void TA_InventoryMenu::load(TA_Controller* controller)
     loadOnscreenButtons();
 }
 
-void TA_InventoryMenu::loadOnscreenButtons()
-{
-    for(int x = 0; x < 4; x ++) {
-        for(int y = 0; y < 2; y ++) {
+void TA_InventoryMenu::loadOnscreenButtons() {
+    for(int x = 0; x < 4; x++) {
+        for(int y = 0; y < 2; y++) {
             buttons[x][y].setRectangle({0, 0}, {32, 24});
         }
         buttons[x][2].setRectangle({0, 0}, {22, 24});
@@ -37,55 +35,53 @@ void TA_InventoryMenu::loadOnscreenButtons()
     rightButton.setRectangle({0, 0}, {32, 32});
 }
 
-void TA_InventoryMenu::fillItemMatrix()
-{
+void TA_InventoryMenu::fillItemMatrix() {
     if(TA::save::getSaveParameter("seafox") == 1) {
-        items[0][0] = {.number=4, .name="vulcan gun"};
-        items[0][1] = {.number=22, .name="anti-air missile"};
-        items[1][0] = {.number=12, .name="proton torpedo"};
-        items[1][1] = {.number=23, .name="spark"};
-        items[2][0] = {.number=20, .name="extra speed"};
-        items[2][1] = {.number=24, .name="mine"};
-        items[3][0] = {.number=21, .name="extra armor"};
-        items[3][1] = {.number=25, .name="rocket booster"};
+        items[0][0] = {.number = 4, .name = "vulcan gun"};
+        items[0][1] = {.number = 22, .name = "anti-air missile"};
+        items[1][0] = {.number = 12, .name = "proton torpedo"};
+        items[1][1] = {.number = 23, .name = "spark"};
+        items[2][0] = {.number = 20, .name = "extra speed"};
+        items[2][1] = {.number = 24, .name = "mine"};
+        items[3][0] = {.number = 21, .name = "extra armor"};
+        items[3][1] = {.number = 25, .name = "rocket booster"};
     }
 
     else {
-        items[0][0] = {.number=0, .name="regular bomb"};
-        items[0][1] = {.number=14, .name="triple bomb"};
-        items[1][0] = {.number=1, .name="large bomb"};
-        items[1][1] = {.number=15, .name="wrench"};
-        items[2][0] = {.number=2, .name="remote bomb"};
-        items[2][1] = {.number=16, .name="helmet"};
-        items[3][0] = {.number=13, .name="napalm bomb"};
-        items[3][1] = {.number=6, .name="remote robot"};
-        items[4][0] = {.number=19, .name="hammer"};
-        items[4][1] = {.number=8, .name="super glove"};
-        items[5][0] = {.number=3, .name="teleport device"};
-        items[5][1] = {.number=9, .name="fang"};
-        items[6][0] = {.number=5, .name="night vision"};
-        items[6][1] = {.number=10, .name="knuckles"};
-        items[7][0] = {.number=7, .name="speed boots"};
-        items[7][1] = {.number=11, .name="sonic"};
-        items[8][0] = {.number=17, .name="item radar"};
-        items[8][1] = {.number=33, .name="purple c.emerald"};
-        items[9][0] = {.number=18, .name="radio"};
-        items[9][1] = {.number=31, .name="red c.emerald"};
-        items[10][0] = {.number=32, .name="blue c.emerald"};
-        items[10][1] = {.number=30, .name="white c.emerald"};
-        items[11][0] = {.number=29, .name="green c.emerald"};
-        items[11][1] = {.number=34, .name="yellow c.emerald"};
+        items[0][0] = {.number = 0, .name = "regular bomb"};
+        items[0][1] = {.number = 14, .name = "triple bomb"};
+        items[1][0] = {.number = 1, .name = "large bomb"};
+        items[1][1] = {.number = 15, .name = "wrench"};
+        items[2][0] = {.number = 2, .name = "remote bomb"};
+        items[2][1] = {.number = 16, .name = "helmet"};
+        items[3][0] = {.number = 13, .name = "napalm bomb"};
+        items[3][1] = {.number = 6, .name = "remote robot"};
+        items[4][0] = {.number = 19, .name = "hammer"};
+        items[4][1] = {.number = 8, .name = "super glove"};
+        items[5][0] = {.number = 3, .name = "teleport device"};
+        items[5][1] = {.number = 9, .name = "fang"};
+        items[6][0] = {.number = 5, .name = "night vision"};
+        items[6][1] = {.number = 10, .name = "knuckles"};
+        items[7][0] = {.number = 7, .name = "speed boots"};
+        items[7][1] = {.number = 11, .name = "sonic"};
+        items[8][0] = {.number = 17, .name = "item radar"};
+        items[8][1] = {.number = 33, .name = "purple c.emerald"};
+        items[9][0] = {.number = 18, .name = "radio"};
+        items[9][1] = {.number = 31, .name = "red c.emerald"};
+        items[10][0] = {.number = 32, .name = "blue c.emerald"};
+        items[10][1] = {.number = 30, .name = "white c.emerald"};
+        items[11][0] = {.number = 29, .name = "green c.emerald"};
+        items[11][1] = {.number = 34, .name = "yellow c.emerald"};
     }
 
-    for(int x = 0; x < 12; x ++) {
-        for(int y = 0; y < 2; y ++) {
+    for(int x = 0; x < 12; x++) {
+        for(int y = 0; y < 2; y++) {
             itemName[items[x][y].number] = items[x][y].name;
         }
     }
 }
 
-bool TA_InventoryMenu::update()
-{
+bool TA_InventoryMenu::update() {
     if(showTimeLeft <= 0 && hideTimeLeft <= 0 && listTransitionTimeLeft <= 0) {
         if(controller->isTouchscreen()) {
             selectingSlot = false;
@@ -99,10 +95,9 @@ bool TA_InventoryMenu::update()
     return true;
 }
 
-void TA_InventoryMenu::updateOnscreenButtons()
-{
-    for(int x = 0; x < 4; x ++) {
-        for(int y = 0; y < 2; y ++) {
+void TA_InventoryMenu::updateOnscreenButtons() {
+    for(int x = 0; x < 4; x++) {
+        for(int y = 0; y < 2; y++) {
             double screenX = getLeftX() + 16 + 32 * x;
             double screenY = (y == 0 ? 36 : 60);
             if(replace) {
@@ -128,7 +123,7 @@ void TA_InventoryMenu::updateOnscreenButtons()
     rightButton.update();
 
     if(!replace) {
-        for(int pos = 0; pos < 4; pos ++) {
+        for(int pos = 0; pos < 4; pos++) {
             if(buttons[pos][2].isReleased() && selectionSlot != pos) {
                 selectSound.play();
                 selectionSlot = pos;
@@ -144,8 +139,7 @@ void TA_InventoryMenu::updateOnscreenButtons()
         selectionY = 0;
         listTransitionTimeLeft = listTransitionTime * 2;
         switchSound.play();
-    }
-    else if(rightButton.isReleased() && page + 1 < 3) {
+    } else if(rightButton.isReleased() && page + 1 < 3) {
         prevSelection = {selectionX, selectionY};
         selectionX = (page + 1) * 4;
         selectionY = 0;
@@ -154,16 +148,14 @@ void TA_InventoryMenu::updateOnscreenButtons()
     }
 }
 
-bool TA_InventoryMenu::updateSlotSelection()
-{
+bool TA_InventoryMenu::updateSlotSelection() {
     if(controller->isJustChangedDirection()) {
         TA_Direction direction = controller->getDirection();
         int prev = selectionSlot;
 
         if(direction == TA_DIRECTION_LEFT) {
             selectionSlot = std::max(0, selectionSlot - 1);
-        }
-        else if(direction == TA_DIRECTION_RIGHT) {
+        } else if(direction == TA_DIRECTION_RIGHT) {
             selectionSlot = std::min(3, selectionSlot + 1);
         }
 
@@ -183,8 +175,7 @@ bool TA_InventoryMenu::updateSlotSelection()
     return true;
 }
 
-bool TA_InventoryMenu::updateItemSelection()
-{
+bool TA_InventoryMenu::updateItemSelection() {
     if(!controller->isTouchscreen() && controller->isJustChangedDirection()) {
         TA_Direction direction = controller->getDirection();
         prevSelection = {selectionX, selectionY};
@@ -215,8 +206,8 @@ bool TA_InventoryMenu::updateItemSelection()
     }
 
     bool shouldPlaceItem = controller->isJustPressed(TA_BUTTON_A);
-    for(int x = 0; x < 4; x ++) {
-        for(int y = 0; y < 2; y ++) {
+    for(int x = 0; x < 4; x++) {
+        for(int y = 0; y < 2; y++) {
             int page = selectionX / 4;
             if(buttons[x][y].isReleased()) {
                 selectionX = page * 4 + x;
@@ -230,8 +221,7 @@ bool TA_InventoryMenu::updateItemSelection()
         if(canPlaceItem(items[selectionX][selectionY].number)) {
             placeItem(selectionSlot, items[selectionX][selectionY].number);
             selectSound.play();
-        }
-        else {
+        } else {
             errorSound.play();
         }
         if(replace) {
@@ -254,8 +244,7 @@ bool TA_InventoryMenu::updateItemSelection()
     return true;
 }
 
-bool TA_InventoryMenu::canPlaceItem(int item)
-{
+bool TA_InventoryMenu::canPlaceItem(int item) {
     if(!characterHasItem(item)) {
         return false;
     }
@@ -265,10 +254,9 @@ bool TA_InventoryMenu::canPlaceItem(int item)
     return true;
 }
 
-void TA_InventoryMenu::placeItem(int slot, int item)
-{
+void TA_InventoryMenu::placeItem(int slot, int item) {
     int prevSlot = -1;
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < 4; pos++) {
         if(getInventoryItem(pos) == item) {
             prevSlot = pos;
             break;
@@ -277,16 +265,14 @@ void TA_InventoryMenu::placeItem(int slot, int item)
 
     if(prevSlot == -1) {
         setInventoryItem(slot, item);
-    }
-    else {
+    } else {
         int prevItem = getInventoryItem(slot);
         setInventoryItem(slot, item);
         setInventoryItem(prevSlot, prevItem);
     }
 }
 
-void TA_InventoryMenu::draw()
-{
+void TA_InventoryMenu::draw() {
     updateAlpha();
     drawItemList();
     if(!replace) {
@@ -300,8 +286,7 @@ void TA_InventoryMenu::draw()
     }
 }
 
-void TA_InventoryMenu::updateAlpha()
-{
+void TA_InventoryMenu::updateAlpha() {
     if(showTimeLeft > 0) {
         showTimeLeft -= TA::elapsedTime;
     }
@@ -312,11 +297,9 @@ void TA_InventoryMenu::updateAlpha()
     int globalAlpha = 0;
     if(showTimeLeft > 0) {
         globalAlpha = 255 - 255 * showTimeLeft / transitionTime;
-    }
-    else if(hideTimeLeft > 0) {
+    } else if(hideTimeLeft > 0) {
         globalAlpha = 255 * hideTimeLeft / transitionTime;
-    }
-    else if(shown) {
+    } else if(shown) {
         globalAlpha = 255;
     }
 
@@ -330,14 +313,11 @@ void TA_InventoryMenu::updateAlpha()
 
     if(arrowTimer < arrowTransitionTime) {
         arrowAlpha = 255 * arrowTimer / arrowTransitionTime;
-    }
-    else if(arrowTimer < arrowTransitionTime + arrowIdleTime) {
+    } else if(arrowTimer < arrowTransitionTime + arrowIdleTime) {
         arrowAlpha = 255;
-    }
-    else if(arrowTimer < arrowTransitionTime * 2 + arrowIdleTime) {
+    } else if(arrowTimer < arrowTransitionTime * 2 + arrowIdleTime) {
         arrowAlpha = 255 - 255 * (arrowTimer - arrowIdleTime - arrowTransitionTime) / arrowTransitionTime;
-    }
-    else {
+    } else {
         arrowAlpha = 0;
     }
 
@@ -350,8 +330,7 @@ void TA_InventoryMenu::updateAlpha()
         listTransitionTimeLeft -= TA::elapsedTime;
         if(listTransitionTimeLeft > listTransitionTime) {
             itemAlpha = 255 * (listTransitionTimeLeft - listTransitionTime) / listTransitionTime;
-        }
-        else {
+        } else {
             itemAlpha = 255 - 255 * listTransitionTimeLeft / listTransitionTime;
         }
     }
@@ -361,15 +340,14 @@ void TA_InventoryMenu::updateAlpha()
     pointerSprite.setAlpha(itemAlpha);
 }
 
-void TA_InventoryMenu::drawItemList()
-{
+void TA_InventoryMenu::drawItemList() {
     int page = selectionX / 4;
     if(listTransitionTimeLeft > listTransitionTime) {
         page = prevSelection.first / 4;
     }
-    
-    for(int x = page * 4; x < (page + 1) * 4; x ++) {
-        for(int y = 0; y < 2; y ++) {
+
+    for(int x = page * 4; x < (page + 1) * 4; x++) {
+        for(int y = 0; y < 2; y++) {
             double screenX = getLeftX() + 24 + 32 * (x % 4);
             double screenY = (y == 0 ? 40 : 64);
             if(replace) {
@@ -380,8 +358,7 @@ void TA_InventoryMenu::drawItemList()
             int index = items[x][y].number;
             if(characterHasItem(index)) {
                 itemSprite.setFrame(index);
-            }
-            else {
+            } else {
                 itemSprite.setFrame(38);
             }
 
@@ -390,11 +367,10 @@ void TA_InventoryMenu::drawItemList()
     }
 }
 
-void TA_InventoryMenu::drawInventory()
-{
+void TA_InventoryMenu::drawInventory() {
     inventoryItemSprite.setPosition(getLeftX() + 39, 101);
 
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < 4; pos++) {
         int index = getInventoryItem(pos);
         if(index == -1) {
             index = 38;
@@ -405,26 +381,22 @@ void TA_InventoryMenu::drawInventory()
     }
 }
 
-int TA_InventoryMenu::getInventoryItem(int slot)
-{
+int TA_InventoryMenu::getInventoryItem(int slot) {
     std::string paramName = getParameterName(slot);
     return TA::save::getSaveParameter(paramName);
 }
 
-void TA_InventoryMenu::setInventoryItem(int slot, int index)
-{
+void TA_InventoryMenu::setInventoryItem(int slot, int index) {
     std::string paramName = getParameterName(slot);
     TA::save::setSaveParameter(paramName, index);
 }
 
-std::string TA_InventoryMenu::getParameterName(int slot)
-{
+std::string TA_InventoryMenu::getParameterName(int slot) {
     bool seaFox = TA::save::getSaveParameter("seafox");
     return (seaFox ? "seafox_item_slot" : "item_slot") + std::to_string(slot);
 }
 
-void TA_InventoryMenu::drawSelectionName()
-{
+void TA_InventoryMenu::drawSelectionName() {
     TA_Point position = TA_Point(getLeftX() + 16, 128);
     std::string text = "";
 
@@ -433,12 +405,10 @@ void TA_InventoryMenu::drawSelectionName()
         if(itemName.count(item)) {
             text = itemName[item];
         }
-    }
-    else {
+    } else {
         if(characterHasItem(items[selectionX][selectionY].number)) {
             text = items[selectionX][selectionY].name;
-        }
-        else {
+        } else {
             text = "???";
         }
     }
@@ -446,24 +416,20 @@ void TA_InventoryMenu::drawSelectionName()
     font.drawText(position, text);
 }
 
-bool TA_InventoryMenu::characterHasItem(int item)
-{
+bool TA_InventoryMenu::characterHasItem(int item) {
     long long itemMask = TA::save::getSaveParameter("item_mask");
     return itemMask & (1ll << item);
 }
 
-void TA_InventoryMenu::drawPointer()
-{
+void TA_InventoryMenu::drawPointer() {
     if(controller->isTouchscreen()) {
         drawPointerTouchscreen();
-    }
-    else {
+    } else {
         drawPointerController();
     }
 }
 
-void TA_InventoryMenu::drawPointerController()
-{
+void TA_InventoryMenu::drawPointerController() {
     if(!replace) {
         TA_Point inventoryPosition = TA_Point(getLeftX() + 39 + 22 * selectionSlot, 101);
         inventoryPointerSprite.setPosition(inventoryPosition - TA_Point(1, 2));
@@ -487,10 +453,9 @@ void TA_InventoryMenu::drawPointerController()
     pointerSprite.draw();
 }
 
-void TA_InventoryMenu::drawPointerTouchscreen()
-{
+void TA_InventoryMenu::drawPointerTouchscreen() {
     if(!replace) {
-        for(int pos = 0; pos < 4; pos ++) {
+        for(int pos = 0; pos < 4; pos++) {
             if((selectingSlot && buttons[pos][2].isPressed()) || (!selectingSlot && pos == selectionSlot)) {
                 TA_Point position = TA_Point(getLeftX() + 39 + 22 * pos, 101);
                 inventoryPointerSprite.setPosition(position - TA_Point(1, 2));
@@ -499,8 +464,8 @@ void TA_InventoryMenu::drawPointerTouchscreen()
         }
     }
     if(!selectingSlot) {
-        for(int x = 0; x < 4; x ++) {
-            for(int y = 0; y < 2; y ++) {
+        for(int x = 0; x < 4; x++) {
+            for(int y = 0; y < 2; y++) {
                 if(buttons[x][y].isPressed()) {
                     double screenX = getLeftX() + 24 + 32 * x;
                     double screenY = (y == 0 ? 40 : 64);
@@ -515,8 +480,7 @@ void TA_InventoryMenu::drawPointerTouchscreen()
     }
 }
 
-void TA_InventoryMenu::drawArrows()
-{
+void TA_InventoryMenu::drawArrows() {
     if(TA::save::getSaveParameter("seafox")) {
         return;
     }
@@ -545,8 +509,7 @@ void TA_InventoryMenu::drawSlotNumber() {
     font.drawTextCentered(91, text);
 }
 
-void TA_InventoryMenu::show()
-{
+void TA_InventoryMenu::show() {
     if(shown) {
         return;
     }
@@ -563,8 +526,7 @@ void TA_InventoryMenu::show()
     }
 }
 
-void TA_InventoryMenu::hide()
-{
+void TA_InventoryMenu::hide() {
     if(!shown) {
         return;
     }

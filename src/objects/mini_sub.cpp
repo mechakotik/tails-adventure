@@ -1,8 +1,7 @@
 #include "mini_sub.h"
 #include "dead_kukku.h"
 
-void TA_MiniSub::load(TA_Point position)
-{
+void TA_MiniSub::load(TA_Point position) {
     loadFromToml("objects/mini_sub.toml");
     setAnimation("mini_sub");
 
@@ -11,12 +10,10 @@ void TA_MiniSub::load(TA_Point position)
     updatePosition();
 }
 
-bool TA_MiniSub::update()
-{
+bool TA_MiniSub::update() {
     if(idle) {
         updateIdle();
-    }
-    else {
+    } else {
         updateAttack();
     }
 
@@ -33,8 +30,7 @@ bool TA_MiniSub::update()
     return true;
 }
 
-void TA_MiniSub::updateIdle()
-{
+void TA_MiniSub::updateIdle() {
     if(objectSet->isVisible(hitbox)) {
         idle = false;
         flip = (position.x < objectSet->getCharacterPosition().x);
@@ -42,8 +38,7 @@ void TA_MiniSub::updateIdle()
     }
 }
 
-void TA_MiniSub::updateAttack()
-{
+void TA_MiniSub::updateAttack() {
     position.x -= speed * TA::elapsedTime * (flip ? -1 : 1);
     timer += TA::elapsedTime;
 }

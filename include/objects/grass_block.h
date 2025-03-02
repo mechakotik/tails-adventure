@@ -11,7 +11,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, std::string texture);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_SOLID;}
+    int getCollisionType() override { return TA_COLLISION_SOLID; }
 };
 
 #endif // TA_GRASS_BLOCK_H

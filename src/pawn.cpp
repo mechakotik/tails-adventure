@@ -1,10 +1,9 @@
-#include <cassert>
 #include "pawn.h"
-#include "tools.h"
+#include <cassert>
 #include "geometry.h"
+#include "tools.h"
 
-int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground)
-{
+int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground) {
     this->topLeft = topLeft;
     this->bottomRight = bottomRight;
     this->velocity = velocity;
@@ -22,17 +21,15 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     return getCollisionFlags(topLeft, bottomRight);
 }
 
-void TA_Pawn::moveByX()
-{
+void TA_Pawn::moveByX() {
     TA_Polygon hitbox;
     if(ground) {
         hitbox.setRectangle(topLeft + TA_Point(0, 1), bottomRight - TA_Point(0, 1));
-    }
-    else {
+    } else {
         hitbox.setRectangle(topLeft, bottomRight);
     }
 
-    auto isOutside = [&] (double factor) {
+    auto isOutside = [&](double factor) {
         hitbox.setPosition({position.x + factor * velocity.x, position.y});
         return !checkPawnCollision(hitbox);
     };
@@ -40,14 +37,12 @@ void TA_Pawn::moveByX()
     double left = 0, right = 1, eps = 1e-5;
     if(!isOutside(eps * 2)) {
         left = right = 0;
-    }
-    else if(isOutside(1)) {
+    } else if(isOutside(1)) {
         left = right = 1;
-    }
-    else {
+    } else {
         while((right - left) * std::abs(velocity.x) > eps) {
             double mid = (left + right) / 2;
-            if (isOutside(mid)) {
+            if(isOutside(mid)) {
                 left = mid;
             } else {
                 right = mid;
@@ -58,8 +53,7 @@ void TA_Pawn::moveByX()
     position.x += velocity.x * left;
 }
 
-void TA_Pawn::moveByY()
-{
+void TA_Pawn::moveByY() {
     if(ground && isGoodPosition(position + TA_Point(0, 2))) {
         ground = false;
     }
@@ -71,7 +65,7 @@ void TA_Pawn::moveByY()
     TA_Polygon hitbox;
     hitbox.setRectangle(topLeft, bottomRight);
 
-    auto isOutside = [&] (double factor) {
+    auto isOutside = [&](double factor) {
         hitbox.setPosition({position.x, position.y + velocity.y * factor});
         return !checkPawnCollision(hitbox);
     };
@@ -79,16 +73,14 @@ void TA_Pawn::moveByY()
     double left = 0, right = 1, eps = 1e-5;
     if(!isOutside(eps * 2)) {
         left = right = 0;
-    }
-    else if(isOutside(1)) {
+    } else if(isOutside(1)) {
         left = right = 1;
     }
     while((right - left) * std::abs(velocity.y) > eps) {
         double mid = (left + right) / 2;
         if(isOutside(mid)) {
             left = mid;
-        }
-        else {
+        } else {
             right = mid;
         }
     }
@@ -96,16 +88,15 @@ void TA_Pawn::moveByY()
     position.y += velocity.y * left;
 }
 
-void TA_Pawn::popOut()
-{
+void TA_Pawn::popOut() {
     std::vector<std::pair<double, TA_Point>> directions;
-    
+
     for(TA_Point delta : {TA_Point(-32, 0), TA_Point(32, 0), TA_Point(0, -32), TA_Point(0, 32)}) {
         directions.push_back({getFirstGood(delta), delta});
     }
 
     int min = 0;
-    for(int pos = 1; pos < (int)directions.size(); pos ++) {
+    for(int pos = 1; pos < (int)directions.size(); pos++) {
         if(directions[pos].first < directions[min].first) {
             min = pos;
         }
@@ -117,34 +108,31 @@ void TA_Pawn::popOut()
     }
 }
 
-double TA_Pawn::getFirstGood(TA_Point delta)
-{
+double TA_Pawn::getFirstGood(TA_Point delta) {
     double left = 0, right = 1, eps = 1e-5;
     while((right - left) * delta.length() > eps) {
         double mid = (left + right) / 2;
         if(isGoodPosition(position + delta * mid)) {
             right = mid;
-        }
-        else {
+        } else {
             left = mid;
         }
     }
     return right;
 }
 
-bool TA_Pawn::isGoodPosition(TA_Point position)
-{
+bool TA_Pawn::isGoodPosition(TA_Point position) {
     TA_Polygon hitbox;
     hitbox.setRectangle(topLeft, bottomRight);
     hitbox.setPosition(position);
     return !checkPawnCollision(hitbox);
 }
 
-int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight)
-{
+int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight) {
     TA_Polygon hitbox;
     int flags = 0;
-    hitbox.setRectangle(TA_Point(topLeft.x + 0.001, bottomRight.y), TA_Point(bottomRight.x - 0.001, bottomRight.y + 0.001));
+    hitbox.setRectangle(
+        TA_Point(topLeft.x + 0.001, bottomRight.y), TA_Point(bottomRight.x - 0.001, bottomRight.y + 0.001));
     hitbox.setPosition(position);
     if(checkPawnCollision(hitbox)) {
         flags |= TA_GROUND_COLLISION;

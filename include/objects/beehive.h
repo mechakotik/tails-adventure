@@ -1,8 +1,8 @@
 #ifndef TA_BEEHIVE_H
 #define TA_BEEHIVE_H
 
-#include "object_set.h"
 #include "geometry.h"
+#include "object_set.h"
 
 class TA_BeeHive : public TA_Object {
 public:
@@ -10,7 +10,7 @@ public:
     void load(TA_Point position);
     bool update() override;
     int getCollisionType() override;
-    void deleteBee() {beeCount--;}
+    void deleteBee() { beeCount--; }
 
 private:
     static constexpr double cooldownTime = 40;
@@ -25,7 +25,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, TA_BeeHive* hive);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
     static constexpr double flySpeed = 1;
@@ -49,7 +49,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
     static constexpr double idleTime = 40;

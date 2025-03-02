@@ -10,13 +10,13 @@ class TA_Controller;
 class TA_Hud;
 
 struct TA_Links {
-    TA_Character *character = nullptr;
-    TA_SeaFox *seaFox = nullptr;
-    TA_Tilemap *tilemap = nullptr;
-    TA_Camera *camera = nullptr;
-    TA_ObjectSet *objectSet = nullptr;
-    TA_Controller *controller = nullptr;
-    TA_Hud *hud = nullptr;
+    TA_Character* character = nullptr;
+    TA_SeaFox* seaFox = nullptr;
+    TA_Tilemap* tilemap = nullptr;
+    TA_Camera* camera = nullptr;
+    TA_ObjectSet* objectSet = nullptr;
+    TA_Controller* controller = nullptr;
+    TA_Hud* hud = nullptr;
 };
 
 #endif // TA_LINKS_H

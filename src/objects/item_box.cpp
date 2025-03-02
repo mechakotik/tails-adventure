@@ -1,12 +1,11 @@
-#include <cmath>
 #include "item_box.h"
-#include "save.h"
-#include "tools.h"
+#include <cmath>
 #include "character.h"
 #include "error.h"
+#include "save.h"
+#include "tools.h"
 
-void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName)
-{
+void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName) {
     this->position = position;
     this->velocity = velocity;
     this->itemNumber = itemNumber;
@@ -21,8 +20,7 @@ void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std:
     updatePosition();
 }
 
-bool TA_ItemBox::update()
-{
+bool TA_ItemBox::update() {
     switch(state) {
         case STATE_IDLE:
             if(characterHasThisItem()) {
@@ -50,18 +48,15 @@ bool TA_ItemBox::update()
     return true;
 }
 
-bool TA_ItemBox::characterHasThisItem()
-{
+bool TA_ItemBox::characterHasThisItem() {
     long long itemMask = TA::save::getSaveParameter("item_mask");
     return (itemMask & (1ll << itemNumber)) != 0;
 }
 
-void TA_ItemBox::updateIdle()
-{
+void TA_ItemBox::updateIdle() {
     if(objectSet->getLinks().character->isRemoteRobot()) {
         hitbox.setRectangle(TA_Point(2, 0), TA_Point(14, 17));
-    }
-    else {
+    } else {
         hitbox.setRectangle(TA_Point(8, 0), TA_Point(9, 17));
     }
 
@@ -80,8 +75,7 @@ void TA_ItemBox::updateIdle()
     }
 }
 
-void TA_ItemBox::updateFall()
-{
+void TA_ItemBox::updateFall() {
     velocity.y += gravity * TA::elapsedTime;
     velocity.y = std::min(velocity.y, maxFallSpeed);
     int flags = moveAndCollide(TA_Point(8, 0), TA_Point(9, 16), velocity * TA::elapsedTime);
@@ -92,14 +86,12 @@ void TA_ItemBox::updateFall()
     }
 }
 
-bool TA_ItemBox::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_ItemBox::checkPawnCollision(TA_Polygon& hitbox) {
     int flags = objectSet->checkCollision(hitbox);
     return (flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) != 0;
 }
 
-void TA_ItemBox::updateUnpack()
-{
+void TA_ItemBox::updateUnpack() {
     timer += TA::elapsedTime;
     if(timer > unpackTime) {
         state = STATE_RAISE;
@@ -114,23 +106,20 @@ void TA_ItemBox::updateUnpack()
 
     const double stepTime = unpackTime / 3;
     double stepTimer = std::fmod(timer, stepTime);
-    
+
     if(stepTimer < stepTime / 3) {
         setAlpha(255 - 255 * (stepTimer / (stepTime / 5)));
-    }
-    else if(stepTimer < stepTime * 2 / 3) {
+    } else if(stepTimer < stepTime * 2 / 3) {
         if(timer > stepTime * 2) {
             setFrame(itemNumber);
         }
         setAlpha(255 * (stepTimer - stepTime * 2 / 3) / (stepTime / 3));
-    }
-    else {
+    } else {
         setAlpha(255);
     }
 }
 
-void TA_ItemBox::updateRaise()
-{
+void TA_ItemBox::updateRaise() {
     if(!objectSet->getLinks().character->isAnimated()) {
         state = STATE_HOLD;
         timer = 0;
@@ -167,8 +156,7 @@ void TA_ItemBox::updateRaise()
     position = characterPosition + addPosition;
 }
 
-bool TA_ItemBox::updateHold()
-{
+bool TA_ItemBox::updateHold() {
     timer += TA::elapsedTime;
     if(timer > holdTime) {
         objectSet->getLinks().character->setReleaseState();
@@ -177,8 +165,7 @@ bool TA_ItemBox::updateHold()
     return true;
 }
 
-void TA_ItemBox::addItemToCharacter()
-{
+void TA_ItemBox::addItemToCharacter() {
     long long itemMask = TA::save::getSaveParameter("item_mask");
     itemMask |= (1ll << itemNumber);
     TA::save::setSaveParameter("item_mask", itemMask);
@@ -193,19 +180,17 @@ void TA_ItemBox::addItemToCharacter()
     TA::save::writeToFile();
 }
 
-void TA_ItemBox::addItemToFirstFreeSlot()
-{
+void TA_ItemBox::addItemToFirstFreeSlot() {
     int slot = getFirstFreeItemSlot();
     if(slot != -1) {
         TA::save::setSaveParameter(getItemSlotName(slot), itemNumber);
     }
 }
 
-int TA_ItemBox::getFirstFreeItemSlot()
-{
+int TA_ItemBox::getFirstFreeItemSlot() {
     int slot = 0;
     while(slot <= 3 && TA::save::getSaveParameter(getItemSlotName(slot)) != -1) {
-        slot ++;
+        slot++;
     }
     if(slot == 4) {
         slot = -1;
@@ -213,21 +198,18 @@ int TA_ItemBox::getFirstFreeItemSlot()
     return slot;
 }
 
-std::string TA_ItemBox::getItemSlotName(int number)
-{
+std::string TA_ItemBox::getItemSlotName(int number) {
     return "item_slot" + std::to_string(number);
 }
 
-int TA_ItemBox::getDrawPriority()
-{
+int TA_ItemBox::getDrawPriority() {
     if(objectSet->getLinks().character->isRemoteRobot()) {
         return 0;
     }
     return 1;
 }
 
-void TA_ItemLabel::load(TA_Point position, std::string name)
-{
+void TA_ItemLabel::load(TA_Point position, std::string name) {
     font.load("fonts/item.png", 8, 8);
     font.setMapping("abcdefghijklmnopqrstuvwxyz XY.?-0123456789SABF");
 
@@ -236,8 +218,7 @@ void TA_ItemLabel::load(TA_Point position, std::string name)
     this->name = name;
 }
 
-bool TA_ItemLabel::update()
-{
+bool TA_ItemLabel::update() {
     timer += TA::elapsedTime;
     if(timer > showTime) {
         return false;
@@ -248,20 +229,17 @@ bool TA_ItemLabel::update()
         double factor = timer / appearTime;
         font.setAlpha(255 * factor);
         currentPosition.x += shift * (1 - factor);
-    }
-    else if(timer > showTime - appearTime) {
+    } else if(timer > showTime - appearTime) {
         double factor = (timer - (showTime - appearTime)) / appearTime;
         font.setAlpha(255 * (1 - factor));
         currentPosition.x -= shift * factor;
-    }
-    else {
+    } else {
         font.setAlpha(255);
     }
 
     return true;
 }
 
-void TA_ItemLabel::draw()
-{
+void TA_ItemLabel::draw() {
     font.drawText(currentPosition, name);
 }

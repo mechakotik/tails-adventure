@@ -1,9 +1,9 @@
 #ifndef TA_MAP_SCREEN_H
 #define TA_MAP_SCREEN_H
 
-#include "screen.h"
-#include "ingame_map.h"
 #include "area_selector.h"
+#include "ingame_map.h"
+#include "screen.h"
 
 class TA_MapScreen : public TA_Screen {
 private:

@@ -2,27 +2,22 @@
 #define TA_OPTIONS_MENU_H
 
 #include <memory>
-#include "main_menu_section.h"
 #include "controller.h"
 #include "font.h"
+#include "main_menu_section.h"
 #include "sound.h"
 
-enum TA_MoveSoundId {
-    TA_MOVE_SOUND_SWITCH,
-    TA_MOVE_SOUND_SELECT,
-    TA_MOVE_SOUND_ERROR,
-    TA_MOVE_SOUND_EMPTY
-};
+enum TA_MoveSoundId { TA_MOVE_SOUND_SWITCH, TA_MOVE_SOUND_SELECT, TA_MOVE_SOUND_ERROR, TA_MOVE_SOUND_EMPTY };
 
 class TA_Option {
 public:
-    virtual std::string getName() {return "name";}
-    virtual std::string getValue() {return "value";}
-    virtual TA_MoveSoundId move(int delta) {return TA_MOVE_SOUND_ERROR;}
-    constexpr virtual bool hasNegativeMove() {return false;}
+    virtual std::string getName() { return "name"; }
+    virtual std::string getValue() { return "value"; }
+    virtual TA_MoveSoundId move(int delta) { return TA_MOVE_SOUND_ERROR; }
+    constexpr virtual bool hasNegativeMove() { return false; }
 
-    virtual bool isLocked() {return false;}
-    virtual TA_MoveSoundId updateLocked() {return TA_MOVE_SOUND_EMPTY;}
+    virtual bool isLocked() { return false; }
+    virtual TA_MoveSoundId updateLocked() { return TA_MOVE_SOUND_EMPTY; }
     virtual void unlock() {}
 
     virtual ~TA_Option() = default;
@@ -37,18 +32,14 @@ private:
     void playMoveSound(TA_MoveSoundId id);
 
     void updateAlpha();
-    int getLeftX() {return TA::screenWidth / 2 - 80;}
+    int getLeftX() { return TA::screenWidth / 2 - 80; }
 
     void drawGroupList();
     void drawOptionList();
     void drawHighlight(double x, double y, double width);
     void drawHighlight(double y);
 
-    enum State {
-        STATE_SELECTING_GROUP,
-        STATE_SELECTING_OPTION,
-        STATE_QUIT
-    };
+    enum State { STATE_SELECTING_GROUP, STATE_SELECTING_OPTION, STATE_QUIT };
 
     TA_Font font;
     double listTransitionTimeLeft = -1;
@@ -67,8 +58,8 @@ public:
     void load() override;
     TA_MainMenuState update() override;
     void draw() override;
-    void setAlpha(int alpha) override {baseAlpha = alpha;}
-    void reset() override {group = 0;}
+    void setAlpha(int alpha) override { baseAlpha = alpha; }
+    void reset() override { group = 0; }
 };
 
 #endif // TA_OPTIONS_MENU_H

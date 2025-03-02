@@ -1,37 +1,34 @@
-#include "SDL3/SDL.h"
 #include "keyboard.h"
+#include "SDL3/SDL.h"
 #include "save.h"
 
-namespace TA { namespace keyboard {
-    std::array<SDL_Scancode, TA_BUTTON_MAX> mapping;
-    std::array<SDL_Scancode, TA_DIRECTION_MAX> directionMapping;
-    std::array<bool, SDL_SCANCODE_COUNT> pressed, justPressed;
-    
-    std::array<bool, SDL_SCANCODE_COUNT> getKeyboardState();
-    void updateMapping();
-}}
+namespace TA {
+    namespace keyboard {
+        std::array<SDL_Scancode, TA_BUTTON_MAX> mapping;
+        std::array<SDL_Scancode, TA_DIRECTION_MAX> directionMapping;
+        std::array<bool, SDL_SCANCODE_COUNT> pressed, justPressed;
 
-void TA::keyboard::update()
-{
+        std::array<bool, SDL_SCANCODE_COUNT> getKeyboardState();
+        void updateMapping();
+    }
+}
+
+void TA::keyboard::update() {
     updateMapping();
     std::array<bool, SDL_SCANCODE_COUNT> keyboardState = getKeyboardState();
 
-    for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
+    for(int button = 0; button < SDL_SCANCODE_COUNT; button++) {
         if(keyboardState[button]) {
             justPressed[button] = !pressed[button];
             pressed[button] = true;
-        }
-        else {
+        } else {
             pressed[button] = justPressed[button] = false;
         }
     }
 }
 
-void TA::keyboard::updateMapping()
-{
-    auto getMap = [] (std::string name) {
-        return (SDL_Scancode)TA::save::getParameter("keyboard_map_" + name);
-    };
+void TA::keyboard::updateMapping() {
+    auto getMap = [](std::string name) { return (SDL_Scancode)TA::save::getParameter("keyboard_map_" + name); };
 
     mapping[TA_BUTTON_A] = getMap("a");
     mapping[TA_BUTTON_B] = getMap("b");
@@ -45,38 +42,32 @@ void TA::keyboard::updateMapping()
     directionMapping[TA_DIRECTION_RIGHT] = getMap("right");
 }
 
-std::array<bool, SDL_SCANCODE_COUNT> TA::keyboard::getKeyboardState()
-{
+std::array<bool, SDL_SCANCODE_COUNT> TA::keyboard::getKeyboardState() {
     std::array<bool, SDL_SCANCODE_COUNT> state;
     const bool* keyState = SDL_GetKeyboardState(NULL);
-    for(int button = 0; button < SDL_SCANCODE_COUNT; button ++) {
+    for(int button = 0; button < SDL_SCANCODE_COUNT; button++) {
         state[button] = keyState[button];
     }
     return state;
 }
 
-bool TA::keyboard::isPressed(TA_FunctionButton button)
-{
+bool TA::keyboard::isPressed(TA_FunctionButton button) {
     return pressed[mapping[button]];
 }
 
-bool TA::keyboard::isJustPressed(TA_FunctionButton button)
-{
+bool TA::keyboard::isJustPressed(TA_FunctionButton button) {
     return justPressed[mapping[button]];
 }
 
-bool TA::keyboard::isScancodePressed(SDL_Scancode scancode)
-{
+bool TA::keyboard::isScancodePressed(SDL_Scancode scancode) {
     return pressed[scancode];
 }
 
-bool TA::keyboard::isScancodeJustPressed(SDL_Scancode scancode)
-{
+bool TA::keyboard::isScancodeJustPressed(SDL_Scancode scancode) {
     return justPressed[scancode];
 }
 
-TA_Point TA::keyboard::getDirectionVector()
-{
+TA_Point TA::keyboard::getDirectionVector() {
     int verticalDirection = -1, horizontalDirection = -1;
     for(int direction : {TA_DIRECTION_UP, TA_DIRECTION_DOWN}) {
         if(pressed[directionMapping[direction]]) {

@@ -1,14 +1,13 @@
 #include "mecha_golem.h"
-#include "mecha_golem_bomb.h"
-#include "explosion.h"
-#include "item_box.h"
-#include "save.h"
-#include "transition.h"
 #include <algorithm>
 #include <cmath>
+#include "explosion.h"
+#include "item_box.h"
+#include "mecha_golem_bomb.h"
+#include "save.h"
+#include "transition.h"
 
-void TA_MechaGolem::load()
-{
+void TA_MechaGolem::load() {
     if(isComplete()) {
         objectSet->spawnObject<TA_Transition>(TA_Point(510, 0), TA_Point(512, 144), 4, false);
         return;
@@ -41,8 +40,7 @@ void TA_MechaGolem::load()
     hitboxVector.assign(HITBOX_MAX, HitboxVectorElement());
 }
 
-bool TA_MechaGolem::update()
-{
+bool TA_MechaGolem::update() {
     if(isComplete() && state != STATE_DEFEATED && state != STATE_WAIT_ITEM) {
         return false;
     }
@@ -118,22 +116,19 @@ bool TA_MechaGolem::update()
     return true;
 }
 
-bool TA_MechaGolem::isComplete()
-{
+bool TA_MechaGolem::isComplete() {
     long long itemMask = TA::save::getSaveParameter("item_mask");
     return itemMask & (1ll << 22);
 }
 
-void TA_MechaGolem::updateIdle()
-{
+void TA_MechaGolem::updateIdle() {
     if(objectSet->getLinks().camera->isLocked()) {
         state = STATE_WAIT;
         TA::sound::playMusic("sound/boss.vgm");
     }
 }
 
-void TA_MechaGolem::updateWait()
-{
+void TA_MechaGolem::updateWait() {
     if(health <= 16 && !secondPhase) {
         initPhaseChange();
         return;
@@ -153,47 +148,38 @@ void TA_MechaGolem::updateWait()
         double distance = objectSet->getCharacterPosition().getDistance(position + TA_Point(-11, -42));
         if(distance < armMoveMaxDistance && previousState != STATE_ARM_MOVE_BACK) {
             initArmMove();
-        }
-        else {
+        } else {
             initGo();
         }
-    }
-    else {
+    } else {
         if(previousState == STATE_GO_LEFT || previousState == STATE_GO_RIGHT) {
             timer = 0;
             double characterX = objectSet->getCharacterPosition().x;
             if(TA::random::next() % 4 == 0) {
                 initGo();
-            }
-            else if(characterX < position.x && characterX > position.x - 48) {
+            } else if(characterX < position.x && characterX > position.x - 48) {
                 state = STATE_ARM_CIRCLE;
-            }
-            else {
+            } else {
                 state = STATE_ARM_BITE1;
             }
-        }
-        else {
+        } else {
             initGo();
         }
     }
 }
 
-void TA_MechaGolem::initGo()
-{
+void TA_MechaGolem::initGo() {
     timer = 0;
     startX = position.x;
     double cameraX = objectSet->getLinks().camera->getPosition().x;
-    
+
     if(position.x < cameraX + goBorder) {
         state = STATE_GO_RIGHT;
-    }
-    else if(position.x > cameraX + TA::screenWidth - goBorder - bodySprite.getWidth()) {
+    } else if(position.x > cameraX + TA::screenWidth - goBorder - bodySprite.getWidth()) {
         state = STATE_GO_LEFT;
-    }
-    else if(position.x + bodySprite.getWidth() / 2 < objectSet->getCharacterPosition().x) {
+    } else if(position.x + bodySprite.getWidth() / 2 < objectSet->getCharacterPosition().x) {
         state = STATE_GO_RIGHT;
-    }
-    else {
+    } else {
         state = STATE_GO_LEFT;
     }
 
@@ -202,8 +188,7 @@ void TA_MechaGolem::initGo()
     }
 }
 
-void TA_MechaGolem::updateGo()
-{
+void TA_MechaGolem::updateGo() {
     int direction = (state == STATE_GO_LEFT ? -1 : 1);
     timer += TA::elapsedTime;
 
@@ -227,13 +212,11 @@ void TA_MechaGolem::updateGo()
         if(direction == -1) {
             leftFootSprite.setPosition(x + 5, position.y - 10 - y);
             rightFootSprite.setPosition(startX + 26, position.y - 10);
-        }
-        else {
+        } else {
             leftFootSprite.setPosition(startX + 5, position.y - 10);
             rightFootSprite.setPosition(x + 26, position.y - 10 - y);
         }
-    }
-    else {
+    } else {
         double angle = ((timer - goTime / 2) / (goTime / 2)) * TA::pi;
         double x = startX + (-cos(angle) + 1) / 2 * goDistance * direction;
         double y = sin(angle) * stepHeight;
@@ -241,24 +224,21 @@ void TA_MechaGolem::updateGo()
         if(direction == -1) {
             leftFootSprite.setPosition((startX + goDistance * direction) + 5, position.y - 10);
             rightFootSprite.setPosition(x + 26, position.y - 10 - y);
-        }
-        else {
+        } else {
             leftFootSprite.setPosition(x + 5, position.y - 10 - y);
             rightFootSprite.setPosition((startX + goDistance * direction) + 26, position.y - 10);
         }
     }
 }
 
-void TA_MechaGolem::initArmMove()
-{
+void TA_MechaGolem::initArmMove() {
     timer = 0;
     armTarget = getOptimalArmTarget();
     state = STATE_ARM_MOVE;
     armSprite.setAnimation("attack");
 }
 
-void TA_MechaGolem::updateArmMove()
-{
+void TA_MechaGolem::updateArmMove() {
     timer += TA::elapsedTime;
     if(timer > armMoveTime) {
         timer = 0;
@@ -270,8 +250,7 @@ void TA_MechaGolem::updateArmMove()
     armPosition = startPosition + (armTarget - startPosition) * (timer / armMoveTime);
 }
 
-void TA_MechaGolem::updateArmMoveBack()
-{
+void TA_MechaGolem::updateArmMoveBack() {
     timer += TA::elapsedTime;
     if(timer > armMoveTime) {
         timer = 0;
@@ -283,14 +262,13 @@ void TA_MechaGolem::updateArmMoveBack()
     armPosition = armTarget + (startPosition - armTarget) * (timer / armMoveTime);
 }
 
-TA_Point TA_MechaGolem::getOptimalArmTarget()
-{
+TA_Point TA_MechaGolem::getOptimalArmTarget() {
     std::vector<TA_Point> targets;
     targets.push_back(position + TA_Point(-11, -82));
     targets.push_back(position + TA_Point(-51, -42));
     targets.push_back(position + TA_Point(-43, -74));
 
-    std::sort(targets.begin(), targets.end(), [&] (const auto &first, const auto &second) {
+    std::sort(targets.begin(), targets.end(), [&](const auto& first, const auto& second) {
         TA_Point characterPosition = objectSet->getCharacterPosition();
         return (characterPosition - first).length() < (characterPosition - second).length();
     });
@@ -298,8 +276,7 @@ TA_Point TA_MechaGolem::getOptimalArmTarget()
     return targets[0];
 }
 
-void TA_MechaGolem::initPhaseChange()
-{
+void TA_MechaGolem::initPhaseChange() {
     timer = 0;
     state = STATE_PHASE_CHANGE;
     secondPhase = true;
@@ -313,8 +290,7 @@ void TA_MechaGolem::initPhaseChange()
     }
 }
 
-void TA_MechaGolem::updatePhaseChange()
-{
+void TA_MechaGolem::updatePhaseChange() {
     timer += TA::elapsedTime;
     if(timer > phaseChangeTime) {
         timer = 0;
@@ -328,8 +304,7 @@ void TA_MechaGolem::updatePhaseChange()
     }
 }
 
-void TA_MechaGolem::updateArmCircle()
-{
+void TA_MechaGolem::updateArmCircle() {
     timer += TA::elapsedTime;
     if(timer > armCircleTime) {
         timer = 0;
@@ -351,8 +326,7 @@ void TA_MechaGolem::updateArmCircle()
     armSprite.setAnimation("attack");
 }
 
-void TA_MechaGolem::updateArmBite1()
-{
+void TA_MechaGolem::updateArmBite1() {
     timer += TA::elapsedTime;
     if(timer > armBite1Time) {
         timer = 0;
@@ -366,8 +340,7 @@ void TA_MechaGolem::updateArmBite1()
     armPosition = startPosition + (endPosition - startPosition) * (timer / armBite1Time);
 }
 
-void TA_MechaGolem::updateArmBite2()
-{
+void TA_MechaGolem::updateArmBite2() {
     TA_Point startPosition = position + TA_Point(-11, -82);
     TA_Point endPosition = position + TA_Point(-32, -15);
     timer += TA::elapsedTime;
@@ -393,8 +366,7 @@ void TA_MechaGolem::updateArmBite2()
     armPosition.y = endPosition.y + (endPosition.y - startPosition.y) * (-sin(angle));
 }
 
-void TA_MechaGolem::updateArmBite3()
-{
+void TA_MechaGolem::updateArmBite3() {
     timer += TA::elapsedTime;
     if(timer > armBite3Time) {
         timer = 0;
@@ -402,8 +374,7 @@ void TA_MechaGolem::updateArmBite3()
     }
 }
 
-void TA_MechaGolem::updateArmBite4()
-{
+void TA_MechaGolem::updateArmBite4() {
     timer += TA::elapsedTime;
     if(timer > armBite4Time) {
         timer = 0;
@@ -415,8 +386,7 @@ void TA_MechaGolem::updateArmBite4()
     armPosition = startPosition + (endPosition - startPosition) * (timer / armBite4Time);
 }
 
-void TA_MechaGolem::initBlow()
-{
+void TA_MechaGolem::initBlow() {
     TA::sound::fadeOutMusic(0);
     objectSet->spawnObject<TA_Explosion>(position + TA_Point(-11, -42), 32, TA_EXPLOSION_NEUTRAL);
     objectSet->spawnObject<TA_Explosion>(position + TA_Point(-7, -38), 36, TA_EXPLOSION_NEUTRAL);
@@ -429,8 +399,7 @@ void TA_MechaGolem::initBlow()
     state = STATE_BLOW;
 }
 
-void TA_MechaGolem::updateBlow()
-{
+void TA_MechaGolem::updateBlow() {
     double prev = timer;
     timer += TA::elapsedTime;
 
@@ -447,8 +416,7 @@ void TA_MechaGolem::updateBlow()
     }
 }
 
-void TA_MechaGolem::updateFall()
-{
+void TA_MechaGolem::updateFall() {
     speed += gravity * TA::elapsedTime;
     position.y += speed * TA::elapsedTime;
 
@@ -466,15 +434,14 @@ void TA_MechaGolem::updateFall()
     }
 }
 
-void TA_MechaGolem::updateDefeated()
-{
+void TA_MechaGolem::updateDefeated() {
     if(timer > defeatedTime) {
         state = STATE_WAIT_ITEM;
         return;
     }
     double prev = timer;
     timer += TA::elapsedTime;
-    
+
     if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3)) {
         explosionSound.play();
     }
@@ -484,20 +451,17 @@ void TA_MechaGolem::updateDefeated()
     }
 }
 
-bool TA_MechaGolem::canDoTransition()
-{
+bool TA_MechaGolem::canDoTransition() {
     return isComplete() && !objectSet->getLinks().character->isGettingItem();
 }
 
-void TA_MechaGolem::doTransition()
-{
+void TA_MechaGolem::doTransition() {
     TA::save::setSaveParameter("map_selection", 4);
     TA::save::setSaveParameter("seafox", 0);
     objectSet->setTransition(TA_SCREENSTATE_MAP);
 }
 
-void TA_MechaGolem::updateDamage()
-{
+void TA_MechaGolem::updateDamage() {
     if(invincibleTimer <= invincibleTime) {
         invincibleTimer += TA::elapsedTime;
         return;
@@ -512,28 +476,32 @@ void TA_MechaGolem::updateDamage()
 
     hitSound.play();
     invincibleTimer = 0;
-    health --;
+    health--;
 }
 
-void TA_MechaGolem::updateHitboxes()
-{
+void TA_MechaGolem::updateHitboxes() {
     // TODO: add hitbox to block bombs from back
     hitboxVector[HITBOX_WALL_LEFT].hitbox.setRectangle(TA_Point(112, 0), TA_Point(128, 112));
-    hitboxVector[HITBOX_WALL_RIGHT].hitbox.setRectangle(TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 112));
-    hitboxVector[HITBOX_WALL_LEFT].collisionType = hitboxVector[HITBOX_WALL_RIGHT].collisionType = (state == STATE_IDLE ? TA_COLLISION_TRANSPARENT : TA_COLLISION_SOLID);
-    
-    int type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE | TA_COLLISION_TARGET);
+    hitboxVector[HITBOX_WALL_RIGHT].hitbox.setRectangle(
+        TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 112));
+    hitboxVector[HITBOX_WALL_LEFT].collisionType = hitboxVector[HITBOX_WALL_RIGHT].collisionType =
+        (state == STATE_IDLE ? TA_COLLISION_TRANSPARENT : TA_COLLISION_SOLID);
+
+    int type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM
+                    ? TA_COLLISION_TRANSPARENT
+                    : TA_COLLISION_DAMAGE | TA_COLLISION_TARGET);
     hitboxVector[HITBOX_BODY].hitbox.setRectangle(position + TA_Point(5, -44), position + TA_Point(52, -16));
     hitboxVector[HITBOX_WEAK].hitbox.setRectangle(position + TA_Point(8, -55), position + TA_Point(24, -42));
     hitboxVector[HITBOX_BODY].collisionType = hitboxVector[HITBOX_WEAK].collisionType = type;
 
-    type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE);
+    type = (state == STATE_BLOW || state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM
+                ? TA_COLLISION_TRANSPARENT
+                : TA_COLLISION_DAMAGE);
     hitboxVector[HITBOX_ARM].hitbox.setRectangle(armPosition + TA_Point(4, 4), armPosition + TA_Point(12, 12));
     hitboxVector[HITBOX_ARM].collisionType = type;
 }
 
-void TA_MechaGolem::draw()
-{
+void TA_MechaGolem::draw() {
     headSprite.setPosition(position + TA_Point(5, -56));
     bodySprite.setPosition(position + TA_Point(0, -57));
 
@@ -550,11 +518,12 @@ void TA_MechaGolem::draw()
         headSprite.draw();
     }
 
-    if(!(state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM || (state == STATE_BLOW && timer > 88))) {
+    if(!(state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM ||
+           (state == STATE_BLOW && timer > 88))) {
         leftFootSprite.draw();
         rightFootSprite.draw();
     }
-    
+
     drawArm();
 
     if(invincibleTimer < damageFlashTime * 4 && int(invincibleTimer / damageFlashTime) % 2 == 0) {
@@ -562,9 +531,9 @@ void TA_MechaGolem::draw()
     }
 }
 
-void TA_MechaGolem::drawArm()
-{
-    if(state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM || (state == STATE_BLOW && timer > 40)) {
+void TA_MechaGolem::drawArm() {
+    if(state == STATE_FALL || state == STATE_DEFEATED || state == STATE_WAIT_ITEM ||
+        (state == STATE_BLOW && timer > 40)) {
         return;
     }
 

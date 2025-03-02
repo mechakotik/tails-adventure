@@ -1,13 +1,12 @@
 #include "speedy.h"
-#include "tools.h"
 #include "character.h"
+#include "error.h"
 #include "item_box.h"
 #include "save.h"
+#include "tools.h"
 #include "transition.h"
-#include "error.h"
 
-void TA_Speedy::load()
-{
+void TA_Speedy::load() {
     double leftX = 256 - static_cast<double>(TA::screenWidth) / 2;
     objectSet->spawnObject<TA_Transition>(TA_Point(leftX, 3888), TA_Point(leftX + 2, 4016), "maps/pm/pm3");
 
@@ -15,7 +14,8 @@ void TA_Speedy::load()
     objectSet->getLinks().camera->forceLockX();
 
     if(isComplete()) {
-        objectSet->spawnObject<TA_Transition>(TA_Point(leftX + TA::screenWidth - 2, 3888), TA_Point(leftX + TA::screenWidth, 4016), 3, false);
+        objectSet->spawnObject<TA_Transition>(
+            TA_Point(leftX + TA::screenWidth - 2, 3888), TA_Point(leftX + TA::screenWidth, 4016), 3, false);
         return;
     }
 
@@ -23,14 +23,12 @@ void TA_Speedy::load()
     initShow();
 }
 
-bool TA_Speedy::isComplete()
-{
+bool TA_Speedy::isComplete() {
     long long itemMask = TA::save::getSaveParameter("item_mask");
     return itemMask & (1ll << 33);
 }
 
-void TA_Speedy::loadSprite()
-{
+void TA_Speedy::loadSprite() {
     loadFromToml("objects/speedy.toml");
     hitbox.setRectangle(TA_Point(6, 10), TA_Point(20, 30));
 
@@ -38,8 +36,7 @@ void TA_Speedy::loadSprite()
     characterPlaceholder.setCamera(objectSet->getLinks().camera);
 }
 
-void TA_Speedy::initShow()
-{
+void TA_Speedy::initShow() {
     state = STATE_SHOW;
     position = {328, 3883};
     velocity = startShowVelocity;
@@ -48,8 +45,7 @@ void TA_Speedy::initShow()
     characterPlaceholder.setAnimation("look_up");
 }
 
-bool TA_Speedy::update()
-{
+bool TA_Speedy::update() {
     if(state == STATE_SHOW && isComplete()) {
         return false;
     }
@@ -89,19 +85,17 @@ bool TA_Speedy::update()
     return true;
 }
 
-void TA_Speedy::updateShow()
-{
+void TA_Speedy::updateShow() {
     if(waiting) {
         timer += TA::elapsedTime;
         if(timer > showWaitTime) {
             waiting = false;
         }
-    }
-    else {
+    } else {
         velocity.y -= gravity * TA::elapsedTime;
         position = position + velocity * TA::elapsedTime;
     }
-    
+
     characterPlaceholder.setPosition(objectSet->getLinks().character->getPosition());
     characterPlaceholder.setFlip(getDistanceToCharacter().x > 0);
 
@@ -113,29 +107,26 @@ void TA_Speedy::updateShow()
         waiting = true;
         timer = 0;
     }
-    
+
     else if(position.x > cameraPosition.x + 180 && position.y < cameraPosition.y - 32) {
         objectSet->getLinks().character->setHide(false);
         initIdle();
     }
 }
 
-void TA_Speedy::initIdle()
-{
+void TA_Speedy::initIdle() {
     state = STATE_IDLE;
     position = {96, 0};
 }
 
-void TA_Speedy::updateIdle()
-{
+void TA_Speedy::updateIdle() {
     if(objectSet->getCharacterPosition().y < 3776) {
         TA::sound::playMusic("sound/boss.vgm");
         initAttack();
     }
 }
 
-void TA_Speedy::initAttack()
-{
+void TA_Speedy::initAttack() {
     if(objectSet->getLinks().camera->isLocked()) {
         initEndSequence();
         return;
@@ -150,20 +141,17 @@ void TA_Speedy::initAttack()
     setAnimation("attack");
 }
 
-void TA_Speedy::updateAttack()
-{
+void TA_Speedy::updateAttack() {
     position.y += attackSpeed * TA::elapsedTime;
     if(position.y > objectSet->getLinks().camera->getPosition().y + 200) {
         initFlyUp();
     }
 }
 
-void TA_Speedy::initFlyUp()
-{
+void TA_Speedy::initFlyUp() {
     if(objectSet->getCharacterPosition().x > 128) {
         position.x = 192;
-    }
-    else {
+    } else {
         position.x = 296;
     }
     position.y = objectSet->getLinks().camera->getPosition().y + 176;
@@ -173,38 +161,33 @@ void TA_Speedy::initFlyUp()
     if(TA::random::next() % 2 == 0) {
         flyUpPhase = 0;
         state = STATE_FLY_UP;
-    }
-    else {
+    } else {
         state = STATE_FLY_UP_SIMPLE;
     }
 }
 
-void TA_Speedy::updateFlyUpSimple()
-{
+void TA_Speedy::updateFlyUpSimple() {
     position = position + velocity * TA::elapsedTime;
     if(position.y < objectSet->getLinks().camera->getPosition().y - 64) {
         initAttack();
     }
 }
 
-void TA_Speedy::updateFlyUp()
-{
+void TA_Speedy::updateFlyUp() {
     if(flyUpPhase == 0) {
         double cameraY = objectSet->getLinks().camera->getPosition().y;
         if(position.y < cameraY + 24) {
             flyUpPhase = 1;
             flyUpPhase2Y = cameraY - 8;
         }
-    }
-    else if(flyUpPhase == 1 && position.y < flyUpPhase2Y) {
+    } else if(flyUpPhase == 1 && position.y < flyUpPhase2Y) {
         flyUpPhase = 2;
     }
 
     if(flyUpPhase != 0) {
         if(flyUpPhase == 1) {
             velocity = {0, -flyUpPhase1Speed};
-        }
-        else {
+        } else {
             velocity = {0, -flyUpPhase2Speed};
         }
         setAnimation("show");
@@ -213,8 +196,7 @@ void TA_Speedy::updateFlyUp()
     updateFlyUpSimple();
 }
 
-void TA_Speedy::initEndSequence()
-{
+void TA_Speedy::initEndSequence() {
     state = STATE_END_SEQUENCE;
     position = objectSet->getLinks().camera->getPosition() + TA_Point(240, -34);
     TA::sound::playMusic("sound/pm.vgm");
@@ -226,8 +208,7 @@ void TA_Speedy::initEndSequence()
     characterPlaceholder.setFlip(false);
 }
 
-void TA_Speedy::updateEndSequence()
-{
+void TA_Speedy::updateEndSequence() {
     switch(endSequencePhase) {
         case 0:
             updateEndSequencePhase0();
@@ -253,8 +234,7 @@ void TA_Speedy::updateEndSequence()
     characterPlaceholder.setPosition(cpPosition);
 }
 
-void TA_Speedy::updateEndSequencePhase0()
-{
+void TA_Speedy::updateEndSequencePhase0() {
     cpPosition.y -= TA::elapsedTime;
     double needY = objectSet->getLinks().camera->getPosition().y + 48;
 
@@ -263,15 +243,13 @@ void TA_Speedy::updateEndSequencePhase0()
     }
 }
 
-void TA_Speedy::updateEndSequencePhase1()
-{
+void TA_Speedy::updateEndSequencePhase1() {
     const double needX = 176;
 
     if(cpPosition.x < needX) {
         cpPosition.x += TA::elapsedTime;
         cpPosition.x = std::min(cpPosition.x, needX);
-    }
-    else {
+    } else {
         cpPosition.x -= TA::elapsedTime;
         cpPosition.x = std::max(cpPosition.x, needX);
     }
@@ -281,8 +259,7 @@ void TA_Speedy::updateEndSequencePhase1()
     }
 }
 
-void TA_Speedy::updateEndSequencePhase2()
-{
+void TA_Speedy::updateEndSequencePhase2() {
     double needY = objectSet->getLinks().camera->getPosition().y + 89;
 
     cpPosition.y += TA::elapsedTime;
@@ -295,8 +272,7 @@ void TA_Speedy::updateEndSequencePhase2()
     }
 }
 
-void TA_Speedy::updateEndSequencePhase3()
-{
+void TA_Speedy::updateEndSequencePhase3() {
     velocity.y -= gravity * TA::elapsedTime;
     velocity.y = std::max(velocity.y, double(0));
     position = position + velocity * TA::elapsedTime;
@@ -307,8 +283,7 @@ void TA_Speedy::updateEndSequencePhase3()
     }
 }
 
-void TA_Speedy::updateEndSequencePhase4()
-{
+void TA_Speedy::updateEndSequencePhase4() {
     if(!isAnimated()) {
         endSequencePhase = 5;
         velocity = {2, 0};
@@ -322,8 +297,7 @@ void TA_Speedy::updateEndSequencePhase4()
     position = position + velocity * TA::elapsedTime;
 }
 
-void TA_Speedy::updateEndSequencePhase5()
-{
+void TA_Speedy::updateEndSequencePhase5() {
     velocity.y -= gravity * TA::elapsedTime;
     position = position + velocity * TA::elapsedTime;
     double cameraY = objectSet->getLinks().camera->getPosition().y;
@@ -336,8 +310,7 @@ void TA_Speedy::updateEndSequencePhase5()
     }
 }
 
-void TA_Speedy::updateWaitItem()
-{
+void TA_Speedy::updateWaitItem() {
     if(!(isComplete() && !objectSet->getLinks().character->isGettingItem())) {
         return;
     }
@@ -351,8 +324,7 @@ void TA_Speedy::updateWaitItem()
     characterPlaceholder.setFlip(false);
 }
 
-void TA_Speedy::updateFlyAway()
-{
+void TA_Speedy::updateFlyAway() {
     cpVelocity.y -= flyAwayAcceleration * TA::elapsedTime;
     cpPosition = cpPosition + cpVelocity * TA::elapsedTime;
     characterPlaceholder.setPosition(cpPosition);
@@ -362,21 +334,17 @@ void TA_Speedy::updateFlyAway()
     }
 }
 
-void TA_Speedy::updateFlip()
-{
+void TA_Speedy::updateFlip() {
     if(state == STATE_FLY_UP && getCurrentFrame() == 7) {
         setFlip(position.x < 256);
-    }
-    else if(state == STATE_END_SEQUENCE) {
+    } else if(state == STATE_END_SEQUENCE) {
         setFlip(false);
-    }
-    else {
+    } else {
         setFlip(getAnimationFrame() >= 2);
     }
 }
 
-void TA_Speedy::doTransition()
-{
+void TA_Speedy::doTransition() {
     long long areaMask = TA::save::getSaveParameter("area_mask");
     areaMask |= (1ll << 10);
     TA::save::setSaveParameter("area_mask", areaMask);
@@ -385,16 +353,14 @@ void TA_Speedy::doTransition()
     objectSet->setTransition(TA_SCREENSTATE_HOUSE);
 }
 
-int TA_Speedy::getCollisionType()
-{
+int TA_Speedy::getCollisionType() {
     if(state == STATE_ATTACK) {
         return TA_COLLISION_DAMAGE;
     }
     return TA_COLLISION_TRANSPARENT;
 }
 
-void TA_Speedy::draw()
-{
+void TA_Speedy::draw() {
     TA_Object::draw();
     if(objectSet->getLinks().character->isHidden()) {
         characterPlaceholder.draw();

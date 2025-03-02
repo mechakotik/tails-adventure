@@ -2,24 +2,24 @@
 #define TA_CONTROLLER_H
 
 #include <array>
-#include "sprite.h"
-#include "touchscreen.h"
-#include "tools.h"
 #include "gamepad.h"
 #include "keyboard.h"
+#include "sprite.h"
+#include "tools.h"
+#include "touchscreen.h"
 
 class TA_GamepadController {
 public:
-    TA_Point getDirectionVector() {return TA::gamepad::getDirectionVector();}
-    bool isPressed(TA_FunctionButton button) {return TA::gamepad::isPressed(button);}
-    bool isJustPressed(TA_FunctionButton button) {return TA::gamepad::isJustPressed(button);}
+    TA_Point getDirectionVector() { return TA::gamepad::getDirectionVector(); }
+    bool isPressed(TA_FunctionButton button) { return TA::gamepad::isPressed(button); }
+    bool isJustPressed(TA_FunctionButton button) { return TA::gamepad::isJustPressed(button); }
 };
 
 class TA_KeyboardController {
 public:
-    TA_Point getDirectionVector() {return TA::keyboard::getDirectionVector();}
-    bool isPressed(TA_FunctionButton button) {return TA::keyboard::isPressed(button);}
-    bool isJustPressed(TA_FunctionButton button) {return TA::keyboard::isJustPressed(button);}
+    TA_Point getDirectionVector() { return TA::keyboard::getDirectionVector(); }
+    bool isPressed(TA_FunctionButton button) { return TA::keyboard::isPressed(button); }
+    bool isJustPressed(TA_FunctionButton button) { return TA::keyboard::isJustPressed(button); }
 };
 
 enum TA_OnscreenControllerMode {
@@ -49,7 +49,7 @@ public:
     void load();
     void update();
     void draw();
-    void setMode(TA_OnscreenControllerMode newMode) {mode = newMode;}
+    void setMode(TA_OnscreenControllerMode newMode) { mode = newMode; }
     void setAlpha(int alpha);
 
     TA_Point getDirectionVector();
@@ -73,15 +73,15 @@ public:
     void load();
     void update();
     void draw();
-    void setMode(TA_OnscreenControllerMode mode) {onscreen.setMode(mode);}
-    void setAlpha(int alpha) {onscreen.setAlpha(alpha);}
+    void setMode(TA_OnscreenControllerMode mode) { onscreen.setMode(mode); }
+    void setAlpha(int alpha) { onscreen.setAlpha(alpha); }
 
     TA_Point getDirectionVector();
     TA_Direction getDirection();
 
     bool isPressed(TA_FunctionButton button);
     bool isJustPressed(TA_FunctionButton button);
-    bool isJustChangedDirection() {return justChanged;}
+    bool isJustChangedDirection() { return justChanged; }
     bool isTouchscreen();
 };
 

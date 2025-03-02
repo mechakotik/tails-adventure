@@ -1,8 +1,7 @@
 #include "napalm_fire.h"
 #include <iostream>
 
-void TA_NapalmFire::load(TA_Point position, double xsp)
-{
+void TA_NapalmFire::load(TA_Point position, double xsp) {
     this->position = position;
     velocity = {xsp, 0};
 
@@ -20,8 +19,7 @@ void TA_NapalmFire::load(TA_Point position, double xsp)
     updatePosition();
 }
 
-bool TA_NapalmFire::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_NapalmFire::checkPawnCollision(TA_Polygon& hitbox) {
     int flags = objectSet->checkCollision(hitbox);
     if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE)) {
         return true;
@@ -29,15 +27,14 @@ bool TA_NapalmFire::checkPawnCollision(TA_Polygon &hitbox)
     return false;
 }
 
-bool TA_NapalmFire::update()
-{
+bool TA_NapalmFire::update() {
     int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime, true);
     if(flags & TA_WALL_COLLISION) {
         velocity.x = 0;
     }
 
     updatePosition();
-    
+
     if(!TA_Sprite::isAnimated()) {
         return false;
     }

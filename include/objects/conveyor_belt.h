@@ -10,8 +10,8 @@ private:
 public:
     using TA_Object::TA_Object;
     void load(TA_Point topLeft, TA_Point bottomRight, bool direction);
-    bool update() {return true;}
-    int getCollisionType() {return collisionType;}
+    bool update() { return true; }
+    int getCollisionType() { return collisionType; }
 };
 
 #endif // TA_CONVEYOR_BELT_H

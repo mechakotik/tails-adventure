@@ -1,15 +1,13 @@
 #ifndef TA_SEA_FOX_H
 #define TA_SEA_FOX_H
 
-#include "pawn.h"
 #include "links.h"
+#include "pawn.h"
 #include "sound.h"
 
 class TA_SeaFox : public TA_Pawn {
 private:
-    enum Item {
-        ITEM_VULCAN_GUN = 4
-    };
+    enum Item { ITEM_VULCAN_GUN = 4 };
 
     const double verticalDrag = double(1) / 32;
     const double horizontalDrag = double(1) / 196;
@@ -29,7 +27,7 @@ private:
     void updateDamage();
     void dropRings();
     void updateDead();
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
 
     TA_Links links;
     TA_Point velocity{0, 0};
@@ -42,15 +40,15 @@ private:
     double invincibleTimer = invincibleTime + 1;
     double waterLevel = -64;
     double deadTimer = 0;
-    
+
 public:
     void load(TA_Links links);
     void update();
-    
+
     void setSpawnPoint(TA_Point position, bool flip);
-    TA_Polygon* getHitbox() {return &hitbox;}
-    TA_Polygon* getDrillHitbox() {return &drillHitbox;}
-    bool gameOver() {return dead && deadTimer >= deadTime;}
+    TA_Polygon* getHitbox() { return &hitbox; }
+    TA_Polygon* getDrillHitbox() { return &drillHitbox; }
+    bool gameOver() { return dead && deadTimer >= deadTime; }
 };
 
 #endif // TA_SEA_FOX_H

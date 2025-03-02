@@ -2,8 +2,8 @@
 #define TA_MAIN_MENU_SCREEN_H
 
 #include <memory>
-#include "screen.h"
 #include "main_menu_section.h"
+#include "screen.h"
 
 class TA_MainMenuScreen : public TA_Screen {
 public:

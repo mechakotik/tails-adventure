@@ -1,13 +1,13 @@
 #ifndef TA_TILEMAP_H
 #define TA_TILEMAP_H
 
-#include <string>
-#include <vector>
 #include <array>
+#include <string>
 #include <tmxpp.hpp>
-#include "sprite.h"
+#include <vector>
 #include "camera.h"
 #include "geometry.h"
+#include "sprite.h"
 
 enum TA_CollisionType {
     TA_COLLISION_TRANSPARENT = 0,
@@ -62,11 +62,11 @@ private:
 public:
     void load(std::string filename);
     void draw(int priority);
-    void setCamera(TA_Camera *newCamera);
+    void setCamera(TA_Camera* newCamera);
     void setPosition(TA_Point position);
-    int getWidth() {return width * tileWidth;}
-    int getHeight() {return height * tileHeight;}
-    int checkCollision(TA_Polygon &polygon);
+    int getWidth() { return width * tileWidth; }
+    int getHeight() { return height * tileHeight; }
+    int checkCollision(TA_Polygon& polygon);
     void setUpdateAnimation(bool enabled);
 };
 

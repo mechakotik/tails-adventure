@@ -1,16 +1,14 @@
 #include "pushable_object.h"
-#include "tools.h"
 #include "character.h"
+#include "tools.h"
 
-void TA_PushableObject::load(std::string filename, TA_Point newPosition)
-{
+void TA_PushableObject::load(std::string filename, TA_Point newPosition) {
     TA_Sprite::load(filename);
     position = newPosition;
     hitbox.setRectangle(TA_Point(0.33, 0), TA_Point(getWidth() - 0.33, getHeight()));
 }
 
-bool TA_PushableObject::update()
-{
+bool TA_PushableObject::update() {
     TA_Polygon leftHitbox, rightHitbox;
     leftHitbox.setRectangle(TA_Point(-0.1, getHeight() / 2), TA_Point(0, getHeight()));
     rightHitbox.setRectangle(TA_Point(getWidth(), getHeight() / 2), TA_Point(getWidth() + 0.1, getHeight()));
@@ -22,8 +20,7 @@ bool TA_PushableObject::update()
     if(objectSet->getLinks().character->isOnGround()) {
         if(objectSet->checkCollision(leftHitbox) & TA_COLLISION_CHARACTER) {
             velocity.x = speed;
-        }
-        else if(objectSet->checkCollision(rightHitbox) & TA_COLLISION_CHARACTER) {
+        } else if(objectSet->checkCollision(rightHitbox) & TA_COLLISION_CHARACTER) {
             velocity.x = -speed;
         }
     }
@@ -38,8 +35,7 @@ bool TA_PushableObject::update()
     return true;
 }
 
-bool TA_PushableObject::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_PushableObject::checkPawnCollision(TA_Polygon& hitbox) {
     int flags = objectSet->checkCollision(hitbox);
     if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP)) {
         return true;
@@ -47,8 +43,7 @@ bool TA_PushableObject::checkPawnCollision(TA_Polygon &hitbox)
     return false;
 }
 
-void TA_PushableSpring::load(TA_Point newPosition)
-{
+void TA_PushableSpring::load(TA_Point newPosition) {
     TA_PushableObject::load("objects/spring.png", newPosition);
     springBounceSprite.load("objects/spring_bounce.png");
     springBounceSprite.setCamera(objectSet->getLinks().camera);
@@ -59,19 +54,16 @@ void TA_PushableSpring::load(TA_Point newPosition)
     hitboxVector.push_back(element);
 }
 
-bool TA_PushableSpring::update()
-{
+bool TA_PushableSpring::update() {
     springBounceSprite.setPosition(position - TA_Point(0, 12));
     return TA_PushableObject::update();
 }
 
-void TA_PushableSpring::draw()
-{
+void TA_PushableSpring::draw() {
     if(objectSet->getLinks().character->isJumpingOnSpring() &&
         objectSet->getLinks().character->getJumpTime() < bounceTime) {
         springBounceSprite.draw();
-    }
-    else {
+    } else {
         TA_PushableObject::draw();
     }
 }

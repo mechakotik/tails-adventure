@@ -9,12 +9,7 @@ private:
     const double moveTime = 30;
     const double moveRange = 16;
 
-    enum State {
-        STATE_IDLE_UP,
-        STATE_MOVE_DOWN,
-        STATE_IDLE_DOWN,
-        STATE_MOVE_UP
-    };
+    enum State { STATE_IDLE_UP, STATE_MOVE_DOWN, STATE_IDLE_DOWN, STATE_MOVE_UP };
 
     std::pair<State, double> getStateAndTime();
     void updatePosition() override;
@@ -28,7 +23,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 #endif // TA_DRILL_MOLE_H

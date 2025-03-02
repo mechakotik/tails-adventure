@@ -1,8 +1,8 @@
 #include "particle.h"
 #include "tools.h"
 
-void TA_Particle::load(std::string filename, TA_Point newPosition, TA_Point newVelocity, TA_Point newDelta, double newDelay)
-{
+void TA_Particle::load(
+    std::string filename, TA_Point newPosition, TA_Point newVelocity, TA_Point newDelta, double newDelay) {
     TA_Sprite::load(filename);
     position = newPosition;
     velocity = newVelocity;
@@ -11,8 +11,7 @@ void TA_Particle::load(std::string filename, TA_Point newPosition, TA_Point newV
     setPosition(position);
 }
 
-bool TA_Particle::update()
-{
+bool TA_Particle::update() {
     if(delay < 0) {
         velocity = velocity + delta * TA::elapsedTime;
         position = position + velocity * TA::elapsedTime;
@@ -21,8 +20,7 @@ bool TA_Particle::update()
         if(timer >= 300) {
             return false;
         }
-    }
-    else {
+    } else {
         delay -= TA::elapsedTime;
     }
     return true;

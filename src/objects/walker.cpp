@@ -1,9 +1,8 @@
 #include "walker.h"
-#include "tools.h"
 #include "dead_kukku.h"
+#include "tools.h"
 
-void TA_Walker::load(TA_Point newPosition, int range, bool flip)
-{
+void TA_Walker::load(TA_Point newPosition, int range, bool flip) {
     loadFromToml("objects/pf_enemies.toml");
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(18, 26));
 
@@ -11,13 +10,11 @@ void TA_Walker::load(TA_Point newPosition, int range, bool flip)
     direction = flip;
     if(range <= 0) {
         alwaysIdle = true;
-    }
-    else {
+    } else {
         if(!flip) {
             rangeLeft = position.x;
             rangeRight = position.x + range;
-        }
-        else {
+        } else {
             rangeLeft = position.x - range;
             rangeRight = position.x;
         }
@@ -25,8 +22,7 @@ void TA_Walker::load(TA_Point newPosition, int range, bool flip)
     updatePosition();
 }
 
-bool TA_Walker::update()
-{
+bool TA_Walker::update() {
     switch(state) {
         case TA_WALKER_STATE_IDLE:
             updateIdle();
@@ -56,31 +52,27 @@ bool TA_Walker::update()
     return true;
 }
 
-void TA_Walker::updateIdle()
-{
+void TA_Walker::updateIdle() {
     setAnimation("walker_idle");
     TA_Point distance = getDistanceToCharacter();
-    if (abs(distance.x) <= 140 && abs(distance.y) <= 90) {
+    if(abs(distance.x) <= 140 && abs(distance.y) <= 90) {
         state = TA_WALKER_STATE_MOVE;
     }
 }
 
-void TA_Walker::updateMove()
-{
-    if (alwaysIdle) {
+void TA_Walker::updateMove() {
+    if(alwaysIdle) {
         setAnimation("walker_idle");
-    }
-    else {
+    } else {
         setAnimation("walker");
-        if (!direction) {
+        if(!direction) {
             position.x += speed * TA::elapsedTime;
-            if (position.x > rangeRight) {
+            if(position.x > rangeRight) {
                 direction = true;
             }
-        }
-        else {
+        } else {
             position.x -= speed * TA::elapsedTime;
-            if (position.x < rangeLeft) {
+            if(position.x < rangeLeft) {
                 direction = false;
             }
         }
@@ -92,12 +84,10 @@ void TA_Walker::updateMove()
     }
 }
 
-void TA_Walker::updateFire()
-{
+void TA_Walker::updateFire() {
     if(!alwaysIdle && timer < standTime) {
         setAnimation("walker_idle");
-    }
-    else {
+    } else {
         setAnimation("walker_fire");
     }
     timer += TA::elapsedTime;
@@ -107,48 +97,42 @@ void TA_Walker::updateFire()
     }
 }
 
-void TA_Walker::updateMoveAway()
-{
-    if (alwaysIdle) {
+void TA_Walker::updateMoveAway() {
+    if(alwaysIdle) {
         state = TA_WALKER_STATE_MOVE;
         return;
     }
     setAnimation("walker");
-    if (!direction) {
+    if(!direction) {
         position.x -= speed * TA::elapsedTime;
-        if (position.x < rangeLeft) {
+        if(position.x < rangeLeft) {
             state = TA_WALKER_STATE_MOVE;
         }
-    }
-    else {
+    } else {
         position.x += speed * TA::elapsedTime;
-        if (position.x > rangeRight) {
+        if(position.x > rangeRight) {
             state = TA_WALKER_STATE_MOVE;
         }
     }
 }
 
-TA_Point TA_Walker::getDistanceToCharacter()
-{
+TA_Point TA_Walker::getDistanceToCharacter() {
     TA_Point centeredPosition = position + TA_Point(12, 16);
     TA_Point characterPosition = objectSet->getCharacterPosition();
     return characterPosition - centeredPosition;
 }
 
-void TA_WalkerBullet::load(TA_Point newPosition, bool newDirection)
-{
+void TA_WalkerBullet::load(TA_Point newPosition, bool newDirection) {
     TA_Sprite::load("objects/walker_bullet.png");
     position = newPosition;
     direction = newDirection;
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(7, 7));
 }
 
-bool TA_WalkerBullet::update()
-{
+bool TA_WalkerBullet::update() {
     if(direction) {
         position.x -= speed * TA::elapsedTime;
-    }
-    else {
+    } else {
         position.x += speed * TA::elapsedTime;
     }
     setPosition(position);

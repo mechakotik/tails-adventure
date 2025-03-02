@@ -1,14 +1,13 @@
 #include "sea_fox.h"
-#include "controller.h"
-#include "object_set.h"
 #include "bullet.h"
-#include "hud.h"
+#include "controller.h"
 #include "error.h"
-#include "save.h"
+#include "hud.h"
+#include "object_set.h"
 #include "ring.h"
+#include "save.h"
 
-void TA_SeaFox::load(TA_Links links)
-{
+void TA_SeaFox::load(TA_Links links) {
     this->links = links;
 
     loadFromToml("tails/seafox.toml");
@@ -20,21 +19,19 @@ void TA_SeaFox::load(TA_Links links)
 
     hitbox.setRectangle(TA_Point(9, 4), TA_Point(23, 30));
 
-    if(TA::levelPath=="maps/lr/lr1") { // TODO: set water level in area XML
+    if(TA::levelPath == "maps/lr/lr1") { // TODO: set water level in area XML
         waterLevel = 96;
     }
 }
 
-void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip)
-{
+void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip) {
     this->position = position;
     this->flip = this->neededFlip = flip;
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
 }
 
-void TA_SeaFox::update()
-{
+void TA_SeaFox::update() {
     if(dead) {
         updateDead();
         setFlip(flip);
@@ -50,17 +47,14 @@ void TA_SeaFox::update()
     updateDamage();
 
     setFlip(flip);
-    //TA::printLog("%f %f", position.x, position.y);
+    // TA::printLog("%f %f", position.x, position.y);
 }
 
-void TA_SeaFox::physicsStep()
-{
-    auto updateSpeed = [] (double &currentSpeed, double neededSpeed, double drag)
-    {
+void TA_SeaFox::physicsStep() {
+    auto updateSpeed = [](double& currentSpeed, double neededSpeed, double drag) {
         if(currentSpeed > neededSpeed) {
             currentSpeed = std::max(neededSpeed, currentSpeed - drag * TA::elapsedTime);
-        }
-        else {
+        } else {
             currentSpeed = std::min(neededSpeed, currentSpeed + drag * TA::elapsedTime);
         }
     };
@@ -73,8 +67,7 @@ void TA_SeaFox::physicsStep()
         if(underwater) {
             updateSpeed(velocity.y, vector.y, inputDrag);
         }
-    }
-    else {
+    } else {
         updateSpeed(velocity.x, 0, horizontalDrag);
         if(underwater) {
             updateSpeed(velocity.y, 0, verticalDrag);
@@ -89,8 +82,7 @@ void TA_SeaFox::physicsStep()
     TA_Sprite::setPosition(position);
 }
 
-bool TA_SeaFox::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_SeaFox::checkPawnCollision(TA_Polygon& hitbox) {
     int flags = links.objectSet->checkCollision(hitbox);
     if(flags & TA_COLLISION_SOLID) {
         return true;
@@ -98,39 +90,34 @@ bool TA_SeaFox::checkPawnCollision(TA_Polygon &hitbox)
     return false;
 }
 
-void TA_SeaFox::updateDirection()
-{
+void TA_SeaFox::updateDirection() {
     if(flip != neededFlip) {
         if(!isAnimated()) {
             setAnimation("idle");
             flip = neededFlip;
         }
-    }
-    else if(links.controller->isJustPressed(TA_BUTTON_A)) {
+    } else if(links.controller->isJustPressed(TA_BUTTON_A)) {
         setAnimation("rotate");
         neededFlip = !flip;
     }
 }
 
-void TA_SeaFox::updateFollowPosition()
-{
-    followPosition = position + TA_Point(getWidth() / 2, getHeight() / 2) - TA_Point(TA::screenWidth / 2, TA::screenHeight / 2);
+void TA_SeaFox::updateFollowPosition() {
+    followPosition =
+        position + TA_Point(getWidth() / 2, getHeight() / 2) - TA_Point(TA::screenWidth / 2, TA::screenHeight / 2);
     followPosition.x += (flip ? -1 : 1) * (TA::screenWidth * 0.15);
 }
 
-void TA_SeaFox::updateDrill()
-{
+void TA_SeaFox::updateDrill() {
     if(flip) {
         drillHitbox.setRectangle(TA_Point(2, 10), TA_Point(16, 24));
-    }
-    else {
+    } else {
         drillHitbox.setRectangle(TA_Point(24, 10), TA_Point(30, 24));
     }
     drillHitbox.setPosition(position);
 }
 
-void TA_SeaFox::updateItem()
-{
+void TA_SeaFox::updateItem() {
     if(vulcanGunTimer < vulcanGunTime) {
         updateVulcanGun();
         return;
@@ -149,8 +136,7 @@ void TA_SeaFox::updateItem()
     }
 }
 
-void TA_SeaFox::updateVulcanGun()
-{
+void TA_SeaFox::updateVulcanGun() {
     int prev = vulcanGunTimer / vulcanGunInterval;
     vulcanGunTimer += TA::elapsedTime;
     int cur = vulcanGunTimer / vulcanGunInterval;
@@ -163,8 +149,7 @@ void TA_SeaFox::updateVulcanGun()
     }
 }
 
-void TA_SeaFox::updateDamage()
-{
+void TA_SeaFox::updateDamage() {
     hitbox.setPosition(position);
     if(invincibleTimer < invincibleTime) {
         invincibleTimer += TA::elapsedTime;
@@ -204,8 +189,7 @@ void TA_SeaFox::dropRings() {
     links.objectSet->spawnObject<TA_Ring>(ringPosition, TA_Point(-0.75, -2), 64);
 }
 
-void TA_SeaFox::updateDead()
-{
+void TA_SeaFox::updateDead() {
     velocity.x = 0;
     velocity.y += gravity * TA::elapsedTime;
     position = position + velocity * TA::elapsedTime;

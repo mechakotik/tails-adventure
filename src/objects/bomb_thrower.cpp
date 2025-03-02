@@ -2,8 +2,7 @@
 #include "dead_kukku.h"
 #include "explosion.h"
 
-void TA_BombThrower::load(TA_Point position, double leftX, double rightX)
-{
+void TA_BombThrower::load(TA_Point position, double leftX, double rightX) {
     this->position = position;
     this->leftX = leftX;
     this->rightX = rightX;
@@ -13,8 +12,7 @@ void TA_BombThrower::load(TA_Point position, double leftX, double rightX)
     updatePosition();
 }
 
-bool TA_BombThrower::update()
-{
+bool TA_BombThrower::update() {
     switch(state) {
         case STATE_IDLE:
             updateIdle();
@@ -39,11 +37,10 @@ bool TA_BombThrower::update()
     return true;
 }
 
-void TA_BombThrower::updateIdle()
-{
+void TA_BombThrower::updateIdle() {
     timer += TA::elapsedTime;
     TA_Point distance = getDistanceToCharacter();
-    
+
     if(timer > idleTime && distance.x < 0 && abs(distance.x) <= 160 && abs(distance.y) <= 90) {
         state = STATE_WALK_FORWARD;
         return;
@@ -53,8 +50,7 @@ void TA_BombThrower::updateIdle()
     setFlip(false);
 }
 
-void TA_BombThrower::updateWalkForward()
-{
+void TA_BombThrower::updateWalkForward() {
     position.x -= speed * TA::elapsedTime;
     TA_Point distance = getDistanceToCharacter();
 
@@ -68,16 +64,14 @@ void TA_BombThrower::updateWalkForward()
     setFlip(false);
 }
 
-void TA_BombThrower::initAttack()
-{
+void TA_BombThrower::initAttack() {
     objectSet->spawnObject<TA_EnemyBomb>(position + TA_Point(6, 7));
     state = STATE_ATTACK;
     setAnimation("throw");
     setFlip(false);
 }
 
-void TA_BombThrower::updateAttack()
-{
+void TA_BombThrower::updateAttack() {
     if(!isAnimated()) {
         state = STATE_WALK_BACK;
         timer = 0;
@@ -85,11 +79,10 @@ void TA_BombThrower::updateAttack()
     }
 }
 
-void TA_BombThrower::updateWalkBack()
-{
+void TA_BombThrower::updateWalkBack() {
     position.x += speed * TA::elapsedTime;
     timer += TA::elapsedTime;
-    
+
     if(position.x > rightX || timer > walkBackTime) {
         position.x = std::min(position.x, rightX);
         timer = 0;
@@ -101,37 +94,32 @@ void TA_BombThrower::updateWalkBack()
     setFlip(true);
 }
 
-TA_Point TA_BombThrower::getDistanceToCharacter()
-{
+TA_Point TA_BombThrower::getDistanceToCharacter() {
     TA_Point characterPosition = objectSet->getCharacterPosition();
     TA_Point centeredPosition = position + TA_Point(14, 8);
     return characterPosition - centeredPosition;
 }
 
-bool TA_BombThrower::shouldBeDestroyed()
-{
+bool TA_BombThrower::shouldBeDestroyed() {
     if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
         return true;
     }
     return false;
 }
 
-void TA_BombThrower::destroy()
-{
+void TA_BombThrower::destroy() {
     objectSet->spawnObject<TA_DeadKukku>(position - TA_Point(4, 2));
     objectSet->resetInstaShield();
 }
 
-void TA_EnemyBomb::load(TA_Point position)
-{
+void TA_EnemyBomb::load(TA_Point position) {
     this->position = position;
     TA_Sprite::load("objects/enemy_bomb.png");
     hitbox.setRectangle(topLeft - TA_Point(0.5, 0.5), bottomRight + TA_Point(0.5, 0.5));
     updatePosition();
 }
 
-bool TA_EnemyBomb::update()
-{
+bool TA_EnemyBomb::update() {
     velocity.y += grv * TA::elapsedTime;
     int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
 
@@ -144,8 +132,7 @@ bool TA_EnemyBomb::update()
     return true;
 }
 
-bool TA_EnemyBomb::checkPawnCollision(TA_Polygon &hitbox)
-{
+bool TA_EnemyBomb::checkPawnCollision(TA_Polygon& hitbox) {
     if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_CHARACTER)) {
         return true;
     }

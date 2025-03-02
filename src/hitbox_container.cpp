@@ -1,7 +1,6 @@
 #include "hitbox_container.h"
 
-void TA_HitboxContainer::add(TA_Polygon &hitbox, int type)
-{
+void TA_HitboxContainer::add(TA_Polygon& hitbox, int type) {
     if(type == TA_COLLISION_TRANSPARENT) {
         return;
     }
@@ -12,13 +11,14 @@ void TA_HitboxContainer::add(TA_Polygon &hitbox, int type)
     }
     Element element = {&hitbox, type};
 
-    auto addToChunk = [&](Chunk &chunk) {
+    auto addToChunk = [&](Chunk& chunk) {
         lazyClear(chunk);
         chunk.elements.push_back(element);
     };
 
     TA_Point topLeft = hitbox.getTopLeft(), bottomRight = hitbox.getBottomRight();
-    int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize, bottom = bottomRight.y / chunkSize;
+    int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize,
+        bottom = bottomRight.y / chunkSize;
 
     if(0 <= top && bottom < size && 0 <= left && right < size && right - left <= 1 && bottom - top <= 1) {
         addToChunk(chunks[top][left]);
@@ -31,19 +31,17 @@ void TA_HitboxContainer::add(TA_Polygon &hitbox, int type)
         if(right != left && bottom != top) {
             addToChunk(chunks[bottom][right]);
         }
-    }
-    else {
+    } else {
         addToChunk(commonChunk);
     }
 }
 
-int TA_HitboxContainer::getCollisionFlags(TA_Polygon &hitbox)
-{
+int TA_HitboxContainer::getCollisionFlags(TA_Polygon& hitbox) {
     int flags = 0;
 
-    auto processChunk = [&](Chunk &chunk) {
+    auto processChunk = [&](Chunk& chunk) {
         lazyClear(chunk);
-        for(Element &element : chunk.elements) {
+        for(Element& element : chunk.elements) {
             if(hitbox.intersects(*element.hitbox)) {
                 flags |= element.type;
             }
@@ -57,7 +55,8 @@ int TA_HitboxContainer::getCollisionFlags(TA_Polygon &hitbox)
     };
 
     TA_Point topLeft = hitbox.getTopLeft(), bottomRight = hitbox.getBottomRight();
-    int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize, bottom = bottomRight.y / chunkSize;
+    int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize,
+        bottom = bottomRight.y / chunkSize;
 
     processChunk(commonChunk);
     processChunkAt(top, left);
@@ -74,8 +73,7 @@ int TA_HitboxContainer::getCollisionFlags(TA_Polygon &hitbox)
     return flags;
 }
 
-void TA_HitboxContainer::lazyClear(Chunk &chunk)
-{
+void TA_HitboxContainer::lazyClear(Chunk& chunk) {
     if(chunk.updateTime == currentTime) {
         return;
     }
@@ -83,8 +81,7 @@ void TA_HitboxContainer::lazyClear(Chunk &chunk)
     chunk.updateTime = currentTime;
 }
 
-void TA_HitboxContainer::clear()
-{
-    currentTime ++;
+void TA_HitboxContainer::clear() {
+    currentTime++;
     collisionTypeMask = 0;
 }

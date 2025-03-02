@@ -1,8 +1,8 @@
 #ifndef TA_PAWN_H
 #define TA_PAWN_H
 
-#include "sprite.h"
 #include "geometry.h"
+#include "sprite.h"
 
 enum TA_COLLISION_STATE {
     TA_GROUND_COLLISION = (1 << 0),
@@ -27,7 +27,7 @@ protected:
     int getCollisionFlags(TA_Point topLeft, TA_Point bottomRight);
 
 public:
-    virtual bool checkPawnCollision(TA_Polygon &hitbox) {return false;}
+    virtual bool checkPawnCollision(TA_Polygon& hitbox) { return false; }
     int moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground = false);
 };
 

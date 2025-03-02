@@ -1,10 +1,9 @@
+#include <algorithm>
 #include "character.h"
 #include "hud.h"
 #include "objects/bomb.h"
-#include <algorithm>
 
-void TA_Character::updateTool()
-{
+void TA_Character::updateTool() {
     if(!ground || !links.controller->isPressed(TA_BUTTON_B)) {
         usingSpeedBoots = false;
     }
@@ -23,7 +22,7 @@ void TA_Character::updateTool()
         }
         return;
     }
-    
+
     switch(links.hud->getCurrentItem()) {
         case TOOL_BOMB:
             spawnBomb(BOMB_REGULAR);
@@ -58,19 +57,15 @@ void TA_Character::updateTool()
     }
 }
 
-void TA_Character::spawnBomb(BombType type)
-{
-    auto spawn = [&] (TA_Point position, bool flip, TA_BombMode mode) {
+void TA_Character::spawnBomb(BombType type) {
+    auto spawn = [&](TA_Point position, bool flip, TA_BombMode mode) {
         if(type == BOMB_REMOTE) {
             links.objectSet->spawnObject<TA_RemoteBomb>(position, flip, mode);
-        }
-        else if(type == BOMB_NAPALM) {
+        } else if(type == BOMB_NAPALM) {
             links.objectSet->spawnObject<TA_NapalmBomb>(position, flip, mode);
-        }
-        else if(type == BOMB_TRIPLE) {
+        } else if(type == BOMB_TRIPLE) {
             links.objectSet->spawnObject<TA_TripleBomb>(position, flip, mode);
-        }
-        else {
+        } else {
             links.objectSet->spawnObject<TA_Bomb>(position, flip, mode);
         }
     };
@@ -83,18 +78,15 @@ void TA_Character::spawnBomb(BombType type)
     if(helitail) {
         spawn(position + TA_Point((flip ? 14 : 20), 27), flip, TA_BOMB_MODE_HELITAIL);
         setAnimation("throw_helitail");
-    }
-    else if(jump) {
+    } else if(jump) {
         spawn(position + TA_Point((flip ? 24 : 9), 7), flip, TA_BOMB_MODE_AIR);
         jump = false;
         setAnimation("throw_air");
-    }
-    else if(crouch) {
+    } else if(crouch) {
         spawn(position + TA_Point((flip ? 11 : 22), 21), flip, TA_BOMB_MODE_CROUCH);
         setAnimation("throw_crouch");
         state = STATE_THROW_BOMB;
-    }
-    else if(ground) {
+    } else if(ground) {
         spawn(position + TA_Point((flip ? 26 : 7), 11), flip, TA_BOMB_MODE_DEFAULT);
         setAnimation("throw");
         state = STATE_THROW_BOMB;
@@ -102,11 +94,7 @@ void TA_Character::spawnBomb(BombType type)
 }
 
 void TA_Character::spawnRemoteRobot() {
-    const std::vector<std::string> bossLevels {
-        "maps/pf/pf3",
-        "maps/pm/pm4",
-        "maps/ci/ci3"
-    };
+    const std::vector<std::string> bossLevels{"maps/pf/pf3", "maps/pm/pm4", "maps/ci/ci3"};
 
     if(!ground || std::find(bossLevels.begin(), bossLevels.end(), TA::levelPath) != bossLevels.end()) {
         damageSound.play();
@@ -118,7 +106,7 @@ void TA_Character::spawnRemoteRobot() {
         damageSound.play();
         return;
     }
-    
+
     remoteRobot = true;
     remoteRobotInitialPosition = position;
     remoteRobotControlSprite.setPosition(remoteRobotInitialPosition);
@@ -128,8 +116,7 @@ void TA_Character::spawnRemoteRobot() {
     state = STATE_REMOTE_ROBOT_INIT;
 }
 
-void TA_Character::initHammer()
-{
+void TA_Character::initHammer() {
     if(ground || (jump && !helitail)) {
         setAnimation("hammer");
         state = STATE_HAMMER;
@@ -141,8 +128,7 @@ void TA_Character::initHammer()
     }
 }
 
-void TA_Character::updateHammer()
-{
+void TA_Character::updateHammer() {
     if(!ground) {
         TA_Point topLeft{18, 12}, bottomRight{30, 39};
         int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
@@ -182,13 +168,9 @@ void TA_Character::updateHammer()
     }
 }
 
-void TA_Character::resetInstaShield()
-{
-    
-}
+void TA_Character::resetInstaShield() {}
 
-void TA_Character::initTeleport()
-{
+void TA_Character::initTeleport() {
     state = STATE_TELEPORT;
     teleportSound.play();
     setAnimation("teleport");
@@ -196,8 +178,7 @@ void TA_Character::initTeleport()
     teleportTime = 0;
 }
 
-void TA_Character::updateTeleport()
-{
+void TA_Character::updateTeleport() {
     teleportTime += TA::elapsedTime;
     if(teleportTime > teleportInitTime) {
         velocity.y -= grv * TA::elapsedTime;
@@ -206,30 +187,14 @@ void TA_Character::updateTeleport()
     setPosition(position);
 }
 
-bool TA_Character::isTeleported()
-{
+bool TA_Character::isTeleported() {
     return state == STATE_TELEPORT && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3);
 }
 
-void TA_Character::changeMusic()
-{
-    const std::vector<std::string> music{
-        "sound/bf.vgm",
-        "sound/boss.vgm",
-        "sound/cc.vgm",
-        "sound/cf.vgm",
-        "sound/final.vgm",
-        "sound/house.vgm",
-        "sound/lr.vgm",
-        "sound/map.vgm",
-        "sound/password.vgm",
-        "sound/pf.vgm",
-        "sound/pm.vgm",
-        "sound/sea_fox.vgm",
-        "sound/radio.vgm",
-        "sound/title.vgm",
-        "sound/vt.vgm"
-    };
+void TA_Character::changeMusic() {
+    const std::vector<std::string> music{"sound/bf.vgm", "sound/boss.vgm", "sound/cc.vgm", "sound/cf.vgm",
+        "sound/final.vgm", "sound/house.vgm", "sound/lr.vgm", "sound/map.vgm", "sound/password.vgm", "sound/pf.vgm",
+        "sound/pm.vgm", "sound/sea_fox.vgm", "sound/radio.vgm", "sound/title.vgm", "sound/vt.vgm"};
 
     // TODO: don't play current music
     int pos = TA::random::next() % (int)music.size();

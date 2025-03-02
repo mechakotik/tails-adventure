@@ -1,15 +1,14 @@
-#include <cstddef>
-#include <array>
-#include <string>
-#include <SDL3/SDL_render.h>
-#include "SDL3/SDL_rect.h"
-
 #include "pause_menu.h"
-#include "tools.h"
-#include "links.h"
+#include <SDL3/SDL_render.h>
+#include <array>
+#include <cstddef>
+#include <string>
+#include "SDL3/SDL_rect.h"
 #include "controller.h"
+#include "links.h"
 #include "save.h"
 #include "sound.h"
+#include "tools.h"
 
 void TA_PauseMenu::load(TA_Links links) {
     switchMenu.load(links);
@@ -30,12 +29,10 @@ TA_PauseMenu::UpdateResult TA_PauseMenu::update() {
             if(replace) {
                 inventoryMenu.show();
             }
-        }
-        else {
+        } else {
             if(replace) {
                 switchMenu.setAlpha(255 * timer / transitionTime);
-            }
-            else {
+            } else {
                 switchMenu.setAlpha(255 - 255 * timer / transitionTime);
             }
             return UpdateResult::CONTINUE;
@@ -78,8 +75,7 @@ void TA_PauseMenu::draw() {
     frameSprite.draw();
     if(replace && replaceWanted) {
         inventoryMenu.draw();
-    }
-    else {
+    } else {
         switchMenu.draw();
     }
 }
@@ -109,8 +105,7 @@ TA_PauseMenu::UpdateResult TA_PauseMenu::SwitchMenu::update() {
     result = UpdateResult::CONTINUE;
     if(links.controller->isTouchscreen()) {
         processTouchInput();
-    }
-    else {
+    } else {
         processControllerInput();
     }
     return result;
@@ -123,8 +118,7 @@ void TA_PauseMenu::SwitchMenu::reset() {
 }
 
 void TA_PauseMenu::SwitchMenu::processControllerInput() {
-    if(links.controller->isJustPressed(TA_BUTTON_PAUSE) ||
-        links.controller->isJustPressed(TA_BUTTON_A)) {
+    if(links.controller->isJustPressed(TA_BUTTON_PAUSE) || links.controller->isJustPressed(TA_BUTTON_A)) {
         select();
         return;
     }
@@ -145,17 +139,14 @@ void TA_PauseMenu::SwitchMenu::processControllerInput() {
         switchSound.play();
         itemPosition -= 1;
         TA::save::setSaveParameter(itemPositionKey, itemPosition);
-    }
-    else if(direction == TA_DIRECTION_RIGHT && itemPosition <= 2) {
+    } else if(direction == TA_DIRECTION_RIGHT && itemPosition <= 2) {
         switchSound.play();
         itemPosition += 1;
         TA::save::setSaveParameter(itemPositionKey, itemPosition);
-    }
-    else if(direction == TA_DIRECTION_UP && selection >= 1) {
+    } else if(direction == TA_DIRECTION_UP && selection >= 1) {
         switchSound.play();
         selection -= 1;
-    }
-    else if(direction == TA_DIRECTION_DOWN && selection <= 1) {
+    } else if(direction == TA_DIRECTION_DOWN && selection <= 1) {
         switchSound.play();
         selection += 1;
     }
@@ -163,7 +154,8 @@ void TA_PauseMenu::SwitchMenu::processControllerInput() {
 
 void TA_PauseMenu::SwitchMenu::processTouchInput() {
     for(int pos = 0; pos < 3; pos++) {
-        menuButtons.at(pos).setPosition({(static_cast<double>(TA::screenWidth) / 2) - 62, static_cast<double>(63 + (17 * pos))});
+        menuButtons.at(pos).setPosition(
+            {(static_cast<double>(TA::screenWidth) / 2) - 62, static_cast<double>(63 + (17 * pos))});
         menuButtons.at(pos).update();
         if(menuButtons.at(pos).isReleased()) {
             selection = pos;
@@ -215,8 +207,9 @@ void TA_PauseMenu::SwitchMenu::draw() {
     {
         const double startX = (static_cast<double>(TA::screenWidth) / 2) - 56;
 
-        for(int num = 0; num < 4; num ++) {
-            const std::string itemKey = (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
+        for(int num = 0; num < 4; num++) {
+            const std::string itemKey =
+                (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
             int item = static_cast<int>(TA::save::getSaveParameter(itemKey));
             if(item == -1) {
                 item = 38;
@@ -231,11 +224,7 @@ void TA_PauseMenu::SwitchMenu::draw() {
         pointerSprite.draw();
     }
 
-    const std::array<std::string, 3> menu {
-        "continue",
-        "replace item",
-        "quit to map"
-    };
+    const std::array<std::string, 3> menu{"continue", "replace item", "quit to map"};
 
     const bool touchscreen = links.controller->isTouchscreen();
     for(int pos = 0; pos < menu.size(); pos += 1) {
@@ -249,7 +238,7 @@ void TA_PauseMenu::SwitchMenu::draw() {
 void TA_PauseMenu::SwitchMenu::drawHighlight(double y) const {
     SDL_FRect rect = {(static_cast<float>(TA::screenWidth) / 2) - 54, static_cast<float>(y), 110, 15};
 
-    for(int num = 0; num < 4; num ++) {
+    for(int num = 0; num < 4; num++) {
         const int squareAlpha = globalAlpha * globalAlpha / 255;
         SDL_SetRenderDrawColor(TA::renderer, num * 28, num * 24, num * 28, squareAlpha);
 

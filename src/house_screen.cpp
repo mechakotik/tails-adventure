@@ -1,9 +1,8 @@
 #include "house_screen.h"
-#include "tools.h"
 #include "save.h"
+#include "tools.h"
 
-void TA_HouseScreen::init()
-{
+void TA_HouseScreen::init() {
     interfaceSprite.load("house/interface.png");
     houseSprite.load("house/house.png");
     houseSeaFoxSprite.load("house/house_seafox.png");
@@ -17,15 +16,14 @@ void TA_HouseScreen::init()
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX2);
     selectSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
 
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < 4; pos++) {
         buttons[pos].setRectangle({0, 0}, {23, 32});
     }
 
     inventoryMenu.load(&controller);
 }
 
-TA_ScreenState TA_HouseScreen::update()
-{
+TA_ScreenState TA_HouseScreen::update() {
     controller.update();
     updatePositions();
 
@@ -41,12 +39,10 @@ TA_ScreenState TA_HouseScreen::update()
             shouldMove |= !inventoryMenu.update();
             if(shouldMove) {
                 inventoryMenu.hide();
-            }
-            else {
+            } else {
                 inventoryMenu.show();
             }
-        }
-        else {
+        } else {
             updateSelector();
         }
     }
@@ -62,8 +58,7 @@ TA_ScreenState TA_HouseScreen::update()
     return TA_SCREENSTATE_CURRENT;
 }
 
-void TA_HouseScreen::updatePositions()
-{
+void TA_HouseScreen::updatePositions() {
     double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
     interfaceSprite.setPosition(leftX, 0);
     houseSprite.setPosition(leftX + 8, 32);
@@ -76,8 +71,7 @@ void TA_HouseScreen::updatePositions()
             clawX = 106;
             clawDirection = false;
         }
-    }
-    else {
+    } else {
         clawX -= TA::elapsedTime;
         if(clawX < 40) {
             clawX = 40;
@@ -89,36 +83,31 @@ void TA_HouseScreen::updatePositions()
     seaFoxSprite.setPosition(leftX + 65, 45);
 }
 
-void TA_HouseScreen::updateSelector()
-{
+void TA_HouseScreen::updateSelector() {
     if(controller.isTouchscreen()) {
         updateSelectorTouch();
-    }
-    else {
+    } else {
         updateSelectorController();
     }
 }
 
-void TA_HouseScreen::updateSelectorController()
-{
+void TA_HouseScreen::updateSelectorController() {
     if(!controller.isJustChangedDirection()) {
         return;
     }
     TA_Direction direction = controller.getDirection();
     if(direction == TA_DIRECTION_LEFT && selection - 1 >= 0) {
-        selection --;
+        selection--;
         switchSound.play();
-    }
-    else if(direction == TA_DIRECTION_RIGHT && selection + 1 < 4) {
-        selection ++;
+    } else if(direction == TA_DIRECTION_RIGHT && selection + 1 < 4) {
+        selection++;
         switchSound.play();
     }
 }
 
-void TA_HouseScreen::updateSelectorTouch()
-{
+void TA_HouseScreen::updateSelectorTouch() {
     double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < 4; pos++) {
         buttons[pos].setPosition({leftX + 31 + 23 * pos, 0});
         buttons[pos].update();
         if(buttons[pos].isReleased() && !inventoryOpen) {
@@ -127,8 +116,7 @@ void TA_HouseScreen::updateSelectorTouch()
     }
 }
 
-void TA_HouseScreen::updateCurtain()
-{
+void TA_HouseScreen::updateCurtain() {
     if(curtainTimeLeft <= 0) {
         if(shouldDoTransition()) {
             curtainTimeLeft = curtainMoveTime * 2 + curtainIdleTime;
@@ -145,8 +133,7 @@ void TA_HouseScreen::updateCurtain()
     }
 }
 
-bool TA_HouseScreen::shouldDoTransition()
-{
+bool TA_HouseScreen::shouldDoTransition() {
     if(inventoryOpen) {
         return !inventoryMenu.isShown();
     }
@@ -157,7 +144,7 @@ bool TA_HouseScreen::shouldDoTransition()
     }
     if(touchscreen) {
         bool pressed = false;
-        for(int pos = 0; pos < 4; pos ++) {
+        for(int pos = 0; pos < 4; pos++) {
             if(buttons[pos].isReleased()) {
                 pressed = true;
             }
@@ -171,47 +158,40 @@ bool TA_HouseScreen::shouldDoTransition()
         errorSound.play();
         return false;
     }
-    
+
     selectSound.play();
     return true;
 }
 
-bool TA_HouseScreen::isSeaFoxAvailable()
-{
+bool TA_HouseScreen::isSeaFoxAvailable() {
     long long itemMask = TA::save::getSaveParameter("item_mask");
     return itemMask & (1ll << 33);
 }
 
-void TA_HouseScreen::applyTransition()
-{
+void TA_HouseScreen::applyTransition() {
     if(selection == 0) {
         inventoryOpen = !inventoryOpen;
-    }
-    else if(selection == 1) {
+    } else if(selection == 1) {
         bool seaFox = TA::save::getSaveParameter("seafox");
         seaFox = !seaFox;
         TA::save::setSaveParameter("seafox", seaFox);
-    }
-    else {
+    } else {
         shouldExit = true;
     }
 }
 
-void TA_HouseScreen::draw()
-{
+void TA_HouseScreen::draw() {
     TA::drawScreenRect(68, 56, 68, 255);
     interfaceSprite.draw();
 
     if(inventoryOpen) {
         inventoryMenu.draw();
-    }
-    else {
+    } else {
         if(TA::save::getSaveParameter("seafox")) {
             houseSeaFoxSprite.draw();
             clawSprite.draw();
             seaFoxSprite.draw();
-        }
-        else {
+        } else {
             houseSprite.draw();
         }
     }
@@ -220,15 +200,14 @@ void TA_HouseScreen::draw()
     drawCurtain();
 }
 
-void TA_HouseScreen::drawSelector()
-{
+void TA_HouseScreen::drawSelector() {
     double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
     bool touchscreen = controller.isTouchscreen();
 
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < 4; pos++) {
         int frame = pos;
         if(pos > 1 || (pos == 1 && TA::save::getSaveParameter("seafox"))) {
-            frame ++;
+            frame++;
         }
 
         if(inventoryOpen) {
@@ -236,12 +215,10 @@ void TA_HouseScreen::drawSelector()
                 if(buttons[pos].isPressed()) {
                     frame += 5;
                 }
-            }
-            else {
+            } else {
                 frame += 10;
             }
-        }
-        else if((!touchscreen && selection == pos) || (touchscreen && buttons[pos].isPressed())) {
+        } else if((!touchscreen && selection == pos) || (touchscreen && buttons[pos].isPressed())) {
             frame += 5;
         }
 
@@ -251,27 +228,22 @@ void TA_HouseScreen::drawSelector()
     }
 }
 
-void TA_HouseScreen::drawCurtain()
-{
+void TA_HouseScreen::drawCurtain() {
     if(curtainTimeLeft < 0) {
         return;
     }
     if(shouldExit) {
         drawCurtain(1);
-    }
-    else if(curtainTimeLeft > curtainMoveTime + curtainIdleTime) {
+    } else if(curtainTimeLeft > curtainMoveTime + curtainIdleTime) {
         drawCurtain(1 - (curtainTimeLeft - curtainMoveTime - curtainIdleTime) / curtainMoveTime);
-    }
-    else if(curtainTimeLeft > curtainMoveTime) {
+    } else if(curtainTimeLeft > curtainMoveTime) {
         drawCurtain(1);
-    }
-    else {
+    } else {
         drawCurtain(curtainTimeLeft / curtainMoveTime);
     }
 }
 
-void TA_HouseScreen::drawCurtain(double factor)
-{
+void TA_HouseScreen::drawCurtain(double factor) {
     SDL_Rect rect{0, 0, curtainSprite.getWidth(), int(curtainSprite.getHeight() * factor + 0.5)};
     curtainSprite.drawFrom(rect);
 }

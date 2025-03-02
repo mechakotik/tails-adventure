@@ -2,8 +2,8 @@
 #define TA_AREA_SELECTOR_H
 
 #include <vector>
-#include "screen_state_machine.h"
 #include "controller.h"
+#include "screen_state_machine.h"
 #include "sound.h"
 
 class TA_MapPoint;
@@ -47,17 +47,17 @@ private:
 
 public:
     TA_MapPoint(int index, std::string name, std::string path, TA_Point position);
-    void setNeighbour(TA_Direction direction, TA_MapPoint* neighbour) {neighbours[direction] = neighbour;}
-    void activate() {active = true;}
+    void setNeighbour(TA_Direction direction, TA_MapPoint* neighbour) { neighbours[direction] = neighbour; }
+    void activate() { active = true; }
     bool updateButton();
     void draw();
 
-    TA_Point getPosition() {return position;}
-    std::string getName() {return name;}
-    std::string getPath() {return path;}
-    bool isActive() {return active;}
-    TA_MapPoint* getNeighbour(TA_Direction direction) {return neighbours[direction];}
-    int getIndex() {return index;}
+    TA_Point getPosition() { return position; }
+    std::string getName() { return name; }
+    std::string getPath() { return path; }
+    bool isActive() { return active; }
+    TA_MapPoint* getNeighbour(TA_Direction direction) { return neighbours[direction]; }
+    int getIndex() { return index; }
 };
 
 #endif // TA_AREA_SELECTOR_H

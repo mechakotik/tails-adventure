@@ -1,39 +1,39 @@
-#include <toml.hpp>
 #include "object_set.h"
-#include "objects/explosion.h"
-#include "objects/bomb.h"
-#include "objects/breakable_block.h"
-#include "objects/ring.h"
-#include "objects/walker.h"
-#include "objects/hover_pod.h"
-#include "objects/pushable_object.h"
+#include <toml.hpp>
+#include "character.h"
 #include "error.h"
+#include "hud.h"
+#include "objects/bat_robot.h"
+#include "objects/beehive.h"
+#include "objects/bird_walker.h"
+#include "objects/bomb.h"
+#include "objects/bomb_thrower.h"
+#include "objects/breakable_block.h"
+#include "objects/bridge.h"
+#include "objects/conveyor_belt.h"
+#include "objects/drill_mole.h"
+#include "objects/enemy_mine.h"
+#include "objects/explosion.h"
+#include "objects/fire.h"
+#include "objects/flame.h"
+#include "objects/grass_block.h"
+#include "objects/hover_pod.h"
+#include "objects/item_box.h"
+#include "objects/jumper.h"
+#include "objects/mecha_golem.h"
+#include "objects/mini_sub.h"
+#include "objects/moving_platform.h"
+#include "objects/nezu.h"
+#include "objects/pushable_object.h"
+#include "objects/ring.h"
+#include "objects/rock_thrower.h"
+#include "objects/speedy.h"
+#include "objects/transition.h"
+#include "objects/walker.h"
+#include "objects/wind.h"
 #include "resource_manager.h"
 #include "save.h"
 #include "sea_fox.h"
-#include "hud.h"
-#include "objects/transition.h"
-#include "objects/bridge.h"
-#include "objects/bird_walker.h"
-#include "character.h"
-#include "objects/bat_robot.h"
-#include "objects/nezu.h"
-#include "objects/flame.h"
-#include "objects/fire.h"
-#include "objects/item_box.h"
-#include "objects/drill_mole.h"
-#include "objects/moving_platform.h"
-#include "objects/bomb_thrower.h"
-#include "objects/rock_thrower.h"
-#include "objects/jumper.h"
-#include "objects/wind.h"
-#include "objects/speedy.h"
-#include "objects/mecha_golem.h"
-#include "objects/grass_block.h"
-#include "objects/mini_sub.h"
-#include "objects/enemy_mine.h"
-#include "objects/conveyor_belt.h"
-#include "objects/beehive.h"
 
 inline double asIntOrFloat(const toml::value& value) {
     if(value.is_floating()) {
@@ -42,23 +42,20 @@ inline double asIntOrFloat(const toml::value& value) {
     return value.as_integer();
 }
 
-TA_Object::TA_Object(TA_ObjectSet *newObjectSet)
-{
+TA_Object::TA_Object(TA_ObjectSet* newObjectSet) {
     objectSet = newObjectSet;
     setCamera(objectSet->getLinks().camera);
 }
 
-void TA_Object::updatePosition()
-{
+void TA_Object::updatePosition() {
     setPosition(position);
     hitbox.setPosition(position);
-    for(auto & element : hitboxVector) {
+    for(auto& element : hitboxVector) {
         element.hitbox.setPosition(position);
     }
 }
 
-TA_Point TA_Object::getDistanceToCharacter()
-{
+TA_Point TA_Object::getDistanceToCharacter() {
     TA_Point characterPosition = objectSet->getCharacterPosition();
     TA_Point centeredPosition = position + TA_Point(getWidth() / 2, getHeight() / 2);
     return characterPosition - centeredPosition;
@@ -67,7 +64,7 @@ TA_Point TA_Object::getDistanceToCharacter()
 void TA_ObjectSet::load(std::string filename) {
     try {
         tryLoad(filename);
-    } catch(std::exception &e) {
+    } catch(std::exception& e) {
         TA::handleError("%s load failed\n%s", filename, e.what());
     }
 }
@@ -230,8 +227,7 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         if(object.contains("speed")) {
             double speed = asIntOrFloat(object.at("speed"));
             spawnObject<TA_FlameLauncher>(position, speed);
-        }
-        else {
+        } else {
             spawnObject<TA_FlameLauncher>(position);
         }
     }
@@ -250,8 +246,7 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         TA_Point endPosition(object.at("end_x").as_integer(), object.at("end_y").as_integer());
         if(object.contains("idle") && !object.at("idle").as_boolean()) {
             spawnObject<TA_MovingPlatform>(startPosition, endPosition, false);
-        }
-        else {
+        } else {
             spawnObject<TA_MovingPlatform>(startPosition, endPosition, true);
         }
     }
@@ -309,41 +304,37 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 }
 
-
-void TA_ObjectSet::update()
-{
-    for(TA_Object *currentObject : deleteList) {
+void TA_ObjectSet::update() {
+    for(TA_Object* currentObject : deleteList) {
         delete currentObject;
     }
-    for(TA_Object *currentObject : spawnedObjects) {
+    for(TA_Object* currentObject : spawnedObjects) {
         objects.push_back(currentObject);
     }
     deleteList.clear();
     spawnedObjects.clear();
 
     hitboxContainer.clear();
-    for(TA_Object *currentObject : objects) {
+    for(TA_Object* currentObject : objects) {
         hitboxContainer.add(currentObject->hitbox, currentObject->getCollisionType());
-        for(TA_Object::HitboxVectorElement &element : currentObject->hitboxVector) {
+        for(TA_Object::HitboxVectorElement& element : currentObject->hitboxVector) {
             hitboxContainer.add(element.hitbox, element.collisionType);
         }
     }
 
     std::vector<TA_Object*> newObjects;
-    for(TA_Object *currentObject : objects) {
+    for(TA_Object* currentObject : objects) {
         if(currentObject->update()) {
             newObjects.push_back(currentObject);
-        }
-        else {
+        } else {
             deleteList.push_back(currentObject);
         }
     }
     objects = newObjects;
 }
 
-void TA_ObjectSet::draw(int priority)
-{
-    for(TA_Object *currentObject : objects) {
+void TA_ObjectSet::draw(int priority) {
+    for(TA_Object* currentObject : objects) {
         if(currentObject->getDrawPriority() == priority) {
             currentObject->setUpdateAnimation(!isPaused());
             currentObject->draw();
@@ -351,8 +342,7 @@ void TA_ObjectSet::draw(int priority)
     }
 }
 
-void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
-{
+void TA_ObjectSet::checkCollision(TA_Polygon& hitbox, int& flags) {
     if(hitbox.empty()) {
         return;
     }
@@ -362,8 +352,7 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
 
     if(links.character && links.character->getHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
-    }
-    else if(links.seaFox && links.seaFox->getHitbox()->intersects(hitbox)) {
+    } else if(links.seaFox && links.seaFox->getHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_CHARACTER;
     }
 
@@ -376,57 +365,51 @@ void TA_ObjectSet::checkCollision(TA_Polygon &hitbox, int &flags)
     }
 }
 
-int TA_ObjectSet::checkCollision(TA_Polygon &hitbox)
-{
+int TA_ObjectSet::checkCollision(TA_Polygon& hitbox) {
     int flags = 0;
     checkCollision(hitbox, flags);
     return flags;
 }
 
-TA_Point TA_ObjectSet::getCharacterPosition()
-{
+TA_Point TA_ObjectSet::getCharacterPosition() {
     if(links.character) {
         return links.character->getPosition() + TA_Point(24, 24);
     }
     return links.seaFox->getPosition() + TA_Point(16, 16);
 }
 
-void TA_ObjectSet::addRings(int count)
-{
+void TA_ObjectSet::addRings(int count) {
     int rings = TA::save::getSaveParameter("rings");
     rings += count;
     rings = std::min(rings, getMaxRings());
     TA::save::setSaveParameter("rings", rings);
 }
 
-void TA_ObjectSet::addRingsToMaximum()
-{
+void TA_ObjectSet::addRingsToMaximum() {
     TA::save::setSaveParameter("rings", getMaxRings());
 }
 
-int TA_ObjectSet::getEmeraldsCount()
-{
+int TA_ObjectSet::getEmeraldsCount() {
     long long itemMask = TA::save::getSaveParameter("item_mask");
     int count = 0;
-    for(int item = 29; item <= 34; item ++) {
+    for(int item = 29; item <= 34; item++) {
         if(itemMask & (1ll << item)) {
-            count ++;
+            count++;
         }
     }
     return count;
 }
 
-bool TA_ObjectSet::isVisible(TA_Polygon &hitbox)
-{
+bool TA_ObjectSet::isVisible(TA_Polygon& hitbox) {
     TA_Point cameraPosition = links.camera->getPosition();
     TA_Polygon cameraRect;
-    cameraRect.setRectangle(cameraPosition - TA_Point(5, 5), cameraPosition + TA_Point(TA::screenWidth + 5, TA::screenHeight + 5));
+    cameraRect.setRectangle(
+        cameraPosition - TA_Point(5, 5), cameraPosition + TA_Point(TA::screenWidth + 5, TA::screenHeight + 5));
     return cameraRect.intersects(hitbox);
 }
 
-TA_ObjectSet::~TA_ObjectSet()
-{
-    for(TA_Object *currentObject : objects) {
+TA_ObjectSet::~TA_ObjectSet() {
+    for(TA_Object* currentObject : objects) {
         delete currentObject;
     }
 }

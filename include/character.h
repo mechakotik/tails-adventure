@@ -1,12 +1,12 @@
 #ifndef TA_CHARACTER_H
 #define TA_CHARACTER_H
 
-#include "pawn.h"
-#include "geometry.h"
 #include "controller.h"
+#include "geometry.h"
 #include "links.h"
-#include "tilemap.h"
+#include "pawn.h"
 #include "sound.h"
+#include "tilemap.h"
 
 class TA_Character : public TA_Pawn {
 private:
@@ -36,12 +36,7 @@ private:
         STATE_DEAD
     };
 
-    enum BombType {
-        BOMB_REGULAR,
-        BOMB_REMOTE,
-        BOMB_NAPALM,
-        BOMB_TRIPLE
-    };
+    enum BombType { BOMB_REGULAR, BOMB_REMOTE, BOMB_NAPALM, BOMB_TRIPLE };
 
     const double jmp = -3.75;
     const double grv = 0.125;
@@ -110,7 +105,7 @@ private:
 
     void updateFollowPosition();
     void horizontalMove();
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
     void updateCollisions();
     void updateAnimation();
     void updateClimb();
@@ -137,40 +132,42 @@ public:
     void update();
     void draw() override;
 
-    bool isOnGround() {return ground;}
-    bool isJumpingOnSpring() {return spring;}
-    bool getBombDestroySignal() {return bombDestroySignal;}
-    bool isClimbing() {return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH;}
+    bool isOnGround() { return ground; }
+    bool isJumpingOnSpring() { return spring; }
+    bool getBombDestroySignal() { return bombDestroySignal; }
+    bool isClimbing() { return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH; }
 
-    TA_Polygon *getHitbox() {return &hitbox;}
-    TA_Polygon *getHammerHitbox() {return &hammerHitbox;}
+    TA_Polygon* getHitbox() { return &hitbox; }
+    TA_Polygon* getHammerHitbox() { return &hammerHitbox; }
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
-    TA_Point getPosition() {return position;}
-    TA_Point getVelocity() {return velocity;}
-    double getJumpTime() {return jumpTime;}
+    TA_Point getPosition() { return position; }
+    TA_Point getVelocity() { return velocity; }
+    double getJumpTime() { return jumpTime; }
 
     void setCharacterPosition(TA_Point position);
 
     bool displayFlightTimeBar();
-    double getFlightTime() {return helitailTime / getMaxHelitailTime();}
-    bool gameOver() {return state == STATE_DEAD && invincibleTimeLeft <= 0;}
-    bool isRemoteRobot() {return remoteRobot;}
-    bool isFlying() {return helitail;}
-    bool isOnCeiling() {return ceiling;}
-    bool isOnStrongWind() {return strongWind;}
+    double getFlightTime() { return helitailTime / getMaxHelitailTime(); }
+    bool gameOver() { return state == STATE_DEAD && invincibleTimeLeft <= 0; }
+    bool isRemoteRobot() { return remoteRobot; }
+    bool isFlying() { return helitail; }
+    bool isOnCeiling() { return ceiling; }
+    bool isOnStrongWind() { return strongWind; }
     bool isTeleported();
-    bool isUsingSpeedBoots() {return usingSpeedBoots;}
-    bool isUsingHammer() {return state == STATE_HAMMER;}
-    bool isInWater() {return water;}
-    bool isGettingItem() {return state == STATE_UNPACK_ITEM || state == STATE_RAISE_ITEM || getAnimationName() == "release";}
+    bool isUsingSpeedBoots() { return usingSpeedBoots; }
+    bool isUsingHammer() { return state == STATE_HAMMER; }
+    bool isInWater() { return water; }
+    bool isGettingItem() {
+        return state == STATE_UNPACK_ITEM || state == STATE_RAISE_ITEM || getAnimationName() == "release";
+    }
 
-    void setUnpackState() {state = STATE_UNPACK_ITEM;}
+    void setUnpackState() { state = STATE_UNPACK_ITEM; }
     void setRaiseState();
     void setReleaseState();
-    void setHide(bool hidden) {nextFrameHidden = hidden;}
-    bool isHidden() {return hidden;}
+    void setHide(bool hidden) { nextFrameHidden = hidden; }
+    bool isHidden() { return hidden; }
 
-    void addToPosition(TA_Point delta) {position = position + delta;}
+    void addToPosition(TA_Point delta) { position = position + delta; }
     void resetInstaShield();
     void setWindVelocity(TA_Point windVelocity);
     void setPaused(bool paused);

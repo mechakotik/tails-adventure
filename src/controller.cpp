@@ -1,44 +1,39 @@
-#include <algorithm>
 #include "controller.h"
-#include "touchscreen.h"
+#include <algorithm>
 #include "error.h"
 #include "tools.h"
+#include "touchscreen.h"
 
-void TA_Controller::load()
-{
-    #ifdef __ANDROID__
-        onscreen.load();
-    #endif
+void TA_Controller::load() {
+#ifdef __ANDROID__
+    onscreen.load();
+#endif
 
     update();
 }
 
-void TA_Controller::update()
-{
-    #ifdef __ANDROID__
-        onscreen.update();
-    #endif
+void TA_Controller::update() {
+#ifdef __ANDROID__
+    onscreen.update();
+#endif
 
     if(getDirection() != currentDirection) {
         currentDirection = getDirection();
         justChanged = true;
-    }
-    else {
+    } else {
         justChanged = false;
     }
 }
 
-void TA_Controller::draw()
-{
-    #ifdef __ANDROID__
-        if(isTouchscreen()) {
-            onscreen.draw();
-        }
-    #endif
+void TA_Controller::draw() {
+#ifdef __ANDROID__
+    if(isTouchscreen()) {
+        onscreen.draw();
+    }
+#endif
 }
 
-TA_Point TA_Controller::getDirectionVector()
-{
+TA_Point TA_Controller::getDirectionVector() {
     for(TA_Point vector : {onscreen.getDirectionVector(), gamepad.getDirectionVector()}) {
         if(vector.length() >= analogDeadZone) {
             return vector;
@@ -47,8 +42,7 @@ TA_Point TA_Controller::getDirectionVector()
     return keyboard.getDirectionVector();
 }
 
-TA_Direction TA_Controller::getDirection()
-{
+TA_Direction TA_Controller::getDirection() {
     TA_Point vector = getDirectionVector();
     if(vector.length() < analogDeadZone) {
         return TA_DIRECTION_MAX;
@@ -66,21 +60,18 @@ TA_Direction TA_Controller::getDirection()
     return TA_DIRECTION_LEFT;
 }
 
-bool TA_Controller::isPressed(TA_FunctionButton button)
-{
+bool TA_Controller::isPressed(TA_FunctionButton button) {
     return keyboard.isPressed(button) || gamepad.isPressed(button) || onscreen.isPressed(button);
 }
 
-bool TA_Controller::isJustPressed(TA_FunctionButton button)
-{
+bool TA_Controller::isJustPressed(TA_FunctionButton button) {
     return keyboard.isJustPressed(button) || gamepad.isJustPressed(button) || onscreen.isJustPressed(button);
 }
 
-bool TA_Controller::isTouchscreen()
-{
-    #ifdef __ANDROID__
-        return !(TA::gamepad::connected() && TA::gamepad::oncePressed());
-    #else
-        return false;
-    #endif
+bool TA_Controller::isTouchscreen() {
+#ifdef __ANDROID__
+    return !(TA::gamepad::connected() && TA::gamepad::oncePressed());
+#else
+    return false;
+#endif
 }

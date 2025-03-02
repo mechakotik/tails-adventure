@@ -14,7 +14,7 @@ private:
     void throwRock();
     bool shouldBeDestroyed();
     void destroy() override;
-    
+
     TA_Point getRockPosition();
     TA_Point getRockVelocity();
 
@@ -26,7 +26,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, bool direction);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 class TA_EnemyRock : public TA_Object {
@@ -46,8 +46,8 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, TA_Point velocity);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE;}
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
+    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
 };
 
 #endif // TA_ROCK_THROWER_H

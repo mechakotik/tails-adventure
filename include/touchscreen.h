@@ -14,9 +14,9 @@ namespace TA::touchscreen {
 class TA_OnscreenButton : public TA_Shape {
 public:
     void update();
-    bool isPressed() {return fingerId != -1;}
-    bool isJustPressed() {return fingerId != -1 && !hold;}
-    bool isReleased() {return released;}
+    bool isPressed() { return fingerId != -1; }
+    bool isJustPressed() { return fingerId != -1 && !hold; }
+    bool isReleased() { return released; }
 
 private:
     bool hold = false, released = false;
@@ -26,9 +26,9 @@ private:
 class TA_OnscreenStick : public TA_Shape {
 public:
     void update();
-    bool isPressed() {return fingerId != -1;}
-    bool isJustPressed() {return fingerId != -1 && !hold;}
-    TA_Point getTouchPosition() {return touchPosition;}
+    bool isPressed() { return fingerId != -1; }
+    bool isJustPressed() { return fingerId != -1 && !hold; }
+    TA_Point getTouchPosition() { return touchPosition; }
 
 private:
     bool pressed = false, hold = false;

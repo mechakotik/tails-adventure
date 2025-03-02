@@ -12,7 +12,7 @@ private:
     void updateOffset();
 
     TA_Point position, lockPosition, shakeDelta;
-    TA_Point *followPosition;
+    TA_Point* followPosition;
     TA_Rect border;
 
     int yTopOffset, yBottomOffset;
@@ -21,16 +21,15 @@ private:
 
 public:
     void update(bool ground, bool spring);
-    void setFollowPosition(TA_Point *newFollowPosition);
+    void setFollowPosition(TA_Point* newFollowPosition);
     void setLockPosition(TA_Point newLockPosition);
     void forceLockX();
-    bool isLocked() {return locked && lockedX && lockedY;}
-    void unlock() {locked = lockedX = lockedY = false;}
-    void setBorder(TA_Rect newBorder) {border = newBorder;}
-    void shake(double time) {shakeTime = time;}
-    TA_Point getPosition() {return position + shakeDelta;}
-    TA_Point getRelative(TA_Point realPosition) {return realPosition - (position + shakeDelta);}
+    bool isLocked() { return locked && lockedX && lockedY; }
+    void unlock() { locked = lockedX = lockedY = false; }
+    void setBorder(TA_Rect newBorder) { border = newBorder; }
+    void shake(double time) { shakeTime = time; }
+    TA_Point getPosition() { return position + shakeDelta; }
+    TA_Point getRelative(TA_Point realPosition) { return realPosition - (position + shakeDelta); }
 };
-
 
 #endif // TA_CAMERA_H

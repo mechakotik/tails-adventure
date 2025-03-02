@@ -25,7 +25,7 @@ private:
     const double defeatedTime = 180;
     const double defeatedExplosionInterval = 6;
     const double gravity = 0.125;
-    
+
     const double armBite1Time = 16;
     const double armBite2Time = 20;
     const double armBite3Time = 16;
@@ -51,14 +51,7 @@ private:
         STATE_WAIT_ITEM,
     };
 
-    enum Hitbox {
-        HITBOX_WALL_LEFT,
-        HITBOX_WALL_RIGHT,
-        HITBOX_BODY,
-        HITBOX_WEAK,
-        HITBOX_ARM,
-        HITBOX_MAX
-    };
+    enum Hitbox { HITBOX_WALL_LEFT, HITBOX_WALL_RIGHT, HITBOX_BODY, HITBOX_WEAK, HITBOX_ARM, HITBOX_MAX };
 
     State state = STATE_IDLE, previousState = STATE_IDLE;
 

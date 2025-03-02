@@ -1,10 +1,10 @@
 #ifndef TA_INGAME_MAP_H
 #define TA_INGAME_MAP_H
 
-#include "sprite.h"
-#include "tilemap.h"
 #include "font.h"
 #include "sound.h"
+#include "sprite.h"
+#include "tilemap.h"
 
 class TA_InGameMap {
 private:

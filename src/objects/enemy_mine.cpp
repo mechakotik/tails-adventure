@@ -1,23 +1,20 @@
 #include "enemy_mine.h"
-#include "explosion.h"
 #include <cmath>
+#include "explosion.h"
 
-void TA_EnemyMine::load(TA_Point position)
-{
+void TA_EnemyMine::load(TA_Point position) {
     TA_Sprite::load("objects/mine.png");
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(14, 14));
     timer = TA::random::next() % int(interval);
     this->startPosition = position;
 }
 
-bool TA_EnemyMine::update()
-{
-    auto func = [] (double x) {
+bool TA_EnemyMine::update() {
+    auto func = [](double x) {
         double y;
         if(int(x) % 2 == 0) {
             y = std::fmod(x, 1) - 0.5;
-        }
-        else {
+        } else {
             y = 0.5 - std::fmod(x, 1);
         }
         return double(1) / (1 + exp(-6 * y));
@@ -32,6 +29,6 @@ bool TA_EnemyMine::update()
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(1, 1), 0, TA_EXPLOSION_ENEMY);
         return false;
     }
-    
+
     return true;
 }

@@ -1,6 +1,6 @@
+#include "touchscreen.h"
 #include <map>
 #include <set>
-#include "touchscreen.h"
 #include "tools.h"
 
 namespace TA::touchscreen {
@@ -15,13 +15,11 @@ namespace TA::touchscreen {
     int scrollId = -1;
 }
 
-void TA::touchscreen::update()
-{
+void TA::touchscreen::update() {
     justPressedFingers.clear();
 }
 
-void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event)
-{
+void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event) {
     if(event.type == SDL_EVENT_FINGER_DOWN || event.type == SDL_EVENT_FINGER_MOTION) {
         if(event.type == SDL_EVENT_FINGER_DOWN) {
             justPressedFingers.insert(event.fingerID);
@@ -36,14 +34,12 @@ void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event)
             if(currentFingers[event.fingerID].position.getDistance(currentFingers[event.fingerID].startPosition) > 8) {
                 scrollId = event.fingerID;
             }
-        }
-        else if(event.fingerID == scrollId) {
+        } else if(event.fingerID == scrollId) {
             scrollVector = currentFingers[event.fingerID].position - position;
         }
 
         currentFingers[event.fingerID].position = position;
-    }
-    else {
+    } else {
         if(event.fingerID == scrollId) {
             scrollId = -1;
         }
@@ -51,18 +47,15 @@ void TA::touchscreen::handleEvent(SDL_TouchFingerEvent event)
     }
 }
 
-bool TA::touchscreen::isScrolling()
-{
+bool TA::touchscreen::isScrolling() {
     return scrollId != -1;
 }
 
-TA_Point TA::touchscreen::getScrollVector()
-{
+TA_Point TA::touchscreen::getScrollVector() {
     return scrollVector;
 }
 
-void TA_OnscreenButton::update()
-{
+void TA_OnscreenButton::update() {
     if(fingerId == -1) {
         released = false;
         for(int id : TA::touchscreen::justPressedFingers) {
@@ -72,29 +65,24 @@ void TA_OnscreenButton::update()
                 break;
             }
         }
-    }
-    else {
+    } else {
         if(TA::touchscreen::scrollId == fingerId) {
             fingerId = -1;
             hold = released = false;
-        }
-        else if(!TA::touchscreen::currentFingers.count(fingerId)) {
+        } else if(!TA::touchscreen::currentFingers.count(fingerId)) {
             fingerId = -1;
             hold = false;
             released = true;
-        }
-        else if(!inside(TA::touchscreen::currentFingers[fingerId].position)) {
+        } else if(!inside(TA::touchscreen::currentFingers[fingerId].position)) {
             fingerId = -1;
             hold = released = false;
-        }
-        else {
+        } else {
             hold = true;
         }
     }
 }
 
-void TA_OnscreenStick::update()
-{
+void TA_OnscreenStick::update() {
     if(fingerId == -1) {
         for(auto finger : TA::touchscreen::currentFingers) {
             TA_Point point = finger.second.position;
@@ -103,13 +91,11 @@ void TA_OnscreenStick::update()
                 touchPosition = point;
             }
         }
-    }
-    else {
+    } else {
         if(TA::touchscreen::currentFingers.count(fingerId)) {
             touchPosition = TA::touchscreen::currentFingers[fingerId].position;
             hold = true;
-        }
-        else {
+        } else {
             fingerId = -1;
             hold = false;
         }

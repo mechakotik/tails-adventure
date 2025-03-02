@@ -1,9 +1,9 @@
 #ifndef TA_DEVMENU_SCREEN_H
 #define TA_DEVMENU_SCREEN_H
 
-#include "screen.h"
-#include "font.h"
 #include "controller.h"
+#include "font.h"
+#include "screen.h"
 
 enum TA_DevmenuElements {
     TA_DEVMENU_ELEMENT_LEVEL,
@@ -18,7 +18,9 @@ private:
 
     std::vector<std::string> levels;
 
-    const std::string mapping = " !" + std::string{'"'} + "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[a]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    const std::string mapping =
+        " !" + std::string{'"'} +
+        "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[a]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 public:
     void init() override;

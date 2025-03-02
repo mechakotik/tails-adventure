@@ -16,7 +16,7 @@ private:
 public:
     void init();
     bool update();
-    bool isQuitNeeded() {return quitNeeded;}
+    bool isQuitNeeded() { return quitNeeded; }
     ~TA_ScreenStateMachine();
 };
 

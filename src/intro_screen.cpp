@@ -1,8 +1,7 @@
 #include "intro_screen.h"
 #include "tools.h"
 
-void TA_IntroScreen::init()
-{
+void TA_IntroScreen::init() {
     segaLogoSprite.load("intro/sega_logo.png", 80, 25);
     segaLogoSprite.setPosition(TA::screenWidth / 2 - 40, TA::screenHeight / 2 - 12);
     segaLogoSprite.setAnimation(TA_Animation(0, 16, 3, 1));
@@ -11,8 +10,7 @@ void TA_IntroScreen::init()
     localTimer = 0;
 }
 
-TA_ScreenState TA_IntroScreen::update()
-{
+TA_ScreenState TA_IntroScreen::update() {
     localTimer += TA::elapsedTime;
 
     if(localTimer <= 130) {
@@ -26,8 +24,7 @@ TA_ScreenState TA_IntroScreen::update()
             int factor = 255 * (localTimer - 120) / 10;
             TA::drawShadow(factor);
         }
-    }
-    else if(localTimer >= 150) {
+    } else if(localTimer >= 150) {
         disclaimerSprite.draw();
 
         if(localTimer <= 160) {
@@ -46,7 +43,4 @@ TA_ScreenState TA_IntroScreen::update()
     return TA_SCREENSTATE_CURRENT;
 }
 
-void TA_IntroScreen::quit()
-{
-
-}
+void TA_IntroScreen::quit() {}

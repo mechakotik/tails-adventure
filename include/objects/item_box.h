@@ -1,8 +1,8 @@
 #ifndef TA_ITEM_BOX_H
 #define TA_ITEM_BOX_H
 
-#include "object_set.h"
 #include "font.h"
+#include "object_set.h"
 
 class TA_ItemBox : public TA_Object {
 private:
@@ -13,7 +13,7 @@ private:
     bool updateHold();
     bool characterHasThisItem();
     void drawItemName();
-    
+
     void addItemToCharacter();
     void addItemToFirstFreeSlot();
     int getFirstFreeItemSlot();
@@ -24,13 +24,7 @@ private:
     const double gravity = 0.125;
     const double maxFallSpeed = 3;
 
-    enum State {
-        STATE_IDLE,
-        STATE_FALL,
-        STATE_UNPACK,
-        STATE_RAISE,
-        STATE_HOLD
-    };
+    enum State { STATE_IDLE, STATE_FALL, STATE_UNPACK, STATE_RAISE, STATE_HOLD };
 
     State state = STATE_IDLE;
     int itemNumber = 0;
@@ -46,7 +40,7 @@ public:
     void load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName);
     bool update() override;
     int getDrawPriority() override;
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
 };
 
 class TA_ItemLabel : public TA_Object {
@@ -65,7 +59,7 @@ public:
     void load(TA_Point position, std::string name);
     bool update() override;
     void draw() override;
-    int getDrawPriority() override {return 2;}
+    int getDrawPriority() override { return 2; }
 };
 
 #endif // TA_ITEM_BOX_H

@@ -4,7 +4,7 @@
 #include <string>
 
 namespace TA::filesystem {
-    void fixPath(std::string &path);
+    void fixPath(std::string& path);
     bool fileExists(std::string path);
     std::string readFile(std::string path);
     std::string readAsset(std::string path);

@@ -1,12 +1,12 @@
 #ifndef TA_HOUSE_SCREEN_H
 #define TA_HOUSE_SCREEN_H
 
-#include "screen_state_machine.h"
-#include "sprite.h"
-#include "font.h"
 #include "controller.h"
-#include "sound.h"
+#include "font.h"
 #include "inventory_menu.h"
+#include "screen_state_machine.h"
+#include "sound.h"
+#include "sprite.h"
 
 class TA_HouseScreen : public TA_Screen {
 private:

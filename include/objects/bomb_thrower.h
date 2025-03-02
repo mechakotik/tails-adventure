@@ -18,12 +18,7 @@ private:
     bool shouldBeDestroyed();
     void destroy() override;
 
-    enum State {
-        STATE_IDLE,
-        STATE_WALK_FORWARD,
-        STATE_WALK_BACK,
-        STATE_ATTACK
-    };
+    enum State { STATE_IDLE, STATE_WALK_FORWARD, STATE_WALK_BACK, STATE_ATTACK };
 
     State state = STATE_IDLE;
     double leftX, rightX;
@@ -34,7 +29,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, double leftX, double rightX);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;}
+    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 class TA_EnemyBomb : public TA_Object {
@@ -48,8 +43,8 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_DAMAGE;}
-    bool checkPawnCollision(TA_Polygon &hitbox) override;
+    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
+    bool checkPawnCollision(TA_Polygon& hitbox) override;
 };
 
 #endif // TA_BOMB_THROWER_H

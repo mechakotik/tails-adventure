@@ -1,19 +1,19 @@
 #ifndef TA_SPRITE_H
 #define TA_SPRITE_H
 
-#include <vector>
-#include <string>
-#include <map>
 #include <filesystem>
+#include <map>
+#include <string>
+#include <vector>
 #include "SDL3/SDL.h"
-#include "geometry.h"
 #include "camera.h"
+#include "geometry.h"
 
 class TA_Texture {
 public:
     virtual void load(std::string filename);
 
-    SDL_Texture *SDLTexture = nullptr;
+    SDL_Texture* SDLTexture = nullptr;
     int width = 0, height = 0;
 };
 
@@ -35,7 +35,7 @@ private:
     int frameWidth = 0, frameHeight = 0;
     int frame = 0;
     TA_Point position;
-    TA_Camera *camera = nullptr;
+    TA_Camera* camera = nullptr;
 
     std::map<std::string, TA_Animation> loadedAnimations;
     TA_Animation animation;
@@ -55,17 +55,17 @@ public:
     virtual void draw();
     void drawFrom(SDL_Rect srcRect);
 
-    void setPosition(TA_Point newPosition) {position = newPosition;}
-    void setPosition(double newX, double newY) {setPosition(TA_Point(newX, newY));}
+    void setPosition(TA_Point newPosition) { position = newPosition; }
+    void setPosition(double newX, double newY) { setPosition(TA_Point(newX, newY)); }
     void setAlpha(int newAlpha);
-    void setCamera(TA_Camera *newCamera) {camera = newCamera;}
+    void setCamera(TA_Camera* newCamera) { camera = newCamera; }
     void setColorMod(int r, int g, int b);
-    void setColorMod(int w) {setColorMod(w, w, w);}
-    void setFlip(bool newFlip) {flip = newFlip;}
-    int getWidth() {return frameWidth;}
-    int getHeight() {return frameHeight;}
-    bool getFlip() {return flip;}
-    TA_Point getPosition() {return position;}
+    void setColorMod(int w) { setColorMod(w, w, w); }
+    void setFlip(bool newFlip) { flip = newFlip; }
+    int getWidth() { return frameWidth; }
+    int getHeight() { return frameHeight; }
+    bool getFlip() { return flip; }
+    TA_Point getPosition() { return position; }
 
     void setAnimation(std::string name);
     void setAnimation(TA_Animation newAnimation);
@@ -73,9 +73,9 @@ public:
     bool isAnimated();
     int getAnimationFrame();
     int getCurrentFrame();
-    std::string getAnimationName() {return (isAnimated() ? animationName : "");}
+    std::string getAnimationName() { return (isAnimated() ? animationName : ""); }
     void updateAnimation();
-    void setUpdateAnimation(bool enabled) {doUpdateAnimation = enabled;}
+    void setUpdateAnimation(bool enabled) { doUpdateAnimation = enabled; }
 };
 
-#endif //TA_SPRITE_H
+#endif // TA_SPRITE_H

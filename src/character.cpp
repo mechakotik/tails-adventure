@@ -1,15 +1,14 @@
+#include "character.h"
 #include <algorithm>
 #include <cmath>
-#include "character.h"
-#include "tools.h"
 #include "error.h"
 #include "gamepad.h"
-#include "save.h"
 #include "hud.h"
 #include "object_set.h"
+#include "save.h"
+#include "tools.h"
 
-void TA_Character::load(TA_Links newLinks)
-{
+void TA_Character::load(TA_Links newLinks) {
     links = newLinks;
     jumpSound.load("sound/jump.ogg", TA_SOUND_CHANNEL_SFX1);
     remoteRobotStepSound.load("sound/remote_robot_step.ogg", TA_SOUND_CHANNEL_SFX1);
@@ -29,8 +28,7 @@ void TA_Character::load(TA_Links newLinks)
     rings = TA::save::getSaveParameter("rings");
 }
 
-void TA_Character::handleInput()
-{
+void TA_Character::handleInput() {
     rings = TA::save::getSaveParameter("rings");
     hidden = nextFrameHidden;
     if(hidden) {
@@ -54,8 +52,7 @@ void TA_Character::handleInput()
     strongWind = false;
 }
 
-void TA_Character::update()
-{
+void TA_Character::update() {
     rings = TA::save::getSaveParameter("rings");
     if(hidden) {
         return;
@@ -109,8 +106,7 @@ void TA_Character::update()
     if(state == STATE_UNPACK_ITEM) {
         if(remoteRobot) {
             setAnimation("remote_robot_idle");
-        }
-        else {
+        } else {
             setAnimation("unpack");
         }
         setPosition(position);
@@ -132,14 +128,14 @@ void TA_Character::update()
     updateWaterCollision();
     updateTool();
     updateFollowPosition();
-    if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT || state == STATE_HAMMER) {
+    if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT ||
+        state == STATE_HAMMER) {
         return;
     }
     updateAnimation();
 }
 
-void TA_Character::draw()
-{
+void TA_Character::draw() {
     if(hidden) {
         return;
     }
@@ -149,15 +145,12 @@ void TA_Character::draw()
     TA_Pawn::draw();
 }
 
-void TA_Character::updateAnimation()
-{
+void TA_Character::updateAnimation() {
     if(rings >= 0 && hurt) {
         setAlpha(255);
-    }
-    else if(rings >= 0 && invincibleTimeLeft > 0) {
+    } else if(rings >= 0 && invincibleTimeLeft > 0) {
         setAlpha(180);
-    }
-    else {
+    } else {
         setAlpha(255);
     }
 
@@ -167,11 +160,9 @@ void TA_Character::updateAnimation()
             if(!isAnimated()) {
                 setAnimation("remote_robot_fly_loop");
             }
-        }
-        else if(ground && !TA::equal(velocity.x, 0)) {
+        } else if(ground && !TA::equal(velocity.x, 0)) {
             setAnimation("remote_robot_walk");
-        }
-        else {
+        } else {
             setAnimation("remote_robot_idle");
         }
         return;
@@ -179,76 +170,60 @@ void TA_Character::updateAnimation()
 
     if(hurt) {
         setAnimation("hurt");
-    }
-    else if(ground) {
+    } else if(ground) {
         if(lookUp) {
             setAnimation("look_up");
-        }
-        else if(crouch) {
+        } else if(crouch) {
             setAnimation("crouch");
-        }
-        else if(TA::equal(velocity.x, 0)) {
+        } else if(TA::equal(velocity.x, 0)) {
             setAnimation("idle");
-        }
-        else if(wall) {
+        } else if(wall) {
             setAnimation("push");
-        }
-        else {
+        } else {
             setAnimation("walk");
         }
-    }
-    else {
+    } else {
         if(helitail) {
             if(getAnimationName() != "throw_helitail") {
                 double maxTime = getMaxHelitailTime();
                 if(helitailTime < maxTime / 3) {
                     setAnimation("helitail_full");
-                }
-                else if(helitailTime < maxTime * 2 / 3) {
+                } else if(helitailTime < maxTime * 2 / 3) {
                     setAnimation("helitail");
-                }
-                else {
+                } else {
                     setAnimation("helitail_tired");
                 }
             }
-        }
-        else if(jump) {
+        } else if(jump) {
             if(velocity.y < 0) {
                 setAnimation("jump_up");
-            }
-            else {
+            } else {
                 setAnimation("jump_down");
             }
-        }
-        else if(getAnimationName() != "throw_air") {
+        } else if(getAnimationName() != "throw_air") {
             if(coyoteTime < maxCoyoteTime) {
                 setAnimation("jump_down");
-            }
-            else {
+            } else {
                 setAnimation("fall");
             }
         }
     }
 }
 
-void TA_Character::updateClimbAnimation()
-{
+void TA_Character::updateClimbAnimation() {
     if(!isAnimated()) {
         position = climbPosition;
         state = STATE_NORMAL;
-    }
-    else if(state == STATE_CLIMB_HIGH && getAnimationFrame() == 1) {
+    } else if(state == STATE_CLIMB_HIGH && getAnimationFrame() == 1) {
         setPosition(position.x, position.y - 8);
-    }
-    else if(getAnimationFrame() == 2) {
+    } else if(getAnimationFrame() == 2) {
         setPosition(position.x, climbPosition.y);
     }
     updateFollowPosition();
     usingSpeedBoots = false;
 }
 
-void TA_Character::updateThrowAnimation()
-{
+void TA_Character::updateThrowAnimation() {
     if(links.controller->isJustPressed(TA_BUTTON_B)) {
         bombDestroySignal = true;
     }
@@ -258,45 +233,40 @@ void TA_Character::updateThrowAnimation()
     updateFollowPosition();
 }
 
-void TA_Character::updateFollowPosition()
-{
+void TA_Character::updateFollowPosition() {
     TA_Point sourcePosition = position;
     if(state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH) {
         sourcePosition.x = climbPosition.x;
     }
     followPosition = sourcePosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
 
-    if(ground && (links.controller->getDirection() == TA_DIRECTION_UP || links.controller->getDirection() == TA_DIRECTION_DOWN)) {
+    if(ground && (links.controller->getDirection() == TA_DIRECTION_UP ||
+                     links.controller->getDirection() == TA_DIRECTION_DOWN)) {
         lookTime += TA::elapsedTime;
-    }
-    else {
+    } else {
         lookTime = 0;
     }
     if(lookTime > maxLookTime) {
         if(links.controller->getDirection() == TA_DIRECTION_UP) {
             followPosition.y -= 48;
-        }
-        else {
+        } else {
             followPosition.y += 64;
         }
     }
 }
 
-void TA_Character::setSpawnPoint(TA_Point newPosition, bool newFlip)
-{
+void TA_Character::setSpawnPoint(TA_Point newPosition, bool newFlip) {
     position = newPosition;
     flip = newFlip;
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
 }
 
-void TA_Character::updateRemoteRobotReturn()
-{
+void TA_Character::updateRemoteRobotReturn() {
     timer = std::fmod(timer + TA::elapsedTime, 30);
     if(timer < 15) {
         setAlpha(255 - 255 * (timer / 5));
-    }
-    else {
+    } else {
         setAlpha(255 * ((timer - 15) / 5));
     }
 
@@ -322,30 +292,25 @@ void TA_Character::updateRemoteRobotReturn()
     updateFollowPosition();
 }
 
-void TA_Character::setRaiseState()
-{
+void TA_Character::setRaiseState() {
     state = STATE_RAISE_ITEM;
     if(remoteRobot) {
         setAnimation("remote_robot_raise");
-    }
-    else {
+    } else {
         setAnimation("raise");
     }
 }
 
-void TA_Character::setReleaseState()
-{
+void TA_Character::setReleaseState() {
     if(!remoteRobot) {
         setAnimation("release");
     }
 }
 
-void TA_Character::setWindVelocity(TA_Point windVelocity)
-{
+void TA_Character::setWindVelocity(TA_Point windVelocity) {
     if(windVelocity.y > -2.5) {
         this->windVelocity = windVelocity;
-    }
-    else {
+    } else {
         ground = jump = helitail = false;
         velocity.y -= strongWindForce * TA::elapsedTime;
         velocity.y = std::max(velocity.y, double(-5));
@@ -357,16 +322,14 @@ void TA_Character::setWindVelocity(TA_Point windVelocity)
     }
 }
 
-double TA_Character::getMaxHelitailTime()
-{
+double TA_Character::getMaxHelitailTime() {
     if(TA::levelPath == "maps/pm/pm4") {
         return 1e6;
     }
     return 140 + 70 * links.objectSet->getEmeraldsCount();
 }
 
-bool TA_Character::displayFlightTimeBar()
-{
+bool TA_Character::displayFlightTimeBar() {
     if(TA::levelPath == "maps/pm/pm4") {
         return false;
     }
@@ -376,8 +339,7 @@ bool TA_Character::displayFlightTimeBar()
     return helitail && !remoteRobot;
 }
 
-void TA_Character::setCharacterPosition(TA_Point position)
-{
+void TA_Character::setCharacterPosition(TA_Point position) {
     this->position = position;
     velocity = TA_Point(0, 0);
     ground = true;
@@ -387,8 +349,7 @@ void TA_Character::setCharacterPosition(TA_Point position)
     updateAnimation();
 }
 
-void TA_Character::setPaused(bool paused)
-{
+void TA_Character::setPaused(bool paused) {
     setUpdateAnimation(!paused);
     remoteRobotControlSprite.setUpdateAnimation(!paused);
 }

@@ -4,13 +4,7 @@
 #include <string>
 #include "SDL3_mixer/SDL_mixer.h"
 
-enum TA_SoundChannel
-{
-    TA_SOUND_CHANNEL_SFX1,
-    TA_SOUND_CHANNEL_SFX2,
-    TA_SOUND_CHANNEL_SFX3,
-    TA_SOUND_CHANNEL_MAX
-};
+enum TA_SoundChannel { TA_SOUND_CHANNEL_SFX1, TA_SOUND_CHANNEL_SFX2, TA_SOUND_CHANNEL_SFX3, TA_SOUND_CHANNEL_MAX };
 
 namespace TA::sound {
     void playMusic(std::string filename, int repeat = -1);
@@ -22,10 +16,9 @@ namespace TA::sound {
     void fadeOutChannel(TA_SoundChannel channel, int time);
 }
 
-class TA_Sound
-{
+class TA_Sound {
 private:
-    Mix_Chunk *chunk = nullptr;
+    Mix_Chunk* chunk = nullptr;
     TA_SoundChannel channel = TA_SOUND_CHANNEL_SFX1;
     bool loop = false;
 
@@ -33,8 +26,8 @@ public:
     void load(std::string filename, TA_SoundChannel channel, bool loop = false);
     void play();
     void fadeOut(int time);
-    void clear() {chunk = nullptr;}
-    bool empty() {return chunk == nullptr;}
+    void clear() { chunk = nullptr; }
+    bool empty() { return chunk == nullptr; }
 };
 
 #endif // TA_SOUND_H

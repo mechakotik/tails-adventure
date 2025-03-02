@@ -1,13 +1,12 @@
-#include <cmath>
 #include "bird_walker.h"
-#include "tools.h"
-#include "error.h"
+#include <cmath>
 #include "bullet.h"
+#include "error.h"
 #include "explosion.h"
 #include "save.h"
+#include "tools.h"
 
-void TA_BirdWalker::load(double newFloorY)
-{
+void TA_BirdWalker::load(double newFloorY) {
     if(TA::save::getSaveParameter("boss_mask") & (1ll << 0)) {
         return;
     }
@@ -53,8 +52,7 @@ void TA_BirdWalker::load(double newFloorY)
     objectSet->getLinks().camera->setLockPosition(TA_Point(576, 64));
 }
 
-void TA_BirdWalker::updatePosition()
-{
+void TA_BirdWalker::updatePosition() {
     double offset = (feetSprite.getCurrentFrame() == 4 ? 18 : 27);
     feetSprite.setPosition(position + TA_Point(8, -(feetSprite.getHeight() - 1)));
 
@@ -81,8 +79,7 @@ void TA_BirdWalker::updatePosition()
 
     if(flip) {
         weakHitbox.setRectangle({4, -61}, {8, -36});
-    }
-    else {
+    } else {
         weakHitbox.setRectangle({31, -61}, {35, -36});
     }
     weakHitbox.setPosition(position);
@@ -90,14 +87,13 @@ void TA_BirdWalker::updatePosition()
     headFlashSprite.setPosition(headSprite.getPosition());
     bodyFlashSprite.setPosition(bodySprite.getPosition());
     feetFlashSprite.setPosition(feetSprite.getPosition());
-    
+
     headFlashSprite.setFlip(flip);
     bodyFlashSprite.setFlip(flip);
     feetFlashSprite.setFlip(flip);
 }
 
-void TA_BirdWalker::insertBorderHitboxes()
-{
+void TA_BirdWalker::insertBorderHitboxes() {
     borderHitboxVector.clear();
     TA_Polygon borderHitbox;
     TA_Point cameraPosition = objectSet->getLinks().camera->getPosition();
@@ -109,23 +105,21 @@ void TA_BirdWalker::insertBorderHitboxes()
     hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
 }
 
-bool TA_BirdWalker::update()
-{
+bool TA_BirdWalker::update() {
     if(TA::save::getSaveParameter("boss_mask") & (1ll << 0)) {
         return false;
     }
 
-    auto initAiming = [&] () {
+    auto initAiming = [&]() {
         timer = 0;
         aimPosition.y = floorY - 20;
 
         if(objectSet->getCharacterPosition().x < objectSet->getLinks().camera->getPosition().x + TA::screenWidth / 2) {
             aimPosition.x = objectSet->getLinks().camera->getPosition().x + TA::screenWidth - aimBorder - 12;
-        }
-        else {
+        } else {
             aimPosition.x = objectSet->getLinks().camera->getPosition().x + aimBorder;
         }
-        
+
         state = TA_BIRD_WALKER_STATE_AIMING;
     };
 
@@ -137,8 +131,7 @@ bool TA_BirdWalker::update()
     double centeredX = position.x + bodySprite.getWidth() / 2;
     if(TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) == (flip ? 1 : -1)) {
         jumpTimer += TA::elapsedTime;
-    }
-    else {
+    } else {
         jumpTimer = 0;
     }
 
@@ -197,8 +190,7 @@ bool TA_BirdWalker::update()
                 if(jumpTimer < jumpWaitTime) {
                     currentWalkDistance = 0;
                     state = TA_BIRD_WALKER_STATE_WALK;
-                }
-                else {
+                } else {
                     headSprite.setAnimation("turn");
                     state = TA_BIRD_WALKER_STATE_LAUGH;
                 }
@@ -212,23 +204,21 @@ bool TA_BirdWalker::update()
             double leftBorder = objectSet->getLinks().camera->getPosition().x + walkBorder;
             double rightBorder = objectSet->getLinks().camera->getPosition().x + TA::screenWidth - walkBorder;
 
-            if((!flip && centeredPosition < leftBorder) || (flip && centeredPosition > rightBorder) || currentWalkDistance > walkDistance) {
+            if((!flip && centeredPosition < leftBorder) || (flip && centeredPosition > rightBorder) ||
+                currentWalkDistance > walkDistance) {
                 timer = 0;
                 feetSprite.setAnimation("idle");
                 bulletCounter = 0;
                 if(jumpTimer > jumpWaitTime) {
                     headSprite.setAnimation("turn");
                     state = TA_BIRD_WALKER_STATE_LAUGH;
-                }
-                else if((centeredPosition < objectSet->getCharacterPosition().x) == flip
-                    && TA::random::next() % 3 == 0) {
+                } else if((centeredPosition < objectSet->getCharacterPosition().x) == flip &&
+                          TA::random::next() % 3 == 0) {
                     state = TA_BIRD_WALKER_STATE_FIRE_LONG;
-                }
-                else {
+                } else {
                     state = TA_BIRD_WALKER_STATE_FIRE_SHORT;
                 }
-            }
-            else {
+            } else {
                 position.x += walkSpeed * TA::elapsedTime * (flip ? 1 : -1);
                 currentWalkDistance += walkSpeed * TA::elapsedTime;
             }
@@ -240,12 +230,11 @@ bool TA_BirdWalker::update()
             if(timer > shortFireDelay) {
                 if(bulletCounter == shortFireBullets) {
                     state = TA_BIRD_WALKER_STATE_COOL_DOWN;
-                }
-                else {
+                } else {
                     double angle = double(TA::random::next()) / TA::random::max() * maxFireAngle;
                     TA_Point velocity(bulletSpeed * cos(angle) * (flip ? 1 : -1), bulletSpeed * sin(angle));
-                    objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30  : -6), -64), velocity);
-                    bulletCounter ++;
+                    objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30 : -6), -64), velocity);
+                    bulletCounter++;
                     shootSound.play();
                 }
                 timer = 0;
@@ -259,12 +248,11 @@ bool TA_BirdWalker::update()
                 if(bulletCounter == longFireBullets) {
                     feetSprite.setFrame(0);
                     state = TA_BIRD_WALKER_STATE_COOL_DOWN;
-                }
-                else {
+                } else {
                     double angle = double(TA::random::next()) / TA::random::max() * maxFireAngle;
                     TA_Point velocity(bulletSpeed * cos(angle) * (flip ? 1 : -1), bulletSpeed * sin(angle));
-                    objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30  : -6), -55), velocity);
-                    bulletCounter ++;
+                    objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30 : -6), -55), velocity);
+                    bulletCounter++;
                     shootSound.play();
                 }
                 timer = 0;
@@ -386,21 +374,18 @@ bool TA_BirdWalker::update()
     return true;
 }
 
-void TA_BirdWalker::updateDamage()
-{
+void TA_BirdWalker::updateDamage() {
     if(invincibleTimeLeft > 0) {
         invincibleTimeLeft -= TA::elapsedTime;
-    }
-    else if(state != TA_BIRD_WALKER_STATE_AIMING && state != TA_BIRD_WALKER_STATE_FLYING_UP &&
-            state != TA_BIRD_WALKER_STATE_LANDING && state != TA_BIRD_WALKER_STATE_DEAD)
-    {
+    } else if(state != TA_BIRD_WALKER_STATE_AIMING && state != TA_BIRD_WALKER_STATE_FLYING_UP &&
+              state != TA_BIRD_WALKER_STATE_LANDING && state != TA_BIRD_WALKER_STATE_DEAD) {
         if(objectSet->checkCollision(weakHitbox) & TA_COLLISION_ATTACK) {
-            health --;
+            health--;
             invincibleTimeLeft = invincibleTime;
             flashTimer = 0;
             hitSound.play();
             if(health <= 0) {
-                for(auto &element : defaultHitboxVector) {
+                for(auto& element : defaultHitboxVector) {
                     element.collisionType = TA_COLLISION_TRANSPARENT;
                 }
                 timer = 0;
@@ -410,8 +395,7 @@ void TA_BirdWalker::updateDamage()
     }
 }
 
-void TA_BirdWalker::draw()
-{
+void TA_BirdWalker::draw() {
     headSprite.setUpdateAnimation(!objectSet->isPaused());
     bodySprite.setUpdateAnimation(!objectSet->isPaused());
     feetSprite.setUpdateAnimation(!objectSet->isPaused());

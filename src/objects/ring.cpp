@@ -1,9 +1,9 @@
 #include "ring.h"
-#include "tools.h"
 #include "error.h"
 #include "pawn.h"
-#include "tilemap.h"
 #include "save.h"
+#include "tilemap.h"
+#include "tools.h"
 
 void TA_Ring::load(TA_Point position, TA_Point velocity, double delay) {
     this->position = position;
@@ -26,7 +26,7 @@ void TA_Ring::loadStationary(TA_Point position) {
     stationary = true;
 }
 
-bool TA_Ring::checkPawnCollision(TA_Polygon &hitbox) {
+bool TA_Ring::checkPawnCollision(TA_Polygon& hitbox) {
     int flags;
     objectSet->checkCollision(hitbox, flags);
     return flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP);
@@ -46,8 +46,7 @@ bool TA_Ring::update() {
 
         if(velocity.x > 0) {
             velocity.x = std::max(0.0, velocity.x - drag * TA::elapsedTime);
-        }
-        else {
+        } else {
             velocity.x = std::min(0.0, velocity.x + drag * TA::elapsedTime);
         }
 

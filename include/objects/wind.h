@@ -7,12 +7,7 @@ class TA_Wind : public TA_Object {
 private:
     const double leafSpawnTime = 5;
 
-    enum Side {
-        SIDE_UP,
-        SIDE_DOWN,
-        SIDE_LEFT,
-        SIDE_RIGHT
-    };
+    enum Side { SIDE_UP, SIDE_DOWN, SIDE_LEFT, SIDE_RIGHT };
 
     void spawnLeaf();
     Side getRandomLeafSide();

@@ -1,14 +1,12 @@
 #include "game_screen.h"
 #include "save.h"
 
-void TA_GameScreen::init()
-{
+void TA_GameScreen::init() {
     isSeaFox = ((int)TA::levelPath.size() >= 7 && TA::levelPath.substr(0, 7) == "maps/lr");
 
     if(isSeaFox) {
         links.seaFox = &seaFox;
-    }
-    else {
+    } else {
         links.character = &character;
     }
 
@@ -23,11 +21,10 @@ void TA_GameScreen::init()
 
     if(isSeaFox) {
         seaFox.load(links);
-    }
-    else {
+    } else {
         character.load(links);
     }
-    
+
     objectSet.setLinks(links);
     tilemap.load(TA::levelPath + ".tmx");
     tilemap.setCamera(&camera);
@@ -36,17 +33,15 @@ void TA_GameScreen::init()
 
     if(isSeaFox) {
         seaFox.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());
-    }
-    else {
+    } else {
         character.setSpawnPoint(objectSet.getCharacterSpawnPoint(), objectSet.getCharacterSpawnFlip());
     }
-    
+
     TA::previousLevelPath = TA::levelPath;
     timer = TA::save::getSaveParameter("time");
 }
 
-TA_ScreenState TA_GameScreen::update()
-{
+TA_ScreenState TA_GameScreen::update() {
     timer += TA::elapsedTime;
     TA::save::setSaveParameter("time", timer);
 
@@ -62,17 +57,15 @@ TA_ScreenState TA_GameScreen::update()
         if(isSeaFox) {
             seaFox.update();
             camera.update(true, false);
-        }
-        else {
+        } else {
             character.update();
-            camera.update(character.isOnGround(), character.isJumpingOnSpring() || character.isOnStrongWind() || character.isUsingSpeedBoots());
+            camera.update(character.isOnGround(),
+                character.isJumpingOnSpring() || character.isOnStrongWind() || character.isUsingSpeedBoots());
         }
     }
 
     if(isSeaFox) {
-
-    }
-    else {
+    } else {
         character.setPaused(hud.isPaused());
     }
 
@@ -84,11 +77,10 @@ TA_ScreenState TA_GameScreen::update()
 
     if(isSeaFox) {
         seaFox.draw();
-    }
-    else {
+    } else {
         character.draw();
     }
-    
+
     objectSet.draw(1);
     tilemap.draw(1);
     objectSet.draw(2);
@@ -110,7 +102,4 @@ TA_ScreenState TA_GameScreen::update()
     return TA_SCREENSTATE_CURRENT;
 }
 
-void TA_GameScreen::quit()
-{
-
-}
+void TA_GameScreen::quit() {}

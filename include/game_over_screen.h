@@ -1,9 +1,9 @@
 #ifndef TA_GAME_OVER_SCREEN_H
 #define TA_GAME_OVER_SCREEN_H
 
+#include "controller.h"
 #include "screen_state_machine.h"
 #include "sprite.h"
-#include "controller.h"
 
 class TA_GameOverScreen : public TA_Screen {
 private:

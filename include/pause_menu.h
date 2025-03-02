@@ -2,21 +2,16 @@
 #define TA_PAUSE_MENU_H
 
 #include <array>
-#include "inventory_menu.h"
-#include "sprite.h"
-#include "touchscreen.h"
 #include "font.h"
+#include "inventory_menu.h"
 #include "links.h"
 #include "sound.h"
+#include "sprite.h"
+#include "touchscreen.h"
 
 class TA_PauseMenu {
 public:
-    enum class UpdateResult : char {
-        CONTINUE,
-        RESUME,
-        REPLACE,
-        QUIT
-    };
+    enum class UpdateResult : char { CONTINUE, RESUME, REPLACE, QUIT };
 
     void load(TA_Links links);
     UpdateResult update();

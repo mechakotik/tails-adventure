@@ -1,10 +1,10 @@
-#include "SDL3/SDL.h"
 #include "options_section.h"
+#include "SDL3/SDL.h"
 #include "save.h"
 
 class TA_ResolutionOption : public TA_Option {
 public:
-    std::string getName() override {return "resolution";}
+    std::string getName() override { return "resolution"; }
 
     std::string getValue() override {
         int factor = TA::save::getParameter("resolution");
@@ -32,7 +32,7 @@ public:
 
 class TA_PixelAROption : public TA_Option {
 public:
-    std::string getName() override {return "pixel ar";}
+    std::string getName() override { return "pixel ar"; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("pixel_ar");
@@ -49,7 +49,7 @@ public:
 
 class TA_VSyncOption : public TA_Option {
 public:
-    std::string getName() override {return "v-sync";}
+    std::string getName() override { return "v-sync"; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("vsync");
@@ -76,7 +76,7 @@ public:
 
 class TA_ScaleModeOption : public TA_Option {
 public:
-    std::string getName() override {return "scale mode";}
+    std::string getName() override { return "scale mode"; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("scale_mode");
@@ -100,14 +100,14 @@ public:
         this->param = param;
     }
 
-    std::string getName() override {return name;}
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int value = TA::save::getParameter(param);
         std::string bar(10, 'E');
         bar[0] = 'C';
         bar[9] = 'F';
-        for(int i = 1; i <= value; i ++) {
+        for(int i = 1; i <= value; i++) {
             bar[i] = 'D';
         }
         return bar;
@@ -131,7 +131,7 @@ public:
         return result;
     }
 
-    constexpr bool hasNegativeMove() override {return true;}
+    constexpr bool hasNegativeMove() override { return true; }
 };
 
 class TA_MapKeyboardOption : public TA_Option {
@@ -142,7 +142,7 @@ private:
     int button = 0;
 
 public:
-    std::string getName() override {return "map keyboard";}
+    std::string getName() override { return "map keyboard"; }
 
     std::string getValue() override {
         if(!locked) {
@@ -151,8 +151,8 @@ public:
         return buttons[button];
     }
 
-    bool isLocked() override {return locked;}
-    void unlock() override {locked = false;}
+    bool isLocked() override { return locked; }
+    void unlock() override { locked = false; }
 
     TA_MoveSoundId move(int delta) override {
         locked = true;
@@ -161,13 +161,13 @@ public:
     }
 
     TA_MoveSoundId updateLocked() override {
-        for(int scancode = 0; scancode < SDL_SCANCODE_COUNT; scancode ++) {
+        for(int scancode = 0; scancode < SDL_SCANCODE_COUNT; scancode++) {
             if(scancode == SDL_SCANCODE_ESCAPE || scancode == SDL_SCANCODE_RALT) {
                 continue;
             }
             if(TA::keyboard::isScancodeJustPressed(SDL_Scancode(scancode))) {
                 TA::save::setParameter("keyboard_map_" + buttons[button], scancode);
-                button ++;
+                button++;
                 if(button >= (int)buttons.size()) {
                     locked = false;
                     TA::save::writeToFile();
@@ -188,7 +188,7 @@ private:
     int button = 0;
 
 public:
-    std::string getName() override {return "map gamepad";}
+    std::string getName() override { return "map gamepad"; }
 
     std::string getValue() override {
         if(!locked) {
@@ -197,8 +197,8 @@ public:
         return buttons[button];
     }
 
-    bool isLocked() override {return locked;}
-    void unlock() override {locked = false;}
+    bool isLocked() override { return locked; }
+    void unlock() override { locked = false; }
 
     TA_MoveSoundId move(int delta) override {
         locked = true;
@@ -207,10 +207,10 @@ public:
     }
 
     TA_MoveSoundId updateLocked() override {
-        for(int id = 0; id < SDL_GAMEPAD_BUTTON_COUNT; id ++) {
+        for(int id = 0; id < SDL_GAMEPAD_BUTTON_COUNT; id++) {
             if(TA::gamepad::isControllerButtonJustPressed(SDL_GamepadButton(id))) {
                 TA::save::setParameter("gamepad_map_" + buttons[button], id);
-                button ++;
+                button++;
                 if(button >= (int)buttons.size()) {
                     locked = false;
                     TA::save::writeToFile();
@@ -224,7 +224,7 @@ public:
 };
 
 class TA_HideOnscreenOption : public TA_Option {
-    std::string getName() override {return "hide onscreen";}
+    std::string getName() override { return "hide onscreen"; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("hide_onscreen");
@@ -240,7 +240,7 @@ class TA_HideOnscreenOption : public TA_Option {
 };
 
 class TA_RumbleOption : public TA_Option {
-    std::string getName() override {return "rumble";}
+    std::string getName() override { return "rumble"; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("rumble");
@@ -255,24 +255,25 @@ class TA_RumbleOption : public TA_Option {
     }
 };
 
-void TA_OptionsSection::load()
-{
+void TA_OptionsSection::load() {
     font.load("fonts/pause_menu.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+"); // TODO: generalize font mappings
+    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+"); // TODO:
+                                                                          // generalize font
+                                                                          // mappings
 
     options.resize(groups.size());
-    #ifndef __ANDROID__
-        options[0].push_back(std::make_unique<TA_ResolutionOption>());
-    #endif
+#ifndef __ANDROID__
+    options[0].push_back(std::make_unique<TA_ResolutionOption>());
+#endif
     options[0].push_back(std::make_unique<TA_PixelAROption>());
     options[0].push_back(std::make_unique<TA_ScaleModeOption>());
     options[0].push_back(std::make_unique<TA_VSyncOption>());
 
     options[1].push_back(std::make_unique<TA_MapKeyboardOption>());
     options[1].push_back(std::make_unique<TA_MapGamepadOption>());
-    #ifdef __ANDROID__
-        options[1].push_back(std::make_unique<TA_HideOnscreenOption>());
-    #endif
+#ifdef __ANDROID__
+    options[1].push_back(std::make_unique<TA_HideOnscreenOption>());
+#endif
     options[1].push_back(std::make_unique<TA_RumbleOption>());
 
     options[2].push_back(std::make_unique<TA_VolumeOption>("main", "main_volume"));
@@ -285,7 +286,7 @@ void TA_OptionsSection::load()
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX3);
 
     double y = 32;
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < 4; pos++) {
         buttons[pos][0].setRectangle({(double)getLeftX() - 32, y}, {(double)getLeftX() + 80, y + 17});
         buttons[pos][1].setRectangle({(double)getLeftX() + 80, y}, {(double)getLeftX() + 192, y + 17});
         y += 20;
@@ -294,10 +295,9 @@ void TA_OptionsSection::load()
     backButton.setRectangle({0, 0}, {128, 32});
 }
 
-TA_MainMenuState TA_OptionsSection::update()
-{
+TA_MainMenuState TA_OptionsSection::update() {
     backButton.update();
-    for(int pos = 0; pos < 4; pos ++) {
+    for(int pos = 0; pos < 4; pos++) {
         buttons[pos][0].update();
         buttons[pos][1].update();
     }
@@ -321,22 +321,20 @@ TA_MainMenuState TA_OptionsSection::update()
     return TA_MAIN_MENU_OPTIONS;
 }
 
-void TA_OptionsSection::updateGroupSelector()
-{
+void TA_OptionsSection::updateGroupSelector() {
     if(controller->isJustChangedDirection()) {
         TA_Direction direction = controller->getDirection();
         if(direction == TA_DIRECTION_UP && group > 0) {
-            group --;
+            group--;
             switchSound.play();
-        }
-        else if(direction == TA_DIRECTION_DOWN && group < static_cast<int>(groups.size()) - 1) {
-            group ++;
+        } else if(direction == TA_DIRECTION_DOWN && group < static_cast<int>(groups.size()) - 1) {
+            group++;
             switchSound.play();
         }
     }
 
     bool selected = false;
-    for(int pos = 0; pos < static_cast<int>(options.size()); pos ++) {
+    for(int pos = 0; pos < static_cast<int>(options.size()); pos++) {
         if(buttons[pos][0].isReleased() || buttons[pos][1].isReleased()) {
             group = pos;
             selected = true;
@@ -356,8 +354,7 @@ void TA_OptionsSection::updateGroupSelector()
     }
 }
 
-void TA_OptionsSection::updateOptionSelector()
-{
+void TA_OptionsSection::updateOptionSelector() {
     if(options[group][option]->isLocked()) {
         if(backButton.isReleased()) {
             options[group][option]->unlock();
@@ -376,13 +373,13 @@ void TA_OptionsSection::updateOptionSelector()
         switch(direction) {
             case TA_DIRECTION_UP:
                 if(option > 0) {
-                    option --;
+                    option--;
                     sound = TA_MOVE_SOUND_SWITCH;
                 }
                 break;
             case TA_DIRECTION_DOWN:
                 if(option < (int)options[group].size() - 1) {
-                    option ++;
+                    option++;
                     sound = TA_MOVE_SOUND_SWITCH;
                 }
                 break;
@@ -399,7 +396,7 @@ void TA_OptionsSection::updateOptionSelector()
         }
     }
 
-    for(int pos = 0; pos < static_cast<int>(options[group].size()); pos ++) {
+    for(int pos = 0; pos < static_cast<int>(options[group].size()); pos++) {
         if(options[group][pos]->hasNegativeMove()) {
             if(buttons[pos][0].isReleased()) {
                 option = pos;
@@ -411,8 +408,7 @@ void TA_OptionsSection::updateOptionSelector()
                 sound = options[group][pos]->move(1);
                 TA::save::writeToFile();
             }
-        }
-        else if(buttons[pos][0].isReleased() || buttons[pos][1].isReleased()) {
+        } else if(buttons[pos][0].isReleased() || buttons[pos][1].isReleased()) {
             option = pos;
             sound = options[group][pos]->move(1);
             TA::save::writeToFile();
@@ -432,8 +428,7 @@ void TA_OptionsSection::updateOptionSelector()
     }
 }
 
-void TA_OptionsSection::playMoveSound(TA_MoveSoundId id)
-{
+void TA_OptionsSection::playMoveSound(TA_MoveSoundId id) {
     switch(id) {
         case TA_MOVE_SOUND_SWITCH:
             switchSound.play();
@@ -449,25 +444,23 @@ void TA_OptionsSection::playMoveSound(TA_MoveSoundId id)
     }
 }
 
-void TA_OptionsSection::draw()
-{
+void TA_OptionsSection::draw() {
     updateAlpha();
 
     if(state == STATE_SELECTING_OPTION) {
         drawOptionList();
-    }
-    else {
+    } else {
         drawGroupList();
     }
 }
 
-void TA_OptionsSection::drawGroupList()
-{
+void TA_OptionsSection::drawGroupList() {
     TA_Point textPosition{(double)getLeftX() + 16, 36};
     bool touchscreen = controller->isTouchscreen();
 
-    for(int pos = 0; pos < (int)groups.size(); pos ++) {
-        if((!touchscreen && pos == group) || (touchscreen && (buttons[pos][0].isPressed() || buttons[pos][1].isPressed()))) {
+    for(int pos = 0; pos < (int)groups.size(); pos++) {
+        if((!touchscreen && pos == group) ||
+            (touchscreen && (buttons[pos][0].isPressed() || buttons[pos][1].isPressed()))) {
             drawHighlight(textPosition.y - 3);
         }
         font.drawText(textPosition, groups[pos]);
@@ -475,12 +468,11 @@ void TA_OptionsSection::drawGroupList()
     }
 }
 
-void TA_OptionsSection::drawOptionList()
-{
+void TA_OptionsSection::drawOptionList() {
     double lx = getLeftX() + 16, rx = getLeftX() + 144, y = 36;
     bool touchscreen = controller->isTouchscreen();
 
-    for(int pos = 0; pos < (int)options[group].size(); pos ++) {
+    for(int pos = 0; pos < (int)options[group].size(); pos++) {
         std::string left = options[group][pos]->getName();
         std::string right = options[group][pos]->getValue();
         int offset = font.getTextWidth(right, {-1, 0});
@@ -493,12 +485,10 @@ void TA_OptionsSection::drawOptionList()
                 if(buttons[pos][1].isPressed()) {
                     drawHighlight(rx + 4, y - 3, 25);
                 }
-            }
-            else if(buttons[pos][0].isPressed() || buttons[pos][1].isPressed()) {
+            } else if(buttons[pos][0].isPressed() || buttons[pos][1].isPressed()) {
                 drawHighlight(y - 3);
             }
-        }
-        else if(pos == option) {
+        } else if(pos == option) {
             drawHighlight(y - 3);
         }
 
@@ -513,12 +503,12 @@ void TA_OptionsSection::drawOptionList()
     }
 }
 
-void TA_OptionsSection::drawHighlight(double x, double y, double width)
-{
+void TA_OptionsSection::drawHighlight(double x, double y, double width) {
     SDL_FRect rect = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), 15};
 
-    for(int num = 0; num < 4; num ++) {
-        SDL_SetRenderDrawColor(TA::renderer, num * 28 * alpha / 255, num * 24 * alpha / 255, num * 28 * alpha / 255, 255);
+    for(int num = 0; num < 4; num++) {
+        SDL_SetRenderDrawColor(
+            TA::renderer, num * 28 * alpha / 255, num * 24 * alpha / 255, num * 28 * alpha / 255, 255);
 
         SDL_FRect targetRect = rect;
         targetRect.x *= static_cast<float>(TA::scaleFactor);
@@ -532,13 +522,11 @@ void TA_OptionsSection::drawHighlight(double x, double y, double width)
     }
 }
 
-void TA_OptionsSection::drawHighlight(double y)
-{
+void TA_OptionsSection::drawHighlight(double y) {
     drawHighlight(getLeftX() + 4, y, 152);
 }
 
-void TA_OptionsSection::updateAlpha()
-{
+void TA_OptionsSection::updateAlpha() {
     alpha = baseAlpha;
 
     if(listTransitionTimeLeft > 0) {
@@ -551,8 +539,7 @@ void TA_OptionsSection::updateAlpha()
         }
         if(listTransitionTimeLeft > listTransitionTime) {
             alpha *= (listTransitionTimeLeft - listTransitionTime) / listTransitionTime;
-        }
-        else {
+        } else {
             alpha *= (1 - listTransitionTimeLeft / listTransitionTime);
         }
     }

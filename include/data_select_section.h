@@ -1,16 +1,16 @@
 #ifndef DATA_SELECT_SECTION_H
 #define DATA_SELECT_SECTION_H
 
+#include "font.h"
 #include "main_menu_section.h"
 #include "sound.h"
-#include "font.h"
 
 class TA_DataSelectSection : public TA_MainMenuSection {
 public:
     using TA_MainMenuSection::TA_MainMenuSection;
     void load() override;
     TA_MainMenuState update() override;
-    void setAlpha(int alpha) override {this->alpha = alpha;}
+    void setAlpha(int alpha) override { this->alpha = alpha; }
     void draw() override;
 
 private:

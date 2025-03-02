@@ -1,8 +1,7 @@
 #include "fire.h"
 #include "tools.h"
 
-void TA_Fire::load(TA_Point position, bool flip)
-{
+void TA_Fire::load(TA_Point position, bool flip) {
     this->position = position;
     this->flip = flip;
 
@@ -13,8 +12,7 @@ void TA_Fire::load(TA_Point position, bool flip)
     updatePosition();
 }
 
-bool TA_Fire::update()
-{
+bool TA_Fire::update() {
     if(!isAnimated()) {
         timer += TA::elapsedTime;
         if(timer > waitTime) {
@@ -29,8 +27,7 @@ bool TA_Fire::update()
     return true;
 }
 
-void TA_Fire::updateHitbox()
-{
+void TA_Fire::updateHitbox() {
     double left = 0;
     switch(getCurrentFrame()) {
         case 0:
@@ -50,14 +47,12 @@ void TA_Fire::updateHitbox()
     }
     if(flip) {
         hitbox.setRectangle(TA_Point(0, 0), TA_Point(24 - left, 8));
-    }
-    else {
+    } else {
         hitbox.setRectangle(TA_Point(left, 0), TA_Point(24, 8));
     }
 }
 
-void TA_Fire::updateAlpha()
-{
+void TA_Fire::updateAlpha() {
     alphaTimer += TA::elapsedTime;
     double factor = TA::linearInterpolation(128, 255, alphaTimer / alphaPeriod);
     TA_Sprite::setAlpha(factor);

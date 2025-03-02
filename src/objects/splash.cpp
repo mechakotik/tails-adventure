@@ -1,7 +1,6 @@
 #include "splash.h"
 
-void TA_Splash::load(TA_Point newPosition)
-{
+void TA_Splash::load(TA_Point newPosition) {
     loadFromToml("objects/splash.toml");
     setAnimation("splash");
 
@@ -10,16 +9,14 @@ void TA_Splash::load(TA_Point newPosition)
     int bottom = top + 16;
     if(abs(position.y - top) < abs(position.y - bottom)) {
         position.y = top;
-    }
-    else {
+    } else {
         position.y = bottom;
     }
 
     setPosition(position);
 }
 
-bool TA_Splash::update()
-{
+bool TA_Splash::update() {
     if(!isAnimated()) {
         return false;
     }
