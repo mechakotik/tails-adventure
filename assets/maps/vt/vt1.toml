@@ -51,7 +51,7 @@ breakable_block = [
 	{ path="maps/vt/block4.png", particle_path="maps/vt/rock.png", tile_x=108, tile_y=6 }
 ]
 fire = [
-	{ x=1240, y=152, direction="left" }
+	{ x=1240, y=152 }
 ]
 item_box = [
 	{ x=968, y=112, number=19, item_name=" hammer \n        " },

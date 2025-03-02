@@ -59,15 +59,15 @@ bridge = [
 	{ path="maps/vt/bridge.png", particle_path="maps/vt/rock.png", leftx=1568, rightx=1615, y=112 }
 ]
 fire = [
-	{ x=168, y=88, direction="left" },
-	{ x=232, y=120, direction="left" },
-	{ x=280, y=152, direction="left" },
-	{ x=792, y=136, direction="left" },
-	{ x=904, y=168, direction="left" },
-	{ x=336, y=216, direction="right" },
-	{ x=736, y=104, direction="right" },
-	{ x=736, y=168, direction="right" },
-	{ x=960, y=184, direction="right" }
+	{ x=168, y=88 },
+	{ x=232, y=120 },
+	{ x=280, y=152 },
+	{ x=792, y=136 },
+	{ x=904, y=168 },
+	{ x=336, y=216, flip=true },
+	{ x=736, y=104, flip=true },
+	{ x=736, y=168, flip=true },
+	{ x=960, y=184, flip=true }
 ]
 item_box = [
 	{ x=1880, y=272, number=29, item_name="  chaos  \n emerald " }
