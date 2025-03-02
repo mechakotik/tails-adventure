@@ -11,6 +11,7 @@ namespace TA {
         std::unordered_map<std::filesystem::path, Mix_Music*> musicMap;
         std::unordered_map<std::filesystem::path, Mix_Chunk*> chunkMap;
         std::unordered_map<std::filesystem::path, std::string> assetMap;
+        std::unordered_map<std::filesystem::path, toml::value> tomlMap;
 
         void preloadTextures();
         void preloadChunks();
@@ -94,6 +95,18 @@ const std::string& TA::resmgr::loadAsset(std::filesystem::path path) {
         assetMap[path] = TA::filesystem::readFile(path);
     }
     return assetMap[path];
+}
+
+const toml::value& TA::resmgr::loadToml(std::filesystem::path path) {
+    path = TA::filesystem::getAssetsPath() / path;
+    if(!tomlMap.contains(path)) {
+        try {
+            tomlMap[path] = toml::parse_str(TA::filesystem::readFile(path));
+        } catch(std::exception& e) {
+            TA::handleError("Failed to load %s:\n%s", path, e.what());
+        }
+    }
+    return tomlMap[path];
 }
 
 void TA::resmgr::quit() {

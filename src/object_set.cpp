@@ -70,7 +70,7 @@ void TA_ObjectSet::load(std::string filename) {
 }
 
 void TA_ObjectSet::tryLoad(std::string filename) {
-    toml::value table = toml::parse_str(TA::resmgr::loadAsset(filename));
+    const toml::value& table = TA::resmgr::loadToml(filename);
     if(table.contains("level") && table.at("level").contains("music")) {
         TA::sound::playMusic(table.at("level").at("music").as_string());
     }

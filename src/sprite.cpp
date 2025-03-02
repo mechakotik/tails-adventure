@@ -61,7 +61,7 @@ void TA_Sprite::loadFromToml(std::filesystem::path path) {
 }
 
 void TA_Sprite::tryLoadFromToml(std::filesystem::path path) {
-    toml::value table = toml::parse_str(TA::resmgr::loadAsset(path));
+    const toml::value& table = TA::resmgr::loadToml(path);
     texture.load(path.parent_path() / table.at("sprite").at("image").as_string());
     if(table.at("sprite").contains("width")) {
         frameWidth = static_cast<int>(table.at("sprite").at("width").as_integer());
