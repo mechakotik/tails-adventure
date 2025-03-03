@@ -11,16 +11,17 @@ private:
     static const int sizeChunks = (size + chunkSize - 1) / chunkSize;
 
     struct Element {
-        TA_Polygon* hitbox;
+        TA_Polygon hitbox;
         int type;
     };
 
     struct Chunk {
-        std::vector<Element> elements;
+        std::vector<int> elements;
         int updateTime = 0;
     };
 
     std::array<std::array<Chunk, sizeChunks>, sizeChunks> chunks;
+    std::vector<Element> hitboxes;
     Chunk commonChunk;
     int currentTime = 0, collisionTypeMask = 0;
 

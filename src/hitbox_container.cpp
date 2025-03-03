@@ -9,16 +9,22 @@ void TA_HitboxContainer::add(TA_Polygon& hitbox, int type) {
     if(hitbox.empty()) {
         return;
     }
-    Element element = {&hitbox, type};
+
+    Element element = {.hitbox=hitbox, .type=type};
+    hitboxes.push_back(element);
+    int id = static_cast<int>(hitboxes.size()) - 1;
 
     auto addToChunk = [&](Chunk& chunk) {
         lazyClear(chunk);
-        chunk.elements.push_back(element);
+        chunk.elements.push_back(id);
     };
 
-    TA_Point topLeft = hitbox.getTopLeft(), bottomRight = hitbox.getBottomRight();
-    int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize,
-        bottom = bottomRight.y / chunkSize;
+    TA_Point topLeft = hitbox.getTopLeft();
+    TA_Point bottomRight = hitbox.getBottomRight();
+    int left = static_cast<int>(topLeft.x / chunkSize);
+    int top = static_cast<int>(topLeft.y / chunkSize);
+    int right = static_cast<int>(bottomRight.x / chunkSize);
+    int bottom = static_cast<int>(bottomRight.y / chunkSize);
 
     if(0 <= top && bottom < size && 0 <= left && right < size && right - left <= 1 && bottom - top <= 1) {
         addToChunk(chunks[top][left]);
@@ -41,9 +47,9 @@ int TA_HitboxContainer::getCollisionFlags(TA_Polygon& hitbox) {
 
     auto processChunk = [&](Chunk& chunk) {
         lazyClear(chunk);
-        for(Element& element : chunk.elements) {
-            if(hitbox.intersects(*element.hitbox)) {
-                flags |= element.type;
+        for(int id : chunk.elements) {
+            if(hitbox.intersects(hitboxes[id].hitbox)) {
+                flags |= hitboxes[id].type;
             }
         }
     };
@@ -82,6 +88,7 @@ void TA_HitboxContainer::lazyClear(Chunk& chunk) {
 }
 
 void TA_HitboxContainer::clear() {
+    hitboxes.clear();
     currentTime++;
     collisionTypeMask = 0;
 }
