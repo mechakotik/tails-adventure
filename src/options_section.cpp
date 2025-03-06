@@ -7,12 +7,40 @@ public:
     std::string getName() override { return "resolution"; }
 
     std::string getValue() override {
-        int factor = TA::save::getParameter("resolution");
+        int value = TA::save::getParameter("base_height");
+        return std::to_string(TA::getBaseHeight(value)) + "p";
+    }
+
+    TA_MoveSoundId move(int delta) override {
+        int value = TA::save::getParameter("base_height");
+        value += delta;
+
+        TA_MoveSoundId result = TA_MOVE_SOUND_SWITCH;
+        if(value < 0) {
+            value = 0;
+            result = TA_MOVE_SOUND_ERROR;
+        }
+        if(value > 3) {
+            value = 3;
+            result = TA_MOVE_SOUND_ERROR;
+        }
+
+        TA::save::setParameter("base_height", value);
+        return result;
+    }
+};
+
+class TA_WindowSizeOption : public TA_Option {
+public:
+    std::string getName() override { return "window size"; }
+
+    std::string getValue() override {
+        int factor = TA::save::getParameter("window_size");
         return "x" + std::to_string(factor);
     }
 
     TA_MoveSoundId move(int delta) override {
-        int factor = TA::save::getParameter("resolution");
+        int factor = TA::save::getParameter("window_size");
         factor += delta;
 
         TA_MoveSoundId result = TA_MOVE_SOUND_SWITCH;
@@ -25,7 +53,7 @@ public:
             result = TA_MOVE_SOUND_ERROR;
         }
 
-        TA::save::setParameter("resolution", factor);
+        TA::save::setParameter("window_size", factor);
         return result;
     }
 };
@@ -262,12 +290,13 @@ void TA_OptionsSection::load() {
                                                                           // mappings
 
     options.resize(groups.size());
-#ifndef __ANDROID__
     options[0].push_back(std::make_unique<TA_ResolutionOption>());
-#endif
     options[0].push_back(std::make_unique<TA_PixelAROption>());
     options[0].push_back(std::make_unique<TA_ScaleModeOption>());
     options[0].push_back(std::make_unique<TA_VSyncOption>());
+#ifndef __ANDROID__
+    options[0].push_back(std::make_unique<TA_WindowSizeOption>());
+#endif
 
     options[1].push_back(std::make_unique<TA_MapKeyboardOption>());
     options[1].push_back(std::make_unique<TA_MapGamepadOption>());
@@ -286,7 +315,7 @@ void TA_OptionsSection::load() {
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX3);
 
     double y = 32;
-    for(int pos = 0; pos < 4; pos++) {
+    for(int pos = 0; pos < 5; pos++) {
         buttons[pos][0].setRectangle({(double)getLeftX() - 32, y}, {(double)getLeftX() + 80, y + 17});
         buttons[pos][1].setRectangle({(double)getLeftX() + 80, y}, {(double)getLeftX() + 192, y + 17});
         y += 20;
@@ -297,7 +326,7 @@ void TA_OptionsSection::load() {
 
 TA_MainMenuState TA_OptionsSection::update() {
     backButton.update();
-    for(int pos = 0; pos < 4; pos++) {
+    for(int pos = 0; pos < 5; pos++) {
         buttons[pos][0].update();
         buttons[pos][1].update();
     }

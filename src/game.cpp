@@ -69,10 +69,11 @@ void TA_Game::toggleFullscreen() {
 }
 
 void TA_Game::updateWindowSize() {
+    int baseHeight = (TA::getBaseHeight(TA::save::getParameter("base_height")));
     double pixelAR = (TA::save::getParameter("pixel_ar") == 0 ? 1 : double(7) / 8);
 
     if(!fullscreen) {
-        int factor = TA::save::getParameter("resolution");
+        int factor = TA::save::getParameter("window_size");
         int neededWidth = baseHeight * 16 / 9 * factor;
         int neededHeight = baseHeight * factor;
         SDL_SetWindowSize(TA::window, neededWidth, neededHeight);

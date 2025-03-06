@@ -72,3 +72,18 @@ double TA::linearInterpolation(double left, double right, double pos) {
     }
     return right - (right - left) * (pos - 1);
 }
+
+int TA::getBaseHeight(int index) {
+    switch(index) {
+        case 0:
+            return 144;
+        case 1:
+            return 160;
+        case 2:
+            return 180;
+        case 3:
+            return 196;
+        default:
+            return 144;
+    }
+}

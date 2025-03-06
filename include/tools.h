@@ -28,6 +28,7 @@ namespace TA {
     void drawScreenRect(int r, int g, int b, int a);
     void drawShadow(int factor);
     double linearInterpolation(double left, double right, double pos);
+    int getBaseHeight(int index);
 
     template <typename T>
     T sign(T a) {

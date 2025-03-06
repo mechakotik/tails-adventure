@@ -50,7 +50,7 @@ private:
     TA_Sound switchSound, selectSound, backSound, errorSound;
     int group = 0, option = 0, alpha = 255, baseAlpha = 255;
 
-    std::array<std::array<TA_OnscreenButton, 2>, 4> buttons;
+    std::array<std::array<TA_OnscreenButton, 2>, 5> buttons;
     TA_OnscreenButton backButton;
 
 public:
