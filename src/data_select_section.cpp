@@ -166,7 +166,7 @@ void TA_DataSelectSection::drawSaveEntries() {
 
 void TA_DataSelectSection::drawSplash() {
     splashFont.setAlpha(alpha);
-    splashFont.drawTextCentered(120, splash, TA_Point(-1, 0));
+    splashFont.drawTextCentered(TA::screenHeight - 24, splash, TA_Point(-1, 0));
 }
 
 void TA_DataSelectSection::drawSelector() {

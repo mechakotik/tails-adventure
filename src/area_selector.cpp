@@ -13,17 +13,19 @@ void TA_AreaSelector::load() {
 
 void TA_AreaSelector::appendPoints() {
     double xOffset = (TA::screenWidth - 256) / 2;
+    double yOffset = (TA::screenHeight - 144) / 2;
 
+    // TODO: store map points in TOML
     if(TA::save::getSaveParameter("seafox")) {
-        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 88)));
-        points.push_back(new TA_MapPoint(1, " lake\n rocky", "maps/lr/lr1", TA_Point(131 + xOffset, 111)));
+        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 88 + yOffset)));
+        points.push_back(new TA_MapPoint(1, " lake\n rocky", "maps/lr/lr1", TA_Point(131 + xOffset, 111 + yOffset)));
     } else {
-        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 97)));
-        points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106 + xOffset, 89)));
-        points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73)));
-        points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41)));
-        points.push_back(new TA_MapPoint(4, "cavern\nisland", "maps/ci/ci1", TA_Point(182 + xOffset, 33)));
-        points.push_back(new TA_MapPoint(5, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49)));
+        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 97 + yOffset)));
+        points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106 + xOffset, 89 + yOffset)));
+        points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73 + yOffset)));
+        points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41 + yOffset)));
+        points.push_back(new TA_MapPoint(4, "cavern\nisland", "maps/ci/ci1", TA_Point(182 + xOffset, 33 + yOffset)));
+        points.push_back(new TA_MapPoint(5, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49 + yOffset)));
     }
 
     currentPoint = points[TA::save::getSaveParameter("map_selection")];

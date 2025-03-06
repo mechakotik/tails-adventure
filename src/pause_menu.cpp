@@ -16,7 +16,7 @@ void TA_PauseMenu::load(TA_Links links) {
     inventoryMenu.setReplace(true);
 
     frameSprite.load("hud/pause_menu_frame.png");
-    frameSprite.setPosition(static_cast<double>(TA::screenWidth - frameSprite.getWidth()) / 2, 29);
+    frameSprite.setPosition(static_cast<double>(TA::screenWidth - frameSprite.getWidth()) / 2, static_cast<double>(TA::screenHeight - frameSprite.getHeight()) / 2);
 
     reset();
 }
@@ -153,9 +153,12 @@ void TA_PauseMenu::SwitchMenu::processControllerInput() {
 }
 
 void TA_PauseMenu::SwitchMenu::processTouchInput() {
+    const double startX = (static_cast<double>(TA::screenWidth) / 2) - 64;
+    const double startY = static_cast<double>(TA::screenHeight - 144) / 2;
+
     for(int pos = 0; pos < 3; pos++) {
         menuButtons.at(pos).setPosition(
-            {(static_cast<double>(TA::screenWidth) / 2) - 62, static_cast<double>(63 + (17 * pos))});
+            {(static_cast<double>(TA::screenWidth) / 2) - 62, startY + static_cast<double>(63 + (17 * pos))});
         menuButtons.at(pos).update();
         if(menuButtons.at(pos).isReleased()) {
             selection = pos;
@@ -165,10 +168,8 @@ void TA_PauseMenu::SwitchMenu::processTouchInput() {
     }
 
     const std::string itemPositionKey = (links.seaFox == nullptr ? "item_position" : "seafox_item_position");
-    const double startX = (static_cast<double>(TA::screenWidth) / 2) - 64;
-
     for(int pos = 0; pos < 4; pos += 1) {
-        itemButtons.at(pos).setPosition({startX + (pos * 32), 36});
+        itemButtons.at(pos).setPosition({startX + (pos * 32), startY + 36});
         itemButtons.at(pos).update();
         if(itemButtons.at(pos).isJustPressed()) {
             switchSound.play();
@@ -204,34 +205,33 @@ void TA_PauseMenu::SwitchMenu::setAlpha(int alpha) {
 }
 
 void TA_PauseMenu::SwitchMenu::draw() {
-    {
-        const double startX = (static_cast<double>(TA::screenWidth) / 2) - 56;
+    const double startX = (static_cast<double>(TA::screenWidth) / 2) - 56;
+    const double startY = static_cast<double>(TA::screenHeight - 144) / 2;
 
-        for(int num = 0; num < 4; num++) {
-            const std::string itemKey =
-                (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
-            int item = static_cast<int>(TA::save::getSaveParameter(itemKey));
-            if(item == -1) {
-                item = 38;
-            }
-
-            itemSprite.setPosition(startX + (num * 32), 38);
-            itemSprite.setFrame(item);
-            itemSprite.draw();
+    for(int num = 0; num < 4; num++) {
+        const std::string itemKey =
+            (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
+        int item = static_cast<int>(TA::save::getSaveParameter(itemKey));
+        if(item == -1) {
+            item = 38;
         }
 
-        pointerSprite.setPosition(startX + (itemPosition * 32) - 1, 36);
-        pointerSprite.draw();
+        itemSprite.setPosition(startX + (num * 32), startY + 38);
+        itemSprite.setFrame(item);
+        itemSprite.draw();
     }
+
+    pointerSprite.setPosition(startX + (itemPosition * 32) - 1, startY + 36);
+    pointerSprite.draw();
 
     const std::array<std::string, 3> menu{"continue", "replace item", "quit to map"};
 
     const bool touchscreen = links.controller->isTouchscreen();
     for(int pos = 0; pos < menu.size(); pos += 1) {
         if((!touchscreen && selection == pos) || (touchscreen && menuButtons.at(pos).isPressed())) {
-            drawHighlight(60 + (17 * pos));
+            drawHighlight(startY + 60 + (17 * pos));
         }
-        font.drawTextCentered(63 + (17 * pos), menu.at(pos), {-1, 0});
+        font.drawTextCentered(startY + 63 + (17 * pos), menu.at(pos), {-1, 0});
     }
 }
 

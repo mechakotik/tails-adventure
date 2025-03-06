@@ -34,6 +34,7 @@ private:
     void setInventoryItem(int slot, int value);
     std::string getParameterName(int slot);
     int getLeftX() { return TA::screenWidth / 2 - 80; }
+    int getTopY() { return (TA::screenHeight - 144) / 2; }
     bool characterHasItem(int item);
     bool canPlaceItem(int item);
     void placeItem(int slot, int item);

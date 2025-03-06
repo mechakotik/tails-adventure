@@ -3,11 +3,12 @@
 
 void TA_InGameMap::load() {
     double xOffset = (TA::screenWidth - 256) / 2;
+    double yOffset = (TA::screenHeight - 144) / 2;
     tilemap.load("worldmap/map.tmx");
-    tilemap.setPosition({xOffset, 0});
+    tilemap.setPosition({xOffset, yOffset});
 
     namePlateSprite.load("worldmap/name_plate.png");
-    namePlateSprite.setPosition(16, 120);
+    namePlateSprite.setPosition(16, TA::screenHeight - 24);
 
     font.load("fonts/area.png", 8, 8);
     font.setMapping("abcdefghijklmnopqrstuvwxyz '.12");
@@ -16,8 +17,8 @@ void TA_InGameMap::load() {
         dolphinSprites[pos].loadFromToml("worldmap/dolphin.toml");
     }
 
-    dolphinSprites[0].setPosition(76 + xOffset, 24);
-    dolphinSprites[1].setPosition(172 + xOffset, 48);
+    dolphinSprites[0].setPosition(76 + xOffset, yOffset + 24);
+    dolphinSprites[1].setPosition(172 + xOffset, yOffset + 48);
 }
 
 void TA_InGameMap::draw() {
@@ -29,8 +30,9 @@ void TA_InGameMap::draw() {
 }
 
 void TA_InGameMap::drawBackground() {
+    double yOffset = (TA::screenHeight - 144) / 2;
     TA::drawScreenRect(17, 136, 221, 255);
-    TA::drawRect({0, 0}, {static_cast<double>(TA::screenWidth), 9}, 187, 238, 238, 255);
+    TA::drawRect({0, 0}, {static_cast<double>(TA::screenWidth), yOffset + 9}, 187, 238, 238, 255);
 }
 
 void TA_InGameMap::drawSelectionName(std::string name) {

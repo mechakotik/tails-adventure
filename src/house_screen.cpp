@@ -60,10 +60,11 @@ TA_ScreenState TA_HouseScreen::update() {
 
 void TA_HouseScreen::updatePositions() {
     double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
-    interfaceSprite.setPosition(leftX, 0);
-    houseSprite.setPosition(leftX + 8, 32);
-    houseSeaFoxSprite.setPosition(leftX + 8, 32);
-    curtainSprite.setPosition(leftX + 8, 32);
+    double topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
+    interfaceSprite.setPosition(leftX, topY);
+    houseSprite.setPosition(leftX + 8, topY + 32);
+    houseSeaFoxSprite.setPosition(leftX + 8, topY + 32);
+    curtainSprite.setPosition(leftX + 8, topY + 32);
 
     if(clawDirection) {
         clawX += TA::elapsedTime;
@@ -79,8 +80,8 @@ void TA_HouseScreen::updatePositions() {
         }
     }
 
-    clawSprite.setPosition(leftX + clawX, 32);
-    seaFoxSprite.setPosition(leftX + 65, 45);
+    clawSprite.setPosition(leftX + clawX, topY + 32);
+    seaFoxSprite.setPosition(leftX + 65, topY + 45);
 }
 
 void TA_HouseScreen::updateSelector() {
@@ -107,8 +108,9 @@ void TA_HouseScreen::updateSelectorController() {
 
 void TA_HouseScreen::updateSelectorTouch() {
     double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
+    double topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
     for(int pos = 0; pos < 4; pos++) {
-        buttons[pos].setPosition({leftX + 31 + 23 * pos, 0});
+        buttons[pos].setPosition({leftX + 31 + 23 * pos, topY});
         buttons[pos].update();
         if(buttons[pos].isReleased() && !inventoryOpen) {
             selection = pos;
@@ -202,6 +204,7 @@ void TA_HouseScreen::draw() {
 
 void TA_HouseScreen::drawSelector() {
     double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
+    double topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
     bool touchscreen = controller.isTouchscreen();
 
     for(int pos = 0; pos < 4; pos++) {
@@ -222,7 +225,7 @@ void TA_HouseScreen::drawSelector() {
             frame += 5;
         }
 
-        selectorSprite.setPosition(leftX + 37 + pos * 23, 10);
+        selectorSprite.setPosition(leftX + 37 + pos * 23, topY + 10);
         selectorSprite.setFrame(frame);
         selectorSprite.draw();
     }

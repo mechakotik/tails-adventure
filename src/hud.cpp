@@ -219,8 +219,9 @@ void TA_Hud::drawFlightBar() {
     }
 
     int offset = 8 + std::min(24, int(24 * flightTime));
-    flightBarSprite.setPosition(flightBarX, flightBarY);
+    int topY = (TA::screenHeight - 144) / 2;
+    flightBarSprite.setPosition(flightBarX, topY + flightBarY);
     flightBarSprite.drawFrom({8, 0, 8, offset});
-    flightBarSprite.setPosition(flightBarX, flightBarY + offset);
+    flightBarSprite.setPosition(flightBarX, topY + flightBarY + offset);
     flightBarSprite.drawFrom({0, offset, 8, 40 - offset});
 }
