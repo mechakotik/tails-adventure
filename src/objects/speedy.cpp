@@ -10,7 +10,7 @@ void TA_Speedy::load() {
     double leftX = 256 - static_cast<double>(TA::screenWidth) / 2;
     objectSet->spawnObject<TA_Transition>(TA_Point(leftX, 3888), TA_Point(leftX + 2, 4016), "maps/pm/pm3");
 
-    objectSet->getLinks().camera->setLockPosition({leftX, 112});
+    objectSet->getLinks().camera->setLockPosition({leftX, 112 - (TA::screenHeight - 144)});
     objectSet->getLinks().camera->forceLockX();
 
     if(isComplete()) {
@@ -236,7 +236,7 @@ void TA_Speedy::updateEndSequence() {
 
 void TA_Speedy::updateEndSequencePhase0() {
     cpPosition.y -= TA::elapsedTime;
-    double needY = objectSet->getLinks().camera->getPosition().y + 48;
+    double needY = objectSet->getLinks().camera->getPosition().y + 48 + (TA::screenHeight - 144);
 
     if(cpPosition.y < needY) {
         endSequencePhase = 1;
@@ -260,7 +260,7 @@ void TA_Speedy::updateEndSequencePhase1() {
 }
 
 void TA_Speedy::updateEndSequencePhase2() {
-    double needY = objectSet->getLinks().camera->getPosition().y + 89;
+    double needY = objectSet->getLinks().camera->getPosition().y + 89 + (TA::screenHeight - 144);
 
     cpPosition.y += TA::elapsedTime;
     if(cpPosition.y > needY) {

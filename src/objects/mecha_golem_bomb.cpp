@@ -12,7 +12,7 @@ bool TA_MechaGolemBomb::update() {
     position.y += speed * TA::elapsedTime;
     updatePosition();
 
-    if(position.y >= 80) {
+    if(position.y >= 128) {
         objectSet->spawnObject<TA_Explosion>(position + TA_Point(0, 16));
         return false;
     }

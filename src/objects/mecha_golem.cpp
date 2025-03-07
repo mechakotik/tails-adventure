@@ -35,8 +35,8 @@ void TA_MechaGolem::load() {
     smallExplosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX3);
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
-    position = {double(128 + TA::screenWidth - 61), 112};
-    objectSet->getLinks().camera->setLockPosition({128, 0});
+    position = {double(128 + TA::screenWidth - 61), 160};
+    objectSet->getLinks().camera->setLockPosition({128, 192 - TA::screenHeight});
     hitboxVector.assign(HITBOX_MAX, HitboxVectorElement());
 }
 
@@ -420,8 +420,8 @@ void TA_MechaGolem::updateFall() {
     speed += gravity * TA::elapsedTime;
     position.y += speed * TA::elapsedTime;
 
-    if(position.y >= 123) {
-        position.y = 123;
+    if(position.y >= 171) {
+        position.y = 171;
         state = STATE_DEFEATED;
         headSprite.setAnimation("defeated");
 
@@ -481,9 +481,12 @@ void TA_MechaGolem::updateDamage() {
 
 void TA_MechaGolem::updateHitboxes() {
     // TODO: add hitbox to block bombs from back
-    hitboxVector[HITBOX_WALL_LEFT].hitbox.setRectangle(TA_Point(112, 0), TA_Point(128, 112));
+    hitboxVector[HITBOX_WALL_TOP].hitbox.setRectangle(
+        TA_Point(0, 208 - TA::screenHeight), TA_Point(512, 192 - TA::screenHeight));
+    hitboxVector[HITBOX_WALL_LEFT].hitbox.setRectangle(TA_Point(112, 0), TA_Point(128, 160));
     hitboxVector[HITBOX_WALL_RIGHT].hitbox.setRectangle(
-        TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 112));
+        TA_Point(128 + TA::screenWidth, 0), TA_Point(144 + TA::screenWidth, 160));
+    hitboxVector[HITBOX_WALL_TOP].collisionType = TA_COLLISION_SOLID;
     hitboxVector[HITBOX_WALL_LEFT].collisionType = hitboxVector[HITBOX_WALL_RIGHT].collisionType =
         (state == STATE_IDLE ? TA_COLLISION_TRANSPARENT : TA_COLLISION_SOLID);
 

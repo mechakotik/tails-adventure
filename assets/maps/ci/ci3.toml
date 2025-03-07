@@ -1,7 +1,7 @@
 [level]
 music = "sound/vt.vgm"
 spawn = [
-	{ x=42, y=73 }
+	{ x=42, y=121 }
 ]
 
 [objects.static]
