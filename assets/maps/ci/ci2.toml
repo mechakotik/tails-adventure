@@ -39,13 +39,13 @@ bridge = [
 	{ path="maps/vt/bridge.png", particle_path="maps/vt/rock.png", leftx=208, rightx=255, y=1568 }
 ]
 conveyor_belt = [
-	{ top=1232, bottom=1248, left=160, right=240, direction="right" },
-	{ top=1296, bottom=1312, left=112, right=176, direction="right" },
-	{ top=1312, bottom=1328, left=176, right=208, direction="right" },
-	{ top=1216, bottom=1232, left=336, right=384, direction="right" },
-	{ top=1264, bottom=1280, left=352, right=400, direction="left" },
-	{ top=1312, bottom=1328, left=336, right=384, direction="right" },
-	{ top=1360, bottom=1376, left=352, right=400, direction="left" }
+	{ top=1232, bottom=1248, left=160, right=240 },
+	{ top=1296, bottom=1312, left=112, right=176 },
+	{ top=1312, bottom=1328, left=176, right=208 },
+	{ top=1216, bottom=1232, left=336, right=384 },
+	{ top=1264, bottom=1280, left=352, right=400, flip=true },
+	{ top=1312, bottom=1328, left=336, right=384 },
+	{ top=1360, bottom=1376, left=352, right=400, flip=true }
 ]
 item_box = [
 	{ tile_x=8, tile_y=97, number=13, item_name=" napalm \n  bomb  " }

@@ -9,7 +9,7 @@ private:
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point topLeft, TA_Point bottomRight, bool direction);
+    void load(TA_Point topLeft, TA_Point bottomRight, bool flip);
     bool update() { return true; }
     int getCollisionType() { return collisionType; }
 };
