@@ -22,8 +22,8 @@ void TA_TitleScreen::init() {
 }
 
 TA_ScreenState TA_TitleScreen::update() {
-    backgroundSprite.setPosition(TA::screenWidth / 2 - backgroundSprite.getWidth() / 2, 0);
-    pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104);
+    backgroundSprite.setPosition((TA::screenWidth - backgroundSprite.getWidth()) / 2, (TA::screenHeight - backgroundSprite.getHeight()) / 2);
+    pressStartSprite.setPosition(TA::screenWidth / 2 - pressStartSprite.getWidth() / 2, 104 + (TA::screenHeight - backgroundSprite.getHeight()) / 2);
 
     TA::drawScreenRect(0, 0, 102, 255);
     backgroundSprite.draw();
