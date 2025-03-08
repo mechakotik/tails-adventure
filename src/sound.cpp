@@ -10,7 +10,7 @@ void TA::sound::playMusic(std::string filename, int repeat) {
 
 void TA::sound::update() {
     Mix_MasterVolume(TA::save::getParameter("main_volume") * 16);
-    Mix_VolumeMusic(TA::save::getParameter("music_volume") * 8);
+    Mix_VolumeMusic(TA::save::getParameter("main_volume") * TA::save::getParameter("music_volume"));
     Mix_Volume(TA_SOUND_CHANNEL_SFX1, TA::save::getParameter("sfx_volume") * 16);
     Mix_Volume(TA_SOUND_CHANNEL_SFX2, TA::save::getParameter("sfx_volume") * 16);
     Mix_Volume(TA_SOUND_CHANNEL_SFX3, TA::save::getParameter("sfx_volume") * 16);
