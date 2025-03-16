@@ -284,10 +284,7 @@ class TA_RumbleOption : public TA_Option {
 };
 
 void TA_OptionsSection::load() {
-    font.load("fonts/pause_menu.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+"); // TODO:
-                                                                          // generalize font
-                                                                          // mappings
+    font.loadFont("fonts/pause_menu.toml");
 
     options.resize(groups.size());
     options[0].push_back(std::make_unique<TA_ResolutionOption>());

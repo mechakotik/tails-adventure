@@ -9,13 +9,8 @@ void TA_DataSelectSection::load() {
     previewSprite.load("data_select/preview.png", 46, 46);
     optionsSprite.load("data_select/options.png");
 
-    font.load("fonts/pause_menu.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:");
-    splashFont.load("fonts/splash.png", 7, 9);
-    splashFont.setMapping(" !" + std::string{'"'} +
-                          "#$%&'()*+,-./"
-                          "0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[a]^_`"
-                          "abcdefghijklmnopqrstuvwxyz{|}~");
+    font.loadFont("fonts/pause_menu.toml");
+    splashFont.loadFont("fonts/splash.toml");
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX1);

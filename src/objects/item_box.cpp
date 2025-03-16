@@ -210,9 +210,7 @@ int TA_ItemBox::getDrawPriority() {
 }
 
 void TA_ItemLabel::load(TA_Point position, std::string name) {
-    font.load("fonts/item.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz XY.?-0123456789SABF");
-
+    font.loadFont("fonts/item.toml");
     position.x -= font.getTextWidth(name) / 2 - 8;
     this->position = position;
     this->name = name;

@@ -20,8 +20,7 @@ TA_Game::TA_Game() {
     TA::gamepad::init();
     TA::resmgr::preload();
 
-    font.load("fonts/pause_menu.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+");
+    font.loadFont("fonts/pause_menu.toml");
 
     startTime = std::chrono::high_resolution_clock::now();
     screenStateMachine.init();

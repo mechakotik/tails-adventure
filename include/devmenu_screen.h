@@ -18,10 +18,6 @@ private:
 
     std::vector<std::string> levels;
 
-    const std::string mapping =
-        " !" + std::string{'"'} +
-        "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[a]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-
 public:
     void init() override;
     TA_ScreenState update() override;

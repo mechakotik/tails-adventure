@@ -1,0 +1,6 @@
+[font]
+image = "devmenu.png"
+width = 7
+height = 9
+mapping = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[a]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+

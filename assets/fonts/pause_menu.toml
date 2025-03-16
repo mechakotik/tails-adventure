@@ -1,0 +1,6 @@
+[font]
+image = "pause_menu.png"
+width = 8
+height = 8
+mapping = "abcdefghijklmnopqrstuvwxyz AB.?-0123456789CDEF%:+"
+

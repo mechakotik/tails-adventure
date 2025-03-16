@@ -1,0 +1,6 @@
+[font]
+image = "area.png"
+width = 8
+height = 8
+mapping = "abcdefghijklmnopqrstuvwxyz '.12"
+

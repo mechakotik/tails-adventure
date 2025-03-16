@@ -12,8 +12,7 @@ void TA_InventoryMenu::load(TA_Controller* controller) {
     inventoryPointerSprite.load("house/pointer.png");
     arrowSprite.load("house/arrow.png", 8, 13);
 
-    font.load("fonts/item.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz AB.?-0123456789SABF");
+    font.loadFont("fonts/item.toml");
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);

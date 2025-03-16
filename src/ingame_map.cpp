@@ -10,8 +10,7 @@ void TA_InGameMap::load() {
     namePlateSprite.load("worldmap/name_plate.png");
     namePlateSprite.setPosition(16, TA::screenHeight - 24);
 
-    font.load("fonts/area.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz '.12");
+    font.loadFont("fonts/area.toml");
 
     for(int pos = 0; pos < 2; pos++) {
         dolphinSprites[pos].loadFromToml("worldmap/dolphin.toml");

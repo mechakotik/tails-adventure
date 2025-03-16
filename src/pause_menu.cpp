@@ -83,8 +83,7 @@ void TA_PauseMenu::draw() {
 void TA_PauseMenu::SwitchMenu::load(TA_Links links) {
     itemSprite.load("hud/items.png", 16, 16);
     pointerSprite.load("house/pointer.png");
-    font.load("fonts/pause_menu.png", 8, 8);
-    font.setMapping("abcdefghijklmnopqrstuvwxyz .*");
+    font.loadFont("fonts/pause_menu.toml");
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
