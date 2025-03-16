@@ -15,6 +15,7 @@ void TA_InGameMap::load() {
 
     for(int pos = 0; pos < 2; pos++) {
         dolphinSprites[pos].loadFromToml("worldmap/dolphin.toml");
+        dolphinSprites[pos].setAnimation("dolphin");
     }
 
     dolphinSprites[0].setPosition(76 + xOffset, yOffset + 24);
