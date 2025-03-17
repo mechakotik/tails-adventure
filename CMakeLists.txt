@@ -82,12 +82,17 @@ set(USE_GME_NSFE OFF)
 set(USE_GME_SAP OFF)
 set(USE_GME_SPC OFF)
 
+set(TMXPP_BASE64 OFF)
+set(TMXPP_ZSTD OFF)
+set(TMXPP_ZLIB OFF)
 set(TOML11_PRECOMPILE ON)
 
 add_subdirectory(external/SDL_image EXCLUDE_FROM_ALL)
 add_subdirectory(external/SDL_mixer EXCLUDE_FROM_ALL)
 add_subdirectory(external/tmxpp EXCLUDE_FROM_ALL)
 add_subdirectory(external/toml11 EXCLUDE_FROM_ALL)
+
+target_compile_options(toml11 PRIVATE -Wno-error)
 
 if(WIN32)
     enable_language("RC")

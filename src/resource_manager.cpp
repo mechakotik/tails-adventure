@@ -7,11 +7,11 @@
 
 namespace TA {
     namespace resmgr {
-        std::unordered_map<std::filesystem::path, SDL_Texture*> textureMap;
-        std::unordered_map<std::filesystem::path, Mix_Music*> musicMap;
-        std::unordered_map<std::filesystem::path, Mix_Chunk*> chunkMap;
-        std::unordered_map<std::filesystem::path, std::string> assetMap;
-        std::unordered_map<std::filesystem::path, toml::value> tomlMap;
+        std::unordered_map<std::string, SDL_Texture*> textureMap;
+        std::unordered_map<std::string, Mix_Music*> musicMap;
+        std::unordered_map<std::string, Mix_Chunk*> chunkMap;
+        std::unordered_map<std::string, std::string> assetMap;
+        std::unordered_map<std::string, toml::value> tomlMap;
 
         void preloadTextures();
         void preloadChunks();
@@ -48,11 +48,11 @@ SDL_Texture* TA::resmgr::loadTexture(std::filesystem::path path) {
     if(!textureMap.count(path)) {
         SDL_Surface* surface = IMG_Load(path.c_str());
         if(surface == nullptr) {
-            TA::handleSDLError("%s", "Failed to load image");
+            TA::handleSDLError("%s", "failed to load image");
         }
         SDL_Texture* texture = SDL_CreateTextureFromSurface(TA::renderer, surface);
         if(texture == nullptr) {
-            TA::handleSDLError("%s", "Failed to create texture from surface");
+            TA::handleSDLError("%s", "failed to create texture from surface");
         }
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
         SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
@@ -103,7 +103,7 @@ const toml::value& TA::resmgr::loadToml(std::filesystem::path path) {
         try {
             tomlMap[path] = toml::parse_str(TA::filesystem::readFile(path));
         } catch(std::exception& e) {
-            TA::handleError("Failed to load %s:\n%s", path, e.what());
+            TA::handleError("failed to load %s\n%s", path.c_str(), e.what());
         }
     }
     return tomlMap[path];

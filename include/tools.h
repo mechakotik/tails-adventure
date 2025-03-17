@@ -19,7 +19,7 @@ namespace TA {
     extern int screenWidth, screenHeight, scaleFactor;
     extern double elapsedTime;
 
-    constexpr double pi = atan(double(1)) * 4;
+    constexpr double pi = 3.14159265358979323846;
 
     extern std::string levelPath, previousLevelPath;
     extern std::set<std::string> arguments;

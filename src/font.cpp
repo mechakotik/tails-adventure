@@ -24,7 +24,7 @@ void TA_Font::tryLoadFont(const std::filesystem::path& path) {
 
 std::string TA_Font::getUtf8Char(const std::string& text, int pos) {
     if(pos >= text.size()) {
-        TA::handleError("UTF8 symbol position out of range (text = %s, pos = %i)", text, pos);
+        TA::handleError("UTF8 symbol position out of range (text = %s, pos = %i)", text.c_str(), pos);
     }
 
     unsigned char firstByte = static_cast<unsigned char>(text[pos]);
@@ -45,7 +45,7 @@ std::string TA_Font::getUtf8Char(const std::string& text, int pos) {
     }
 
     if(pos + charLength > text.size()) {
-        TA::handleError("UTF8 symbol length out of range (text = %s, pos = %i, length = %i", text, pos, charLength);
+        TA::handleError("UTF8 symbol length out of range (text = %s, pos = %i, length = %i", text.c_str(), pos, charLength);
     }
     return text.substr(pos, charLength);
 }

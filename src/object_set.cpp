@@ -65,7 +65,7 @@ void TA_ObjectSet::load(std::string filename) {
     try {
         tryLoad(filename);
     } catch(std::exception& e) {
-        TA::handleError("%s load failed\n%s", filename, e.what());
+        TA::handleError("%s load failed\n%s", filename.c_str(), e.what());
     }
 }
 
@@ -300,7 +300,7 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else {
-        TA::handleError("Unknown object %s", name.c_str());
+        TA::handleError("unknown object %s", name.c_str());
     }
 }
 

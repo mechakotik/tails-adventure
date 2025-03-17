@@ -17,7 +17,7 @@ namespace TA {
 
 void TA::save::addOptionsFromFile(std::filesystem::path path) {
     if(!TA::filesystem::fileExists(path)) {
-        TA::printWarning("Save file %s was not found, skipping", path.c_str());
+        TA::printWarning("save file %s was not found, skipping", path.c_str());
         return;
     }
 
@@ -65,7 +65,7 @@ std::string TA::save::getSaveFileName() {
 
 long long TA::save::getParameter(std::string name) {
     if(!saveMap.count(name)) {
-        TA::handleError("Unknown parameter %s", name.c_str());
+        TA::handleError("unknown parameter %s", name.c_str());
     }
     return saveMap[name];
 }

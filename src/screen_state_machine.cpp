@@ -73,7 +73,7 @@ bool TA_ScreenStateMachine::update() {
                 currentScreen = std::make_unique<TA_MainMenuScreen>();
                 break;
             default:
-                TA::handleError("%s", "Invalid new screen state");
+                TA::handleError("%s", "invalid new screen state");
                 break;
         }
 

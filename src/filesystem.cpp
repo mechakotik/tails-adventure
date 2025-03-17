@@ -17,7 +17,7 @@ bool TA::filesystem::fileExists(std::filesystem::path path) {
     }
 
     if(!SDL_CloseIO(file)) {
-        TA::handleSDLError("Close %s after checking existence failed", path.c_str());
+        TA::handleSDLError("close %s after checking existence failed", path.c_str());
     }
     return true;
 }
@@ -25,7 +25,7 @@ bool TA::filesystem::fileExists(std::filesystem::path path) {
 std::string TA::filesystem::readFile(std::filesystem::path path) {
     SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "rb");
     if(file == nullptr) {
-        TA::handleSDLError("Open %s for read failed", path.c_str());
+        TA::handleSDLError("open %s for read failed", path.c_str());
     }
 
     size_t dataBytes = SDL_SeekIO(file, 0, SDL_IO_SEEK_END);
@@ -40,7 +40,7 @@ std::string TA::filesystem::readFile(std::filesystem::path path) {
     delete[] data;
 
     if(!SDL_CloseIO(file)) {
-        TA::handleSDLError("Close %s after reading failed", path.c_str());
+        TA::handleSDLError("close %s after reading failed", path.c_str());
     }
     return str;
 }
@@ -51,7 +51,7 @@ std::string TA::filesystem::readAsset(std::filesystem::path path) {
 
 std::filesystem::path TA::filesystem::getAssetsPath() {
 #ifdef __ANDROID__
-    return ".";
+    return "";
 #elifdef TA_UNIX_INSTALL
     return "/usr/share/tails-adventure";
 #else
@@ -76,7 +76,7 @@ std::filesystem::path TA::filesystem::getExecutableDirectory() {
 void TA::filesystem::writeFile(std::filesystem::path path, std::string value) {
     SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "wb");
     if(file == nullptr) {
-        TA::handleSDLError("Open %s for write failed", path.c_str());
+        TA::handleSDLError("open %s for write failed", path.c_str());
     }
 
     for(int pos = 0; pos < (int)value.size(); pos++) {
@@ -84,6 +84,6 @@ void TA::filesystem::writeFile(std::filesystem::path path, std::string value) {
     }
 
     if(!SDL_CloseIO(file)) {
-        TA::handleSDLError("Close %s after writing failed", path.c_str());
+        TA::handleSDLError("close %s after writing failed", path.c_str());
     }
 }

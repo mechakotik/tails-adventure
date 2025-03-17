@@ -47,12 +47,12 @@ void TA_Game::initSDL() {
 void TA_Game::createWindow() {
     TA::window = SDL_CreateWindow("Tails Adventure", defaultWindowWidth, defaultWindowHeight, SDL_WINDOW_FULLSCREEN);
     if(TA::window == nullptr) {
-        TA::handleSDLError("%s", "Failed to create window");
+        TA::handleSDLError("%s", "failed to create window");
     }
 
     TA::renderer = SDL_CreateRenderer(TA::window, NULL);
     if(TA::renderer == nullptr) {
-        TA::handleSDLError("%s", "Failed to create renderer");
+        TA::handleSDLError("%s", "failed to create renderer");
     }
 
     updateWindowSize();

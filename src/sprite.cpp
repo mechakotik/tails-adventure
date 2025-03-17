@@ -56,7 +56,7 @@ void TA_Sprite::loadFromToml(std::filesystem::path path) {
     try {
         tryLoadFromToml(path);
     } catch(std::exception& e) {
-        TA::handleError("Failed to load %s:\n%s", path, e.what());
+        TA::handleError("failed to load %s:\n%s", path.c_str(), e.what());
     }
 }
 
@@ -186,7 +186,7 @@ void TA_Sprite::setAnimation(std::string name) {
         setAnimation(loadedAnimations[name]);
         animationName = name;
     } else {
-        TA::printWarning("Unknown animation %s", name.c_str());
+        TA::printWarning("unknown animation %s", name.c_str());
     }
 }
 

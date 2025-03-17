@@ -13,7 +13,7 @@ void TA_Tilemap::load(std::string filename) {
     try {
         map.parseFromData(TA::resmgr::loadAsset(filename));
     } catch(std::exception& e) {
-        TA::handleError("Failed to load %s: %s", filename, e.what());
+        TA::handleError("failed to load %s: %s", filename.c_str(), e.what());
     }
 
     width = map.width();
@@ -23,10 +23,10 @@ void TA_Tilemap::load(std::string filename) {
     tileHeight = map.tileHeight();
 
     if(map.tilesets().size() != 1) {
-        TA::handleError("Failed to load %s: multiple tilesets are not supported", filename);
+        TA::handleError("failed to load %s: multiple tilesets are not supported", filename.c_str());
     }
     if(map.tilesets()[0].source() != "") {
-        TA::handleError("Failed to load %s: external tilesets are not supported", filename);
+        TA::handleError("failed to load %s: external tilesets are not supported", filename.c_str());
     }
 
     tilemap.resize(layerCount);
@@ -81,13 +81,11 @@ void TA_Tilemap::loadTileset(const tmx::Tileset& tiles) {
             continue;
         }
         if(tile.objectGroup().objects().size() > 1) {
-            TA::printWarning(
-                "Multiple objects in tile are not supported, using the first "
-                "object");
+            TA::printWarning("%s", "multiple objects in tile are not supported, using the first object");
         }
         tmx::Object object = tile.objectGroup().objects()[0];
         if(object.type() != tmx::Object::Type::POLYGON) {
-            TA::printWarning("Object shape is not polygon, ignoring it");
+            TA::printWarning("%s", "object shape is not polygon, ignoring it");
             continue;
         }
 
@@ -117,7 +115,7 @@ void TA_Tilemap::loadTileset(const tmx::Tileset& tiles) {
 
 void TA_Tilemap::loadLayer(int id, const tmx::Layer& layer) {
     if(layer.type() != tmx::Layer::Type::TILE) {
-        TA::printWarning("Layer is not tile layer, ignoring it");
+        TA::printWarning("%s", "layer is not tile layer, ignoring it");
         return;
     }
     for(int x = 0; x < width; x++) {
