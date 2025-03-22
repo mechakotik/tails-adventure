@@ -18,7 +18,7 @@ TA_Game::TA_Game() {
     createWindow();
     TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
     TA::gamepad::init();
-    TA::resmgr::preload();
+    TA::resmgr::load();
 
     font.loadFont("fonts/pause_menu.toml");
 

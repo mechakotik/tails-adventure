@@ -8,7 +8,7 @@
 
 namespace TA {
     namespace resmgr {
-        void preload();
+        void load();
         SDL_Texture* loadTexture(std::filesystem::path path);
         Mix_Music* loadMusic(std::filesystem::path path);
         Mix_Chunk* loadChunk(std::filesystem::path path);
