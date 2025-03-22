@@ -1,4 +1,5 @@
 #include "inventory_menu.h"
+#include "resource_manager.h"
 #include "controller.h"
 #include "save.h"
 #include "sound.h"
@@ -36,41 +37,41 @@ void TA_InventoryMenu::loadOnscreenButtons() {
 
 void TA_InventoryMenu::fillItemMatrix() {
     if(TA::save::getSaveParameter("seafox") == 1) {
-        items[0][0] = {.number = 4, .name = "vulcan gun"};
-        items[0][1] = {.number = 22, .name = "anti-air missile"};
-        items[1][0] = {.number = 12, .name = "proton torpedo"};
-        items[1][1] = {.number = 23, .name = "spark"};
-        items[2][0] = {.number = 20, .name = "extra speed"};
-        items[2][1] = {.number = 24, .name = "mine"};
-        items[3][0] = {.number = 21, .name = "extra armor"};
-        items[3][1] = {.number = 25, .name = "rocket booster"};
+        items[0][0] = {.number = 4, .name = getItemString("vulcan_gun")};
+        items[0][1] = {.number = 22, .name = getItemString("anti_air_missile")};
+        items[1][0] = {.number = 12, .name = getItemString("proton_torpedo")};
+        items[1][1] = {.number = 23, .name = getItemString("spark")};
+        items[2][0] = {.number = 20, .name = getItemString("extra_speed")};
+        items[2][1] = {.number = 24, .name = getItemString("mine")};
+        items[3][0] = {.number = 21, .name = getItemString("extra_armor")};
+        items[3][1] = {.number = 25, .name = getItemString("rocket_booster")};
     }
 
     else {
-        items[0][0] = {.number = 0, .name = "regular bomb"};
-        items[0][1] = {.number = 14, .name = "triple bomb"};
-        items[1][0] = {.number = 1, .name = "large bomb"};
-        items[1][1] = {.number = 15, .name = "wrench"};
-        items[2][0] = {.number = 2, .name = "remote bomb"};
-        items[2][1] = {.number = 16, .name = "helmet"};
-        items[3][0] = {.number = 13, .name = "napalm bomb"};
-        items[3][1] = {.number = 6, .name = "remote robot"};
-        items[4][0] = {.number = 19, .name = "hammer"};
-        items[4][1] = {.number = 8, .name = "super glove"};
-        items[5][0] = {.number = 3, .name = "teleport device"};
-        items[5][1] = {.number = 9, .name = "fang"};
-        items[6][0] = {.number = 5, .name = "night vision"};
-        items[6][1] = {.number = 10, .name = "knuckles"};
-        items[7][0] = {.number = 7, .name = "speed boots"};
-        items[7][1] = {.number = 11, .name = "sonic"};
-        items[8][0] = {.number = 17, .name = "item radar"};
-        items[8][1] = {.number = 33, .name = "purple c.emerald"};
-        items[9][0] = {.number = 18, .name = "radio"};
-        items[9][1] = {.number = 31, .name = "red c.emerald"};
-        items[10][0] = {.number = 32, .name = "blue c.emerald"};
-        items[10][1] = {.number = 30, .name = "white c.emerald"};
-        items[11][0] = {.number = 29, .name = "green c.emerald"};
-        items[11][1] = {.number = 34, .name = "yellow c.emerald"};
+        items[0][0] = {.number = 0, .name = getItemString("regular_bomb")};
+        items[0][1] = {.number = 14, .name = getItemString("triple_bomb")};
+        items[1][0] = {.number = 1, .name = getItemString("large_bomb")};
+        items[1][1] = {.number = 15, .name = getItemString("wrench")};
+        items[2][0] = {.number = 2, .name = getItemString("remote_bomb")};
+        items[2][1] = {.number = 16, .name = getItemString("helmet")};
+        items[3][0] = {.number = 13, .name = getItemString("napalm_bomb")};
+        items[3][1] = {.number = 6, .name = getItemString("remote_robot")};
+        items[4][0] = {.number = 19, .name = getItemString("hammer")};
+        items[4][1] = {.number = 8, .name = getItemString("super_glove")};
+        items[5][0] = {.number = 3, .name = getItemString("teleport_device")};
+        items[5][1] = {.number = 9, .name = getItemString("fang")};
+        items[6][0] = {.number = 5, .name = getItemString("night_vision")};
+        items[6][1] = {.number = 10, .name = getItemString("knuckles")};
+        items[7][0] = {.number = 7, .name = getItemString("speed_boots")};
+        items[7][1] = {.number = 11, .name = getItemString("sonic")};
+        items[8][0] = {.number = 17, .name = getItemString("item_radar")};
+        items[8][1] = {.number = 33, .name = getItemString("purple_emerald")};
+        items[9][0] = {.number = 18, .name = getItemString("radio")};
+        items[9][1] = {.number = 31, .name = getItemString("red_emerald")};
+        items[10][0] = {.number = 32, .name = getItemString("blue_emerald")};
+        items[10][1] = {.number = 30, .name = getItemString("white_emerald")};
+        items[11][0] = {.number = 29, .name = getItemString("green_emerald")};
+        items[11][1] = {.number = 34, .name = getItemString("yellow_emerald")};
     }
 
     for(int x = 0; x < 12; x++) {
@@ -78,6 +79,12 @@ void TA_InventoryMenu::fillItemMatrix() {
             itemName[items[x][y].number] = items[x][y].name;
         }
     }
+
+    replaceText = TA::resmgr::loadToml("hud/pause_menu_strings.toml").at("replace").as_string();
+}
+
+std::string TA_InventoryMenu::getItemString(const std::string& name) {
+    return TA::resmgr::loadToml("house/item_strings.toml").at(name).as_string();
 }
 
 bool TA_InventoryMenu::update() {
@@ -504,7 +511,7 @@ void TA_InventoryMenu::drawArrows() {
 }
 
 void TA_InventoryMenu::drawSlotNumber() {
-    std::string text = "replace " + std::to_string(selectionSlot + 1);
+    std::string text = replaceText + " " + std::to_string(selectionSlot + 1);
     font.drawTextCentered(getTopY() + 91, text);
 }
 

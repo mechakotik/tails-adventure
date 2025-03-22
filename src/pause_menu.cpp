@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <string>
 #include "SDL3/SDL_rect.h"
+#include "resource_manager.h"
 #include "controller.h"
 #include "links.h"
 #include "save.h"
@@ -95,6 +96,11 @@ void TA_PauseMenu::SwitchMenu::load(TA_Links links) {
     for(size_t pos = 0; pos < 3; pos += 1) {
         menuButtons.at(pos).setRectangle({0, 0}, {125, 17});
     }
+
+    toml::value table = TA::resmgr::loadToml("hud/pause_menu_strings.toml");
+    menu[0] = table.at("continue").as_string();
+    menu[1] = table.at("replace_item").as_string();
+    menu[2] = table.at("quit_to_map").as_string();
 
     this->links = links;
     reset();
@@ -222,8 +228,6 @@ void TA_PauseMenu::SwitchMenu::draw() {
 
     pointerSprite.setPosition(startX + (itemPosition * 32) - 1, startY + 36);
     pointerSprite.draw();
-
-    const std::array<std::string, 3> menu{"continue", "replace item", "quit to map"};
 
     const bool touchscreen = links.controller->isTouchscreen();
     for(int pos = 0; pos < menu.size(); pos += 1) {

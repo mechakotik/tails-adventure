@@ -1,10 +1,17 @@
 #include "options_section.h"
+#include "resource_manager.h"
 #include "SDL3/SDL.h"
 #include "save.h"
 
+namespace {
+    std::string getOptionString(const std::string& name) {
+        return TA::resmgr::loadToml("data_select/options_strings.toml").at(name).as_string();
+    }
+}
+
 class TA_ResolutionOption : public TA_Option {
 public:
-    std::string getName() override { return "resolution"; }
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("base_height");
@@ -17,11 +24,14 @@ public:
         TA::save::setParameter("base_height", value);
         return TA_MOVE_SOUND_SWITCH;
     }
+
+private:
+    std::string name = getOptionString("resolution");
 };
 
 class TA_WindowSizeOption : public TA_Option {
 public:
-    std::string getName() override { return "window size"; }
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int factor = TA::save::getParameter("window_size");
@@ -45,11 +55,14 @@ public:
         TA::save::setParameter("window_size", factor);
         return result;
     }
+
+private:
+    std::string name = getOptionString("window_size");
 };
 
 class TA_PixelAROption : public TA_Option {
 public:
-    std::string getName() override { return "pixel ar"; }
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("pixel_ar");
@@ -62,21 +75,24 @@ public:
         TA::save::setParameter("pixel_ar", value);
         return TA_MOVE_SOUND_SWITCH;
     }
+
+private:
+    std::string name = getOptionString("pixel_ar");
 };
 
 class TA_VSyncOption : public TA_Option {
 public:
-    std::string getName() override { return "v-sync"; }
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("vsync");
         switch(value) {
             case 0:
-                return "off";
+                return off;
             case 1:
-                return "on";
+                return on;
             case 2:
-                return "adapt";
+                return adapt;
             default:
                 return "";
         }
@@ -89,11 +105,17 @@ public:
         SDL_SetRenderVSync(TA::renderer, (value == 2 ? -1 : value));
         return TA_MOVE_SOUND_SWITCH;
     }
+
+private:
+    std::string name = getOptionString("vsync");
+    std::string on = getOptionString("on");
+    std::string off = getOptionString("off");
+    std::string adapt = getOptionString("vsync_adapt");
 };
 
 class TA_ScaleModeOption : public TA_Option {
 public:
-    std::string getName() override { return "scale mode"; }
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("scale_mode");
@@ -106,6 +128,9 @@ public:
         TA::save::setParameter("scale_mode", value);
         return TA_MOVE_SOUND_SWITCH;
     }
+
+private:
+    std::string name = getOptionString("scale_mode");
 };
 
 class TA_VolumeOption : public TA_Option {
@@ -152,14 +177,8 @@ public:
 };
 
 class TA_MapKeyboardOption : public TA_Option {
-private:
-    const std::array<std::string, 9> buttons{"up", "down", "left", "right", "a", "b", "lb", "rb", "start"};
-
-    bool locked = false;
-    int button = 0;
-
 public:
-    std::string getName() override { return "map keyboard"; }
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         if(!locked) {
@@ -195,17 +214,18 @@ public:
 
         return TA_MOVE_SOUND_EMPTY;
     }
+
+private:
+    const std::array<std::string, 9> buttons{"up", "down", "left", "right", "a", "b", "lb", "rb", "start"};
+
+    std::string name = getOptionString("map_keyboard");
+    bool locked = false;
+    int button = 0;
 };
 
 class TA_MapGamepadOption : public TA_Option {
-private:
-    const std::array<std::string, 5> buttons{"a", "b", "lb", "rb", "start"};
-
-    bool locked = false;
-    int button = 0;
-
 public:
-    std::string getName() override { return "map gamepad"; }
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         if(!locked) {
@@ -238,14 +258,22 @@ public:
 
         return TA_MOVE_SOUND_EMPTY;
     }
+
+private:
+    const std::array<std::string, 5> buttons{"a", "b", "lb", "rb", "start"};
+
+    std::string name = getOptionString("map_gamepad");
+    bool locked = false;
+    int button = 0;
 };
 
 class TA_HideOnscreenOption : public TA_Option {
-    std::string getName() override { return "hide onscreen"; }
+public:
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("hide_onscreen");
-        return (value ? "on" : "off");
+        return (value ? on : off);
     }
 
     TA_MoveSoundId move(int delta) override {
@@ -254,14 +282,20 @@ class TA_HideOnscreenOption : public TA_Option {
         TA::save::setParameter("hide_onscreen", value);
         return TA_MOVE_SOUND_SWITCH;
     }
+
+private:
+    std::string name = getOptionString("hide_onscreen");
+    std::string on = getOptionString("on");
+    std::string off = getOptionString("off");
 };
 
 class TA_RumbleOption : public TA_Option {
-    std::string getName() override { return "rumble"; }
+public:
+    std::string getName() override { return name; }
 
     std::string getValue() override {
         int value = TA::save::getParameter("rumble");
-        return (value ? "on" : "off");
+        return (value ? on : off);
     }
 
     TA_MoveSoundId move(int delta) override {
@@ -270,6 +304,11 @@ class TA_RumbleOption : public TA_Option {
         TA::save::setParameter("rumble", value);
         return TA_MOVE_SOUND_SWITCH;
     }
+
+private:
+    std::string name = getOptionString("rumble");
+    std::string on = getOptionString("on");
+    std::string off = getOptionString("off");
 };
 
 void TA_OptionsSection::load() {
@@ -291,9 +330,9 @@ void TA_OptionsSection::load() {
 #endif
     options[1].push_back(std::make_unique<TA_RumbleOption>());
 
-    options[2].push_back(std::make_unique<TA_VolumeOption>("main", "main_volume"));
-    options[2].push_back(std::make_unique<TA_VolumeOption>("music", "music_volume"));
-    options[2].push_back(std::make_unique<TA_VolumeOption>("sfx", "sfx_volume"));
+    options[2].push_back(std::make_unique<TA_VolumeOption>(getOptionString("main"), "main_volume"));
+    options[2].push_back(std::make_unique<TA_VolumeOption>(getOptionString("music"), "music_volume"));
+    options[2].push_back(std::make_unique<TA_VolumeOption>(getOptionString("sfx"), "sfx_volume"));
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);

@@ -1,0 +1,24 @@
+video = "video"
+controls = "controls"
+sound = "sound"
+on = "on"
+off = "off"
+
+resolution = "resolution"
+pixel_ar = "pixel ar"
+scale_mode = "scale mode"
+scale_mode_smooth = "smooth"
+scale_mode_sharp = "sharp"
+vsync = "v-sync"
+vsync_adapt = "adapt"
+window_size = "window size"
+
+map_keyboard = "map keyboard"
+map_gamepad = "map gamepad"
+rumble = "rumble"
+hide_onscreen = "hide onscreen"
+
+main = "main"
+music = "music"
+sfx = "sfx"
+

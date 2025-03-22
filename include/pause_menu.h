@@ -36,11 +36,13 @@ private:
 
         TA_InventoryMenu inventoryMenu;
         TA_Sprite itemSprite, pointerSprite;
-        TA_Links links;
-        std::array<TA_OnscreenButton, 4> itemButtons;
-        std::array<TA_OnscreenButton, 3> menuButtons;
         TA_Font font;
         TA_Sound switchSound, selectSound, pauseSound;
+        TA_Links links;
+
+        std::array<std::string, 3> menu;
+        std::array<TA_OnscreenButton, 4> itemButtons;
+        std::array<TA_OnscreenButton, 3> menuButtons;
 
         UpdateResult result = UpdateResult::CONTINUE;
         int selection = 0, itemPosition = 0;

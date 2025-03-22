@@ -15,6 +15,7 @@ private:
 
     void fillItemMatrix();
     void loadOnscreenButtons();
+    static std::string getItemString(const std::string& name);
 
     bool updateSlotSelection();
     bool updateItemSelection();
@@ -46,6 +47,7 @@ private:
 
     std::array<std::array<Item, 2>, 12> items;
     std::map<int, std::string> itemName;
+    std::string replaceText;
 
     TA_Controller* controller;
     TA_Sprite itemSprite, pointerSprite, arrowSprite;
