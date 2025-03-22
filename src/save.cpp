@@ -9,10 +9,16 @@
 namespace TA {
     namespace save {
         void addOptionsFromFile(std::filesystem::path path);
-        std::string getSaveFileName();
+        std::filesystem::path getSaveFileName();
         std::map<std::string, long long> saveMap;
         std::string currentSave = "";
     }
+}
+
+void TA::save::load() {
+    std::string defaultConfigPath = TA::filesystem::getAssetsPath() / "default_config";
+    addOptionsFromFile(defaultConfigPath);
+    addOptionsFromFile(getSaveFileName());
 }
 
 void TA::save::addOptionsFromFile(std::filesystem::path path) {
@@ -32,12 +38,6 @@ void TA::save::addOptionsFromFile(std::filesystem::path path) {
     }
 }
 
-void TA::save::load() {
-    std::string defaultConfigPath = TA::filesystem::getAssetsPath() / "default_config";
-    addOptionsFromFile(defaultConfigPath);
-    addOptionsFromFile(getSaveFileName());
-}
-
 void TA::save::writeToFile() {
     std::stringstream output;
     for(auto [key, value] : saveMap) {
@@ -48,15 +48,15 @@ void TA::save::writeToFile() {
     TA::filesystem::writeFile(name, output.str());
 }
 
-std::string TA::save::getSaveFileName() {
+std::filesystem::path TA::save::getSaveFileName() {
 #ifdef __ANDROID__
-    std::string path = SDL_GetAndroidInternalStoragePath();
-    return path + "/config";
+    std::filesystem::path path = SDL_GetAndroidInternalStoragePath();
+    return path / "config";
 #else
 #ifdef TA_UNIX_INSTALL
-    std::string path = std::string(getenv("HOME")) + "/.local/share/tails-adventure";
+    std::filesystem::path path = std::filesystem::path(getenv("HOME")) / ".local/share/tails-adventure";
     std::filesystem::create_directories(path);
-    return path + "/config";
+    return path / "config";
 #else
     return TA::filesystem::getExecutableDirectory() / "config";
 #endif
