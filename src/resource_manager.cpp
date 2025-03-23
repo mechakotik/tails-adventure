@@ -61,7 +61,7 @@ void TA::resmgr::loadMods() {
         }
     }
 
-    std::ranges::sort(mods, [](const Mod& a, const Mod& b) {
+    std::sort(mods.begin(), mods.end(), [](const Mod& a, const Mod& b) {
         return a.priority < b.priority;
     });
 
