@@ -14,21 +14,19 @@ private:
     void appendPoints();
     void addSelectedArea();
     void setActivePoints();
-    void setPointNeighbours();
     void loadTailsIcon();
 
     TA_Controller controller;
-    std::vector<TA_MapPoint*> points;
+    std::vector<TA_MapPoint> points;
     TA_Sprite tailsIcon;
-    TA_MapPoint* currentPoint;
     TA_Sound switchSound;
+    int pos;
 
 public:
     void load();
     TA_ScreenState update();
     std::string getSelectionName();
     void draw();
-    ~TA_AreaSelector();
 };
 
 class TA_MapPoint {
@@ -39,15 +37,14 @@ private:
     TA_OnscreenButton button;
     TA_Point position;
     std::string name = "", path = "";
-    std::array<TA_MapPoint*, TA_DIRECTION_MAX> neighbours;
+    std::array<int, TA_DIRECTION_MAX> neighbours;
 
     bool active = false;
-    int index = 0;
     double timer = 0;
 
 public:
-    TA_MapPoint(int index, std::string name, std::string path, TA_Point position);
-    void setNeighbour(TA_Direction direction, TA_MapPoint* neighbour) { neighbours[direction] = neighbour; }
+    TA_MapPoint(std::string name, std::string path, TA_Point position);
+    void setNeighbour(TA_Direction direction, int neighbour) { neighbours[direction] = neighbour; }
     void activate() { active = true; }
     bool updateButton();
     void draw();
@@ -56,8 +53,7 @@ public:
     std::string getName() { return name; }
     std::string getPath() { return path; }
     bool isActive() { return active; }
-    TA_MapPoint* getNeighbour(TA_Direction direction) { return neighbours[direction]; }
-    int getIndex() { return index; }
+    int getNeighbour(TA_Direction direction) { return neighbours[direction]; }
 };
 
 #endif // TA_AREA_SELECTOR_H

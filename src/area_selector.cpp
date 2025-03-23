@@ -1,12 +1,13 @@
 #include "area_selector.h"
+#include "resource_manager.h"
 #include "save.h"
+#include "controller.h"
 
 void TA_AreaSelector::load() {
     controller.load();
     appendPoints();
     addSelectedArea();
     setActivePoints();
-    setPointNeighbours();
     loadTailsIcon();
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
 }
@@ -15,20 +16,35 @@ void TA_AreaSelector::appendPoints() {
     double xOffset = (TA::screenWidth - 256) / 2;
     double yOffset = (TA::screenHeight - 144) / 2;
 
-    // TODO: store map points in TOML
-    if(TA::save::getSaveParameter("seafox")) {
-        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 88 + yOffset)));
-        points.push_back(new TA_MapPoint(1, " lake\n rocky", "maps/lr/lr1", TA_Point(131 + xOffset, 111 + yOffset)));
+    toml::array tomlPoints;
+    if(TA::save::getSaveParameter("seafox") == 1) {
+        tomlPoints = TA::resmgr::loadToml("worldmap/points.toml").at("seafox").as_array();
     } else {
-        points.push_back(new TA_MapPoint(0, " tails'\n house", "", TA_Point(122 + xOffset, 97 + yOffset)));
-        points.push_back(new TA_MapPoint(1, " poloy\n forest", "maps/pf/pf1", TA_Point(106 + xOffset, 89 + yOffset)));
-        points.push_back(new TA_MapPoint(2, "volcanic\ntunnel", "maps/vt/vt1", TA_Point(146 + xOffset, 73 + yOffset)));
-        points.push_back(new TA_MapPoint(3, " polly\n mt.1", "maps/pm/pm1", TA_Point(146 + xOffset, 41 + yOffset)));
-        points.push_back(new TA_MapPoint(4, "cavern\nisland", "maps/ci/ci1", TA_Point(182 + xOffset, 33 + yOffset)));
-        points.push_back(new TA_MapPoint(5, " caron\n forest", "maps/cf/cf1", TA_Point(106 + xOffset, 49 + yOffset)));
+        tomlPoints = TA::resmgr::loadToml("worldmap/points.toml").at("main").as_array();
     }
 
-    currentPoint = points[TA::save::getSaveParameter("map_selection")];
+    for(toml::value element : tomlPoints) {
+        std::string name = element.at("name").as_string();
+        std::string path = (element.contains("path") ? element.at("path").as_string() : "");
+        double x = static_cast<double>(element.at("x").as_integer());
+        double y = static_cast<double>(element.at("y").as_integer());
+        points.emplace_back(name, path, TA_Point(x + xOffset, y + yOffset));
+
+        if(element.contains("up")) {
+            points.back().setNeighbour(TA_DIRECTION_UP, static_cast<int>(element.at("up").as_integer()));
+        }
+        if(element.contains("down")) {
+            points.back().setNeighbour(TA_DIRECTION_DOWN, static_cast<int>(element.at("down").as_integer()));
+        }
+        if(element.contains("left")) {
+            points.back().setNeighbour(TA_DIRECTION_LEFT, static_cast<int>(element.at("left").as_integer()));
+        }
+        if(element.contains("right")) {
+            points.back().setNeighbour(TA_DIRECTION_RIGHT, static_cast<int>(element.at("right").as_integer()));
+        }
+    }
+
+    pos = TA::save::getSaveParameter("map_selection");
 }
 
 void TA_AreaSelector::addSelectedArea() {
@@ -50,36 +66,8 @@ void TA_AreaSelector::setActivePoints() {
     int add = (TA::save::getSaveParameter("seafox") ? 9 : 0);
     for(int level = 0; level < (int)points.size(); level++) {
         if(mask & (1 << (level + add))) {
-            points[level]->activate();
+            points[level].activate();
         }
-    }
-}
-
-void TA_AreaSelector::setPointNeighbours() {
-    if(TA::save::getSaveParameter("seafox")) {
-        points[0]->setNeighbour(TA_DIRECTION_DOWN, points[1]);
-        points[1]->setNeighbour(TA_DIRECTION_UP, points[0]);
-    }
-
-    else {
-        points[0]->setNeighbour(TA_DIRECTION_UP, points[1]);
-        points[0]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
-
-        points[1]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
-        points[1]->setNeighbour(TA_DIRECTION_RIGHT, points[2]);
-        points[1]->setNeighbour(TA_DIRECTION_UP, points[5]);
-
-        points[2]->setNeighbour(TA_DIRECTION_DOWN, points[0]);
-        points[2]->setNeighbour(TA_DIRECTION_LEFT, points[1]);
-        points[2]->setNeighbour(TA_DIRECTION_UP, points[3]);
-
-        points[3]->setNeighbour(TA_DIRECTION_DOWN, points[2]);
-        points[3]->setNeighbour(TA_DIRECTION_RIGHT, points[4]);
-        points[3]->setNeighbour(TA_DIRECTION_UP, points[4]);
-
-        points[4]->setNeighbour(TA_DIRECTION_LEFT, points[3]);
-
-        points[5]->setNeighbour(TA_DIRECTION_DOWN, points[1]);
     }
 }
 
@@ -92,25 +80,25 @@ TA_ScreenState TA_AreaSelector::update() {
     controller.update();
     if(controller.isJustChangedDirection()) {
         TA_Direction direction = controller.getDirection();
-        if(direction != TA_DIRECTION_MAX && currentPoint->getNeighbour(direction) != nullptr &&
-            currentPoint->getNeighbour(direction)->isActive()) {
-            currentPoint = currentPoint->getNeighbour(direction);
+        if(direction != TA_DIRECTION_MAX && points[pos].getNeighbour(direction) != -1 &&
+            points[points[pos].getNeighbour(direction)].isActive()) {
+            pos = points[pos].getNeighbour(direction);
             switchSound.play();
         }
     }
 
-    for(int pos = 0; pos < (int)points.size(); pos++) {
-        if(currentPoint != points[pos] && points[pos]->isActive() && points[pos]->updateButton()) {
-            currentPoint = points[pos];
+    for(int i = 0; i < static_cast<int>(points.size()); i++) {
+        if(i != pos && points[i].isActive() && points[i].updateButton()) {
+            pos = i;
             switchSound.play();
         }
     }
 
-    TA::save::setSaveParameter("map_selection", currentPoint->getIndex());
-    tailsIcon.setPosition(currentPoint->getPosition() + TA_Point(-2, 8));
+    TA::save::setSaveParameter("map_selection", pos);
+    tailsIcon.setPosition(points[pos].getPosition() + TA_Point(-2, 8));
 
-    if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B) || currentPoint->updateButton()) {
-        TA::levelPath = currentPoint->getPath();
+    if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B) || points[pos].updateButton()) {
+        TA::levelPath = points[pos].getPath();
         if(TA::levelPath == "") {
             return TA_SCREENSTATE_HOUSE;
         }
@@ -120,9 +108,9 @@ TA_ScreenState TA_AreaSelector::update() {
 }
 
 void TA_AreaSelector::draw() {
-    if(!TA::save::getSaveParameter("seafox")) {
+    if(TA::save::getSaveParameter("seafox") == 0) {
         for(int pos = 1; pos < (int)points.size(); pos++) {
-            points[pos]->draw();
+            points[pos].draw();
         }
     }
     tailsIcon.draw();
@@ -130,22 +118,15 @@ void TA_AreaSelector::draw() {
 }
 
 std::string TA_AreaSelector::getSelectionName() {
-    return currentPoint->getName();
+    return points[pos].getName();
 }
 
-TA_AreaSelector::~TA_AreaSelector() {
-    for(TA_MapPoint* point : points) {
-        delete point;
-    }
-}
-
-TA_MapPoint::TA_MapPoint(int index, std::string name, std::string path, TA_Point position) {
-    this->index = index;
+TA_MapPoint::TA_MapPoint(std::string name, std::string path, TA_Point position) {
     this->position = position;
     this->name = name;
     this->path = path;
     for(int direction = 0; direction < TA_DIRECTION_MAX; direction++) {
-        neighbours[direction] = nullptr;
+        neighbours[direction] = -1;
     }
 
     sprite.load("worldmap/selection.png");
