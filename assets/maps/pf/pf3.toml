@@ -9,7 +9,7 @@ bird_walker = [
 	{ floor_y=175 }
 ]
 item_box = [
-	{ x=888, y=112, number=6, item_name=" remote \n robot  " }
+	{ x=888, y=112, number=6, item_name="remote_robot" }
 ]
 level_transition = [
 	{ path="maps/pf/pf2", top=0, bottom=384, left=0, right=2 }

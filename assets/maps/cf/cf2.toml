@@ -29,8 +29,8 @@ breakable_block = [
 	{ tile_x=75, tile_y=9, path="maps/cf/cf_block.png" }
 ]
 item_box = [
-	{ x=872, y=208, number=11, item_name=" sonic \n       " },
-	{ x=952, y=48, number=12, item_name=" proton  \n torpedo " }
+	{ x=872, y=208, number=11, item_name="sonic" },
+	{ x=952, y=48, number=12, item_name="proton_torpedo" }
 ]
 level_transition = [
 	{ path="maps/cf/cf1", top=0, bottom=80, left=0, right=2 }

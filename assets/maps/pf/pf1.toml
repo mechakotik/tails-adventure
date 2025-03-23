@@ -33,7 +33,7 @@ grass_block = [
 	{ tile_x=75, tile_y=24, path="maps/pf/pf_grass.png" }
 ]
 item_box = [
-	{ number=23, item_name=" spark  \n        ", tile_x=50, tile_y=24 }
+	{ number=23, item_name="spark", tile_x=50, tile_y=24 }
 ]
 level_transition = [
 	{ path="maps/pf/pf2", top=0, bottom=144, left=2046, right=2048 }

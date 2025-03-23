@@ -28,7 +28,7 @@ bridge = [
 	{ path="maps/pm/bridge.png", particle_path="maps/pm/bridge_part.png", leftx=496, rightx=527, y=320 }
 ]
 item_box = [
-	{ x=440, y=64, number=3, item_name=" teleport \n  device  " }
+	{ x=440, y=64, number=3, item_name="teleport_device" }
 ]
 level_transition = [
 	{ path="maps/pm/pm1", top=0, bottom=80, left=0, right=2 }

@@ -48,7 +48,7 @@ conveyor_belt = [
 	{ top=1360, bottom=1376, left=352, right=400, flip=true }
 ]
 item_box = [
-	{ tile_x=8, tile_y=97, number=13, item_name=" napalm \n  bomb  " }
+	{ tile_x=8, tile_y=97, number=13, item_name="napalm_bomb" }
 ]
 level_transition = [
 	{ path="maps/ci/ci1", top=64, left=0, bottom=128, right=2 },

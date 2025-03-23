@@ -21,7 +21,7 @@ breakable_block = [
 	{ path="maps/pm/block.png", tile_x=76, tile_y=23 }
 ]
 item_box = [
-	{ x=376, y=256, number=8, item_name="  super  \n  glove  " }
+	{ x=376, y=256, number=8, item_name="super_glove" }
 ]
 level_transition = [
 	{ path="maps/pm/pm1", top=368, bottom=400, left=80, right=82 },

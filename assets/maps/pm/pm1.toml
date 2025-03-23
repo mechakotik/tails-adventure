@@ -23,8 +23,8 @@ breakable_block = [
 	{ path="maps/pm/block.png", tile_x=12, tile_y=28 }
 ]
 item_box = [
-	{ x=408, y=1408, number=25, item_name=" rocket  \n booster " },
-	{ x=376, y=896, number=16, item_name=" helmet \n        " }
+	{ x=408, y=1408, number=25, item_name="rocket_booster" },
+	{ x=376, y=896, number=16, item_name="helmet" }
 ]
 level_transition = [
 	{ path="maps/pm/pm2", top=0, bottom=64, left=446, right=448 },

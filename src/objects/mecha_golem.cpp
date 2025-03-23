@@ -447,7 +447,7 @@ void TA_MechaGolem::updateDefeated() {
     }
 
     if(prev < defeatedTime / 3 && timer >= defeatedTime / 3) {
-        objectSet->spawnObject<TA_ItemBox>(position + TA_Point(8, -32), TA_Point(-1, -2), 22, " anti-air \n missile  ");
+        objectSet->spawnObject<TA_ItemBox>(position + TA_Point(8, -32), TA_Point(-1, -2), 22, "anti_air_missile");
     }
 }
 

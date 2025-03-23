@@ -1,6 +1,7 @@
 #include "item_box.h"
 #include <cmath>
 #include "character.h"
+#include "resource_manager.h"
 #include "error.h"
 #include "save.h"
 #include "tools.h"
@@ -9,7 +10,7 @@ void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std:
     this->position = position;
     this->velocity = velocity;
     this->itemNumber = itemNumber;
-    this->itemName = itemName;
+    this->itemName = TA::resmgr::loadToml("hud/item_box_strings.toml").at(itemName).as_string();
 
     TA_Sprite::load("hud/items.png", 16, 16);
     TA_Sprite::setFrame(39);

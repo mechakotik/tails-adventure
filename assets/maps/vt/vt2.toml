@@ -70,7 +70,7 @@ fire = [
 	{ x=960, y=184, flip=true }
 ]
 item_box = [
-	{ x=1880, y=272, number=29, item_name="  chaos  \n emerald " }
+	{ x=1880, y=272, number=29, item_name="chaos_emerald" }
 ]
 level_transition = [
 	{ path="maps/vt/vt1", top=48, bottom=112, left=0, right=2 }

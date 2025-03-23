@@ -28,8 +28,8 @@ grass_block = [
 	{ tile_x=51, tile_y=35, path="maps/cf/cf_grass.png" }
 ]
 item_box = [
-	{ tile_x=3, tile_y=2, number=32, item_name="  chaos  \n emerald " },
-	{ x=776, y=256, number=14, item_name=" triple \n  bomb  " }
+	{ tile_x=3, tile_y=2, number=32, item_name="chaos_emerald" },
+	{ x=776, y=256, number=14, item_name="triple_bomb" }
 ]
 level_transition = [
 	{ path="maps/cf/cf2", top=224, bottom=272, left=1214, right=1216 }

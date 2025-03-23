@@ -48,9 +48,9 @@ grass_block = [
 	{ tile_x=64, tile_y=25, path="maps/pf/pf_grass.png" }
 ]
 item_box = [
-	{ x=248, y=272, number=7, item_name=" speed  \n boots  " },
-	{ x=1144, y=208, number=18, item_name=" radio  \n        " },
-	{ x=1880, y=64, number=31, item_name="  chaos  \n emerald " }
+	{ x=248, y=272, number=7, item_name="speed_boots" },
+	{ x=1144, y=208, number=18, item_name="radio" },
+	{ x=1880, y=64, number=31, item_name="chaos_emerald" }
 ]
 level_transition = [
 	{ path="maps/pf/pf1", top=0, bottom=256, left=0, right=2 },

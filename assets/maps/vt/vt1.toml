@@ -54,8 +54,8 @@ fire = [
 	{ x=1240, y=152 }
 ]
 item_box = [
-	{ x=968, y=112, number=19, item_name=" hammer \n        " },
-	{ x=1864, y=288, number=2, item_name=" remote \n  bomb  " }
+	{ x=968, y=112, number=19, item_name="hammer" },
+	{ x=1864, y=288, number=2, item_name="remote_bomb" }
 ]
 level_transition = [
 	{ path="maps/vt/vt2", top=32, bottom=96, left=1966, right=1968 }
