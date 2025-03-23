@@ -29,6 +29,7 @@ private:
     TA_MainMenuState processSelection();
     void drawCustomEntries();
     void drawSaveEntries();
+    void drawModCount();
     void drawSplash();
     void drawSelector();
     std::string generateSplash();

@@ -1,6 +1,7 @@
 #include "data_select_section.h"
 #include <bit>
 #include "save.h"
+#include "resource_manager.h"
 
 void TA_DataSelectSection::load() {
     entrySprite.load("data_select/entry.png");
@@ -125,6 +126,7 @@ bool TA_DataSelectSection::updateTouchscreenSelection() {
 void TA_DataSelectSection::draw() {
     drawCustomEntries();
     drawSaveEntries();
+    drawModCount();
     drawSplash();
     drawSelector();
 }
@@ -156,6 +158,16 @@ void TA_DataSelectSection::drawSaveEntries() {
 
         font.drawText(entryPosition + TA_Point(11, 50), std::to_string(getSavePercent(num)) + "%");
         font.drawText(entryPosition + TA_Point(11, 60), getSaveTime(num), TA_Point(-2, 0));
+    }
+}
+
+void TA_DataSelectSection::drawModCount() {
+    int total = TA::resmgr::getTotalMods();
+    int loaded = TA::resmgr::getLoadedMods();
+    if(total >= 1) {
+        std::string text = "M " + std::to_string(loaded) + "/" + std::to_string(total);
+        font.setAlpha(alpha);
+        font.drawText(TA_Point(TA::screenWidth - font.getTextWidth(text) - 8, 9), text);
     }
 }
 

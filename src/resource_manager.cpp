@@ -21,6 +21,8 @@ namespace TA::resmgr {
     void preloadChunks();
 
     std::unordered_map<std::string, std::filesystem::path> overrides;
+    int totalMods = 0;
+    int loadedMods = 0;
 
     std::unordered_map<std::string, SDL_Texture*> textureMap;
     std::unordered_map<std::string, Mix_Music*> musicMap;
@@ -65,8 +67,10 @@ void TA::resmgr::loadMods() {
 
     std::vector<std::string> loaded;
     for(const Mod& mod : mods) {
+        totalMods++;
         if(!mod.enabled) continue;
         loaded.push_back(mod.root.filename());
+        loadedMods++;
         for(const std::filesystem::path& path : mod.files) {
             std::string rel = std::filesystem::relative(path, mod.root).string();
             overrides[rel] = path;
@@ -196,6 +200,14 @@ const toml::value& TA::resmgr::loadToml(std::filesystem::path path) {
         }
     }
     return tomlMap[path];
+}
+
+int TA::resmgr::getLoadedMods() {
+    return loadedMods;
+}
+
+int TA::resmgr::getTotalMods() {
+    return totalMods;
 }
 
 void TA::resmgr::quit() {

@@ -14,6 +14,8 @@ namespace TA {
         Mix_Chunk* loadChunk(std::filesystem::path path);
         const std::string& loadAsset(std::filesystem::path path);
         const toml::value& loadToml(std::filesystem::path path);
+        int getTotalMods();
+        int getLoadedMods();
         void quit();
     }
 }
