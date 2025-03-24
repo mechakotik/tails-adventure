@@ -6,20 +6,19 @@
 #include "objects/bat_robot.h"
 #include "objects/beehive.h"
 #include "objects/bird_walker.h"
-#include "objects/bomb.h"
 #include "objects/bomb_thrower.h"
 #include "objects/breakable_block.h"
 #include "objects/bridge.h"
 #include "objects/conveyor_belt.h"
 #include "objects/drill_mole.h"
 #include "objects/enemy_mine.h"
-#include "objects/explosion.h"
 #include "objects/fire.h"
 #include "objects/flame.h"
 #include "objects/grass_block.h"
 #include "objects/hover_pod.h"
 #include "objects/item_box.h"
 #include "objects/jumper.h"
+#include "objects/little_kukku.h"
 #include "objects/mecha_golem.h"
 #include "objects/mini_sub.h"
 #include "objects/moving_platform.h"
@@ -117,6 +116,12 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         position.y = static_cast<int>(object.at("tile_y").as_integer()) * 16;
     } else if(object.contains("y")) {
         position.y = static_cast<int>(object.at("y").as_integer());
+    }
+    if(object.contains("offset_x")) {
+        position.x += static_cast<int>(object.at("offset_x").as_integer());
+    }
+    if(object.contains("offset_y")) {
+        position.y += static_cast<int>(object.at("offset_y").as_integer());
     }
 
     if(name == "breakable_block") {
@@ -297,6 +302,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "beehive") {
         spawnObject<TA_BeeHive>(position);
+    }
+
+    else if(name == "little_kukku") {
+        spawnObject<TA_LittleKukku>(position);
     }
 
     else {

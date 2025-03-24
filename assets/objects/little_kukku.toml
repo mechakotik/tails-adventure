@@ -1,0 +1,18 @@
+[sprite]
+image = "little_kukku.png"
+width = 16
+height = 16
+
+[animations.idle]
+frames = [0, 1]
+delay = 6
+
+[animations.cooldown]
+frames = [3, 2]
+delay = 6
+repeat = 3
+
+[animations.run]
+frames = [4, 5]
+delay = 4
+
