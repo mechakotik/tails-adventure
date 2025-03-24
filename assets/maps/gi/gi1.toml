@@ -1,10 +1,16 @@
 [level]
 music = "sound/pm.vgm"
 spawn = [
-	{ x=0, y=0 }
+	{ x=-2, y=281 }
 ]
 
 [objects.static]
+map_transition = [
+	{ selection=6, left=0, top=0, right=2, bottom=320 }
+]
+level_transition = [
+	{ path="maps/gi/gi2", left=2030, top=112, right=2032, bottom=192 }
+]
 breakable_block = [
 	{ tile_x=93, tile_y=23, path="maps/gi/gi_block.png" },
 	{ tile_x=94, tile_y=23, path="maps/gi/gi_block.png", drops_ring=true },
