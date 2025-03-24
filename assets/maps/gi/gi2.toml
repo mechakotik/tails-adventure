@@ -1,0 +1,100 @@
+[level]
+music = "sound/pm.vgm"
+spawn = [
+	{ x=-2, y=809 }
+]
+
+[objects.static]
+level_transition = [
+	{ path="maps/gi/gi1", left=0, top=720, right=2, bottom=848 }
+]
+breakable_block = [
+	{ tile_x=41, tile_y=52, path="maps/gi/gi_block.png" },
+	{ tile_x=42, tile_y=52, path="maps/gi/gi_block.png" },
+	{ tile_x=41, tile_y=53, path="maps/gi/gi_block.png" },
+	{ tile_x=42, tile_y=53, path="maps/gi/gi_block.png" },
+	{ tile_x=41, tile_y=54, path="maps/gi/gi_block.png" },
+	{ tile_x=42, tile_y=54, path="maps/gi/gi_block.png" },
+	{ tile_x=41, tile_y=55, path="maps/gi/gi_block.png" },
+	{ tile_x=42, tile_y=55, path="maps/gi/gi_block.png" },
+	{ tile_x=41, tile_y=56, path="maps/gi/gi_block.png" },
+	{ tile_x=42, tile_y=56, path="maps/gi/gi_block.png" },
+	
+	{ tile_x=46, tile_y=52, path="maps/gi/gi_block.png" },
+	{ tile_x=47, tile_y=52, path="maps/gi/gi_block.png" },
+	{ tile_x=46, tile_y=53, path="maps/gi/gi_block.png" },
+	{ tile_x=47, tile_y=53, path="maps/gi/gi_block.png" },
+	{ tile_x=46, tile_y=54, path="maps/gi/gi_block.png" },
+	{ tile_x=47, tile_y=54, path="maps/gi/gi_block.png" },
+	{ tile_x=46, tile_y=55, path="maps/gi/gi_block.png" },
+	{ tile_x=47, tile_y=55, path="maps/gi/gi_block.png" },
+	{ tile_x=46, tile_y=56, path="maps/gi/gi_block.png" },
+	{ tile_x=47, tile_y=56, path="maps/gi/gi_block.png" },
+	
+	{ tile_x=38, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=39, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=40, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=41, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=42, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=43, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=44, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=45, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=46, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=47, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=48, tile_y=49, path="maps/gi/gi_block.png" },
+	{ tile_x=49, tile_y=49, path="maps/gi/gi_block.png" },
+	
+	{ tile_x=50, tile_y=37, path="maps/gi/gi_block.png" },
+	{ tile_x=50, tile_y=38, path="maps/gi/gi_block.png" },
+	{ tile_x=50, tile_y=39, path="maps/gi/gi_block.png" },
+	
+	{ tile_x=13, tile_y=17, path="maps/gi/gi_block.png" },
+	{ tile_x=13, tile_y=18, path="maps/gi/gi_block.png" },
+	{ tile_x=24, tile_y=17, path="maps/gi/gi_block.png" },
+	{ tile_x=24, tile_y=18, path="maps/gi/gi_block.png" },
+	{ tile_x=56, tile_y=9, path="maps/gi/gi_block.png" }
+]
+wind = [
+	{ left=128, top=464, right=480, bottom=512, xsp=0, ysp=1 },
+	{ left=128, top=336, right=480, bottom=416, xsp=-1, ysp=0 },
+	{ left=96, top=48, right=272, bottom=240, xsp=0, ysp=1 },
+	{ left=336, top=80, right=544, bottom=240, xsp=0, ysp=1 },
+	{ left=336, top=32, right=544, bottom=64, xsp=1, ysp=0 },
+]
+item_box = [
+	{ number=5, item_name="night_vision", tile_x=18, tile_y=17, offset_x=8 },
+	{ number=30, item_name="chaos_emerald", tile_x=43, tile_y=22, offset_x=8 }
+]
+
+[objects.default]
+beehive = [
+	{ tile_x=16, tile_y=35, offset_x=8 },
+	{ tile_x=19, tile_y=39, offset_x=8 },
+	{ tile_x=43, tile_y=44 },
+	{ tile_x=47, tile_y=33, offset_x=8 },
+	{ tile_x=44, tile_y=25 },
+	{ tile_x=9, tile_y=9, offset_x=8 },
+	{ tile_x=13, tile_y=5, offset_x=8 },
+	{ tile_x=27, tile_y=14, offset_x=8 },
+	{ tile_x=30, tile_y=10, offset_x=8 },
+	{ tile_x=53, tile_y=3, offset_x=8 },
+]
+little_kukku = [
+	{ tile_x=34, tile_y=55, offset_x=8 },
+	{ tile_x=10, tile_y=41, offset_x=8 },
+	{ tile_x=19, tile_y=44, offset_x=8 },
+	{ tile_x=23, tile_y=45, offset_x=8 },
+	{ tile_x=27, tile_y=46, offset_x=8 },
+	{ tile_x=34, tile_y=35, offset_x=8 },
+	{ tile_x=34, tile_y=27, offset_x=8 },
+	{ tile_x=15, tile_y=18, offset_x=8 },
+	{ tile_x=21, tile_y=18, offset_x=8 },
+	{ tile_x=41, tile_y=19, offset_x=8 },
+	{ tile_x=45, tile_y=19, offset_x=8 },
+	{ tile_x=41, tile_y=15, offset_x=8 },
+	{ tile_x=45, tile_y=15, offset_x=8 },
+	{ tile_x=38, tile_y=9, offset_x=8 },
+	{ tile_x=54, tile_y=9, offset_x=8 },
+	{ tile_x=36, tile_y=3, offset_x=8 },
+]
+

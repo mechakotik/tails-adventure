@@ -1,7 +1,8 @@
 [level]
 music = "sound/pm.vgm"
 spawn = [
-	{ x=-2, y=281 }
+	{ x=-2, y=281 },
+	{ x=1988, y=153, flip=true, previous="maps/gi/gi2" }
 ]
 
 [objects.static]
