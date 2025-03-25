@@ -8,7 +8,7 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override {return TA_COLLISION_ATTACK | TA_COLLISION_BOMB | TA_COLLISION_DRILL;}
+    int getCollisionType() override { return TA_COLLISION_ATTACK | TA_COLLISION_BOMB | TA_COLLISION_DRILL; }
 
 private:
     TA_Point velocity;

@@ -4,9 +4,9 @@
 #include <cstddef>
 #include <string>
 #include "SDL3/SDL_rect.h"
-#include "resource_manager.h"
 #include "controller.h"
 #include "links.h"
+#include "resource_manager.h"
 #include "save.h"
 #include "sound.h"
 #include "tools.h"
@@ -17,7 +17,8 @@ void TA_PauseMenu::load(TA_Links links) {
     inventoryMenu.setReplace(true);
 
     frameSprite.load("hud/pause_menu_frame.png");
-    frameSprite.setPosition(static_cast<double>(TA::screenWidth - frameSprite.getWidth()) / 2, static_cast<double>(TA::screenHeight - frameSprite.getHeight()) / 2);
+    frameSprite.setPosition(static_cast<double>(TA::screenWidth - frameSprite.getWidth()) / 2,
+        static_cast<double>(TA::screenHeight - frameSprite.getHeight()) / 2);
 
     reset();
 }
@@ -214,8 +215,7 @@ void TA_PauseMenu::SwitchMenu::draw() {
     const double startY = static_cast<double>(TA::screenHeight - 144) / 2;
 
     for(int num = 0; num < 4; num++) {
-        const std::string itemKey =
-            (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
+        const std::string itemKey = (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
         int item = static_cast<int>(TA::save::getSaveParameter(itemKey));
         if(item == -1) {
             item = 38;

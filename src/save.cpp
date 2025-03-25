@@ -53,7 +53,8 @@ std::filesystem::path TA::save::getSaveFileName() {
     std::filesystem::path internalPath = SDL_GetAndroidInternalStoragePath();
     internalPath /= "config";
 
-    bool useExternal = (SDL_GetAndroidExternalStorageState() == (SDL_ANDROID_EXTERNAL_STORAGE_READ | SDL_ANDROID_EXTERNAL_STORAGE_WRITE));
+    bool useExternal = (SDL_GetAndroidExternalStorageState() ==
+                        (SDL_ANDROID_EXTERNAL_STORAGE_READ | SDL_ANDROID_EXTERNAL_STORAGE_WRITE));
     useExternal &= !TA::filesystem::fileExists(internalPath);
 
     if(useExternal) {

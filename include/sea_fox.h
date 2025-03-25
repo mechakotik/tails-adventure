@@ -7,10 +7,7 @@
 
 class TA_SeaFox : public TA_Pawn {
 private:
-    enum Item {
-        ITEM_VULCAN_GUN = 4,
-        ITEM_ANTI_AIR_MISSILE = 22
-    };
+    enum Item { ITEM_VULCAN_GUN = 4, ITEM_ANTI_AIR_MISSILE = 22 };
 
     const double verticalDrag = double(1) / 32;
     const double horizontalDrag = double(1) / 196;

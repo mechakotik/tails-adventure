@@ -6,8 +6,8 @@
 #ifdef _WIN32
 #include "windows.h"
 #elif __linux__
-#include <climits>
 #include <unistd.h>
+#include <climits>
 #endif
 
 bool TA::filesystem::fileExists(std::filesystem::path path) {

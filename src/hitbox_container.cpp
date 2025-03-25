@@ -10,7 +10,7 @@ void TA_HitboxContainer::add(TA_Polygon& hitbox, int type) {
         return;
     }
 
-    Element element = {.hitbox=hitbox, .type=type};
+    Element element = {.hitbox = hitbox, .type = type};
     hitboxes.push_back(element);
     int id = static_cast<int>(hitboxes.size()) - 1;
 

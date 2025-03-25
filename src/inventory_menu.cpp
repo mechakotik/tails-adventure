@@ -1,6 +1,6 @@
 #include "inventory_menu.h"
-#include "resource_manager.h"
 #include "controller.h"
+#include "resource_manager.h"
 #include "save.h"
 #include "sound.h"
 

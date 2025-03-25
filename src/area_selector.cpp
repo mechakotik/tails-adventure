@@ -1,7 +1,7 @@
 #include "area_selector.h"
+#include "controller.h"
 #include "resource_manager.h"
 #include "save.h"
-#include "controller.h"
 
 void TA_AreaSelector::load() {
     controller.load();

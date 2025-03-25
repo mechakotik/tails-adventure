@@ -15,11 +15,7 @@ private:
     static constexpr double speed = 1.33;
     static constexpr double runTime = 90;
 
-    enum class State {
-        IDLE,
-        COOLDOWN,
-        RUN
-    };
+    enum class State { IDLE, COOLDOWN, RUN };
 
     void updateIdle();
     void updateCooldown();

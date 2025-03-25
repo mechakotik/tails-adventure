@@ -39,7 +39,8 @@ void TA::resmgr::load() {
 
 void TA::resmgr::loadMods() {
 #ifdef __ANDROID__
-    if(SDL_GetAndroidExternalStorageState() != (SDL_ANDROID_EXTERNAL_STORAGE_READ | SDL_ANDROID_EXTERNAL_STORAGE_WRITE)) {
+    if(SDL_GetAndroidExternalStorageState() !=
+        (SDL_ANDROID_EXTERNAL_STORAGE_READ | SDL_ANDROID_EXTERNAL_STORAGE_WRITE)) {
         return;
     }
     std::filesystem::path modsPath = SDL_GetAndroidExternalStoragePath();
@@ -61,9 +62,7 @@ void TA::resmgr::loadMods() {
         }
     }
 
-    std::sort(mods.begin(), mods.end(), [](const Mod& a, const Mod& b) {
-        return a.priority < b.priority;
-    });
+    std::sort(mods.begin(), mods.end(), [](const Mod& a, const Mod& b) { return a.priority < b.priority; });
 
     std::vector<std::string> loaded;
     for(const Mod& mod : mods) {
@@ -91,7 +90,8 @@ TA::resmgr::Mod TA::resmgr::loadMod(std::filesystem::path root) {
     Mod mod = Mod();
     mod.root = root;
 
-    if(!std::filesystem::is_regular_file(root / "enabled") || TA::filesystem::readFile(root / "enabled").front() != '1') {
+    if(!std::filesystem::is_regular_file(root / "enabled") ||
+        TA::filesystem::readFile(root / "enabled").front() != '1') {
         mod.enabled = false;
         return mod;
     }

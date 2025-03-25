@@ -1,9 +1,9 @@
 #ifndef TA_FONT_H
 #define TA_FONT_H
 
+#include <filesystem>
 #include <map>
 #include <string>
-#include <filesystem>
 #include "sprite.h"
 
 class TA_Font : public TA_Sprite {

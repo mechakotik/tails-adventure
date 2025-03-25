@@ -51,7 +51,15 @@ private:
         STATE_WAIT_ITEM,
     };
 
-    enum Hitbox { HITBOX_WALL_TOP, HITBOX_WALL_LEFT, HITBOX_WALL_RIGHT, HITBOX_BODY, HITBOX_WEAK, HITBOX_ARM, HITBOX_MAX };
+    enum Hitbox {
+        HITBOX_WALL_TOP,
+        HITBOX_WALL_LEFT,
+        HITBOX_WALL_RIGHT,
+        HITBOX_BODY,
+        HITBOX_WEAK,
+        HITBOX_ARM,
+        HITBOX_MAX
+    };
 
     State state = STATE_IDLE, previousState = STATE_IDLE;
 

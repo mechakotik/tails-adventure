@@ -1,6 +1,6 @@
 #include "options_section.h"
-#include "resource_manager.h"
 #include "SDL3/SDL.h"
+#include "resource_manager.h"
 #include "save.h"
 
 namespace {

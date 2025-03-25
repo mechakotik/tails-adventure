@@ -1,14 +1,13 @@
 #include "font.h"
-
 #include <utility>
-#include "tools.h"
 #include "error.h"
 #include "resource_manager.h"
+#include "tools.h"
 
 void TA_Font::loadFont(const std::filesystem::path& path) {
     try {
         tryLoadFont(path);
-    } catch(std::exception &e) {
+    } catch(std::exception& e) {
         TA::handleError("failed to load font:\n%s", e.what());
     }
 }
@@ -45,7 +44,8 @@ std::string TA_Font::getUtf8Char(const std::string& text, int pos) {
     }
 
     if(pos + charLength > text.size()) {
-        TA::handleError("UTF8 symbol length out of range (text = %s, pos = %i, length = %i", text.c_str(), pos, charLength);
+        TA::handleError(
+            "UTF8 symbol length out of range (text = %s, pos = %i, length = %i", text.c_str(), pos, charLength);
     }
     return text.substr(pos, charLength);
 }

@@ -1,7 +1,7 @@
 #include "data_select_section.h"
 #include <bit>
-#include "save.h"
 #include "resource_manager.h"
+#include "save.h"
 
 void TA_DataSelectSection::load() {
     entrySprite.load("data_select/entry.png");

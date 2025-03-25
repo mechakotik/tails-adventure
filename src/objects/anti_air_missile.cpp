@@ -46,7 +46,8 @@ bool TA_AntiAirMissile::update() {
             explosionSound.play();
             // TODO: explosion velocity
             for(int i = 1; i <= 3; i++) {
-                TA_Point explosionPosition = position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
+                TA_Point explosionPosition =
+                    position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
                 explosionSound.play();
                 objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
             }

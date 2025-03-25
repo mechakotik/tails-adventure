@@ -1,8 +1,8 @@
 #include "item_box.h"
 #include <cmath>
 #include "character.h"
-#include "resource_manager.h"
 #include "error.h"
+#include "resource_manager.h"
 #include "save.h"
 #include "tools.h"
 

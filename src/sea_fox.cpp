@@ -1,4 +1,5 @@
 #include "sea_fox.h"
+#include "anti_air_missile.h"
 #include "bullet.h"
 #include "controller.h"
 #include "error.h"
@@ -6,7 +7,6 @@
 #include "object_set.h"
 #include "ring.h"
 #include "save.h"
-#include "anti_air_missile.h"
 
 void TA_SeaFox::load(TA_Links links) {
     this->links = links;
