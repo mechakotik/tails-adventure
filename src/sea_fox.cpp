@@ -6,6 +6,7 @@
 #include "object_set.h"
 #include "ring.h"
 #include "save.h"
+#include "anti_air_missile.h"
 
 void TA_SeaFox::load(TA_Links links) {
     this->links = links;
@@ -79,7 +80,7 @@ void TA_SeaFox::physicsStep() {
     }
 
     moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), velocity * TA::elapsedTime, false);
-    TA_Sprite::setPosition(position);
+    setPosition(position);
 }
 
 bool TA_SeaFox::checkPawnCollision(TA_Polygon& hitbox) {
@@ -129,6 +130,11 @@ void TA_SeaFox::updateItem() {
     switch(links.hud->getCurrentItem()) {
         case ITEM_VULCAN_GUN:
             vulcanGunTimer = 0;
+            break;
+        case ITEM_ANTI_AIR_MISSILE:
+            if(!links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
+                links.objectSet->spawnObject<TA_AntiAirMissile>(position + TA_Point(8, -12));
+            }
             break;
         default:
             damageSound.play();
