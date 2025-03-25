@@ -5,11 +5,11 @@
 
 class TA_Nezu : public TA_Object {
 private:
-    const double speed = 0.5;
-    const double placeTime = 30;
-    const double attackTime = 60;
-    const double gravity = 0.125;
-    const double maxFallSpeed = 3;
+    const float speed = 0.5;
+    const float placeTime = 30;
+    const float attackTime = 60;
+    const float gravity = 0.125;
+    const float maxFallSpeed = 3;
 
     TA_Point getDistanceToCharacter();
     bool isBadPosition(TA_Point position);
@@ -27,7 +27,7 @@ private:
 
     State state = STATE_IDLE;
     bool direction = 0, bombPlaced = 0;
-    double timer = 0, fallSpeed = 0;
+    float timer = 0, fallSpeed = 0;
 
 public:
     using TA_Object::TA_Object;
@@ -38,9 +38,9 @@ public:
 
 class TA_NezuBomb : public TA_Object {
 private:
-    const double waitTime = 30;
+    const float waitTime = 30;
 
-    double timer = 0;
+    float timer = 0;
 
 public:
     using TA_Object::TA_Object;

@@ -15,7 +15,7 @@ bool TA_PushableObject::update() {
     leftHitbox.setPosition(position);
     rightHitbox.setPosition(position);
 
-    double speed = 0.33;
+    float speed = 0.33;
     velocity.x = 0;
     if(objectSet->getLinks().character->isOnGround()) {
         if(objectSet->checkCollision(leftHitbox) & TA_COLLISION_CHARACTER) {
@@ -49,7 +49,7 @@ void TA_PushableSpring::load(TA_Point newPosition) {
     springBounceSprite.setCamera(objectSet->getLinks().camera);
 
     HitboxVectorElement element;
-    element.hitbox.setRectangle(TA_Point(0.1, 0), TA_Point(getWidth() - 0.1, 0));
+    element.hitbox.setRectangle({0.1, -0.1}, {getWidth() - 0.1, 0});
     element.collisionType = TA_COLLISION_SPRING;
     hitboxVector.push_back(element);
 }

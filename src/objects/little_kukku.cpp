@@ -35,8 +35,8 @@ bool TA_LittleKukku::update() {
 void TA_LittleKukku::updateIdle() {
     setAnimation("idle");
     TA_Point characterDist;
-    characterDist.x = objectSet->getCharacterPosition().x - position.x + static_cast<double>(getWidth()) / 2;
-    characterDist.y = objectSet->getCharacterPosition().y - position.y + static_cast<double>(getHeight()) / 2;
+    characterDist.x = objectSet->getCharacterPosition().x - position.x + static_cast<float>(getWidth()) / 2;
+    characterDist.y = objectSet->getCharacterPosition().y - position.y + static_cast<float>(getHeight()) / 2;
     if(characterDist.length() < maxCharacterDist && isGoodPosition(position)) {
         state = State::COOLDOWN;
         setAnimation("cooldown");
@@ -46,7 +46,7 @@ void TA_LittleKukku::updateIdle() {
 void TA_LittleKukku::updateCooldown() {
     if(!isAnimated()) {
         state = State::RUN;
-        flip = (objectSet->getCharacterPosition().x > position.x + static_cast<double>(getWidth()) / 2);
+        flip = (objectSet->getCharacterPosition().x > position.x + static_cast<float>(getWidth()) / 2);
         timer = 0;
     }
 }
@@ -65,7 +65,7 @@ void TA_LittleKukku::updateRun() {
     position = newPosition;
     if(timer > runTime) {
         state = State::COOLDOWN;
-        flip = (objectSet->getCharacterPosition().x > position.x + static_cast<double>(getWidth()) / 2);
+        flip = (objectSet->getCharacterPosition().x > position.x + static_cast<float>(getWidth()) / 2);
         setAnimation("cooldown");
     }
 }

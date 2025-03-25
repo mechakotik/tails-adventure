@@ -8,7 +8,7 @@ class TA_PushableObject : public TA_Object {
 private:
     TA_Point velocity;
 
-    const double grv = 0.125;
+    const float grv = 0.125;
 
 public:
     using TA_Object::TA_Object;
@@ -26,7 +26,7 @@ public:
 
 class TA_PushableSpring : public TA_PushableObject {
 private:
-    const double bounceTime = 12;
+    const float bounceTime = 12;
 
     TA_Sprite springBounceSprite;
 

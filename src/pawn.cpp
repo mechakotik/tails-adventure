@@ -29,19 +29,19 @@ void TA_Pawn::moveByX() {
         hitbox.setRectangle(topLeft, bottomRight);
     }
 
-    auto isOutside = [&](double factor) {
+    auto isOutside = [&](float factor) {
         hitbox.setPosition({position.x + factor * velocity.x, position.y});
         return !checkPawnCollision(hitbox);
     };
 
-    double left = 0, right = 1, eps = 1e-5;
+    float left = 0, right = 1, eps = 1e-5;
     if(!isOutside(eps * 2)) {
         left = right = 0;
     } else if(isOutside(1)) {
         left = right = 1;
     } else {
         while((right - left) * std::abs(velocity.x) > eps) {
-            double mid = (left + right) / 2;
+            float mid = (left + right) / 2;
             if(isOutside(mid)) {
                 left = mid;
             } else {
@@ -65,19 +65,19 @@ void TA_Pawn::moveByY() {
     TA_Polygon hitbox;
     hitbox.setRectangle(topLeft, bottomRight);
 
-    auto isOutside = [&](double factor) {
+    auto isOutside = [&](float factor) {
         hitbox.setPosition({position.x, position.y + velocity.y * factor});
         return !checkPawnCollision(hitbox);
     };
 
-    double left = 0, right = 1, eps = 1e-5;
+    float left = 0, right = 1, eps = 1e-5;
     if(!isOutside(eps * 2)) {
         left = right = 0;
     } else if(isOutside(1)) {
         left = right = 1;
     }
     while((right - left) * std::abs(velocity.y) > eps) {
-        double mid = (left + right) / 2;
+        float mid = (left + right) / 2;
         if(isOutside(mid)) {
             left = mid;
         } else {
@@ -89,7 +89,7 @@ void TA_Pawn::moveByY() {
 }
 
 void TA_Pawn::popOut() {
-    std::vector<std::pair<double, TA_Point>> directions;
+    std::vector<std::pair<float, TA_Point>> directions;
 
     for(TA_Point delta : {TA_Point(-32, 0), TA_Point(32, 0), TA_Point(0, -32), TA_Point(0, 32)}) {
         directions.push_back({getFirstGood(delta), delta});
@@ -108,10 +108,10 @@ void TA_Pawn::popOut() {
     }
 }
 
-double TA_Pawn::getFirstGood(TA_Point delta) {
-    double left = 0, right = 1, eps = 1e-5;
+float TA_Pawn::getFirstGood(TA_Point delta) {
+    float left = 0, right = 1, eps = 1e-5;
     while((right - left) * delta.length() > eps) {
-        double mid = (left + right) / 2;
+        float mid = (left + right) / 2;
         if(isGoodPosition(position + delta * mid)) {
             right = mid;
         } else {

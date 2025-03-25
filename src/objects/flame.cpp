@@ -2,7 +2,7 @@
 #include <cmath>
 #include "tools.h"
 
-void TA_Flame::load(TA_Point position, double startSpeed) {
+void TA_Flame::load(TA_Point position, float startSpeed) {
     this->position = position;
     speed = -startSpeed;
     startY = position.y;
@@ -23,7 +23,7 @@ bool TA_Flame::update() {
     return true;
 }
 
-void TA_FlameLauncher::load(TA_Point position, double startSpeed) {
+void TA_FlameLauncher::load(TA_Point position, float startSpeed) {
     this->position = position;
     this->startSpeed = startSpeed;
 }

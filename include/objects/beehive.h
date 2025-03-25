@@ -13,11 +13,11 @@ public:
     void deleteBee() { beeCount--; }
 
 private:
-    static constexpr double cooldownTime = 40;
+    static constexpr float cooldownTime = 40;
 
     bool destroyed = false;
     int beeCount = 0;
-    double timer = 0;
+    float timer = 0;
 };
 
 class TA_Bee : public TA_Object {
@@ -28,8 +28,8 @@ public:
     int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
-    static constexpr double flySpeed = 1;
-    static constexpr double circleRadius = 12;
+    static constexpr float flySpeed = 1;
+    static constexpr float circleRadius = 12;
 
     void updateFlyDown();
     void updateNormal();
@@ -37,11 +37,11 @@ private:
     TA_BeeHive* hive;
 
     bool flyDown = true;
-    double flyDownY = 0;
+    float flyDownY = 0;
 
     TA_Point leftCircleCenter, rightCircleCenter;
     bool leftCircle = false, direction = false;
-    double timer = 0;
+    float timer = 0;
 };
 
 class TA_StrongBee : public TA_Object {
@@ -52,14 +52,14 @@ public:
     int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
-    static constexpr double idleTime = 40;
-    static constexpr double speed = 0.4;
-    static constexpr double rotateSpeed = 0.25;
+    static constexpr float idleTime = 40;
+    static constexpr float speed = 0.4;
+    static constexpr float rotateSpeed = 0.25;
 
-    double getNeedeedAngle();
+    float getNeedeedAngle();
 
-    double timer = 0;
-    double angle = 0;
+    float timer = 0;
+    float angle = 0;
 };
 
 #endif // TA_BEEHIVE_H

@@ -11,10 +11,10 @@ public:
     int getCollisionType() override { return TA_COLLISION_DAMAGE; }
 
 private:
-    const double gravity = 0.125;
-    const double maxSpeed = 2.5;
+    const float gravity = 0.125;
+    const float maxSpeed = 2.5;
 
-    double speed = 0;
+    float speed = 0;
 };
 
 #endif

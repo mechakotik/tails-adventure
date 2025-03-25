@@ -16,7 +16,7 @@ private:
     void updateExit();
 
     State state = STATE_PRESS_START;
-    double timer = 0, alpha = 0;
+    float timer = 0, alpha = 0;
     bool shouldExit = false;
 
     TA_Sprite backgroundSprite, pressStartSprite;

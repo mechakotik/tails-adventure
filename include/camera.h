@@ -5,9 +5,9 @@
 
 class TA_Camera {
 private:
-    const double groundSpeed = 1, airSpeed = 3, springSpeed = 5, maxLockDistance = 256;
+    const float groundSpeed = 1, airSpeed = 3, springSpeed = 5, maxLockDistance = 256;
     const int shakeRadius = 1, xOffset = 4;
-    const double shakeFrequency = 3;
+    const float shakeFrequency = 3;
 
     void updateOffset();
 
@@ -17,7 +17,7 @@ private:
 
     int yTopOffset, yBottomOffset;
     bool locked = false, lockedX = false, lockedY = false;
-    double shakeTime = -1;
+    float shakeTime = -1;
 
 public:
     void update(bool ground, bool spring);
@@ -27,7 +27,7 @@ public:
     bool isLocked() { return locked && lockedX && lockedY; }
     void unlock() { locked = lockedX = lockedY = false; }
     void setBorder(TA_Rect newBorder) { border = newBorder; }
-    void shake(double time) { shakeTime = time; }
+    void shake(float time) { shakeTime = time; }
     TA_Point getPosition() { return position + shakeDelta; }
     TA_Point getRelative(TA_Point realPosition) { return realPosition - (position + shakeDelta); }
 };

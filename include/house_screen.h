@@ -10,8 +10,8 @@
 
 class TA_HouseScreen : public TA_Screen {
 private:
-    const double curtainMoveTime = 10;
-    const double curtainIdleTime = 10;
+    const float curtainMoveTime = 10;
+    const float curtainIdleTime = 10;
 
     void updatePositions();
     void updateSelector();
@@ -25,7 +25,7 @@ private:
     void draw();
     void drawSelector();
     void drawCurtain();
-    void drawCurtain(double factor);
+    void drawCurtain(float factor);
 
     TA_InventoryMenu inventoryMenu;
     TA_Sprite interfaceSprite, houseSprite, selectorSprite, curtainSprite, houseSeaFoxSprite, clawSprite, seaFoxSprite;
@@ -34,11 +34,11 @@ private:
     TA_Sound switchSound, errorSound, selectSound;
 
     int selection = 3;
-    double curtainTimeLeft = -1;
+    float curtainTimeLeft = -1;
     bool inventoryOpen = false;
     bool shouldMove = false, shouldExit = false;
 
-    double clawX = 40;
+    float clawX = 40;
     bool clawDirection = true;
 
 public:

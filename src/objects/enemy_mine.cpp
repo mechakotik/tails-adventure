@@ -10,14 +10,14 @@ void TA_EnemyMine::load(TA_Point position) {
 }
 
 bool TA_EnemyMine::update() {
-    auto func = [](double x) {
-        double y;
+    auto func = [](float x) {
+        float y;
         if(int(x) % 2 == 0) {
             y = std::fmod(x, 1) - 0.5;
         } else {
             y = 0.5 - std::fmod(x, 1);
         }
-        return double(1) / (1 + exp(-6 * y));
+        return float(1) / (1 + exp(-6 * y));
     };
 
     timer += TA::elapsedTime;

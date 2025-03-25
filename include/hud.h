@@ -11,9 +11,9 @@
 
 class TA_Hud {
 private:
-    static constexpr double flightBarLeft = -9, flightBarRight = 3, flightBarY = 47;
-    static constexpr double flightBarSpeed = 0.7;
-    static constexpr double ringAddTime = 6, fadeTime = 6;
+    static constexpr float flightBarLeft = -9, flightBarRight = 3, flightBarY = 47;
+    static constexpr float flightBarSpeed = 0.7;
+    static constexpr float ringAddTime = 6, fadeTime = 6;
 
     TA_Links links;
     TA_Sprite ringMonitor, itemSprite, flightBarSprite, leftSprite, rightSprite, pauseSprite;
@@ -21,8 +21,8 @@ private:
     std::array<TA_Sprite, 2> ringDigits;
     TA_Sound switchSound, itemSwitchSound, pauseSound;
     int item = 0, itemPosition = 0, rings = 0;
-    double flightBarX = flightBarLeft;
-    double timer = 0;
+    float flightBarX = flightBarLeft;
+    float timer = 0;
 
     TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
     TA_PauseMenu pauseMenu;

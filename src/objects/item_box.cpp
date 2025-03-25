@@ -105,8 +105,8 @@ void TA_ItemBox::updateUnpack() {
         return;
     }
 
-    const double stepTime = unpackTime / 3;
-    double stepTimer = std::fmod(timer, stepTime);
+    const float stepTime = unpackTime / 3;
+    float stepTimer = std::fmod(timer, stepTime);
 
     if(stepTimer < stepTime / 3) {
         setAlpha(255 - 255 * (stepTimer / (stepTime / 5)));
@@ -225,11 +225,11 @@ bool TA_ItemLabel::update() {
 
     currentPosition = position;
     if(timer < appearTime) {
-        double factor = timer / appearTime;
+        float factor = timer / appearTime;
         font.setAlpha(255 * factor);
         currentPosition.x += shift * (1 - factor);
     } else if(timer > showTime - appearTime) {
-        double factor = (timer - (showTime - appearTime)) / appearTime;
+        float factor = (timer - (showTime - appearTime)) / appearTime;
         font.setAlpha(255 * (1 - factor));
         currentPosition.x -= shift * factor;
     } else {

@@ -28,12 +28,12 @@ public:
 
 class TA_VulcanGunBullet : public TA_Bullet {
 private:
-    const double existTime = 15;
+    const float existTime = 15;
 
     int getCollisionFlags() override { return TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_DAMAGE; }
 
     TA_Sound explosionSound;
-    double timer = 0;
+    float timer = 0;
 
 public:
     using TA_Bullet::TA_Bullet;

@@ -11,7 +11,7 @@ private:
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position, double xsp);
+    void load(TA_Point position, float xsp);
     bool update() override;
 };
 

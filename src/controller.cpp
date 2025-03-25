@@ -47,7 +47,7 @@ TA_Direction TA_Controller::getDirection() {
     if(vector.length() < analogDeadZone) {
         return TA_DIRECTION_MAX;
     }
-    double angle = atan2(vector.y, vector.x) * 180 / (atan(1) * 4);
+    float angle = atan2(vector.y, vector.x) * 180 / (atan(1) * 4);
     if(-90 - verticalRange <= angle && angle <= -90 + verticalRange) {
         return TA_DIRECTION_UP;
     }

@@ -5,28 +5,28 @@
 
 class TA_Flame : public TA_Object {
 private:
-    const double gravity = 0.125;
-    const double maxSpeed = 2;
+    const float gravity = 0.125;
+    const float maxSpeed = 2;
 
-    double startY, speed;
+    float startY, speed;
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position, double startSpeed);
+    void load(TA_Point position, float startSpeed);
     bool update() override;
     int getCollisionType() override { return TA_COLLISION_DAMAGE; }
 };
 
 class TA_FlameLauncher : public TA_Object {
 private:
-    const double launchPeriod = 180;
+    const float launchPeriod = 180;
 
-    double timer = 90, startSpeed;
+    float timer = 90, startSpeed;
     bool active = false;
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position, double startSpeed = 3.75);
+    void load(TA_Point position, float startSpeed = 3.75);
     bool update() override;
 };
 

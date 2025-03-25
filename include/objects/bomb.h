@@ -11,21 +11,21 @@ enum TA_BombMode : int { TA_BOMB_MODE_DEFAULT, TA_BOMB_MODE_AIR, TA_BOMB_MODE_CR
 
 class TA_Bomb : public TA_Object {
 private:
-    const double grv = 0.125;
+    const float grv = 0.125;
 
     TA_Sound explosionSound;
     TA_BombMode mode;
 
     bool direction, ground = false;
     int moveTime = 0;
-    double timer = 0;
+    float timer = 0;
 
 protected:
     virtual bool shouldExplode();
     virtual void explode();
     [[nodiscard]] bool isInitSequence() const { return timer < moveTime; }
 
-    double speed = 1.15, crouchThrowHeight = -6;
+    float speed = 1.15, crouchThrowHeight = -6;
     TA_Point topLeft{3, 4}, bottomRight{12, 14};
     TA_Point startVelocity = {2 * speed, -1 * speed};
     TA_Point startCrouchVelocity = {1.35 * speed, -0.7 * speed};
@@ -44,7 +44,7 @@ public:
 
 class TA_RemoteBomb : public TA_Bomb {
 private:
-    const double friction = 0.0125;
+    const float friction = 0.0125;
 
     bool shouldExplode() override;
 
@@ -72,11 +72,11 @@ public:
     void draw() override;
 
 private:
-    static constexpr double explodeInterval = 7;
+    static constexpr float explodeInterval = 7;
 
     bool shouldExplode() override;
 
-    double timer = 0;
+    float timer = 0;
     bool active = false;
 };
 

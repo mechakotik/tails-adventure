@@ -53,8 +53,8 @@ TA_ScreenState TA_TitleScreen::update() {
 }
 
 void TA_TitleScreen::updatePressStart() {
-    const double idleTime = 30;
-    const double transitionTime = 5;
+    const float idleTime = 30;
+    const float transitionTime = 5;
 
     timer += TA::elapsedTime;
     timer = std::fmod(timer, (idleTime + transitionTime) * 2);
@@ -79,7 +79,7 @@ void TA_TitleScreen::updatePressStart() {
 }
 
 void TA_TitleScreen::updateHidePressStart() {
-    const double disappearTime = 5;
+    const float disappearTime = 5;
     alpha += 255 * (disappearTime / TA::elapsedTime);
 
     pressStartSprite.setAlpha(alpha);
@@ -93,7 +93,7 @@ void TA_TitleScreen::updateHidePressStart() {
 }
 
 void TA_TitleScreen::updateExit() {
-    const double exitTime = 14;
+    const float exitTime = 14;
     pressStartSprite.draw();
 
     timer += TA::elapsedTime;

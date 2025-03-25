@@ -34,7 +34,7 @@
 #include "save.h"
 #include "sea_fox.h"
 
-inline double asIntOrFloat(const toml::value& value) {
+inline float asIntOrFloat(const toml::value& value) {
     if(value.is_floating()) {
         return value.as_floating();
     }
@@ -230,7 +230,7 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "flame") {
         if(object.contains("speed")) {
-            double speed = asIntOrFloat(object.at("speed"));
+            float speed = asIntOrFloat(object.at("speed"));
             spawnObject<TA_FlameLauncher>(position, speed);
         } else {
             spawnObject<TA_FlameLauncher>(position);
@@ -257,8 +257,8 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "bomb_thrower") {
-        double leftX = object.at("left_x").as_integer();
-        double rightX = object.at("right_x").as_integer();
+        float leftX = object.at("left_x").as_integer();
+        float rightX = object.at("right_x").as_integer();
         spawnObject<TA_BombThrower>(position, leftX, rightX);
     }
 

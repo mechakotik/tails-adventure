@@ -14,7 +14,7 @@ private:
     TA_Point velocity;
     TA_Sound explosionSound;
     bool destroyed = false;
-    double timer = 0;
+    float timer = 0;
 };
 
 #endif // TA_ANTI_AIR_MISSILE_H

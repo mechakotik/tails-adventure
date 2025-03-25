@@ -73,7 +73,7 @@ bool TA_Bomb::update() {
         int moveFlags = moveAndCollide(topLeft, bottomRight, (velocity + velocityAdd) * TA::elapsedTime, ground);
 
         if(moveFlags & TA_GROUND_COLLISION) {
-            velocity.y = std::min(double(0), velocity.y);
+            velocity.y = std::min(float(0), velocity.y);
             ground = true;
         } else {
             ground = false;
@@ -83,7 +83,7 @@ bool TA_Bomb::update() {
             velocity.x = 0;
         }
         if(moveFlags & TA_CEIL_COLLISION) {
-            velocity.y = std::max(double(0), velocity.y);
+            velocity.y = std::max(float(0), velocity.y);
         }
         if(shouldExplode()) {
             explode();
@@ -143,9 +143,9 @@ bool TA_RemoteBomb::shouldExplode() {
 bool TA_RemoteBomb::update() {
     if(TA::equal(velocity.y, 0)) {
         if(velocity.x > 0) {
-            velocity.x = std::max(double(0), velocity.x - friction * speed * speed * TA::elapsedTime);
+            velocity.x = std::max(float(0), velocity.x - friction * speed * speed * TA::elapsedTime);
         } else {
-            velocity.x = std::min(double(0), velocity.x + friction * speed * speed * TA::elapsedTime);
+            velocity.x = std::min(float(0), velocity.x + friction * speed * speed * TA::elapsedTime);
         }
     }
 
@@ -185,7 +185,7 @@ void TA_TripleBomb::load(TA_Point newPosition, bool newDirection, TA_BombMode mo
 
 bool TA_TripleBomb::update() {
     if(active) {
-        const double newTimer = timer + TA::elapsedTime;
+        const float newTimer = timer + TA::elapsedTime;
         if(timer < explodeInterval && newTimer > explodeInterval) {
             explode();
             timer = newTimer;

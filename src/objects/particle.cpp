@@ -2,7 +2,7 @@
 #include "tools.h"
 
 void TA_Particle::load(
-    std::string filename, TA_Point newPosition, TA_Point newVelocity, TA_Point newDelta, double newDelay) {
+    std::string filename, TA_Point newPosition, TA_Point newVelocity, TA_Point newDelta, float newDelay) {
     TA_Sprite::load(filename);
     position = newPosition;
     velocity = newVelocity;

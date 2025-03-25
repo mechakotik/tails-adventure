@@ -9,9 +9,9 @@
 class TA_Game {
 private:
     const int defaultWindowWidth = 1024, defaultWindowHeight = 576;
-    const double minWindowAspectRatio = 1.2, maxWindowAspectRatio = 2.4;
+    const float minWindowAspectRatio = 1.2, maxWindowAspectRatio = 2.4;
     const int soundFrequency = 44100, soundChunkSize = 256;
-    const double maxElapsedTime = 4;
+    const float maxElapsedTime = 4;
 
     void initSDL();
     void createWindow();

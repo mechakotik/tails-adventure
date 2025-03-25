@@ -12,12 +12,12 @@ private:
     TA_Point velocity;
     TA_Polygon collisionHitbox;
     std::string particleFilename;
-    double timer = 0;
+    float timer = 0;
     bool particlesThrown = false;
 
-    const double delayTime = 25;
-    const double fallingTime = 15;
-    const double initialSpeed = 0, grv = 0.25;
+    const float delayTime = 25;
+    const float fallingTime = 15;
+    const float initialSpeed = 0, grv = 0.25;
 
 public:
     using TA_Object::TA_Object;

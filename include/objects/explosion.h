@@ -9,7 +9,7 @@ enum TA_ExplosionType { TA_EXPLOSION_CHARACTER, TA_EXPLOSION_ENEMY, TA_EXPLOSION
 class TA_Explosion : public TA_Object {
 private:
     TA_ExplosionType type;
-    double timer = 0;
+    float timer = 0;
     int delay = 0;
 
 public:

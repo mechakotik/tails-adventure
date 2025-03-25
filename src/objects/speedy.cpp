@@ -7,7 +7,7 @@
 #include "transition.h"
 
 void TA_Speedy::load() {
-    double leftX = 256 - static_cast<double>(TA::screenWidth) / 2;
+    float leftX = 256 - static_cast<float>(TA::screenWidth) / 2;
     objectSet->spawnObject<TA_Transition>(TA_Point(leftX, 3888), TA_Point(leftX + 2, 4016), "maps/pm/pm3");
 
     objectSet->getLinks().camera->setLockPosition({leftX, 112 - (TA::screenHeight - 144)});
@@ -175,7 +175,7 @@ void TA_Speedy::updateFlyUpSimple() {
 
 void TA_Speedy::updateFlyUp() {
     if(flyUpPhase == 0) {
-        double cameraY = objectSet->getLinks().camera->getPosition().y;
+        float cameraY = objectSet->getLinks().camera->getPosition().y;
         if(position.y < cameraY + 24) {
             flyUpPhase = 1;
             flyUpPhase2Y = cameraY - 8;
@@ -236,7 +236,7 @@ void TA_Speedy::updateEndSequence() {
 
 void TA_Speedy::updateEndSequencePhase0() {
     cpPosition.y -= TA::elapsedTime;
-    double needY = objectSet->getLinks().camera->getPosition().y + 48 + (TA::screenHeight - 144);
+    float needY = objectSet->getLinks().camera->getPosition().y + 48 + (TA::screenHeight - 144);
 
     if(cpPosition.y < needY) {
         endSequencePhase = 1;
@@ -244,7 +244,7 @@ void TA_Speedy::updateEndSequencePhase0() {
 }
 
 void TA_Speedy::updateEndSequencePhase1() {
-    const double needX = 176;
+    const float needX = 176;
 
     if(cpPosition.x < needX) {
         cpPosition.x += TA::elapsedTime;
@@ -260,7 +260,7 @@ void TA_Speedy::updateEndSequencePhase1() {
 }
 
 void TA_Speedy::updateEndSequencePhase2() {
-    double needY = objectSet->getLinks().camera->getPosition().y + 89 + (TA::screenHeight - 144);
+    float needY = objectSet->getLinks().camera->getPosition().y + 89 + (TA::screenHeight - 144);
 
     cpPosition.y += TA::elapsedTime;
     if(cpPosition.y > needY) {
@@ -274,7 +274,7 @@ void TA_Speedy::updateEndSequencePhase2() {
 
 void TA_Speedy::updateEndSequencePhase3() {
     velocity.y -= gravity * TA::elapsedTime;
-    velocity.y = std::max(velocity.y, double(0));
+    velocity.y = std::max(velocity.y, float(0));
     position = position + velocity * TA::elapsedTime;
 
     if(TA::equal(velocity.y, 0)) {
@@ -300,7 +300,7 @@ void TA_Speedy::updateEndSequencePhase4() {
 void TA_Speedy::updateEndSequencePhase5() {
     velocity.y -= gravity * TA::elapsedTime;
     position = position + velocity * TA::elapsedTime;
-    double cameraY = objectSet->getLinks().camera->getPosition().y;
+    float cameraY = objectSet->getLinks().camera->getPosition().y;
 
     if(position.x > 388 || position.y < cameraY - 36) {
         endSequencePhase = 6;

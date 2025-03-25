@@ -1,7 +1,7 @@
 #include "napalm_fire.h"
 #include <iostream>
 
-void TA_NapalmFire::load(TA_Point position, double xsp) {
+void TA_NapalmFire::load(TA_Point position, float xsp) {
     this->position = position;
     velocity = {xsp, 0};
 

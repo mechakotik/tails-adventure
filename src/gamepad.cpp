@@ -128,7 +128,7 @@ TA_Point TA::gamepad::getDpadDirectionVector() {
     vectors[TA_DIRECTION_DOWN] = {0, 1};
     vectors[TA_DIRECTION_LEFT] = {-1, 0};
     vectors[TA_DIRECTION_RIGHT] = {1, 0};
-    const double length = 0.8;
+    const float length = 0.8;
 
     if(verticalDirection == -1 || horizontalDirection == -1) {
         return (verticalDirection != -1 ? vectors[verticalDirection] : vectors[horizontalDirection]);
@@ -137,7 +137,7 @@ TA_Point TA::gamepad::getDpadDirectionVector() {
 }
 
 TA_Point TA::gamepad::getStickDirectionVector() {
-    auto getAxis = [&](double& x, SDL_GamepadAxis index) {
+    auto getAxis = [&](float& x, SDL_GamepadAxis index) {
         x = SDL_GetGamepadAxis(controller, index);
         x /= 32768;
     };
@@ -163,7 +163,7 @@ bool TA::gamepad::isControllerButtonJustPressed(SDL_GamepadButton button) {
     return connected() && justPressed[(int)button];
 }
 
-void TA::gamepad::rumble(double lowFreqStrength, double highFreqStrength, int time) {
+void TA::gamepad::rumble(float lowFreqStrength, float highFreqStrength, int time) {
     if(!connected() || !TA::save::getParameter("rumble")) {
         return;
     }

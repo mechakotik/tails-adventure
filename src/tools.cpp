@@ -10,7 +10,7 @@ namespace TA {
     SDL_Renderer* renderer;
 
     int screenWidth, screenHeight, scaleFactor;
-    double elapsedTime;
+    float elapsedTime;
 
     std::string levelPath = "", previousLevelPath = "";
     std::set<std::string> arguments;
@@ -65,7 +65,7 @@ long long TA::random::max() {
     return std::numeric_limits<long long>::max();
 }
 
-double TA::linearInterpolation(double left, double right, double pos) {
+float TA::linearInterpolation(float left, float right, float pos) {
     pos = fmod(pos, 2);
     if(pos < 1) {
         return left + (right - left) * pos;

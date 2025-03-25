@@ -6,13 +6,13 @@
 class TA_Speedy : public TA_Object {
 private:
     const TA_Point startShowVelocity{-3, 4};
-    const double gravity = 0.125;
-    const double showWaitTime = 30;
-    const double attackSpeed = 1.5;
-    const double flyUpSpeed = 5;
-    const double flyUpPhase1Speed = 2;
-    const double flyUpPhase2Speed = 7;
-    const double flyAwayAcceleration = 0.125;
+    const float gravity = 0.125;
+    const float showWaitTime = 30;
+    const float attackSpeed = 1.5;
+    const float flyUpSpeed = 5;
+    const float flyUpPhase1Speed = 2;
+    const float flyUpPhase2Speed = 7;
+    const float flyAwayAcceleration = 0.125;
 
     enum State {
         STATE_SHOW,
@@ -54,11 +54,11 @@ private:
     void doTransition();
 
     TA_Point velocity;
-    double timer = 0;
+    float timer = 0;
     bool waiting = false;
 
     int flyUpPhase, endSequencePhase;
-    double flyUpPhase2Y;
+    float flyUpPhase2Y;
 
     TA_Sprite characterPlaceholder;
     TA_Point cpPosition, cpVelocity;

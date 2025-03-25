@@ -14,12 +14,12 @@ public:
     void draw() override;
 
 private:
-    const double menuStart = 16;
-    const double menuOffset = 64;
-    const double scrollSpeed = 12;
-    const double selectorBlinkTime = 15;
-    const double loadTime = 60;
-    const double scrollSlowdown = 0.125;
+    const float menuStart = 16;
+    const float menuOffset = 64;
+    const float scrollSpeed = 12;
+    const float selectorBlinkTime = 15;
+    const float loadTime = 60;
+    const float scrollSlowdown = 0.125;
 
     void updateScroll();
     void updateSelection();
@@ -38,10 +38,10 @@ private:
     TA_Sound switchSound, selectSound, loadSaveSound;
     TA_Font font, splashFont;
     std::string splash;
-    double timer = 0, selectorTimer = 0;
+    float timer = 0, selectorTimer = 0;
 
     std::array<TA_OnscreenButton, 9> buttons;
-    double position = 0, scrollVelocity = 0;
+    float position = 0, scrollVelocity = 0;
     int selection = 1, createdSave = -1, alpha = 255;
     bool locked = false;
 };

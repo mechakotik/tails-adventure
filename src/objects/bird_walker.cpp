@@ -6,7 +6,7 @@
 #include "save.h"
 #include "tools.h"
 
-void TA_BirdWalker::load(double newFloorY) {
+void TA_BirdWalker::load(float newFloorY) {
     if(TA::save::getSaveParameter("boss_mask") & (1ll << 0)) {
         return;
     }
@@ -53,7 +53,7 @@ void TA_BirdWalker::load(double newFloorY) {
 }
 
 void TA_BirdWalker::updatePosition() {
-    double offset = (feetSprite.getCurrentFrame() == 4 ? 18 : 27);
+    float offset = (feetSprite.getCurrentFrame() == 4 ? 18 : 27);
     feetSprite.setPosition(position + TA_Point(8, -(feetSprite.getHeight() - 1)));
 
     offset += bodySprite.getHeight();
@@ -128,7 +128,7 @@ bool TA_BirdWalker::update() {
         flashTimer += TA::elapsedTime;
     }
 
-    double centeredX = position.x + bodySprite.getWidth() / 2;
+    float centeredX = position.x + bodySprite.getWidth() / 2;
     if(TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) == (flip ? 1 : -1)) {
         jumpTimer += TA::elapsedTime;
     } else {
@@ -148,7 +148,7 @@ bool TA_BirdWalker::update() {
         case TA_BIRD_WALKER_STATE_AIMING: {
             headSprite.setAnimation("idle");
             if(timer > aimingTime) {
-                double centeredX = (aimPosition.x - 12) + bodySprite.getWidth() / 2;
+                float centeredX = (aimPosition.x - 12) + bodySprite.getWidth() / 2;
                 flip = (TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) < 0);
                 timer = 0;
                 state = TA_BIRD_WALKER_STATE_LANDING;
@@ -159,7 +159,7 @@ bool TA_BirdWalker::update() {
 
         case TA_BIRD_WALKER_STATE_LANDING: {
             position.x = aimPosition.x - 12;
-            position.y = floorY - std::max(double(0), TA::screenHeight * (1 - timer / flyingTime));
+            position.y = floorY - std::max(float(0), TA::screenHeight * (1 - timer / flyingTime));
             if(timer > flyingTime) {
                 timer = 0;
                 feetSprite.setFrame(4);
@@ -200,9 +200,9 @@ bool TA_BirdWalker::update() {
 
         case TA_BIRD_WALKER_STATE_WALK: {
             feetSprite.setAnimation("walk");
-            double centeredPosition = position.x + bodySprite.getWidth() / 2;
-            double leftBorder = objectSet->getLinks().camera->getPosition().x + walkBorder;
-            double rightBorder = objectSet->getLinks().camera->getPosition().x + TA::screenWidth - walkBorder;
+            float centeredPosition = position.x + bodySprite.getWidth() / 2;
+            float leftBorder = objectSet->getLinks().camera->getPosition().x + walkBorder;
+            float rightBorder = objectSet->getLinks().camera->getPosition().x + TA::screenWidth - walkBorder;
 
             if((!flip && centeredPosition < leftBorder) || (flip && centeredPosition > rightBorder) ||
                 currentWalkDistance > walkDistance) {
@@ -231,7 +231,7 @@ bool TA_BirdWalker::update() {
                 if(bulletCounter == shortFireBullets) {
                     state = TA_BIRD_WALKER_STATE_COOL_DOWN;
                 } else {
-                    double angle = double(TA::random::next()) / TA::random::max() * maxFireAngle;
+                    float angle = float(TA::random::next()) / TA::random::max() * maxFireAngle;
                     TA_Point velocity(bulletSpeed * cos(angle) * (flip ? 1 : -1), bulletSpeed * sin(angle));
                     objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30 : -6), -64), velocity);
                     bulletCounter++;
@@ -249,7 +249,7 @@ bool TA_BirdWalker::update() {
                     feetSprite.setFrame(0);
                     state = TA_BIRD_WALKER_STATE_COOL_DOWN;
                 } else {
-                    double angle = double(TA::random::next()) / TA::random::max() * maxFireAngle;
+                    float angle = float(TA::random::next()) / TA::random::max() * maxFireAngle;
                     TA_Point velocity(bulletSpeed * cos(angle) * (flip ? 1 : -1), bulletSpeed * sin(angle));
                     objectSet->spawnObject<TA_BirdWalkerBullet>(position + TA_Point((flip ? 30 : -6), -55), velocity);
                     bulletCounter++;

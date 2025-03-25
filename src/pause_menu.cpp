@@ -17,8 +17,8 @@ void TA_PauseMenu::load(TA_Links links) {
     inventoryMenu.setReplace(true);
 
     frameSprite.load("hud/pause_menu_frame.png");
-    frameSprite.setPosition(static_cast<double>(TA::screenWidth - frameSprite.getWidth()) / 2,
-        static_cast<double>(TA::screenHeight - frameSprite.getHeight()) / 2);
+    frameSprite.setPosition(static_cast<float>(TA::screenWidth - frameSprite.getWidth()) / 2,
+        static_cast<float>(TA::screenHeight - frameSprite.getHeight()) / 2);
 
     reset();
 }
@@ -159,12 +159,12 @@ void TA_PauseMenu::SwitchMenu::processControllerInput() {
 }
 
 void TA_PauseMenu::SwitchMenu::processTouchInput() {
-    const double startX = (static_cast<double>(TA::screenWidth) / 2) - 64;
-    const double startY = static_cast<double>(TA::screenHeight - 144) / 2;
+    const float startX = (static_cast<float>(TA::screenWidth) / 2) - 64;
+    const float startY = static_cast<float>(TA::screenHeight - 144) / 2;
 
     for(int pos = 0; pos < 3; pos++) {
         menuButtons.at(pos).setPosition(
-            {(static_cast<double>(TA::screenWidth) / 2) - 62, startY + static_cast<double>(63 + (17 * pos))});
+            {(static_cast<float>(TA::screenWidth) / 2) - 62, startY + static_cast<float>(63 + (17 * pos))});
         menuButtons.at(pos).update();
         if(menuButtons.at(pos).isReleased()) {
             selection = pos;
@@ -211,8 +211,8 @@ void TA_PauseMenu::SwitchMenu::setAlpha(int alpha) {
 }
 
 void TA_PauseMenu::SwitchMenu::draw() {
-    const double startX = (static_cast<double>(TA::screenWidth) / 2) - 56;
-    const double startY = static_cast<double>(TA::screenHeight - 144) / 2;
+    const float startX = (static_cast<float>(TA::screenWidth) / 2) - 56;
+    const float startY = static_cast<float>(TA::screenHeight - 144) / 2;
 
     for(int num = 0; num < 4; num++) {
         const std::string itemKey = (links.seaFox == nullptr ? "item_slot" : "seafox_item_slot") + std::to_string(num);
@@ -238,7 +238,7 @@ void TA_PauseMenu::SwitchMenu::draw() {
     }
 }
 
-void TA_PauseMenu::SwitchMenu::drawHighlight(double y) const {
+void TA_PauseMenu::SwitchMenu::drawHighlight(float y) const {
     SDL_FRect rect = {(static_cast<float>(TA::screenWidth) / 2) - 54, static_cast<float>(y), 110, 15};
 
     for(int num = 0; num < 4; num++) {

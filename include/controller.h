@@ -59,8 +59,8 @@ public:
 
 class TA_Controller {
 private:
-    const double analogDeadZone = 0.25;
-    const double verticalRange = 30;
+    const float analogDeadZone = 0.25;
+    const float verticalRange = 30;
 
     TA_GamepadController gamepad;
     TA_KeyboardController keyboard;

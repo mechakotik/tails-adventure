@@ -2,7 +2,7 @@
 #include "dead_kukku.h"
 #include "explosion.h"
 
-void TA_BombThrower::load(TA_Point position, double leftX, double rightX) {
+void TA_BombThrower::load(TA_Point position, float leftX, float rightX) {
     this->position = position;
     this->leftX = leftX;
     this->rightX = rightX;

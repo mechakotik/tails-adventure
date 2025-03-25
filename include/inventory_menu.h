@@ -8,10 +8,10 @@
 
 class TA_InventoryMenu {
 private:
-    const double transitionTime = 6;
-    const double arrowIdleTime = 15;
-    const double arrowTransitionTime = 5;
-    const double listTransitionTime = 6;
+    const float transitionTime = 6;
+    const float arrowIdleTime = 15;
+    const float arrowTransitionTime = 5;
+    const float listTransitionTime = 6;
 
     void fillItemMatrix();
     void loadOnscreenButtons();
@@ -62,7 +62,7 @@ private:
     std::pair<int, int> prevSelection;
     bool selectingSlot = true, shown = false;
     bool replace = false;
-    double arrowTimer = 0, showTimeLeft = -1, hideTimeLeft = -1, listTransitionTimeLeft = -1;
+    float arrowTimer = 0, showTimeLeft = -1, hideTimeLeft = -1, listTransitionTimeLeft = -1;
 
 public:
     TA_InventoryMenu() {}

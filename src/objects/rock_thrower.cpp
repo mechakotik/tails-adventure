@@ -121,7 +121,7 @@ bool TA_EnemyRock::update() {
 }
 
 void TA_EnemyRock::updateVelocity() {
-    double add = (ground ? friction : airDrag) * TA::elapsedTime;
+    float add = (ground ? friction : airDrag) * TA::elapsedTime;
     if(velocity.x > add) {
         velocity.x -= add;
     } else if(velocity.x < -add) {

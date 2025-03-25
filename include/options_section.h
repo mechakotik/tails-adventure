@@ -25,7 +25,7 @@ public:
 
 class TA_OptionsSection : public TA_MainMenuSection {
 private:
-    const double listTransitionTime = 5;
+    const float listTransitionTime = 5;
 
     void updateGroupSelector();
     void updateOptionSelector();
@@ -36,13 +36,13 @@ private:
 
     void drawGroupList();
     void drawOptionList();
-    void drawHighlight(double x, double y, double width);
-    void drawHighlight(double y);
+    void drawHighlight(float x, float y, float width);
+    void drawHighlight(float y);
 
     enum State { STATE_SELECTING_GROUP, STATE_SELECTING_OPTION, STATE_QUIT };
 
     TA_Font font;
-    double listTransitionTimeLeft = -1;
+    float listTransitionTimeLeft = -1;
 
     State state = STATE_SELECTING_GROUP;
     std::vector<std::string> groups{"video", "controls", "sound"};

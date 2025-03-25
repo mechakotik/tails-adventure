@@ -117,10 +117,10 @@ void TA_Character::updateCollisions() {
     if(flags & TA_CEIL_COLLISION) {
         ceiling = true;
         if(jump) {
-            jumpSpeed = std::max(jumpSpeed, double(-0.3));
+            jumpSpeed = std::max(jumpSpeed, float(-0.3));
             jumpReleased = true;
         } else {
-            velocity.y = std::max(velocity.y, double(-0.3));
+            velocity.y = std::max(velocity.y, float(-0.3));
         }
     } else {
         ceiling = false;
@@ -153,7 +153,7 @@ void TA_Character::updateCollisions() {
 
         TA_Polygon leftHalf, rightHalf;
         {
-            double middleX = (topLeft.x + bottomRight.x) / 2;
+            float middleX = (topLeft.x + bottomRight.x) / 2;
             leftHalf.setRectangle(topLeft - TA_Point(0.001, 0.001), {middleX, bottomRight.y + 0.001});
             rightHalf.setRectangle({middleX, topLeft.y - 0.001}, bottomRight + TA_Point(0.001, 0.001));
             leftHalf.setPosition(position);
@@ -232,9 +232,9 @@ void TA_Character::updateClimb() {
         bool collisionMoved = checkPawnCollision(hitbox);
 
         if(collision != collisionMoved) {
-            double left = 0, right = 1;
+            float left = 0, right = 1;
             while(right - left > TA::epsilon) {
-                double mid = (left + right) / 2;
+                float mid = (left + right) / 2;
                 hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * mid));
                 if(checkPawnCollision(hitbox) == collision) {
                     left = mid;
@@ -292,7 +292,7 @@ void TA_Character::updateClimb() {
 void TA_Character::updateSpringCollision() {
     TA_Polygon hitbox;
     hitbox.setPosition(position);
-    hitbox.setRectangle({topLeft.x + 0.01, bottomRight.y}, bottomRight + TA_Point(-0.01, 0.01));
+    hitbox.setRectangle({topLeft.x + 0.01, bottomRight.y - 0.01}, bottomRight + TA_Point(-0.01, 0.01));
 
     if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_SPRING) {
         jumpSound.play();

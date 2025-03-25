@@ -6,15 +6,15 @@
 #include <vector>
 
 namespace TA {
-    constexpr double epsilon = 1e-5;
+    constexpr float epsilon = 1e-5;
 
-    inline bool equal(const double& a, const double& b) {
+    inline bool equal(const float& a, const float& b) {
         return std::abs(a - b) < epsilon;
     }
 }
 
 struct TA_Point {
-    double x = 0, y = 0;
+    float x = 0, y = 0;
 
     TA_Point() = default;
 
@@ -24,10 +24,10 @@ struct TA_Point {
     TA_Point operator+(const TA_Point& rv) const { return {x + rv.x, y + rv.y}; }
     TA_Point operator-(const TA_Point& rv) const { return {x - rv.x, y - rv.y}; }
     TA_Point operator*(const TA_Point& rv) const { return {x * rv.x, y * rv.y}; }
-    TA_Point operator*(const double& rv) const { return {x * rv, y * rv}; }
+    TA_Point operator*(const float& rv) const { return {x * rv, y * rv}; }
 
-    [[nodiscard]] double length() const { return std::sqrt((x * x) + (y * y)); }
-    [[nodiscard]] double getDistance(const TA_Point& rv) const { return (*this - rv).length(); }
+    [[nodiscard]] float length() const { return std::sqrt((x * x) + (y * y)); }
+    [[nodiscard]] float getDistance(const TA_Point& rv) const { return (*this - rv).length(); }
 };
 
 struct TA_Rect {
@@ -38,7 +38,7 @@ class TA_Line {
 public:
     TA_Line(const TA_Point& p1, const TA_Point& p2)
         : p1(p1), p2(p2), a(p2.y - p1.y), b(p1.x - p2.x), c((p2.x * p1.y) - (p1.x * p2.y)) {
-        const double k = (c > 0 ? -1.0 : 1.0) / std::sqrt((a * a) + (b * b));
+        const float k = (c > 0 ? -1.0 : 1.0) / std::sqrt((a * a) + (b * b));
         a *= k;
         b *= k;
         c *= k;
@@ -47,21 +47,21 @@ public:
     [[nodiscard]] const TA_Point& getFirst() const { return p1; }
     [[nodiscard]] const TA_Point& getSecond() const { return p2; }
 
-    [[nodiscard]] double getDeviation(const TA_Point& point) const { return (a * point.x) + (b * point.y) + c; }
+    [[nodiscard]] float getDeviation(const TA_Point& point) const { return (a * point.x) + (b * point.y) + c; }
 
-    [[nodiscard]] double getDistance(const TA_Point& point) const { return std::abs(getDeviation(point)); }
+    [[nodiscard]] float getDistance(const TA_Point& point) const { return std::abs(getDeviation(point)); }
 
     [[nodiscard]] bool intersects(const TA_Line& rv) const {
-        const double s1 = getDeviation(rv.getFirst());
-        const double s2 = getDeviation(rv.getSecond());
-        const double s3 = rv.getDeviation(getFirst());
-        const double s4 = rv.getDeviation(getSecond());
+        const float s1 = getDeviation(rv.getFirst());
+        const float s2 = getDeviation(rv.getSecond());
+        const float s3 = rv.getDeviation(getFirst());
+        const float s4 = rv.getDeviation(getSecond());
         return s1 * s2 <= 0 && s3 * s4 <= 0;
     }
 
 private:
     TA_Point p1, p2;
-    double a = 0, b = 0, c = 0;
+    float a = 0, b = 0, c = 0;
 };
 
 class TA_Polygon {
@@ -170,7 +170,7 @@ class TA_Circle {
 public:
     TA_Circle() = default;
 
-    TA_Circle(const TA_Point& center, const double& radius) : center(center), radius(radius) {}
+    TA_Circle(const TA_Point& center, const float& radius) : center(center), radius(radius) {}
 
     void setCenter(const TA_Point& center) { this->center = center; }
 
@@ -178,7 +178,7 @@ public:
 
 private:
     TA_Point center;
-    double radius = 0;
+    float radius = 0;
 };
 
 class TA_Shape {

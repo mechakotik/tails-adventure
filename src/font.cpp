@@ -78,14 +78,14 @@ void TA_Font::drawText(TA_Point position, std::string text, TA_Point offset) {
     }
 }
 
-void TA_Font::drawTextCentered(double y, std::string text, TA_Point offset) {
-    double width = getTextWidth(text, offset);
+void TA_Font::drawTextCentered(float y, std::string text, TA_Point offset) {
+    float width = getTextWidth(text, offset);
     drawText(TA_Point(TA::screenWidth / 2 - width / 2, y), text, offset);
 }
 
-double TA_Font::getTextWidth(std::string text, TA_Point offset) {
-    double currentWidth = 0;
-    double maxWidth = 0;
+float TA_Font::getTextWidth(std::string text, TA_Point offset) {
+    float currentWidth = 0;
+    float maxWidth = 0;
     for(int pos = 0; pos < static_cast<int>(text.length());) {
         std::string symbol = getUtf8Char(text, pos);
         if(symbol != "\n") {

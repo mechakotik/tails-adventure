@@ -5,13 +5,13 @@
 
 class TA_Fire : public TA_Object {
 private:
-    const double waitTime = 6;
-    const double alphaPeriod = 4;
+    const float waitTime = 6;
+    const float alphaPeriod = 4;
 
     void updateHitbox();
     void updateAlpha();
 
-    double timer = 0, alphaTimer = 0;
+    float timer = 0, alphaTimer = 0;
     bool flip;
 
 public:

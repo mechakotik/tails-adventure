@@ -19,7 +19,7 @@ private:
     void moveByX();
     void moveByY();
     void popOut();
-    double getFirstGood(TA_Point delta);
+    float getFirstGood(TA_Point delta);
     bool isGoodPosition(TA_Point position);
 
 protected:

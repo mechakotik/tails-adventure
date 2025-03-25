@@ -13,8 +13,8 @@ void TA_AreaSelector::load() {
 }
 
 void TA_AreaSelector::appendPoints() {
-    double xOffset = (TA::screenWidth - 256) / 2;
-    double yOffset = (TA::screenHeight - 144) / 2;
+    float xOffset = (TA::screenWidth - 256) / 2;
+    float yOffset = (TA::screenHeight - 144) / 2;
 
     toml::array tomlPoints;
     if(TA::save::getSaveParameter("seafox") == 1) {
@@ -26,8 +26,8 @@ void TA_AreaSelector::appendPoints() {
     for(toml::value element : tomlPoints) {
         std::string name = element.at("name").as_string();
         std::string path = (element.contains("path") ? element.at("path").as_string() : "");
-        double x = static_cast<double>(element.at("x").as_integer());
-        double y = static_cast<double>(element.at("y").as_integer());
+        float x = static_cast<float>(element.at("x").as_integer());
+        float y = static_cast<float>(element.at("y").as_integer());
         points.emplace_back(name, path, TA_Point(x + xOffset, y + yOffset));
 
         if(element.contains("up")) {

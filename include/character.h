@@ -38,29 +38,29 @@ private:
 
     enum BombType { BOMB_REGULAR, BOMB_REMOTE, BOMB_NAPALM, BOMB_TRIPLE };
 
-    const double jmp = -3.75;
-    const double grv = 0.125;
-    const double acc = 0.25;
-    const double airAcc = 0.09;
-    const double topX = 1;
-    const double minJumpSpeed = -2.5;
-    const double maxJumpSpeed = 3;
-    const double releaseJumpSpeed = -1.5;
-    const double helitailAcc = 0.1;
-    const double helitailTop = 1;
-    const double hurtXsp = 1;
-    const double hurtYsp = -2.5;
-    const double invincibleTime = 120;
-    const double springYsp = -8;
-    const double remoteRobotInitTime = 30;
-    const double remoteRobotJumpSpeed = -3.25;
-    const double maxLookTime = 100;
-    const double strongWindForce = 0.25;
-    const double teleportInitTime = 60;
-    const double hammerFallSpeed = 0.2;
-    const double waterFriction = 0.75;
-    const double waterFlowAcc = 0.15;
-    const double maxCoyoteTime = 10;
+    const float jmp = -3.75;
+    const float grv = 0.125;
+    const float acc = 0.25;
+    const float airAcc = 0.09;
+    const float topX = 1;
+    const float minJumpSpeed = -2.5;
+    const float maxJumpSpeed = 3;
+    const float releaseJumpSpeed = -1.5;
+    const float helitailAcc = 0.1;
+    const float helitailTop = 1;
+    const float hurtXsp = 1;
+    const float hurtYsp = -2.5;
+    const float invincibleTime = 120;
+    const float springYsp = -8;
+    const float remoteRobotInitTime = 30;
+    const float remoteRobotJumpSpeed = -3.25;
+    const float maxLookTime = 100;
+    const float strongWindForce = 0.25;
+    const float teleportInitTime = 60;
+    const float hammerFallSpeed = 0.2;
+    const float waterFriction = 0.75;
+    const float waterFlowAcc = 0.15;
+    const float maxCoyoteTime = 10;
 
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
@@ -88,11 +88,11 @@ private:
     bool hidden = false, nextFrameHidden = false;
     bool water = false;
 
-    double jumpSpeed = 0, jumpTime = 0;
-    double climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
-    double timer = 0, lookTime = 0, teleportTime = 0;
-    double coyoteTime = 0;
-    double deltaX = 0;
+    float jumpSpeed = 0, jumpTime = 0;
+    float climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
+    float timer = 0, lookTime = 0, teleportTime = 0;
+    float coyoteTime = 0;
+    float deltaX = 0;
     int rings, currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
 
@@ -123,7 +123,7 @@ private:
     void initTeleport();
     void updateTeleport();
     void changeMusic();
-    double getMaxHelitailTime();
+    float getMaxHelitailTime();
     void dropRings();
 
 public:
@@ -142,12 +142,12 @@ public:
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() { return position; }
     TA_Point getVelocity() { return velocity; }
-    double getJumpTime() { return jumpTime; }
+    float getJumpTime() { return jumpTime; }
 
     void setCharacterPosition(TA_Point position);
 
     bool displayFlightTimeBar();
-    double getFlightTime() { return helitailTime / getMaxHelitailTime(); }
+    float getFlightTime() { return helitailTime / getMaxHelitailTime(); }
     bool gameOver() { return state == STATE_DEAD && invincibleTimeLeft <= 0; }
     bool isRemoteRobot() { return remoteRobot; }
     bool isFlying() { return helitail; }

@@ -8,7 +8,7 @@ private:
     bool direction, idle = true;
     int rangeLeft, rangeRight;
 
-    const double speed = 0.33;
+    const float speed = 0.33;
 
 public:
     using TA_Object::TA_Object;

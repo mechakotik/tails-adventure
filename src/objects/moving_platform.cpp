@@ -32,13 +32,13 @@ void TA_MovingPlatform::updateIdle() {
 void TA_MovingPlatform::movePlatform() {
     prevPosition = position;
     if(moveByX()) {
-        position.x += TA::sign(endPosition.x - startPosition.x) * (reverse ? -1 : 1) * speed * TA::elapsedTime;
+        position.x += TA::sign(endPosition.x - startPosition.x) * (reverse ? -1.0F : 1.0F) * speed * TA::elapsedTime;
         if(exceedsBorder()) {
             position.x = (reverse ? startPosition.x : endPosition.x);
             reverse = !reverse;
         }
     } else {
-        position.y += TA::sign(endPosition.y - startPosition.y) * (reverse ? -1 : 1) * speed * TA::elapsedTime;
+        position.y += TA::sign(endPosition.y - startPosition.y) * (reverse ? -1.0F : 1.0F) * speed * TA::elapsedTime;
         if(exceedsBorder()) {
             position.y = (reverse ? startPosition.y : endPosition.y);
             reverse = !reverse;
@@ -57,7 +57,7 @@ bool TA_MovingPlatform::characterIsOnTop() {
     topHitbox.setRectangle(TA_Point(0, -0.01), TA_Point(32, 0.01));
     topHitbox.setPosition(prevPosition);
 
-    if((objectSet->checkCollision(topHitbox) & TA_COLLISION_CHARACTER) &&
+    if((objectSet->checkCollision(topHitbox) & TA_COLLISION_CHARACTER) != 0&&
         objectSet->getLinks().character->isOnGround() && !objectSet->getLinks().character->isClimbing()) {
         return true;
     }
@@ -70,10 +70,10 @@ bool TA_MovingPlatform::moveByX() {
 
 bool TA_MovingPlatform::exceedsBorder() {
     if(moveByX()) {
-        double startX = startPosition.x, endX = endPosition.x;
+        float startX = startPosition.x, endX = endPosition.x;
         return !(std::min(startX, endX) <= position.x && position.x <= std::max(startX, endX));
     } else {
-        double startY = startPosition.y, endY = endPosition.y;
+        float startY = startPosition.y, endY = endPosition.y;
         return !(std::min(startY, endY) <= position.y && position.y <= std::max(startY, endY));
     }
 }

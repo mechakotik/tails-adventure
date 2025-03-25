@@ -5,7 +5,7 @@
 #include "tilemap.h"
 #include "tools.h"
 
-void TA_Ring::load(TA_Point position, TA_Point velocity, double delay) {
+void TA_Ring::load(TA_Point position, TA_Point velocity, float delay) {
     this->position = position;
     this->velocity = velocity;
     this->delay = delay;
@@ -17,7 +17,7 @@ void TA_Ring::load(TA_Point position, TA_Point velocity, double delay) {
     setPosition(position);
 }
 
-void TA_Ring::load(TA_Point position, double speed) {
+void TA_Ring::load(TA_Point position, float speed) {
     load(position, {0, speed}, 0);
 }
 
@@ -38,21 +38,21 @@ bool TA_Ring::update() {
     }
 
     if(!stationary) {
-        double currentGrv = (TA::save::getSaveParameter("seafox") == 1 ? waterGrv : grv);
+        float currentGrv = (TA::save::getSaveParameter("seafox") == 1 ? waterGrv : grv);
         velocity.y += currentGrv * TA::elapsedTime;
         TA_Point topLeft{0, 0}, bottomRight{8, 8};
         int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
         setPosition(position);
 
         if(velocity.x > 0) {
-            velocity.x = std::max(0.0, velocity.x - drag * TA::elapsedTime);
+            velocity.x = std::max(0.0F, velocity.x - drag * TA::elapsedTime);
         } else {
-            velocity.x = std::min(0.0, velocity.x + drag * TA::elapsedTime);
+            velocity.x = std::min(0.0F, velocity.x + drag * TA::elapsedTime);
         }
 
         if((flags & TA_GROUND_COLLISION) != 0 && velocity.y > 0) {
             velocity.y *= -slowdown;
-            if(velocity.y > -0.5) {
+            if(velocity.y > -0.5F) {
                 velocity.y = 0;
             }
         }

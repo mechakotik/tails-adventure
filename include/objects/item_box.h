@@ -19,16 +19,16 @@ private:
     int getFirstFreeItemSlot();
     std::string getItemSlotName(int number);
 
-    const double unpackTime = 40;
-    const double holdTime = 60;
-    const double gravity = 0.125;
-    const double maxFallSpeed = 3;
+    const float unpackTime = 40;
+    const float holdTime = 60;
+    const float gravity = 0.125;
+    const float maxFallSpeed = 3;
 
     enum State { STATE_IDLE, STATE_FALL, STATE_UNPACK, STATE_RAISE, STATE_HOLD };
 
     State state = STATE_IDLE;
     int itemNumber = 0;
-    double timer = 0;
+    float timer = 0;
 
     TA_Sound sound;
     TA_Font font;
@@ -45,14 +45,14 @@ public:
 
 class TA_ItemLabel : public TA_Object {
 private:
-    const double showTime = 100;
-    const double appearTime = 10;
-    const double shift = 32;
+    const float showTime = 100;
+    const float appearTime = 10;
+    const float shift = 32;
 
     std::string name;
     TA_Font font;
     TA_Point currentPosition;
-    double timer = 0;
+    float timer = 0;
 
 public:
     using TA_Object::TA_Object;

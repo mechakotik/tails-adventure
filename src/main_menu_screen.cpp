@@ -50,7 +50,7 @@ TA_ScreenState TA_MainMenuScreen::update() {
 }
 
 void TA_MainMenuScreen::updateTitle() {
-    const double titleY = 10, shift = 8;
+    const float titleY = 10, shift = 8;
 
     if(state == neededState) {
         titleSprite.setPosition(0, titleY);
@@ -61,7 +61,7 @@ void TA_MainMenuScreen::updateTitle() {
         titleSprite.setFrame(state);
         titleSprite.setAlpha(255 - 255 * timer / transitionTime);
     } else {
-        double delta = 1 - std::min(double(1), (timer - transitionTime) / transitionTime);
+        float delta = 1 - std::min(float(1), (timer - transitionTime) / transitionTime);
         titleSprite.setPosition(-shift * delta, titleY);
         titleSprite.setFrame(neededState);
         titleSprite.setAlpha(255 - 255 * delta);

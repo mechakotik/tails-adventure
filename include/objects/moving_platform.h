@@ -5,7 +5,7 @@
 
 class TA_MovingPlatform : public TA_Object {
 private:
-    const double speed = 0.5;
+    const float speed = 0.5;
 
     void updateIdle();
     void movePlatform();

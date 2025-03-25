@@ -65,7 +65,7 @@ void TA_Tilemap::loadTileset(const tmx::Tileset& tiles) {
         if(!tile.animation().empty()) {
             TA_Animation animation;
             int delayMs = tile.animation().at(0).duration;
-            animation.delay = static_cast<int>((static_cast<double>(delayMs) * 60 / 1000) + 0.5);
+            animation.delay = static_cast<int>((static_cast<float>(delayMs) * 60 / 1000) + 0.5);
             animation.frames.resize(tile.animation().size());
             for(int i = 0; i < tile.animation().size(); i++) {
                 animation.frames[i] = tile.animation().at(i).id;

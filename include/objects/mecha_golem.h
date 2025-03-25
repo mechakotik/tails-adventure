@@ -11,26 +11,26 @@ public:
     void draw() override;
 
 private:
-    const double invincibleTime = 30;
-    const double damageFlashTime = 5;
-    const double waitTime = 20;
-    const double goTime = 25;
-    const double goBorder = 32;
-    const double goDistance = 16;
-    const double stepHeight = 8;
-    const double armMoveMaxDistance = 64;
-    const double armMoveTime = 16;
-    const double phaseChangeTime = 120;
-    const double phaseChangeExplosionInterval = 6;
-    const double defeatedTime = 180;
-    const double defeatedExplosionInterval = 6;
-    const double gravity = 0.125;
+    const float invincibleTime = 30;
+    const float damageFlashTime = 5;
+    const float waitTime = 20;
+    const float goTime = 25;
+    const float goBorder = 32;
+    const float goDistance = 16;
+    const float stepHeight = 8;
+    const float armMoveMaxDistance = 64;
+    const float armMoveTime = 16;
+    const float phaseChangeTime = 120;
+    const float phaseChangeExplosionInterval = 6;
+    const float defeatedTime = 180;
+    const float defeatedExplosionInterval = 6;
+    const float gravity = 0.125;
 
-    const double armBite1Time = 16;
-    const double armBite2Time = 20;
-    const double armBite3Time = 16;
-    const double armBite4Time = 12;
-    const double armCircleTime = 40;
+    const float armBite1Time = 16;
+    const float armBite2Time = 20;
+    const float armBite3Time = 16;
+    const float armBite4Time = 12;
+    const float armCircleTime = 40;
 
     enum State {
         STATE_IDLE,
@@ -98,11 +98,11 @@ private:
     TA_Sound hitSound, explosionSound, smallExplosionSound;
 
     TA_Point armPosition, armTarget;
-    double timer = 0;
-    double startX = 0;
-    double speed = 0;
+    float timer = 0;
+    float startX = 0;
+    float speed = 0;
 
-    double invincibleTimer = invincibleTime;
+    float invincibleTimer = invincibleTime;
     int health = 24;
     bool secondPhase = false;
 };

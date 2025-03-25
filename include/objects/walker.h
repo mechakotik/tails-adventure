@@ -12,9 +12,9 @@ enum TA_WalkerState {
 
 class TA_Walker : public TA_Object {
 private:
-    const double speed = 0.25;
-    const double fireTime = 80;
-    const double standTime = 20;
+    const float speed = 0.25;
+    const float fireTime = 80;
+    const float standTime = 20;
 
     void updateIdle();
     void updateMove();
@@ -25,7 +25,7 @@ private:
     int rangeLeft, rangeRight;
     bool direction;
     TA_Point velocity;
-    double timer = 0;
+    float timer = 0;
     bool alwaysIdle = false;
     TA_WalkerState state = TA_WALKER_STATE_IDLE;
 
@@ -40,7 +40,7 @@ class TA_WalkerBullet : public TA_Object { // TODO: reimplement TA_WalkerBullet 
 private:
     bool direction;
 
-    const double speed = 1;
+    const float speed = 1;
 
 public:
     using TA_Object::TA_Object;

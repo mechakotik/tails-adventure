@@ -11,8 +11,8 @@ public:
     void loadFont(const std::filesystem::path& path);
     void setMapping(const std::string& mappingString);
     void drawText(TA_Point position, std::string text, TA_Point offset = {0, 0});
-    void drawTextCentered(double y, std::string text, TA_Point offset = {0, 0});
-    double getTextWidth(std::string text, TA_Point offset = {0, 0});
+    void drawTextCentered(float y, std::string text, TA_Point offset = {0, 0});
+    float getTextWidth(std::string text, TA_Point offset = {0, 0});
 
 private:
     void tryLoadFont(const std::filesystem::path& path);

@@ -69,7 +69,7 @@ void TA_Game::toggleFullscreen() {
 
 void TA_Game::updateWindowSize() {
     int baseHeight = (TA::getBaseHeight(TA::save::getParameter("base_height")));
-    double pixelAR = (TA::save::getParameter("pixel_ar") == 0 ? 1 : double(7) / 8);
+    float pixelAR = (TA::save::getParameter("pixel_ar") == 0 ? 1 : float(7) / 8);
 
     if(!fullscreen) {
         int factor = TA::save::getParameter("window_size");
@@ -133,7 +133,7 @@ bool TA_Game::process() {
 void TA_Game::update() {
     currentTime = std::chrono::high_resolution_clock::now();
     TA::elapsedTime =
-        static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) /
+        static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) /
         1e6 * 60;
 
     TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);

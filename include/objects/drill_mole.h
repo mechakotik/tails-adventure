@@ -5,19 +5,19 @@
 
 class TA_DrillMole : public TA_Object {
 private:
-    const double idleTime = 120;
-    const double moveTime = 30;
-    const double moveRange = 16;
+    const float idleTime = 120;
+    const float moveTime = 30;
+    const float moveRange = 16;
 
     enum State { STATE_IDLE_UP, STATE_MOVE_DOWN, STATE_IDLE_DOWN, STATE_MOVE_UP };
 
-    std::pair<State, double> getStateAndTime();
+    std::pair<State, float> getStateAndTime();
     void updatePosition() override;
     bool shouldBeDestroyed();
     void destroy() override;
 
-    double startY;
-    double timer = 0;
+    float startY;
+    float timer = 0;
 
 public:
     using TA_Object::TA_Object;

@@ -24,7 +24,7 @@ private:
     TA_Hud hud;
 
     bool isSeaFox = false;
-    double timer = 0;
+    float timer = 0;
 
 public:
     void init() override;

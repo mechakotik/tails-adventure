@@ -20,18 +20,18 @@ enum TA_BirdWalkerState {
 
 class TA_BirdWalker : public TA_Object {
 private:
-    const double aimingTime = 30, aimBorder = 32;
-    const double flyingTime = 25;
-    const double crouchTime = 6;
-    const double coolDownTime = 60;
-    const double laughTime = 60;
-    const double walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
-    const double shortFireDelay = 12, longFireDelay = 20, maxFireAngle = atan(1) * 2 / 3, bulletSpeed = 1;
+    const float aimingTime = 30, aimBorder = 32;
+    const float flyingTime = 25;
+    const float crouchTime = 6;
+    const float coolDownTime = 60;
+    const float laughTime = 60;
+    const float walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
+    const float shortFireDelay = 12, longFireDelay = 20, maxFireAngle = atan(1) * 2 / 3, bulletSpeed = 1;
     const int shortFireBullets = 3, longFireBullets = 10;
-    const double invincibleTime = 30;
-    const double deathTime = 180, deathExplosionDelay = 6;
-    const double jumpWaitTime = 60;
-    const double damageFlashTime = 5;
+    const float invincibleTime = 30;
+    const float deathTime = 180, deathExplosionDelay = 6;
+    const float jumpWaitTime = 60;
+    const float damageFlashTime = 5;
 
     void updatePosition() override;
     void insertBorderHitboxes();
@@ -45,20 +45,20 @@ private:
     TA_Sound hitSound, jumpSound, fallSound, landSound, shootSound, explosionSound;
 
     bool flip = false;
-    double currentWalkDistance = 0;
+    float currentWalkDistance = 0;
     int bulletCounter = 0;
 
-    double invincibleTimeLeft = -1;
+    float invincibleTimeLeft = -1;
     int health = 8;
 
     std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, flipHitboxVector;
     TA_Polygon weakHitbox;
 
-    double floorY, timer = 0, jumpTimer = 0, flashTimer = damageFlashTime * 5;
+    float floorY, timer = 0, jumpTimer = 0, flashTimer = damageFlashTime * 5;
 
 public:
     using TA_Object::TA_Object;
-    void load(double newFloorY);
+    void load(float newFloorY);
     bool update() override;
     void draw() override;
     int getDrawPriority() override { return 1; }

@@ -14,8 +14,8 @@ void TA_Character::physicsStep() {
             updateAir();
         }
     } else {
-        velocity.y += grv * (water ? 0.5 : 1) * TA::elapsedTime;
-        velocity.y = std::min(velocity.y, maxJumpSpeed * (water ? 0.5 : 1));
+        velocity.y += grv * (water ? 0.5F : 1) * TA::elapsedTime;
+        velocity.y = std::min(velocity.y, maxJumpSpeed * (water ? 0.5F : 1));
     }
 
     // TA::printLog("%f %f", position.x, position.y);
@@ -46,7 +46,7 @@ void TA_Character::updateGround() {
             initHelitail();
         } else {
             jumpSound.play();
-            jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * (water ? 0.7 : 1);
+            jumpSpeed = (remoteRobot ? remoteRobotJumpSpeed : jmp) * (water ? 0.7F : 1);
             jump = true;
             jumpReleased = false;
             jumpTime = 0;
@@ -61,7 +61,7 @@ void TA_Character::updateAir() {
     horizontalMove();
 
     if(jump) {
-        jumpSpeed += grv * (water ? 0.5 : 1) * TA::elapsedTime;
+        jumpSpeed += grv * (water ? 0.5F : 1) * TA::elapsedTime;
         jumpSpeed = std::min(jumpSpeed, maxJumpSpeed);
         jumpTime += TA::elapsedTime;
 
@@ -72,13 +72,13 @@ void TA_Character::updateAir() {
             jumpSpeed = std::max(jumpSpeed, releaseJumpSpeed);
         }
 
-        if(water && jumpSpeed > maxJumpSpeed * 0.5) {
-            jumpSpeed = std::max(maxJumpSpeed * 0.5, jumpSpeed - waterFriction * TA::elapsedTime);
+        if(water && jumpSpeed > maxJumpSpeed * 0.5F) {
+            jumpSpeed = std::max(maxJumpSpeed * 0.5F, jumpSpeed - waterFriction * TA::elapsedTime);
         }
         if(spring) {
-            velocity.y = std::min(maxJumpSpeed * (water ? 0.5 : 1), jumpSpeed);
+            velocity.y = std::min(maxJumpSpeed * (water ? 0.5F : 1), jumpSpeed);
         } else {
-            velocity.y = std::min(maxJumpSpeed, std::max(minJumpSpeed * (water ? 0.5 : 1), jumpSpeed));
+            velocity.y = std::min(maxJumpSpeed, std::max(minJumpSpeed * (water ? 0.5F : 1), jumpSpeed));
         }
         if(jump && jumpReleased && (!water || remoteRobot) && links.controller->isJustPressed(TA_BUTTON_A)) {
             initHelitail();
@@ -86,10 +86,10 @@ void TA_Character::updateAir() {
     }
 
     else {
-        velocity.y += grv * (water ? 0.5 : 1) * TA::elapsedTime;
+        velocity.y += grv * (water ? 0.5F : 1) * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxJumpSpeed);
-        if(water && velocity.y > maxJumpSpeed * 0.5) {
-            velocity.y = std::max(maxJumpSpeed * 0.5, velocity.y - waterFriction * TA::elapsedTime);
+        if(water && velocity.y > maxJumpSpeed * 0.5F) {
+            velocity.y = std::max(maxJumpSpeed * 0.5F, velocity.y - waterFriction * TA::elapsedTime);
         }
 
         if(links.controller->isJustPressed(TA_BUTTON_A) && coyoteTime < maxCoyoteTime) {
@@ -103,7 +103,7 @@ void TA_Character::updateAir() {
 }
 
 void TA_Character::updateHelitail() {
-    auto process = [&](double& x, double need) {
+    auto process = [&](float& x, float need) {
         if(x > need) {
             x = std::max(need, x - helitailAcc * TA::elapsedTime);
         } else {
@@ -127,7 +127,7 @@ void TA_Character::updateHelitail() {
         flip = false;
     }
 
-    double topSpeed = helitailTop * (water ? 0.7 : 1);
+    float topSpeed = helitailTop * (water ? 0.7 : 1);
     process(velocity.x, vector.x * topSpeed);
     process(velocity.y, vector.y * topSpeed);
 
@@ -151,8 +151,8 @@ void TA_Character::horizontalMove() {
         remoteRobotStepSound.play();
     }
 
-    double currentTopX = topX;
-    double currentAcc = (ground ? acc : airAcc);
+    float currentTopX = topX;
+    float currentAcc = (ground ? acc : airAcc);
 
     if(isUsingSpeedBoots()) {
         currentTopX *= 2;
@@ -172,15 +172,15 @@ void TA_Character::horizontalMove() {
         velocity.x = std::max(velocity.x, -currentTopX);
     } else {
         if(velocity.x > 0) {
-            velocity.x = std::max(double(0), velocity.x - currentAcc * TA::elapsedTime);
+            velocity.x = std::max(float(0), velocity.x - currentAcc * TA::elapsedTime);
         } else {
-            velocity.x = std::min(double(0), velocity.x + currentAcc * TA::elapsedTime);
+            velocity.x = std::min(float(0), velocity.x + currentAcc * TA::elapsedTime);
         }
     }
 }
 
 void TA_Character::updateWaterFlow() {
-    auto addAcceleration = [&](double& speed, double neededSpeed) {
+    auto addAcceleration = [&](float& speed, float neededSpeed) {
         if(speed < neededSpeed) {
             speed = std::min(neededSpeed, speed + waterFlowAcc * TA::elapsedTime);
         } else {

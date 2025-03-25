@@ -84,7 +84,7 @@ bool TA_ScreenStateMachine::update() {
         return true;
     }
 
-    transitionTimer = std::max(double(0), transitionTimer) + TA::elapsedTime;
+    transitionTimer = std::max(float(0), transitionTimer) + TA::elapsedTime;
     TA::drawShadow(255 * transitionTimer / transitionTime);
     if(transitionTimer > transitionTime) {
         changeState = true;

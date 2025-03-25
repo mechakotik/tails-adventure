@@ -59,8 +59,8 @@ TA_ScreenState TA_HouseScreen::update() {
 }
 
 void TA_HouseScreen::updatePositions() {
-    double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
-    double topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
+    float leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
+    float topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
     interfaceSprite.setPosition(leftX, topY);
     houseSprite.setPosition(leftX + 8, topY + 32);
     houseSeaFoxSprite.setPosition(leftX + 8, topY + 32);
@@ -107,8 +107,8 @@ void TA_HouseScreen::updateSelectorController() {
 }
 
 void TA_HouseScreen::updateSelectorTouch() {
-    double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
-    double topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
+    float leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
+    float topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
     for(int pos = 0; pos < 4; pos++) {
         buttons[pos].setPosition({leftX + 31 + 23 * pos, topY});
         buttons[pos].update();
@@ -127,7 +127,7 @@ void TA_HouseScreen::updateCurtain() {
         return;
     }
 
-    double prev = curtainTimeLeft;
+    float prev = curtainTimeLeft;
     curtainTimeLeft -= TA::elapsedTime;
 
     if(prev > curtainMoveTime && curtainTimeLeft <= curtainMoveTime) {
@@ -203,8 +203,8 @@ void TA_HouseScreen::draw() {
 }
 
 void TA_HouseScreen::drawSelector() {
-    double leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
-    double topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
+    float leftX = TA::screenWidth / 2 - interfaceSprite.getWidth() / 2;
+    float topY = TA::screenHeight / 2 - interfaceSprite.getHeight() / 2;
     bool touchscreen = controller.isTouchscreen();
 
     for(int pos = 0; pos < 4; pos++) {
@@ -246,7 +246,7 @@ void TA_HouseScreen::drawCurtain() {
     }
 }
 
-void TA_HouseScreen::drawCurtain(double factor) {
+void TA_HouseScreen::drawCurtain(float factor) {
     SDL_Rect rect{0, 0, curtainSprite.getWidth(), int(curtainSprite.getHeight() * factor + 0.5)};
     curtainSprite.drawFrom(rect);
 }

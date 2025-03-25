@@ -18,7 +18,7 @@ void TA_DataSelectSection::load() {
     loadSaveSound.load("sound/load_save.ogg", TA_SOUND_CHANNEL_SFX1);
 
     for(int pos = 0; pos < 9; pos++) {
-        TA_Point topLeft{menuStart + menuOffset * pos, (double)TA::screenHeight / 2 - entrySprite.getHeight() / 2};
+        TA_Point topLeft{menuStart + menuOffset * pos, (float)TA::screenHeight / 2 - entrySprite.getHeight() / 2};
         TA_Point bottomRight = topLeft + TA_Point(48, (pos == 0 ? 48 : 72));
         buttons[pos].setRectangle(topLeft, bottomRight);
     }
@@ -71,21 +71,21 @@ void TA_DataSelectSection::updateScroll() {
         scrollVelocity = TA::touchscreen::getScrollVector().x;
     } else if(!TA::equal(scrollVelocity, 0)) {
         if(scrollVelocity > 0) {
-            scrollVelocity = std::max((double)0, scrollVelocity - scrollSlowdown * TA::elapsedTime);
+            scrollVelocity = std::max((float)0, scrollVelocity - scrollSlowdown * TA::elapsedTime);
         } else {
-            scrollVelocity = std::min((double)0, scrollVelocity + scrollSlowdown * TA::elapsedTime);
+            scrollVelocity = std::min((float)0, scrollVelocity + scrollSlowdown * TA::elapsedTime);
         }
     }
 
     position += scrollVelocity;
-    position = std::max(position, double(0));
+    position = std::max(position, float(0));
     position = std::min(position, menuStart + 9 * menuOffset - TA::screenWidth);
 }
 
 void TA_DataSelectSection::updateSelection() {
     // menuStart + selection * menuOffset + 24 - need = TA::screenWidth / 2
-    double need = menuStart + selection * menuOffset + 24 - (double)TA::screenWidth / 2;
-    need = std::max(need, double(0));
+    float need = menuStart + selection * menuOffset + 24 - (float)TA::screenWidth / 2;
+    need = std::max(need, float(0));
     need = std::min(need, menuStart + 9 * menuOffset - TA::screenWidth);
 
     if(!TA::equal(position, need)) {
@@ -133,18 +133,18 @@ void TA_DataSelectSection::draw() {
 
 void TA_DataSelectSection::drawCustomEntries() {
     optionsSprite.setAlpha(alpha);
-    optionsSprite.setPosition(menuStart - position, (double)TA::screenHeight / 2 - entrySprite.getHeight() / 2);
+    optionsSprite.setPosition(menuStart - position, (float)TA::screenHeight / 2 - entrySprite.getHeight() / 2);
     optionsSprite.draw();
 }
 
 void TA_DataSelectSection::drawSaveEntries() {
     entrySprite.setAlpha(alpha);
     previewSprite.setAlpha(alpha);
-    font.setAlpha(255 * ((double)alpha / 255) * ((double)alpha / 255));
+    font.setAlpha(255 * ((float)alpha / 255) * ((float)alpha / 255));
 
     for(int num = 0; num < 8; num++) {
         TA_Point entryPosition{
-            menuStart + (num + 1) * menuOffset - position, (double)TA::screenHeight / 2 - entrySprite.getHeight() / 2};
+            menuStart + (num + 1) * menuOffset - position, (float)TA::screenHeight / 2 - entrySprite.getHeight() / 2};
         entrySprite.setPosition(entryPosition);
         entrySprite.draw();
 
@@ -220,7 +220,7 @@ int TA_DataSelectSection::getSavePercent(int save) {
     std::string saveName = "save_" + std::to_string(save);
     int areaCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/area_mask"));
     int itemCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/item_mask"));
-    return 50 * (double(areaCount - 3) / 12 + double(itemCount - 2) / 30);
+    return 50 * (float(areaCount - 3) / 12 + float(itemCount - 2) / 30);
 }
 
 std::string TA_DataSelectSection::getSaveTime(int save) {

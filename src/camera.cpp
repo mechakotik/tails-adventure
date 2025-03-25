@@ -27,7 +27,7 @@ void TA_Camera::forceLockX() {
 
 void TA_Camera::update(bool ground, bool spring) {
     updateOffset();
-    double movementSpeed = airSpeed;
+    float movementSpeed = airSpeed;
     if(ground) {
         movementSpeed = groundSpeed;
     }
@@ -35,7 +35,7 @@ void TA_Camera::update(bool ground, bool spring) {
         movementSpeed = springSpeed;
     }
 
-    auto move = [&](double current, double need) {
+    auto move = [&](float current, float need) {
         if(current < need) {
             current = std::min(need, current + movementSpeed * TA::elapsedTime);
         } else {
@@ -79,7 +79,7 @@ void TA_Camera::update(bool ground, bool spring) {
         }
     }
 
-    auto normalize = [&](double current, double left, double right) {
+    auto normalize = [&](float current, float left, float right) {
         current = std::max(current, left);
         current = std::min(current, right);
         return current;

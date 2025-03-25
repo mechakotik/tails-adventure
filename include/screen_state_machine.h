@@ -8,10 +8,10 @@ class TA_ScreenStateMachine {
 private:
     TA_ScreenState currentState, neededState;
     std::unique_ptr<TA_Screen> currentScreen;
-    double transitionTimer = 0;
+    float transitionTimer = 0;
     bool changeState = false, quitNeeded = false;
 
-    const double transitionTime = 6;
+    const float transitionTime = 6;
 
 public:
     void init();

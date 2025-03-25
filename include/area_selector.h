@@ -31,7 +31,7 @@ public:
 
 class TA_MapPoint {
 private:
-    const double lightTime = 15, appearTime = 3;
+    const float lightTime = 15, appearTime = 3;
 
     TA_Sprite sprite;
     TA_OnscreenButton button;
@@ -40,7 +40,7 @@ private:
     std::array<int, TA_DIRECTION_MAX> neighbours;
 
     bool active = false;
-    double timer = 0;
+    float timer = 0;
 
 public:
     TA_MapPoint(std::string name, std::string path, TA_Point position);

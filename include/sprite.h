@@ -40,7 +40,7 @@ private:
     std::map<std::string, TA_Animation> loadedAnimations;
     TA_Animation animation;
     int animationFrame = 0;
-    double animationTimer = 0;
+    float animationTimer = 0;
     bool flip = false, hidden = false, updateAnimationNeeded = true, loaded = false;
     bool doUpdateAnimation = true;
     int alpha = 255;
@@ -56,7 +56,7 @@ public:
     void drawFrom(SDL_Rect srcRect);
 
     void setPosition(TA_Point newPosition) { position = newPosition; }
-    void setPosition(double newX, double newY) { setPosition(TA_Point(newX, newY)); }
+    void setPosition(float newX, float newY) { setPosition(TA_Point(newX, newY)); }
     void setAlpha(int newAlpha);
     void setCamera(TA_Camera* newCamera) { camera = newCamera; }
     void setColorMod(int r, int g, int b);

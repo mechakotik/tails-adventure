@@ -339,10 +339,10 @@ void TA_OptionsSection::load() {
     backSound.load("sound/select.ogg", TA_SOUND_CHANNEL_SFX2);
     errorSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX3);
 
-    double y = 32;
+    float y = 32;
     for(int pos = 0; pos < 5; pos++) {
-        buttons[pos][0].setRectangle({(double)getLeftX() - 32, y}, {(double)getLeftX() + 80, y + 17});
-        buttons[pos][1].setRectangle({(double)getLeftX() + 80, y}, {(double)getLeftX() + 192, y + 17});
+        buttons[pos][0].setRectangle({(float)getLeftX() - 32, y}, {(float)getLeftX() + 80, y + 17});
+        buttons[pos][1].setRectangle({(float)getLeftX() + 80, y}, {(float)getLeftX() + 192, y + 17});
         y += 20;
     }
 
@@ -509,7 +509,7 @@ void TA_OptionsSection::draw() {
 }
 
 void TA_OptionsSection::drawGroupList() {
-    TA_Point textPosition{(double)getLeftX() + 16, 36};
+    TA_Point textPosition{(float)getLeftX() + 16, 36};
     bool touchscreen = controller->isTouchscreen();
 
     for(int pos = 0; pos < (int)groups.size(); pos++) {
@@ -523,7 +523,7 @@ void TA_OptionsSection::drawGroupList() {
 }
 
 void TA_OptionsSection::drawOptionList() {
-    double lx = getLeftX() + 16, rx = getLeftX() + 144, y = 36;
+    float lx = getLeftX() + 16, rx = getLeftX() + 144, y = 36;
     bool touchscreen = controller->isTouchscreen();
 
     for(int pos = 0; pos < (int)options[group].size(); pos++) {
@@ -557,7 +557,7 @@ void TA_OptionsSection::drawOptionList() {
     }
 }
 
-void TA_OptionsSection::drawHighlight(double x, double y, double width) {
+void TA_OptionsSection::drawHighlight(float x, float y, float width) {
     SDL_FRect rect = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), 15};
 
     for(int num = 0; num < 4; num++) {
@@ -576,7 +576,7 @@ void TA_OptionsSection::drawHighlight(double x, double y, double width) {
     }
 }
 
-void TA_OptionsSection::drawHighlight(double y) {
+void TA_OptionsSection::drawHighlight(float y) {
     drawHighlight(getLeftX() + 4, y, 152);
 }
 

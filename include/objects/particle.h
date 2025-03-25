@@ -6,11 +6,11 @@
 class TA_Particle : public TA_Object {
 private:
     TA_Point velocity, delta;
-    double delay = 0, timer = 0;
+    float delay = 0, timer = 0;
 
 public:
     using TA_Object::TA_Object;
-    void load(std::string filename, TA_Point newPosition, TA_Point newVelocity, TA_Point newDelta, double newDelay = 0);
+    void load(std::string filename, TA_Point newPosition, TA_Point newVelocity, TA_Point newDelta, float newDelay = 0);
     bool update() override;
 };
 

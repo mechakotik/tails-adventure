@@ -17,9 +17,9 @@ namespace TA {
     extern SDL_Renderer* renderer;
 
     extern int screenWidth, screenHeight, scaleFactor;
-    extern double elapsedTime;
+    extern float elapsedTime;
 
-    constexpr double pi = 3.14159265358979323846;
+    constexpr float pi = 3.14159265358979323846;
 
     extern std::string levelPath, previousLevelPath;
     extern std::set<std::string> arguments;
@@ -27,7 +27,7 @@ namespace TA {
     void drawRect(TA_Point topLeft, TA_Point bottomRight, int r, int g, int b, int a);
     void drawScreenRect(int r, int g, int b, int a);
     void drawShadow(int factor);
-    double linearInterpolation(double left, double right, double pos);
+    float linearInterpolation(float left, float right, float pos);
     int getBaseHeight(int index);
 
     template <typename T>

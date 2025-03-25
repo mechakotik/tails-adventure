@@ -5,10 +5,10 @@
 
 class TA_EnemyMine : public TA_Object {
 private:
-    const double interval = 50;
+    const float interval = 50;
 
     TA_Point startPosition;
-    double timer = 0;
+    float timer = 0;
 
 public:
     using TA_Object::TA_Object;

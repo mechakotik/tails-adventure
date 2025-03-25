@@ -28,7 +28,7 @@ bool TA_DrillMole::update() {
 
 void TA_DrillMole::updatePosition() {
     State state;
-    double stateTime;
+    float stateTime;
     std::tie(state, stateTime) = getStateAndTime();
 
     switch(state) {
@@ -49,7 +49,7 @@ void TA_DrillMole::updatePosition() {
     TA_Object::updatePosition();
 }
 
-std::pair<TA_DrillMole::State, double> TA_DrillMole::getStateAndTime() {
+std::pair<TA_DrillMole::State, float> TA_DrillMole::getStateAndTime() {
     if(timer < idleTime) {
         return {STATE_IDLE_UP, timer / idleTime};
     }

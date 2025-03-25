@@ -70,7 +70,7 @@ void TA_Jumper::setJumpVelocity() {
     }
 
     velocity.x = tileDistance * jumpSpeed * (direction ? 1 : -1);
-    double jumpTime = tileDistance * 16 / std::abs(velocity.x), deltaY = getDistanceToCharacter().y;
+    float jumpTime = tileDistance * 16 / std::abs(velocity.x), deltaY = getDistanceToCharacter().y;
     velocity.y = (deltaY - jumpTime * (jumpTime - 1) * gravity / 2) / jumpTime;
 }
 
@@ -81,7 +81,7 @@ void TA_Jumper::updateJump() {
     int flags = moveAndCollide(TA_Point(4, 1), TA_Point(12, 31), velocity * TA::elapsedTime);
 
     if(flags & TA_CEIL_COLLISION) {
-        velocity.y = std::max(velocity.y, double(0));
+        velocity.y = std::max(velocity.y, float(0));
     }
     if(flags & TA_WALL_COLLISION) {
         velocity.x = 0;

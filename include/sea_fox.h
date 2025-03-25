@@ -9,14 +9,14 @@ class TA_SeaFox : public TA_Pawn {
 private:
     enum Item { ITEM_VULCAN_GUN = 4, ITEM_ANTI_AIR_MISSILE = 22 };
 
-    const double verticalDrag = double(1) / 32;
-    const double horizontalDrag = double(1) / 196;
-    const double inputDrag = double(1) / 20;
-    const double vulcanGunTime = 27;
-    const double vulcanGunInterval = 5;
-    const double invincibleTime = 120;
-    const double gravity = double(1) / 16;
-    const double deadTime = 120;
+    const float verticalDrag = float(1) / 32;
+    const float horizontalDrag = float(1) / 196;
+    const float inputDrag = float(1) / 20;
+    const float vulcanGunTime = 27;
+    const float vulcanGunInterval = 5;
+    const float invincibleTime = 120;
+    const float gravity = float(1) / 16;
+    const float deadTime = 120;
 
     void physicsStep();
     void updateDirection();
@@ -36,10 +36,10 @@ private:
     TA_Sound bulletSound, damageSound;
     bool flip = false, neededFlip = false, dead = false;
 
-    double vulcanGunTimer = vulcanGunTime + 1;
-    double invincibleTimer = invincibleTime + 1;
-    double waterLevel = -64;
-    double deadTimer = 0;
+    float vulcanGunTimer = vulcanGunTime + 1;
+    float invincibleTimer = invincibleTime + 1;
+    float waterLevel = -64;
+    float deadTimer = 0;
 
 public:
     void load(TA_Links links);

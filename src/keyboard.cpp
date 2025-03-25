@@ -91,7 +91,7 @@ TA_Point TA::keyboard::getDirectionVector() {
     vectors[TA_DIRECTION_DOWN] = {0, 1};
     vectors[TA_DIRECTION_LEFT] = {-1, 0};
     vectors[TA_DIRECTION_RIGHT] = {1, 0};
-    const double length = 0.8;
+    const float length = 0.8;
 
     if(verticalDirection == -1 || horizontalDirection == -1) {
         return (verticalDirection != -1 ? vectors[verticalDirection] : vectors[horizontalDirection]);

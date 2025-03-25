@@ -6,7 +6,7 @@
 class TA_BreakableBlock : public TA_Object {
 private:
     std::string particlePath;
-    const double grv = 0.35;
+    const float grv = 0.35;
     bool dropsRing;
     TA_Sound breakSound;
 

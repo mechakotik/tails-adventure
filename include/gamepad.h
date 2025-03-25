@@ -19,7 +19,7 @@ namespace TA {
         bool isJustPressed(TA_FunctionButton button);
         bool isControllerButtonPressed(SDL_GamepadButton button);
         bool isControllerButtonJustPressed(SDL_GamepadButton button);
-        void rumble(double lowFreqStrength, double highFreqStrength, int time);
+        void rumble(float lowFreqStrength, float highFreqStrength, int time);
     }
 }
 

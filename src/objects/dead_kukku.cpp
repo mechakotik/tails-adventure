@@ -8,7 +8,7 @@ void TA_DeadKukku::load(TA_Point newPosition) {
     setAnimation("death");
     position = newPosition;
     objectSet->spawnObject<TA_Explosion>(
-        position + TA_Point(double(TA::random::next() % 16) - 4, double(TA::random::next() % 16) - 8), 0,
+        position + TA_Point(float(TA::random::next() % 16) - 4, float(TA::random::next() % 16) - 8), 0,
         TA_EXPLOSION_NEUTRAL);
     if(objectSet->enemyShouldDropRing()) {
         objectSet->spawnObject<TA_Ring>(position + TA_Point(8, 24), -2.5);

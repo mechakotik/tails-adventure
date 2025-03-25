@@ -104,8 +104,8 @@ bool TA_InventoryMenu::update() {
 void TA_InventoryMenu::updateOnscreenButtons() {
     for(int x = 0; x < 4; x++) {
         for(int y = 0; y < 2; y++) {
-            double screenX = getLeftX() + 16 + 32 * x;
-            double screenY = getTopY() + (y == 0 ? 36 : 60);
+            float screenX = getLeftX() + 16 + 32 * x;
+            float screenY = getTopY() + (y == 0 ? 36 : 60);
             if(replace) {
                 screenY -= 2;
             }
@@ -354,8 +354,8 @@ void TA_InventoryMenu::drawItemList() {
 
     for(int x = page * 4; x < (page + 1) * 4; x++) {
         for(int y = 0; y < 2; y++) {
-            double screenX = getLeftX() + 24 + 32 * (x % 4);
-            double screenY = getTopY() + (y == 0 ? 40 : 64);
+            float screenX = getLeftX() + 24 + 32 * (x % 4);
+            float screenY = getTopY() + (y == 0 ? 40 : 64);
             if(replace) {
                 screenY -= 2;
             }
@@ -450,8 +450,8 @@ void TA_InventoryMenu::drawPointerController() {
         std::tie(pointerX, pointerY) = prevSelection;
     }
 
-    double screenX = getLeftX() + 24 + 32 * (pointerX % 4);
-    double screenY = getTopY() + (pointerY == 0 ? 40 : 64);
+    float screenX = getLeftX() + 24 + 32 * (pointerX % 4);
+    float screenY = getTopY() + (pointerY == 0 ? 40 : 64);
     if(replace) {
         screenY -= 2;
     }
@@ -473,8 +473,8 @@ void TA_InventoryMenu::drawPointerTouchscreen() {
         for(int x = 0; x < 4; x++) {
             for(int y = 0; y < 2; y++) {
                 if(buttons[x][y].isPressed()) {
-                    double screenX = getLeftX() + 24 + 32 * x;
-                    double screenY = getTopY() + (y == 0 ? 40 : 64);
+                    float screenX = getLeftX() + 24 + 32 * x;
+                    float screenY = getTopY() + (y == 0 ? 40 : 64);
                     if(replace) {
                         screenY -= 2;
                     }

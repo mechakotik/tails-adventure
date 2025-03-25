@@ -35,7 +35,7 @@ void TA_MechaGolem::load() {
     smallExplosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX3);
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
-    position = {double(128 + TA::screenWidth - 61), 160};
+    position = {float(128 + TA::screenWidth - 61), 160};
     objectSet->getLinks().camera->setLockPosition({128, 192 - TA::screenHeight});
     hitboxVector.assign(HITBOX_MAX, HitboxVectorElement());
 }
@@ -145,7 +145,7 @@ void TA_MechaGolem::updateWait() {
 
     // TODO: check point to line distance here
     if(!secondPhase) {
-        double distance = objectSet->getCharacterPosition().getDistance(position + TA_Point(-11, -42));
+        float distance = objectSet->getCharacterPosition().getDistance(position + TA_Point(-11, -42));
         if(distance < armMoveMaxDistance && previousState != STATE_ARM_MOVE_BACK) {
             initArmMove();
         } else {
@@ -154,7 +154,7 @@ void TA_MechaGolem::updateWait() {
     } else {
         if(previousState == STATE_GO_LEFT || previousState == STATE_GO_RIGHT) {
             timer = 0;
-            double characterX = objectSet->getCharacterPosition().x;
+            float characterX = objectSet->getCharacterPosition().x;
             if(TA::random::next() % 4 == 0) {
                 initGo();
             } else if(characterX < position.x && characterX > position.x - 48) {
@@ -171,7 +171,7 @@ void TA_MechaGolem::updateWait() {
 void TA_MechaGolem::initGo() {
     timer = 0;
     startX = position.x;
-    double cameraX = objectSet->getLinks().camera->getPosition().x;
+    float cameraX = objectSet->getLinks().camera->getPosition().x;
 
     if(position.x < cameraX + goBorder) {
         state = STATE_GO_RIGHT;
@@ -205,9 +205,9 @@ void TA_MechaGolem::updateGo() {
     position.x = startX + goDistance * (timer / goTime) * direction;
 
     if(timer < goTime / 2) {
-        double angle = (timer / (goTime / 2)) * TA::pi;
-        double x = startX + (-cos(angle) + 1) / 2 * goDistance * direction;
-        double y = sin(angle) * stepHeight;
+        float angle = (timer / (goTime / 2)) * TA::pi;
+        float x = startX + (-cos(angle) + 1) / 2 * goDistance * direction;
+        float y = sin(angle) * stepHeight;
 
         if(direction == -1) {
             leftFootSprite.setPosition(x + 5, position.y - 10 - y);
@@ -217,9 +217,9 @@ void TA_MechaGolem::updateGo() {
             rightFootSprite.setPosition(x + 26, position.y - 10 - y);
         }
     } else {
-        double angle = ((timer - goTime / 2) / (goTime / 2)) * TA::pi;
-        double x = startX + (-cos(angle) + 1) / 2 * goDistance * direction;
-        double y = sin(angle) * stepHeight;
+        float angle = ((timer - goTime / 2) / (goTime / 2)) * TA::pi;
+        float x = startX + (-cos(angle) + 1) / 2 * goDistance * direction;
+        float y = sin(angle) * stepHeight;
 
         if(direction == -1) {
             leftFootSprite.setPosition((startX + goDistance * direction) + 5, position.y - 10);
@@ -313,10 +313,10 @@ void TA_MechaGolem::updateArmCircle() {
     }
 
     TA_Point center = position + TA_Point(-20, -60);
-    double radius = center.getDistance(position + TA_Point(-11, -42));
+    float radius = center.getDistance(position + TA_Point(-11, -42));
 
-    double baseAngle = acos((position.x - 11 - center.x) / radius);
-    double angle = baseAngle + (timer / armCircleTime) * TA::pi * 2;
+    float baseAngle = acos((position.x - 11 - center.x) / radius);
+    float angle = baseAngle + (timer / armCircleTime) * TA::pi * 2;
     if(angle > TA::pi * 2) {
         angle -= TA::pi * 2;
     }
@@ -361,7 +361,7 @@ void TA_MechaGolem::updateArmBite2() {
     }
 
     armSprite.setAnimation("bite");
-    double angle = TA::pi / 2 + (timer / armBite2Time) * (timer / armBite2Time) * (TA::pi / 2);
+    float angle = TA::pi / 2 + (timer / armBite2Time) * (timer / armBite2Time) * (TA::pi / 2);
     armPosition.x = startPosition.x + (endPosition.x - startPosition.x) * (-cos(angle));
     armPosition.y = endPosition.y + (endPosition.y - startPosition.y) * (-sin(angle));
 }
@@ -400,7 +400,7 @@ void TA_MechaGolem::initBlow() {
 }
 
 void TA_MechaGolem::updateBlow() {
-    double prev = timer;
+    float prev = timer;
     timer += TA::elapsedTime;
 
     if(prev <= 32 && timer > 32) {
@@ -439,7 +439,7 @@ void TA_MechaGolem::updateDefeated() {
         state = STATE_WAIT_ITEM;
         return;
     }
-    double prev = timer;
+    float prev = timer;
     timer += TA::elapsedTime;
 
     if(!TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3)) {
@@ -546,7 +546,7 @@ void TA_MechaGolem::drawArm() {
     TA_Point startAdd = TA_Point(2, -26);
     TA_Point endAdd = (armPosition - position) + TA_Point(4, 8);
 
-    for(double part : {0.25, 0.5, 0.75}) {
+    for(float part : {0.25, 0.5, 0.75}) {
         TA_Point currentAdd = startAdd + (endAdd - startAdd) * part;
         currentAdd.x = round(currentAdd.x);
         currentAdd.y = round(currentAdd.y);

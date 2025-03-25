@@ -86,7 +86,7 @@ void TA_Bee::updateFlyDown() {
 }
 
 void TA_Bee::updateNormal() {
-    static constexpr double circleTime = 2 * TA::pi * circleRadius / flySpeed;
+    static constexpr float circleTime = 2 * TA::pi * circleRadius / flySpeed;
 
     timer += TA::elapsedTime;
     if(timer > circleTime) {
@@ -96,7 +96,7 @@ void TA_Bee::updateNormal() {
     }
 
     TA_Point circleCenter = (leftCircle ? leftCircleCenter : rightCircleCenter);
-    double circlePos = 2 * TA::pi * timer / circleTime;
+    float circlePos = 2 * TA::pi * timer / circleTime;
     if(!leftCircle) {
         circlePos += TA::pi;
         if(circlePos > TA::pi * 2) {
@@ -128,9 +128,9 @@ bool TA_StrongBee::update() {
         return true;
     }
 
-    double neededAngle = getNeedeedAngle();
-    double leftDist = std::fmod(angle - neededAngle + TA::pi * 2, TA::pi * 2);
-    double rightDist = std::fmod(neededAngle - angle + TA::pi * 2, TA::pi * 2);
+    float neededAngle = getNeedeedAngle();
+    float leftDist = std::fmod(angle - neededAngle + TA::pi * 2, TA::pi * 2);
+    float rightDist = std::fmod(neededAngle - angle + TA::pi * 2, TA::pi * 2);
     angle += rotateSpeed * (leftDist < rightDist ? -1 : 1) * TA::elapsedTime;
     angle = std::fmod(angle + TA::pi * 2, TA::pi * 2);
     position = position + TA_Point(std::cos(angle), std::sin(angle)) * speed;
@@ -143,9 +143,9 @@ bool TA_StrongBee::update() {
     return true;
 }
 
-double TA_StrongBee::getNeedeedAngle() {
+float TA_StrongBee::getNeedeedAngle() {
     TA_Point vector = objectSet->getCharacterPosition() - (position + TA_Point(8, 8));
-    double length = vector.length();
+    float length = vector.length();
     vector.x /= length;
     vector.y /= length;
     if(vector.y >= 0) {

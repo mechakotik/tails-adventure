@@ -5,7 +5,7 @@
 
 class TA_Wind : public TA_Object {
 private:
-    const double leafSpawnTime = 5;
+    const float leafSpawnTime = 5;
 
     enum Side { SIDE_UP, SIDE_DOWN, SIDE_LEFT, SIDE_RIGHT };
 
@@ -14,7 +14,7 @@ private:
     TA_Point getRandomPointOnSide(Side side);
 
     TA_Point velocity;
-    double timer = 0;
+    float timer = 0;
 
 protected:
     virtual bool shouldBlow();
@@ -39,10 +39,10 @@ public:
 
 class TA_Leaf : public TA_Object {
 private:
-    const double existTime = 200;
+    const float existTime = 200;
 
     TA_Point velocity;
-    double timer = 0;
+    float timer = 0;
 
 public:
     using TA_Object::TA_Object;

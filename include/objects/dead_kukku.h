@@ -6,10 +6,10 @@
 class TA_DeadKukku : public TA_Object {
 private:
     TA_Point velocity{0, -2.5};
-    double timer = 0;
+    float timer = 0;
 
-    const double grv = 0.125;
-    const double deathTime = 500;
+    const float grv = 0.125;
+    const float deathTime = 500;
 
 public:
     using TA_Object::TA_Object;

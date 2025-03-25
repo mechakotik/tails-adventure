@@ -28,7 +28,7 @@ bool TA_Fire::update() {
 }
 
 void TA_Fire::updateHitbox() {
-    double left = 0;
+    float left = 0;
     switch(getCurrentFrame()) {
         case 0:
             left = 0;
@@ -54,6 +54,6 @@ void TA_Fire::updateHitbox() {
 
 void TA_Fire::updateAlpha() {
     alphaTimer += TA::elapsedTime;
-    double factor = TA::linearInterpolation(128, 255, alphaTimer / alphaPeriod);
+    float factor = TA::linearInterpolation(128, 255, alphaTimer / alphaPeriod);
     TA_Sprite::setAlpha(factor);
 }

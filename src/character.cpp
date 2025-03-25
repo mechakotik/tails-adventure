@@ -44,7 +44,7 @@ void TA_Character::handleInput() {
     }
 
     physicsStep();
-    double prevX = position.x;
+    float prevX = position.x;
     updateCollisions();
     deltaX = position.x - prevX;
 
@@ -185,7 +185,7 @@ void TA_Character::updateAnimation() {
     } else {
         if(helitail) {
             if(getAnimationName() != "throw_helitail") {
-                double maxTime = getMaxHelitailTime();
+                float maxTime = getMaxHelitailTime();
                 if(helitailTime < maxTime / 3) {
                     setAnimation("helitail_full");
                 } else if(helitailTime < maxTime * 2 / 3) {
@@ -283,7 +283,7 @@ void TA_Character::updateRemoteRobotReturn() {
         return;
     }
 
-    double divisor = velocity.length();
+    float divisor = velocity.length();
     velocity.x /= divisor;
     velocity.y /= divisor;
     position = position + velocity * TA::elapsedTime;
@@ -313,7 +313,7 @@ void TA_Character::setWindVelocity(TA_Point windVelocity) {
     } else {
         ground = jump = helitail = false;
         velocity.y -= strongWindForce * TA::elapsedTime;
-        velocity.y = std::max(velocity.y, double(-5));
+        velocity.y = std::max(velocity.y, float(-5));
         strongWind = true;
         if(hurt && rings >= 1) {
             hurt = false;
@@ -322,7 +322,7 @@ void TA_Character::setWindVelocity(TA_Point windVelocity) {
     }
 }
 
-double TA_Character::getMaxHelitailTime() {
+float TA_Character::getMaxHelitailTime() {
     if(TA::levelPath == "maps/pm/pm4") {
         return 1e6;
     }

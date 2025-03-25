@@ -32,7 +32,7 @@ private:
         void processTouchInput();
         void processControllerInput();
         void select();
-        void drawHighlight(double y) const;
+        void drawHighlight(float y) const;
 
         TA_InventoryMenu inventoryMenu;
         TA_Sprite itemSprite, pointerSprite;
@@ -49,7 +49,7 @@ private:
         int globalAlpha = 0;
     };
 
-    static constexpr double transitionTime = 6;
+    static constexpr float transitionTime = 6;
 
     TA_Sprite frameSprite;
     SwitchMenu switchMenu;
@@ -58,7 +58,7 @@ private:
 
     bool replace = false;
     bool replaceWanted = false;
-    double timer = 0;
+    float timer = 0;
 };
 
 #endif // TA_PAUSE_MENU_H

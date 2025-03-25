@@ -11,9 +11,9 @@ public:
     int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
-    static constexpr double maxCharacterDist = 100;
-    static constexpr double speed = 1.33;
-    static constexpr double runTime = 90;
+    static constexpr float maxCharacterDist = 100;
+    static constexpr float speed = 1.33;
+    static constexpr float runTime = 90;
 
     enum class State { IDLE, COOLDOWN, RUN };
 
@@ -25,7 +25,7 @@ private:
 
     State state = State::IDLE;
     bool flip = false;
-    double timer = 0;
+    float timer = 0;
 };
 
 #endif // TA_LITTLE_KUKKU_H

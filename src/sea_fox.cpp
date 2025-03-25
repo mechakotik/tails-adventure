@@ -52,7 +52,7 @@ void TA_SeaFox::update() {
 }
 
 void TA_SeaFox::physicsStep() {
-    auto updateSpeed = [](double& currentSpeed, double neededSpeed, double drag) {
+    auto updateSpeed = [](float& currentSpeed, float neededSpeed, float drag) {
         if(currentSpeed > neededSpeed) {
             currentSpeed = std::max(neededSpeed, currentSpeed - drag * TA::elapsedTime);
         } else {
@@ -76,7 +76,7 @@ void TA_SeaFox::physicsStep() {
     }
 
     if(!underwater) {
-        velocity.y = std::min(double(1), velocity.y + gravity * TA::elapsedTime);
+        velocity.y = std::min(float(1), velocity.y + gravity * TA::elapsedTime);
     }
 
     moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), velocity * TA::elapsedTime, false);
