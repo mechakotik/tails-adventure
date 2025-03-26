@@ -34,7 +34,7 @@ void TA_Pawn::moveByX() {
         return !checkPawnCollision(hitbox);
     };
 
-    float left = 0, right = 1, eps = 1e-5;
+    float left = 0, right = 1, eps = 0.001;
     if(!isOutside(eps * 2)) {
         left = right = 0;
     } else if(isOutside(1)) {
@@ -70,7 +70,7 @@ void TA_Pawn::moveByY() {
         return !checkPawnCollision(hitbox);
     };
 
-    float left = 0, right = 1, eps = 1e-5;
+    float left = 0, right = 1, eps = 0.001;
     if(!isOutside(eps * 2)) {
         left = right = 0;
     } else if(isOutside(1)) {
@@ -109,7 +109,7 @@ void TA_Pawn::popOut() {
 }
 
 float TA_Pawn::getFirstGood(TA_Point delta) {
-    float left = 0, right = 1, eps = 1e-5;
+    float left = 0, right = 1, eps = 0.001;
     while((right - left) * delta.length() > eps) {
         float mid = (left + right) / 2;
         if(isGoodPosition(position + delta * mid)) {
@@ -132,18 +132,18 @@ int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight) {
     TA_Polygon hitbox;
     int flags = 0;
     hitbox.setRectangle(
-        TA_Point(topLeft.x + 0.001, bottomRight.y), TA_Point(bottomRight.x - 0.001, bottomRight.y + 0.001));
+        TA_Point(topLeft.x + 0.005, bottomRight.y), TA_Point(bottomRight.x - 0.005, bottomRight.y + 0.005));
     hitbox.setPosition(position);
     if(checkPawnCollision(hitbox)) {
         flags |= TA_GROUND_COLLISION;
     }
 
-    hitbox.setRectangle(TA_Point(topLeft.x + 0.001, topLeft.y - 0.001), TA_Point(bottomRight.x - 0.001, topLeft.y));
+    hitbox.setRectangle(TA_Point(topLeft.x + 0.005, topLeft.y - 0.005), TA_Point(bottomRight.x - 0.005, topLeft.y));
     if(checkPawnCollision(hitbox)) {
         flags |= TA_CEIL_COLLISION;
     }
 
-    hitbox.setRectangle(topLeft + TA_Point(-0.001, 1), bottomRight + TA_Point(0.001, -1));
+    hitbox.setRectangle(topLeft + TA_Point(-0.005, 1), bottomRight + TA_Point(0.005, -1));
     if(checkPawnCollision(hitbox)) {
         flags |= TA_WALL_COLLISION;
     }

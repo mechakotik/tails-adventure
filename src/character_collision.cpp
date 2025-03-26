@@ -154,8 +154,8 @@ void TA_Character::updateCollisions() {
         TA_Polygon leftHalf, rightHalf;
         {
             float middleX = (topLeft.x + bottomRight.x) / 2;
-            leftHalf.setRectangle(topLeft - TA_Point(0.001, 0.001), {middleX, bottomRight.y + 0.001});
-            rightHalf.setRectangle({middleX, topLeft.y - 0.001}, bottomRight + TA_Point(0.001, 0.001));
+            leftHalf.setRectangle(topLeft - TA_Point(0.01, 0.01), {middleX, bottomRight.y + 0.01});
+            rightHalf.setRectangle({middleX, topLeft.y - 0.01}, bottomRight + TA_Point(0.01, 0.01));
             leftHalf.setPosition(position);
             rightHalf.setPosition(position);
         }

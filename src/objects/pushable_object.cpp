@@ -49,7 +49,7 @@ void TA_PushableSpring::load(TA_Point newPosition) {
     springBounceSprite.setCamera(objectSet->getLinks().camera);
 
     HitboxVectorElement element;
-    element.hitbox.setRectangle({0.1, -0.1}, {getWidth() - 0.1, 0});
+    element.hitbox.setRectangle({0.5, -0.1}, {getWidth() - 0.5, 0});
     element.collisionType = TA_COLLISION_SPRING;
     hitboxVector.push_back(element);
 }

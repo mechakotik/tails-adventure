@@ -54,10 +54,10 @@ void TA_MovingPlatform::moveCharacter() {
 
 bool TA_MovingPlatform::characterIsOnTop() {
     TA_Polygon topHitbox;
-    topHitbox.setRectangle(TA_Point(0, -0.01), TA_Point(32, 0.01));
+    topHitbox.setRectangle(TA_Point(0, -0.05), TA_Point(32, 0.05));
     topHitbox.setPosition(prevPosition);
 
-    if((objectSet->checkCollision(topHitbox) & TA_COLLISION_CHARACTER) != 0&&
+    if((objectSet->checkCollision(topHitbox) & TA_COLLISION_CHARACTER) != 0 &&
         objectSet->getLinks().character->isOnGround() && !objectSet->getLinks().character->isClimbing()) {
         return true;
     }
@@ -72,10 +72,9 @@ bool TA_MovingPlatform::exceedsBorder() {
     if(moveByX()) {
         float startX = startPosition.x, endX = endPosition.x;
         return !(std::min(startX, endX) <= position.x && position.x <= std::max(startX, endX));
-    } else {
-        float startY = startPosition.y, endY = endPosition.y;
-        return !(std::min(startY, endY) <= position.y && position.y <= std::max(startY, endY));
     }
+    float startY = startPosition.y, endY = endPosition.y;
+    return !(std::min(startY, endY) <= position.y && position.y <= std::max(startY, endY));
 }
 
 int TA_MovingPlatform::getCollisionType() {
