@@ -53,8 +53,8 @@ public:
 
 private:
     static constexpr float idleTime = 40;
-    static constexpr float speed = 0.4;
-    static constexpr float rotateSpeed = 0.25;
+    static constexpr float speed = 1;
+    static constexpr float rotateSpeed = 0.1;
 
     float getNeedeedAngle();
 

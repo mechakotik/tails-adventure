@@ -133,7 +133,8 @@ bool TA_StrongBee::update() {
     float rightDist = std::fmod(neededAngle - angle + TA::pi * 2, TA::pi * 2);
     angle += rotateSpeed * (leftDist < rightDist ? -1 : 1) * TA::elapsedTime;
     angle = std::fmod(angle + TA::pi * 2, TA::pi * 2);
-    position = position + TA_Point(std::cos(angle), std::sin(angle)) * speed;
+    position = position + TA_Point(std::cos(angle), std::sin(angle)) * speed * TA::elapsedTime;
+    setFlip(std::cos(angle) > 0);
     updatePosition();
 
     if((objectSet->checkCollision(hitbox) & (TA_COLLISION_ATTACK | TA_COLLISION_NAPALM)) != 0) {
