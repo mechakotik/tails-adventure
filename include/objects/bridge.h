@@ -10,7 +10,7 @@ private:
     TA_BridgeState state = TA_BRIDGE_STATE_IDLE;
     TA_Sound breakSound;
     TA_Point velocity;
-    TA_Polygon collisionHitbox;
+    TA_Rect collisionHitbox;
     std::string particleFilename;
     float timer = 0;
     bool particlesThrown = false;

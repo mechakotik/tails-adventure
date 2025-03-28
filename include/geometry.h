@@ -3,10 +3,12 @@
 
 #include <cmath>
 #include <cstddef>
+#include <eve/module/core.hpp>
+#include <eve/wide.hpp>
 #include <vector>
 
 namespace TA {
-    constexpr float epsilon = 1e-5;
+    constexpr float epsilon = 0.001;
 
     inline bool equal(const float& a, const float& b) {
         return std::abs(a - b) < epsilon;
@@ -30,8 +32,75 @@ struct TA_Point {
     [[nodiscard]] float getDistance(const TA_Point& rv) const { return (*this - rv).length(); }
 };
 
-struct TA_Rect {
-    TA_Point topLeft, bottomRight;
+class TA_Rect {
+public:
+    TA_Rect() {
+        std::fill(src.begin(), src.end(), 0);
+        std::fill(pos.begin(), pos.end(), 0);
+        std::fill(data.begin(), data.end(), 0);
+    }
+
+    TA_Rect(TA_Point topLeft, TA_Point bottomRight) {
+        pos[0] = pos[1] = pos[2] = pos[3] = 0;
+        setRectangle(topLeft, bottomRight);
+    }
+
+    void setRectangle(TA_Point topLeft, TA_Point bottomRight) {
+        src[0] = topLeft.x;
+        src[1] = topLeft.y;
+        src[2] = bottomRight.x;
+        src[3] = bottomRight.y;
+        updateData();
+    }
+
+    void setPosition(TA_Point position) {
+        pos[0] = pos[2] = position.x;
+        pos[1] = pos[3] = position.y;
+        updateData();
+    }
+
+    [[nodiscard]] TA_Point getTopLeft() const { return {data[0], data[1]}; }
+
+    [[nodiscard]] TA_Point getBottomRight() const { return {data[2], data[3]}; }
+
+    [[nodiscard]] bool intersects(const TA_Rect& rv) const {
+        eve::wide<float, eve::fixed<4>> v1{data.data()};
+        eve::wide<float, eve::fixed<4>> v2 =
+            eve::gather(rv.data.data(), eve::wide<unsigned char, eve::fixed<4>>{2, 3, 0, 1});
+        eve::logical<eve::wide<float, eve::fixed<4>>> mask{1, 1, 0, 0};
+        return eve::all((v1 < v2) == mask);
+    }
+
+    // kept for compatibility
+
+    [[nodiscard]] bool inside(TA_Point pt) const {
+        return data[0] <= pt.x && pt.x <= data[2] && data[1] <= pt.y && pt.y <= data[3];
+    }
+
+    [[nodiscard]] TA_Point getVertex(int pos) const {
+        switch(pos) {
+            case 0:
+                return {data[0], data[1]};
+            case 1:
+                return {data[2], data[1]};
+            case 2:
+                return {data[2], data[3]};
+            case 3:
+                return {data[0], data[3]};
+            default:
+                return {data[0], data[2]};
+        }
+    }
+
+private:
+    void updateData() {
+        eve::wide<float, eve::fixed<4>> srcVector{src.data()};
+        eve::wide<float, eve::fixed<4>> posVector{pos.data()};
+        eve::wide<float, eve::fixed<4>> dataVector = srcVector + posVector;
+        eve::store(dataVector, data.data());
+    }
+
+    std::array<float, 4> src, pos, data;
 };
 
 class TA_Line {
@@ -115,20 +184,20 @@ public:
         return count % 2 == 1;
     }
 
-    [[nodiscard]] bool intersects(const TA_Polygon& rv) const {
-        if(empty() || rv.empty()) [[unlikely]] {
-            return false;
-        }
-
-        if(isRectangle() && rv.isRectangle()) [[likely]] {
+    [[nodiscard]] bool intersects(const TA_Rect& rv) const {
+        if(isRectangle()) [[likely]] {
             return getTopLeft().x < rv.getBottomRight().x && getBottomRight().x > rv.getTopLeft().x &&
                    getTopLeft().y < rv.getBottomRight().y && getBottomRight().y > rv.getTopLeft().y;
         }
 
+        if(empty()) [[unlikely]] {
+            return false;
+        }
+
         for(int pos1 = 0; pos1 < size(); pos1++) {
             const TA_Line line1 = {getVertex(pos1), getVertex((pos1 + 1) % size())};
-            for(int pos2 = 0; pos2 < rv.size(); pos2++) {
-                const TA_Line line2 = {rv.getVertex(pos2), rv.getVertex((pos2 + 1) % rv.size())};
+            for(int pos2 = 0; pos2 < 4; pos2++) {
+                const TA_Line line2 = {rv.getVertex(pos2), rv.getVertex((pos2 + 1) % 4)};
                 if(line1.intersects(line2)) {
                     return true;
                 }

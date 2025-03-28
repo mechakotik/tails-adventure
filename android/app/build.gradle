@@ -4,16 +4,17 @@ plugins {
 
 android {
     namespace "com.mechakotik.tailsadventure"
-    compileSdkVersion 34
+    ndkVersion "29.0.13113456"
+    compileSdkVersion 36
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 34
+        minSdkVersion 21
+        targetSdkVersion 36
         versionCode 7
         versionName "0.2.3"
         externalNativeBuild {
             cmake {
                 arguments "-DANDROID_PLATFORM=android-19", "-DANDROID_STL=c++_static"
-                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+                abiFilters 'armeabi-v7a', 'arm64-v8a'/*, 'x86', 'x86_64'*/
             }
         }
     }

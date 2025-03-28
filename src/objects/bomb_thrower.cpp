@@ -132,7 +132,7 @@ bool TA_EnemyBomb::update() {
     return true;
 }
 
-bool TA_EnemyBomb::checkPawnCollision(TA_Polygon& hitbox) {
+bool TA_EnemyBomb::checkPawnCollision(TA_Rect& hitbox) {
     if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_CHARACTER)) {
         return true;
     }

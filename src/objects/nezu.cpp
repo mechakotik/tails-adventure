@@ -106,7 +106,7 @@ bool TA_Nezu::updateFall() {
     fallSpeed = std::min(fallSpeed, maxFallSpeed);
     position.y += fallSpeed * TA::elapsedTime;
 
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
     hitbox.setRectangle(TA_Point(2, 0), TA_Point(14, 16));
     hitbox.setPosition(position);
 
@@ -124,7 +124,7 @@ TA_Point TA_Nezu::getDistanceToCharacter() {
 }
 
 bool TA_Nezu::isBadPosition(TA_Point position) {
-    TA_Polygon groundHitbox, wallHitbox;
+    TA_Rect groundHitbox, wallHitbox;
     if(direction) {
         groundHitbox.setRectangle(TA_Point(17, 18), TA_Point(18, 19));
         wallHitbox.setRectangle(TA_Point(16, 0), TA_Point(18, 10));
@@ -156,7 +156,7 @@ bool TA_Nezu::isCloseToCharacter() {
 }
 
 bool TA_Nezu::isGoingToFall() {
-    TA_Polygon groundHitbox;
+    TA_Rect groundHitbox;
     groundHitbox.setRectangle(TA_Point(2, 15), TA_Point(14, 17));
     groundHitbox.setPosition(position);
 

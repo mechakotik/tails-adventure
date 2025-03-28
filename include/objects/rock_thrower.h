@@ -47,7 +47,7 @@ public:
     void load(TA_Point position, TA_Point velocity);
     bool update() override;
     int getCollisionType() override { return TA_COLLISION_DAMAGE; }
-    bool checkPawnCollision(TA_Polygon& hitbox) override;
+    bool checkPawnCollision(TA_Rect& hitbox) override;
 };
 
 #endif // TA_ROCK_THROWER_H

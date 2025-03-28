@@ -12,7 +12,7 @@ void TA_BatRobot::load(TA_Point newPosition) {
     updatePosition();
 }
 
-bool TA_BatRobot::checkPawnCollision(TA_Polygon& collisionHitbox) {
+bool TA_BatRobot::checkPawnCollision(TA_Rect& collisionHitbox) {
     int flags = objectSet->checkCollision(collisionHitbox);
     return flags & TA_COLLISION_SOLID;
 }

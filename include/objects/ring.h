@@ -25,7 +25,7 @@ public:
     void load(TA_Point position, float startSpeed = -2);
     void loadStationary(TA_Point position);
     bool update() override;
-    bool checkPawnCollision(TA_Polygon& hitbox) override;
+    bool checkPawnCollision(TA_Rect& hitbox) override;
     int getDrawPriority() override { return 1; }
 };
 

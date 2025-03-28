@@ -64,7 +64,7 @@ private:
 
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
-    TA_Polygon hitbox, hammerHitbox;
+    TA_Rect hitbox, hammerHitbox;
     TA_Point topLeft, bottomRight;
     TA_Point windVelocity;
 
@@ -105,7 +105,7 @@ private:
 
     void updateFollowPosition();
     void horizontalMove();
-    bool checkPawnCollision(TA_Polygon& hitbox) override;
+    bool checkPawnCollision(TA_Rect& hitbox) override;
     void updateCollisions();
     void updateAnimation();
     void updateClimb();
@@ -137,8 +137,8 @@ public:
     bool getBombDestroySignal() { return bombDestroySignal; }
     bool isClimbing() { return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH; }
 
-    TA_Polygon* getHitbox() { return &hitbox; }
-    TA_Polygon* getHammerHitbox() { return &hammerHitbox; }
+    TA_Rect* getHitbox() { return &hitbox; }
+    TA_Rect* getHammerHitbox() { return &hammerHitbox; }
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() { return position; }
     TA_Point getVelocity() { return velocity; }

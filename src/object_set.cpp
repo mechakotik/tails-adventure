@@ -351,11 +351,7 @@ void TA_ObjectSet::draw(int priority) {
     }
 }
 
-void TA_ObjectSet::checkCollision(TA_Polygon& hitbox, int& flags) {
-    if(hitbox.empty()) {
-        return;
-    }
-
+void TA_ObjectSet::checkCollision(TA_Rect& hitbox, int& flags) {
     flags = links.tilemap->checkCollision(hitbox);
     flags |= hitboxContainer.getCollisionFlags(hitbox);
 
@@ -368,13 +364,12 @@ void TA_ObjectSet::checkCollision(TA_Polygon& hitbox, int& flags) {
     if(links.character && links.character->isUsingHammer() && links.character->getHammerHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_ATTACK;
     }
-
     if(links.seaFox && links.seaFox->getDrillHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_DRILL;
     }
 }
 
-int TA_ObjectSet::checkCollision(TA_Polygon& hitbox) {
+int TA_ObjectSet::checkCollision(TA_Rect& hitbox) {
     int flags = 0;
     checkCollision(hitbox, flags);
     return flags;
@@ -409,9 +404,9 @@ int TA_ObjectSet::getEmeraldsCount() {
     return count;
 }
 
-bool TA_ObjectSet::isVisible(TA_Polygon& hitbox) {
+bool TA_ObjectSet::isVisible(TA_Rect& hitbox) {
     TA_Point cameraPosition = links.camera->getPosition();
-    TA_Polygon cameraRect;
+    TA_Rect cameraRect;
     cameraRect.setRectangle(
         cameraPosition - TA_Point(5, 5), cameraPosition + TA_Point(TA::screenWidth + 5, TA::screenHeight + 5));
     return cameraRect.intersects(hitbox);

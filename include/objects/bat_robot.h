@@ -22,7 +22,7 @@ public:
     void load(TA_Point newPosition);
     bool update() override;
     int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
-    bool checkPawnCollision(TA_Polygon& collisionHitbox) override;
+    bool checkPawnCollision(TA_Rect& collisionHitbox) override;
 };
 
 #endif // TA_BAT_ROBOT_H

@@ -29,6 +29,7 @@ Checks: >
   -llvmlibc-restrict-system-libc-headers,
   misc-*,
   -misc-no-recursion,
+  -misc-const-correctness,
   modernize-*,
   -modernize-use-trailing-return-type,
   performance-*,

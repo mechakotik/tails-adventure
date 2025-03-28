@@ -17,24 +17,24 @@ enum TA_BombMode : int;
 
 class TA_Object : public TA_Pawn {
 private:
-    bool checkPawnCollision(TA_Polygon& rv) override { return false; }
+    bool checkPawnCollision(TA_Rect& rv) override { return false; }
 
 protected:
     virtual void updatePosition();
 
 public:
     TA_ObjectSet* objectSet;
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
 
     struct HitboxVectorElement {
-        TA_Polygon hitbox;
+        TA_Rect hitbox;
         int collisionType;
     };
     std::vector<HitboxVectorElement> hitboxVector;
 
     TA_Object(TA_ObjectSet* newObjectSet);
     virtual bool update() { return false; }
-    virtual bool checkCollision(TA_Polygon rv) {
+    virtual bool checkCollision(TA_Rect rv) {
         return getCollisionType() != TA_COLLISION_TRANSPARENT && hitbox.intersects(rv);
     }
     virtual int getCollisionType() { return TA_COLLISION_TRANSPARENT; }
@@ -70,8 +70,8 @@ public:
     void update();
     void draw(int priority);
 
-    void checkCollision(TA_Polygon& hitbox, int& flags);
-    int checkCollision(TA_Polygon& hitbox);
+    void checkCollision(TA_Rect& hitbox, int& flags);
+    int checkCollision(TA_Rect& hitbox);
     void setTransition(TA_ScreenState screenState) { transition = screenState; }
     TA_ScreenState getTransition() { return transition; }
     bool hasCollisionType(TA_CollisionType type) { return hitboxContainer.hasCollisionType(type); }
@@ -81,7 +81,7 @@ public:
     } // TODO: figure out what it is
     bool isPaused() { return paused; }
     void setPaused(bool enabled) { paused = enabled; }
-    bool isVisible(TA_Polygon& hitbox);
+    bool isVisible(TA_Rect& hitbox);
 
     int getEmeraldsCount();
     int getMaxRings() { return 8 + 2 * getEmeraldsCount(); }

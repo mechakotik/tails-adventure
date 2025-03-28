@@ -9,7 +9,7 @@ void TA_PushableObject::load(std::string filename, TA_Point newPosition) {
 }
 
 bool TA_PushableObject::update() {
-    TA_Polygon leftHitbox, rightHitbox;
+    TA_Rect leftHitbox, rightHitbox;
     leftHitbox.setRectangle(TA_Point(-0.1, getHeight() / 2), TA_Point(0, getHeight()));
     rightHitbox.setRectangle(TA_Point(getWidth(), getHeight() / 2), TA_Point(getWidth() + 0.1, getHeight()));
     leftHitbox.setPosition(position);
@@ -35,7 +35,7 @@ bool TA_PushableObject::update() {
     return true;
 }
 
-bool TA_PushableObject::checkPawnCollision(TA_Polygon& hitbox) {
+bool TA_PushableObject::checkPawnCollision(TA_Rect& hitbox) {
     int flags = objectSet->checkCollision(hitbox);
     if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP)) {
         return true;

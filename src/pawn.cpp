@@ -22,7 +22,7 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
 }
 
 void TA_Pawn::moveByX() {
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
     if(ground) {
         hitbox.setRectangle(topLeft + TA_Point(0, 1), bottomRight - TA_Point(0, 1));
     } else {
@@ -62,7 +62,7 @@ void TA_Pawn::moveByY() {
         velocity.y = 4;
     }
 
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
     hitbox.setRectangle(topLeft, bottomRight);
 
     auto isOutside = [&](float factor) {
@@ -122,14 +122,14 @@ float TA_Pawn::getFirstGood(TA_Point delta) {
 }
 
 bool TA_Pawn::isGoodPosition(TA_Point position) {
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
     hitbox.setRectangle(topLeft, bottomRight);
     hitbox.setPosition(position);
     return !checkPawnCollision(hitbox);
 }
 
 int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight) {
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
     int flags = 0;
     hitbox.setRectangle(
         TA_Point(topLeft.x + 0.005, bottomRight.y), TA_Point(bottomRight.x - 0.005, bottomRight.y + 0.005));

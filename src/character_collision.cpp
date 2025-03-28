@@ -6,7 +6,7 @@
 #include "splash.h"
 #include "tilemap.h"
 
-bool TA_Character::checkPawnCollision(TA_Polygon& checkHitbox) {
+bool TA_Character::checkPawnCollision(TA_Rect& checkHitbox) {
     int flags = 0;
     links.objectSet->checkCollision(checkHitbox, flags);
     if((flags & (TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE)) != 0) {
@@ -45,7 +45,7 @@ void TA_Character::updateCollisions() {
     } else {
         if(velocity.y > -0.01 && !useSolidUpTiles) {
             useSolidUpTiles = true;
-            TA_Polygon hitbox;
+            TA_Rect hitbox;
             hitbox.setRectangle(topLeft, bottomRight);
             hitbox.setPosition(position);
             if(checkPawnCollision(hitbox)) {
@@ -56,7 +56,7 @@ void TA_Character::updateCollisions() {
         }
         if(velocity.y < 0.01 && !useSolidDownTiles) {
             useSolidDownTiles = true;
-            TA_Polygon hitbox;
+            TA_Rect hitbox;
             hitbox.setRectangle(topLeft, bottomRight);
             hitbox.setPosition(position);
             if(checkPawnCollision(hitbox)) {
@@ -127,7 +127,7 @@ void TA_Character::updateCollisions() {
     }
 
     if(!remoteRobot && !hurt && invincibleTimeLeft <= 0) {
-        auto handleDamage = [&](TA_Polygon& hitbox, int sign) {
+        auto handleDamage = [&](TA_Rect& hitbox, int sign) {
             if(hurt) {
                 return;
             }
@@ -151,7 +151,7 @@ void TA_Character::updateCollisions() {
             }
         };
 
-        TA_Polygon leftHalf, rightHalf;
+        TA_Rect leftHalf, rightHalf;
         {
             float middleX = (topLeft.x + bottomRight.x) / 2;
             leftHalf.setRectangle(topLeft - TA_Point(0.01, 0.01), {middleX, bottomRight.y + 0.01});
@@ -220,7 +220,7 @@ void TA_Character::updateClimb() {
         }
 
         TA_Point topLeft = TA_Point(16, 12), bottomRight = TA_Point(32, 39);
-        TA_Polygon hitbox;
+        TA_Rect hitbox;
         hitbox.setRectangle(topLeft, bottomRight);
         hitbox.setPosition(climbPosition);
         if(ground) {
@@ -290,7 +290,7 @@ void TA_Character::updateClimb() {
 }
 
 void TA_Character::updateSpringCollision() {
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
     hitbox.setPosition(position);
     hitbox.setRectangle({topLeft.x + 0.01, bottomRight.y - 0.01}, bottomRight + TA_Point(-0.01, 0.01));
 
@@ -305,7 +305,7 @@ void TA_Character::updateSpringCollision() {
 }
 
 void TA_Character::updateWaterCollision() {
-    TA_Polygon hitbox;
+    TA_Rect hitbox;
     hitbox.setPosition(position);
     hitbox.setRectangle(topLeft, bottomRight);
 

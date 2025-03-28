@@ -78,7 +78,7 @@ bool TA_LittleKukku::isGoodPosition(TA_Point newPosition) {
     hitbox.setPosition(position);
     if(wall) return false;
 
-    TA_Polygon groundHitbox;
+    TA_Rect groundHitbox;
     groundHitbox.setRectangle({-4, 16}, {-2, 18});
     groundHitbox.setPosition(newPosition);
     if((objectSet->checkCollision(groundHitbox) & solidFlags) == 0) {

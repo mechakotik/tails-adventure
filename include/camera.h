@@ -13,7 +13,8 @@ private:
 
     TA_Point position, lockPosition, shakeDelta;
     TA_Point* followPosition;
-    TA_Rect border;
+    TA_Point borderTopLeft;
+    TA_Point borderBottomRight;
 
     int yTopOffset, yBottomOffset;
     bool locked = false, lockedX = false, lockedY = false;
@@ -26,7 +27,7 @@ public:
     void forceLockX();
     bool isLocked() { return locked && lockedX && lockedY; }
     void unlock() { locked = lockedX = lockedY = false; }
-    void setBorder(TA_Rect newBorder) { border = newBorder; }
+    void setBorder(TA_Point topLeft, TA_Point bottomRight);
     void shake(float time) { shakeTime = time; }
     TA_Point getPosition() { return position + shakeDelta; }
     TA_Point getRelative(TA_Point realPosition) { return realPosition - (position + shakeDelta); }

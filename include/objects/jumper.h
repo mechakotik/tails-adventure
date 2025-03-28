@@ -19,7 +19,7 @@ private:
     void setJumpVelocity();
     void updateDirection();
     bool isCloseToCharacter();
-    bool checkPawnCollision(TA_Polygon& hitbox) override;
+    bool checkPawnCollision(TA_Rect& hitbox) override;
     bool shouldBeDestroyed();
     void destroy() override;
 

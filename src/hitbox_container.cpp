@@ -1,14 +1,10 @@
 #include "hitbox_container.h"
 
-void TA_HitboxContainer::add(TA_Polygon& hitbox, int type) {
+void TA_HitboxContainer::add(TA_Rect& hitbox, int type) {
     if(type == TA_COLLISION_TRANSPARENT) {
         return;
     }
     collisionTypeMask |= type;
-
-    if(hitbox.empty()) {
-        return;
-    }
 
     Element element = {.hitbox = hitbox, .type = type};
     hitboxes.push_back(element);
@@ -42,7 +38,7 @@ void TA_HitboxContainer::add(TA_Polygon& hitbox, int type) {
     }
 }
 
-int TA_HitboxContainer::getCollisionFlags(TA_Polygon& hitbox) {
+int TA_HitboxContainer::getCollisionFlags(TA_Rect& hitbox) {
     int flags = 0;
 
     auto processChunk = [&](Chunk& chunk) {

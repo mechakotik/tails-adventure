@@ -26,7 +26,7 @@ void TA_Ring::loadStationary(TA_Point position) {
     stationary = true;
 }
 
-bool TA_Ring::checkPawnCollision(TA_Polygon& hitbox) {
+bool TA_Ring::checkPawnCollision(TA_Rect& hitbox) {
     int flags;
     objectSet->checkCollision(hitbox, flags);
     return flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP);

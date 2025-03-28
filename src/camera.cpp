@@ -25,6 +25,11 @@ void TA_Camera::forceLockX() {
     lockedX = true;
 }
 
+void TA_Camera::setBorder(TA_Point topLeft, TA_Point bottomRight) {
+    this->borderTopLeft = topLeft;
+    this->borderBottomRight = bottomRight;
+}
+
 void TA_Camera::update(bool ground, bool spring) {
     updateOffset();
     float movementSpeed = airSpeed;
@@ -85,8 +90,8 @@ void TA_Camera::update(bool ground, bool spring) {
         return current;
     };
 
-    position.x = normalize(position.x, border.topLeft.x, border.bottomRight.x - TA::screenWidth);
-    position.y = normalize(position.y, border.topLeft.y, border.bottomRight.y - TA::screenHeight);
+    position.x = normalize(position.x, borderTopLeft.x, borderBottomRight.x - TA::screenWidth);
+    position.y = normalize(position.y, borderTopLeft.y, borderBottomRight.y - TA::screenHeight);
 
     if(shakeTime > 0) {
         int previousStep = shakeTime / shakeFrequency;

@@ -87,7 +87,7 @@ void TA_ItemBox::updateFall() {
     }
 }
 
-bool TA_ItemBox::checkPawnCollision(TA_Polygon& hitbox) {
+bool TA_ItemBox::checkPawnCollision(TA_Rect& hitbox) {
     int flags = objectSet->checkCollision(hitbox);
     return (flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) != 0;
 }

@@ -107,6 +107,8 @@ else()
     add_executable(tails-adventure ${TA_SOURCES} ${WIN32_RESOURCES})
 endif()
 
+target_compile_options(tails-adventure PRIVATE -O3)
+
 if(TA_CLANG_TIDY)
     find_program(CLANG_TIDY NAMES "clang-tidy")
     set_target_properties(tails-adventure PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY}")
@@ -142,8 +144,8 @@ target_include_directories(tails-adventure PRIVATE
     external/SDL_image/include
     external/SDL_mixer/include
     external/tmxpp/include
-    external/tinyxml2
     external/toml11/include
+    external/eve/include
 )
 
 if(TA_STATIC)

@@ -53,7 +53,7 @@ void TA_MovingPlatform::moveCharacter() {
 }
 
 bool TA_MovingPlatform::characterIsOnTop() {
-    TA_Polygon topHitbox;
+    TA_Rect topHitbox;
     topHitbox.setRectangle(TA_Point(0, -0.05), TA_Point(32, 0.05));
     topHitbox.setPosition(prevPosition);
 

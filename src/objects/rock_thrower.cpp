@@ -150,7 +150,7 @@ void TA_EnemyRock::updateCollision() {
     }
 }
 
-bool TA_EnemyRock::checkPawnCollision(TA_Polygon& hitbox) {
+bool TA_EnemyRock::checkPawnCollision(TA_Rect& hitbox) {
     if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) {
         return true;
     }

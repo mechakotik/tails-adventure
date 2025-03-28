@@ -27,12 +27,12 @@ private:
     void updateDamage();
     void dropRings();
     void updateDead();
-    bool checkPawnCollision(TA_Polygon& hitbox) override;
+    bool checkPawnCollision(TA_Rect& hitbox) override;
 
     TA_Links links;
     TA_Point velocity{0, 0};
     TA_Point followPosition;
-    TA_Polygon hitbox, drillHitbox;
+    TA_Rect hitbox, drillHitbox;
     TA_Sound bulletSound, damageSound;
     bool flip = false, neededFlip = false, dead = false;
 
@@ -46,8 +46,8 @@ public:
     void update();
 
     void setSpawnPoint(TA_Point position, bool flip);
-    TA_Polygon* getHitbox() { return &hitbox; }
-    TA_Polygon* getDrillHitbox() { return &drillHitbox; }
+    TA_Rect* getHitbox() { return &hitbox; }
+    TA_Rect* getDrillHitbox() { return &drillHitbox; }
     bool gameOver() { return dead && deadTimer >= deadTime; }
 };
 

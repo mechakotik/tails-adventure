@@ -52,7 +52,7 @@ private:
     int health = 8;
 
     std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, flipHitboxVector;
-    TA_Polygon weakHitbox;
+    TA_Rect weakHitbox;
 
     float floorY, timer = 0, jumpTimer = 0, flashTimer = damageFlashTime * 5;
 

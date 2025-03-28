@@ -8,7 +8,7 @@ void TA_AntiAirMissile::load(TA_Point position) {
     this->position = position;
     updatePosition();
 
-    TA_Polygon aimHitbox;
+    TA_Rect aimHitbox;
     aimHitbox.setRectangle({-24, -128}, {24, 0});
     aimHitbox.setPosition(position);
     bool centerGood = (objectSet->checkCollision(aimHitbox) & TA_COLLISION_TARGET) != 0;

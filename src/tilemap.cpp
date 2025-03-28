@@ -168,7 +168,7 @@ void TA_Tilemap::draw(int priority) {
 
 void TA_Tilemap::setCamera(TA_Camera* newCamera) {
     camera = newCamera;
-    newCamera->setBorder({TA_Point(0, 0), TA_Point(width * tileWidth, height * tileHeight)});
+    newCamera->setBorder(TA_Point(0, 0), TA_Point(width * tileWidth, height * tileHeight));
     for(size_t tile = 0; tile < tileset.size(); tile += 1) {
         tileset[tile].sprite.setCamera(newCamera);
     }
@@ -178,11 +178,11 @@ void TA_Tilemap::setPosition(TA_Point position) {
     this->position = position;
 }
 
-int TA_Tilemap::checkCollision(TA_Polygon& polygon) {
+int TA_Tilemap::checkCollision(TA_Rect& rect) {
     int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
 
-    for(int pos = 0; pos < polygon.size(); pos++) {
-        TA_Point vertex = polygon.getVertex(pos);
+    for(int pos = 0; pos < 4; pos++) {
+        TA_Point vertex = rect.getVertex(pos);
         minX = std::min(minX, int(vertex.x / tileWidth));
         maxX = std::max(maxX, int(vertex.x / tileWidth));
         minY = std::min(minY, int(vertex.y / tileHeight));
@@ -209,7 +209,7 @@ int TA_Tilemap::checkCollision(TA_Polygon& polygon) {
 
         for(auto& hitbox : tileset[tileId].hitboxes) {
             hitbox.polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
-            if(polygon.intersects(hitbox.polygon)) {
+            if(hitbox.polygon.intersects(rect)) {
                 flags |= hitbox.type;
             }
         }
@@ -224,7 +224,7 @@ int TA_Tilemap::checkCollision(TA_Polygon& polygon) {
     }
 
     for(int pos = 0; pos < (int)borderPolygons.size(); pos++) {
-        if(borderPolygons[pos].intersects(polygon)) {
+        if(borderPolygons[pos].intersects(rect)) {
             flags |= TA_COLLISION_SOLID;
         }
     }

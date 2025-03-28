@@ -33,7 +33,7 @@ void TA_BirdWalker::load(float newFloorY) {
     bodyFlashSprite.setCamera(objectSet->getLinks().camera);
     feetFlashSprite.setCamera(objectSet->getLinks().camera);
 
-    TA_Polygon bodyHitbox;
+    TA_Rect bodyHitbox;
     bodyHitbox.setRectangle({6, -61}, {33, -36});
     defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
     flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
@@ -95,7 +95,7 @@ void TA_BirdWalker::updatePosition() {
 
 void TA_BirdWalker::insertBorderHitboxes() {
     borderHitboxVector.clear();
-    TA_Polygon borderHitbox;
+    TA_Rect borderHitbox;
     TA_Point cameraPosition = objectSet->getLinks().camera->getPosition();
 
     borderHitbox.setRectangle(cameraPosition + TA_Point(-16, -16), cameraPosition + TA_Point(0, TA::screenHeight + 16));

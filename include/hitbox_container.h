@@ -11,7 +11,7 @@ private:
     static const int sizeChunks = (size + chunkSize - 1) / chunkSize;
 
     struct Element {
-        TA_Polygon hitbox;
+        TA_Rect hitbox;
         int type;
     };
 
@@ -28,8 +28,8 @@ private:
     void lazyClear(Chunk& chunk);
 
 public:
-    void add(TA_Polygon& hitbox, int type);
-    int getCollisionFlags(TA_Polygon& hitbox);
+    void add(TA_Rect& hitbox, int type);
+    int getCollisionFlags(TA_Rect& hitbox);
     bool hasCollisionType(TA_CollisionType type) { return collisionTypeMask & type; }
     void clear();
 };

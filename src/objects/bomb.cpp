@@ -36,7 +36,7 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
     }
 }
 
-bool TA_Bomb::checkPawnCollision(TA_Polygon& hitbox) {
+bool TA_Bomb::checkPawnCollision(TA_Rect& hitbox) {
     int flags = 0;
     objectSet->checkCollision(hitbox, flags);
     return (flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP) || (flags & TA_COLLISION_PUSHABLE);

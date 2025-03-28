@@ -83,7 +83,7 @@ void TA_SeaFox::physicsStep() {
     setPosition(position);
 }
 
-bool TA_SeaFox::checkPawnCollision(TA_Polygon& hitbox) {
+bool TA_SeaFox::checkPawnCollision(TA_Rect& hitbox) {
     int flags = links.objectSet->checkCollision(hitbox);
     if(flags & TA_COLLISION_SOLID) {
         return true;
