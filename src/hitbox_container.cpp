@@ -1,6 +1,6 @@
 #include "hitbox_container.h"
 
-void TA_HitboxContainer::add(TA_Rect& hitbox, int type) {
+void TA_HitboxContainer::add(const TA_Rect& hitbox, int type) {
     if(type == TA_COLLISION_TRANSPARENT) {
         return;
     }
@@ -38,7 +38,7 @@ void TA_HitboxContainer::add(TA_Rect& hitbox, int type) {
     }
 }
 
-int TA_HitboxContainer::getCollisionFlags(TA_Rect& hitbox) {
+int TA_HitboxContainer::getCollisionFlags(const TA_Rect& hitbox) {
     int flags = 0;
 
     auto processChunk = [&](Chunk& chunk) {

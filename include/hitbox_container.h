@@ -28,8 +28,8 @@ private:
     void lazyClear(Chunk& chunk);
 
 public:
-    void add(TA_Rect& hitbox, int type);
-    int getCollisionFlags(TA_Rect& hitbox);
+    void add(const TA_Rect& hitbox, int type);
+    int getCollisionFlags(const TA_Rect& hitbox);
     bool hasCollisionType(TA_CollisionType type) { return collisionTypeMask & type; }
     void clear();
 };

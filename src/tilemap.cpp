@@ -179,15 +179,10 @@ void TA_Tilemap::setPosition(TA_Point position) {
 }
 
 int TA_Tilemap::checkCollision(TA_Rect& rect) {
-    int minX = 1e5, maxX = 0, minY = 1e5, maxY = 0;
-
-    for(int pos = 0; pos < 4; pos++) {
-        TA_Point vertex = rect.getVertex(pos);
-        minX = std::min(minX, int(vertex.x / tileWidth));
-        maxX = std::max(maxX, int(vertex.x / tileWidth));
-        minY = std::min(minY, int(vertex.y / tileHeight));
-        maxY = std::max(maxY, int(vertex.y / tileHeight));
-    }
+    int minX = rect.getTopLeft().x / tileWidth;
+    int maxX = rect.getBottomRight().x / tileHeight;
+    int minY = rect.getTopLeft().y / tileWidth;
+    int maxY = rect.getBottomRight().y / tileHeight;
 
     auto normalize = [&](int& value, int left, int right) {
         value = std::max(value, left);
