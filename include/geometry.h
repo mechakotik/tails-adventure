@@ -1,11 +1,17 @@
 #ifndef TA_GEOMETRY_H
 #define TA_GEOMETRY_H
 
+#include <error.h>
 #include <cmath>
 #include <cstddef>
-#include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <vector>
+
+#ifdef TA_SIMD
+#ifdef __SSE__
+#include <x86intrin.h>
+#define TA_SSE_AVAILABLE
+#endif
+#endif
 
 namespace TA {
     constexpr float epsilon = 0.001;
@@ -35,9 +41,9 @@ struct TA_Point {
 class TA_Rect {
 public:
     TA_Rect() {
-        std::fill(src.begin(), src.end(), 0);
-        std::fill(pos.begin(), pos.end(), 0);
-        std::fill(data.begin(), data.end(), 0);
+        std::fill(src, src + 4, 0);
+        std::fill(pos, pos + 4, 0);
+        std::fill(data, data + 4, 0);
     }
 
     TA_Rect(TA_Point topLeft, TA_Point bottomRight) {
@@ -64,11 +70,15 @@ public:
     [[nodiscard]] TA_Point getBottomRight() const { return {data[2], data[3]}; }
 
     [[nodiscard]] bool intersects(const TA_Rect& rv) const {
-        eve::wide<float, eve::fixed<4>> v1{data.data()};
-        eve::wide<float, eve::fixed<4>> v2 =
-            eve::gather(rv.data.data(), eve::wide<unsigned char, eve::fixed<4>>{2, 3, 0, 1});
-        eve::logical<eve::wide<float, eve::fixed<4>>> mask{1, 1, 0, 0};
-        return eve::all((v1 < v2) == mask);
+#ifdef TA_SSE_AVAILABLE
+        __m128 v1 = _mm_load_ps(data);
+        __m128 v2 = _mm_load_ps(rv.data);
+        v2 = _mm_shuffle_ps(v2, v2, _MM_SHUFFLE(1, 0, 3, 2));
+        __m128 cmp = _mm_cmplt_ps(v1, v2);
+        return _mm_movemask_ps(cmp) == 3;
+#else
+        return data[0] < rv.data[2] && data[1] < rv.data[3] && data[2] > rv.data[0] && data[3] > rv.data[1];
+#endif
     }
 
     // kept for compatibility
@@ -94,13 +104,22 @@ public:
 
 private:
     void updateData() {
-        eve::wide<float, eve::fixed<4>> srcVector{src.data()};
-        eve::wide<float, eve::fixed<4>> posVector{pos.data()};
-        eve::wide<float, eve::fixed<4>> dataVector = srcVector + posVector;
-        eve::store(dataVector, data.data());
+#ifdef TA_SSE_AVAILABLE
+        __m128 srcv = _mm_load_ps(src);
+        __m128 posv = _mm_load_ps(pos);
+        __m128 datav = _mm_add_ps(srcv, posv);
+        _mm_store_ps(data, datav);
+#else
+        data[0] = src[0] + pos[0];
+        data[1] = src[1] + pos[1];
+        data[2] = src[2] + pos[2];
+        data[3] = src[3] + pos[3];
+#endif
     }
 
-    std::array<float, 4> src, pos, data;
+    alignas(16) float src[4];
+    alignas(16) float pos[4];
+    alignas(16) float data[4];
 };
 
 class TA_Line {

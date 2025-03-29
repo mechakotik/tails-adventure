@@ -16,6 +16,3 @@
 [submodule "external/toml11"]
 	path = external/toml11
 	url = https://github.com/ToruNiina/toml11
-[submodule "external/eve"]
-	path = external/eve
-	url = https://github.com/jfalcou/eve

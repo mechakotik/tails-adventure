@@ -3,6 +3,7 @@ project(tails-adventure)
 
 option(TA_STATIC "Statically link libgcc and libstdc++" OFF)
 option(TA_UNIX_INSTALL "Install on Unix filesystem" OFF)
+option(TA_SIMD "Use SIMD intrinsics on supported targets" ON)
 option(TA_LTO "Enable link time optimization" ON)
 option(TA_SANITIZE "Build with sanitizers" OFF)
 option(TA_CLANG_TIDY "Run clang-tidy alongside with building" OFF)
@@ -154,6 +155,10 @@ if(TA_STATIC)
     else()
         target_link_options(tails-adventure PRIVATE -static-libgcc -static-libstdc++)
     endif()
+endif()
+
+if(TA_SIMD)
+    target_compile_options(tails-adventure PRIVATE -DTA_SIMD)
 endif()
 
 if(WIN32)
