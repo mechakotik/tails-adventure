@@ -134,15 +134,17 @@ void TA_Tilemap::draw(int priority) {
         if(camera != nullptr && TA::equal(position.x, 0) && TA::equal(position.y, 0)) {
             TA_Point cameraPos = camera->getPosition();
             lx = std::max(0, static_cast<int>(cameraPos.x / tileWidth));
-            rx = std::min(width - 1, static_cast<int>((cameraPos.x + TA::screenWidth) / tileWidth));
+            rx = static_cast<int>((cameraPos.x + TA::screenWidth) / tileWidth);
             ly = std::max(0, static_cast<int>(cameraPos.y / tileWidth));
-            ry = std::min(height - 1, static_cast<int>((cameraPos.y + TA::screenHeight) / tileWidth));
+            ry = static_cast<int>((cameraPos.y + TA::screenHeight) / tileWidth);
         }
 
         for(int tileX = lx; tileX <= rx; tileX++) {
             for(int tileY = ly; tileY <= ry; tileY++) {
-                if(tilemap[layer][tileX][tileY] != -1) {
-                    TA_Sprite& sprite = tileset[tilemap[layer][tileX][tileY]].sprite;
+                int normX = tileX % width;
+                int normY = tileY % height;
+                if(tilemap[layer][normX][normY] != -1) {
+                    TA_Sprite& sprite = tileset[tilemap[layer][normX][normY]].sprite;
                     sprite.setPosition(position + TA_Point(tileX * tileWidth, tileY * tileHeight));
                     sprite.draw();
                 }
@@ -179,29 +181,17 @@ void TA_Tilemap::setPosition(TA_Point position) {
 }
 
 int TA_Tilemap::checkCollision(TA_Rect& rect) {
-    int minX = rect.getTopLeft().x / tileWidth;
+    int minX = std::max(0, static_cast<int>(rect.getTopLeft().x / tileWidth));
     int maxX = rect.getBottomRight().x / tileHeight;
-    int minY = rect.getTopLeft().y / tileWidth;
+    int minY = std::max(0, static_cast<int>(rect.getTopLeft().y / tileWidth));
     int maxY = rect.getBottomRight().y / tileHeight;
-
-    auto normalize = [&](int& value, int left, int right) {
-        value = std::max(value, left);
-        value = std::min(value, right);
-    };
-
-    normalize(minX, 0, width - 1);
-    normalize(maxX, 0, width - 1);
-    normalize(minY, 0, height - 1);
-    normalize(maxY, 0, height - 1);
-
     int flags = 0;
 
     auto checkCollisionWithTile = [&](int layer, int tileX, int tileY) {
-        int tileId = tilemap[layer][tileX][tileY];
+        int tileId = tilemap[layer][tileX % width][tileY % height];
         if(tileId == -1) {
             return;
         }
-
         for(auto& hitbox : tileset[tileId].hitboxes) {
             hitbox.polygon.setPosition(TA_Point(tileX * tileWidth, tileY * tileHeight));
             if(hitbox.polygon.intersects(rect)) {
