@@ -1,0 +1,10 @@
+[sprite]
+image = "cruiser.png"
+width = 207
+height = 96
+
+[[animations.damage]]
+frames = [1, 0, 1, 0]
+delay = 12
+repeat = 1
+

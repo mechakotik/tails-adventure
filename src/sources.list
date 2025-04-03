@@ -8,6 +8,7 @@ src/objects/breakable_block.cpp
 src/objects/bridge.cpp
 src/objects/bullet.cpp
 src/objects/conveyor_belt.cpp
+src/objects/cruiser.cpp
 src/objects/dead_kukku.cpp
 src/objects/drill_mole.cpp
 src/objects/enemy_mine.cpp

@@ -30,6 +30,7 @@
 #include "objects/transition.h"
 #include "objects/walker.h"
 #include "objects/wind.h"
+#include "objects/cruiser.h"
 #include "resource_manager.h"
 #include "save.h"
 #include "sea_fox.h"
@@ -334,6 +335,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "little_kukku") {
         spawnObject<TA_LittleKukku>(position);
+    }
+
+    else if(name == "cruiser") {
+        spawnObject<TA_Cruiser>();
     }
 
     else {

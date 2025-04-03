@@ -31,6 +31,7 @@ private:
 
     TA_Links links;
     TA_Point velocity{0, 0};
+    TA_Point velocityAdd{0, 0};
     TA_Point followPosition;
     TA_Rect hitbox, drillHitbox;
     TA_Sound bulletSound, damageSound;
@@ -46,7 +47,8 @@ public:
     void update();
 
     void setSpawnPoint(TA_Point position, bool flip);
-    void setWaterLevel(float level);
+    void setWaterLevel(float level) { waterLevel = level; }
+    void setVelocityAdd(TA_Point add) { velocityAdd = add; }
     TA_Rect* getHitbox() { return &hitbox; }
     TA_Rect* getDrillHitbox() { return &drillHitbox; }
     bool gameOver() { return dead && deadTimer >= deadTime; }

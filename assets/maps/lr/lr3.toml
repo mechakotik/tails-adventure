@@ -8,6 +8,9 @@ spawn = [
 ]
 
 [objects.static]
+cruiser = [
+	{ }
+]
 level_transition = [
 	{ path="maps/lr/lr1", top=0, bottom=256, left=0, right=2 }
 ]

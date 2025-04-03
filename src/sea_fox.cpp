@@ -28,10 +28,6 @@ void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip) {
     links.camera->setFollowPosition(&followPosition);
 }
 
-void TA_SeaFox::setWaterLevel(float level) {
-    waterLevel = level;
-}
-
 void TA_SeaFox::update() {
     if(dead) {
         updateDead();
@@ -78,8 +74,9 @@ void TA_SeaFox::physicsStep() {
         velocity.y = std::min(float(1), velocity.y + gravity * TA::elapsedTime);
     }
 
-    moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), velocity * TA::elapsedTime, false);
+    moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), (velocity + velocityAdd) * TA::elapsedTime, false);
     setPosition(position);
+    velocityAdd = {0, 0};
 }
 
 bool TA_SeaFox::checkPawnCollision(TA_Rect& hitbox) {
