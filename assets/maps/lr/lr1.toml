@@ -1,8 +1,10 @@
 [level]
 music = "sound/lr.vgm"
+water_level = 96
 spawn = [
 	{ x=12, y=84 },
-	{ x=987, y=371, previous="maps/lr/lr2", flip=true }
+	{ x=987, y=371, previous="maps/lr/lr2", flip=true },
+	{ x=987, y=73, previous="maps/lr/lr3", flip=true }
 ]
 
 [objects.static]
@@ -60,7 +62,8 @@ breakable_block = [
 	{ tile_x=47, tile_y=13, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" }
 ]
 level_transition = [
-	{ path="maps/lr/lr2", top=304, bottom=416, left=1022, right=1024 }
+	{ path="maps/lr/lr2", top=304, bottom=416, left=1022, right=1024 },
+	{ path="maps/lr/lr3", top=0, bottom=144, left=1022, right=1024 }
 ]
 map_transition = [
 	{ selection=1, sea_fox=true, top=0, bottom=224, left=0, right=2 }

@@ -89,6 +89,34 @@ void TA_ObjectSet::tryLoad(std::string filename) {
         }
     }
 
+    if(table.contains("level") && table.at("level").contains("water_level") && links.seaFox != nullptr) {
+        links.seaFox->setWaterLevel(table.at("level").at("water_level").as_integer());
+    }
+
+    if(table.contains("level") && table.at("level").contains("borders")) {
+        std::array<std::string, 4> borders = {"top", "bottom", "left", "right"};
+        int mask = 0;
+        for(int i = 0; i < 4; i++) {
+            if(table.at("level").at("borders").at(borders[i]).as_boolean()) {
+                mask |= (1 << i);
+            }
+        }
+        links.tilemap->setBorderMask(mask);
+    }
+
+    links.tilemap->updateBorders();
+
+    if(table.contains("level") && table.at("level").contains("camera_borders")) {
+        std::array<std::string, 4> borders = {"top", "bottom", "left", "right"};
+        int mask = 0;
+        for(int i = 0; i < 4; i++) {
+            if(table.at("level").at("camera_borders").at(borders[i]).as_boolean()) {
+                mask |= (1 << i);
+            }
+        }
+        links.camera->setBorderMask(mask);
+    }
+
     if(table.contains("objects") && table.at("objects").contains("static")) {
         for(const auto& [name, array] : table.at("objects").at("static").as_table()) {
             for(const auto& object : array.as_array()) {

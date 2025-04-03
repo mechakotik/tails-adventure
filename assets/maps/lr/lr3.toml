@@ -1,0 +1,13 @@
+[level]
+music = "sound/lr.vgm"
+water_level = 144
+borders = { top=true, bottom=true, left=true, right=false }
+camera_borders = { top=true, bottom=true, left=true, right=false }
+spawn = [
+	{ x=5, y=122 },
+]
+
+[objects.static]
+level_transition = [
+	{ path="maps/lr/lr1", top=0, bottom=256, left=0, right=2 }
+]

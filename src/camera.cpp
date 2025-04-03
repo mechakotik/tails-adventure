@@ -84,14 +84,18 @@ void TA_Camera::update(bool ground, bool spring) {
         }
     }
 
-    auto normalize = [&](float current, float left, float right) {
-        current = std::max(current, left);
-        current = std::min(current, right);
-        return current;
-    };
-
-    position.x = normalize(position.x, borderTopLeft.x, borderBottomRight.x - TA::screenWidth);
-    position.y = normalize(position.y, borderTopLeft.y, borderBottomRight.y - TA::screenHeight);
+    if((borderMask & (1 << 0)) != 0) {
+        position.y = std::max(position.y, borderTopLeft.y);
+    }
+    if((borderMask & (1 << 1)) != 0) {
+        position.y = std::min(position.y, borderBottomRight.y - TA::screenHeight);
+    }
+    if((borderMask & (1 << 2)) != 0) {
+        position.x = std::max(position.x, borderTopLeft.x);
+    }
+    if((borderMask & (1 << 3)) != 0) {
+        position.x = std::min(position.x, borderBottomRight.x - TA::screenWidth);
+    }
 
     if(shakeTime > 0) {
         int previousStep = shakeTime / shakeFrequency;

@@ -46,6 +46,7 @@ public:
     void update();
 
     void setSpawnPoint(TA_Point position, bool flip);
+    void setWaterLevel(float level);
     TA_Rect* getHitbox() { return &hitbox; }
     TA_Rect* getDrillHitbox() { return &drillHitbox; }
     bool gameOver() { return dead && deadTimer >= deadTime; }

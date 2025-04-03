@@ -19,10 +19,6 @@ void TA_SeaFox::load(TA_Links links) {
     damageSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);
 
     hitbox.setRectangle(TA_Point(9, 4), TA_Point(23, 30));
-
-    if(TA::levelPath == "maps/lr/lr1") { // TODO: set water level in area XML
-        waterLevel = 96;
-    }
 }
 
 void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip) {
@@ -30,6 +26,10 @@ void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip) {
     this->flip = this->neededFlip = flip;
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
+}
+
+void TA_SeaFox::setWaterLevel(float level) {
+    waterLevel = level;
 }
 
 void TA_SeaFox::update() {
@@ -48,7 +48,6 @@ void TA_SeaFox::update() {
     updateDamage();
 
     setFlip(flip);
-    // TA::printLog("%f %f", position.x, position.y);
 }
 
 void TA_SeaFox::physicsStep() {

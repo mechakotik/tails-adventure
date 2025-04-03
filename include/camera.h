@@ -17,6 +17,7 @@ private:
     TA_Point borderBottomRight;
 
     int yTopOffset, yBottomOffset;
+    int borderMask = 15;
     bool locked = false, lockedX = false, lockedY = false;
     float shakeTime = -1;
 
@@ -28,6 +29,7 @@ public:
     bool isLocked() { return locked && lockedX && lockedY; }
     void unlock() { locked = lockedX = lockedY = false; }
     void setBorder(TA_Point topLeft, TA_Point bottomRight);
+    void setBorderMask(int mask) { borderMask = mask; }
     void shake(float time) { shakeTime = time; }
     TA_Point getPosition() { return position + shakeDelta; }
     TA_Point getRelative(TA_Point realPosition) { return realPosition - (position + shakeDelta); }
