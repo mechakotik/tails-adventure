@@ -77,12 +77,17 @@ TA_ScreenState TA_GameScreen::update() {
 
     if(isSeaFox) {
         seaFox.draw();
-    } else {
+    } else if(!objectSet.isNight()) {
         character.draw();
     }
 
     objectSet.draw(1);
     tilemap.draw(1);
+
+    if(!isSeaFox && objectSet.isNight()) {
+        character.draw();
+    }
+
     objectSet.draw(2);
     hud.draw();
     controller.draw();

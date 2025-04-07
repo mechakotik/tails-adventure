@@ -53,6 +53,7 @@ private:
     std::vector<Tile> tileset;
     std::array<TA_Polygon, 4> borderPolygons;
     std::vector<int> collisionLayers;
+    std::vector<int> layerAlpha;
     std::filesystem::path filename;
     TA_Camera* camera = nullptr;
     TA_Point position;
@@ -66,9 +67,11 @@ public:
     void setCamera(TA_Camera* newCamera);
     void setPosition(TA_Point position);
     void setBorderMask(int mask) { borderMask = mask; }
+    void setLayerAlpha(int layer, int alpha);
     void updateBorders();
     int getWidth() { return width * tileWidth; }
     int getHeight() { return height * tileHeight; }
+    int getNumLayers() { return static_cast<int>(tilemap.size()); }
     int checkCollision(TA_Rect& rect);
     void setUpdateAnimation(bool enabled);
 };

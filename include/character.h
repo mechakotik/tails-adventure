@@ -14,6 +14,7 @@ private:
         TOOL_BOMB = 0,
         TOOL_REMOTE_BOMB = 2,
         TOOL_TELEPORT_DEVICE = 3,
+        TOOL_NIGHT_VISION = 5,
         TOOL_REMOTE_ROBOT = 6,
         TOOL_SPEED_BOOTS = 7,
         TOOL_NAPALM_BOMB = 13,
@@ -38,29 +39,30 @@ private:
 
     enum BombType { BOMB_REGULAR, BOMB_REMOTE, BOMB_NAPALM, BOMB_TRIPLE };
 
-    const float jmp = -3.75;
-    const float grv = 0.125;
-    const float acc = 0.25;
-    const float airAcc = 0.09;
-    const float topX = 1;
-    const float minJumpSpeed = -2.5;
-    const float maxJumpSpeed = 3;
-    const float releaseJumpSpeed = -1.5;
-    const float helitailAcc = 0.1;
-    const float helitailTop = 1;
-    const float hurtXsp = 1;
-    const float hurtYsp = -2.5;
-    const float invincibleTime = 120;
-    const float springYsp = -8;
-    const float remoteRobotInitTime = 30;
-    const float remoteRobotJumpSpeed = -3.25;
-    const float maxLookTime = 100;
-    const float strongWindForce = 0.25;
-    const float teleportInitTime = 60;
-    const float hammerFallSpeed = 0.2;
-    const float waterFriction = 0.75;
-    const float waterFlowAcc = 0.15;
-    const float maxCoyoteTime = 10;
+    static constexpr float jmp = -3.75;
+    static constexpr float grv = 0.125;
+    static constexpr float acc = 0.25;
+    static constexpr float airAcc = 0.09;
+    static constexpr float topX = 1;
+    static constexpr float minJumpSpeed = -2.5;
+    static constexpr float maxJumpSpeed = 3;
+    static constexpr float releaseJumpSpeed = -1.5;
+    static constexpr float helitailAcc = 0.1;
+    static constexpr float helitailTop = 1;
+    static constexpr float hurtXsp = 1;
+    static constexpr float hurtYsp = -2.5;
+    static constexpr float invincibleTime = 120;
+    static constexpr float springYsp = -8;
+    static constexpr float remoteRobotInitTime = 30;
+    static constexpr float remoteRobotJumpSpeed = -3.25;
+    static constexpr float maxLookTime = 100;
+    static constexpr float strongWindForce = 0.25;
+    static constexpr float teleportInitTime = 60;
+    static constexpr float hammerFallSpeed = 0.2;
+    static constexpr float waterFriction = 0.75;
+    static constexpr float waterFlowAcc = 0.15;
+    static constexpr float maxCoyoteTime = 10;
+    static constexpr float nightVisionActivateTime = 10;
 
     TA_Point followPosition, velocity, climbPosition;
     TA_Links links;
@@ -71,6 +73,7 @@ private:
     TA_Sound jumpSound, remoteRobotStepSound;
     TA_Sound flySound, remoteRobotFlySound;
     TA_Sound damageSound, hammerSound, waterSound, teleportSound;
+    TA_Sound nightVisionSound;
 
     CharacterState state = STATE_NORMAL;
 
@@ -95,6 +98,9 @@ private:
     float deltaX = 0;
     int rings, currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
+
+    float nightVisionTimer = 0;
+    bool usingNightVision = false;
 
     void physicsStep();
     void updateGround();
@@ -122,6 +128,8 @@ private:
     void updateHammer();
     void initTeleport();
     void updateTeleport();
+    void initNightVision();
+    void updateNightVision();
     void changeMusic();
     float getMaxHelitailTime();
     void dropRings();
@@ -157,6 +165,7 @@ public:
     bool isUsingSpeedBoots() { return usingSpeedBoots; }
     bool isUsingHammer() { return state == STATE_HAMMER; }
     bool isInWater() { return water; }
+    bool isNightVisionApplied() { return nightVisionTimer > 0; }
     bool isGettingItem() {
         return state == STATE_UNPACK_ITEM || state == STATE_RAISE_ITEM || getAnimationName() == "release";
     }

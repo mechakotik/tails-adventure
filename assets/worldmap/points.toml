@@ -2,10 +2,11 @@ main = [
 	{ name=" tails\n house", x=122, y=97, up=1, left=1 },
 	{ name=" poloy\n forest", path="maps/pf/pf1", x=106, y=89, up=5, down=0, left=6, right=2 },
 	{ name="volcanic\ntunnel", path="maps/vt/vt1", x=146, y=73, up=3, down=0, left=1 },
-	{ name=" polly\n mt.1", path="maps/pm/pm1", x=146, y=41, up=4, down=2, right=4 },
+	{ name=" polly\n mt.1", path="maps/pm/pm1", x=146, y=41, up=4, down=2, left=7, right=4 },
 	{ name="cavern\nisland", path="maps/ci/ci1", x=182, y=33, left=3 },
-	{ name=" caron\n forest", path="maps/cf/cf1", x=106, y=49, down=1, left=6 },
-	{ name=" green\n island", path="maps/gi/gi1", x=70, y=57, down=1, right=5 }
+	{ name=" caron\n forest", path="maps/cf/cf1", x=106, y=49, down=1, left=6, right=7 },
+	{ name=" green\n island", path="maps/gi/gi1", x=70, y=57, down=1, right=5 },
+	{ name=" polly\n mt.2", path="maps/pv/pv1", x=122, y=41, down=0, left=5, right=3 }
 ]
 
 seafox = [

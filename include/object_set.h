@@ -56,6 +56,7 @@ private:
     TA_ScreenState transition = TA_SCREENSTATE_CURRENT;
     bool spawnFlip = false, firstSpawnPointSet = false;
     bool paused = false;
+    bool night = false;
 
 public:
     ~TA_ObjectSet();
@@ -87,6 +88,7 @@ public:
     int getMaxRings() { return 8 + 2 * getEmeraldsCount(); }
     void addRings(int count);
     void addRingsToMaximum();
+    bool isNight() { return night; }
 
     template <class T, typename... P>
     void spawnObject(P... params) {

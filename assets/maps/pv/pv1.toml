@@ -1,0 +1,46 @@
+[level]
+music = "sound/vt.vgm"
+night = true
+spawn = [
+	{ x=-2, y=25 },
+]
+
+[objects.static]
+breakable_block = [
+	{ tile_x=4, tile_y=15, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=4, tile_y=16, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=4, tile_y=17, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=5, tile_y=15, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=5, tile_y=16, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=5, tile_y=17, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
+	
+	{ tile_x=10, tile_y=18, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=10, tile_y=19, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=11, tile_y=18, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=11, tile_y=19, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
+	
+	{ tile_x=18, tile_y=18, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=18, tile_y=19, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=19, tile_y=18, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=19, tile_y=19, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
+	
+	{ tile_x=24, tile_y=13, path="maps/pv/block3.png", particle_path="maps/pv/rock.png", drops_ring=true },
+	{ tile_x=24, tile_y=14, path="maps/pv/block3.png", particle_path="maps/pv/rock.png", drops_ring=true },
+	{ tile_x=24, tile_y=15, path="maps/pv/block3.png", particle_path="maps/pv/rock.png", drops_ring=true },
+]
+bridge = [
+	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=160, rightx=223, y=128 },
+	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=256, rightx=303, y=128 },
+	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=224, rightx=255, y=192 },
+	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=336, rightx=367, y=304 },
+]
+map_transition = [
+	{ selection=7, left=0, top=0, right=2, bottom=320 }
+]
+
+[objects.default]
+bat_robot = [
+	{ tile_x=12, tile_y=4, offset_x=-4 },
+	{ tile_x=17, tile_y=4, offset_x=-4 }
+]
+

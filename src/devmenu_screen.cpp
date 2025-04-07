@@ -23,6 +23,8 @@ void TA_DevmenuScreen::init() {
     levels.emplace_back("maps/lr/lr7");
     levels.emplace_back("maps/gi/gi1");
     levels.emplace_back("maps/gi/gi2");
+    levels.emplace_back("maps/pv/pv1");
+    levels.emplace_back("maps/pv/pv2");
     normalFont.loadFont("fonts/devmenu.toml");
     selectedFont.loadFont("fonts/devmenu_selected.toml");
 }

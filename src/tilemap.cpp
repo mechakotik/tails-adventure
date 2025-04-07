@@ -45,6 +45,8 @@ void TA_Tilemap::load(std::string filename) {
     if(collisionLayers.empty()) {
         collisionLayers.push_back(0);
     }
+
+    layerAlpha.assign(layerCount, 255);
 }
 
 void TA_Tilemap::updateBorders() {
@@ -156,6 +158,7 @@ void TA_Tilemap::draw(int priority) {
                 if(tilemap[layer][normX][normY] != -1) {
                     TA_Sprite& sprite = tileset[tilemap[layer][normX][normY]].sprite;
                     sprite.setPosition(position + TA_Point(tileX * tileWidth, tileY * tileHeight));
+                    sprite.setAlpha(layerAlpha[layer]);
                     sprite.draw();
                 }
             }
@@ -188,6 +191,10 @@ void TA_Tilemap::setCamera(TA_Camera* newCamera) {
 
 void TA_Tilemap::setPosition(TA_Point position) {
     this->position = position;
+}
+
+void TA_Tilemap::setLayerAlpha(int layer, int alpha) {
+    layerAlpha[layer] = alpha;
 }
 
 int TA_Tilemap::checkCollision(TA_Rect& rect) {

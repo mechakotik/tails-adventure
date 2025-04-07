@@ -118,6 +118,10 @@ void TA_ObjectSet::tryLoad(std::string filename) {
         links.camera->setBorderMask(mask);
     }
 
+    if(table.contains("level") && table.at("level").contains("night")) {
+        night = table.at("level").at("night").as_boolean();
+    }
+
     if(table.contains("objects") && table.at("objects").contains("static")) {
         for(const auto& [name, array] : table.at("objects").at("static").as_table()) {
             for(const auto& object : array.as_array()) {
@@ -376,6 +380,9 @@ void TA_ObjectSet::update() {
 }
 
 void TA_ObjectSet::draw(int priority) {
+    if(night && !links.character->isNightVisionApplied()) {
+        return;
+    }
     for(TA_Object* currentObject : objects) {
         if(currentObject->getDrawPriority() == priority) {
             currentObject->setUpdateAnimation(!isPaused());

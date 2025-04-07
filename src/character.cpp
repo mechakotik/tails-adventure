@@ -18,6 +18,7 @@ void TA_Character::load(TA_Links newLinks) {
     hammerSound.load("sound/hammer.ogg", TA_SOUND_CHANNEL_SFX3);
     teleportSound.load("sound/teleport.ogg", TA_SOUND_CHANNEL_SFX3);
     waterSound.load("sound/water.ogg", TA_SOUND_CHANNEL_SFX1);
+    nightVisionSound.load("sound/land.ogg", TA_SOUND_CHANNEL_SFX3);
 
     loadFromToml("tails/tails.toml");
     setCamera(links.camera);

@@ -4,6 +4,9 @@
 #include "objects/bomb.h"
 
 void TA_Character::updateTool() {
+    if(usingNightVision) {
+        updateNightVision();
+    }
     if(!ground || !links.controller->isPressed(TA_BUTTON_B)) {
         usingSpeedBoots = false;
     }
@@ -50,6 +53,9 @@ void TA_Character::updateTool() {
             break;
         case TOOL_SPEED_BOOTS:
             usingSpeedBoots = true;
+            break;
+        case TOOL_NIGHT_VISION:
+            initNightVision();
             break;
         default:
             damageSound.play();
@@ -189,6 +195,26 @@ void TA_Character::updateTeleport() {
 
 bool TA_Character::isTeleported() {
     return state == STATE_TELEPORT && !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3);
+}
+
+void TA_Character::initNightVision() {
+    if(!links.objectSet->isNight() || usingNightVision || nightVisionTimer > nightVisionActivateTime) {
+        damageSound.play();
+        return;
+    }
+    usingNightVision = true;
+    nightVisionTimer = 0;
+}
+
+void TA_Character::updateNightVision() {
+    nightVisionTimer += TA::elapsedTime;
+    if(nightVisionTimer > nightVisionActivateTime) {
+        nightVisionSound.play();
+        links.tilemap->setLayerAlpha(links.tilemap->getNumLayers() - 1, 0);
+        usingNightVision = false;
+    } else {
+        links.tilemap->setLayerAlpha(links.tilemap->getNumLayers() - 1, 255 - 255 * nightVisionTimer / nightVisionActivateTime);
+    }
 }
 
 void TA_Character::changeMusic() {
