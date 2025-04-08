@@ -54,13 +54,15 @@ void TA_Tilemap::updateBorders() {
         borderPolygons[0].setRectangle(TA_Point(0, -16), TA_Point(width * tileWidth, 0));
     }
     if((borderMask & (1 << 1)) != 0) {
-        borderPolygons[1].setRectangle(TA_Point(0, height * tileHeight), TA_Point(width * tileWidth, height * tileHeight + 16));
+        borderPolygons[1].setRectangle(
+            TA_Point(0, height * tileHeight), TA_Point(width * tileWidth, height * tileHeight + 16));
     }
     if((borderMask & (1 << 2)) != 0) {
         borderPolygons[2].setRectangle(TA_Point(-16, 0), TA_Point(0, height * tileHeight));
     }
     if((borderMask & (1 << 3)) != 0) {
-        borderPolygons[3].setRectangle(TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
+        borderPolygons[3].setRectangle(
+            TA_Point(width * tileWidth, 0), TA_Point(width * tileWidth + 16, height * tileHeight));
     }
 }
 

@@ -11,11 +11,7 @@ public:
     int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
-    enum class State {
-        IDLE,
-        ACTIVE,
-        DESTROYED
-    };
+    enum class State { IDLE, ACTIVE, DESTROYED };
 
     void updateIdle();
     void updateActive();

@@ -213,7 +213,8 @@ void TA_Character::updateNightVision() {
         links.tilemap->setLayerAlpha(links.tilemap->getNumLayers() - 1, 0);
         usingNightVision = false;
     } else {
-        links.tilemap->setLayerAlpha(links.tilemap->getNumLayers() - 1, 255 - 255 * nightVisionTimer / nightVisionActivateTime);
+        links.tilemap->setLayerAlpha(
+            links.tilemap->getNumLayers() - 1, 255 - 255 * nightVisionTimer / nightVisionActivateTime);
     }
 }
 

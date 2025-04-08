@@ -65,6 +65,4 @@ void TA_Cruiser::updateActive() {
     objectSet->getLinks().camera->forceLockX();
 }
 
-void TA_Cruiser::updateDestroyed() {
-
-}
+void TA_Cruiser::updateDestroyed() {}
