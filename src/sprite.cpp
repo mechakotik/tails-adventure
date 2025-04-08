@@ -152,20 +152,20 @@ void TA_Sprite::updateAnimation() {
     }
     if(animation.frames.size() >= 2) {
         animationTimer += TA::elapsedTime;
-        animationFrame += animationTimer / animation.delay;
+        animationFrame += static_cast<int>(animationTimer / static_cast<float>(animation.delay));
 
-        if(animationFrame >= (int)animation.frames.size()) {
+        if(animationFrame >= static_cast<int>(animation.frames.size())) {
             if(animation.repeatTimes != -1) {
-                animation.repeatTimes -= animationFrame / animation.frames.size();
+                animation.repeatTimes -= animationFrame / static_cast<int>(animation.frames.size());
                 if(animation.repeatTimes <= 0) {
                     setFrame(animation.frames.back());
                     frame = animation.frames[0];
                 }
             }
-            animationFrame %= animation.frames.size();
+            animationFrame %= static_cast<int>(animation.frames.size());
         }
 
-        animationTimer = std::fmod(animationTimer, animation.delay);
+        animationTimer = std::fmodf(animationTimer, static_cast<float>(animation.delay));
         frame = animation.frames[animationFrame];
     } else {
         frame = animation.frames[0];
@@ -178,7 +178,8 @@ void TA_Sprite::setAnimation(TA_Animation newAnimation) {
         return;
     }
     animation = newAnimation;
-    animationFrame = animationTimer = 0;
+    animationFrame = 0;
+    animationTimer = 0;
 }
 
 void TA_Sprite::setAnimation(std::string name) {

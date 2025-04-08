@@ -132,9 +132,7 @@ bool TA_Game::process() {
 
 void TA_Game::update() {
     currentTime = std::chrono::high_resolution_clock::now();
-    TA::elapsedTime =
-        static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(currentTime - startTime).count()) /
-        1e6 * 60;
+    TA::elapsedTime = static_cast<float>(std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime - startTime).count()) / 1e9F * 60;
 
     TA::elapsedTime = std::min(TA::elapsedTime, maxElapsedTime);
     // TA::elapsedTime /= 10;

@@ -108,7 +108,7 @@ else()
     add_executable(tails-adventure ${TA_SOURCES} ${WIN32_RESOURCES})
 endif()
 
-target_compile_options(tails-adventure PRIVATE -O3)
+target_compile_options(tails-adventure PRIVATE -O3 -ffast-math)
 
 if(TA_CLANG_TIDY)
     find_program(CLANG_TIDY NAMES "clang-tidy")
