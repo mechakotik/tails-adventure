@@ -1,17 +1,11 @@
 #ifndef TA_GEOMETRY_H
 #define TA_GEOMETRY_H
 
+#include <SDL3/SDL_intrin.h>
 #include <error.h>
 #include <cmath>
 #include <cstddef>
 #include <vector>
-
-#ifdef TA_SIMD
-#ifdef __SSE__
-#include <x86intrin.h>
-#define TA_SSE_AVAILABLE
-#endif
-#endif
 
 namespace TA {
     constexpr float epsilon = 0.001;
@@ -73,7 +67,7 @@ public:
     [[nodiscard]] TA_Point getBottomRight() const { return {data[2], data[3]}; }
 
     [[nodiscard]] bool intersects(const TA_Rect& rv) const {
-#ifdef TA_SSE_AVAILABLE
+#ifdef SDL_SSE_INTRINSICS
         __m128 v1 = _mm_load_ps(data);
         __m128 v2 = _mm_load_ps(rv.data);
         v2 = _mm_shuffle_ps(v2, v2, _MM_SHUFFLE(1, 0, 3, 2));
