@@ -71,7 +71,7 @@ std::filesystem::path TA::save::getSaveFileName() {
 }
 
 long long TA::save::getParameter(std::string name) {
-    if(!saveMap.count(name)) {
+    if(!saveMap.contains(name)) {
         TA::handleError("unknown parameter %s", name.c_str());
     }
     return saveMap[name];

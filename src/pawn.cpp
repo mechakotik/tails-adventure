@@ -10,9 +10,12 @@ int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point vel
     this->ground = ground;
 
     if(!isGoodPosition(position)) [[unlikely]] {
-        popOut();
+        popOut(4);
         if(!isGoodPosition(position)) [[unlikely]] {
-            return TA_COLLISION_ERROR;
+            popOut(32);
+            if(!isGoodPosition(position)) [[unlikely]] {
+                return TA_COLLISION_ERROR;
+            }
         }
     }
 
@@ -88,10 +91,10 @@ void TA_Pawn::moveByY() {
     position.y += velocity.y * left;
 }
 
-void TA_Pawn::popOut() {
+void TA_Pawn::popOut(float area) {
     std::vector<std::pair<float, TA_Point>> directions;
 
-    for(TA_Point delta : {TA_Point(-32, 0), TA_Point(32, 0), TA_Point(0, -32), TA_Point(0, 32)}) {
+    for(TA_Point delta : {TA_Point(-area, 0), TA_Point(area, 0), TA_Point(0, -area), TA_Point(0, area)}) {
         directions.push_back({getFirstGood(delta), delta});
     }
 
