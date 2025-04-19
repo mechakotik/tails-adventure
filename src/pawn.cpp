@@ -66,7 +66,7 @@ void TA_Pawn::moveByY() {
     }
 
     TA_Rect hitbox;
-    hitbox.setRectangle(topLeft, bottomRight);
+    hitbox.setRectangle(topLeft + TA_Point(0.005, 0), bottomRight - TA_Point(0.005, 0));
 
     auto isOutside = [&](float factor) {
         hitbox.setPosition({position.x, position.y + velocity.y * factor});
