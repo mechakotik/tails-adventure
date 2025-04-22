@@ -75,6 +75,7 @@ public:
     int getCurrentFrame();
     std::string getAnimationName() { return (isAnimated() ? animationName : ""); }
     void updateAnimation();
+    void forceUpdateAnimation();
     void setUpdateAnimation(bool enabled) { doUpdateAnimation = enabled; }
 };
 

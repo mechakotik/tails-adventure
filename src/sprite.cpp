@@ -173,6 +173,11 @@ void TA_Sprite::updateAnimation() {
     updateAnimationNeeded = false;
 }
 
+void TA_Sprite::forceUpdateAnimation() {
+    updateAnimationNeeded = true;
+    updateAnimation();
+}
+
 void TA_Sprite::setAnimation(TA_Animation newAnimation) {
     if(animation.frames == newAnimation.frames && animation.delay == newAnimation.delay) {
         return;

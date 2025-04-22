@@ -171,7 +171,7 @@ void TA_Tilemap::draw(int priority) {
         if(updateAnimation) {
             for(size_t tile = 0; tile < tileset.size(); tile += 1) {
                 tileset[tile].sprite.setUpdateAnimation(true);
-                tileset[tile].sprite.updateAnimation();
+                tileset[tile].sprite.forceUpdateAnimation();
                 tileset[tile].sprite.setUpdateAnimation(false);
             }
         }
