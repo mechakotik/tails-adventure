@@ -41,7 +41,8 @@ void TA_Character::updateCollisions() {
     hitbox.setRectangle(topLeft, bottomRight);
 
     if(ground) {
-        useSolidUpTiles = useSolidDownTiles = true;
+        useSolidUpTiles = true;
+        useSolidDownTiles = false;
     } else {
         if(velocity.y > -0.01 && !useSolidUpTiles) {
             useSolidUpTiles = true;
