@@ -1,0 +1,75 @@
+[level]
+music = "sound/cc.vgm"
+spawn = [
+	{ x=-2, y=48 },
+]
+
+[objects.static]
+breakable_block = [
+	{ tile_x=55, tile_y=6, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=55, tile_y=7, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=56, tile_y=6, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=56, tile_y=7, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=63, tile_y=8, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=63, tile_y=9, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=63, tile_y=10, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=64, tile_y=8, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=64, tile_y=9, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=64, tile_y=10, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=80, tile_y=4, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=80, tile_y=5, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=80, tile_y=6, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=81, tile_y=4, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=81, tile_y=5, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=81, tile_y=6, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=83, tile_y=7, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=83, tile_y=8, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=84, tile_y=7, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=84, tile_y=8, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=86, tile_y=4, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=86, tile_y=5, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=86, tile_y=6, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=87, tile_y=4, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=87, tile_y=5, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=87, tile_y=6, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=90, tile_y=1, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=90, tile_y=2, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=91, tile_y=1, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=91, tile_y=2, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=90, tile_y=8, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=90, tile_y=9, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=90, tile_y=10, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=91, tile_y=8, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=91, tile_y=9, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=91, tile_y=10, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=99, tile_y=16, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=99, tile_y=17, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=99, tile_y=18, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=100, tile_y=16, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=100, tile_y=17, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=100, tile_y=18, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	
+	{ tile_x=37, tile_y=18, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=37, tile_y=19, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=38, tile_y=18, path="maps/cc/block3.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=39, tile_y=18, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=39, tile_y=19, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
+]
+
+bridge = [
+	{ leftx=304, rightx=383, y=96, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
+	{ leftx=528, rightx=687, y=176, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
+	{ leftx=528, rightx=687, y=224, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
+	{ leftx=528, rightx=687, y=272, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
+	{ leftx=464, rightx=495, y=272, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
+	{ leftx=464, rightx=607, y=320, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
+	{ leftx=624, rightx=688, y=320, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
+]
+
