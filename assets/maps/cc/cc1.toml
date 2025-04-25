@@ -1,10 +1,13 @@
 [level]
 music = "sound/cc.vgm"
 spawn = [
-	{ x=-2, y=48 },
+	{ x=-2, y=57 },
 ]
 
 [objects.static]
+map_transition = [
+	{ selection=8, left=0, top=32, right=2, bottom=96 }
+]
 breakable_block = [
 	{ tile_x=55, tile_y=6, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
 	{ tile_x=55, tile_y=7, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
@@ -62,7 +65,6 @@ breakable_block = [
 	{ tile_x=39, tile_y=18, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
 	{ tile_x=39, tile_y=19, path="maps/cc/block2.png", particle_path="maps/cc/rock.png" },
 ]
-
 bridge = [
 	{ leftx=304, rightx=383, y=96, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
 	{ leftx=528, rightx=687, y=176, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
