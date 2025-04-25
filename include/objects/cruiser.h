@@ -9,6 +9,7 @@ public:
     void load();
     bool update() override;
     int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
+    void draw() override;
 
 private:
     enum class State { IDLE, ACTIVE, DESTROYED, UNLOCK };
@@ -18,11 +19,16 @@ private:
     void updateDestroyed();
     void updateUnlock();
     void updateBorderPosition();
+    void updateBirdsPosition();
     void updateDamage();
 
     State state = State::IDLE;
     TA_Point lockPosition;
     bool cameraNormalized = false;
+
+    TA_Sprite watcherSprite;
+    TA_Sprite leftThrowerSprite;
+    TA_Sprite rightThrowerSprite;
 
     TA_Sound hitSound;
 

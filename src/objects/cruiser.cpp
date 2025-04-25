@@ -9,6 +9,14 @@ void TA_Cruiser::load() {
     hitbox.setRectangle({16, 45}, {164, 94});
     position = {288, 62};
 
+    watcherSprite.loadFromToml("objects/cruiser/watcher.toml");
+    leftThrowerSprite.loadFromToml("objects/rock_thrower.toml");
+    rightThrowerSprite.loadFromToml("objects/rock_thrower.toml");
+    watcherSprite.setCamera(objectSet->getLinks().camera);
+    watcherSprite.setAnimation("idle");
+    leftThrowerSprite.setCamera(objectSet->getLinks().camera);
+    rightThrowerSprite.setCamera(objectSet->getLinks().camera);
+
     hitboxVector.assign(2, HitboxVectorElement());
     hitboxVector[0].hitbox.setRectangle({-16, 0}, {0, TA::screenHeight});
     hitboxVector[0].collisionType = TA_COLLISION_SOLID;
@@ -41,12 +49,26 @@ bool TA_Cruiser::update() {
 
     updatePosition();
     updateBorderPosition();
+    updateBirdsPosition();
     return true;
+}
+
+void TA_Cruiser::draw() {
+    TA_Object::draw();
+    watcherSprite.draw();
+    leftThrowerSprite.draw();
+    rightThrowerSprite.draw();
 }
 
 void TA_Cruiser::updateBorderPosition() {
     hitboxVector[0].hitbox.setPosition(lockPosition);
     hitboxVector[1].hitbox.setPosition(lockPosition + TA_Point(TA::screenWidth, 0));
+}
+
+void TA_Cruiser::updateBirdsPosition() {
+    watcherSprite.setPosition(position + TA_Point(72, 16));
+    leftThrowerSprite.setPosition(position + TA_Point(56, 35));
+    rightThrowerSprite.setPosition(position + TA_Point(152, 27));
 }
 
 void TA_Cruiser::updateIdle() {
