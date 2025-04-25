@@ -3,8 +3,8 @@ image = "cruiser.png"
 width = 207
 height = 96
 
-[[animations.damage]]
+[animations.damage]
 frames = [1, 0, 1, 0]
-delay = 12
+delay = 6
 repeat = 1
 

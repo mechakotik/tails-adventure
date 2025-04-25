@@ -1,5 +1,8 @@
 #include "cruiser.h"
+#include "little_kukku.h"
+#include "ring.h"
 #include "sea_fox.h"
+#include "transition.h"
 
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");
@@ -11,6 +14,8 @@ void TA_Cruiser::load() {
     hitboxVector[0].collisionType = TA_COLLISION_SOLID;
     hitboxVector[1].hitbox.setRectangle({0, 0}, {16, TA::screenHeight});
     hitboxVector[1].collisionType = TA_COLLISION_SOLID;
+
+    hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX3);
 
     updatePosition();
     updateBorderPosition();
@@ -28,6 +33,9 @@ bool TA_Cruiser::update() {
             break;
         case State::DESTROYED:
             updateDestroyed();
+            break;
+        case State::UNLOCK:
+            updateUnlock();
             break;
     }
 
@@ -49,20 +57,52 @@ void TA_Cruiser::updateIdle() {
 }
 
 void TA_Cruiser::updateActive() {
-    position.x += TA::elapsedTime;
+    position.x += TA::elapsedTime * 1.5F;
     float center = position.x + 104;
     if(cameraNormalized) {
-        lockPosition.x += TA::elapsedTime;
+        lockPosition.x += TA::elapsedTime * 1.5F;
     } else {
-        lockPosition.x += TA::elapsedTime * 1.5;
+        lockPosition.x += TA::elapsedTime * 2;
         if(lockPosition.x > center - TA::screenWidth / 2) {
             cameraNormalized = true;
         }
     }
 
-    objectSet->getLinks().seaFox->setVelocityAdd({1, 0});
+    objectSet->getLinks().seaFox->setVelocityAdd({1.5, 0});
     objectSet->getLinks().camera->setLockPosition(lockPosition);
     objectSet->getLinks().camera->forceLockX();
+
+    updateDamage();
 }
 
-void TA_Cruiser::updateDestroyed() {}
+void TA_Cruiser::updateDamage() {
+    if(!isAnimated()) {
+        if(objectSet->checkCollision(hitbox) & TA_COLLISION_BOMB) {
+            setAnimation("damage");
+            hitSound.play();
+            health--;
+            if(health == 0) {
+                state = State::DESTROYED;
+            }
+        }
+    }
+}
+
+void TA_Cruiser::updateDestroyed() {
+    position.x += speed * TA::elapsedTime;
+    speed = std::max(0.0F, speed - 0.005F * TA::elapsedTime);
+    lockPosition.x += TA::elapsedTime * 1.5F;
+
+    objectSet->getLinks().seaFox->setVelocityAdd({1.5, 0});
+    objectSet->getLinks().camera->setLockPosition(lockPosition);
+    objectSet->getLinks().camera->forceLockX();
+
+    if(position.x < lockPosition.x - getWidth() - 32) {
+        TA::sound::playMusic("sound/lr.vgm");
+        objectSet->spawnObject<TA_Transition>(lockPosition + TA_Point(TA::screenWidth - 2, 0),
+            lockPosition + TA_Point(TA::screenWidth, TA::screenHeight), 6, false);
+        state = State::UNLOCK;
+    }
+}
+
+void TA_Cruiser::updateUnlock() {}
