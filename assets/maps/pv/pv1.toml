@@ -3,6 +3,7 @@ music = "sound/vt.vgm"
 night = true
 spawn = [
 	{ x=-2, y=25 },
+	{ x=390, y=25, flip=true, previous="maps/pv/pv2" }
 ]
 
 [objects.static]
@@ -34,8 +35,11 @@ bridge = [
 	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=224, rightx=255, y=192 },
 	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=336, rightx=367, y=304 },
 ]
+level_transition = [
+	{ path="maps/pv/pv2", left=430, top=16, right=432, bottom=64 }
+]
 map_transition = [
-	{ selection=7, left=0, top=0, right=2, bottom=320 }
+	{ selection=7, left=0, top=16, right=2, bottom=64 }
 ]
 
 [objects.default]
