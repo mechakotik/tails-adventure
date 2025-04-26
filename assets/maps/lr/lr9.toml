@@ -1,0 +1,15 @@
+[level]
+music = "sound/lr.vgm"
+water_level = 96
+spawn = [
+	{ x=56, y=478 }
+]
+
+[objects.static]
+breakable_block = [
+	{ tile_x=20, tile_y=54, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+]
+level_transition = [
+	{ path="maps/lr/lr8", left=48, top=510, right=96, bottom=512 },
+]
+

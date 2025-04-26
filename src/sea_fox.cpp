@@ -77,6 +77,8 @@ void TA_SeaFox::physicsStep() {
     moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), (velocity + velocityAdd) * TA::elapsedTime, false);
     setPosition(position);
     velocityAdd = {0, 0};
+
+    // TA::printLog("%f %f", position.x, position.y);
 }
 
 bool TA_SeaFox::checkPawnCollision(TA_Rect& hitbox) {
