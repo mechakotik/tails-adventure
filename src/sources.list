@@ -1,4 +1,5 @@
 src/objects/anti_air_missile.cpp
+src/objects/barrel.cpp
 src/objects/bat_robot.cpp
 src/objects/beehive.cpp
 src/objects/bird_walker.cpp

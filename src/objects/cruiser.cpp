@@ -3,6 +3,7 @@
 #include "ring.h"
 #include "sea_fox.h"
 #include "transition.h"
+#include "barrel.h"
 
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");
@@ -15,7 +16,11 @@ void TA_Cruiser::load() {
     watcherSprite.setCamera(objectSet->getLinks().camera);
     watcherSprite.setAnimation("idle");
     leftThrowerSprite.setCamera(objectSet->getLinks().camera);
+    leftThrowerSprite.setAnimation("throw_barrel_left");
+    leftThrowerSprite.setFlip(true);
     rightThrowerSprite.setCamera(objectSet->getLinks().camera);
+    rightThrowerSprite.setAnimation("throw_barrel_right");
+    rightThrowerSprite.setFlip(true);
 
     hitboxVector.assign(2, HitboxVectorElement());
     hitboxVector[0].hitbox.setRectangle({-16, 0}, {0, TA::screenHeight});
@@ -49,7 +54,7 @@ bool TA_Cruiser::update() {
 
     updatePosition();
     updateBorderPosition();
-    updateBirdsPosition();
+    updateBirds();
     return true;
 }
 
@@ -65,10 +70,21 @@ void TA_Cruiser::updateBorderPosition() {
     hitboxVector[1].hitbox.setPosition(lockPosition + TA_Point(TA::screenWidth, 0));
 }
 
-void TA_Cruiser::updateBirdsPosition() {
+void TA_Cruiser::updateBirds() {
     watcherSprite.setPosition(position + TA_Point(72, 16));
     leftThrowerSprite.setPosition(position + TA_Point(56, 35));
     rightThrowerSprite.setPosition(position + TA_Point(152, 27));
+
+    if(state == State::ACTIVE && cameraNormalized) {
+        if(leftThrowerSprite.getCurrentFrame() == 0 && leftThrowerPrevFrame == 1) {
+            objectSet->spawnObject<TA_Barrel>(leftThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 20), -2));
+        }
+        if(rightThrowerSprite.getCurrentFrame() == 0 && rightThrowerPrevFrame == 1) {
+            objectSet->spawnObject<TA_Barrel>(rightThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 15), -2));
+        }
+        leftThrowerPrevFrame = leftThrowerSprite.getCurrentFrame();
+        rightThrowerPrevFrame = rightThrowerSprite.getCurrentFrame();
+    }
 }
 
 void TA_Cruiser::updateIdle() {

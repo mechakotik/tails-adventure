@@ -11,3 +11,11 @@ delay = 24
 frames = [0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1]
 delay = 8
 
+[animations.throw_barrel_left]
+frames = [0, 1, 1, 1, 1, 1, 1, 1]
+delay = 12
+
+[animations.throw_barrel_right]
+frames = [1, 1, 1, 1, 0, 1, 1, 1]
+delay = 12
+

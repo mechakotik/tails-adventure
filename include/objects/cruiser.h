@@ -19,7 +19,7 @@ private:
     void updateDestroyed();
     void updateUnlock();
     void updateBorderPosition();
-    void updateBirdsPosition();
+    void updateBirds();
     void updateDamage();
 
     State state = State::IDLE;
@@ -29,10 +29,12 @@ private:
     TA_Sprite watcherSprite;
     TA_Sprite leftThrowerSprite;
     TA_Sprite rightThrowerSprite;
+    int leftThrowerPrevFrame = 1;
+    int rightThrowerPrevFrame = 1;
 
     TA_Sound hitSound;
 
-    int health = 32;
+    int health = 48;
     float speed = 1.5;
 };
 

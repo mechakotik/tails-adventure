@@ -4,7 +4,7 @@ width = 207
 height = 96
 
 [animations.damage]
-frames = [1, 0, 1, 0]
+frames = [1, 0, 1, 0, 0, 0, 0, 0, 0, 0]
 delay = 6
 repeat = 1
 
