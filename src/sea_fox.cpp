@@ -84,9 +84,14 @@ void TA_SeaFox::physicsStep() {
                 if(extraSpeed) {
                     extraSpeedSound.fadeOut(0);
                     extraSpeed = false;
+                    extraSpeedTimer = extraSpeedTime;
                 }
                 jumpSound.play();
                 jumpSpeed = initJumpSpeed;
+                if(extraSpeedTimer < extraSpeedTime + extraSpeedAddTime) {
+                    jumpSpeed += extraSpeedAddYSpeed * std::min(1.0F, extraSpeedTimer / extraSpeedTime);
+                    extraSpeedTimer = extraSpeedTime + extraSpeedAddTime + 1;
+                }
                 velocity.y = std::min(maxYSpeed, std::max(minJumpSpeed, jumpSpeed));
                 jump = true;
                 ground = false;
@@ -162,11 +167,15 @@ void TA_SeaFox::updateItem() {
         updateVulcanGun();
         return;
     }
+    if(extraSpeedTimer < extraSpeedTime + extraSpeedAddTime) {
+        extraSpeedTimer += TA::elapsedTime;
+    }
     if(extraSpeed) {
         if(!links.controller->isPressed(TA_BUTTON_B) || links.hud->getCurrentItem() != ITEM_EXTRA_SPEED ||
             !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3)) {
             extraSpeedSound.fadeOut(0);
             extraSpeed = false;
+            extraSpeedTimer = extraSpeedTime;
         }
     }
     if(!links.controller->isJustPressed(TA_BUTTON_B)) {
@@ -186,6 +195,7 @@ void TA_SeaFox::updateItem() {
             if(ground) {
                 extraSpeedSound.play();
                 extraSpeed = true;
+                extraSpeedTimer = 0;
             } else {
                 damageSound.play();
             }

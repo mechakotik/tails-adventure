@@ -23,6 +23,9 @@ private:
     static constexpr float minJumpSpeed = -2.5;
     static constexpr float maxYSpeed = 3;
     static constexpr float releaseJumpSpeed = -1.5;
+    static constexpr float extraSpeedTime = 140;
+    static constexpr float extraSpeedAddTime = 40;
+    static constexpr float extraSpeedAddYSpeed = -3.25;
 
     void physicsStep();
     void updateDirection();
@@ -54,6 +57,7 @@ private:
     bool jump = false;
     bool jumpReleased = false;
     bool extraSpeed = false;
+    float extraSpeedTimer = extraSpeedTime + extraSpeedAddTime + 1;
 
 public:
     void load(TA_Links links);
