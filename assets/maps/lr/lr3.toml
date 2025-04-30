@@ -1,5 +1,6 @@
 [level]
 music = "sound/lr.vgm"
+mode = "seafox"
 water_level = 144
 borders = { top=true, bottom=true, left=true, right=false }
 camera_borders = { top=true, bottom=true, left=true, right=false }

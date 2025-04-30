@@ -1,0 +1,8 @@
+[level]
+music = "sound/lc.vgm"
+mode = "seafox_ground"
+water_level = 96
+spawn = [
+	{ x=64, y=538 }
+]
+

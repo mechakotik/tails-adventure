@@ -1,5 +1,6 @@
 [level]
 music = "sound/lr.vgm"
+mode = "seafox"
 spawn = [
 	{ x=6, y=406 },
 	{ x=472, y=4, previous="maps/lr/lr8" }

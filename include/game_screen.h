@@ -23,7 +23,9 @@ private:
     TA_Links links;
     TA_Hud hud;
 
+    std::string mode;
     bool isSeaFox = false;
+    bool isSeaFoxGround = false;
     float timer = 0;
 
 public:

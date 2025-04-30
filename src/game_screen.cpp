@@ -1,8 +1,15 @@
 #include "game_screen.h"
+#include "resource_manager.h"
 #include "save.h"
 
 void TA_GameScreen::init() {
-    isSeaFox = ((int)TA::levelPath.size() >= 7 && TA::levelPath.substr(0, 7) == "maps/lr");
+    const toml::value& table = TA::resmgr::loadToml(TA::levelPath + ".toml");
+    if(table.contains("level") && table.at("level").contains("mode") && table.at("level").at("mode").is_string()) {
+        mode = table.at("level").at("mode").as_string();
+    }
+
+    isSeaFox = (mode != "ground");
+    isSeaFoxGround = (mode == "seafox_ground");
 
     if(isSeaFox) {
         links.seaFox = &seaFox;
@@ -21,6 +28,9 @@ void TA_GameScreen::init() {
 
     if(isSeaFox) {
         seaFox.load(links);
+        if(mode == "seafox_ground") {
+            seaFox.setGroundMode();
+        }
     } else {
         character.load(links);
     }
@@ -56,7 +66,7 @@ TA_ScreenState TA_GameScreen::update() {
 
         if(isSeaFox) {
             seaFox.update();
-            camera.update(true, false);
+            camera.update(!isSeaFoxGround, false);
         } else {
             character.update();
             camera.update(character.isOnGround(),
