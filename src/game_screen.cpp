@@ -6,6 +6,8 @@ void TA_GameScreen::init() {
     const toml::value& table = TA::resmgr::loadToml(TA::levelPath + ".toml");
     if(table.contains("level") && table.at("level").contains("mode") && table.at("level").at("mode").is_string()) {
         mode = table.at("level").at("mode").as_string();
+    } else {
+        mode = "ground";
     }
 
     isSeaFox = (mode != "ground");
