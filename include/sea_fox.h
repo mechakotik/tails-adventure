@@ -57,7 +57,8 @@ private:
     bool jump = false;
     bool jumpReleased = false;
     bool extraSpeed = false;
-    float extraSpeedTimer = extraSpeedTime + extraSpeedAddTime + 1;
+    float extraSpeedReleaseTime = 140;
+    float extraSpeedTimer = extraSpeedReleaseTime + extraSpeedAddTime + 1;
 
 public:
     void load(TA_Links links);

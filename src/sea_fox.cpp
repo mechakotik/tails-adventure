@@ -84,13 +84,13 @@ void TA_SeaFox::physicsStep() {
                 if(extraSpeed) {
                     extraSpeedSound.fadeOut(0);
                     extraSpeed = false;
-                    extraSpeedTimer = extraSpeedTime;
+                    extraSpeedReleaseTime = extraSpeedTimer;
                 }
                 jumpSound.play();
                 jumpSpeed = initJumpSpeed;
-                if(extraSpeedTimer < extraSpeedTime + extraSpeedAddTime) {
-                    jumpSpeed += extraSpeedAddYSpeed * std::min(1.0F, extraSpeedTimer / extraSpeedTime);
-                    extraSpeedTimer = extraSpeedTime + extraSpeedAddTime + 1;
+                if(extraSpeedTimer < extraSpeedReleaseTime + extraSpeedAddTime) {
+                    jumpSpeed += extraSpeedAddYSpeed * std::min(1.0F, extraSpeedReleaseTime / extraSpeedTime);
+                    extraSpeedTimer = extraSpeedReleaseTime + extraSpeedAddTime + 1;
                 }
                 velocity.y = std::min(maxYSpeed, std::max(minJumpSpeed, jumpSpeed));
                 jump = true;
@@ -163,11 +163,7 @@ void TA_SeaFox::updateDrill() {
 }
 
 void TA_SeaFox::updateItem() {
-    if(vulcanGunTimer < vulcanGunTime) {
-        updateVulcanGun();
-        return;
-    }
-    if(extraSpeedTimer < extraSpeedTime + extraSpeedAddTime) {
+    if(extraSpeedTimer < extraSpeedReleaseTime + extraSpeedAddTime) {
         extraSpeedTimer += TA::elapsedTime;
     }
     if(extraSpeed) {
@@ -175,8 +171,12 @@ void TA_SeaFox::updateItem() {
             !TA::sound::isPlaying(TA_SOUND_CHANNEL_SFX3)) {
             extraSpeedSound.fadeOut(0);
             extraSpeed = false;
-            extraSpeedTimer = extraSpeedTime;
+            extraSpeedReleaseTime = extraSpeedTimer;
         }
+    }
+    if(vulcanGunTimer < vulcanGunTime) {
+        updateVulcanGun();
+        return;
     }
     if(!links.controller->isJustPressed(TA_BUTTON_B)) {
         return;
