@@ -3,6 +3,7 @@
 #include <fstream>
 #include <limits>
 #include <vector>
+#include <random>
 #include "SDL3/SDL.h"
 
 namespace TA {
@@ -16,7 +17,7 @@ namespace TA {
     std::set<std::string> arguments;
 
     namespace random {
-        unsigned long long x = 1;
+        std::mt19937_64 gen;
     }
 
     namespace eventLog {
@@ -47,18 +48,11 @@ void TA::drawShadow(int factor) {
 }
 
 void TA::random::init(unsigned long long seed) {
-    seed = std::max(seed, 1ull);
-    x = seed;
-    for(int it = 0; it < 10; it++) {
-        next();
-    }
+    gen = std::mt19937_64(seed);
 }
 
 long long TA::random::next() {
-    x ^= (x << 13);
-    x ^= (x >> 7);
-    x ^= (x << 17);
-    return (long long)(x % max());
+    return static_cast<long long>(gen() & ~(1ULL << 63));
 }
 
 long long TA::random::max() {
