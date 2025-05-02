@@ -6,3 +6,12 @@ spawn = [
 	{ x=64, y=538 }
 ]
 
+[objects.default]
+wood = [
+	{ tile_x=27, tile_y=30, offset_x=8 },
+	{ tile_x=34, tile_y=28, offset_x=8 },
+	{ tile_x=40, tile_y=28, offset_x=8 },
+	{ tile_x=51, tile_y=22, offset_x=8 },
+	{ tile_x=66, tile_y=20, offset_x=8 },
+]
+

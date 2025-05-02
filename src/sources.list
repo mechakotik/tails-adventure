@@ -36,6 +36,7 @@ src/objects/transition.cpp
 src/objects/walker.cpp
 src/objects/wind.cpp
 src/objects/splash.cpp
+src/objects/wood.cpp
 src/area_selector.cpp
 src/camera.cpp
 src/character_collision.cpp
