@@ -77,6 +77,7 @@ TA_ScreenState TA_GameScreen::update() {
     }
 
     if(isSeaFox) {
+        seaFox.setUpdateAnimation(!hud.isPaused());
     } else {
         character.setPaused(hud.isPaused());
     }

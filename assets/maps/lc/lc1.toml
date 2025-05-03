@@ -6,6 +6,11 @@ spawn = [
 	{ x=64, y=538 }
 ]
 
+[objects.static]
+map_transition = [
+	{ selection=2, seafox=true, top=0, bottom=640, left=0, right=2 }
+]
+
 [objects.default]
 wood = [
 	{ tile_x=27, tile_y=30, offset_x=8 },

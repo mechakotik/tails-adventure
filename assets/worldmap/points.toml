@@ -11,7 +11,8 @@ main = [
 ]
 
 seafox = [
-	{ name=" tails\n house", x=122, y=88, down=1 },
-	{ name=" lake\n rocky", path="maps/lr/lr1", x=131, y=111, up=0 }
+	{ name=" tails\n house", x=122, y=88, down=1, up=2, right=2 },
+	{ name=" lake\n rocky", path="maps/lr/lr1", x=131, y=111, up=0, left=0 },
+	{ name=" lake\ncrystal", path="maps/lc/lc1", x=135, y=79, down=1, left=0 }
 ]
 

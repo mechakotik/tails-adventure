@@ -67,7 +67,7 @@ level_transition = [
 	{ path="maps/lr/lr3", top=0, bottom=144, left=1022, right=1024 }
 ]
 map_transition = [
-	{ selection=1, sea_fox=true, top=0, bottom=224, left=0, right=2 }
+	{ selection=1, seafox=true, top=0, bottom=224, left=0, right=2 }
 ]
 
 [objects.default]
