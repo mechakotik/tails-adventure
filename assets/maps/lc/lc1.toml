@@ -1,14 +1,17 @@
 [level]
 music = "sound/lc.vgm"
 mode = "seafox_ground"
-water_level = 96
 spawn = [
-	{ x=64, y=538 }
+	{ x=64, y=538 },
+	{ x=1240, y=202, previous="maps/lc/lc2" }
 ]
 
 [objects.static]
 map_transition = [
 	{ selection=2, seafox=true, top=0, bottom=640, left=0, right=2 }
+]
+level_transition = [
+	{ path="maps/lc/lc2", left=1278, top=0, right=1280, bottom=240 }
 ]
 
 [objects.default]

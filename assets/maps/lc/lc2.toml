@@ -1,0 +1,22 @@
+[level]
+music = "sound/lc.vgm"
+mode = "seafox_ground"
+spawn = [
+	{ x=64, y=410 }
+]
+
+[objects.static]
+level_transition = [
+	{ path="maps/lc/lc1", left=0, top=0, right=2, bottom=448 },
+]
+map_transition = [
+	{ selection=7, seafox=false, left=2046, top=0, right=2048, bottom=112 }
+]
+
+[objects.default]
+wood = [
+	{ tile_x=61, tile_y=10 },
+	{ tile_x=77, tile_y=6, offset_x=8 },
+	{ tile_x=121, tile_y=5, offset_x=8 }
+]
+
