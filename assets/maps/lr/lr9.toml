@@ -13,4 +13,7 @@ breakable_block = [
 level_transition = [
 	{ path="maps/lr/lr8", left=48, top=510, right=96, bottom=512 },
 ]
+map_transition = [
+	{ selection=2, seafox=true, left=990, top=0, right=992, bottom=128 }
+]
 
