@@ -1,9 +1,9 @@
 #include "cruiser.h"
+#include "barrel.h"
 #include "little_kukku.h"
 #include "ring.h"
 #include "sea_fox.h"
 #include "transition.h"
-#include "barrel.h"
 
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");
@@ -77,10 +77,12 @@ void TA_Cruiser::updateBirds() {
 
     if(state == State::ACTIVE && cameraNormalized) {
         if(leftThrowerSprite.getCurrentFrame() == 0 && leftThrowerPrevFrame == 1) {
-            objectSet->spawnObject<TA_Barrel>(leftThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 20), -2));
+            objectSet->spawnObject<TA_Barrel>(
+                leftThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 20), -2));
         }
         if(rightThrowerSprite.getCurrentFrame() == 0 && rightThrowerPrevFrame == 1) {
-            objectSet->spawnObject<TA_Barrel>(rightThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 15), -2));
+            objectSet->spawnObject<TA_Barrel>(
+                rightThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 15), -2));
         }
         leftThrowerPrevFrame = leftThrowerSprite.getCurrentFrame();
         rightThrowerPrevFrame = rightThrowerSprite.getCurrentFrame();

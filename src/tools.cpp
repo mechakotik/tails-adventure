@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <fstream>
 #include <limits>
-#include <vector>
 #include <random>
+#include <vector>
 #include "SDL3/SDL.h"
 
 namespace TA {
