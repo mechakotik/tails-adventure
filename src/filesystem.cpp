@@ -77,11 +77,12 @@ std::filesystem::path TA::filesystem::getExecutableDirectory() {
         char buffer[PATH_MAX];
     	#ifdef __APPLE__
 			uint32_t size = PATH_MAX;
-			ssize_t count = _NSGetExecutablePath(buffer, &size);
+			_NSGetExecutablePath(buffer, &size);
+			std::string path(buffer);
 		#else
 			ssize_t count = readlink("/proc/self/exe", buffer, PATH_MAX);
+			std::string path(buffer, (count > 0 ? count : 0));
         #endif
-    std::string path(buffer, (count > 0 ? count : 0));
     return path.substr(0, path.find_last_of("/"));
 #endif
 }
