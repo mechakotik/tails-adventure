@@ -3,6 +3,9 @@
 #include "filesystem.h"
 #include "error.h"
 
+#ifdef __APPLE__
+#include "mach-o/dyld.h"
+#endif
 #ifdef _WIN32
 #include "windows.h"
 #elif __linux__
@@ -69,7 +72,11 @@ std::string TA::filesystem::getAssetsPath()
     #ifdef __ANDROID__
         return ".";
     #elifdef TA_UNIX_INSTALL
-        return "/usr/share/tails-adventure";
+    	#ifdef __APPLE__
+    		return "/usr/local/share/tails-adventure";
+    	#else
+        	return "/usr/share/tails-adventure";
+        #endif
     #else
         return getExecutableDirectory() + "/assets";
     #endif
@@ -84,7 +91,12 @@ std::string TA::filesystem::getExecutableDirectory()
         return path.substr(0, path.find_last_of("\\/"));
     #else
         char buffer[PATH_MAX];
-        ssize_t count = readlink("/proc/self/exe", buffer, PATH_MAX);
+    	#ifdef __APPLE__
+			uint32_t size = PATH_MAX;
+			ssize_t count = _NSGetExecutablePath(buffer, &size);
+		#else
+			ssize_t count = readlink("/proc/self/exe", buffer, PATH_MAX);
+        #endif
         std::string path(buffer, (count > 0 ? count : 0));
         return path.substr(0, path.find_last_of("/"));
     #endif
