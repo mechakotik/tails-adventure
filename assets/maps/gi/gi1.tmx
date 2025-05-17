@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="127" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="127" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="110" columns="10">
   <image source="gi1.png" width="160" height="176"/>
   <tile id="0">
@@ -102,11 +102,6 @@
    <properties>
     <property name="spikes" type="int" value="2"/>
    </properties>
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
   </tile>
   <tile id="37">
    <objectgroup draworder="index" id="2">
@@ -443,11 +438,6 @@
    <properties>
     <property name="spikes" type="int" value="0"/>
    </properties>
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
   </tile>
   <tile id="107">
    <objectgroup draworder="index" id="2">
