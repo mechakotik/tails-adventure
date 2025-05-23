@@ -214,7 +214,11 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
         TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
         TA_Point velocity(asIntOrFloat(object.at("xsp")), asIntOrFloat(object.at("ysp")));
-        spawnObject<TA_Wind>(topLeft, bottomRight, velocity);
+        std::string animation = "leaf";
+        if(object.contains("animation")) {
+            animation = object.at("animation").as_string();
+        }
+        spawnObject<TA_Wind>(topLeft, bottomRight, velocity, animation);
     }
 
     else if(name == "item_box") {

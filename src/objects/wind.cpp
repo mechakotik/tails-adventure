@@ -1,15 +1,17 @@
 #include "wind.h"
 #include "character.h"
 
-void TA_Wind::load(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity) {
+void TA_Wind::load(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, const std::string& animation) {
     hitbox.setRectangle(topLeft, bottomRight);
     this->velocity = velocity;
+    this->animation = animation;
 }
 
 bool TA_Wind::update() {
     if(shouldBlow()) {
         objectSet->getLinks().character->setWindVelocity(velocity);
         timer += TA::elapsedTime;
+        // TODO: don't hardcode this, make level option like wind_as_flow
         if(timer > leafSpawnTime && TA::levelPath.substr(0, 7) != "maps/ci") {
             spawnLeaf();
             timer = 0;
@@ -42,8 +44,10 @@ void TA_Wind::spawnLeaf() {
     leafVelocity.x = (TA::equal(velocity.x, 0) ? 0 : TA::sign(velocity.x) * 12);
     leafVelocity.y = (TA::equal(velocity.y, 0) ? 0 : TA::sign(velocity.y) * 12);
 
-    objectSet->spawnObject<TA_Leaf>(leafPosition, leafVelocity);
+    objectSet->spawnObject<TA_Leaf>(leafPosition, leafVelocity, animation);
 }
+
+// TODO: actual uniform distribution
 
 TA_Wind::Side TA_Wind::getRandomLeafSide() {
     std::vector<Side> sides;
@@ -80,7 +84,7 @@ TA_Point TA_Wind::getRandomPointOnSide(Side side) {
 }
 
 void TA_StrongWind::load(TA_Point topLeft, TA_Point bottomRight) {
-    TA_Wind::load(topLeft, bottomRight, {0, -3});
+    TA_Wind::load(topLeft, bottomRight, {0, -3}, "leaf");
 }
 
 bool TA_StrongWind::shouldBlow() {
@@ -98,9 +102,9 @@ bool TA_StrongWind::shouldBlow() {
     return blowing;
 }
 
-void TA_Leaf::load(TA_Point position, TA_Point velocity) {
+void TA_Leaf::load(TA_Point position, TA_Point velocity, const std::string& animation) {
     loadFromToml("objects/leaf.toml");
-    setAnimation("leaf");
+    setAnimation(animation);
     setCamera(nullptr);
 
     this->position = position;

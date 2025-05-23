@@ -15,13 +15,14 @@ private:
 
     TA_Point velocity;
     float timer = 0;
+    std::string animation;
 
 protected:
     virtual bool shouldBlow();
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity);
+    void load(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, const std::string& animation);
     bool update();
 };
 
@@ -46,7 +47,7 @@ private:
 
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position, TA_Point velocity);
+    void load(TA_Point position, TA_Point velocity, const std::string& animation);
     bool update();
 };
 

@@ -188,4 +188,9 @@ bridge = [
 	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=368, rightx=383, y=496 },
 	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=240, rightx=287, y=432 },
 ]
+wind = [
+	{ left=752, top=672, right=848, bottom=880, xsp=0, ysp=-1, animation="flame" },
+	{ left=112, top=512, right=448, bottom=624, xsp=0, ysp=1, animation="flame" },
+	{ left=96, top=64, right=432, bottom=400, xsp=0, ysp=1, animation="flame" },
+]
 

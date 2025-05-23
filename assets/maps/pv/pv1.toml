@@ -41,6 +41,9 @@ level_transition = [
 map_transition = [
 	{ selection=7, left=0, top=16, right=2, bottom=64 }
 ]
+wind = [
+	{ left=208, top=16, right=272, bottom=48, xsp=0, ysp=1, animation="flame" }
+]
 
 [objects.default]
 bat_robot = [
