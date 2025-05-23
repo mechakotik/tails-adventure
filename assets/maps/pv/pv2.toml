@@ -9,6 +9,9 @@ spawn = [
 level_transition = [
 	{ path="maps/pv/pv1", left=624, top=832, right=626, bottom=880 }
 ]
+map_transition = [
+	{ selection=7, left=288, top=928, right=320, bottom=944 }
+]
 breakable_block = [
 	{ tile_x=5, tile_y=3, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
 	{ tile_x=5, tile_y=4, path="maps/pv/block1.png", particle_path="maps/pv/rock.png" },
