@@ -18,11 +18,13 @@ bool TA_BreakableBlock::update() {
     objectSet->checkCollision(hitbox, flags);
 
     bool shouldBreak = false;
-    if(objectSet->getLinks().character && flags & TA_COLLISION_ATTACK) {
-        shouldBreak = true;
-    } else if(objectSet->getLinks().seaFox && flags & (TA_COLLISION_DRILL)) {
-        shouldBreak = true;
-        breakSound.play();
+    if((flags & TA_COLLISION_NAPALM) == 0) {
+        if(objectSet->getLinks().character && flags & TA_COLLISION_ATTACK) {
+            shouldBreak = true;
+        } else if(objectSet->getLinks().seaFox && flags & (TA_COLLISION_DRILL)) {
+            shouldBreak = true;
+            breakSound.play();
+        }
     }
 
     if(shouldBreak) { // TODO: particles positions should depend on block size
