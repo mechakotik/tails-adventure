@@ -179,6 +179,12 @@ breakable_block = [
 	{ tile_x=40, tile_y=38, path="maps/pv/block2.png", particle_path="maps/pv/rock.png" },
 	
 	{ tile_x=56, tile_y=37, path="maps/pv/block3.png", particle_path="maps/pv/rock.png", drops_ring=true },
+	
+	{ tile_x=48, tile_y=22, path="maps/pv/block4.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=49, tile_y=22, path="maps/pv/block4.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=50, tile_y=22, path="maps/pv/block4.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=51, tile_y=22, path="maps/pv/block4.png", particle_path="maps/pv/rock.png" },
+	{ tile_x=52, tile_y=22, path="maps/pv/block4.png", particle_path="maps/pv/rock.png" },
 ]
 bridge = [
 	{ path="maps/pv/bridge.png", particle_path="maps/pv/rock.png", leftx=288, rightx=319, y=624 },
