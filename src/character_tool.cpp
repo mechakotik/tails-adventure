@@ -211,6 +211,7 @@ void TA_Character::updateNightVision() {
     if(nightVisionTimer > nightVisionActivateTime) {
         nightVisionSound.play();
         links.tilemap->setLayerAlpha(links.tilemap->getNumLayers() - 1, 0);
+        links.objectSet->disableNight();
         usingNightVision = false;
     } else {
         links.tilemap->setLayerAlpha(

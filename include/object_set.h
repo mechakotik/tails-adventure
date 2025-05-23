@@ -89,6 +89,7 @@ public:
     void addRings(int count);
     void addRingsToMaximum();
     bool isNight() { return night; }
+    void disableNight() { night = false; }
 
     template <class T, typename... P>
     void spawnObject(P... params) {
