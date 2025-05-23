@@ -44,6 +44,9 @@ map_transition = [
 wind = [
 	{ left=208, top=16, right=272, bottom=48, xsp=0, ysp=1, animation="flame" }
 ]
+item_box = [
+	{ tile_x=14, tile_y=18, offset_x=8, offset_y=8, number=17, item_name="item_radar" }
+]
 
 [objects.default]
 bat_robot = [

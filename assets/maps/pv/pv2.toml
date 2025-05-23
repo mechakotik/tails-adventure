@@ -199,4 +199,40 @@ wind = [
 	{ left=112, top=512, right=448, bottom=624, xsp=0, ysp=1, animation="flame" },
 	{ left=96, top=64, right=432, bottom=400, xsp=0, ysp=1, animation="flame" },
 ]
+fire = [
+	{ tile_x=13, tile_y=30, offset_x=-24, offset_y=8 },
+	{ tile_x=20, tile_y=30, offset_y=8, flip=true },
+]
+item_box = [
+	{ tile_x=34, tile_y=43, number=9, item_name="fang" },
+	{ tile_x=7, tile_y=1, offset_x=8, number=1, item_name="large_bomb" },
+]
+
+[objects.default]
+bat_robot = [
+	{ tile_x=49, tile_y=35, offset_x=-4 },
+	{ tile_x=22, tile_y=32, offset_x=-4 },
+	{ tile_x=10, tile_y=32, offset_x=-4 },
+	{ tile_x=44, tile_y=20, offset_x=-4 },
+	{ tile_x=37, tile_y=20, offset_x=-4 },
+	{ tile_x=30, tile_y=20, offset_x=-4 },
+	{ tile_x=37, tile_y=3, offset_x=-4 },
+]
+nezu = [
+	{ tile_x=37, tile_y=38 },
+	{ tile_x=33, tile_y=36 },
+	{ tile_x=18, tile_y=44 },
+	{ tile_x=50, tile_y=25 },
+	{ tile_x=3, tile_y=14 },
+]
+drill_mole = [
+	{ tile_x=29, tile_y=28, offset_x=4 },
+	{ tile_x=35, tile_y=28, offset_x=4 },
+	{ tile_x=41, tile_y=28, offset_x=4 },
+]
+flame = [
+	{ tile_x=13, tile_y=46, offset_x=12 },
+	{ tile_x=25, tile_y=46, offset_x=12 },
+	{ tile_x=50, tile_y=30, offset_x=12 },
+]
 

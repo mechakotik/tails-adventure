@@ -17,4 +17,7 @@ sonic = " sonic \n       "
 proton_torpedo = " proton  \n torpedo "
 extra_speed = "  extra  \n  speed  "
 night_vision = "  night  \n  vision "
+item_radar = "  item  \n radar  "
+fang = "  fang  \n        "
+large_bomb = "  large \n  bomb  "
 
