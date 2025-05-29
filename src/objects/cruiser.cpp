@@ -60,6 +60,10 @@ bool TA_Cruiser::update() {
 }
 
 void TA_Cruiser::draw() {
+    watcherSprite.setUpdateAnimation(!objectSet->isPaused());
+    leftThrowerSprite.setUpdateAnimation(!objectSet->isPaused());
+    rightThrowerSprite.setUpdateAnimation(!objectSet->isPaused());
+
     TA_Object::draw();
     watcherSprite.draw();
     leftThrowerSprite.draw();
