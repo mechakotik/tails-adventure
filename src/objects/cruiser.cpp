@@ -4,6 +4,7 @@
 #include "ring.h"
 #include "sea_fox.h"
 #include "transition.h"
+#include "explosion.h"
 
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");
@@ -143,6 +144,19 @@ void TA_Cruiser::updateDestroyed() {
             lockPosition + TA_Point(TA::screenWidth, TA::screenHeight), 6, false);
         state = State::UNLOCK;
     }
+
+    float newTimer = timer + TA::elapsedTime;
+    if(static_cast<int>(newTimer / 4) != static_cast<int>(timer / 4)) {
+        constexpr int minX = 16;
+        constexpr int maxX = 176;
+        constexpr int minY = 32;
+        constexpr int maxY = 80;
+        int x = minX + TA::random::next() % (maxX - minX + 1);
+        int y = minY + TA::random::next() % (maxY - minY + 1);
+        objectSet->spawnObject<TA_Explosion>(position + TA_Point(x, y), 0, TA_EXPLOSION_NEUTRAL);
+    }
+
+    timer = newTimer;
 }
 
 void TA_Cruiser::updateUnlock() {}

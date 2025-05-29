@@ -36,6 +36,8 @@ private:
 
     int health = 48;
     float speed = 1.5;
+
+    float timer = 0;
 };
 
 #endif // TA_CRUISER_H
