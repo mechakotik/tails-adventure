@@ -1,10 +1,10 @@
 #include "cruiser.h"
 #include "barrel.h"
-#include "little_kukku.h"
+#include "dead_kukku.h"
+#include "explosion.h"
 #include "ring.h"
 #include "sea_fox.h"
 #include "transition.h"
-#include "explosion.h"
 
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");
@@ -150,6 +150,19 @@ void TA_Cruiser::updateDestroyed() {
     }
 
     float newTimer = timer + TA::elapsedTime;
+    if(timer < 20 && newTimer >= 20) {
+        watcherSprite.setAlpha(0);
+        objectSet->spawnObject<TA_DeadKukku>(position + TA_Point(68, 15));
+    }
+    if(timer < 40 && newTimer >= 40) {
+        leftThrowerSprite.setAlpha(0);
+        objectSet->spawnObject<TA_DeadKukku>(position + TA_Point(52, 34));
+    }
+    if(timer < 60 && newTimer >= 60) {
+        rightThrowerSprite.setAlpha(0);
+        objectSet->spawnObject<TA_DeadKukku>(position + TA_Point(148, 26));
+    }
+
     if(static_cast<int>(newTimer / 4) != static_cast<int>(timer / 4)) {
         constexpr int minX = 16;
         constexpr int maxX = 176;
