@@ -28,6 +28,22 @@ struct TA_Point {
     TA_Point operator*(const TA_Point& rv) const { return {x * rv.x, y * rv.y}; }
     TA_Point operator*(const float& rv) const { return {x * rv, y * rv}; }
 
+    TA_Point& operator+=(const TA_Point& rv) {
+        x += rv.x;
+        y += rv.y;
+        return *this;
+    }
+    TA_Point& operator-=(const TA_Point& rv) {
+        x -= rv.x;
+        y -= rv.y;
+        return *this;
+    }
+    TA_Point& operator*=(const TA_Point& rv) {
+        x *= rv.x;
+        y *= rv.y;
+        return *this;
+    }
+
     [[nodiscard]] float length() const { return std::sqrt((x * x) + (y * y)); }
     [[nodiscard]] float getDistance(const TA_Point& rv) const { return (*this - rv).length(); }
 };
