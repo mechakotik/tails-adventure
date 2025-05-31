@@ -53,6 +53,8 @@ private:
     std::vector<Tile> tileset;
     std::array<TA_Polygon, 4> borderPolygons;
     std::vector<int> collisionLayers;
+    std::vector<int> normalLayers;
+    std::vector<int> priorityLayers;
     std::vector<int> layerAlpha;
     std::filesystem::path filename;
     TA_Camera* camera = nullptr;

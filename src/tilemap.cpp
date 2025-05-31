@@ -140,6 +140,11 @@ void TA_Tilemap::loadLayer(int id, const tmx::Layer& layer) {
     if(layer.tileLayer().hasProperty("collision") && layer.tileLayer().property("collision").boolValue()) {
         collisionLayers.push_back(id);
     }
+    if(layer.tileLayer().hasProperty("priority") && layer.tileLayer().property("priority").boolValue()) {
+        priorityLayers.push_back(id);
+    } else {
+        normalLayers.push_back(id);
+    }
 }
 
 void TA_Tilemap::draw(int priority) {
@@ -175,11 +180,13 @@ void TA_Tilemap::draw(int priority) {
                 tileset[tile].sprite.setUpdateAnimation(false);
             }
         }
-        for(int layer = 0; layer < std::max(1, layerCount - 1); layer++) {
+        for(int layer : normalLayers) {
             drawLayer(layer);
         }
-    } else if(priority == 1 && layerCount >= 2) {
-        drawLayer(layerCount - 1);
+    } else if(priority == 1) {
+        for(int layer : priorityLayers) {
+            drawLayer(layer);
+        }
     }
 }
 

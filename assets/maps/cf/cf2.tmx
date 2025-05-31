@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="96" height="29" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="96" height="29" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="90" columns="10">
   <image source="cf2.png" width="160" height="144"/>
   <tile id="0">
@@ -359,7 +359,7 @@
    </objectgroup>
   </tile>
  </tileset>
- <layer id="2" name="layer1" width="96" height="29">
+ <layer id="2" name="layer0" width="96" height="29">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
@@ -395,7 +395,10 @@
 2,2,2,2,2,2,2,2,61,3,4,4,4,4,4,4,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6,33,2,61,62,2,2,6,33,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
- <layer id="1" name="layer0" width="96" height="29">
+ <layer id="1" name="layer1" width="96" height="29">
+  <properties>
+   <property name="priority" type="bool" value="true"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,3,4,4,4,4,4,5,0,0,0,0,0,3,15,16,16,16,16,16,17,4,15,16,16,17,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,3,4,4,4,4,4,5,0,0,0,0,0,3,39,0,0,0,0,0,3,4,39,0,0,90,88,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="git" orientation="orthogonal" renderorder="right-down" width="123" height="28" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="123" height="28" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <properties>
+  <property name="priority" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="297" columns="11">
   <image source="vt1.png" width="176" height="432"/>
   <tile id="0">
@@ -595,7 +598,7 @@
    </animation>
   </tile>
  </tileset>
- <layer id="1" name="layer" width="123" height="28">
+ <layer id="1" name="layer0" width="123" height="28">
   <properties>
    <property name="collision" type="bool" value="true"/>
   </properties>
@@ -631,6 +634,9 @@
 </data>
  </layer>
  <layer id="2" name="layer1" width="123" height="28">
+  <properties>
+   <property name="priority" type="bool" value="true"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

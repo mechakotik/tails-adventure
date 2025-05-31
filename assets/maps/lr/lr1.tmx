@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <properties>
+  <property name="priority" type="bool" value="true"/>
+ </properties>
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="432" columns="27">
   <image source="lr1.png" width="432" height="256"/>
   <tile id="1">
