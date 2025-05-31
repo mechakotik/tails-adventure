@@ -26,7 +26,7 @@ bool TA_PushableObject::update() {
     }
     velocity.y += grv * TA::elapsedTime;
 
-    int flags = moveAndCollide(TA_Point(0, 0), TA_Point(getWidth(), getHeight()), velocity * TA::elapsedTime);
+    int flags = moveAndCollide(TA_Point(0, 0), TA_Point(getWidth(), getHeight()), velocity * TA::elapsedTime, true);
     if(flags & TA_GROUND_COLLISION) {
         velocity.y = 0;
     }
