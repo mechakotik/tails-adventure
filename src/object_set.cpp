@@ -7,6 +7,7 @@
 #include "objects/beehive.h"
 #include "objects/bird_walker.h"
 #include "objects/bomb_thrower.h"
+#include "objects/bomber.h"
 #include "objects/breakable_block.h"
 #include "objects/bridge.h"
 #include "objects/conveyor_belt.h"
@@ -352,6 +353,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "wood") {
         spawnObject<TA_Wood>(position);
+    }
+
+    else if(name == "bomber") {
+        spawnObject<TA_Bomber>(position.x);
     }
 
     else {

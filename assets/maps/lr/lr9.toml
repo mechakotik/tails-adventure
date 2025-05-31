@@ -17,3 +17,11 @@ map_transition = [
 	{ selection=2, seafox=true, left=990, top=0, right=992, bottom=128 }
 ]
 
+[objects.default]
+bomber = [
+	{ tile_x=36, offset_x=-56 },
+	{ tile_x=41, offset_x=-56 },
+	{ tile_x=47, offset_x=-56 },
+	{ tile_x=54, offset_x=-56 },
+]
+

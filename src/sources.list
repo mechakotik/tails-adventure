@@ -4,6 +4,7 @@ src/objects/bat_robot.cpp
 src/objects/beehive.cpp
 src/objects/bird_walker.cpp
 src/objects/bomb_thrower.cpp
+src/objects/bomber.cpp
 src/objects/bomb.cpp
 src/objects/breakable_block.cpp
 src/objects/bridge.cpp

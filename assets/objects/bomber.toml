@@ -1,0 +1,13 @@
+[sprite]
+image = "bomber.png"
+width = 24
+height = 32
+
+[animations.fly]
+frames = [0, 1]
+delay = 12
+
+[animations.fly_away]
+frames = [2, 3]
+delay = 12
+

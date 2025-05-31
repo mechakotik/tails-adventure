@@ -17,6 +17,19 @@ map_transition = [
 wood = [
 	{ tile_x=61, tile_y=10 },
 	{ tile_x=77, tile_y=6, offset_x=8 },
-	{ tile_x=121, tile_y=5, offset_x=8 }
+	{ tile_x=121, tile_y=5, offset_x=8 },
+]
+bomber = [
+	{ tile_x=9, offset_x=-56 },
+	{ tile_x=13, offset_x=-56 },
+	{ tile_x=18, offset_x=-56 },
+	{ tile_x=22, offset_x=-56 },
+	{ tile_x=30, offset_x=-56 },
+	{ tile_x=36, offset_x=-56 },
+	{ tile_x=41, offset_x=-56 },
+	{ tile_x=45, offset_x=-56 },
+	{ tile_x=91, offset_x=-56 },
+	{ tile_x=97, offset_x=-56 },
+	{ tile_x=103, offset_x=-56 },
 ]
 
