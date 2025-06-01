@@ -356,7 +356,8 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "bomber") {
-        spawnObject<TA_Bomber>(position.x);
+        float maxY = (object.contains("max_y") ? static_cast<float>(object.at("max_y").as_integer()) : 1e5F);
+        spawnObject<TA_Bomber>(position.x, maxY);
     }
 
     else {

@@ -1,10 +1,11 @@
 #include "bomber.h"
 #include "dead_kukku.h"
 
-void TA_Bomber::load(float aimX) {
+void TA_Bomber::load(float aimX, float maxY) {
     loadFromToml("objects/bomber.toml");
     hitbox.setRectangle(TA_Point(2, 2), TA_Point(14, 14));
     this->aimX = aimX;
+    this->maxY = maxY;
 }
 
 bool TA_Bomber::update() {
@@ -36,8 +37,9 @@ bool TA_Bomber::update() {
 
 void TA_Bomber::updateIdle() {
     float characterX = objectSet->getCharacterPosition().x;
-    if(lastCharacterX < aimX && aimX <= characterX) {
-        position = {aimX + 64, objectSet->getLinks().camera->getPosition().y - static_cast<float>(getHeight()) - 1};
+    float startY = objectSet->getLinks().camera->getPosition().y - static_cast<float>(getHeight()) - 1;
+    if(lastCharacterX < aimX && aimX <= characterX && startY + heightShift <= maxY) {
+        position = {aimX + 64, startY};
         velocity = {-1, startYSpeed};
         setAnimation("fly");
         state = State::FLY;

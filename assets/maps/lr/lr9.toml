@@ -19,9 +19,9 @@ map_transition = [
 
 [objects.default]
 bomber = [
-	{ tile_x=36, offset_x=-56 },
-	{ tile_x=41, offset_x=-56 },
-	{ tile_x=47, offset_x=-56 },
-	{ tile_x=54, offset_x=-56 },
+	{ tile_x=36, offset_x=-56, max_y=60 },
+	{ tile_x=41, offset_x=-56, max_y=60 },
+	{ tile_x=47, offset_x=-56, max_y=60 },
+	{ tile_x=54, offset_x=-56, max_y=60 },
 ]
 
