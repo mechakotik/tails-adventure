@@ -1,9 +1,10 @@
 #include "bomber.h"
 #include "dead_kukku.h"
+#include "explosion.h"
 
 void TA_Bomber::load(float aimX, float maxY) {
     loadFromToml("objects/bomber.toml");
-    hitbox.setRectangle(TA_Point(2, 2), TA_Point(22, 30));
+    hitbox.setRectangle({2, 2}, {22, 30});
     this->aimX = aimX;
     this->maxY = maxY;
 }
@@ -60,6 +61,8 @@ void TA_Bomber::updateFly() {
 void TA_Bomber::updatePreAttack() {
     timer += TA::elapsedTime;
     if(timer > attackTime) {
+        objectSet->spawnObject<TA_BomberBomb>(position + TA_Point(8, 23));
+        setAnimation("fly_away");
         timer = 0;
         state = State::POST_ATTACK;
     }
@@ -92,4 +95,25 @@ int TA_Bomber::getCollisionType() {
         return TA_COLLISION_TRANSPARENT;
     }
     return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
+}
+
+void TA_BomberBomb::load(TA_Point position) {
+    loadFromToml("objects/bomber_bomb.toml");
+    hitbox.setRectangle(TA_Point(0, 0), TA_Point(4, 8));
+    this->position = position;
+}
+
+bool TA_BomberBomb::update() {
+    velocity.y = std::min(maxYSpeed, velocity.y + gravity * TA::elapsedTime);
+    int flags = moveAndCollide({0, 0}, {4, 8}, velocity * TA::elapsedTime, false);
+    if(flags & (TA_GROUND_COLLISION | TA_WALL_COLLISION)) {
+        objectSet->spawnObject<TA_Explosion>(position - TA_Point(6, 4), 0, TA_EXPLOSION_ENEMY);
+        return false;
+    }
+    updatePosition();
+    return true;
+}
+
+bool TA_BomberBomb::checkPawnCollision(TA_Rect& hitbox) {
+    return (objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_CHARACTER)) != 0;
 }
