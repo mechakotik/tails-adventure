@@ -3,7 +3,7 @@
 
 void TA_Bomber::load(float aimX, float maxY) {
     loadFromToml("objects/bomber.toml");
-    hitbox.setRectangle(TA_Point(2, 2), TA_Point(14, 14));
+    hitbox.setRectangle(TA_Point(2, 2), TA_Point(22, 30));
     this->aimX = aimX;
     this->maxY = maxY;
 }
