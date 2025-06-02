@@ -27,7 +27,7 @@ bool TA_Barrel::update() {
     position = position + velocity * TA::elapsedTime;
     updatePosition();
 
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_CHARACTER)) {
+    if(position.y > 232 || (objectSet->checkCollision(hitbox) & TA_COLLISION_CHARACTER) != 0) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 4), 0, TA_EXPLOSION_ENEMY);
         return false;
     }

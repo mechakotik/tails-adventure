@@ -12,12 +12,12 @@ public:
     void draw() override;
 
 private:
-    enum class State { IDLE, ACTIVE, DESTROYED, UNLOCK };
+    enum class State { IDLE, ACTIVE, DESTROYED, POST_DESTROYED };
 
     void updateIdle();
     void updateActive();
     void updateDestroyed();
-    void updateUnlock();
+    void updatePostDestroyed();
     void updateBorderPosition();
     void updateBirds();
     void updateDamage();

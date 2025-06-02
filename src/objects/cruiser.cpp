@@ -48,8 +48,8 @@ bool TA_Cruiser::update() {
         case State::DESTROYED:
             updateDestroyed();
             break;
-        case State::UNLOCK:
-            updateUnlock();
+        case State::POST_DESTROYED:
+            updatePostDestroyed();
             break;
     }
 
@@ -87,7 +87,7 @@ void TA_Cruiser::updateBirds() {
         }
         if(rightThrowerSprite.getCurrentFrame() == 0 && rightThrowerPrevFrame == 1) {
             objectSet->spawnObject<TA_Barrel>(
-                rightThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 15), -2));
+                rightThrowerSprite.getPosition() + TA_Point(12, 4), TA_Point(1 + 0.1 * (TA::random::next() % 25), -2));
         }
         leftThrowerPrevFrame = leftThrowerSprite.getCurrentFrame();
         rightThrowerPrevFrame = rightThrowerSprite.getCurrentFrame();
@@ -144,9 +144,9 @@ void TA_Cruiser::updateDestroyed() {
 
     if(position.x < lockPosition.x - getWidth() - 32) {
         TA::sound::playMusic("sound/lr.vgm");
-        objectSet->spawnObject<TA_Transition>(lockPosition + TA_Point(TA::screenWidth - 2, 0),
-            lockPosition + TA_Point(TA::screenWidth, TA::screenHeight), 6, false);
-        state = State::UNLOCK;
+        objectSet->spawnObject<TA_Transition>(lockPosition + TA_Point(TA::screenWidth + 64, 0),
+            lockPosition + TA_Point(TA::screenWidth + 66, TA::screenHeight), 6, false);
+        state = State::POST_DESTROYED;
     }
 
     float newTimer = timer + TA::elapsedTime;
@@ -176,4 +176,9 @@ void TA_Cruiser::updateDestroyed() {
     timer = newTimer;
 }
 
-void TA_Cruiser::updateUnlock() {}
+void TA_Cruiser::updatePostDestroyed() {
+    lockPosition.x += TA::elapsedTime * 1.5F;
+    objectSet->getLinks().seaFox->setVelocityAdd({1.5, 0});
+    objectSet->getLinks().camera->setLockPosition(lockPosition);
+    objectSet->getLinks().camera->forceLockX();
+}
