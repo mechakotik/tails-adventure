@@ -27,7 +27,8 @@ void TA_GameOverScreen::setMaxRings() {
 
 TA_ScreenState TA_GameOverScreen::update() {
     TA::drawScreenRect(17, 17, 153, 255);
-    gameOverSprite.setPosition(TA::screenWidth / 2 - gameOverSprite.getWidth() / 2, 0);
+    gameOverSprite.setPosition(
+        TA::screenWidth / 2 - gameOverSprite.getWidth() / 2, TA::screenHeight / 2 - gameOverSprite.getHeight() / 2);
     gameOverSprite.draw();
 
     controller.update();
