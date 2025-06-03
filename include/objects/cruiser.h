@@ -34,7 +34,7 @@ private:
 
     TA_Sound hitSound;
 
-    int health = 48;
+    int health = 32;
     float speed = 1.5;
 
     float timer = 0;
