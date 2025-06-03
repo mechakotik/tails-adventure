@@ -1,6 +1,6 @@
 [submodule "external/SDL"]
 	path = external/SDL
-	url = https://github.com/libsdl-org/SDL
+	url = https://github.com/mechakotik/SDL
 [submodule "external/SDL_image"]
 	path = external/SDL_image
 	url = https://github.com/libsdl-org/SDL_image
