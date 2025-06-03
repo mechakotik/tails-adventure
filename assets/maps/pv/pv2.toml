@@ -226,9 +226,9 @@ nezu = [
 	{ tile_x=3, tile_y=14 },
 ]
 drill_mole = [
-	{ tile_x=29, tile_y=28, offset_x=4 },
-	{ tile_x=35, tile_y=28, offset_x=4 },
-	{ tile_x=41, tile_y=28, offset_x=4 },
+	{ tile_x=29, tile_y=29, offset_x=4, offset_y=-26 },
+	{ tile_x=35, tile_y=29, offset_x=4, offset_y=-26 },
+	{ tile_x=41, tile_y=29, offset_x=4, offset_y=-26 },
 ]
 flame = [
 	{ tile_x=13, tile_y=46, offset_x=12 },
