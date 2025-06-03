@@ -16,7 +16,7 @@ namespace TA {
 }
 
 void TA::save::load() {
-    std::string defaultConfigPath = TA::filesystem::getAssetsPath() / "default_config";
+    std::filesystem::path defaultConfigPath = TA::filesystem::getAssetsPath() / "default_config";
     addOptionsFromFile(defaultConfigPath);
     addOptionsFromFile(getSaveFileName());
 }
@@ -44,7 +44,7 @@ void TA::save::writeToFile() {
         output << key << ' ' << value << std::endl;
     }
 
-    std::string name = getSaveFileName();
+    std::filesystem::path name = getSaveFileName();
     TA::filesystem::writeFile(name, output.str());
 }
 

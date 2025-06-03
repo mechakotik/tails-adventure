@@ -17,7 +17,7 @@ void TA_Font::tryLoadFont(const std::filesystem::path& path) {
     std::filesystem::path image = path.parent_path() / table.at("font").at("image").as_string();
     int width = static_cast<int>(table.at("font").at("width").as_integer());
     int height = static_cast<int>(table.at("font").at("height").as_integer());
-    load(image, width, height);
+    load(image.string(), width, height);
     setMapping(table.at("font").at("mapping").as_string());
 }
 

@@ -71,7 +71,7 @@ void TA_Tilemap::loadTileset(const tmx::Tileset& tiles) {
     std::filesystem::path textureFilename = filename.parent_path() / tiles.image().source();
 
     for(size_t tile = 0; tile < tiles.tileCount(); tile += 1) {
-        tileset[tile].sprite.load(textureFilename, tileWidth, tileHeight);
+        tileset[tile].sprite.load(textureFilename.string(), tileWidth, tileHeight);
         tileset[tile].sprite.setFrame(tile);
     }
 

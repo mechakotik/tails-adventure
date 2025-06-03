@@ -133,6 +133,7 @@ else()
         SDL3::SDL3-static
         SDL3_image::SDL3_image-static
         SDL3_mixer::SDL3_mixer-static
+        SDL3::SDL3-static
         tmxpp
         toml11::toml11
     )

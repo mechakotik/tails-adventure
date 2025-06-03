@@ -14,7 +14,8 @@
 #endif
 
 bool TA::filesystem::fileExists(std::filesystem::path path) {
-    SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "rb");
+    std::string pathStr = path.string();
+    SDL_IOStream* file = SDL_IOFromFile(pathStr.c_str(), "rb");
     if(file == nullptr) {
         return false;
     }
@@ -26,7 +27,8 @@ bool TA::filesystem::fileExists(std::filesystem::path path) {
 }
 
 std::string TA::filesystem::readFile(std::filesystem::path path) {
-    SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "rb");
+    std::string pathStr = path.string();
+    SDL_IOStream* file = SDL_IOFromFile(pathStr.c_str(), "rb");
     if(file == nullptr) {
         TA::handleSDLError("open %s for read failed", path.c_str());
     }
@@ -87,7 +89,8 @@ std::filesystem::path TA::filesystem::getExecutableDirectory() {
 }
 
 void TA::filesystem::writeFile(std::filesystem::path path, std::string value) {
-    SDL_IOStream* file = SDL_IOFromFile(path.c_str(), "wb");
+    std::string pathStr = path.string();
+    SDL_IOStream* file = SDL_IOFromFile(pathStr.c_str(), "wb");
     if(file == nullptr) {
         TA::handleSDLError("open %s for write failed", path.c_str());
     }
