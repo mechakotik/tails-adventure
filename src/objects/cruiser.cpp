@@ -9,7 +9,7 @@
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");
     hitbox.setRectangle({16, 45}, {164, 94});
-    position = {288, 62};
+    position = {TA::screenWidth + 64, 62};
 
     watcherSprite.loadFromToml("objects/cruiser/watcher.toml");
     leftThrowerSprite.loadFromToml("objects/rock_thrower.toml");
