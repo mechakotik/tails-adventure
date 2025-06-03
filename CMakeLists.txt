@@ -22,6 +22,11 @@ if(APPLE)
     enable_language(OBJC)
 endif()
 
+# workaround for fseeko not found error
+if(ANDROID)
+    add_compile_definitions(_LIBCPP_HAS_NO_OFF_T_FUNCTIONS)
+endif()
+
 if(TA_SANITIZE)
     add_compile_options(-fsanitize=address,leak,undefined)
     add_link_options(-fsanitize=address,leak,undefined)
