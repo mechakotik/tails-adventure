@@ -11,16 +11,27 @@
 
 </div>
 
-Tails Adventure is Sonic the Hedgehog spin-off game, released for Game Gear and featuring Tails in a solo role. Opposed to other Sonic titles with fast-paced gameplay, Tails Adventure is metroidvania game with emphasis on exploration, collecting items and backtracking. It's a really unique "hidden gem" of the series, which couldn't get attention it deserves due to low popularity of Game Gear.
+Tails Adventure is a Sonic the Hedgehog spin-off game, released for Game Gear and featuring Tails in a solo role. Opposed to other Sonic titles with fast-paced gameplay, Tails Adventure is a metroidvania game with emphasis on exploration, collecting items and backtracking. It's a unique "hidden gem" of the series that couldn't get attention it deserves due to low popularity of Game Gear.
 
-This project tries to bring Tails Adventure experience to modern platforms, pushing away Game Gear limitations and implementing some improvements:
-- **New features:** item hotswap menu, ring drop system
-- **Balance improvements:** rebalanced gameplay, enemies and bosses
-- **Smoother gameplay:** runs in your native resolution and refresh rate, displays subpixels
-- **Better controls:** customizable keyboard and gamepad mappings, analog input support
-- **Save system:** convenient data select menu in Sonic 3 style
+This project aims to bring Tails Adventure experience to modern platforms, pushing away Game Gear limitations and implementing some improvements:
+- **Balance changes:** rebalanced gameplay, enemies and bosses, to make the game more challenging
+- **QoL improvements:** more responsive controls, pause menu, item hotswap
+- **Display support:** runs in any resolution and refresh rate, displays subpixels, allows adjusting internal resolution to "zoom out the camera"
+- **Input support:** keyboard, gamepad and touchscreen input, rumble and analog stick support, customizable mappings
+- **Save system:** automatic saving, convenient data select menu in Sonic 3 style
+- **Mod support:** simple mod system to embed custom assets, easily modifiable formats like TMX and TOML
 
-Also, it was made from the ground up in C++ without using any game engines to be less bloated, maximize performance and portability.
+Also, it was made from the ground up in C++ without using any game engines to be less bloated, maximize performance and portability. Effort is put into making the framework as lightweight as possible, able to run on weak hardware.
+
+## Implemented
+
+**Levels (fully):** Poloy Forest, Polly Mt. 1, Cavern Island, Caron Forest, Green Island, Lake Crystal, Polly Mt. 2.
+
+**Levels (partially):** Volcanic Tunnel, Lake Rocky.
+
+**Items:** Regular Bomb, Remote Bomb, Napalm Bomb, Triple Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio.
+
+**Sea Fox items:** Vulcan Gun, Anti-air Missile, Extra Speed.
 
 ## Default controls
 
@@ -35,16 +46,6 @@ Controls can be remapped with Options -> Controls -> Map keyboard / Map gamepad.
 | Next item | D | RB |
 | Start | Enter | Start |
 | Toggle fullscreen | Right Alt + Enter | - |
-
-## Implemented
-
-**Levels (fully):** Poloy Forest, Polly Mt. 1, Cavern Island, Caron Forest.
-
-**Levels (partially):** Volcanic Tunnel, Lake Rocky.
-
-**Items:** Regular Bomb, Remote Bomb, Napalm Bomb, Triple Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio.
-
-**Sea Fox items:** Vulcan Gun.
 
 ## Get it
 
@@ -69,7 +70,7 @@ git clone --recurse-submodules https://github.com/mechakotik/tails-adventure
 cd tails-adventure
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_UNIX_INSTALL=true
-cmake --build .
+cmake --build . -j$(nproc)
 sudo cmake --install .
 ```
 
@@ -90,12 +91,12 @@ pacman -Syu
 If it asks to restart shell, restart it and run this command again. After MSYS2 is fully updated, run following commands in MSYS2 MINGW64 shell to install dependencies, clone repository and build Tails Adventure Remake:
 
 ```sh
-pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-ninja mingw-w64-ucrt-x86_64-cmake git
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-ninja mingw-w64-x86_64-cmake git
 git clone --recurse-submodules https://github.com/mechakotik/tails-adventure
 cd tails-adventure
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=true
-cmake --build .
+cmake --build . -j$(nproc)
 cmake --install .
 ```
 
@@ -111,4 +112,4 @@ After copying the necessary files, you may just open `android` directory as a pr
 
 ## Contributing
 
-Contributions are welcome! Just be sure to follow project's code style and write clear descriptions of changes that you are making. To get started, you may search for TODO in source code.
+Contributions are welcome! Just be sure to follow project's code style (use clang-format to format the code automatically) and write clear descriptions of changes that you are making. To get started, you may search for TODO in source code.
