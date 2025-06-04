@@ -1,4 +1,18 @@
 =======================
+        v0.3.0
+=======================
+
+- New levels: Green Island, Lake Crystal, Polly Mt. 2
+- New items: Anti-air Missile, Extra Speed
+- Optimization improvements (around 2x increase in FPS)
+- Support for adjusting internal resolution
+- Added mod support
+- TMX tilemap parsing with tmx++
+- Moved game config files to TOML format
+- Initial macOS support (build from source)
+- Formatted all code with clang-format
+
+=======================
         v0.2.3
 =======================
 
