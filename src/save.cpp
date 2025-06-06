@@ -50,17 +50,11 @@ void TA::save::writeToFile() {
 
 std::filesystem::path TA::save::getSaveFileName() {
 #ifdef __ANDROID__
-    std::filesystem::path internalPath = SDL_GetAndroidInternalStoragePath();
-    internalPath /= "config";
-
-    bool useExternal = (SDL_GetAndroidExternalStorageState() ==
-                        (SDL_ANDROID_EXTERNAL_STORAGE_READ | SDL_ANDROID_EXTERNAL_STORAGE_WRITE));
-    useExternal &= !TA::filesystem::fileExists(internalPath);
-
-    if(useExternal) {
+    if(SDL_GetAndroidExternalStorageState() ==
+        (SDL_ANDROID_EXTERNAL_STORAGE_READ | SDL_ANDROID_EXTERNAL_STORAGE_WRITE)) {
         return std::filesystem::path(SDL_GetAndroidExternalStoragePath()) / "config";
     }
-    return internalPath;
+    return std::filesystem::path(SDL_GetAndroidInternalStoragePath()) / "config";
 #elifdef TA_UNIX_INSTALL
     std::filesystem::path path = std::filesystem::path(getenv("HOME")) / ".local/share/tails-adventure";
     std::filesystem::create_directories(path);
