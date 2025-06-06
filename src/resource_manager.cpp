@@ -68,10 +68,10 @@ void TA::resmgr::loadMods() {
     for(const Mod& mod : mods) {
         totalMods++;
         if(!mod.enabled) continue;
-        loaded.push_back(mod.root.filename().string());
+        loaded.push_back(mod.root.filename().generic_string());
         loadedMods++;
         for(const std::filesystem::path& path : mod.files) {
-            std::string rel = std::filesystem::relative(path, mod.root).string();
+            std::string rel = std::filesystem::relative(path, mod.root).generic_string();
             overrides[rel] = path;
         }
     }
@@ -110,8 +110,8 @@ TA::resmgr::Mod TA::resmgr::loadMod(std::filesystem::path root) {
 }
 
 std::filesystem::path TA::resmgr::getAssetPath(std::filesystem::path asset) {
-    if(overrides.contains(asset.string())) {
-        return overrides.at(asset.string());
+    if(overrides.contains(asset.generic_string())) {
+        return overrides.at(asset.generic_string());
     }
     return TA::filesystem::getAssetsPath() / asset;
 }
@@ -136,10 +136,10 @@ void TA::resmgr::preloadChunks() {
 }
 
 SDL_Texture* TA::resmgr::loadTexture(std::filesystem::path path) {
-    path = getAssetPath(path.string());
+    path = getAssetPath(path);
 
-    if(!textureMap.count(path.string())) {
-        std::string pathStr = path.string();
+    if(!textureMap.count(path.generic_string())) {
+        std::string pathStr = path.generic_string();
         SDL_Surface* surface = IMG_Load(pathStr.c_str());
         if(surface == nullptr) {
             TA::handleSDLError("%s", "failed to load image");
@@ -150,59 +150,59 @@ SDL_Texture* TA::resmgr::loadTexture(std::filesystem::path path) {
         }
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
         SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
-        textureMap[path.string()] = texture;
+        textureMap[path.generic_string()] = texture;
         SDL_DestroySurface(surface);
     }
 
-    return textureMap[path.string()];
+    return textureMap[path.generic_string()];
 }
 
 Mix_Music* TA::resmgr::loadMusic(std::filesystem::path path) {
     path = getAssetPath(path);
 
-    if(!musicMap.count(path.string())) {
-        std::string pathStr = path.string();
-        musicMap[path.string()] = Mix_LoadMUS(pathStr.c_str());
-        if(musicMap[path.string()] == nullptr) {
+    if(!musicMap.count(path.generic_string())) {
+        std::string pathStr = path.generic_string();
+        musicMap[path.generic_string()] = Mix_LoadMUS(pathStr.c_str());
+        if(musicMap[path.generic_string()] == nullptr) {
             TA::handleSDLError("%s load failed", pathStr.c_str());
         }
     }
 
-    return musicMap[path.string()];
+    return musicMap[path.generic_string()];
 }
 
 Mix_Chunk* TA::resmgr::loadChunk(std::filesystem::path path) {
     path = getAssetPath(path);
 
-    if(!chunkMap.contains(path.string())) {
-        std::string pathStr = path.string();
-        chunkMap[path.string()] = Mix_LoadWAV(pathStr.c_str());
-        if(chunkMap[path.string()] == nullptr) {
+    if(!chunkMap.contains(path.generic_string())) {
+        std::string pathStr = path.generic_string();
+        chunkMap[path.generic_string()] = Mix_LoadWAV(pathStr.c_str());
+        if(chunkMap[path.generic_string()] == nullptr) {
             TA::handleSDLError("%s load failed", pathStr.c_str());
         }
     }
 
-    return chunkMap[path.string()];
+    return chunkMap[path.generic_string()];
 }
 
 const std::string& TA::resmgr::loadAsset(std::filesystem::path path) {
     path = getAssetPath(path);
-    if(!assetMap.contains(path.string())) {
-        assetMap[path.string()] = TA::filesystem::readFile(path);
+    if(!assetMap.contains(path.generic_string())) {
+        assetMap[path.generic_string()] = TA::filesystem::readFile(path);
     }
-    return assetMap[path.string()];
+    return assetMap[path.generic_string()];
 }
 
 const toml::value& TA::resmgr::loadToml(std::filesystem::path path) {
     path = getAssetPath(path);
-    if(!tomlMap.contains(path.string())) {
+    if(!tomlMap.contains(path.generic_string())) {
         try {
-            tomlMap[path.string()] = toml::parse_str(TA::filesystem::readFile(path));
+            tomlMap[path.generic_string()] = toml::parse_str(TA::filesystem::readFile(path));
         } catch(std::exception& e) {
             TA::handleError("failed to load %s\n%s", path.c_str(), e.what());
         }
     }
-    return tomlMap[path.string()];
+    return tomlMap[path.generic_string()];
 }
 
 int TA::resmgr::getLoadedMods() {
