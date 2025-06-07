@@ -50,9 +50,13 @@ void TA::save::writeToFile() {
 
 std::filesystem::path TA::save::getSaveFileName() {
 #ifdef __ANDROID__
+    const char* path = nullptr;
     if(SDL_GetAndroidExternalStorageState() ==
         (SDL_ANDROID_EXTERNAL_STORAGE_READ | SDL_ANDROID_EXTERNAL_STORAGE_WRITE)) {
-        return std::filesystem::path(SDL_GetAndroidExternalStoragePath()) / "config";
+        path = SDL_GetAndroidExternalStoragePath();
+    }
+    if(path != nullptr) {
+        return std::filesystem::path(path) / "config";
     }
     return std::filesystem::path(SDL_GetAndroidInternalStoragePath()) / "config";
 #elifdef TA_UNIX_INSTALL
