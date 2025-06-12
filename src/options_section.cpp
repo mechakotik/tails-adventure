@@ -188,7 +188,7 @@ public:
         if(!locked) {
             return "";
         }
-        return buttons[button];
+        return getOptionString("button_" + buttons[button]);
     }
 
     bool isLocked() override { return locked; }
@@ -235,7 +235,7 @@ public:
         if(!locked) {
             return "";
         }
-        return buttons[button];
+        return getOptionString(buttons[button]);
     }
 
     bool isLocked() override { return locked; }
