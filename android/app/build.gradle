@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 10
-        versionName "0.3.0-2"
+        versionCode 11
+        versionName "0.3.0-3"
         externalNativeBuild {
             cmake {
                 arguments "-DANDROID_PLATFORM=android-19", "-DANDROID_STL=c++_static"
