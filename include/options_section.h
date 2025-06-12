@@ -45,7 +45,7 @@ private:
     float listTransitionTimeLeft = -1;
 
     State state = STATE_SELECTING_GROUP;
-    std::vector<std::string> groups{"video", "controls", "sound"};
+    std::vector<std::string> groups;
     std::vector<std::vector<std::unique_ptr<TA_Option>>> options;
     TA_Sound switchSound, selectSound, backSound, errorSound;
     int group = 0, option = 0, alpha = 255, baseAlpha = 255;

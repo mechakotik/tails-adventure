@@ -66,7 +66,7 @@ public:
 
     std::string getValue() override {
         int value = TA::save::getParameter("pixel_ar");
-        return (value == 1 ? "gg" : "off");
+        return (value == 1 ? gg : off);
     }
 
     TA_MoveSoundId move(int delta) override {
@@ -78,6 +78,8 @@ public:
 
 private:
     std::string name = getOptionString("pixel_ar");
+    std::string off = getOptionString("off");
+    std::string gg = getOptionString("pixel_ar_gg");
 };
 
 class TA_VSyncOption : public TA_Option {
@@ -119,7 +121,7 @@ public:
 
     std::string getValue() override {
         int value = TA::save::getParameter("scale_mode");
-        return (value == 1 ? "smooth" : "sharp");
+        return (value == 1 ? smooth : sharp);
     }
 
     TA_MoveSoundId move(int delta) override {
@@ -131,6 +133,8 @@ public:
 
 private:
     std::string name = getOptionString("scale_mode");
+    std::string smooth = getOptionString("scale_mode_smooth");
+    std::string sharp = getOptionString("scale_mode_sharp");
 };
 
 class TA_VolumeOption : public TA_Option {
@@ -313,6 +317,11 @@ private:
 
 void TA_OptionsSection::load() {
     font.loadFont("fonts/pause_menu.toml");
+
+    groups = std::vector<std::string>(3);
+    groups[0] = getOptionString("video");
+    groups[1] = getOptionString("controls");
+    groups[2] = getOptionString("sound");
 
     options.resize(groups.size());
     options[0].push_back(std::make_unique<TA_ResolutionOption>());
