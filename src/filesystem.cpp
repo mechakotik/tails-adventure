@@ -58,11 +58,7 @@ std::filesystem::path TA::filesystem::getAssetsPath() {
 #ifdef __ANDROID__
     return "";
 #elifdef TA_UNIX_INSTALL
-#ifdef __APPLE__
     return "/usr/local/share/tails-adventure";
-#else
-    return "/usr/share/tails-adventure";
-#endif
 #else
     return getExecutableDirectory() / "assets";
 #endif
