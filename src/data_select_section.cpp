@@ -245,6 +245,7 @@ std::string TA_DataSelectSection::generateSplash() {
         "test splash",
         "Free as in freedom",
         "Install Gentoo",
+        "Learn Vim",
         "Also try Sonic Forces",
         "Bleeding edge SDL3 o_o",
         "One Piece wa jitsuzai suru!",

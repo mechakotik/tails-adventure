@@ -61,6 +61,10 @@ sudo apt install build-essential cmake git
 
 # Arch and its derives
 sudo pacman -S gcc make cmake git
+
+# NixOS and uwu
+nix shell nixpkgs#{gcc,gnumake,cmake} # Build tools
+nix develop nixpkgs#sdl3.lib # System libs for SDL3
 ```
 
 After installing required libraries, run following commands to clone repository, build and install Tails Adventure Remake:
