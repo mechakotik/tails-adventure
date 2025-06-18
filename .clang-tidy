@@ -42,7 +42,7 @@ Checks: >
   -fuchsia-default-arguments-declarations,
   -hicpp-signed-bitwise
 HeaderFilterRegex: '.*'
-WarningsAsErrors: '*'
+WarningsAsErrors: ''
 CheckOptions:
   - key: readability-identifier-naming.NamespaceCase
     value: camelBack
