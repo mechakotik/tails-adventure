@@ -35,11 +35,12 @@ jobs:
         run: |
           cd build
           cmake --build . -j$(nproc)
-          cmake --install .
 
       - name: Package
         run: |
-          cd build/output
+          cd build
+          cmake --install .
+          cd output
           export XZ_OPT='-9'
           tar -cJf ../artifact.tar.xz *
 
