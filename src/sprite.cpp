@@ -165,7 +165,7 @@ void TA_Sprite::updateAnimation() {
             animationFrame %= static_cast<int>(animation.frames.size());
         }
 
-        animationTimer = std::fmodf(animationTimer, static_cast<float>(animation.delay));
+        animationTimer = std::fmod(animationTimer, static_cast<float>(animation.delay));
         frame = animation.frames[animationFrame];
     } else {
         frame = animation.frames[0];
