@@ -1,0 +1,51 @@
+name: Build (Debian)
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    name: Build and Package
+    runs-on: ubuntu-latest
+    container: # glibc is not forward compatible, assuming no one uses glibc older than Debian stable
+      image: debian:stable
+      options: --privileged
+
+    steps:
+      - name: Install dependencies
+        run: |
+          echo "deb-src http://deb.debian.org/debian stable main" >> /etc/apt/sources.list
+          echo "deb-src http://deb.debian.org/debian stable-updates main" >> /etc/apt/sources.list
+          apt-get update -y
+          apt-get install -y build-essential cmake git xz-utils
+          apt-get build-dep -y libsdl2-dev
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=ON
+
+      - name: Build
+        run: |
+          cd build
+          cmake --build . -j$(nproc)
+          cmake --install .
+
+      - name: Package
+        run: |
+          cd build/output
+          export XZ_OPT='-9'
+          tar -cJf ../artifact.tar.xz *
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: artifact.tar.xz
