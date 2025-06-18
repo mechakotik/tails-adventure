@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-    name: Build and Package
     runs-on: ubuntu-latest
     container: # glibc is not forward compatible, assuming no one uses glibc older than Debian stable
       image: debian:stable
@@ -48,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact
-          path: artifact.tar.xz
+          path: build/artifact.tar.xz
