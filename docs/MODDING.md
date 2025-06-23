@@ -10,7 +10,7 @@ A mod is a subdirectory of `mods` directory. Its files will override correspondi
 
 To make the game load the mod, you also need to enable it: create file `mods/example/enabled` and put 1 in it.
 
-There are also priorities to resolve conflicts between mods. To set priority for the mod, create text file `mods/example/priority` and put integer priority value in it. If multiple mods override the same file, the game will load this file from the mod with highest priority. The default priority value (if `priority` file doesn't exist) is 0.
+There are also priorities to resolve conflicts between mods. To set priority for the mod, create text file `mods/example/priority` and put integer priority value in it. If multiple mods override the same file, the game will load this file from the mod with highest priority. The default priority value (if `priority` file doesn't exist) is `0`.
 
 ## Debugging
 
@@ -89,8 +89,7 @@ A level consists of a tilemap and a TOML file that defines level and objects. Le
 # path to music relative to assets directory
 music = "sound/lr.vgm"
 
-# leave unset for usual mode, "seafox" for Sea Fox, "seafox_ground" for
-# Lake Crystal-like gameplay
+# leave unset for usual mode, "seafox" for Sea Fox, "seafox_ground" for Lake Crystal-like gameplay
 mode = "seafox"
 
 # water level Y position, leave unset if not needed
@@ -98,7 +97,7 @@ water_level = 96
 
 spawn = [
 	{ x=12, y=84 }, # default spawn point
-  # spawn point if player went from LR2, flip character
+	# spawn point if player went from LR2, flip character
 	{ x=987, y=371, previous="maps/lr/lr2", flip=true },
 ]
 ```
