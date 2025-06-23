@@ -30,7 +30,8 @@ void TA_Hud::load(TA_Links newLinks) {
 
     pauseMenu.load(links);
 
-    itemPosition = TA::save::getSaveParameter("item_position");
+    itemPositionKey = (links.seaFox == nullptr ? "item_position" : "seafox_item_position");
+    itemPosition = TA::save::getSaveParameter(itemPositionKey);
     flightBarSprite.load("hud/flightbar.png");
     rings = TA::save::getSaveParameter("rings");
 
@@ -92,8 +93,6 @@ void TA_Hud::updatePauseMenu() {
     if(result == TA_PauseMenu::UpdateResult::RESUME) {
         exitPause = true;
         timer = 0;
-
-        const std::string itemPositionKey = (links.seaFox == nullptr ? "item_position" : "seafox_item_position");
         itemPosition = static_cast<int>(TA::save::getSaveParameter(itemPositionKey));
     }
     if(result == TA_PauseMenu::UpdateResult::QUIT) {
@@ -150,7 +149,6 @@ void TA_Hud::updateCurrentItem() {
         itemSwitchSound.play();
     }
 
-    std::string itemPositionKey = (links.seaFox ? "seafox_item_position" : "item_position");
     TA::save::setSaveParameter(itemPositionKey, itemPosition);
 }
 

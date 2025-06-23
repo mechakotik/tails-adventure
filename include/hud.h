@@ -20,6 +20,7 @@ private:
     TA_OnscreenButton leftButton, rightButton, pauseButton;
     std::array<TA_Sprite, 2> ringDigits;
     TA_Sound switchSound, itemSwitchSound, pauseSound;
+    std::string itemPositionKey;
     int item = 0, itemPosition = 0, rings = 0;
     float flightBarX = flightBarLeft;
     float timer = 0;
