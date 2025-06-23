@@ -11,6 +11,7 @@ void TA_BeeHive::load(TA_Point position) {
 
     hitbox.setRectangle(TA_Point(2, 2), TA_Point(14, 14));
     this->position = position;
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     updatePosition();
 }
 
@@ -30,6 +31,7 @@ bool TA_BeeHive::update() {
         objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
         destroyed = true;
         setAlpha(0);
+        collisionType = TA_COLLISION_TRANSPARENT;
     }
 
     if(destroyed && beeCount == 0) {
@@ -38,18 +40,12 @@ bool TA_BeeHive::update() {
     return true;
 }
 
-int TA_BeeHive::getCollisionType() {
-    if(!destroyed) {
-        return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
-    }
-    return TA_COLLISION_TRANSPARENT;
-}
-
 void TA_Bee::load(TA_Point position, TA_BeeHive* hive) {
     loadFromToml("objects/beehive.toml");
     setAnimation("bee");
 
     hitbox.setRectangle(TA_Point(4, 4), TA_Point(12, 12));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     this->position = position;
     this->hive = hive;
     updatePosition();
@@ -117,6 +113,7 @@ void TA_StrongBee::load(TA_Point position) {
     setAnimation("strong_bee");
 
     hitbox.setRectangle(TA_Point(4, 4), TA_Point(12, 12));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     this->position = position;
     updatePosition();
     angle = getNeedeedAngle();

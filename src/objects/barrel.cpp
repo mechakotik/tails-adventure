@@ -7,6 +7,8 @@ void TA_Barrel::load(TA_Point position, TA_Point velocity) {
     this->position = position;
     this->velocity = velocity;
     hitbox.setRectangle({0, 0}, {8, 8});
+    collisionType = TA_COLLISION_DAMAGE;
+
     updatePosition();
 }
 

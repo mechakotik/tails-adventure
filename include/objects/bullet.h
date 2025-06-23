@@ -15,7 +15,6 @@ public:
     using TA_Object::TA_Object;
     void load(std::string filename, TA_Point newPosition, TA_Point newVelocity);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
     int getDrawPriority() override { return 1; }
 };
 
@@ -40,7 +39,6 @@ public:
     void load(TA_Point position, TA_Point velocity);
     bool update() override;
     void onDestroy() override;
-    int getCollisionType() override { return TA_COLLISION_ATTACK; }
 };
 
 #endif // TA_BULLET_H

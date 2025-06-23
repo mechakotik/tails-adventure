@@ -12,6 +12,7 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
     position = newPosition;
     setPosition(position);
     hitbox.setRectangle(topLeft - TA_Point(0.5, 0.5), bottomRight + TA_Point(0.5, 0.5));
+    collisionType = TA_COLLISION_BOMB;
 
     mode = newMode;
     moveTime = (mode == TA_BOMB_MODE_DEFAULT ? 6 : 8);

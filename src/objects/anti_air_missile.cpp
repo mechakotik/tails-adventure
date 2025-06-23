@@ -6,6 +6,7 @@ void TA_AntiAirMissile::load(TA_Point position) {
     hitbox.setRectangle({2, 2}, {14, 14});
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
     this->position = position;
+    collisionType = TA_COLLISION_ATTACK | TA_COLLISION_BOMB | TA_COLLISION_DRILL;
     updatePosition();
 
     TA_Rect aimHitbox;

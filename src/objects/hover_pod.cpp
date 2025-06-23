@@ -1,11 +1,13 @@
 #include "hover_pod.h"
 #include "dead_kukku.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_HoverPod::load(TA_Point newPosition, int range, bool flip) {
     loadFromToml("objects/pf_enemies.toml");
     setAnimation("hover_pod");
     hitbox.setRectangle(TA_Point(4, 1), TA_Point(20, 30));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
 
     position = newPosition;
     direction = flip;

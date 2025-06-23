@@ -9,7 +9,6 @@ public:
     void load(float aimX, float maxY);
     bool update() override;
     void draw() override;
-    int getCollisionType() override;
 
 private:
     static constexpr float startYSpeed = 3.2; // TODO: depend on screen height to make it more fair
@@ -38,7 +37,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
     bool checkPawnCollision(TA_Rect& hitbox) override;
 
 private:

@@ -38,7 +38,6 @@ public:
     bool update() override;
 
     bool checkPawnCollision(TA_Rect& hitbox) override;
-    int getCollisionType() override { return TA_COLLISION_BOMB; }
     int getDrawPriority() override { return 1; }
 };
 

@@ -62,7 +62,6 @@ public:
     bool update() override;
     void draw() override;
     int getDrawPriority() override { return 1; }
-    int getCollisionType() override { return TA_COLLISION_SOLID; }
 };
 
 #endif // TA_BIRD_WALKER_H

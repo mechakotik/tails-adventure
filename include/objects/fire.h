@@ -5,8 +5,8 @@
 
 class TA_Fire : public TA_Object {
 private:
-    const float waitTime = 6;
-    const float alphaPeriod = 4;
+    static constexpr float waitTime = 6;
+    static constexpr float alphaPeriod = 4;
 
     void updateHitbox();
     void updateAlpha();
@@ -18,7 +18,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, bool flip = false);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
 };
 
 #endif // TA_FIRE_H

@@ -1,10 +1,12 @@
 #include "bomber.h"
 #include "dead_kukku.h"
 #include "explosion.h"
+#include "tilemap.h"
 
 void TA_Bomber::load(float aimX, float maxY) {
     loadFromToml("objects/bomber.toml");
     hitbox.setRectangle({2, 2}, {22, 30});
+    collisionType = TA_COLLISION_TRANSPARENT;
     this->aimX = aimX;
     this->maxY = maxY;
 }
@@ -26,6 +28,12 @@ bool TA_Bomber::update() {
         case State::FLY_AWAY:
             updateFlyAway();
             break;
+    }
+
+    if(state == State::IDLE) {
+        collisionType = TA_COLLISION_TRANSPARENT;
+    } else {
+        collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     }
 
     updatePosition();
@@ -90,16 +98,10 @@ void TA_Bomber::draw() {
     }
 }
 
-int TA_Bomber::getCollisionType() {
-    if(state == State::IDLE) {
-        return TA_COLLISION_TRANSPARENT;
-    }
-    return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
-}
-
 void TA_BomberBomb::load(TA_Point position) {
     loadFromToml("objects/bomber_bomb.toml");
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(4, 8));
+    collisionType = TA_COLLISION_DAMAGE;
     this->position = position;
 }
 

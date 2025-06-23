@@ -7,10 +7,16 @@ void TA_Explosion::load(TA_Point position, int newDelay, TA_ExplosionType type) 
     setPosition(position);
     setAnimation("explosion");
 
-    this->type = type;
     delay = newDelay;
     hitbox.setRectangle(TA_Point(-2, -2), TA_Point(17, 17));
     hitbox.setPosition(position);
+
+    collisionType = TA_COLLISION_TRANSPARENT;
+    if(type == TA_EXPLOSION_CHARACTER && delay == 0) {
+        collisionType |= TA_COLLISION_ATTACK;
+    } else if(type == TA_EXPLOSION_ENEMY) {
+        collisionType = TA_COLLISION_DAMAGE;
+    }
 }
 
 bool TA_Explosion::update() {
@@ -19,16 +25,6 @@ bool TA_Explosion::update() {
         return false;
     }
     return true;
-}
-
-int TA_Explosion::getCollisionType() {
-    int collisionType = TA_COLLISION_TRANSPARENT;
-    if(type == TA_EXPLOSION_CHARACTER && delay == 0) {
-        collisionType |= TA_COLLISION_ATTACK;
-    } else if(type == TA_EXPLOSION_ENEMY) {
-        collisionType = TA_COLLISION_DAMAGE;
-    }
-    return collisionType;
 }
 
 void TA_Explosion::draw() {

@@ -3,6 +3,7 @@
 #include "error.h"
 #include "item_box.h"
 #include "save.h"
+#include "tilemap.h"
 #include "tools.h"
 #include "transition.h"
 
@@ -82,6 +83,7 @@ bool TA_Speedy::update() {
 
     updatePosition();
     updateFlip();
+    collisionType = (state == STATE_ATTACK ? TA_COLLISION_DAMAGE : TA_COLLISION_TRANSPARENT);
     return true;
 }
 
@@ -351,13 +353,6 @@ void TA_Speedy::doTransition() {
     TA::save::setSaveParameter("last_unlocked", 10);
     TA::save::setSaveParameter("seafox", true);
     objectSet->setTransition(TA_SCREENSTATE_HOUSE);
-}
-
-int TA_Speedy::getCollisionType() {
-    if(state == STATE_ATTACK) {
-        return TA_COLLISION_DAMAGE;
-    }
-    return TA_COLLISION_TRANSPARENT;
 }
 
 void TA_Speedy::draw() {

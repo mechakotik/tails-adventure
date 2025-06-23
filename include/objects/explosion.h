@@ -8,7 +8,6 @@ enum TA_ExplosionType { TA_EXPLOSION_CHARACTER, TA_EXPLOSION_ENEMY, TA_EXPLOSION
 
 class TA_Explosion : public TA_Object {
 private:
-    TA_ExplosionType type;
     float timer = 0;
     int delay = 0;
 
@@ -18,7 +17,6 @@ public:
     bool update() override;
     void draw() override;
     int getDrawPriority() override { return 1; }
-    int getCollisionType() override;
 };
 
 #endif // TA_EXPLOSION_H

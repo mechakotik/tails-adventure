@@ -1,11 +1,13 @@
 #include "pushable_object.h"
 #include "character.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_PushableObject::load(std::string filename, TA_Point newPosition) {
     TA_Sprite::load(filename);
     position = newPosition;
     hitbox.setRectangle(TA_Point(0.33, 0), TA_Point(getWidth() - 0.33, getHeight()));
+    collisionType = TA_COLLISION_PUSHABLE;
 }
 
 bool TA_PushableObject::update() {

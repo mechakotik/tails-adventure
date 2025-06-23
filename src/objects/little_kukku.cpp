@@ -5,6 +5,7 @@
 void TA_LittleKukku::load(TA_Point position) {
     loadFromToml("objects/little_kukku.toml");
     hitbox.setRectangle({3, 2}, {13, 16});
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     this->position = position;
     updatePosition();
 }

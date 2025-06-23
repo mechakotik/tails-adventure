@@ -26,7 +26,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, bool direction);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 class TA_EnemyRock : public TA_Object {
@@ -46,7 +45,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, TA_Point velocity);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
     bool checkPawnCollision(TA_Rect& hitbox) override;
 };
 

@@ -7,6 +7,7 @@ void TA_Fire::load(TA_Point position, bool flip) {
 
     loadFromToml("objects/fire.toml");
     setFlip(flip);
+    collisionType = TA_COLLISION_DAMAGE;
 
     updateHitbox();
     updatePosition();

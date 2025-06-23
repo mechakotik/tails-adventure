@@ -6,6 +6,7 @@ void TA_Jumper::load(TA_Point position) {
     this->position = position;
     loadFromToml("objects/jumper.toml");
     hitbox.setRectangle(TA_Point(1, 1), TA_Point(15, 31));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     updatePosition();
 }
 

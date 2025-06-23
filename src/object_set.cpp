@@ -377,7 +377,7 @@ void TA_ObjectSet::update() {
 
     hitboxContainer.clear();
     for(TA_Object* currentObject : objects) {
-        hitboxContainer.add(currentObject->hitbox, currentObject->getCollisionType());
+        hitboxContainer.add(currentObject->hitbox, currentObject->collisionType);
         for(TA_Object::HitboxVectorElement& element : currentObject->hitboxVector) {
             hitboxContainer.add(element.hitbox, element.collisionType);
         }

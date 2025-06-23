@@ -9,7 +9,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override;
     void deleteBee() { beeCount--; }
 
 private:
@@ -25,7 +24,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, TA_BeeHive* hive);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
     static constexpr float flySpeed = 1;
@@ -49,7 +47,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 
 private:
     static constexpr float idleTime = 40;

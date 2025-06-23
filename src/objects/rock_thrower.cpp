@@ -1,5 +1,6 @@
 #include "rock_thrower.h"
 #include "dead_kukku.h"
+#include "tilemap.h"
 
 void TA_RockThrower::load(TA_Point position, bool direction) {
     this->position = position;
@@ -10,6 +11,7 @@ void TA_RockThrower::load(TA_Point position, bool direction) {
     setAnimation("idle");
 
     hitbox.setRectangle(TA_Point(2, 1), TA_Point(14, 29));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     updatePosition();
 }
 
@@ -106,6 +108,7 @@ void TA_EnemyRock::load(TA_Point position, TA_Point velocity) {
     setAnimation("rock");
 
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(6, 7));
+    collisionType = TA_COLLISION_DAMAGE;
     updatePosition();
 }
 

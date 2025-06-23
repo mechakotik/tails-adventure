@@ -23,7 +23,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, std::string filename, std::string newParticleFilename);
     bool update() override;
-    int getCollisionType() override;
 };
 
 #endif // TA_BRIDGE_H

@@ -11,6 +11,7 @@ void TA_DrillMole::load(TA_Point position) {
     setAnimation("drill_mole");
 
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(14, 26));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     TA_Object::updatePosition();
 }
 

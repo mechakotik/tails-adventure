@@ -9,6 +9,7 @@ void TA_BombThrower::load(TA_Point position, float leftX, float rightX) {
 
     loadFromToml("objects/bomb_thrower.toml");
     hitbox.setRectangle(TA_Point(1, 2), TA_Point(14, 26));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     updatePosition();
 }
 
@@ -116,6 +117,7 @@ void TA_EnemyBomb::load(TA_Point position) {
     this->position = position;
     TA_Sprite::load("objects/enemy_bomb.png");
     hitbox.setRectangle(topLeft - TA_Point(0.5, 0.5), bottomRight + TA_Point(0.5, 0.5));
+    collisionType = TA_COLLISION_DAMAGE;
     updatePosition();
 }
 

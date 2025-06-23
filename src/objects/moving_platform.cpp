@@ -1,5 +1,6 @@
 #include "moving_platform.h"
 #include "character.h"
+#include "tilemap.h"
 
 void TA_MovingPlatform::load(TA_Point startPosition, TA_Point endPosition, bool idle) {
     this->startPosition = startPosition;
@@ -20,6 +21,7 @@ bool TA_MovingPlatform::update() {
         moveCharacter();
     }
     updatePosition();
+    collisionType = (idle ? TA_COLLISION_SOLID : TA_COLLISION_MOVING_PLATFORM);
     return true;
 }
 
@@ -75,11 +77,4 @@ bool TA_MovingPlatform::exceedsBorder() {
     }
     float startY = startPosition.y, endY = endPosition.y;
     return !(std::min(startY, endY) <= position.y && position.y <= std::max(startY, endY));
-}
-
-int TA_MovingPlatform::getCollisionType() {
-    if(idle) {
-        return TA_COLLISION_SOLID;
-    }
-    return TA_COLLISION_MOVING_PLATFORM;
 }

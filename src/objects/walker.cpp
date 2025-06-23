@@ -1,10 +1,12 @@
 #include "walker.h"
 #include "dead_kukku.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_Walker::load(TA_Point newPosition, int range, bool flip) {
     loadFromToml("objects/pf_enemies.toml");
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(18, 26));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
 
     position = newPosition;
     direction = flip;
@@ -127,6 +129,7 @@ void TA_WalkerBullet::load(TA_Point newPosition, bool newDirection) {
     position = newPosition;
     direction = newDirection;
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(7, 7));
+    collisionType = TA_COLLISION_DAMAGE;
 }
 
 bool TA_WalkerBullet::update() {

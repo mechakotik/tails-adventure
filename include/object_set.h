@@ -25,6 +25,7 @@ protected:
 public:
     TA_ObjectSet* objectSet;
     TA_Rect hitbox;
+    int collisionType = TA_COLLISION_TRANSPARENT;
 
     struct HitboxVectorElement {
         TA_Rect hitbox;
@@ -35,9 +36,8 @@ public:
     TA_Object(TA_ObjectSet* newObjectSet);
     virtual bool update() { return false; }
     virtual bool checkCollision(TA_Rect rv) {
-        return getCollisionType() != TA_COLLISION_TRANSPARENT && hitbox.intersects(rv);
+        return collisionType != TA_COLLISION_TRANSPARENT && hitbox.intersects(rv);
     }
-    virtual int getCollisionType() { return TA_COLLISION_TRANSPARENT; }
     virtual int getDrawPriority() { return 0; }
     TA_Point getDistanceToCharacter();
     virtual void destroy() {}

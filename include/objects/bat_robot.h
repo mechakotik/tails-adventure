@@ -21,7 +21,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
     bool checkPawnCollision(TA_Rect& collisionHitbox) override;
 };
 

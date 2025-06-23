@@ -14,7 +14,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition, int range, bool flip);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
 };
 
 #endif // TA_HOVER_POD_H

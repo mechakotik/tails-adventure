@@ -14,7 +14,6 @@ public:
     using TA_Object::TA_Object;
     void load(std::string filename, TA_Point newPosition);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_PUSHABLE; }
     bool checkPawnCollision(TA_Rect& hitbox) override;
 };
 

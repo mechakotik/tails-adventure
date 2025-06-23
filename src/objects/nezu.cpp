@@ -1,6 +1,7 @@
 #include "nezu.h"
 #include "explosion.h"
 #include "ring.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_Nezu::load(TA_Point position) {
@@ -10,6 +11,7 @@ void TA_Nezu::load(TA_Point position) {
     setAnimation("idle");
 
     hitbox.setRectangle(TA_Point(2, 3), TA_Point(13, 14));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     updatePosition();
 }
 

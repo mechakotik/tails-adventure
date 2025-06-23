@@ -8,7 +8,6 @@ public:
     using TA_Object::TA_Object;
     void load();
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE | TA_COLLISION_TARGET; }
     void draw() override;
 
 private:

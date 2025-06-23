@@ -9,7 +9,6 @@ public:
     void load(TA_Point position);
     bool update() override;
     void draw() override;
-    int getCollisionType() override { return (idle ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE); }
     bool checkPawnCollision(TA_Rect& hitbox) override;
 
 private:

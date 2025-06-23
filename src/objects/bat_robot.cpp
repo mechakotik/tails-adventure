@@ -9,6 +9,7 @@ void TA_BatRobot::load(TA_Point newPosition) {
 
     position = newPosition;
     hitbox.setRectangle(TA_Point(5, 0), TA_Point(18, 14));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     updatePosition();
 }
 

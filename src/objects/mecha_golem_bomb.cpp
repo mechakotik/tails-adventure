@@ -1,9 +1,11 @@
 #include "mecha_golem_bomb.h"
 #include "explosion.h"
+#include "tilemap.h"
 
 void TA_MechaGolemBomb::load(TA_Point position) {
     TA_Sprite::load("objects/mecha_golem/bomb.png");
     hitbox.setRectangle({4, 4}, {12, 28});
+    collisionType = TA_COLLISION_DAMAGE;
     this->position = position;
 }
 

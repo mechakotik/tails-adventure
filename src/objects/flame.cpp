@@ -1,5 +1,6 @@
 #include "flame.h"
 #include <cmath>
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_Flame::load(TA_Point position, float startSpeed) {
@@ -9,6 +10,7 @@ void TA_Flame::load(TA_Point position, float startSpeed) {
 
     TA_Sprite::load("objects/flame.png");
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(7, 8));
+    collisionType = TA_COLLISION_DAMAGE;
     updatePosition();
 }
 

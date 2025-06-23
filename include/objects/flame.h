@@ -14,7 +14,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, float startSpeed);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
 };
 
 class TA_FlameLauncher : public TA_Object {

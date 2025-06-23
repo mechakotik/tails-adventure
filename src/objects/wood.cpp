@@ -31,6 +31,7 @@ bool TA_Wood::update() {
         hitboxVector[0].collisionType = TA_COLLISION_TRANSPARENT;
     }
 
+    collisionType = (idle ? TA_COLLISION_TRANSPARENT : TA_COLLISION_DAMAGE);
     return true;
 }
 

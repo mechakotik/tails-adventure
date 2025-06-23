@@ -9,6 +9,7 @@
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");
     hitbox.setRectangle({16, 45}, {164, 94});
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     position = {TA::screenWidth + 64, 62};
 
     watcherSprite.loadFromToml("objects/cruiser/watcher.toml");

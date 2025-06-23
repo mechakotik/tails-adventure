@@ -68,7 +68,6 @@ public:
     void load();
     bool update() override;
     void draw() override;
-    int getCollisionType() override;
 };
 
 #endif // TA_SPEEDY_H

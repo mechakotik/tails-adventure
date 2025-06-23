@@ -14,7 +14,6 @@ public:
     using TA_Object::TA_Object;
     void load(std::string path, std::string newParticlePath, TA_Point newPosition, bool newDropsRing);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_SOLID; }
     int getDrawPriority() override { return 0; }
 };
 

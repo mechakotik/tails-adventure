@@ -1,11 +1,13 @@
 #include "mini_sub.h"
 #include "dead_kukku.h"
+#include "tilemap.h"
 
 void TA_MiniSub::load(TA_Point position) {
     loadFromToml("objects/mini_sub.toml");
     setAnimation("mini_sub");
 
     hitbox.setRectangle(TA_Point(5, 2), TA_Point(19, 30));
+    collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     this->position = position;
     updatePosition();
 }

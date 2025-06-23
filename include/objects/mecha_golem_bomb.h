@@ -8,7 +8,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    int getCollisionType() override { return TA_COLLISION_DAMAGE; }
 
 private:
     const float gravity = 0.125;

@@ -49,6 +49,7 @@ void TA_BirdWalker::load(float newFloorY) {
 
     hitbox.setPosition(TA_Point(0, 0));
     hitbox.setRectangle(TA_Point(TA::screenWidth + 576, 0), TA_Point(TA::screenWidth + 592, 448));
+    collisionType = TA_COLLISION_SOLID;
     objectSet->getLinks().camera->setLockPosition(TA_Point(576, 64 - ((TA::screenHeight - 144) / 2)));
 }
 

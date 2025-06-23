@@ -1,5 +1,6 @@
 #include "bullet.h"
 #include "explosion.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVelocity) {
@@ -7,6 +8,7 @@ void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVel
     position = newPosition;
     velocity = newVelocity;
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(getWidth(), getHeight()));
+    collisionType = TA_COLLISION_DAMAGE;
     updatePosition();
 }
 
@@ -51,6 +53,7 @@ bool TA_BirdWalkerBullet::update() {
 void TA_VulcanGunBullet::load(TA_Point position, TA_Point velocity) {
     TA_Bullet::load("objects/vulcan_gun_bullet.toml", position, velocity);
     setAnimation("bullet");
+    collisionType = TA_COLLISION_ATTACK;
     explosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX2);
 }
 
