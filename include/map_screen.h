@@ -7,6 +7,8 @@
 
 class TA_MapScreen : public TA_Screen {
 private:
+    void setMaxRings();
+
     TA_InGameMap map;
     TA_AreaSelector selector;
 
