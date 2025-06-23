@@ -220,9 +220,10 @@ void TA_Character::updateNightVision() {
 }
 
 void TA_Character::changeMusic() {
+    // TODO: don't hardcoode this?
     const std::vector<std::string> music{"sound/bf.vgm", "sound/boss.vgm", "sound/cc.vgm", "sound/cf.vgm",
         "sound/final.vgm", "sound/house.vgm", "sound/lr.vgm", "sound/map.vgm", "sound/password.vgm", "sound/pf.vgm",
-        "sound/pm.vgm", "sound/sea_fox.vgm", "sound/radio.vgm", "sound/title.vgm", "sound/vt.vgm"};
+        "sound/pm.vgm", "sound/lc.vgm", "sound/radio.vgm", "sound/title.vgm", "sound/vt.vgm"};
 
     // TODO: don't play current music
     int pos = TA::random::next() % (int)music.size();
