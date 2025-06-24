@@ -21,6 +21,12 @@ jobs:
           apt-get install -y build-essential cmake git xz-utils
           apt-get build-dep -y libsdl2-dev
 
+      - name: Cache git folder
+        uses: actions/cache@v3
+        with:
+          path: .git
+          key: ${{ runner.os }}-git-folder
+
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -57,14 +63,20 @@ jobs:
     defaults:
       run:
         shell: msys2 {0}
-    
+ 
     steps:
-      - uses: actions/checkout@v3
-      - uses: msys2/setup-msys2@v2
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
           update: true
           install: mingw-w64-x86_64-gcc mingw-w64-x86_64-ninja mingw-w64-x86_64-cmake git
+
+      - name: Cache git folder
+        uses: actions/cache@v3
+        with:
+          path: .git
+          key: ${{ runner.os }}-git-folder
 
       - name: Checkout repository
         uses: actions/checkout@v3
