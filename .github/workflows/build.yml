@@ -21,11 +21,17 @@ jobs:
           apt-get install -y build-essential cmake git xz-utils
           apt-get build-dep -y libsdl2-dev
 
-      - name: Cache git folder
+      - name: Cache git directory
         uses: actions/cache@v3
         with:
           path: .git
-          key: ${{ runner.os }}-git-folder
+          key: ${{ runner.os }}-git
+
+      - name: Cache build directory
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: ${{ runner.os }}-build
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -34,9 +40,9 @@ jobs:
 
       - name: Configure CMake
         run: |
-          mkdir build
+          mkdir build || true
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=ON
+          cmake .. --fresh -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=ON
 
       - name: Build
         run: |
@@ -72,11 +78,17 @@ jobs:
           update: true
           install: mingw-w64-x86_64-gcc mingw-w64-x86_64-ninja mingw-w64-x86_64-cmake git
 
-      - name: Cache git folder
+      - name: Cache git directory
         uses: actions/cache@v3
         with:
           path: .git
-          key: ${{ runner.os }}-git-folder
+          key: ${{ runner.os }}-git
+
+      - name: Cache build directory
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: ${{ runner.os }}-build
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -85,9 +97,9 @@ jobs:
 
       - name: Configure CMake
         run: |
-          mkdir build
+          mkdir build || true
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=ON
+          cmake .. --fresh -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=ON
 
       - name: Build
         run: |
