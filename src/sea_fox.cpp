@@ -6,6 +6,7 @@
 #include "object_set.h"
 #include "ring.h"
 #include "save.h"
+#include "splash.h"
 
 void TA_SeaFox::load(TA_Links links) {
     this->links = links;
@@ -18,6 +19,7 @@ void TA_SeaFox::load(TA_Links links) {
     damageSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);
     bulletSound.load("sound/bullet.ogg", TA_SOUND_CHANNEL_SFX3);
     extraSpeedSound.load("sound/extra_speed.ogg", TA_SOUND_CHANNEL_SFX3);
+    waterSound.load("sound/water.ogg", TA_SOUND_CHANNEL_SFX1);
 
     hitbox.setRectangle(TA_Point(9, 4), TA_Point(23, 30));
 }
@@ -122,6 +124,12 @@ void TA_SeaFox::physicsStep() {
 
     setPosition(position);
     velocityAdd = {0, 0};
+
+    bool newUnderwater = (position.y + 30 > waterLevel);
+    if(newUnderwater != underwater) {
+        links.objectSet->spawnObject<TA_Splash>(position + TA_Point(8, 12));
+        waterSound.play();
+    }
 
     // TA::printLog("%f %f", position.x, position.y);
 }

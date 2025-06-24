@@ -43,7 +43,7 @@ private:
     TA_Point velocityAdd{0, 0};
     TA_Point followPosition;
     TA_Rect hitbox, drillHitbox;
-    TA_Sound bulletSound, damageSound, jumpSound, extraSpeedSound;
+    TA_Sound bulletSound, damageSound, jumpSound, extraSpeedSound, waterSound;
     bool flip = false, neededFlip = false, dead = false;
 
     float vulcanGunTimer = vulcanGunTime + 1;

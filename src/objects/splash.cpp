@@ -7,6 +7,10 @@ void TA_Splash::load(TA_Point newPosition) {
     position = newPosition;
     int top = int((position.y + 6) / 16) * 16 - 6;
     int bottom = top + 16;
+    if(objectSet->getLinks().seaFox != nullptr) {
+        top += 3;
+        bottom += 3;
+    }
     if(abs(position.y - top) < abs(position.y - bottom)) {
         position.y = top;
     } else {
