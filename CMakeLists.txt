@@ -108,7 +108,7 @@ if(WIN32)
     set(WIN32_RESOURCES res/icon.rc)
 endif()
 
-file(STRINGS "src/sources.list" TA_SOURCES)
+file(STRINGS "sources.list" TA_SOURCES)
 
 if(ANDROID)
     add_library(tails-adventure SHARED ${TA_SOURCES})
