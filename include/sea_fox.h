@@ -48,7 +48,6 @@ private:
 
     float vulcanGunTimer = vulcanGunTime + 1;
     float invincibleTimer = invincibleTime + 1;
-    float waterLevel = -64;
     float deadTimer = 0;
 
     bool groundMode = false;
@@ -66,7 +65,6 @@ public:
 
     void setSpawnPoint(TA_Point position, bool flip);
     void setGroundMode() { groundMode = true; }
-    void setWaterLevel(float level) { waterLevel = level; }
     void setVelocityAdd(TA_Point add) { velocityAdd = add; }
     TA_Rect* getHitbox() { return &hitbox; }
     TA_Rect* getDrillHitbox() { return &drillHitbox; }

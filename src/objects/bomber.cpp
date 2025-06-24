@@ -1,6 +1,7 @@
 #include "bomber.h"
 #include "dead_kukku.h"
 #include "explosion.h"
+#include "splash.h"
 #include "tilemap.h"
 
 void TA_Bomber::load(float aimX, float maxY) {
@@ -107,6 +108,12 @@ void TA_BomberBomb::load(TA_Point position) {
 
 bool TA_BomberBomb::update() {
     velocity.y = std::min(maxYSpeed, velocity.y + gravity * TA::elapsedTime);
+
+    float waterLevel = objectSet->getWaterLevel();
+    if(position.y + 8 < waterLevel && position.y + 8 + velocity.y * TA::elapsedTime >= waterLevel) {
+        objectSet->spawnObject<TA_Splash>(position - TA_Point(6, 4));
+    }
+
     int flags = moveAndCollide({0, 0}, {4, 8}, velocity * TA::elapsedTime, false);
     if(flags & (TA_GROUND_COLLISION | TA_WALL_COLLISION)) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(6, 4), 0, TA_EXPLOSION_ENEMY);

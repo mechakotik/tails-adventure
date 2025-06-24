@@ -1,6 +1,6 @@
 #include "barrel.h"
-#include <bomb.h>
 #include "explosion.h"
+#include "splash.h"
 
 void TA_Barrel::load(TA_Point position, TA_Point velocity) {
     loadFromToml("objects/cruiser/barrel.toml");
@@ -18,13 +18,17 @@ bool TA_Barrel::update() {
     static constexpr float maxUnderwaterYsp = 1;
     static constexpr float minXsp = 0.5;
 
-    // TODO: don't hardcode water level
+    float waterLevel = objectSet->getWaterLevel();
     velocity.y += gravity * TA::elapsedTime;
     velocity.x -= drag * TA::elapsedTime;
-    if(position.y >= 140) {
+    if(position.y >= waterLevel) {
         velocity.y = std::min(velocity.y, maxUnderwaterYsp);
     }
     velocity.x = std::max(velocity.x, minXsp);
+
+    if(position.y + 8 < waterLevel && position.y + 8 + velocity.y * TA::elapsedTime >= waterLevel) {
+        objectSet->spawnObject<TA_Splash>(position - TA_Point(4, 4));
+    }
 
     position = position + velocity * TA::elapsedTime;
     updatePosition();

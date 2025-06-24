@@ -93,7 +93,7 @@ void TA_ObjectSet::tryLoad(std::string filename) {
     }
 
     if(table.contains("level") && table.at("level").contains("water_level") && links.seaFox != nullptr) {
-        links.seaFox->setWaterLevel(table.at("level").at("water_level").as_integer());
+        waterLevel = table.at("level").at("water_level").as_integer();
     }
 
     if(table.contains("level") && table.at("level").contains("borders")) {

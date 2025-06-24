@@ -58,6 +58,7 @@ void TA_SeaFox::physicsStep() {
         }
     };
 
+    float waterLevel = links.objectSet->getWaterLevel();
     bool underwater = (position.y + 30 > waterLevel);
 
     if(links.controller->getDirection() != TA_DIRECTION_MAX) {

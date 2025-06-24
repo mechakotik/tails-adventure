@@ -1,5 +1,6 @@
 #include "anti_air_missile.h"
 #include "explosion.h"
+#include "splash.h"
 
 void TA_AntiAirMissile::load(TA_Point position) {
     loadFromToml("objects/anti_air_missile.toml");
@@ -33,10 +34,20 @@ void TA_AntiAirMissile::load(TA_Point position) {
         velocity = {0, -4};
         setFrame(0);
     }
+
+    float waterLevel = objectSet->getWaterLevel();
+    if(position.y < waterLevel && position.y >= waterLevel - 16) {
+        objectSet->spawnObject<TA_Splash>(TA_Point(position.x, waterLevel - 16));
+    }
 }
 
 bool TA_AntiAirMissile::update() {
     if(!destroyed) {
+        float waterLevel = objectSet->getWaterLevel();
+        if(position.y >= waterLevel && position.y + velocity.y * TA::elapsedTime < waterLevel) {
+            objectSet->spawnObject<TA_Splash>(position - TA_Point(0, 16));
+        }
+
         position = position + velocity * TA::elapsedTime;
         updatePosition();
         if((position - objectSet->getCharacterPosition()).length() > 200) {

@@ -57,6 +57,7 @@ private:
     bool spawnFlip = false, firstSpawnPointSet = false;
     bool paused = false;
     bool night = false;
+    float waterLevel = -64;
 
 public:
     ~TA_ObjectSet();
@@ -90,6 +91,7 @@ public:
     void addRingsToMaximum();
     bool isNight() { return night; }
     void disableNight() { night = false; }
+    float getWaterLevel() { return waterLevel; }
 
     template <class T, typename... P>
     void spawnObject(P... params) {
