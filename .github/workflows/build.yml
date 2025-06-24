@@ -27,12 +27,6 @@ jobs:
           path: .git
           key: ${{ runner.os }}-git
 
-      - name: Cache build directory
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: ${{ runner.os }}-build
-
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -40,7 +34,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          mkdir build || true
+          mkdir build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=ON
 
@@ -84,12 +78,6 @@ jobs:
           path: .git
           key: ${{ runner.os }}-git
 
-      - name: Cache build directory
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: ${{ runner.os }}-build
-
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -97,7 +85,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          mkdir build || true
+          mkdir build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release -DTA_STATIC=ON
 
