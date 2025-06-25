@@ -2,7 +2,6 @@
 #include <toml.hpp>
 #include "character.h"
 #include "error.h"
-#include "hud.h"
 #include "objects/bat_robot.h"
 #include "objects/beehive.h"
 #include "objects/bird_walker.h"

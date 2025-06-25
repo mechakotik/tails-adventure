@@ -40,7 +40,6 @@ public:
     void load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName);
     bool update() override;
     int getDrawPriority() override;
-    bool checkPawnCollision(TA_Rect& hitbox) override;
 };
 
 class TA_ItemLabel : public TA_Object {

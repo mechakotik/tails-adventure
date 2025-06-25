@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include "explosion.h"
+#include "gamepad.h"
 #include "item_box.h"
 #include "mecha_golem_bomb.h"
 #include "save.h"

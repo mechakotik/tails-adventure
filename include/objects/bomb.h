@@ -37,7 +37,6 @@ public:
     virtual void load(TA_Point newPosition, bool newDirection, TA_BombMode mode);
     bool update() override;
 
-    bool checkPawnCollision(TA_Rect& hitbox) override;
     int getDrawPriority() override { return 1; }
 };
 

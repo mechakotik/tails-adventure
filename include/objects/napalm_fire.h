@@ -7,8 +7,6 @@ class TA_NapalmFire : public TA_Object {
 private:
     TA_Point velocity, topLeft{0, 23}, bottomRight{8, 31};
 
-    bool checkPawnCollision(TA_Rect& hitbox) override;
-
 public:
     using TA_Object::TA_Object;
     void load(TA_Point position, float xsp);

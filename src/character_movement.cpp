@@ -1,5 +1,7 @@
 #include "character.h"
+#include "controller.h"
 #include "error.h"
+#include "tools.h"
 
 void TA_Character::physicsStep() {
     if(!hurt) {

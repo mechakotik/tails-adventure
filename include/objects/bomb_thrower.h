@@ -42,7 +42,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    bool checkPawnCollision(TA_Rect& hitbox) override;
 };
 
 #endif // TA_BOMB_THROWER_H

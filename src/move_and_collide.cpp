@@ -1,30 +1,33 @@
-#include "pawn.h"
 #include <cassert>
 #include "geometry.h"
-#include "tools.h"
+#include "object_set.h"
 
-int TA_Pawn::moveAndCollide(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, bool ground) {
+std::pair<TA_Point, int> TA_ObjectSet::moveAndCollide(
+    TA_Point position, TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, int solidFlags, bool ground) {
+    this->position = position;
     this->topLeft = topLeft;
     this->bottomRight = bottomRight;
     this->velocity = velocity;
+    this->solidFlags = solidFlags;
     this->ground = ground;
+    delta = {0, 0};
 
-    if(!isGoodPosition(position)) [[unlikely]] {
+    if(!isGoodPosition(position + delta)) [[unlikely]] {
         popOut(4);
-        if(!isGoodPosition(position)) [[unlikely]] {
+        if(!isGoodPosition(position + delta)) [[unlikely]] {
             popOut(32);
-            if(!isGoodPosition(position)) [[unlikely]] {
-                return TA_COLLISION_ERROR;
+            if(!isGoodPosition(position + delta)) [[unlikely]] {
+                return {{0, 0}, TA_COLLISION_ERROR};
             }
         }
     }
 
     moveByX();
     moveByY();
-    return getCollisionFlags(topLeft, bottomRight);
+    return {delta, getCollisionFlags(position + delta, topLeft, bottomRight, solidFlags)};
 }
 
-void TA_Pawn::moveByX() {
+void TA_ObjectSet::moveByX() {
     TA_Rect hitbox;
     if(ground) {
         hitbox.setRectangle(topLeft + TA_Point(0, 1), bottomRight - TA_Point(0, 1));
@@ -33,8 +36,8 @@ void TA_Pawn::moveByX() {
     }
 
     auto isOutside = [&](float factor) {
-        hitbox.setPosition({position.x + factor * velocity.x, position.y});
-        return !checkPawnCollision(hitbox);
+        hitbox.setPosition(position + (delta + TA_Point(velocity.x * factor, 0)));
+        return (checkCollision(hitbox) & solidFlags) == 0;
     };
 
     float left = 0, right = 1, eps = 0.001;
@@ -53,15 +56,15 @@ void TA_Pawn::moveByX() {
         }
     }
 
-    position.x += velocity.x * left;
+    delta.x += velocity.x * left;
 }
 
-void TA_Pawn::moveByY() {
-    if(ground && isGoodPosition(position + TA_Point(0, 2))) {
+void TA_ObjectSet::moveByY() {
+    if(ground && isGoodPosition(position + delta + TA_Point(0, 2))) {
         ground = false;
     }
     if(ground) {
-        position.y -= 2;
+        delta.y -= 2;
         velocity.y = 4;
     }
 
@@ -69,8 +72,8 @@ void TA_Pawn::moveByY() {
     hitbox.setRectangle(topLeft + TA_Point(0.005, 0), bottomRight - TA_Point(0.005, 0));
 
     auto isOutside = [&](float factor) {
-        hitbox.setPosition({position.x, position.y + velocity.y * factor});
-        return !checkPawnCollision(hitbox);
+        hitbox.setPosition(position + (delta + TA_Point(0, velocity.y * factor)));
+        return (checkCollision(hitbox) & solidFlags) == 0;
     };
 
     float left = 0, right = 1, eps = 0.001;
@@ -88,34 +91,33 @@ void TA_Pawn::moveByY() {
         }
     }
 
-    position.y += velocity.y * left;
+    delta.y += velocity.y * left;
 }
 
-void TA_Pawn::popOut(float area) {
+void TA_ObjectSet::popOut(float area) {
     std::vector<std::pair<float, TA_Point>> directions;
-
-    for(TA_Point delta : {TA_Point(-area, 0), TA_Point(area, 0), TA_Point(0, -area), TA_Point(0, area)}) {
-        directions.push_back({getFirstGood(delta), delta});
+    for(TA_Point add : {TA_Point(-area, 0), TA_Point(area, 0), TA_Point(0, -area), TA_Point(0, area)}) {
+        directions.emplace_back(getFirstGood(add), add);
     }
 
     int min = 0;
-    for(int pos = 1; pos < (int)directions.size(); pos++) {
+    for(int pos = 1; pos < static_cast<int>(directions.size()); pos++) {
         if(directions[pos].first < directions[min].first) {
             min = pos;
         }
     }
 
     TA_Point add = directions[min].second * directions[min].first;
-    if(isGoodPosition(position + add)) {
-        position = position + add;
+    if(isGoodPosition(position + (delta + add))) {
+        delta += add;
     }
 }
 
-float TA_Pawn::getFirstGood(TA_Point delta) {
+float TA_ObjectSet::getFirstGood(TA_Point add) {
     float left = 0, right = 1, eps = 0.001;
-    while((right - left) * delta.length() > eps) {
+    while((right - left) * add.length() > eps) {
         float mid = (left + right) / 2;
-        if(isGoodPosition(position + delta * mid)) {
+        if(isGoodPosition(position + (delta + add * mid))) {
             right = mid;
         } else {
             left = mid;
@@ -124,30 +126,30 @@ float TA_Pawn::getFirstGood(TA_Point delta) {
     return right;
 }
 
-bool TA_Pawn::isGoodPosition(TA_Point position) {
+bool TA_ObjectSet::isGoodPosition(TA_Point position) {
     TA_Rect hitbox;
     hitbox.setRectangle(topLeft, bottomRight);
     hitbox.setPosition(position);
-    return !checkPawnCollision(hitbox);
+    return (checkCollision(hitbox) & solidFlags) == 0;
 }
 
-int TA_Pawn::getCollisionFlags(TA_Point topLeft, TA_Point bottomRight) {
+int TA_ObjectSet::getCollisionFlags(TA_Point position, TA_Point topLeft, TA_Point bottomRight, int solidFlags) {
     TA_Rect hitbox;
     int flags = 0;
     hitbox.setRectangle(
         TA_Point(topLeft.x + 0.005, bottomRight.y), TA_Point(bottomRight.x - 0.005, bottomRight.y + 0.005));
     hitbox.setPosition(position);
-    if(checkPawnCollision(hitbox)) {
+    if((checkCollision(hitbox) & solidFlags) != 0) {
         flags |= TA_GROUND_COLLISION;
     }
 
     hitbox.setRectangle(TA_Point(topLeft.x + 0.005, topLeft.y - 0.005), TA_Point(bottomRight.x - 0.005, topLeft.y));
-    if(checkPawnCollision(hitbox)) {
+    if((checkCollision(hitbox) & solidFlags) != 0) {
         flags |= TA_CEIL_COLLISION;
     }
 
     hitbox.setRectangle(topLeft + TA_Point(-0.005, 1), bottomRight + TA_Point(0.005, -1));
-    if(checkPawnCollision(hitbox)) {
+    if((checkCollision(hitbox) & solidFlags) != 0) {
         flags |= TA_WALL_COLLISION;
     }
 

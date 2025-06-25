@@ -142,7 +142,9 @@ void TA_EnemyRock::updateVelocity() {
 }
 
 void TA_EnemyRock::updateCollision() {
-    int flags = moveAndCollide(TA_Point(0, 0), TA_Point(6, 7), velocity * TA::elapsedTime, ground);
+    auto [delta, flags] = objectSet->moveAndCollide(position, TA_Point(0, 0), TA_Point(6, 7),
+        velocity * TA::elapsedTime, TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP, ground);
+    position += delta;
 
     ground = ((flags & TA_GROUND_COLLISION) != 0);
     if(flags & TA_WALL_COLLISION) {
@@ -151,11 +153,4 @@ void TA_EnemyRock::updateCollision() {
     if(flags & TA_CEIL_COLLISION) {
         velocity.y = 0;
     }
-}
-
-bool TA_EnemyRock::checkPawnCollision(TA_Rect& hitbox) {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) {
-        return true;
-    }
-    return false;
 }

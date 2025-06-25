@@ -1,14 +1,12 @@
 #ifndef TA_CHARACTER_H
 #define TA_CHARACTER_H
 
-#include "controller.h"
 #include "geometry.h"
 #include "links.h"
-#include "pawn.h"
 #include "sound.h"
-#include "tilemap.h"
+#include "sprite.h"
 
-class TA_Character : public TA_Pawn {
+class TA_Character : public TA_Sprite {
 private:
     enum CharacterTool {
         TOOL_BOMB = 0,
@@ -64,7 +62,7 @@ private:
     static constexpr float maxCoyoteTime = 10;
     static constexpr float nightVisionActivateTime = 10;
 
-    TA_Point followPosition, velocity, climbPosition;
+    TA_Point position, followPosition, velocity, climbPosition;
     TA_Links links;
     TA_Rect hitbox, hammerHitbox;
     TA_Point topLeft, bottomRight;
@@ -108,10 +106,10 @@ private:
     void updateHelitail();
     void initHelitail();
     void updateWaterFlow();
+    int getSolidFlags();
 
     void updateFollowPosition();
     void horizontalMove();
-    bool checkPawnCollision(TA_Rect& hitbox) override;
     void updateCollisions();
     void updateAnimation();
     void updateClimb();

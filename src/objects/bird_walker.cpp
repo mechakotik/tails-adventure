@@ -3,6 +3,7 @@
 #include "bullet.h"
 #include "error.h"
 #include "explosion.h"
+#include "gamepad.h"
 #include "save.h"
 #include "tools.h"
 

@@ -1,27 +1,23 @@
 #include "character.h"
-#include "error.h"
+#include "controller.h"
 #include "object_set.h"
 #include "ring.h"
 #include "save.h"
 #include "splash.h"
 #include "tilemap.h"
 
-bool TA_Character::checkPawnCollision(TA_Rect& checkHitbox) {
-    int flags = 0;
-    links.objectSet->checkCollision(checkHitbox, flags);
-    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE)) != 0) {
-        return true;
+int TA_Character::getSolidFlags() {
+    int flags = TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE;
+    if(useSolidUpTiles) {
+        flags |= TA_COLLISION_SOLID_UP;
     }
-    if(useSolidUpTiles && (flags & TA_COLLISION_SOLID_UP) != 0) {
-        return true;
+    if(useSolidDownTiles) {
+        flags |= TA_COLLISION_SOLID_DOWN;
     }
-    if(useSolidDownTiles && (flags & TA_COLLISION_SOLID_DOWN) != 0) {
-        return true;
+    if(useMovingPlatforms) {
+        flags |= TA_COLLISION_MOVING_PLATFORM;
     }
-    if(useMovingPlatforms && (flags & TA_COLLISION_MOVING_PLATFORM) != 0) {
-        return true;
-    }
-    return false;
+    return flags;
 }
 
 void TA_Character::updateCollisions() {
@@ -49,7 +45,7 @@ void TA_Character::updateCollisions() {
             TA_Rect hitbox;
             hitbox.setRectangle(topLeft, bottomRight);
             hitbox.setPosition(position);
-            if(checkPawnCollision(hitbox)) {
+            if((links.objectSet->checkCollision(hitbox) & getSolidFlags()) != 0) {
                 useSolidUpTiles = false;
             }
         } else if(velocity.y <= -0.01) {
@@ -60,7 +56,7 @@ void TA_Character::updateCollisions() {
             TA_Rect hitbox;
             hitbox.setRectangle(topLeft, bottomRight);
             hitbox.setPosition(position);
-            if(checkPawnCollision(hitbox)) {
+            if((links.objectSet->checkCollision(hitbox) & getSolidFlags()) != 0) {
                 useSolidDownTiles = false;
             }
         } else if(velocity.y >= 0.01) {
@@ -75,8 +71,6 @@ void TA_Character::updateCollisions() {
     }
 
     useMovingPlatforms = true;
-    TA_Point prevPosition = position;
-
     TA_Point positionDelta;
     if(TA::levelPath.substr(0, 7) == "maps/ci") {
         positionDelta = velocity * TA::elapsedTime;
@@ -94,13 +88,16 @@ void TA_Character::updateCollisions() {
         }
     }
 
-    int flags = moveAndCollide(topLeft, bottomRight, positionDelta, ground);
+    auto [delta, flags] =
+        links.objectSet->moveAndCollide(position, topLeft, bottomRight, positionDelta, getSolidFlags(), ground);
 
     if(flags & TA_COLLISION_ERROR) {
-        position = prevPosition;
         useSolidUpTiles = useMovingPlatforms = false;
-        flags = moveAndCollide(topLeft, bottomRight, positionDelta, ground);
+        std::tie(delta, flags) =
+            links.objectSet->moveAndCollide(position, topLeft, bottomRight, positionDelta, getSolidFlags(), ground);
     }
+
+    position += delta;
 
     if(flags & TA_GROUND_COLLISION) {
         ground = true;
@@ -228,16 +225,16 @@ void TA_Character::updateClimb() {
             velocity.y = 0.05;
         }
 
-        bool collision = checkPawnCollision(hitbox);
+        bool collision = (links.objectSet->checkCollision(hitbox) & getSolidFlags()) != 0;
         hitbox.setPosition(climbPosition + TA_Point(0, velocity.y));
-        bool collisionMoved = checkPawnCollision(hitbox);
+        bool collisionMoved = (links.objectSet->checkCollision(hitbox) & getSolidFlags()) != 0;
 
         if(collision != collisionMoved) {
             float left = 0, right = 1;
             while(right - left > TA::epsilon) {
                 float mid = (left + right) / 2;
                 hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * mid));
-                if(checkPawnCollision(hitbox) == collision) {
+                if(((links.objectSet->checkCollision(hitbox) & getSolidFlags()) != 0) == collision) {
                     left = mid;
                 } else {
                     right = mid;
@@ -245,7 +242,7 @@ void TA_Character::updateClimb() {
             }
 
             hitbox.setPosition(climbPosition + TA_Point(0, velocity.y * left));
-            if(checkPawnCollision(hitbox)) {
+            if((links.objectSet->checkCollision(hitbox) & getSolidFlags()) != 0) {
                 climbPosition.y += velocity.y * right;
             } else {
                 climbPosition.y += velocity.y * left;
@@ -258,7 +255,8 @@ void TA_Character::updateClimb() {
             }
 
             TA_Point delta = climbPosition - position + TA_Point(0, 0.01);
-            int flags = getCollisionFlags(topLeft + delta, bottomRight + delta);
+            int flags =
+                links.objectSet->getCollisionFlags(position, topLeft + delta, bottomRight + delta, getSolidFlags());
             if(flags == TA_GROUND_COLLISION) {
                 ground = true;
                 jump = spring = wall = false;

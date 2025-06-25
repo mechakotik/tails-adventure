@@ -29,22 +29,15 @@ bool TA_PushableObject::update() {
     velocity.y += grv * TA::elapsedTime;
 
     // TODO: actually fix pushable objects collision
-    int flags = moveAndCollide(TA_Point(0, 0), TA_Point(getWidth(), getHeight()), velocity * TA::elapsedTime,
-        (TA::levelPath == "maps/pf/pf1"));
+    auto [delta, flags] = objectSet->moveAndCollide(position, TA_Point(0, 0), TA_Point(getWidth(), getHeight()),
+        velocity * TA::elapsedTime, TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP, (TA::levelPath == "maps/pf/pf1"));
+    position += delta;
     if(flags & TA_GROUND_COLLISION) {
         velocity.y = 0;
     }
 
     updatePosition();
     return true;
-}
-
-bool TA_PushableObject::checkPawnCollision(TA_Rect& hitbox) {
-    int flags = objectSet->checkCollision(hitbox);
-    if((flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP)) {
-        return true;
-    }
-    return false;
 }
 
 void TA_PushableSpring::load(TA_Point newPosition) {

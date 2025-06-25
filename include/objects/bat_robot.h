@@ -21,7 +21,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point newPosition);
     bool update() override;
-    bool checkPawnCollision(TA_Rect& collisionHitbox) override;
 };
 
 #endif // TA_BAT_ROBOT_H

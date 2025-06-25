@@ -143,7 +143,7 @@ void TA_Character::draw() {
     if(remoteRobot) {
         remoteRobotControlSprite.draw();
     }
-    TA_Pawn::draw();
+    TA_Sprite::draw();
 }
 
 void TA_Character::updateAnimation() {

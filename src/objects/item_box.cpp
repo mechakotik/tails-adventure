@@ -1,9 +1,9 @@
 #include "item_box.h"
 #include <cmath>
 #include "character.h"
-#include "error.h"
 #include "resource_manager.h"
 #include "save.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName) {
@@ -79,17 +79,14 @@ void TA_ItemBox::updateIdle() {
 void TA_ItemBox::updateFall() {
     velocity.y += gravity * TA::elapsedTime;
     velocity.y = std::min(velocity.y, maxFallSpeed);
-    int flags = moveAndCollide(TA_Point(8, 0), TA_Point(9, 16), velocity * TA::elapsedTime);
+    auto [delta, flags] = objectSet->moveAndCollide(position, TA_Point(8, 0), TA_Point(9, 16),
+        velocity * TA::elapsedTime, TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP);
+    position += delta;
 
     if(flags & TA_GROUND_COLLISION) {
         state = STATE_IDLE;
         velocity = {0, 0};
     }
-}
-
-bool TA_ItemBox::checkPawnCollision(TA_Rect& hitbox) {
-    int flags = objectSet->checkCollision(hitbox);
-    return (flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) != 0;
 }
 
 void TA_ItemBox::updateUnpack() {

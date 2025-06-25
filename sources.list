@@ -63,11 +63,11 @@ src/keyboard.cpp
 src/main.cpp
 src/main_menu_screen.cpp
 src/map_screen.cpp
+src/move_and_collide.cpp
 src/object_set.cpp
 src/onscreen_controller.cpp
 src/options_section.cpp
 src/pause_menu.cpp
-src/pawn.cpp
 src/resource_manager.cpp
 src/save.cpp
 src/screen_state_machine.cpp

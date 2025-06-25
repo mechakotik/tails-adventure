@@ -13,11 +13,6 @@ void TA_BatRobot::load(TA_Point newPosition) {
     updatePosition();
 }
 
-bool TA_BatRobot::checkPawnCollision(TA_Rect& collisionHitbox) {
-    int flags = objectSet->checkCollision(collisionHitbox);
-    return flags & TA_COLLISION_SOLID;
-}
-
 bool TA_BatRobot::update() {
     switch(state) {
         case STATE_IDLE: {
@@ -49,7 +44,9 @@ bool TA_BatRobot::update() {
         case STATE_ATTACK: {
             setAnimation("attack");
             velocity.y += gravity * TA::elapsedTime;
-            int flags = moveAndCollide(TA_Point(5, 0), TA_Point(18, 14), velocity * TA::elapsedTime);
+            auto [delta, flags] =
+                objectSet->moveAndCollide(position, {5, 0}, {18, 14}, velocity * TA::elapsedTime, TA_COLLISION_SOLID);
+            position += delta;
             if(flags & TA_GROUND_COLLISION) {
                 velocity.y = std::min(float(0), velocity.y);
             }

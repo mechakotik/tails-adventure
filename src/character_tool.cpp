@@ -137,7 +137,9 @@ void TA_Character::initHammer() {
 void TA_Character::updateHammer() {
     if(!ground) {
         TA_Point topLeft{18, 12}, bottomRight{30, 39};
-        int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
+        auto [delta, flags] = links.objectSet->moveAndCollide(
+            position, topLeft, bottomRight, velocity * TA::elapsedTime, getSolidFlags());
+        position += delta;
         if(flags & TA_GROUND_COLLISION) {
             ground = true;
         }

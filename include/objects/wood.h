@@ -9,7 +9,6 @@ public:
     void load(TA_Point position);
     bool update() override;
     void draw() override;
-    bool checkPawnCollision(TA_Rect& hitbox) override;
 
 private:
     static constexpr float gravity = 0.125;

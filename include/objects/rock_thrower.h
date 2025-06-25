@@ -45,7 +45,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position, TA_Point velocity);
     bool update() override;
-    bool checkPawnCollision(TA_Rect& hitbox) override;
 };
 
 #endif // TA_ROCK_THROWER_H

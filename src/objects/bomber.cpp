@@ -114,15 +114,13 @@ bool TA_BomberBomb::update() {
         objectSet->spawnObject<TA_Splash>(position - TA_Point(6, 4));
     }
 
-    int flags = moveAndCollide({0, 0}, {4, 8}, velocity * TA::elapsedTime, false);
+    auto [delta, flags] = objectSet->moveAndCollide(
+        position, {0, 0}, {4, 8}, velocity * TA::elapsedTime, TA_COLLISION_SOLID | TA_COLLISION_CHARACTER);
+    position += delta;
     if(flags & (TA_GROUND_COLLISION | TA_WALL_COLLISION)) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(6, 4), 0, TA_EXPLOSION_ENEMY);
         return false;
     }
     updatePosition();
     return true;
-}
-
-bool TA_BomberBomb::checkPawnCollision(TA_Rect& hitbox) {
-    return (objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_CHARACTER)) != 0;
 }

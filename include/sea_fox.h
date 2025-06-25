@@ -1,11 +1,12 @@
 #ifndef TA_SEA_FOX_H
 #define TA_SEA_FOX_H
 
+#include "geometry.h"
 #include "links.h"
-#include "pawn.h"
 #include "sound.h"
+#include "sprite.h"
 
-class TA_SeaFox : public TA_Pawn {
+class TA_SeaFox : public TA_Sprite {
 private:
     enum Item { ITEM_VULCAN_GUN = 4, ITEM_EXTRA_SPEED = 20, ITEM_ANTI_AIR_MISSILE = 22 };
 
@@ -36,9 +37,9 @@ private:
     void updateDamage();
     void dropRings();
     void updateDead();
-    bool checkPawnCollision(TA_Rect& hitbox) override;
 
     TA_Links links;
+    TA_Point position;
     TA_Point velocity{0, 0};
     TA_Point velocityAdd{0, 0};
     TA_Point followPosition;

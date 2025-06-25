@@ -66,15 +66,12 @@ void TA_Wood::updateAttack() {
         bird = false;
     }
 
-    int flags = moveAndCollide({0, 0}, {16, 16}, velocity * TA::elapsedTime, ground);
+    auto [delta, flags] =
+        objectSet->moveAndCollide(position, {0, 0}, {16, 16}, velocity * TA::elapsedTime, TA_COLLISION_SOLID, ground);
+    position += delta;
     ground = (flags & TA_GROUND_COLLISION) != 0;
 
     if(objectSet->getLinks().camera->getPosition().x > position.x + 16) {
         idle = true;
     }
-}
-
-bool TA_Wood::checkPawnCollision(TA_Rect& hitbox) {
-    int flags = objectSet->checkCollision(hitbox);
-    return (flags & TA_COLLISION_SOLID) != 0;
 }

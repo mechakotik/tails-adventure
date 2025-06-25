@@ -1,8 +1,8 @@
 #include "bomb.h"
 #include "character.h"
-#include "error.h"
 #include "napalm_fire.h"
 #include "objects/explosion.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {
@@ -37,12 +37,6 @@ void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode)
     }
 }
 
-bool TA_Bomb::checkPawnCollision(TA_Rect& hitbox) {
-    int flags = 0;
-    objectSet->checkCollision(hitbox, flags);
-    return (flags & TA_COLLISION_SOLID) || (flags & TA_COLLISION_SOLID_UP) || (flags & TA_COLLISION_PUSHABLE);
-}
-
 bool TA_Bomb::update() {
     bool flag1 = (timer <= moveTime);
     timer += TA::elapsedTime;
@@ -71,7 +65,10 @@ bool TA_Bomb::update() {
             }
         }
 
-        int moveFlags = moveAndCollide(topLeft, bottomRight, (velocity + velocityAdd) * TA::elapsedTime, ground);
+        auto [delta, moveFlags] =
+            objectSet->moveAndCollide(position, topLeft, bottomRight, (velocity + velocityAdd) * TA::elapsedTime,
+                TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE, ground);
+        position += delta;
 
         if(moveFlags & TA_GROUND_COLLISION) {
             velocity.y = std::min(float(0), velocity.y);

@@ -37,7 +37,6 @@ public:
     using TA_Object::TA_Object;
     void load(TA_Point position);
     bool update() override;
-    bool checkPawnCollision(TA_Rect& hitbox) override;
 
 private:
     static constexpr float gravity = 0.125;

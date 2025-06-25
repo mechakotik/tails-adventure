@@ -14,7 +14,6 @@ public:
     using TA_Object::TA_Object;
     void load(std::string filename, TA_Point newPosition);
     bool update() override;
-    bool checkPawnCollision(TA_Rect& hitbox) override;
 };
 
 class TA_PushableRock : public TA_PushableObject {

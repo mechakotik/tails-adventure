@@ -1,6 +1,7 @@
 #include "bomb_thrower.h"
 #include "dead_kukku.h"
 #include "explosion.h"
+#include "tilemap.h"
 
 void TA_BombThrower::load(TA_Point position, float leftX, float rightX) {
     this->position = position;
@@ -123,7 +124,9 @@ void TA_EnemyBomb::load(TA_Point position) {
 
 bool TA_EnemyBomb::update() {
     velocity.y += grv * TA::elapsedTime;
-    int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
+    auto [delta, flags] = objectSet->moveAndCollide(position, topLeft, bottomRight, velocity * TA::elapsedTime,
+        TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_CHARACTER);
+    position += delta;
 
     if(flags != 0) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 1), 0, TA_EXPLOSION_ENEMY);
@@ -132,11 +135,4 @@ bool TA_EnemyBomb::update() {
 
     updatePosition();
     return true;
-}
-
-bool TA_EnemyBomb::checkPawnCollision(TA_Rect& hitbox) {
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_CHARACTER)) {
-        return true;
-    }
-    return false;
 }

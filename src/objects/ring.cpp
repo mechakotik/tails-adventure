@@ -1,6 +1,4 @@
 #include "ring.h"
-#include "error.h"
-#include "pawn.h"
 #include "save.h"
 #include "tilemap.h"
 #include "tools.h"
@@ -26,12 +24,6 @@ void TA_Ring::loadStationary(TA_Point position) {
     stationary = true;
 }
 
-bool TA_Ring::checkPawnCollision(TA_Rect& hitbox) {
-    int flags;
-    objectSet->checkCollision(hitbox, flags);
-    return flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP);
-}
-
 bool TA_Ring::update() {
     if(collected) {
         return isAnimated();
@@ -41,7 +33,9 @@ bool TA_Ring::update() {
         float currentGrv = (TA::save::getSaveParameter("seafox") == 1 ? waterGrv : grv);
         velocity.y += currentGrv * TA::elapsedTime;
         TA_Point topLeft{0, 0}, bottomRight{8, 8};
-        int flags = moveAndCollide(topLeft, bottomRight, velocity * TA::elapsedTime);
+        auto [delta, flags] = objectSet->moveAndCollide(
+            position, topLeft, bottomRight, velocity * TA::elapsedTime, TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP);
+        position += delta;
         setPosition(position);
 
         if(velocity.x > 0) {

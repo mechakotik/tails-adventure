@@ -116,11 +116,14 @@ void TA_SeaFox::physicsStep() {
     }
 
     if(groundMode) {
-        int flags =
-            moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), (velocity + velocityAdd) * TA::elapsedTime, ground);
+        auto [delta, flags] = links.objectSet->moveAndCollide(position, TA_Point(9, 4), TA_Point(23, 30),
+            (velocity + velocityAdd) * TA::elapsedTime, TA_COLLISION_SOLID, ground);
+        position += delta;
         ground = (flags & TA_GROUND_COLLISION) != 0;
     } else {
-        moveAndCollide(TA_Point(9, 4), TA_Point(23, 30), (velocity + velocityAdd) * TA::elapsedTime, false);
+        auto [delta, flags] = links.objectSet->moveAndCollide(position, TA_Point(9, 4), TA_Point(23, 30),
+            (velocity + velocityAdd) * TA::elapsedTime, TA_COLLISION_SOLID, false);
+        position += delta;
     }
 
     setPosition(position);
@@ -133,14 +136,6 @@ void TA_SeaFox::physicsStep() {
     }
 
     // TA::printLog("%f %f", position.x, position.y);
-}
-
-bool TA_SeaFox::checkPawnCollision(TA_Rect& hitbox) {
-    int flags = links.objectSet->checkCollision(hitbox);
-    if(flags & TA_COLLISION_SOLID) {
-        return true;
-    }
-    return false;
 }
 
 void TA_SeaFox::updateDirection() {

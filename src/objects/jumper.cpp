@@ -1,5 +1,6 @@
 #include "jumper.h"
 #include "dead_kukku.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_Jumper::load(TA_Point position) {
@@ -79,7 +80,9 @@ void TA_Jumper::updateJump() {
     setAnimation("jump");
 
     velocity.y += gravity * TA::elapsedTime;
-    int flags = moveAndCollide(TA_Point(4, 1), TA_Point(12, 31), velocity * TA::elapsedTime);
+    auto [delta, flags] = objectSet->moveAndCollide(position, TA_Point(4, 1), TA_Point(12, 31),
+        velocity * TA::elapsedTime, TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP);
+    position += delta;
 
     if(flags & TA_CEIL_COLLISION) {
         velocity.y = std::max(velocity.y, float(0));
@@ -104,19 +107,8 @@ bool TA_Jumper::isCloseToCharacter() {
     return abs(distance.x) <= 128 && abs(distance.y) <= 96;
 }
 
-bool TA_Jumper::checkPawnCollision(TA_Rect& hitbox) {
-    int flags = objectSet->checkCollision(hitbox);
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP)) {
-        return true;
-    }
-    return false;
-}
-
 bool TA_Jumper::shouldBeDestroyed() {
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
-        return true;
-    }
-    return false;
+    return (objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) != 0;
 }
 
 void TA_Jumper::destroy() {
