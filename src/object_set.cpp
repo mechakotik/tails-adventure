@@ -466,6 +466,17 @@ bool TA_ObjectSet::isVisible(TA_Rect& hitbox) {
     return cameraRect.intersects(hitbox);
 }
 
+bool TA_ObjectSet::enemyShouldDropRing() {
+    if(links.character != nullptr) {
+        for(int i = 0; i < 4; i++) {
+            if(TA::save::getSaveParameter("item_slot" + std::to_string(i)) == 9) {
+                return TA::random::next() % 2 == 0;
+            }
+        }
+    }
+    return TA::random::next() % 4 == 0;
+}
+
 TA_ObjectSet::~TA_ObjectSet() {
     for(TA_Object* currentObject : objects) {
         delete currentObject;

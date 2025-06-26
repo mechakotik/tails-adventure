@@ -97,7 +97,7 @@ public:
     void setTransition(TA_ScreenState screenState) { transition = screenState; }
     TA_ScreenState getTransition() { return transition; }
     bool hasCollisionType(TA_CollisionType type) { return hitboxContainer.hasCollisionType(type); }
-    bool enemyShouldDropRing() { return TA::random::next() % 4 == 0; }
+    bool enemyShouldDropRing();
     void resetInstaShield() {
         if(links.character) links.character->resetInstaShield();
     } // TODO: figure out what it is
