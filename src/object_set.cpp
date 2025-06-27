@@ -160,6 +160,7 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     if(name == "breakable_block") {
         bool dropsRing = object.contains("drops_ring") && object.at("drops_ring").as_boolean();
+        bool strong = object.contains("strong") && object.at("strong").as_boolean();
         std::string path = "maps/pf/pf_block.png";
         std::string particlePath = "maps/pf/pf_rock.png";
         if(object.contains("path")) {
@@ -168,7 +169,7 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         if(object.contains("particle_path")) {
             particlePath = object.at("particle_path").as_string();
         }
-        spawnObject<TA_BreakableBlock>(path, particlePath, position, dropsRing);
+        spawnObject<TA_BreakableBlock>(path, particlePath, position, dropsRing, strong);
     }
 
     else if(name == "walker" || name == "hover_pod") {

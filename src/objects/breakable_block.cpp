@@ -2,11 +2,13 @@
 #include "particle.h"
 #include "ring.h"
 
-void TA_BreakableBlock::load(std::string path, std::string newParticlePath, TA_Point newPosition, bool newDropsRing) {
+void TA_BreakableBlock::load(
+    std::string path, std::string particlePath, TA_Point position, bool dropsRing, bool strong) {
     TA_Sprite::load(path);
-    particlePath = newParticlePath;
-    position = newPosition;
-    dropsRing = newDropsRing;
+    this->particlePath = particlePath;
+    this->position = position;
+    this->dropsRing = dropsRing;
+    this->strong = strong;
     setPosition(position);
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(getWidth(), getHeight()));
     hitbox.setPosition(position);
@@ -20,9 +22,13 @@ bool TA_BreakableBlock::update() {
 
     bool shouldBreak = false;
     if((flags & TA_COLLISION_NAPALM) == 0) {
-        if(objectSet->getLinks().character && flags & TA_COLLISION_ATTACK) {
-            shouldBreak = true;
-        } else if(objectSet->getLinks().seaFox && flags & (TA_COLLISION_DRILL)) {
+        if(objectSet->getLinks().character != nullptr) {
+            if(strong && (flags & TA_COLLISION_ATTACK_STRONG) != 0) {
+                shouldBreak = true;
+            } else if(!strong && (flags & TA_COLLISION_ATTACK) != 0) {
+                shouldBreak = true;
+            }
+        } else if(objectSet->getLinks().seaFox != nullptr && (flags & TA_COLLISION_DRILL) != 0) {
             shouldBreak = true;
             breakSound.play();
         }

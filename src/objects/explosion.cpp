@@ -1,5 +1,4 @@
 #include "explosion.h"
-#include "error.h"
 #include "tools.h"
 
 void TA_Explosion::load(TA_Point position, int delay, TA_ExplosionType type, TA_Point velocity) {
@@ -18,7 +17,7 @@ void TA_Explosion::load(TA_Point position, int delay, TA_ExplosionType type, TA_
     } else if(type == TA_EXPLOSION_ENEMY) {
         collisionType |= TA_COLLISION_DAMAGE;
     } else if(type == TA_EXPLOSION_LARGE) {
-        collisionType |= TA_COLLISION_ATTACK | TA_COLLISION_ATTACK_LARGE;
+        collisionType |= TA_COLLISION_ATTACK | TA_COLLISION_ATTACK_STRONG;
     }
 }
 

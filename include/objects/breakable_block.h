@@ -8,11 +8,12 @@ private:
     std::string particlePath;
     const float grv = 0.35;
     bool dropsRing;
+    bool strong;
     TA_Sound breakSound;
 
 public:
     using TA_Object::TA_Object;
-    void load(std::string path, std::string newParticlePath, TA_Point newPosition, bool newDropsRing);
+    void load(std::string path, std::string particlePath, TA_Point position, bool dropsRing, bool strong);
     bool update() override;
     int getDrawPriority() override { return 0; }
 };
