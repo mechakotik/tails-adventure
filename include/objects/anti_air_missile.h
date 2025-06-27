@@ -10,6 +10,8 @@ public:
     bool update() override;
 
 private:
+    static constexpr float explosionSpeed = 1.5;
+
     TA_Point velocity;
     TA_Sound explosionSound;
     bool destroyed = false;

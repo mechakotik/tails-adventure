@@ -60,8 +60,13 @@ bool TA_AntiAirMissile::update() {
             for(int i = 1; i <= 3; i++) {
                 TA_Point explosionPosition =
                     position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
+                float explosionAngle =
+                    static_cast<float>(TA::random::next()) / static_cast<float>(TA::random::max()) * TA::pi * 2;
+                TA_Point explosionVelocty = {
+                    std::cos(explosionAngle) * explosionSpeed, std::sin(explosionAngle) * explosionSpeed};
+
                 explosionSound.play();
-                objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
+                objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16, TA_EXPLOSION_NEUTRAL, explosionVelocty);
             }
             hitbox.setRectangle({0, 0}, {16, 16});
             destroyed = true;
