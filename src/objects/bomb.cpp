@@ -110,7 +110,7 @@ void TA_Bomb::explode() {
         TA_Point explosionPosition =
             position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
         explosionSound.play();
-        objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16);
+        objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16, TA_EXPLOSION_NEUTRAL);
     }
 }
 

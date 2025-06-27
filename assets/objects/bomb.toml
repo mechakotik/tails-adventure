@@ -11,3 +11,8 @@ delay = 12
 frames = [2, 3]
 delay = 8
 
+[animations.large]
+frames = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1]
+delay = 4
+repeat = 1
+

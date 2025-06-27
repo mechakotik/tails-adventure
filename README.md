@@ -29,7 +29,7 @@ Also, it was made from the ground up in C++ without using any game engines to be
 
 **Levels (partially):** Volcanic Tunnel, Lake Rocky.
 
-**Items:** Regular Bomb, Remote Bomb, Napalm Bomb, Triple Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio, Fang.
+**Items:** Regular Bomb, Remote Bomb, Napalm Bomb, Triple Bomb, Large Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio, Fang.
 
 **Sea Fox items:** Vulcan Gun, Anti-air Missile, Extra Speed.
 

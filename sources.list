@@ -21,6 +21,7 @@ src/objects/grass_block.cpp
 src/objects/hover_pod.cpp
 src/objects/item_box.cpp
 src/objects/jumper.cpp
+src/objects/large_bomb.cpp
 src/objects/little_kukku.cpp
 src/objects/mecha_golem_bomb.cpp
 src/objects/mecha_golem.cpp

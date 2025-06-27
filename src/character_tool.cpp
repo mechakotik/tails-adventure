@@ -1,7 +1,9 @@
 #include <algorithm>
 #include "character.h"
 #include "hud.h"
+#include "large_bomb.h"
 #include "objects/bomb.h"
+#include "tilemap.h"
 
 void TA_Character::updateTool() {
     if(usingNightVision) {
@@ -29,6 +31,9 @@ void TA_Character::updateTool() {
     switch(links.hud->getCurrentItem()) {
         case TOOL_BOMB:
             spawnBomb(BOMB_REGULAR);
+            break;
+        case TOOL_LARGE_BOMB:
+            spawnLargeBomb();
             break;
         case TOOL_REMOTE_BOMB:
             spawnBomb(BOMB_REMOTE);
@@ -96,6 +101,12 @@ void TA_Character::spawnBomb(BombType type) {
         spawn(position + TA_Point((flip ? 26 : 7), 11), flip, TA_BOMB_MODE_DEFAULT);
         setAnimation("throw");
         state = STATE_THROW_BOMB;
+    }
+}
+
+void TA_Character::spawnLargeBomb() {
+    if(ground && !links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
+        links.objectSet->spawnObject<TA_LargeBomb>(position + TA_Point(flip ? 5 : 28, 18));
     }
 }
 

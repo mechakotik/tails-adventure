@@ -10,6 +10,7 @@ class TA_Character : public TA_Sprite {
 private:
     enum CharacterTool {
         TOOL_BOMB = 0,
+        TOOL_LARGE_BOMB = 1,
         TOOL_REMOTE_BOMB = 2,
         TOOL_TELEPORT_DEVICE = 3,
         TOOL_NIGHT_VISION = 5,
@@ -121,6 +122,7 @@ private:
 
     void updateTool();
     void spawnBomb(BombType type);
+    void spawnLargeBomb();
     void spawnRemoteRobot();
     void initHammer();
     void updateHammer();

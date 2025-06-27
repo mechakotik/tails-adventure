@@ -26,7 +26,8 @@ enum TA_CollisionType {
     TA_COLLISION_DRILL = (1 << 12),
     TA_COLLISION_CONVEYOR_BELT_LEFT = (1 << 13),
     TA_COLLISION_CONVEYOR_BELT_RIGHT = (1 << 14),
-    TA_COLLISION_TARGET = (1 << 15)
+    TA_COLLISION_TARGET = (1 << 15),
+    TA_COLLISION_ATTACK_LARGE = (1 << 16)
 };
 
 class TA_Tilemap {
