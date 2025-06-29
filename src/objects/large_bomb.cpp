@@ -18,7 +18,7 @@ void TA_LargeBomb::load(TA_Point position) {
 
 bool TA_LargeBomb::update() {
     velocity.y += gravity * TA::elapsedTime;
-    auto [delta, flags] = objectSet->moveAndCollide(position, {1, 4}, {15, 16}, velocity * TA::elapsedTime,
+    auto [delta, flags] = objectSet->moveAndCollide(position, {4, 4}, {12, 16}, velocity * TA::elapsedTime,
         TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE);
 
     position += delta;
