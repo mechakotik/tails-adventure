@@ -52,3 +52,11 @@ level_transition = [
 	{ path="maps/lr/lr9", left=128, top=0, right=304, bottom=2 }
 ]
 
+[objects.default]
+mine_launcher = [
+	{ tile_x = 8, tile_y = 9 },
+	{ tile_x = 9, tile_y = 9 },
+	{ tile_x = 12, tile_y = 10 },
+	{ tile_x = 13, tile_y = 10 },
+]
+

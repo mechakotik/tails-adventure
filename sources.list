@@ -26,6 +26,7 @@ src/objects/little_kukku.cpp
 src/objects/mecha_golem_bomb.cpp
 src/objects/mecha_golem.cpp
 src/objects/mine.cpp
+src/objects/mine_launcher.cpp
 src/objects/mini_sub.cpp
 src/objects/moving_platform.cpp
 src/objects/napalm_fire.cpp

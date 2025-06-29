@@ -21,6 +21,8 @@
 #include "objects/jumper.h"
 #include "objects/little_kukku.h"
 #include "objects/mecha_golem.h"
+#include "objects/mine.h"
+#include "objects/mine_launcher.h"
 #include "objects/mini_sub.h"
 #include "objects/moving_platform.h"
 #include "objects/nezu.h"
@@ -329,7 +331,7 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "mine") {
-        spawnObject<TA_EnemyMine>(position);
+        spawnObject<TA_EnemyMine>(position, false);
     }
 
     else if(name == "conveyor_belt") {
@@ -358,6 +360,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     else if(name == "bomber") {
         float maxY = (object.contains("max_y") ? static_cast<float>(object.at("max_y").as_integer()) : 1e5F);
         spawnObject<TA_Bomber>(position.x, maxY);
+    }
+
+    else if(name == "mine_launcher") {
+        spawnObject<TA_MineLauncher>(position);
     }
 
     else {
