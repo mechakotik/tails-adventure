@@ -8,6 +8,10 @@ spawn = [
 
 [objects.static]
 breakable_block = [
+	{ tile_x=72, tile_y=16, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=73, tile_y=16, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=74, tile_y=16, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=75, tile_y=16, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
 	{ tile_x=97, tile_y=6, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
 	{ tile_x=97, tile_y=7, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
 	{ tile_x=97, tile_y=8, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
@@ -32,7 +36,7 @@ breakable_block = [
 	{ tile_x=112, tile_y=6, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
 	{ tile_x=112, tile_y=7, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
 	{ tile_x=113, tile_y=6, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
-	{ tile_x=113, tile_y=7, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" }
+	{ tile_x=113, tile_y=7, path="maps/lr/lr_block.png", particle_path="maps/lr/lr_rock.png" },
 ]
 level_transition = [
 	{ path="maps/lr/lr1", top=336, bottom=416, left=0, right=2 },

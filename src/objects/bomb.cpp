@@ -106,10 +106,10 @@ bool TA_Bomb::shouldExplode() {
 void TA_Bomb::explode() {
     objectSet->spawnObject<TA_Explosion>(position);
     hitbox.setRectangle(topLeft - TA_Point(2, 2), bottomRight + TA_Point(2, 2));
+    explosionSound.play();
     for(int i = 1; i <= 3; i++) {
         TA_Point explosionPosition =
             position + TA_Point(int(TA::random::next() % 7) - 3, int(TA::random::next() % 7) - 3);
-        explosionSound.play();
         objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16, TA_EXPLOSION_NEUTRAL);
     }
 }

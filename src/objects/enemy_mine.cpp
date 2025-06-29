@@ -3,7 +3,7 @@
 #include "explosion.h"
 
 void TA_EnemyMine::load(TA_Point position) {
-    TA_Sprite::load("objects/mine.png");
+    TA_Sprite::load("objects/enemy_mine.png");
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(14, 14));
     collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     timer = TA::random::next() % int(interval);

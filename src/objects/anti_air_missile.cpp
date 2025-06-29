@@ -64,8 +64,6 @@ bool TA_AntiAirMissile::update() {
                     static_cast<float>(TA::random::next()) / static_cast<float>(TA::random::max()) * TA::pi * 2;
                 TA_Point explosionVelocty = {
                     std::cos(explosionAngle) * explosionSpeed, std::sin(explosionAngle) * explosionSpeed};
-
-                explosionSound.play();
                 objectSet->spawnObject<TA_Explosion>(explosionPosition, i * 16, TA_EXPLOSION_NEUTRAL, explosionVelocty);
             }
             hitbox.setRectangle({0, 0}, {16, 16});

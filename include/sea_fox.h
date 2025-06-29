@@ -8,7 +8,7 @@
 
 class TA_SeaFox : public TA_Sprite {
 private:
-    enum Item { ITEM_VULCAN_GUN = 4, ITEM_EXTRA_SPEED = 20, ITEM_ANTI_AIR_MISSILE = 22 };
+    enum Item : uint8_t { ITEM_VULCAN_GUN = 4, ITEM_EXTRA_SPEED = 20, ITEM_ANTI_AIR_MISSILE = 22, ITEM_MINE = 24 };
 
     static constexpr float verticalDrag = 1.0F / 32;
     static constexpr float horizontalDrag = 1.0F / 196;

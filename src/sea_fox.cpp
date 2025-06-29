@@ -3,6 +3,7 @@
 #include "bullet.h"
 #include "controller.h"
 #include "hud.h"
+#include "mine.h"
 #include "object_set.h"
 #include "ring.h"
 #include "save.h"
@@ -201,6 +202,11 @@ void TA_SeaFox::updateItem() {
                 extraSpeedTimer = 0;
             } else {
                 damageSound.play();
+            }
+            break;
+        case ITEM_MINE:
+            if(!links.objectSet->hasCollisionType(TA_COLLISION_BOMB)) {
+                links.objectSet->spawnObject<TA_Mine>(position + TA_Point((flip ? 8 : 16), 23), velocity.x);
             }
             break;
         default:
