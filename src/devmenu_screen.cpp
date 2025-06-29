@@ -8,6 +8,7 @@ void TA_DevmenuScreen::init() {
     levels.emplace_back("maps/pf/pf3");
     levels.emplace_back("maps/vt/vt1");
     levels.emplace_back("maps/vt/vt2");
+    levels.emplace_back("maps/vt/vt3");
     levels.emplace_back("maps/pm/pm1");
     levels.emplace_back("maps/pm/pm2");
     levels.emplace_back("maps/pm/pm3");

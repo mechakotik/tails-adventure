@@ -1,7 +1,8 @@
 [level]
 music = "sound/vt.vgm"
 spawn = [
-	{ x=-5, y=73 }
+	{ x=-5, y=73 },
+	{ x=644, y=313, previous="maps/vt/vt3", flip=true }
 ]
 
 [objects.static]
@@ -54,12 +55,12 @@ breakable_block = [
 	{ path="maps/vt/block4.png", particle_path="maps/vt/rock.png", tile_x=106, tile_y=7 },
 	{ path="maps/vt/block4.png", particle_path="maps/vt/rock.png", tile_x=107, tile_y=7 },
 
-  { path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=39, tile_y=19, strong=true },
-  { path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=40, tile_y=19, strong=true },
-  { path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=39, tile_y=20, strong=true },
-  { path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=40, tile_y=20, strong=true },
-  { path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=39, tile_y=21, strong=true },
-  { path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=40, tile_y=21, strong=true },
+	{ path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=39, tile_y=19, strong=true },
+	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=40, tile_y=19, strong=true },
+	{ path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=39, tile_y=20, strong=true },
+	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=40, tile_y=20, strong=true },
+	{ path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=39, tile_y=21, strong=true },
+	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=40, tile_y=21, strong=true },
 ]
 bridge = [
 	{ path="maps/vt/bridge.png", particle_path="maps/vt/rock.png", leftx=1616, rightx=1839, y=320 },
@@ -80,7 +81,8 @@ item_box = [
 	{ x=1880, y=272, number=29, item_name="chaos_emerald" }
 ]
 level_transition = [
-	{ path="maps/vt/vt1", top=48, bottom=112, left=0, right=2 }
+	{ path="maps/vt/vt1", top=48, bottom=112, left=0, right=2 },
+	{ path="maps/vt/vt3", top=304, bottom=352, left=686, right=688 }
 ]
 map_transition = [
 	{ selection=3, top=48, bottom=112, left=1966, right=1968 }
