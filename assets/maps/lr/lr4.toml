@@ -1,0 +1,25 @@
+[level]
+music = "sound/lr.vgm"
+mode = "seafox"
+spawn = [
+	{ x=240, y=8 },
+]
+
+[objects.static]
+level_transition = [
+	{ path="maps/lr/lr2", left=192, top=0, right=336, bottom=2 }
+]
+breakable_block = [
+	{ tile_x=4, tile_y=50, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=5, tile_y=50, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=6, tile_y=50, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=7, tile_y=50, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=8, tile_y=50, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=9, tile_y=50, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	
+	{ tile_x=4, tile_y=56, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=5, tile_y=56, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=6, tile_y=56, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=7, tile_y=56, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+]
+

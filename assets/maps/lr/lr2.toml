@@ -3,6 +3,7 @@ music = "sound/lr.vgm"
 mode = "seafox"
 spawn = [
 	{ x=6, y=370 },
+	{ x=1456, y=442, previous="maps/lr/lr4" },
 	{ x=2008, y=364, previous="maps/lr/lr7", flip=true }
 ]
 
@@ -40,6 +41,7 @@ breakable_block = [
 ]
 level_transition = [
 	{ path="maps/lr/lr1", top=336, bottom=416, left=0, right=2 },
+	{ path="maps/lr/lr4", top=478, bottom=480, left=1440, right=1504 },
 	{ path="maps/lr/lr7", top=352, bottom=400, left=2046, right=2048 }
 ]
 
