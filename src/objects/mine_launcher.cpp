@@ -17,8 +17,8 @@ bool TA_MineLauncher::update() {
 
     TA_Point characterPos = objectSet->getCharacterPosition();
     TA_Point delta(characterPos.x - position.x - 8, characterPos.y - position.y);
-    if(std::abs(delta.x) <= 32 && 0 <= delta.y && delta.y <= 192) {
-        objectSet->spawnObject<TA_EnemyMine>(position + TA_Point(1, 6), true);
+    if(std::abs(delta.x) <= 48 && 0 <= delta.y && delta.y <= 192) {
+        objectSet->spawnObject<TA_EnemyMine>(position + TA_Point(1, 14), true);
         timer = 0;
     }
 
