@@ -35,6 +35,7 @@ src/objects/particle.cpp
 src/objects/pushable_object.cpp
 src/objects/ring.cpp
 src/objects/rock_thrower.cpp
+src/objects/sparkle.cpp
 src/objects/speedy.cpp
 src/objects/transition.cpp
 src/objects/walker.cpp

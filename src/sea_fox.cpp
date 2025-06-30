@@ -7,7 +7,9 @@
 #include "object_set.h"
 #include "ring.h"
 #include "save.h"
+#include "sparkle.h"
 #include "splash.h"
+#include "tools.h"
 
 void TA_SeaFox::load(TA_Links links) {
     this->links = links;
@@ -45,6 +47,7 @@ void TA_SeaFox::update() {
     updateFollowPosition();
     updateDrill();
     updateItem();
+    updateSparkle();
     updateDamage();
 
     setFlip(flip);
@@ -209,6 +212,9 @@ void TA_SeaFox::updateItem() {
                 links.objectSet->spawnObject<TA_Mine>(position + TA_Point((flip ? 8 : 16), 23), velocity.x);
             }
             break;
+        case ITEM_EXTRA_ARMOR:
+            extraArmor = !extraArmor;
+            break;
         default:
             damageSound.play();
             break;
@@ -228,6 +234,26 @@ void TA_SeaFox::updateVulcanGun() {
     }
 }
 
+void TA_SeaFox::updateSparkle() {
+    if(!extraArmor) {
+        return;
+    }
+
+    float newSparkleTimer = sparkleTimer + TA::elapsedTime;
+    if(sparkleTimer < sparklePeriod && sparklePeriod <= newSparkleTimer) {
+        int minX = static_cast<int>(position.x);
+        int maxX = static_cast<int>(position.x + 26);
+        int minY = static_cast<int>(position.y);
+        int maxY = static_cast<int>(position.y + 28);
+        TA_Point sparklePos;
+        sparklePos.x = minX + TA::random::next() % (maxX - minX + 1);
+        sparklePos.y = minY + TA::random::next() % (maxY - minY + 1);
+        links.objectSet->spawnObject<TA_Sparkle>(sparklePos);
+    }
+
+    sparkleTimer = std::fmod(newSparkleTimer, sparklePeriod);
+}
+
 void TA_SeaFox::updateDamage() {
     hitbox.setPosition(position);
     if(invincibleTimer < invincibleTime) {
@@ -237,7 +263,7 @@ void TA_SeaFox::updateDamage() {
     }
     setAlpha(255);
 
-    if(links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) {
+    if((links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) != 0) {
         if(TA::save::getParameter("ring_drop")) {
             dropRings();
             links.objectSet->addRings(-4);

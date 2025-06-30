@@ -8,7 +8,13 @@
 
 class TA_SeaFox : public TA_Sprite {
 private:
-    enum Item : uint8_t { ITEM_VULCAN_GUN = 4, ITEM_EXTRA_SPEED = 20, ITEM_ANTI_AIR_MISSILE = 22, ITEM_MINE = 24 };
+    enum Item : uint8_t {
+        ITEM_VULCAN_GUN = 4,
+        ITEM_EXTRA_SPEED = 20,
+        ITEM_EXTRA_ARMOR = 21,
+        ITEM_ANTI_AIR_MISSILE = 22,
+        ITEM_MINE = 24
+    };
 
     static constexpr float verticalDrag = 1.0F / 32;
     static constexpr float horizontalDrag = 1.0F / 196;
@@ -27,6 +33,7 @@ private:
     static constexpr float extraSpeedTime = 140;
     static constexpr float extraSpeedAddTime = 40;
     static constexpr float extraSpeedAddYSpeed = -3.25;
+    static constexpr float sparklePeriod = 6;
 
     void physicsStep();
     void updateDirection();
@@ -34,6 +41,7 @@ private:
     void updateDrill();
     void updateItem();
     void updateVulcanGun();
+    void updateSparkle();
     void updateDamage();
     void dropRings();
     void updateDead();
@@ -59,6 +67,9 @@ private:
     bool extraSpeed = false;
     float extraSpeedReleaseTime = 140;
     float extraSpeedTimer = extraSpeedReleaseTime + extraSpeedAddTime + 1;
+
+    bool extraArmor = false;
+    float sparkleTimer = 0;
 
 public:
     void load(TA_Links links);

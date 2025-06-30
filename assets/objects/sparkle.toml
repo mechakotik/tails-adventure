@@ -1,0 +1,10 @@
+[sprite]
+image = "sparkle.png"
+width = 7
+height = 9
+
+[animations.sparkle]
+frames = [0, 1, 2, 2, 1, 0]
+delay = 4
+repeat = 1
+
