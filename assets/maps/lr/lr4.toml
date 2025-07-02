@@ -23,3 +23,19 @@ breakable_block = [
 	{ tile_x=7, tile_y=56, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
 ]
 
+[objects.default]
+underwater_gun = [
+	{ tile_x=3, tile_y=25 },
+	{ tile_x=7, tile_y=27, flip=true },
+	{ tile_x=3, tile_y=29 },
+	{ tile_x=7, tile_y=31, flip=true },
+	{ tile_x=11, tile_y=33, flip=true },
+	{ tile_x=17, tile_y=34, flip=true },
+	{ tile_x=15, tile_y=41 },
+	{ tile_x=3, tile_y=45 },
+	{ tile_x=3, tile_y=47 },
+	{ tile_x=9, tile_y=52, flip=true },
+	{ tile_x=2, tile_y=54 },
+	{ tile_x=14, tile_y=60, flip=true }
+]
+

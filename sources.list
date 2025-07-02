@@ -38,6 +38,7 @@ src/objects/rock_thrower.cpp
 src/objects/sparkle.cpp
 src/objects/speedy.cpp
 src/objects/transition.cpp
+src/objects/underwater_gun.cpp
 src/objects/walker.cpp
 src/objects/wind.cpp
 src/objects/splash.cpp

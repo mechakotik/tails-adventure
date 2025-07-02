@@ -31,6 +31,7 @@
 #include "objects/rock_thrower.h"
 #include "objects/speedy.h"
 #include "objects/transition.h"
+#include "objects/underwater_gun.h"
 #include "objects/walker.h"
 #include "objects/wind.h"
 #include "objects/wood.h"
@@ -364,6 +365,11 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "mine_launcher") {
         spawnObject<TA_MineLauncher>(position);
+    }
+
+    else if(name == "underwater_gun") {
+        bool flip = object.contains("flip") && object.at("flip").as_boolean();
+        spawnObject<TA_UnderwaterGun>(position, flip);
     }
 
     else {
