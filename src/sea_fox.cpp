@@ -124,10 +124,19 @@ void TA_SeaFox::physicsStep() {
             (velocity + velocityAdd) * TA::elapsedTime, TA_COLLISION_SOLID, ground);
         position += delta;
         ground = (flags & TA_GROUND_COLLISION) != 0;
+        if((flags & TA_WALL_COLLISION) != 0) {
+            velocity.x = 0;
+        }
     } else {
         auto [delta, flags] = links.objectSet->moveAndCollide(position, TA_Point(9, 4), TA_Point(23, 30),
             (velocity + velocityAdd) * TA::elapsedTime, TA_COLLISION_SOLID, false);
         position += delta;
+        if((flags & TA_WALL_COLLISION) != 0) {
+            velocity.x = 0;
+        }
+        if((flags & (TA_GROUND_COLLISION | TA_CEIL_COLLISION)) != 0) {
+            velocity.y = 0;
+        }
     }
 
     setPosition(position);
