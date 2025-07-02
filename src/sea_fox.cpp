@@ -263,7 +263,7 @@ void TA_SeaFox::updateDamage() {
     }
     setAlpha(255);
 
-    if((links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) != 0) {
+    if(!extraArmor && (links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) != 0) {
         if(TA::save::getParameter("ring_drop")) {
             dropRings();
             links.objectSet->addRings(-4);
