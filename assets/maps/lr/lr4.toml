@@ -3,11 +3,13 @@ music = "sound/lr.vgm"
 mode = "seafox"
 spawn = [
 	{ x=240, y=8 },
+	{ x=442, y=920, previous="maps/lr/lr5", flip=true },
 ]
 
 [objects.static]
 level_transition = [
-	{ path="maps/lr/lr2", left=192, top=0, right=336, bottom=2 }
+	{ path="maps/lr/lr2", left=192, top=0, right=336, bottom=2 },
+	{ path="maps/lr/lr5", left=478, top=912, right=480, bottom=960 },
 ]
 breakable_block = [
 	{ tile_x=4, tile_y=50, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },

@@ -20,7 +20,7 @@ public:
     bool update() override;
 
 private:
-    static constexpr float speed = 1.5;
+    static constexpr float speed = 1;
 
     bool flip = false;
 };

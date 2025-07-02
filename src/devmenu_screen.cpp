@@ -22,6 +22,7 @@ void TA_DevmenuScreen::init() {
     levels.emplace_back("maps/lr/lr2");
     levels.emplace_back("maps/lr/lr3");
     levels.emplace_back("maps/lr/lr4");
+    levels.emplace_back("maps/lr/lr5");
     levels.emplace_back("maps/lr/lr7");
     levels.emplace_back("maps/lr/lr8");
     levels.emplace_back("maps/lr/lr9");

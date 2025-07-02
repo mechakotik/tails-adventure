@@ -43,13 +43,7 @@ default_save/seafox_item_slot2 -1
 default_save/seafox_item_slot3 -1
 default_save/seafox_item_position 0
 default_save/map_selection 0
-default_save/latest_item_mask 1
-default_save/latest_boss_mask 0
-default_save/latest_rings 8
-default_save/latest_item_slot0 0
-default_save/latest_item_slot1 -1
-default_save/latest_item_slot2 -1
-default_save/latest_item_slot3 -1
-default_save/latest_item_position 0
 default_save/time 0
 default_save/last_unlocked 1
+default_save/underwater_barrier_passed 0
+
