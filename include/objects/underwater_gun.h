@@ -7,7 +7,7 @@ public:
     bool update() override;
 
 private:
-    static constexpr float cooldown = 120;
+    static constexpr float cooldown = 60;
 
     bool flip = false;
     float timer = cooldown + 1;
