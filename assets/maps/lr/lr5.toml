@@ -3,6 +3,7 @@ music = "sound/lr.vgm"
 mode = "seafox"
 spawn = [
 	{ x=6, y=598 },
+	{ x=1228, y=560, previous="maps/lr/lr6", flip=true },
 ]
 
 [objects.static]

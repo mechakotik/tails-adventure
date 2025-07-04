@@ -1,0 +1,41 @@
+[level]
+music = "sound/lr.vgm"
+mode = "seafox"
+water_level = 192
+spawn = [
+	{ x=6, y=670 },
+]
+
+[objects.static]
+level_transition = [
+	{ path="maps/lr/lr5", left=0, top=608, right=2, bottom=720 },
+]
+breakable_block = [
+	{ tile_x=15, tile_y=41, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=15, tile_y=42, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=15, tile_y=43, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=15, tile_y=44, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=16, tile_y=41, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=16, tile_y=42, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=16, tile_y=43, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+	{ tile_x=16, tile_y=44, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+]
+
+[objects.default]
+underwater_gun = [
+	{ tile_x=17, tile_y=33 },
+	{ tile_x=17, tile_y=34 },
+	{ tile_x=22, tile_y=36, flip=true },
+	{ tile_x=17, tile_y=37 },
+	{ tile_x=17, tile_y=38 },
+	{ tile_x=22, tile_y=41, flip=true },
+	
+	{ tile_x=24, tile_y=16, flip=true },
+	{ tile_x=24, tile_y=17, flip=true },
+	{ tile_x=24, tile_y=18, flip=true },
+	{ tile_x=18, tile_y=20 },
+	{ tile_x=18, tile_y=21 },
+	{ tile_x=19, tile_y=22 },
+	{ tile_x=19, tile_y=23 },
+]
+
