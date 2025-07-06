@@ -3,6 +3,9 @@ image = "seafox.png"
 width = 32
 height = 32
 
+[animations]
+empty = 7
+
 [animations.idle]
 frames = [8, 9]
 delay = 6

@@ -71,6 +71,8 @@ private:
     bool extraArmor = false;
     float sparkleTimer = 0;
 
+    bool hidden = false;
+
 public:
     void load(TA_Links links);
     void update();
@@ -78,6 +80,7 @@ public:
     void setSpawnPoint(TA_Point position, bool flip);
     void setGroundMode() { groundMode = true; }
     void setVelocityAdd(TA_Point add) { velocityAdd = add; }
+    void setHide(bool hidden);
     TA_Rect* getHitbox() { return &hitbox; }
     TA_Rect* getDrillHitbox() { return &drillHitbox; }
     bool gameOver() { return dead && deadTimer >= deadTime; }

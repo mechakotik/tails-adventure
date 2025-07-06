@@ -19,6 +19,7 @@
 #include "objects/hover_pod.h"
 #include "objects/item_box.h"
 #include "objects/jumper.h"
+#include "objects/land_cutscene.h"
 #include "objects/little_kukku.h"
 #include "objects/mecha_golem.h"
 #include "objects/mine.h"
@@ -376,6 +377,12 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     else if(name == "underwater_barrier") {
         std::string particlePath = object.at("particle_path").as_string();
         spawnObject<TA_UnderwaterBarrier>(position, particlePath);
+    }
+
+    else if(name == "land_cutscene") {
+        float landY = asIntOrFloat(object.at("land_y"));
+        int selection = static_cast<int>(object.at("selection").as_integer());
+        spawnObject<TA_LandCutscene>(position, landY, selection);
     }
 
     else {

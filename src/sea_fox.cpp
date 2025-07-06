@@ -30,11 +30,16 @@ void TA_SeaFox::load(TA_Links links) {
 void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip) {
     this->position = position;
     this->flip = this->neededFlip = flip;
+    setPosition(position);
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
 }
 
 void TA_SeaFox::update() {
+    if(hidden) {
+        return;
+    }
+
     if(dead) {
         updateDead();
         setFlip(flip);
@@ -311,4 +316,9 @@ void TA_SeaFox::updateDead() {
 
     deadTimer += TA::elapsedTime;
     flip = (getAnimationFrame() >= 3);
+}
+
+void TA_SeaFox::setHide(bool hidden) {
+    this->hidden = hidden;
+    setAlpha(hidden ? 0 : 255);
 }

@@ -1,7 +1,6 @@
 [level]
 music = "sound/lr.vgm"
 mode = "seafox"
-water_level = 192
 spawn = [
 	{ x=6, y=670 },
 ]
@@ -19,6 +18,9 @@ breakable_block = [
 	{ tile_x=16, tile_y=42, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
 	{ tile_x=16, tile_y=43, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
 	{ tile_x=16, tile_y=44, path="maps/lr/lr_block2.png", particle_path="maps/lr/lr_rock.png" },
+]
+land_cutscene = [
+	{ x=312, y=162, land_y=121, selection=8 },
 ]
 
 [objects.default]
