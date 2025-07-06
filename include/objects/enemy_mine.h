@@ -10,6 +10,7 @@ private:
     static constexpr float maxYSpeed = 2;
 
     TA_Point startPosition;
+    TA_Sound smallExplosionSound;
     float timer = 0;
     float ysp = 0;
     bool fall = false;

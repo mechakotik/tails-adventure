@@ -38,14 +38,19 @@ void TA_UnderwaterBullet::load(TA_Point position, bool flip) {
     hitbox.setRectangle({0, 0}, {8, 7});
     collisionType = TA_COLLISION_DAMAGE;
     updatePosition();
+    smallExplosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX3);
 }
 
 bool TA_UnderwaterBullet::update() {
     position.x += (flip ? -1.0F : 1.0F) * speed;
     updatePosition();
+    int flags = objectSet->checkCollision(hitbox);
 
-    if(objectSet->checkCollision(hitbox) & (TA_COLLISION_SOLID | TA_COLLISION_CHARACTER)) {
+    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_CHARACTER)) != 0) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 4), 0, TA_EXPLOSION_ENEMY);
+        if((flags & TA_COLLISION_CHARACTER) != 0) {
+            smallExplosionSound.play();
+        }
         return false;
     }
 

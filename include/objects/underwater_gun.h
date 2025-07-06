@@ -23,4 +23,5 @@ private:
     static constexpr float speed = 1;
 
     bool flip = false;
+    TA_Sound smallExplosionSound;
 };
