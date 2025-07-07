@@ -74,4 +74,10 @@ bridge = [
 	{ leftx=464, rightx=607, y=320, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
 	{ leftx=624, rightx=688, y=320, path="maps/cc/bridge.png", particle_path="maps/cc/rock.png" },
 ]
+electric_barrier = [
+	{ left=26, top=2, right=27, bottom=5, tile_x=24, tile_y=5, offset_x=-4, offset_y=8 },
+	{ left=17, top=11, right=18, bottom=14, tile_x=27, tile_y=13, offset_x=-4, offset_y=8 },
+	{ left=100, top=5, right=101, bottom=8, tile_x=109, tile_y=5, offset_x=4, offset_y=8 },
+	{ left=105, top=5, right=106, bottom=8, tile_x=93, tile_y=5, offset_x=-4, offset_y=8 },
+]
 

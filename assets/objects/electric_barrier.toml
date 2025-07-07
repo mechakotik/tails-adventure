@@ -1,0 +1,9 @@
+[sprite]
+image = "electric_barrier.png"
+width = 16
+height = 16
+
+[animations.idle]
+frames = [0, 1]
+delay = 3
+

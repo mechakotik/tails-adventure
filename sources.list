@@ -13,6 +13,7 @@ src/objects/conveyor_belt.cpp
 src/objects/cruiser.cpp
 src/objects/dead_kukku.cpp
 src/objects/drill_mole.cpp
+src/objects/electric_barrier.cpp
 src/objects/enemy_mine.cpp
 src/objects/explosion.cpp
 src/objects/fire.cpp

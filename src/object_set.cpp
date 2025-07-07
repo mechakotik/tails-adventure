@@ -12,6 +12,7 @@
 #include "objects/conveyor_belt.h"
 #include "objects/cruiser.h"
 #include "objects/drill_mole.h"
+#include "objects/electric_barrier.h"
 #include "objects/enemy_mine.h"
 #include "objects/fire.h"
 #include "objects/flame.h"
@@ -383,6 +384,14 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         float landY = asIntOrFloat(object.at("land_y"));
         int selection = static_cast<int>(object.at("selection").as_integer());
         spawnObject<TA_LandCutscene>(position, landY, selection);
+    }
+
+    else if(name == "electric_barrier") {
+        int top = static_cast<int>(object.at("top").as_integer());
+        int left = static_cast<int>(object.at("left").as_integer());
+        int bottom = static_cast<int>(object.at("bottom").as_integer());
+        int right = static_cast<int>(object.at("right").as_integer());
+        spawnObject<TA_ElectricBarrier>(top, left, bottom, right, position);
     }
 
     else {
