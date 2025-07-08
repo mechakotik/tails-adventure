@@ -20,7 +20,7 @@ private:
     void updateCooldown();
     void updateRun();
     bool isGoodPosition(TA_Point newPosition);
-    void destroy();
+    void destroy() override;
 
     State state = State::IDLE;
     bool flip = false;

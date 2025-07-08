@@ -7,6 +7,8 @@ option(TA_LTO "Enable link time optimization" ON)
 option(TA_SANITIZE "Build with sanitizers" OFF)
 option(TA_CLANG_TIDY "Run clang-tidy alongside with building" OFF)
 
+set(CMAKE_CXX_STANDARD 23)
+
 if(TA_LTO)
     include(CheckIPOSupported)
     check_ipo_supported(RESULT LTO_SUPPORTED)
@@ -32,7 +34,9 @@ if(TA_SANITIZE)
     add_link_options(-fsanitize=address,leak,undefined)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
+# silence annoying warning inside toml11
+add_compile_options(-Wno-deprecated-literal-operator)
+
 if(ANDROID)
     set(BUILD_SHARED_LIBS ON)
 else()
@@ -108,7 +112,7 @@ if(WIN32)
     set(WIN32_RESOURCES res/icon.rc)
 endif()
 
-file(STRINGS "sources.list" TA_SOURCES)
+file(GLOB_RECURSE TA_SOURCES src/*.cpp)
 
 if(ANDROID)
     add_library(tails-adventure SHARED ${TA_SOURCES})
@@ -116,7 +120,7 @@ else()
     add_executable(tails-adventure ${TA_SOURCES} ${WIN32_RESOURCES})
 endif()
 
-target_compile_options(tails-adventure PRIVATE -O3 -ffast-math)
+target_compile_options(tails-adventure PRIVATE -ffast-math)
 
 if(TA_CLANG_TIDY)
     find_program(CLANG_TIDY NAMES "clang-tidy")
@@ -147,9 +151,12 @@ if(TARGET SDL3::SDL3main)
     target_link_libraries(tails-adventure PRIVATE SDL3::SDL3main)
 endif()
 
+# TODO: don't include src/engine, src/objects, src/ui
 target_include_directories(tails-adventure PRIVATE
-    include
-    include/objects
+    src
+    src/engine
+    src/objects
+    src/ui
     external/SDL/include
     external/SDL_image/include
     external/SDL_mixer/include
