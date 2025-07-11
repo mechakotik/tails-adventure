@@ -80,4 +80,17 @@ electric_barrier = [
 	{ left=100, top=5, right=101, bottom=8, tile_x=109, tile_y=5, offset_x=4, offset_y=8 },
 	{ left=105, top=5, right=106, bottom=8, tile_x=93, tile_y=5, offset_x=-4, offset_y=8 },
 ]
+conveyor_belt = [
+	{ left=304, top=368, right=384, bottom=384, flip=true },
+	{ left=464, top=368, right=688, bottom=384 },
+	{ left=720, top=352, right=768, bottom=368 },
+	{ left=800, top=352, right=848, bottom=368, flip=true },
+	{ left=1152, top=352, right=1264, bottom=368 },
+	{ left=1360, top=352, right=1488, bottom=368, flip=true },
+	{ left=1632, top=368, right=1696, bottom=384 },
+	{ left=1712, top=368, right=1856, bottom=384, flip=true },
+	{ left=1216, top=224, right=1504, bottom=240, flip=true },
+	{ left=1504, top=208, right=1600, bottom=224, flip=true },
+	{ left=1600, top=176, right=1712, bottom=192, flip=true },
+]
 
