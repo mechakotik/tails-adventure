@@ -6,7 +6,6 @@
 #include <toml.hpp>
 #include <vector>
 #include "error.h"
-#include "filesystem.h"
 #include "resource_manager.h"
 #include "tools.h"
 
@@ -150,7 +149,7 @@ void TA_Sprite::updateAnimation() {
     if(!doUpdateAnimation || !updateAnimationNeeded) {
         return;
     }
-    if(animation.frames.size() >= 2) {
+    if(isAnimated()) {
         animationTimer += TA::elapsedTime;
         animationFrame += static_cast<int>(animationTimer / static_cast<float>(animation.delay));
 
@@ -179,7 +178,8 @@ void TA_Sprite::forceUpdateAnimation() {
 }
 
 void TA_Sprite::setAnimation(TA_Animation newAnimation) {
-    if(animation.frames == newAnimation.frames && animation.delay == newAnimation.delay) {
+    if(animation.frames == newAnimation.frames && animation.delay == newAnimation.delay &&
+        animation.repeatTimes == -1 && newAnimation.repeatTimes == -1) {
         return;
     }
     animation = newAnimation;
@@ -201,7 +201,7 @@ void TA_Sprite::setFrame(int newFrame) {
 }
 
 bool TA_Sprite::isAnimated() {
-    return animation.frames.size() >= 2;
+    return animation.frames.size() != 1 || animation.delay != 1 || animation.repeatTimes != -1;
 }
 
 void TA_Sprite::setAlpha(int newAlpha) {
