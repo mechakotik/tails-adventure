@@ -31,6 +31,7 @@
 #include "objects/pushable_object.h"
 #include "objects/ring.h"
 #include "objects/rock_thrower.h"
+#include "objects/sniper.h"
 #include "objects/speedy.h"
 #include "objects/transition.h"
 #include "objects/underwater_barrier.h"
@@ -392,6 +393,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         int bottom = static_cast<int>(object.at("bottom").as_integer());
         int right = static_cast<int>(object.at("right").as_integer());
         spawnObject<TA_ElectricBarrier>(top, left, bottom, right, position);
+    }
+
+    else if(name == "sniper") {
+        spawnObject<TA_Sniper>(position);
     }
 
     else {

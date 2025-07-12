@@ -1,4 +1,6 @@
 #include "sniper.h"
+#include "bullet.h"
+#include "dead_kukku.h"
 
 void TA_Sniper::load(TA_Point position) {
     loadFromToml("objects/sniper.toml");
@@ -12,6 +14,10 @@ void TA_Sniper::load(TA_Point position) {
 bool TA_Sniper::update() {
     if(aim) {
         updateAim();
+        if((objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) != 0) {
+            objectSet->spawnObject<TA_DeadKukku>(position + TA_Point(8, 0));
+            return false;
+        }
     } else {
         updateCrouch();
     }
@@ -22,6 +28,8 @@ bool TA_Sniper::update() {
 void TA_Sniper::updateAim() {
     float newTimer = timer + TA::elapsedTime;
     if(timer < fireTime && newTimer >= fireTime) {
+        objectSet->spawnObject<TA_SniperBullet>(
+            position + TA_Point((flip ? 27 : -1), 16), TA_Point((flip ? 1.5 : -1.5), 0));
     }
     timer = newTimer;
 
@@ -35,7 +43,7 @@ void TA_Sniper::updateAim() {
 
 void TA_Sniper::updateCrouch() {
     TA_Point delta = objectSet->getCharacterPosition() - (position + TA_Point(16, 16));
-    if(!isAnimated() && abs(delta.x) <= 192 && abs(delta.y) <= 80) {
+    if(!isAnimated() && abs(delta.x) <= 128 && abs(delta.y) <= 80) {
         aim = true;
         timer = 0;
         setAnimation("aim");

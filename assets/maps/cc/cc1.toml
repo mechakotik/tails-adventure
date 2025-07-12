@@ -94,3 +94,16 @@ conveyor_belt = [
 	{ left=1600, top=176, right=1712, bottom=192, flip=true },
 ]
 
+[objects.default]
+sniper = [
+	{ tile_x=35, tile_y=3 },
+	{ tile_x=43, tile_y=3 },
+	{ tile_x=51, tile_y=3 },
+	{ tile_x=59, tile_y=3 },
+	{ tile_x=48, tile_y=17 },
+	{ tile_x=74, tile_y=9 },
+	{ tile_x=81, tile_y=20 },
+	{ tile_x=116, tile_y=12 },
+	{ tile_x=116, tile_y=19 },
+]
+

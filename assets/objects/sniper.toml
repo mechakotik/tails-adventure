@@ -1,0 +1,15 @@
+[sprite]
+image = "sniper.png"
+width = 32
+height = 32
+
+[animations.crouch]
+frames = [0]
+delay = 100
+repeat = 1
+
+[animations.aim]
+frames = [1]
+delay = 40
+repeat = 1
+

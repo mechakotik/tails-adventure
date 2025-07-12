@@ -69,3 +69,13 @@ void TA_VulcanGunBullet::onDestroy() {
     objectSet->spawnObject<TA_Explosion>(position - TA_Point(5, 5), 0, TA_EXPLOSION_CHARACTER);
     explosionSound.play();
 }
+
+void TA_SniperBullet::load(TA_Point position, TA_Point velocity) {
+    TA_Bullet::load("objects/sniper_bullet.toml", position, velocity);
+}
+
+void TA_SniperBullet::onDestroy() {
+    if((objectSet->checkCollision(hitbox) & TA_COLLISION_CHARACTER) != 0) {
+        objectSet->spawnObject<TA_Explosion>(position - TA_Point(5, 6), 0, TA_EXPLOSION_ENEMY);
+    }
+}
