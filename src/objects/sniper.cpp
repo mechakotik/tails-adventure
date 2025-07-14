@@ -43,7 +43,7 @@ void TA_Sniper::updateAim() {
 
 void TA_Sniper::updateCrouch() {
     TA_Point delta = objectSet->getCharacterPosition() - (position + TA_Point(16, 16));
-    if(!isAnimated() && abs(delta.x) <= 128 && abs(delta.y) <= 80) {
+    if(!isAnimated() && abs(delta.x) <= 96 && abs(delta.y) <= 64) {
         aim = true;
         timer = 0;
         setAnimation("aim");
