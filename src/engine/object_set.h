@@ -103,7 +103,7 @@ public:
     } // TODO: figure out what it is
     bool isPaused() { return paused; }
     void setPaused(bool enabled) { paused = enabled; }
-    bool isVisible(TA_Rect& hitbox);
+    bool isVisible(const TA_Rect& hitbox);
 
     int getEmeraldsCount();
     int getMaxRings() { return 8 + 2 * getEmeraldsCount(); }

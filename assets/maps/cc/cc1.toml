@@ -93,6 +93,11 @@ conveyor_belt = [
 	{ left=1504, top=208, right=1600, bottom=224, flip=true },
 	{ left=1600, top=176, right=1712, bottom=192, flip=true },
 ]
+sliding_bomb_spawner = [
+	{ tile_x=68, tile_y=19 },
+	{ tile_x=92, tile_y=17, flip=true },
+	{ tile_x=108, tile_y=18, flip=true },
+]
 
 [objects.default]
 sniper = [

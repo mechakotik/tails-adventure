@@ -31,6 +31,7 @@
 #include "objects/pushable_object.h"
 #include "objects/ring.h"
 #include "objects/rock_thrower.h"
+#include "objects/sliding_bomb.h"
 #include "objects/sniper.h"
 #include "objects/speedy.h"
 #include "objects/transition.h"
@@ -399,6 +400,11 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         spawnObject<TA_Sniper>(position);
     }
 
+    else if(name == "sliding_bomb_spawner") {
+        bool flip = object.contains("flip") && object.at("flip").as_boolean();
+        spawnObject<TA_SlidingBombSpawner>(position, flip);
+    }
+
     else {
         TA::handleError("unknown object %s", name.c_str());
     }
@@ -498,7 +504,7 @@ int TA_ObjectSet::getEmeraldsCount() {
     return count;
 }
 
-bool TA_ObjectSet::isVisible(TA_Rect& hitbox) {
+bool TA_ObjectSet::isVisible(const TA_Rect& hitbox) {
     TA_Point cameraPosition = links.camera->getPosition();
     TA_Rect cameraRect;
     cameraRect.setRectangle(
