@@ -172,6 +172,7 @@ void TA_Game::update() {
 }
 
 TA_Game::~TA_Game() {
+    TA::save::writeToFile();
     TA::gamepad::quit();
     TA::resmgr::quit();
 
