@@ -3,7 +3,7 @@
 #include "save.h"
 
 void TA_MapScreen::init() {
-    if(TA::save::getSaveParameter("rings") == 0) {
+    if(TA::save::getSaveParameter("rings") <= 0) {
         TA::save::setSaveParameter("map_position", 0);
         TA::save::setSaveParameter("seafox", false);
         setMaxRings();
