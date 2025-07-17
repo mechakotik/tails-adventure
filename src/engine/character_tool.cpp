@@ -119,7 +119,7 @@ void TA_Character::spawnRemoteRobot() {
     }
 
     hitbox.setPosition(position + TA_Point(0, 0.01));
-    if(links.objectSet->checkCollision(hitbox) & (TA_COLLISION_MOVING_PLATFORM | TA_COLLISION_DAMAGE)) {
+    if(links.objectSet->checkCollision(hitbox) & (TA_COLLISION_DAMAGE | TA_COLLISION_UNSTABLE)) {
         damageSound.play();
         return;
     }

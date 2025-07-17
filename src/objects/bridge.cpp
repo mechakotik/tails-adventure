@@ -7,7 +7,7 @@ void TA_Bridge::load(TA_Point newPosition, std::string filename, std::string new
     TA_Sprite::load(filename, 16, 16);
     position = newPosition;
     hitbox.setRectangle(TA_Point(0, 0), TA_Point(16, 16));
-    collisionType = TA_COLLISION_SOLID_UP;
+    collisionType = TA_COLLISION_SOLID_UP | TA_COLLISION_UNSTABLE;
     collisionHitbox.setRectangle(TA_Point(0, -0.01), TA_Point(16, 0));
     collisionHitbox.setPosition(position);
     particleFilename = newParticleFilename;

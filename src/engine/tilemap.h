@@ -28,6 +28,7 @@ enum TA_CollisionType {
     TA_COLLISION_CONVEYOR_BELT_RIGHT = (1 << 14),
     TA_COLLISION_TARGET = (1 << 15),
     TA_COLLISION_ATTACK_STRONG = (1 << 16),
+    TA_COLLISION_UNSTABLE = (1 << 17),
 };
 
 class TA_Tilemap {

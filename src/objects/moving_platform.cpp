@@ -21,7 +21,7 @@ bool TA_MovingPlatform::update() {
         moveCharacter();
     }
     updatePosition();
-    collisionType = (idle ? TA_COLLISION_SOLID : TA_COLLISION_MOVING_PLATFORM);
+    collisionType = (idle ? TA_COLLISION_SOLID : TA_COLLISION_MOVING_PLATFORM | TA_COLLISION_UNSTABLE);
     return true;
 }
 
