@@ -89,6 +89,7 @@ private:
     bool strongWind = false;
     bool hidden = false, nextFrameHidden = false;
     bool water = false;
+    bool conveyorBelt = false;
 
     float jumpSpeed = 0, jumpTime = 0;
     float climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
@@ -160,10 +161,9 @@ public:
     bool isRemoteRobot() { return remoteRobot; }
     bool isFlying() { return helitail; }
     bool isOnCeiling() { return ceiling; }
-    bool isOnStrongWind() { return strongWind; }
     bool isTeleported();
-    bool isUsingSpeedBoots() { return usingSpeedBoots; }
     bool isUsingHammer() { return state == STATE_HAMMER; }
+    bool isFastCamera() { return spring || strongWind || usingSpeedBoots || conveyorBelt; }
     bool isInWater() { return water; }
     bool isNightVisionApplied() { return nightVisionTimer > 0; }
     bool isGettingItem() {

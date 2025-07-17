@@ -156,7 +156,7 @@ void TA_Character::horizontalMove() {
     float currentTopX = topX;
     float currentAcc = (ground ? acc : airAcc);
 
-    if(isUsingSpeedBoots()) {
+    if(usingSpeedBoots) {
         currentTopX *= 2;
     }
     if(water) {
