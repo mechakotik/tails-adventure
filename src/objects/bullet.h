@@ -52,4 +52,15 @@ private:
     TA_Sound explosionSound;
 };
 
+class TA_HeavyGunBullet : public TA_Bullet {
+public:
+    using TA_Bullet::TA_Bullet;
+    void load(TA_Point position, TA_Point velocity);
+    void onDestroy() override;
+    int getCollisionFlags() override { return TA_COLLISION_SOLID | TA_COLLISION_CHARACTER; }
+
+private:
+    TA_Sound explosionSound;
+};
+
 #endif // TA_BULLET_H

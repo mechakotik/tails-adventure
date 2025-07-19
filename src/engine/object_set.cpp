@@ -17,6 +17,7 @@
 #include "objects/fire.h"
 #include "objects/flame.h"
 #include "objects/grass_block.h"
+#include "objects/heavy_gun.h"
 #include "objects/hover_pod.h"
 #include "objects/item_box.h"
 #include "objects/jumper.h"
@@ -408,6 +409,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "remote_robot_blocker") {
         spawnObject<TA_RemoteRobotBlocker>(position);
+    }
+
+    else if(name == "heavy_gun") {
+        spawnObject<TA_HeavyGun>(position);
     }
 
     else {

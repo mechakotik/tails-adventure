@@ -79,3 +79,13 @@ void TA_SniperBullet::onDestroy() {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(5, 6), 0, TA_EXPLOSION_ENEMY);
     }
 }
+
+void TA_HeavyGunBullet::load(TA_Point position, TA_Point velocity) {
+    TA_Bullet::load("objects/heavy_gun_bullet.toml", position, velocity);
+}
+
+void TA_HeavyGunBullet::onDestroy() {
+    if((objectSet->checkCollision(hitbox) & TA_COLLISION_CHARACTER) != 0) {
+        objectSet->spawnObject<TA_Explosion>(position - TA_Point(5, 6), 0, TA_EXPLOSION_ENEMY);
+    }
+}

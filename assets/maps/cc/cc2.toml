@@ -15,4 +15,9 @@ remote_robot_blocker = [
 	{ tile_x=31, tile_y=9, offset_x=-3 },
 	{ tile_x=37, tile_y=9, offset_x=-3 },
 ]
+heavy_gun = [
+	{ tile_x=36, tile_y=26, offset_x=-4, offset_y=-4 },
+	{ tile_x=41, tile_y=25, offset_x=-4, offset_y=-4 },
+	{ tile_x=46, tile_y=26, offset_x=-4, offset_y=-4 },
+]
 
