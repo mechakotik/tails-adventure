@@ -1,6 +1,7 @@
 #ifndef TA_INGAME_MAP_H
 #define TA_INGAME_MAP_H
 
+#include <array>
 #include "font.h"
 #include "sprite.h"
 
