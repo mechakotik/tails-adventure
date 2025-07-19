@@ -19,5 +19,10 @@ heavy_gun = [
 	{ tile_x=36, tile_y=26, offset_x=-4, offset_y=-4 },
 	{ tile_x=41, tile_y=25, offset_x=-4, offset_y=-4 },
 	{ tile_x=46, tile_y=26, offset_x=-4, offset_y=-4 },
+	
+	{ tile_x=5, tile_y=44, offset_x=-4, offset_y=-4 },
+	{ tile_x=8, tile_y=48, offset_x=-4, offset_y=-4 },
+	{ tile_x=16, tile_y=48, offset_x=-12, offset_y=-4, flip=true },
+	{ tile_x=19, tile_y=44, offset_x=-12, offset_y=-4, flip=true },
 ]
 

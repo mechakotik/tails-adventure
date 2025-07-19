@@ -412,7 +412,8 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "heavy_gun") {
-        spawnObject<TA_HeavyGun>(position);
+        bool flip = object.contains("flip") && object.at("flip").as_boolean();
+        spawnObject<TA_HeavyGun>(position, flip);
     }
 
     else {
