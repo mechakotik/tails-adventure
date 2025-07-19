@@ -1,0 +1,11 @@
+[level]
+music = "sound/cc.vgm"
+spawn = [
+	{ x=205, y=73 },
+]
+
+[objects.static]
+level_transition = [
+	{ path="maps/cc/cc1", left=112, top=0, right=256, bottom=48 },
+]
+
