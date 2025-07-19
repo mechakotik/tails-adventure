@@ -8,4 +8,11 @@ spawn = [
 level_transition = [
 	{ path="maps/cc/cc1", left=112, top=0, right=256, bottom=48 },
 ]
+remote_robot_blocker = [
+	{ tile_x=33, tile_y=5, offset_x=-3 },
+	{ tile_x=41, tile_y=5, offset_x=-3 },
+	{ tile_x=45, tile_y=5, offset_x=-3 },
+	{ tile_x=31, tile_y=9, offset_x=-3 },
+	{ tile_x=37, tile_y=9, offset_x=-3 },
+]
 

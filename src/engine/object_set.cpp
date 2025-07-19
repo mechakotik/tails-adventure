@@ -29,6 +29,7 @@
 #include "objects/moving_platform.h"
 #include "objects/nezu.h"
 #include "objects/pushable_object.h"
+#include "objects/remote_robot_blocker.h"
 #include "objects/ring.h"
 #include "objects/rock_thrower.h"
 #include "objects/sliding_bomb.h"
@@ -403,6 +404,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     else if(name == "sliding_bomb_spawner") {
         bool flip = object.contains("flip") && object.at("flip").as_boolean();
         spawnObject<TA_SlidingBombSpawner>(position, flip);
+    }
+
+    else if(name == "remote_robot_blocker") {
+        spawnObject<TA_RemoteRobotBlocker>(position);
     }
 
     else {

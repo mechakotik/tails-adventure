@@ -1,0 +1,9 @@
+[sprite]
+image = "remote_robot_blocker.png"
+width = 22
+height = 16
+
+[animations.idle]
+frames = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 2, 2, 0, 3, 3, 0, 1, 1, 0, 2, 2, 0, 3, 3, 0]
+delay = 3
+

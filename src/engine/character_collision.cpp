@@ -78,23 +78,30 @@ void TA_Character::updateCollisions() {
         positionDelta = (velocity + windVelocity) * TA::elapsedTime;
     }
 
+    int flags = links.objectSet->checkCollision(hitbox);
+
     if(ground) {
-        int flags = links.objectSet->checkCollision(hitbox);
         conveyorBelt = false;
-        if(flags & TA_COLLISION_CONVEYOR_BELT_LEFT) {
-            positionDelta.x -= 0.8 * TA::elapsedTime;
+        if((flags & TA_COLLISION_CONVEYOR_BELT_LEFT) != 0) {
+            positionDelta.x -= 0.8F * TA::elapsedTime;
             conveyorBelt = true;
         }
-        if(flags & TA_COLLISION_CONVEYOR_BELT_RIGHT) {
-            positionDelta.x += 0.8 * TA::elapsedTime;
+        if((flags & TA_COLLISION_CONVEYOR_BELT_RIGHT) != 0) {
+            positionDelta.x += 0.8F * TA::elapsedTime;
             conveyorBelt = true;
         }
     }
 
-    auto [delta, flags] =
+    if(remoteRobot && state != STATE_REMOTE_ROBOT_INIT && (flags & TA_COLLISION_REMOTE_ROBOT_BLOCKER) != 0) {
+        setAnimation("remote_robot_idle");
+        state = STATE_REMOTE_ROBOT_RETURN;
+    }
+
+    TA_Point delta;
+    std::tie(delta, flags) =
         links.objectSet->moveAndCollide(position, topLeft, bottomRight, positionDelta, getSolidFlags(), ground);
 
-    if(flags & TA_COLLISION_ERROR) {
+    if((flags & TA_COLLISION_ERROR) != 0) {
         useSolidUpTiles = useMovingPlatforms = false;
         std::tie(delta, flags) =
             links.objectSet->moveAndCollide(position, topLeft, bottomRight, positionDelta, getSolidFlags(), ground);
@@ -102,7 +109,7 @@ void TA_Character::updateCollisions() {
 
     position += delta;
 
-    if(flags & TA_GROUND_COLLISION) {
+    if((flags & TA_GROUND_COLLISION) != 0) {
         ground = true;
         helitail = false;
         velocity.y = 0;
