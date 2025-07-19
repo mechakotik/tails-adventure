@@ -118,7 +118,7 @@ void TA_Character::updateCollisions() {
     }
 
     wall = bool(flags & TA_WALL_COLLISION);
-    if(wall && hurt) {
+    if(wall && (hurt || !ground)) {
         velocity.x = 0;
     }
 
