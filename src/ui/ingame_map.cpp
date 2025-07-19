@@ -4,28 +4,42 @@
 void TA_InGameMap::load() {
     float xOffset = (TA::screenWidth - 256) / 2;
     float yOffset = (TA::screenHeight - 144) / 2;
-    tilemap.load("worldmap/map.tmx");
-    tilemap.setPosition({xOffset, yOffset});
+
+    mapSprite.loadFromToml("worldmap/map.toml");
+    mapSprite.setPosition({xOffset, yOffset});
+    mapSprite.setAnimation("map");
 
     namePlateSprite.load("worldmap/name_plate.png");
     namePlateSprite.setPosition(16, TA::screenHeight - 24);
 
     font.loadFont("fonts/area.toml");
 
-    for(int pos = 0; pos < 2; pos++) {
-        dolphinSprites[pos].loadFromToml("worldmap/dolphin.toml");
-        dolphinSprites[pos].setAnimation("dolphin");
+    for(int i = 0; i < 2; i++) {
+        dolphinSprites[i].loadFromToml("worldmap/dolphin.toml");
+        dolphinSprites[i].setAnimation("dolphin");
     }
 
-    dolphinSprites[0].setPosition(76 + xOffset, yOffset + 24);
-    dolphinSprites[1].setPosition(172 + xOffset, yOffset + 48);
+    dolphinSprites[0].setPosition(xOffset + 76, yOffset + 24);
+    dolphinSprites[1].setPosition(xOffset + 172, yOffset + 48);
+
+    for(int i = 0; i < 3; i++) {
+        birdSprites[i].loadFromToml("worldmap/bird.toml");
+        birdSprites[i].setAnimation("bird");
+    }
+
+    birdSprites[0].setPosition(xOffset + 68, yOffset + 88);
+    birdSprites[1].setPosition(xOffset + 64, yOffset + 96);
+    birdSprites[2].setPosition(xOffset + 72, yOffset + 96);
 }
 
 void TA_InGameMap::draw() {
     drawBackground();
-    tilemap.draw(0);
-    for(int pos = 0; pos < 2; pos++) {
-        dolphinSprites[pos].draw();
+    mapSprite.draw();
+    for(int i = 0; i < 2; i++) {
+        dolphinSprites[i].draw();
+    }
+    for(int i = 0; i < 3; i++) {
+        birdSprites[i].draw();
     }
 }
 

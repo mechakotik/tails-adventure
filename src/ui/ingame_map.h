@@ -2,16 +2,15 @@
 #define TA_INGAME_MAP_H
 
 #include "font.h"
-#include "sound.h"
 #include "sprite.h"
-#include "tilemap.h"
 
 class TA_InGameMap {
 private:
-    TA_Tilemap tilemap;
+    TA_Sprite mapSprite;
     TA_Sprite namePlateSprite;
     TA_Font font;
     std::array<TA_Sprite, 2> dolphinSprites;
+    std::array<TA_Sprite, 3> birdSprites;
 
     void drawBackground();
 

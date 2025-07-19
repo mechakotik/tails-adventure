@@ -1,5 +1,4 @@
 #include "map_screen.h"
-#include <cmath>
 #include "save.h"
 
 void TA_MapScreen::init() {

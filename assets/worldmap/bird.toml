@@ -1,0 +1,9 @@
+[sprite]
+image = "bird.png"
+width = 8
+height = 8
+
+[animations.bird]
+frames = [0, 1]
+delay = 10
+

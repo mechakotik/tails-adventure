@@ -1,0 +1,9 @@
+[sprite]
+image = "map.png"
+width = 256
+height = 144
+
+[animations.map]
+frames = [0, 1]
+delay = 42
+
