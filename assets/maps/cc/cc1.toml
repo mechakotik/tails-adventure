@@ -102,6 +102,9 @@ sliding_bomb_spawner = [
 	{ tile_x=92, tile_y=17, flip=true },
 	{ tile_x=108, tile_y=18, flip=true },
 ]
+item_box = [
+  { number=34, item_name="chaos_emerald", tile_x=38, tile_y=19 },
+]
 
 [objects.default]
 sniper = [
