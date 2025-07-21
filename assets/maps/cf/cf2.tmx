@@ -331,11 +331,6 @@
    <properties>
     <property name="spikes" type="int" value="1"/>
    </properties>
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
   </tile>
   <tile id="82">
    <objectgroup draworder="index" id="2">
