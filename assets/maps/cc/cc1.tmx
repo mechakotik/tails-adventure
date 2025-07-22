@@ -1074,20 +1074,6 @@
     <frame tileid="412" duration="70"/>
    </animation>
   </tile>
-  <tile id="182">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="183">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
   <tile id="184">
    <animation>
     <frame tileid="195" duration="70"/>

@@ -88,6 +88,15 @@ electric_barrier = [
 	{ left=44, top=31, right=45, bottom=34, tile_x=43, tile_y=34, offset_x=-4, offset_y=8 },
 	{ left=23, top=50, right=24, bottom=53, tile_x=21, tile_y=53, offset_x=-4, offset_y=8 },
 ]
+conveyor_belt = [
+	{ left=432, top=16, right=608, bottom=32, flip=true },
+	{ left=480, top=96, right=736, bottom=112, flip=true },
+	{ left=464, top=160, right=528, bottom=176 },
+	{ left=544, top=160, right=640, bottom=176, flip=true },
+	{ left=656, top=160, right=752, bottom=176, flip=true },
+	{ left=288, top=592, right=432, bottom=608 },
+	{ left=496, top=592, right=672, bottom=608, flip=true },
+]
 
 [objects.default]
 sniper = [
