@@ -1,0 +1,934 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="29" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="340" columns="20">
+  <image source="cc3.png" width="320" height="272"/>
+  <tile id="0">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="10" duration="70"/>
+    <frame tileid="10" duration="70"/>
+    <frame tileid="10" duration="70"/>
+    <frame tileid="160" duration="70"/>
+    <frame tileid="160" duration="70"/>
+    <frame tileid="160" duration="70"/>
+    <frame tileid="170" duration="70"/>
+    <frame tileid="170" duration="70"/>
+    <frame tileid="170" duration="70"/>
+    <frame tileid="170" duration="70"/>
+    <frame tileid="0" duration="70"/>
+    <frame tileid="170" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="1">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="11" duration="70"/>
+    <frame tileid="11" duration="70"/>
+    <frame tileid="11" duration="70"/>
+    <frame tileid="161" duration="70"/>
+    <frame tileid="161" duration="70"/>
+    <frame tileid="161" duration="70"/>
+    <frame tileid="171" duration="70"/>
+    <frame tileid="171" duration="70"/>
+    <frame tileid="171" duration="70"/>
+    <frame tileid="171" duration="70"/>
+    <frame tileid="1" duration="70"/>
+    <frame tileid="171" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="2">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="12" duration="70"/>
+    <frame tileid="12" duration="70"/>
+    <frame tileid="12" duration="70"/>
+    <frame tileid="162" duration="70"/>
+    <frame tileid="162" duration="70"/>
+    <frame tileid="162" duration="70"/>
+    <frame tileid="172" duration="70"/>
+    <frame tileid="172" duration="70"/>
+    <frame tileid="172" duration="70"/>
+    <frame tileid="172" duration="70"/>
+    <frame tileid="2" duration="70"/>
+    <frame tileid="172" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="3">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="13" duration="70"/>
+    <frame tileid="13" duration="70"/>
+    <frame tileid="13" duration="70"/>
+    <frame tileid="163" duration="70"/>
+    <frame tileid="163" duration="70"/>
+    <frame tileid="163" duration="70"/>
+    <frame tileid="173" duration="70"/>
+    <frame tileid="173" duration="70"/>
+    <frame tileid="173" duration="70"/>
+    <frame tileid="173" duration="70"/>
+    <frame tileid="3" duration="70"/>
+    <frame tileid="173" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="4">
+   <animation>
+    <frame tileid="14" duration="70"/>
+    <frame tileid="14" duration="70"/>
+    <frame tileid="14" duration="70"/>
+    <frame tileid="164" duration="70"/>
+    <frame tileid="164" duration="70"/>
+    <frame tileid="164" duration="70"/>
+    <frame tileid="174" duration="70"/>
+    <frame tileid="174" duration="70"/>
+    <frame tileid="174" duration="70"/>
+    <frame tileid="174" duration="70"/>
+    <frame tileid="4" duration="70"/>
+    <frame tileid="174" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="5">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="15" duration="70"/>
+    <frame tileid="15" duration="70"/>
+    <frame tileid="15" duration="70"/>
+    <frame tileid="165" duration="70"/>
+    <frame tileid="165" duration="70"/>
+    <frame tileid="165" duration="70"/>
+    <frame tileid="175" duration="70"/>
+    <frame tileid="175" duration="70"/>
+    <frame tileid="175" duration="70"/>
+    <frame tileid="175" duration="70"/>
+    <frame tileid="5" duration="70"/>
+    <frame tileid="175" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="6">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="16" duration="70"/>
+    <frame tileid="16" duration="70"/>
+    <frame tileid="16" duration="70"/>
+    <frame tileid="166" duration="70"/>
+    <frame tileid="166" duration="70"/>
+    <frame tileid="166" duration="70"/>
+    <frame tileid="176" duration="70"/>
+    <frame tileid="176" duration="70"/>
+    <frame tileid="176" duration="70"/>
+    <frame tileid="176" duration="70"/>
+    <frame tileid="6" duration="70"/>
+    <frame tileid="176" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="7">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="17" duration="70"/>
+    <frame tileid="17" duration="70"/>
+    <frame tileid="17" duration="70"/>
+    <frame tileid="167" duration="70"/>
+    <frame tileid="167" duration="70"/>
+    <frame tileid="167" duration="70"/>
+    <frame tileid="177" duration="70"/>
+    <frame tileid="177" duration="70"/>
+    <frame tileid="177" duration="70"/>
+    <frame tileid="177" duration="70"/>
+    <frame tileid="7" duration="70"/>
+    <frame tileid="177" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="8">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="18" duration="70"/>
+    <frame tileid="18" duration="70"/>
+    <frame tileid="18" duration="70"/>
+    <frame tileid="168" duration="70"/>
+    <frame tileid="168" duration="70"/>
+    <frame tileid="168" duration="70"/>
+    <frame tileid="178" duration="70"/>
+    <frame tileid="178" duration="70"/>
+    <frame tileid="178" duration="70"/>
+    <frame tileid="178" duration="70"/>
+    <frame tileid="8" duration="70"/>
+    <frame tileid="178" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="9">
+   <objectgroup draworder="index" id="3">
+    <object id="2" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="20">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="21">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="31" duration="70"/>
+    <frame tileid="31" duration="70"/>
+    <frame tileid="31" duration="70"/>
+    <frame tileid="181" duration="70"/>
+    <frame tileid="181" duration="70"/>
+    <frame tileid="181" duration="70"/>
+    <frame tileid="191" duration="70"/>
+    <frame tileid="191" duration="70"/>
+    <frame tileid="191" duration="70"/>
+    <frame tileid="191" duration="70"/>
+    <frame tileid="21" duration="70"/>
+    <frame tileid="191" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="22">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="25">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="26">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="27">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="28">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="29">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="40">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="41">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="42">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="43">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="44">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="45">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="46">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="47">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="48">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="49">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="60">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="70" duration="70"/>
+    <frame tileid="70" duration="70"/>
+    <frame tileid="70" duration="70"/>
+    <frame tileid="220" duration="70"/>
+    <frame tileid="220" duration="70"/>
+    <frame tileid="220" duration="70"/>
+    <frame tileid="230" duration="70"/>
+    <frame tileid="230" duration="70"/>
+    <frame tileid="230" duration="70"/>
+    <frame tileid="230" duration="70"/>
+    <frame tileid="60" duration="70"/>
+    <frame tileid="230" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="61">
+   <animation>
+    <frame tileid="71" duration="70"/>
+    <frame tileid="71" duration="70"/>
+    <frame tileid="71" duration="70"/>
+    <frame tileid="221" duration="70"/>
+    <frame tileid="221" duration="70"/>
+    <frame tileid="221" duration="70"/>
+    <frame tileid="231" duration="70"/>
+    <frame tileid="231" duration="70"/>
+    <frame tileid="231" duration="70"/>
+    <frame tileid="231" duration="70"/>
+    <frame tileid="61" duration="70"/>
+    <frame tileid="231" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="62">
+   <animation>
+    <frame tileid="72" duration="70"/>
+    <frame tileid="72" duration="70"/>
+    <frame tileid="72" duration="70"/>
+    <frame tileid="222" duration="70"/>
+    <frame tileid="222" duration="70"/>
+    <frame tileid="222" duration="70"/>
+    <frame tileid="232" duration="70"/>
+    <frame tileid="232" duration="70"/>
+    <frame tileid="232" duration="70"/>
+    <frame tileid="232" duration="70"/>
+    <frame tileid="62" duration="70"/>
+    <frame tileid="232" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="63">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="66">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="76" duration="70"/>
+    <frame tileid="76" duration="70"/>
+    <frame tileid="76" duration="70"/>
+    <frame tileid="226" duration="70"/>
+    <frame tileid="226" duration="70"/>
+    <frame tileid="226" duration="70"/>
+    <frame tileid="236" duration="70"/>
+    <frame tileid="236" duration="70"/>
+    <frame tileid="236" duration="70"/>
+    <frame tileid="236" duration="70"/>
+    <frame tileid="66" duration="70"/>
+    <frame tileid="236" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="67">
+   <animation>
+    <frame tileid="77" duration="70"/>
+    <frame tileid="77" duration="70"/>
+    <frame tileid="77" duration="70"/>
+    <frame tileid="227" duration="70"/>
+    <frame tileid="227" duration="70"/>
+    <frame tileid="227" duration="70"/>
+    <frame tileid="237" duration="70"/>
+    <frame tileid="237" duration="70"/>
+    <frame tileid="237" duration="70"/>
+    <frame tileid="237" duration="70"/>
+    <frame tileid="67" duration="70"/>
+    <frame tileid="237" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="68">
+   <animation>
+    <frame tileid="78" duration="70"/>
+    <frame tileid="78" duration="70"/>
+    <frame tileid="78" duration="70"/>
+    <frame tileid="228" duration="70"/>
+    <frame tileid="228" duration="70"/>
+    <frame tileid="228" duration="70"/>
+    <frame tileid="238" duration="70"/>
+    <frame tileid="238" duration="70"/>
+    <frame tileid="238" duration="70"/>
+    <frame tileid="238" duration="70"/>
+    <frame tileid="68" duration="70"/>
+    <frame tileid="238" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="69">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="80">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="81">
+   <animation>
+    <frame tileid="91" duration="70"/>
+    <frame tileid="91" duration="70"/>
+    <frame tileid="91" duration="70"/>
+    <frame tileid="241" duration="70"/>
+    <frame tileid="241" duration="70"/>
+    <frame tileid="241" duration="70"/>
+    <frame tileid="251" duration="70"/>
+    <frame tileid="251" duration="70"/>
+    <frame tileid="251" duration="70"/>
+    <frame tileid="251" duration="70"/>
+    <frame tileid="81" duration="70"/>
+    <frame tileid="251" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="82">
+   <animation>
+    <frame tileid="92" duration="70"/>
+    <frame tileid="92" duration="70"/>
+    <frame tileid="92" duration="70"/>
+    <frame tileid="242" duration="70"/>
+    <frame tileid="242" duration="70"/>
+    <frame tileid="242" duration="70"/>
+    <frame tileid="252" duration="70"/>
+    <frame tileid="252" duration="70"/>
+    <frame tileid="252" duration="70"/>
+    <frame tileid="252" duration="70"/>
+    <frame tileid="82" duration="70"/>
+    <frame tileid="252" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="83">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="93" duration="70"/>
+    <frame tileid="93" duration="70"/>
+    <frame tileid="93" duration="70"/>
+    <frame tileid="243" duration="70"/>
+    <frame tileid="243" duration="70"/>
+    <frame tileid="243" duration="70"/>
+    <frame tileid="253" duration="70"/>
+    <frame tileid="253" duration="70"/>
+    <frame tileid="253" duration="70"/>
+    <frame tileid="253" duration="70"/>
+    <frame tileid="83" duration="70"/>
+    <frame tileid="253" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="84">
+   <animation>
+    <frame tileid="94" duration="70"/>
+    <frame tileid="94" duration="70"/>
+    <frame tileid="94" duration="70"/>
+    <frame tileid="244" duration="70"/>
+    <frame tileid="244" duration="70"/>
+    <frame tileid="244" duration="70"/>
+    <frame tileid="254" duration="70"/>
+    <frame tileid="254" duration="70"/>
+    <frame tileid="254" duration="70"/>
+    <frame tileid="254" duration="70"/>
+    <frame tileid="84" duration="70"/>
+    <frame tileid="254" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="85">
+   <animation>
+    <frame tileid="95" duration="70"/>
+    <frame tileid="95" duration="70"/>
+    <frame tileid="95" duration="70"/>
+    <frame tileid="245" duration="70"/>
+    <frame tileid="245" duration="70"/>
+    <frame tileid="245" duration="70"/>
+    <frame tileid="255" duration="70"/>
+    <frame tileid="255" duration="70"/>
+    <frame tileid="255" duration="70"/>
+    <frame tileid="255" duration="70"/>
+    <frame tileid="85" duration="70"/>
+    <frame tileid="255" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="86">
+   <animation>
+    <frame tileid="96" duration="70"/>
+    <frame tileid="96" duration="70"/>
+    <frame tileid="96" duration="70"/>
+    <frame tileid="246" duration="70"/>
+    <frame tileid="246" duration="70"/>
+    <frame tileid="246" duration="70"/>
+    <frame tileid="256" duration="70"/>
+    <frame tileid="256" duration="70"/>
+    <frame tileid="256" duration="70"/>
+    <frame tileid="256" duration="70"/>
+    <frame tileid="86" duration="70"/>
+    <frame tileid="256" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="87">
+   <animation>
+    <frame tileid="97" duration="70"/>
+    <frame tileid="97" duration="70"/>
+    <frame tileid="97" duration="70"/>
+    <frame tileid="247" duration="70"/>
+    <frame tileid="247" duration="70"/>
+    <frame tileid="247" duration="70"/>
+    <frame tileid="257" duration="70"/>
+    <frame tileid="257" duration="70"/>
+    <frame tileid="257" duration="70"/>
+    <frame tileid="257" duration="70"/>
+    <frame tileid="87" duration="70"/>
+    <frame tileid="257" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="100">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="110" duration="70"/>
+    <frame tileid="110" duration="70"/>
+    <frame tileid="110" duration="70"/>
+    <frame tileid="260" duration="70"/>
+    <frame tileid="260" duration="70"/>
+    <frame tileid="260" duration="70"/>
+    <frame tileid="270" duration="70"/>
+    <frame tileid="270" duration="70"/>
+    <frame tileid="270" duration="70"/>
+    <frame tileid="270" duration="70"/>
+    <frame tileid="100" duration="70"/>
+    <frame tileid="270" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="101">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="102">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="103">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="113" duration="70"/>
+    <frame tileid="113" duration="70"/>
+    <frame tileid="113" duration="70"/>
+    <frame tileid="263" duration="70"/>
+    <frame tileid="263" duration="70"/>
+    <frame tileid="263" duration="70"/>
+    <frame tileid="273" duration="70"/>
+    <frame tileid="273" duration="70"/>
+    <frame tileid="273" duration="70"/>
+    <frame tileid="273" duration="70"/>
+    <frame tileid="103" duration="70"/>
+    <frame tileid="273" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="104">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <properties>
+      <property name="type" type="int" value="4"/>
+     </properties>
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="105">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="115" duration="70"/>
+    <frame tileid="115" duration="70"/>
+    <frame tileid="115" duration="70"/>
+    <frame tileid="265" duration="70"/>
+    <frame tileid="265" duration="70"/>
+    <frame tileid="265" duration="70"/>
+    <frame tileid="275" duration="70"/>
+    <frame tileid="275" duration="70"/>
+    <frame tileid="275" duration="70"/>
+    <frame tileid="275" duration="70"/>
+    <frame tileid="105" duration="70"/>
+    <frame tileid="275" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="106">
+   <animation>
+    <frame tileid="116" duration="70"/>
+    <frame tileid="116" duration="70"/>
+    <frame tileid="116" duration="70"/>
+    <frame tileid="266" duration="70"/>
+    <frame tileid="266" duration="70"/>
+    <frame tileid="266" duration="70"/>
+    <frame tileid="276" duration="70"/>
+    <frame tileid="276" duration="70"/>
+    <frame tileid="276" duration="70"/>
+    <frame tileid="276" duration="70"/>
+    <frame tileid="106" duration="70"/>
+    <frame tileid="276" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="120">
+   <animation>
+    <frame tileid="130" duration="70"/>
+    <frame tileid="130" duration="70"/>
+    <frame tileid="130" duration="70"/>
+    <frame tileid="280" duration="70"/>
+    <frame tileid="280" duration="70"/>
+    <frame tileid="280" duration="70"/>
+    <frame tileid="290" duration="70"/>
+    <frame tileid="290" duration="70"/>
+    <frame tileid="290" duration="70"/>
+    <frame tileid="290" duration="70"/>
+    <frame tileid="120" duration="70"/>
+    <frame tileid="290" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="121">
+   <animation>
+    <frame tileid="131" duration="70"/>
+    <frame tileid="131" duration="70"/>
+    <frame tileid="131" duration="70"/>
+    <frame tileid="281" duration="70"/>
+    <frame tileid="281" duration="70"/>
+    <frame tileid="281" duration="70"/>
+    <frame tileid="291" duration="70"/>
+    <frame tileid="291" duration="70"/>
+    <frame tileid="291" duration="70"/>
+    <frame tileid="291" duration="70"/>
+    <frame tileid="121" duration="70"/>
+    <frame tileid="291" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="122">
+   <animation>
+    <frame tileid="132" duration="70"/>
+    <frame tileid="132" duration="70"/>
+    <frame tileid="132" duration="70"/>
+    <frame tileid="282" duration="70"/>
+    <frame tileid="282" duration="70"/>
+    <frame tileid="282" duration="70"/>
+    <frame tileid="292" duration="70"/>
+    <frame tileid="292" duration="70"/>
+    <frame tileid="292" duration="70"/>
+    <frame tileid="292" duration="70"/>
+    <frame tileid="122" duration="70"/>
+    <frame tileid="292" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="123">
+   <animation>
+    <frame tileid="133" duration="70"/>
+    <frame tileid="133" duration="70"/>
+    <frame tileid="133" duration="70"/>
+    <frame tileid="283" duration="70"/>
+    <frame tileid="283" duration="70"/>
+    <frame tileid="283" duration="70"/>
+    <frame tileid="293" duration="70"/>
+    <frame tileid="293" duration="70"/>
+    <frame tileid="293" duration="70"/>
+    <frame tileid="293" duration="70"/>
+    <frame tileid="123" duration="70"/>
+    <frame tileid="293" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="124">
+   <animation>
+    <frame tileid="134" duration="70"/>
+    <frame tileid="134" duration="70"/>
+    <frame tileid="134" duration="70"/>
+    <frame tileid="284" duration="70"/>
+    <frame tileid="284" duration="70"/>
+    <frame tileid="284" duration="70"/>
+    <frame tileid="294" duration="70"/>
+    <frame tileid="294" duration="70"/>
+    <frame tileid="294" duration="70"/>
+    <frame tileid="294" duration="70"/>
+    <frame tileid="124" duration="70"/>
+    <frame tileid="294" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="125">
+   <animation>
+    <frame tileid="135" duration="70"/>
+    <frame tileid="135" duration="70"/>
+    <frame tileid="135" duration="70"/>
+    <frame tileid="285" duration="70"/>
+    <frame tileid="285" duration="70"/>
+    <frame tileid="285" duration="70"/>
+    <frame tileid="295" duration="70"/>
+    <frame tileid="295" duration="70"/>
+    <frame tileid="295" duration="70"/>
+    <frame tileid="295" duration="70"/>
+    <frame tileid="125" duration="70"/>
+    <frame tileid="295" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="128">
+   <objectgroup draworder="index" id="3">
+    <object id="2" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="129">
+   <animation>
+    <frame tileid="139" duration="70"/>
+    <frame tileid="139" duration="70"/>
+    <frame tileid="139" duration="70"/>
+    <frame tileid="289" duration="70"/>
+    <frame tileid="289" duration="70"/>
+    <frame tileid="289" duration="70"/>
+    <frame tileid="299" duration="70"/>
+    <frame tileid="299" duration="70"/>
+    <frame tileid="299" duration="70"/>
+    <frame tileid="299" duration="70"/>
+    <frame tileid="129" duration="70"/>
+    <frame tileid="299" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="140">
+   <animation>
+    <frame tileid="150" duration="70"/>
+    <frame tileid="150" duration="70"/>
+    <frame tileid="150" duration="70"/>
+    <frame tileid="300" duration="70"/>
+    <frame tileid="300" duration="70"/>
+    <frame tileid="300" duration="70"/>
+    <frame tileid="310" duration="70"/>
+    <frame tileid="310" duration="70"/>
+    <frame tileid="310" duration="70"/>
+    <frame tileid="310" duration="70"/>
+    <frame tileid="140" duration="70"/>
+    <frame tileid="310" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="141">
+   <animation>
+    <frame tileid="151" duration="70"/>
+    <frame tileid="151" duration="70"/>
+    <frame tileid="151" duration="70"/>
+    <frame tileid="301" duration="70"/>
+    <frame tileid="301" duration="70"/>
+    <frame tileid="301" duration="70"/>
+    <frame tileid="311" duration="70"/>
+    <frame tileid="311" duration="70"/>
+    <frame tileid="311" duration="70"/>
+    <frame tileid="311" duration="70"/>
+    <frame tileid="141" duration="70"/>
+    <frame tileid="311" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="144">
+   <animation>
+    <frame tileid="154" duration="70"/>
+    <frame tileid="154" duration="70"/>
+    <frame tileid="154" duration="70"/>
+    <frame tileid="304" duration="70"/>
+    <frame tileid="304" duration="70"/>
+    <frame tileid="304" duration="70"/>
+    <frame tileid="314" duration="70"/>
+    <frame tileid="314" duration="70"/>
+    <frame tileid="314" duration="70"/>
+    <frame tileid="314" duration="70"/>
+    <frame tileid="144" duration="70"/>
+    <frame tileid="314" duration="70"/>
+   </animation>
+  </tile>
+  <tile id="145">
+   <properties>
+    <property name="spikes" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="146">
+   <properties>
+    <property name="spikes" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="147">
+   <properties>
+    <property name="spikes" type="int" value="0"/>
+   </properties>
+  </tile>
+  <tile id="148">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="148" duration="24"/>
+    <frame tileid="320" duration="24"/>
+    <frame tileid="321" duration="24"/>
+    <frame tileid="322" duration="24"/>
+    <frame tileid="323" duration="24"/>
+    <frame tileid="324" duration="24"/>
+    <frame tileid="325" duration="24"/>
+    <frame tileid="326" duration="24"/>
+   </animation>
+  </tile>
+  <tile id="320">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="148" duration="24"/>
+    <frame tileid="326" duration="24"/>
+    <frame tileid="325" duration="24"/>
+    <frame tileid="324" duration="24"/>
+    <frame tileid="323" duration="24"/>
+    <frame tileid="322" duration="24"/>
+    <frame tileid="321" duration="24"/>
+    <frame tileid="320" duration="24"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer id="1" name="layer" width="29" height="30">
+  <data encoding="csv">
+1,2,3,4,5,3,4,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,23,9,1,2,1,
+6,7,3,4,10,3,4,24,25,24,25,24,25,24,25,24,26,27,25,24,25,24,25,24,8,9,6,7,6,
+1,2,3,4,5,3,4,24,25,28,29,29,29,30,25,24,26,27,25,24,25,24,25,24,8,9,1,2,1,
+6,7,3,4,41,42,43,24,28,44,10,5,10,45,30,24,26,27,25,46,47,24,28,29,42,45,41,41,41,
+1,2,48,49,22,22,50,24,61,22,22,22,22,22,50,24,61,50,25,61,50,24,61,22,22,22,22,23,21,
+41,41,42,27,25,24,25,24,25,62,63,24,25,64,64,24,25,24,25,24,25,24,25,65,66,67,25,8,9,
+22,22,22,50,25,24,25,24,25,68,69,24,25,70,81,24,25,24,25,24,25,24,25,82,83,84,25,8,9,
+25,24,25,24,25,24,25,24,25,68,69,24,25,70,81,24,25,24,25,24,25,24,25,85,86,84,25,8,9,
+25,24,25,24,25,24,25,24,25,87,88,24,25,70,81,24,25,24,25,24,25,24,67,89,90,101,25,8,9,
+29,29,29,29,29,29,29,29,30,24,24,28,102,103,102,103,29,29,29,29,29,30,101,28,29,30,25,8,9,
+7,6,7,6,7,6,7,5,27,24,24,61,22,22,22,22,22,22,22,22,22,22,23,104,26,27,25,8,9,
+2,1,2,1,2,1,2,10,27,24,24,24,25,24,25,24,25,24,25,24,25,67,8,4,26,27,25,8,9,
+7,6,7,6,7,6,7,5,27,24,24,24,25,24,28,29,29,29,29,30,25,84,8,4,26,27,25,8,9,
+2,1,2,1,2,1,2,10,27,105,105,28,29,30,44,10,5,10,5,27,25,101,61,50,26,27,25,8,9,
+7,6,7,6,7,6,7,5,27,105,105,26,10,5,10,5,10,5,10,27,25,24,25,24,26,27,25,8,9,
+2,1,2,1,2,1,2,10,27,105,105,26,5,10,5,10,5,10,5,27,67,28,30,24,26,27,25,8,9,
+23,106,22,22,22,22,22,22,50,105,105,61,22,22,22,22,22,22,23,27,101,26,27,24,61,50,25,8,9,
+3,4,24,107,24,107,24,107,24,24,24,24,107,24,107,24,107,24,8,27,25,26,27,24,25,24,25,8,9,
+42,43,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,8,27,25,26,27,24,28,30,25,8,9,
+22,50,24,24,24,108,109,24,24,24,24,24,24,108,109,24,24,24,8,27,25,26,27,24,26,27,25,8,9,
+110,110,24,62,121,122,122,123,63,65,66,62,121,122,122,123,63,24,61,50,25,61,50,24,26,27,67,8,9,
+110,110,24,68,124,125,126,124,69,5,5,68,124,125,126,124,69,24,24,24,25,24,25,24,26,27,84,8,9,
+129,47,24,87,130,141,141,142,88,89,90,87,130,141,141,142,88,24,46,129,129,129,129,47,26,27,84,8,9,
+26,27,24,24,24,143,144,24,24,24,24,24,24,143,144,24,24,24,26,27,6,7,6,7,26,27,84,8,9,
+26,27,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,26,27,1,2,1,2,26,27,84,8,9,
+26,27,24,145,24,145,24,145,146,28,30,147,145,24,145,24,145,24,26,27,6,7,6,7,26,27,84,8,9,
+26,27,148,148,321,321,321,321,321,103,102,149,149,149,149,149,148,148,26,27,1,2,1,2,26,27,84,8,9,
+26,27,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,41,26,27,6,7,6,7,26,27,84,8,9,
+26,27,6,7,6,7,6,7,6,7,6,7,6,7,6,7,6,7,26,27,1,2,1,2,26,27,84,8,9,
+26,27,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,26,27,6,7,6,7,26,27,84,8,9
+</data>
+ </layer>
+</map>

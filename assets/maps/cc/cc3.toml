@@ -1,0 +1,19 @@
+[level]
+music = "sound/cc.vgm"
+spawn = [
+	{ x=-2, y=105 },
+]
+
+[objects.static]
+level_transition = [
+	{ path="maps/cc/cc2", left=0, top=112, right=2, bottom=144 },
+]
+conveyor_belt = [
+	{ left=64, top=400, right=144, bottom=416 },
+	{ left=176, top=400, right=256, bottom=416, flip=true },
+]
+breakable_block = [
+	{ tile_x=18, tile_y=21, path="maps/cc/block1.png", particle_path="maps/cc/rock.png" },
+	{ tile_x=19, tile_y=21, path="maps/cc/block3.png", particle_path="maps/cc/rock.png" },
+]
+

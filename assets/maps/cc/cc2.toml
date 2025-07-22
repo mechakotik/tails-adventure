@@ -2,11 +2,13 @@
 music = "sound/cc.vgm"
 spawn = [
 	{ x=205, y=73 },
+	{ x=932, y=825, previous="maps/cc/cc3", flip=true },
 ]
 
 [objects.static]
 level_transition = [
 	{ path="maps/cc/cc1", left=112, top=0, right=256, bottom=48 },
+	{ path="maps/cc/cc3", left=974, top=816, right=976, bottom=864 },
 ]
 remote_robot_blocker = [
 	{ tile_x=33, tile_y=5, offset_x=-3 },
