@@ -12,6 +12,7 @@ look_up = 23
 crouch = 24
 remote_robot_idle = 41
 unpack = 73
+uncontrolled_fall = 32
 
 [animations.walk]
 frames = [3, 4, 5, 6, 1, 2]
@@ -117,3 +118,4 @@ repeat = 1
 frames = [97, 98, 99, 100]
 delay = 6
 repeat = 1
+

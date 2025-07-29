@@ -347,7 +347,12 @@ void TA_Character::setCharacterPosition(TA_Point position) {
     jump = helitail = false;
     lookUp = crouch = false;
     flip = false;
+    updateFollowPosition();
     updateAnimation();
+}
+
+void TA_Character::restoreFollowPosition() {
+    links.objectSet->getLinks().camera->setFollowPosition(&followPosition);
 }
 
 void TA_Character::setPaused(bool paused) {

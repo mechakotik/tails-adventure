@@ -1,0 +1,28 @@
+[sprite]
+image = "dr_fukurokov.png"
+width = 32
+height = 32
+
+[animations.idle]
+frames = [0, 1]
+delay = 8
+
+[animations.step]
+frames = [8, 1, 4, 1]
+delay = 6
+repeat = 1
+
+[animations.remove_platform]
+frames = [4, 5, 6]
+delay = 8
+repeat = 1
+
+[animations.control]
+frames = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 3]
+delay = 8
+
+[animations.defeated]
+frames = [4, 9]
+delay = 20
+repeat = 1
+

@@ -154,6 +154,7 @@ public:
     float getJumpTime() { return jumpTime; }
 
     void setCharacterPosition(TA_Point position);
+    void restoreFollowPosition();
 
     bool displayFlightTimeBar();
     float getFlightTime() { return helitailTime / getMaxHelitailTime(); }

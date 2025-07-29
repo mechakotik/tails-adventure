@@ -29,7 +29,7 @@ bool TA_PushableObject::update() {
     velocity.y += grv * TA::elapsedTime;
 
     // TODO: actually fix pushable objects collision
-    auto [delta, flags] = objectSet->moveAndCollide(position, TA_Point(0, 0), TA_Point(getWidth(), getHeight()),
+    auto [delta, flags] = objectSet->moveAndCollide(position, TA_Point(1, 0), TA_Point(getWidth() - 1, getHeight()),
         velocity * TA::elapsedTime, TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP, (TA::levelPath == "maps/pf/pf1"));
     position += delta;
     if(flags & TA_GROUND_COLLISION) {

@@ -41,8 +41,8 @@ level_transition = [
 map_transition = [
 	{ selection=1, top=0, bottom=240, left=0, right=2 }
 ]
-pushable_rock = [
-	{ x=1272, y=320 }
+pushable_object = [
+	{ x=1272, y=320, path="objects/rock.png" }
 ]
 pushable_spring = [
 	{ x=1768, y=384 }

@@ -11,6 +11,7 @@
 #include "objects/bridge.h"
 #include "objects/conveyor_belt.h"
 #include "objects/cruiser.h"
+#include "objects/dr_fukurokov.h"
 #include "objects/drill_mole.h"
 #include "objects/electric_barrier.h"
 #include "objects/enemy_mine.h"
@@ -198,9 +199,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         }
     }
 
-    else if(name == "pushable_rock" || name == "pushable_spring") {
-        if(name == "pushable_rock") {
-            spawnObject<TA_PushableRock>(position);
+    else if(name == "pushable_object" || name == "pushable_spring") {
+        if(name == "pushable_object") {
+            std::string path = object.at("path").as_string();
+            spawnObject<TA_PushableObject>(path, position);
         } else {
             spawnObject<TA_PushableSpring>(position);
         }
@@ -414,6 +416,17 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     else if(name == "heavy_gun") {
         bool flip = object.contains("flip") && object.at("flip").as_boolean();
         spawnObject<TA_HeavyGun>(position, flip);
+    }
+
+    else if(name == "dr_fukurokov") {
+        float startX = object.at("start_x").as_integer();
+        float startY = object.at("start_y").as_integer();
+        float controlX = object.at("control_x").as_integer();
+        float controlY = object.at("control_y").as_integer();
+        float platformX = object.at("platform_x").as_integer();
+        float platformY = object.at("platform_y").as_integer();
+        spawnObject<TA_DrFukurokov>(
+            TA_Point(startX, startY), TA_Point(controlX, controlY), TA_Point(platformX, platformY));
     }
 
     else {
