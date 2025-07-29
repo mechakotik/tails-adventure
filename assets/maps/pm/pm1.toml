@@ -8,6 +8,10 @@ spawn = [
 
 [objects.static]
 breakable_block = [
+	{ path="maps/pm/block.png", tile_x=23, tile_y=87, strong=true },
+	{ path="maps/pm/block.png", tile_x=23, tile_y=88, strong=true },
+	{ path="maps/pm/block.png", tile_x=24, tile_y=87, strong=true },
+	{ path="maps/pm/block.png", tile_x=24, tile_y=88, strong=true },
 	{ path="maps/pm/block.png", drops_ring=true, tile_x=3, tile_y=100 },
 	{ path="maps/pm/block.png", drops_ring=true, tile_x=3, tile_y=101 },
 	{ path="maps/pm/block.png", drops_ring=true, tile_x=3, tile_y=102 },
