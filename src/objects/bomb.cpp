@@ -65,9 +65,9 @@ bool TA_Bomb::update() {
             }
         }
 
-        auto [delta, moveFlags] =
-            objectSet->moveAndCollide(position, topLeft, bottomRight, (velocity + velocityAdd) * TA::elapsedTime,
-                TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE, ground);
+        auto [delta, moveFlags] = objectSet->moveAndCollide(position, topLeft, bottomRight,
+            (velocity + velocityAdd) * TA::elapsedTime,
+            TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE | TA_COLLISION_MOVING_PLATFORM, ground);
         position += delta;
 
         if(moveFlags & TA_GROUND_COLLISION) {
@@ -97,7 +97,8 @@ bool TA_Bomb::shouldExplode() {
     hitbox.setPosition(position);
     int flags = objectSet->checkCollision(hitbox);
 
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_TARGET | TA_COLLISION_PUSHABLE |
+                   TA_COLLISION_MOVING_PLATFORM)) {
         return true;
     }
     return false;
@@ -166,7 +167,7 @@ bool TA_NapalmBomb::shouldExplode() {
     hitbox.setPosition(position);
     int flags = objectSet->checkCollision(hitbox);
 
-    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE)) {
+    if(flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE | TA_COLLISION_MOVING_PLATFORM)) {
         return true;
     }
     return false;

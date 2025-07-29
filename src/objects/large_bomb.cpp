@@ -2,6 +2,7 @@
 #include "explosion.h"
 #include "gamepad.h"
 #include "object_set.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_LargeBomb::load(TA_Point position) {
@@ -19,7 +20,7 @@ void TA_LargeBomb::load(TA_Point position) {
 bool TA_LargeBomb::update() {
     velocity.y += gravity * TA::elapsedTime;
     auto [delta, flags] = objectSet->moveAndCollide(position, {4, 4}, {12, 16}, velocity * TA::elapsedTime,
-        TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE);
+        TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_PUSHABLE | TA_COLLISION_MOVING_PLATFORM);
 
     position += delta;
     updatePosition();
