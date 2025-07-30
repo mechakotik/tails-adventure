@@ -12,6 +12,7 @@ void TA_GameScreen::init() {
 
     isSeaFox = (mode != "ground");
     isSeaFoxGround = (mode == "seafox_ground");
+    isSeaFoxFly = (mode == "seafox_fly");
 
     if(isSeaFox) {
         links.seaFox = &seaFox;
@@ -32,6 +33,8 @@ void TA_GameScreen::init() {
         seaFox.load(links);
         if(mode == "seafox_ground") {
             seaFox.setGroundMode();
+        } else if(mode == "seafox_fly") {
+            seaFox.setFlyMode();
         }
     } else {
         character.load(links);
@@ -68,7 +71,7 @@ TA_ScreenState TA_GameScreen::update() {
 
         if(isSeaFox) {
             seaFox.update();
-            camera.update(!isSeaFoxGround, false);
+            camera.update(!isSeaFoxGround && !isSeaFoxFly, false);
         } else {
             character.update();
             camera.update(character.isOnGround(), character.isFastCamera());

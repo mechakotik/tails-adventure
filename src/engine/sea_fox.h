@@ -19,6 +19,7 @@ private:
     static constexpr float verticalDrag = 1.0F / 32;
     static constexpr float horizontalDrag = 1.0F / 196;
     static constexpr float inputDrag = 1.0F / 20;
+    static constexpr float airDrag = 1.0F / 12;
     static constexpr float vulcanGunTime = 27;
     static constexpr float vulcanGunInterval = 5;
     static constexpr float invincibleTime = 120;
@@ -34,6 +35,8 @@ private:
     static constexpr float extraSpeedAddTime = 40;
     static constexpr float extraSpeedAddYSpeed = -3.25;
     static constexpr float sparklePeriod = 6;
+    static constexpr float flyXSpeed = 2;
+    static constexpr float flyYSpeed = 1.5;
 
     void physicsStep();
     void updateDirection();
@@ -60,6 +63,8 @@ private:
     float deadTimer = 0;
 
     bool groundMode = false;
+    bool flyMode = false;
+
     bool ground = false;
     float jumpSpeed = 0;
     bool jump = false;
@@ -79,6 +84,7 @@ public:
 
     void setSpawnPoint(TA_Point position, bool flip);
     void setGroundMode() { groundMode = true; }
+    void setFlyMode() { flyMode = true; }
     void setVelocityAdd(TA_Point add) { velocityAdd = add; }
     void setHide(bool hidden);
     TA_Rect* getHitbox() { return &hitbox; }

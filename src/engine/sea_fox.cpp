@@ -1,4 +1,5 @@
 #include "sea_fox.h"
+#include <cinttypes>
 #include "anti_air_missile.h"
 #include "bullet.h"
 #include "controller.h"
@@ -70,16 +71,26 @@ void TA_SeaFox::physicsStep() {
     float waterLevel = links.objectSet->getWaterLevel();
     bool underwater = (position.y + 30 > waterLevel);
 
-    if(links.controller->getDirection() != TA_DIRECTION_MAX) {
-        TA_Point vector = links.controller->getDirectionVector();
-        updateSpeed(velocity.x, vector.x + (vector.x > 0 && extraSpeed ? 1.0F : 0.0F), inputDrag);
-        if(underwater) {
-            updateSpeed(velocity.y, vector.y, inputDrag);
+    if(flyMode) {
+        updateSpeed(velocity.x, (flip ? -1 : 1) * flyXSpeed, inputDrag);
+        if(links.controller->getDirection() != TA_DIRECTION_MAX) {
+            TA_Point vector = links.controller->getDirectionVector();
+            updateSpeed(velocity.y, vector.y * flyYSpeed, airDrag);
+        } else {
+            updateSpeed(velocity.y, 0, airDrag);
         }
     } else {
-        updateSpeed(velocity.x, 0, (groundMode ? inputDrag : horizontalDrag));
-        if(underwater) {
-            updateSpeed(velocity.y, 0, (groundMode ? inputDrag : verticalDrag));
+        if(links.controller->getDirection() != TA_DIRECTION_MAX) {
+            TA_Point vector = links.controller->getDirectionVector();
+            updateSpeed(velocity.x, vector.x + (vector.x > 0 && extraSpeed ? 1.0F : 0.0F), inputDrag);
+            if(underwater) {
+                updateSpeed(velocity.y, vector.y, inputDrag);
+            }
+        } else {
+            updateSpeed(velocity.x, 0, (groundMode ? inputDrag : horizontalDrag));
+            if(underwater) {
+                updateSpeed(velocity.y, 0, (groundMode ? inputDrag : verticalDrag));
+            }
         }
     }
 
@@ -162,9 +173,24 @@ void TA_SeaFox::updateDirection() {
             setAnimation("idle");
             flip = neededFlip;
         }
-    } else if(links.controller->isJustPressed(TA_BUTTON_A) && !groundMode) {
+        return;
+    }
+    if(links.controller->isJustPressed(TA_BUTTON_A) && !groundMode && !flyMode) {
         setAnimation("rotate");
         neededFlip = !flip;
+        return;
+    }
+    if(flyMode) {
+        if(!flip && links.controller->getDirection() == TA_DIRECTION_LEFT) {
+            setAnimation("rotate");
+            neededFlip = true;
+            return;
+        }
+        if(flip && links.controller->getDirection() == TA_DIRECTION_RIGHT) {
+            setAnimation("rotate");
+            neededFlip = false;
+            return;
+        }
     }
 }
 
@@ -242,7 +268,7 @@ void TA_SeaFox::updateVulcanGun() {
 
     if(prev != cur) {
         TA_Point bulletPosition = position + TA_Point((flip ? 0 : 26), 20);
-        TA_Point bulletVelocity = TA_Point((flip ? -5 : 5), 0);
+        TA_Point bulletVelocity = TA_Point((flip ? -4 : 4) + velocity.x, 0);
         links.objectSet->spawnObject<TA_VulcanGunBullet>(bulletPosition, bulletVelocity);
         bulletSound.play();
     }

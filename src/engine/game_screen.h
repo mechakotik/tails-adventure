@@ -26,6 +26,7 @@ private:
     std::string mode;
     bool isSeaFox = false;
     bool isSeaFoxGround = false;
+    bool isSeaFoxFly = false;
     float timer = 0;
 
 public:
