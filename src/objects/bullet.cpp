@@ -89,3 +89,14 @@ void TA_HeavyGunBullet::onDestroy() {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(5, 6), 0, TA_EXPLOSION_ENEMY);
     }
 }
+
+void TA_PilotBullet::load(TA_Point position, TA_Point velocity) {
+    TA_Bullet::load("objects/pilot_bullet.toml", position, velocity);
+    setAnimation("bullet");
+}
+
+void TA_PilotBullet::onDestroy() {
+    if((objectSet->checkCollision(hitbox) & TA_COLLISION_CHARACTER) != 0) {
+        objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 4), 0, TA_EXPLOSION_ENEMY);
+    }
+}

@@ -9,7 +9,7 @@ delay = 12
 
 [animations.look]
 frames = [2, 3]
-repeat = 2
+repeat = 1
 delay = 12
 
 [animations.dive]

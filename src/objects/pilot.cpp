@@ -1,4 +1,5 @@
 #include "pilot.h"
+#include "bullet.h"
 #include "dead_kukku.h"
 #include "sea_fox.h"
 #include "tilemap.h"
@@ -57,7 +58,19 @@ void TA_Pilot::load(TA_Point offset) {
 }
 
 bool TA_Pilot::update() {
-    ysp = std::max(minYSpeed, ysp - gravity * TA::elapsedTime);
+    if(!isAnimated()) {
+        setAnimation("fly");
+    }
+
+    float newYsp = std::max(minYSpeed, ysp - gravity * TA::elapsedTime);
+    if(ysp >= 0.4F && newYsp < 0.4F) {
+        objectSet->spawnObject<TA_PilotBullet>(position + TA_Point(flip ? 22 : -6, 24), TA_Point(flip ? 2 : -2, 0));
+    }
+    if(ysp >= -0.2F && newYsp < -0.2F) {
+        setAnimation("look");
+    }
+    ysp = newYsp;
+
     position.x += (flip ? 1.0F : -1.0F) * TA::elapsedTime;
     position.y += ysp * TA::elapsedTime;
     updatePosition();
@@ -124,10 +137,13 @@ bool TA_DivingPilot::update() {
 
 void TA_DivingPilot::updateDive() {
     static constexpr float diveTime = 60;
+    static constexpr float fireTime = 30;
 
     position += TA_Point(flip ? 0.5 : -0.5, 1) * TA::elapsedTime;
+    if(timer < fireTime && timer + TA::elapsedTime >= fireTime) {
+        objectSet->spawnObject<TA_PilotBullet>(position + TA_Point(flip ? 18 : -2, 21), TA_Point(flip ? 1 : -1, 2));
+    }
     timer += TA::elapsedTime;
-
     if(timer > diveTime) {
         timer = 0;
         state = State::TURN_BACK;

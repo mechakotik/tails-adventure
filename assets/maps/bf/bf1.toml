@@ -3,7 +3,7 @@ music = "sound/lc.vgm"
 mode = "seafox_fly"
 borders = { top=true, bottom=true, left=true, right=true }
 spawn = [
-	{ x=0, y=0 },
+	{ x=0, y=90 },
 ]
 
 [objects.static]

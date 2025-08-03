@@ -1,0 +1,10 @@
+[sprite]
+image = "pilot_bullet.png"
+width = 8
+height = 8
+
+[animations.bullet]
+frames = [0, 1, 2]
+delay = 6
+repeat = 1
+
