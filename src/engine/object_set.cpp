@@ -43,6 +43,7 @@
 #include "objects/walker.h"
 #include "objects/wind.h"
 #include "objects/wood.h"
+#include "pilot.h"
 #include "resource_manager.h"
 #include "save.h"
 #include "sea_fox.h"
@@ -427,6 +428,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         float platformY = object.at("platform_y").as_integer();
         spawnObject<TA_DrFukurokov>(
             TA_Point(startX, startY), TA_Point(controlX, controlY), TA_Point(platformX, platformY));
+    }
+
+    else if(name == "pilot_spawner") {
+        spawnObject<TA_PilotSpawner>();
     }
 
     else {

@@ -1,0 +1,26 @@
+[sprite]
+image = "pilot.png"
+width = 24
+height = 32
+
+[animations.fly]
+frames = [0, 1]
+delay = 12
+
+[animations.look]
+frames = [2, 3]
+repeat = 2
+delay = 12
+
+[animations.dive]
+frames = [4, 5]
+delay = 12
+
+[animations.turn_back]
+frames = [8]
+delay = 12
+repeat = 1
+
+[animations.fly_back]
+frames = [6, 7]
+delay = 12

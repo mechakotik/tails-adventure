@@ -6,3 +6,8 @@ spawn = [
 	{ x=0, y=0 },
 ]
 
+[objects.static]
+pilot_spawner = [
+	{},
+]
+
