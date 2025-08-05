@@ -1,10 +1,10 @@
 #include "dr_fukurokov.h"
 #include "sound.h"
 
-void TA_DrFukurokov::load(TA_Point startPosition, TA_Point controlPosition, TA_Point platformPosition) {
+void TA_DrFukurokov::load(const Properties& properties) {
     loadFromToml("objects/dr_fukurokov.toml");
-    this->startPosition = startPosition;
-    this->controlPosition = controlPosition;
+    this->startPosition = properties.startPosition;
+    this->controlPosition = properties.controlPosition;
 
     position = startPosition;
     setPosition(position);
@@ -24,7 +24,7 @@ void TA_DrFukurokov::load(TA_Point startPosition, TA_Point controlPosition, TA_P
     objectSet->getLinks().character->setHide(true);
 
     platformSprite.loadFromToml("objects/dr_fukurokov_platform.toml");
-    platformSprite.setPosition(platformPosition);
+    platformSprite.setPosition(properties.platformPosition);
     platformSprite.setCamera(objectSet->getLinks().camera);
 }
 

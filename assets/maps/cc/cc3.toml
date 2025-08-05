@@ -17,9 +17,22 @@ breakable_block = [
 	{ tile_x=19, tile_y=21, path="maps/cc/block3.png", particle_path="maps/cc/rock.png" },
 ]
 pushable_object = [
-    { tile_x=20, tile_y=2, offset_x=1, path="objects/weight.png" },
+	{ tile_x=20, tile_y=2, offset_x=1, path="objects/weight.png" },
 ]
-dr_fukurokov = [
-	{ start_x=182, start_y=112, control_x=320, control_y=112, platform_x=144, platform_y=144 },
-]
+
+[[objects.static.dr_fukurokov]]
+start_x = 182
+start_y = 112
+control_x = 320
+control_y = 112
+platform_x = 144
+platform_y = 144
+first_gun_lx = 0
+first_gun_rx = 0
+first_gun_y = 0
+second_gun_lx = 0
+second_gun_rx = 0
+second_gun_y = 0
+exit_blocker_x = 0
+exit_blocker_y = 0
 

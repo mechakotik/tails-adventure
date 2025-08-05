@@ -2,8 +2,21 @@
 
 class TA_DrFukurokov : public TA_Object {
 public:
+    struct Properties {
+        TA_Point startPosition;
+        TA_Point controlPosition;
+        TA_Point platformPosition;
+        TA_Point exitBlockerPosition;
+        float firstGunLeftX;
+        float firstGunRightX;
+        float firstGunY;
+        float secondGunLeftX;
+        float secondGunRightX;
+        float secondGunY;
+    };
+
     using TA_Object::TA_Object;
-    void load(TA_Point startPosition, TA_Point controlPosition, TA_Point platformPosition);
+    void load(const Properties& properties);
     bool update() override;
     void draw() override;
 

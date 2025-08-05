@@ -420,14 +420,22 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "dr_fukurokov") {
-        float startX = object.at("start_x").as_integer();
-        float startY = object.at("start_y").as_integer();
-        float controlX = object.at("control_x").as_integer();
-        float controlY = object.at("control_y").as_integer();
-        float platformX = object.at("platform_x").as_integer();
-        float platformY = object.at("platform_y").as_integer();
-        spawnObject<TA_DrFukurokov>(
-            TA_Point(startX, startY), TA_Point(controlX, controlY), TA_Point(platformX, platformY));
+        TA_DrFukurokov::Properties properties;
+        properties.startPosition.x = object.at("start_x").as_integer();
+        properties.startPosition.y = object.at("start_y").as_integer();
+        properties.controlPosition.x = object.at("control_x").as_integer();
+        properties.controlPosition.y = object.at("control_y").as_integer();
+        properties.platformPosition.x = object.at("platform_x").as_integer();
+        properties.platformPosition.y = object.at("platform_y").as_integer();
+        properties.firstGunLeftX = object.at("first_gun_lx").as_integer();
+        properties.firstGunRightX = object.at("first_gun_rx").as_integer();
+        properties.firstGunY = object.at("first_gun_y").as_integer();
+        properties.secondGunLeftX = object.at("second_gun_lx").as_integer();
+        properties.secondGunRightX = object.at("second_gun_rx").as_integer();
+        properties.secondGunY = object.at("second_gun_y").as_integer();
+        properties.exitBlockerPosition.x = object.at("exit_blocker_x").as_integer();
+        properties.exitBlockerPosition.y = object.at("exit_blocker_y").as_integer();
+        spawnObject<TA_DrFukurokov>(properties);
     }
 
     else if(name == "pilot_spawner") {
