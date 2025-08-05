@@ -1,4 +1,5 @@
 #include "dr_fukurokov.h"
+#include "bullet.h"
 #include "sound.h"
 
 void TA_DrFukurokov::load(const Properties& properties) {
@@ -26,6 +27,17 @@ void TA_DrFukurokov::load(const Properties& properties) {
     platformSprite.loadFromToml("objects/dr_fukurokov_platform.toml");
     platformSprite.setPosition(properties.platformPosition);
     platformSprite.setCamera(objectSet->getLinks().camera);
+
+    firstGun.sprite.loadFromToml("objects/dr_fukurokov_gun.toml");
+    firstGun.sprite.setCamera(objectSet->getLinks().camera);
+    firstGun.leftX = properties.firstGunLeftX;
+    firstGun.rightX = properties.firstGunRightX;
+    firstGun.position = {properties.firstGunLeftX, properties.firstGunY};
+    secondGun.sprite.loadFromToml("objects/dr_fukurokov_gun.toml");
+    secondGun.sprite.setCamera(objectSet->getLinks().camera);
+    secondGun.leftX = properties.secondGunLeftX;
+    secondGun.rightX = properties.secondGunRightX;
+    secondGun.position = {properties.secondGunLeftX, properties.secondGunY};
 }
 
 bool TA_DrFukurokov::update() {
@@ -47,6 +59,11 @@ bool TA_DrFukurokov::update() {
             break;
         default:
             break;
+    }
+
+    if(state != State::DEFEATED) {
+        updateGun(firstGun);
+        updateGun(secondGun);
     }
 
     followPosition = mockPosition + TA_Point(22 - TA::screenWidth / 2, 26 - TA::screenHeight / 2);
@@ -129,8 +146,38 @@ void TA_DrFukurokov::updateControl() {
     }
 }
 
+void TA_DrFukurokov::updateGun(Gun& gun) {
+    static constexpr float cooldown = 120;
+
+    if(gun.flip) {
+        gun.position.x -= TA::elapsedTime;
+        if(gun.position.x < gun.leftX) {
+            gun.position.x = gun.leftX;
+            gun.flip = false;
+        }
+    } else {
+        gun.position.x += TA::elapsedTime;
+        if(gun.position.x > gun.rightX) {
+            gun.position.x = gun.rightX;
+            gun.flip = true;
+        }
+    }
+
+    gun.sprite.setPosition(gun.position);
+    gun.timer += TA::elapsedTime;
+    if(gun.timer > cooldown) {
+        objectSet->spawnObject<TA_DrFukurokovLazer>(gun.position + TA_Point(2, 12), TA_Point(0, 3));
+        gun.timer = 0;
+    }
+}
+
 void TA_DrFukurokov::draw() {
     TA_Sprite::draw();
     characterMock.draw();
     platformSprite.draw();
+
+    if(state != State::DEFEATED) {
+        firstGun.sprite.draw();
+        secondGun.sprite.draw();
+    }
 }

@@ -100,3 +100,11 @@ void TA_PilotBullet::onDestroy() {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 4), 0, TA_EXPLOSION_ENEMY);
     }
 }
+
+void TA_DrFukurokovLazer::load(TA_Point position, TA_Point velocity) {
+    TA_Bullet::load("objects/dr_fukurokov_lazer.toml", position, velocity);
+}
+
+void TA_DrFukurokovLazer::onDestroy() {
+    objectSet->spawnObject<TA_Explosion>(position - TA_Point(7, 0), 0, TA_EXPLOSION_ENEMY);
+}

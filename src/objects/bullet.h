@@ -2,6 +2,7 @@
 #define TA_BULLET_H
 
 #include "object_set.h"
+#include "tilemap.h"
 
 class TA_Bullet : public TA_Object {
 private:
@@ -64,6 +65,17 @@ private:
 };
 
 class TA_PilotBullet : public TA_Bullet {
+public:
+    using TA_Bullet::TA_Bullet;
+    void load(TA_Point position, TA_Point velocity);
+    void onDestroy() override;
+    int getCollisionFlags() override { return TA_COLLISION_SOLID | TA_COLLISION_CHARACTER; }
+
+private:
+    TA_Sound explosionSound;
+};
+
+class TA_DrFukurokovLazer : public TA_Bullet {
 public:
     using TA_Bullet::TA_Bullet;
     void load(TA_Point position, TA_Point velocity);

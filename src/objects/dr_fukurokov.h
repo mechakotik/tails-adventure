@@ -23,11 +23,21 @@ public:
 private:
     enum class State { WAIT_CHARACTER, STEP, REMOVE_PLATFORM, CHARACTER_FALL, CONTROL, DEFEATED };
 
+    struct Gun {
+        TA_Sprite sprite;
+        TA_Point position;
+        float leftX;
+        float rightX;
+        bool flip = false;
+        float timer = 0;
+    };
+
     void updateWaitCharacter();
     void updateStep();
     void updateRemovePlatform();
     void updateCharacterFall();
     void updateControl();
+    void updateGun(Gun& gun);
 
     State state = State::WAIT_CHARACTER;
     TA_Point startPosition, controlPosition;
@@ -41,4 +51,7 @@ private:
     float mockYSpeed = 0;
 
     TA_Sprite platformSprite;
+
+    Gun firstGun;
+    Gun secondGun;
 };
