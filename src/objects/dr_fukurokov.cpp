@@ -1,6 +1,7 @@
 #include "dr_fukurokov.h"
 #include "bullet.h"
 #include "sound.h"
+#include "tilemap.h"
 
 void TA_DrFukurokov::load(const Properties& properties) {
     loadFromToml("objects/dr_fukurokov.toml");
@@ -38,6 +39,13 @@ void TA_DrFukurokov::load(const Properties& properties) {
     secondGun.leftX = properties.secondGunLeftX;
     secondGun.rightX = properties.secondGunRightX;
     secondGun.position = {properties.secondGunLeftX, properties.secondGunY};
+
+    exitBlockerSprite.loadFromToml("objects/dr_fukurokov_exit_blocker.toml");
+    exitBlockerSprite.setPosition(properties.exitBlockerPosition);
+    exitBlockerSprite.setCamera(objectSet->getLinks().camera);
+    hitbox.setRectangle({0, 0}, {exitBlockerSprite.getWidth(), exitBlockerSprite.getHeight()});
+    hitbox.setPosition(properties.exitBlockerPosition);
+    collisionType = TA_COLLISION_SOLID;
 }
 
 bool TA_DrFukurokov::update() {
@@ -131,17 +139,18 @@ void TA_DrFukurokov::updateCharacterFall() {
 
         position = controlPosition;
         setPosition(position);
-        hitbox.setRectangle({0, 16}, {32, 32});
-        hitbox.setPosition(position);
+        controlHitbox.setRectangle({0, 16}, {32, 32});
+        controlHitbox.setPosition(position);
         setAnimation("control");
         state = State::CONTROL;
     }
 }
 
 void TA_DrFukurokov::updateControl() {
-    if((objectSet->checkCollision(hitbox) & TA_COLLISION_PUSHABLE) != 0) {
+    if((objectSet->checkCollision(controlHitbox) & TA_COLLISION_PUSHABLE) != 0) {
         TA::sound::playMusic("sound/cc.vgm");
         setAnimation("defeated");
+        collisionType = TA_COLLISION_TRANSPARENT;
         state = State::DEFEATED;
     }
 }
@@ -179,5 +188,6 @@ void TA_DrFukurokov::draw() {
     if(state != State::DEFEATED) {
         firstGun.sprite.draw();
         secondGun.sprite.draw();
+        exitBlockerSprite.draw();
     }
 }

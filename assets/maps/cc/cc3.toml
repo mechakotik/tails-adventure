@@ -19,6 +19,9 @@ breakable_block = [
 pushable_object = [
 	{ tile_x=20, tile_y=2, offset_x=1, path="objects/weight.png" },
 ]
+map_transition = [
+	{ selection=8, left=0, top=320, right=2, bottom=352 },
+]
 
 [[objects.static.dr_fukurokov]]
 start_x = 182
@@ -34,5 +37,5 @@ second_gun_lx = 180
 second_gun_rx = 277
 second_gun_y = 272
 exit_blocker_x = 0
-exit_blocker_y = 0
+exit_blocker_y = 320
 

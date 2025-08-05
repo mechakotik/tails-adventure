@@ -41,6 +41,7 @@ private:
 
     State state = State::WAIT_CHARACTER;
     TA_Point startPosition, controlPosition;
+    TA_Rect controlHitbox;
 
     TA_Sound drFukurokovSound;
     TA_Sound quickFallSound;
@@ -54,4 +55,6 @@ private:
 
     Gun firstGun;
     Gun secondGun;
+
+    TA_Sprite exitBlockerSprite;
 };
