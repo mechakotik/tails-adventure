@@ -1,0 +1,13 @@
+[level]
+music = "sound/lc.vgm"
+mode = "seafox"
+borders = { top=true, bottom=true, left=true, right=true }
+spawn = [
+	{ x=240, y=3024 },
+]
+
+[objects.static]
+land_cutscene = [
+	{ x=200, y=114, land_y=73, selection=8 },
+]
+

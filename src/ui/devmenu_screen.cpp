@@ -37,6 +37,7 @@ void TA_DevmenuScreen::init() {
     levels.emplace_back("maps/cc/cc2");
     levels.emplace_back("maps/cc/cc3");
     levels.emplace_back("maps/bf/bf1");
+    levels.emplace_back("maps/bf/bf2");
     normalFont.loadFont("fonts/devmenu.toml");
     selectedFont.loadFont("fonts/devmenu_selected.toml");
 }

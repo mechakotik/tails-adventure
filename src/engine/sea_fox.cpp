@@ -1,5 +1,4 @@
 #include "sea_fox.h"
-#include <cinttypes>
 #include "anti_air_missile.h"
 #include "bullet.h"
 #include "controller.h"
