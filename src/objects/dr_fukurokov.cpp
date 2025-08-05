@@ -4,7 +4,7 @@
 #include "tilemap.h"
 
 void TA_DrFukurokov::load(const Properties& properties) {
-    loadFromToml("objects/dr_fukurokov.toml");
+    loadFromToml("objects/dr_fukurokov/dr_fukurokov.toml");
     this->startPosition = properties.startPosition;
     this->controlPosition = properties.controlPosition;
 
@@ -25,22 +25,22 @@ void TA_DrFukurokov::load(const Properties& properties) {
     characterMock.setCamera(objectSet->getLinks().camera);
     objectSet->getLinks().character->setHide(true);
 
-    platformSprite.loadFromToml("objects/dr_fukurokov_platform.toml");
+    platformSprite.loadFromToml("objects/dr_fukurokov/platform.toml");
     platformSprite.setPosition(properties.platformPosition);
     platformSprite.setCamera(objectSet->getLinks().camera);
 
-    firstGun.sprite.loadFromToml("objects/dr_fukurokov_gun.toml");
+    firstGun.sprite.loadFromToml("objects/dr_fukurokov/gun.toml");
     firstGun.sprite.setCamera(objectSet->getLinks().camera);
     firstGun.leftX = properties.firstGunLeftX;
     firstGun.rightX = properties.firstGunRightX;
     firstGun.position = {properties.firstGunLeftX, properties.firstGunY};
-    secondGun.sprite.loadFromToml("objects/dr_fukurokov_gun.toml");
+    secondGun.sprite.loadFromToml("objects/dr_fukurokov/gun.toml");
     secondGun.sprite.setCamera(objectSet->getLinks().camera);
     secondGun.leftX = properties.secondGunLeftX;
     secondGun.rightX = properties.secondGunRightX;
     secondGun.position = {properties.secondGunLeftX, properties.secondGunY};
 
-    exitBlockerSprite.loadFromToml("objects/dr_fukurokov_exit_blocker.toml");
+    exitBlockerSprite.loadFromToml("objects/dr_fukurokov/exit_blocker.toml");
     exitBlockerSprite.setPosition(properties.exitBlockerPosition);
     exitBlockerSprite.setCamera(objectSet->getLinks().camera);
     hitbox.setRectangle({0, 0}, {exitBlockerSprite.getWidth(), exitBlockerSprite.getHeight()});
