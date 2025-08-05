@@ -22,7 +22,7 @@ void TA_HitboxContainer::add(const TA_Rect& hitbox, int type) {
     int right = static_cast<int>(bottomRight.x / chunkSize);
     int bottom = static_cast<int>(bottomRight.y / chunkSize);
 
-    if(0 <= top && bottom < size && 0 <= left && right < size && right - left <= 1 && bottom - top <= 1) {
+    if(0 <= top && bottom < sizeChunks && 0 <= left && right < sizeChunks && right - left <= 1 && bottom - top <= 1) {
         addToChunk(chunks[top][left]);
         if(right != left) {
             addToChunk(chunks[top][right]);
@@ -51,14 +51,17 @@ int TA_HitboxContainer::getCollisionFlags(const TA_Rect& hitbox) {
     };
 
     auto processChunkAt = [&](int x, int y) {
-        if(0 <= x && x < (int)chunks.size() && 0 <= y && y <= (int)chunks[x].size()) {
+        if(0 <= x && x < sizeChunks && 0 <= y && y < sizeChunks) {
             processChunk(chunks[x][y]);
         }
     };
 
-    TA_Point topLeft = hitbox.getTopLeft(), bottomRight = hitbox.getBottomRight();
-    int left = topLeft.x / chunkSize, top = topLeft.y / chunkSize, right = bottomRight.x / chunkSize,
-        bottom = bottomRight.y / chunkSize;
+    TA_Point topLeft = hitbox.getTopLeft();
+    TA_Point bottomRight = hitbox.getBottomRight();
+    int left = topLeft.x / chunkSize;
+    int top = topLeft.y / chunkSize;
+    int right = bottomRight.x / chunkSize;
+    int bottom = bottomRight.y / chunkSize;
 
     processChunk(commonChunk);
     processChunkAt(top, left);
