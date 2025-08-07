@@ -15,6 +15,9 @@ void TA_Camera::setFollowPosition(TA_Point* newFollowPosition) {
 }
 
 void TA_Camera::setLockPosition(TA_Point newLockPosition) {
+    if(locked && TA::equal(lockPosition.x, newLockPosition.x) && TA::equal(lockPosition.y, newLockPosition.y)) {
+        return;
+    }
     lockPosition = newLockPosition;
     locked = true;
     lockedX = lockedY = false;

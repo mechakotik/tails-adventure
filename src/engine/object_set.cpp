@@ -25,6 +25,7 @@
 #include "objects/land_cutscene.h"
 #include "objects/little_kukku.h"
 #include "objects/mecha_golem.h"
+#include "objects/mecha_golem_mk2.h"
 #include "objects/mine.h"
 #include "objects/mine_launcher.h"
 #include "objects/mini_sub.h"
@@ -440,6 +441,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "pilot_spawner") {
         spawnObject<TA_PilotSpawner>();
+    }
+
+    else if(name == "mecha_golem_mk2") {
+        spawnObject<TA_MechaGolemMk2>(position);
     }
 
     else {

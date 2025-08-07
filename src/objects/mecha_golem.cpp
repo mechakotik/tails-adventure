@@ -515,7 +515,7 @@ void TA_MechaGolem::draw() {
     }
 
     headFlashSprite.setPosition(headSprite.getPosition());
-    headFlashSprite.setFrame(headSprite.getCurrentFrame() + 5);
+    headFlashSprite.setFrame(headSprite.getCurrentFrame() + 6);
 
     bodySprite.draw();
     if(!(state == STATE_WAIT_ITEM || (state == STATE_DEFEATED && timer > defeatedTime * 2 / 3))) {

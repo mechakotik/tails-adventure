@@ -1,15 +1,18 @@
 [level]
 music = "sound/vt.vgm"
 spawn = [
-	{ x=92, y=57 }
+	{ x=92, y=57 },
 ]
 
 [objects.static]
+mecha_golem_mk2 = [
+	{ tile_x=9, tile_y=41 },
+]
 level_transition = [
-	{ path="maps/vt/vt2", left=96, top=48, right=98, bottom=96 }
+	{ path="maps/vt/vt2", left=96, top=48, right=98, bottom=96 },
 ]
 map_transition = [
-	{ selection=2, left=64, top=496, right=66, bottom=544 }
+	{ selection=2, left=64, top=496, right=66, bottom=544 },
 ]
 breakable_block = [
 	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=14, tile_y=17 },
@@ -53,9 +56,6 @@ breakable_block = [
 	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=11, tile_y=48 },
 	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=12, tile_y=47 },
 	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=12, tile_y=48 },
-	
-	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=7, tile_y=41 },
-	{ path="maps/vt/block2.png", particle_path="maps/vt/rock.png", tile_x=8, tile_y=41 },
 ]
 bridge = [
 	{ path="maps/vt/bridge.png", particle_path="maps/vt/rock.png", leftx=96, rightx=143, y=320 },

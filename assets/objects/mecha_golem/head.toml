@@ -6,6 +6,7 @@ height = 32
 [animations]
 idle = 0
 idle2 = 1
+mk2_idle = 5
 defeated = 2
 
 [animations.laugh]
