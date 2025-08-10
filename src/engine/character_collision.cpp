@@ -153,9 +153,13 @@ void TA_Character::updateCollisions() {
 
             if(TA::save::getParameter("ring_drop")) {
                 dropRings();
-                links.objectSet->addRings(-4);
+                if(!debugMode) {
+                    links.objectSet->addRings(-4);
+                }
             } else {
-                links.objectSet->addRings(-2);
+                if(!debugMode) {
+                    links.objectSet->addRings(-2);
+                }
             }
         };
 
