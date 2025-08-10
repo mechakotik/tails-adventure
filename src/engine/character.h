@@ -102,6 +102,9 @@ private:
     float nightVisionTimer = 0;
     bool usingNightVision = false;
 
+    bool debugMode = false;
+    bool noclip = false;
+
     void physicsStep();
     void updateGround();
     void updateAir();
@@ -164,7 +167,7 @@ public:
     bool isOnCeiling() { return ceiling; }
     bool isTeleported();
     bool isUsingHammer() { return state == STATE_HAMMER; }
-    bool isFastCamera() { return spring || strongWind || usingSpeedBoots || conveyorBelt; }
+    bool isFastCamera() { return spring || strongWind || usingSpeedBoots || conveyorBelt || noclip; }
     bool isInWater() { return water; }
     bool isNightVisionApplied() { return nightVisionTimer > 0; }
     bool isGettingItem() {

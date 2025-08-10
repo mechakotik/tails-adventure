@@ -27,6 +27,8 @@ void TA_Character::load(TA_Links newLinks) {
     remoteRobotControlSprite.setAnimation("control_remote_robot");
     remoteRobotControlSprite.setCamera(links.camera);
     rings = TA::save::getSaveParameter("rings");
+
+    debugMode = TA::arguments.contains("--debug");
 }
 
 void TA_Character::handleInput() {
@@ -34,6 +36,18 @@ void TA_Character::handleInput() {
     hidden = nextFrameHidden;
     if(hidden) {
         return;
+    }
+
+    if(debugMode) {
+        if(TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_X)) {
+            noclip = !noclip;
+        }
+        if(noclip) {
+            position += links.controller->getDirectionVector() * TA::elapsedTime * 5;
+            setPosition(position);
+            updateFollowPosition();
+            return;
+        }
     }
 
     if(state == STATE_THROW_BOMB || state == STATE_HAMMER) {
@@ -55,7 +69,7 @@ void TA_Character::handleInput() {
 
 void TA_Character::update() {
     rings = TA::save::getSaveParameter("rings");
-    if(hidden) {
+    if(hidden || noclip) {
         return;
     }
 
