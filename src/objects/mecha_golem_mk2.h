@@ -11,10 +11,7 @@ public:
     void draw() override;
 
 private:
-    enum class State : uint8_t {
-        WAIT,
-        IDLE,
-    };
+    enum class State : uint8_t { WAIT, IDLE, PHASE_CHANGE, BLOW, DEFEATED };
 
     enum Hitbox : uint8_t {
         HITBOX_BODY,
@@ -22,13 +19,36 @@ private:
         HITBOX_MAX,
     };
 
+    static constexpr float invincibleTime = 30;
+    static constexpr float damageFlashTime = 5;
+    static constexpr float phaseChangeTime = 120;
+    static constexpr float phaseChangeExplosionInterval = 6;
+    static constexpr float blowTime = 180;
+    static constexpr float blowInterval = 6;
+
     void updateWait();
     void updateIdle();
+    void initPhaseChange();
+    void updatePhaseChange();
+    void initBlow();
+    void updateBlow();
+    void initDefeated();
+    void updateDamage();
 
     State state = State::WAIT;
+    bool secondPhase = false;
 
     TA_Sprite bodySprite;
     TA_Sprite headSprite;
+    TA_Sprite headFlashSprite;
+
+    TA_Sound hitSound;
+    TA_Sound explosionSound;
+
+    float timer = 0;
+
+    int health = 32;
+    float invincibleTimer = invincibleTime;
 };
 
 #endif
