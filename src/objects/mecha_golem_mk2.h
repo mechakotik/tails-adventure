@@ -6,7 +6,7 @@
 class TA_MechaGolemMk2 : public TA_Object {
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position);
+    void load(TA_Point position, TA_Point enterBlockerPosition, TA_Point exitBlockerPosition);
     bool update() override;
     void draw() override;
 
@@ -16,6 +16,8 @@ private:
     enum Hitbox : uint8_t {
         HITBOX_BODY,
         HITBOX_HEAD,
+        HITBOX_ENTER_BLOCKER,
+        HITBOX_EXIT_BLOCKER,
         HITBOX_MAX,
     };
 
@@ -34,6 +36,8 @@ private:
     void updateBlow();
     void initDefeated();
     void updateDamage();
+    void updateEnterBlocker();
+    void updateExitBlocker();
 
     State state = State::WAIT;
     bool secondPhase = false;
@@ -41,6 +45,13 @@ private:
     TA_Sprite bodySprite;
     TA_Sprite headSprite;
     TA_Sprite headFlashSprite;
+    TA_Sprite enterBlockerSprite;
+    TA_Sprite exitBlockerSprite;
+
+    TA_Point enterBlockerPosition;
+    TA_Point exitBlockerPosition;
+    float enterBlockerOffset = 32;
+    float exitBlockerOffset = 0;
 
     TA_Sound hitSound;
     TA_Sound explosionSound;

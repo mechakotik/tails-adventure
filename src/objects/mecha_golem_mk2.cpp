@@ -2,8 +2,10 @@
 #include "explosion.h"
 #include "sound.h"
 
-void TA_MechaGolemMk2::load(TA_Point position) {
+void TA_MechaGolemMk2::load(TA_Point position, TA_Point enterBlockerPosition, TA_Point exitBlockerPosition) {
     this->position = position;
+    this->enterBlockerPosition = enterBlockerPosition;
+    this->exitBlockerPosition = exitBlockerPosition;
 
     bodySprite.loadFromToml("objects/mecha_golem/mk2_body.toml");
     bodySprite.setCamera(objectSet->getLinks().camera);
@@ -13,10 +15,16 @@ void TA_MechaGolemMk2::load(TA_Point position) {
     headSprite.setCamera(objectSet->getLinks().camera);
     headSprite.setPosition(position + TA_Point(32, 1));
     headSprite.setAnimation("mk2_idle");
-
     headFlashSprite.loadFromToml("objects/mecha_golem/head.toml");
     headFlashSprite.setCamera(objectSet->getLinks().camera);
     headFlashSprite.setPosition(position + TA_Point(32, 1));
+
+    enterBlockerSprite.loadFromToml("objects/mecha_golem/enter_blocker.toml");
+    enterBlockerSprite.setCamera(objectSet->getLinks().camera);
+    enterBlockerSprite.setPosition(enterBlockerPosition - TA_Point(0, enterBlockerOffset));
+    exitBlockerSprite.loadFromToml("objects/mecha_golem/exit_blocker.toml");
+    exitBlockerSprite.setCamera(objectSet->getLinks().camera);
+    exitBlockerSprite.setPosition(exitBlockerPosition);
 
     hitboxVector.assign(HITBOX_MAX, HitboxVectorElement());
     hitboxVector[HITBOX_BODY].hitbox.setRectangle({8, 12}, {54, 45});
@@ -25,6 +33,13 @@ void TA_MechaGolemMk2::load(TA_Point position) {
     hitboxVector[HITBOX_HEAD].hitbox.setRectangle({1, 2}, {22, 20});
     hitboxVector[HITBOX_HEAD].hitbox.setPosition(position + TA_Point(32, 1));
     hitboxVector[HITBOX_HEAD].collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
+
+    hitboxVector[HITBOX_ENTER_BLOCKER].hitbox.setRectangle({0, 0}, {32, 32});
+    hitboxVector[HITBOX_ENTER_BLOCKER].hitbox.setPosition(enterBlockerPosition - TA_Point(0, enterBlockerOffset));
+    hitboxVector[HITBOX_ENTER_BLOCKER].collisionType = TA_COLLISION_SOLID;
+    hitboxVector[HITBOX_EXIT_BLOCKER].hitbox.setRectangle({0, 0}, {32, 16});
+    hitboxVector[HITBOX_EXIT_BLOCKER].hitbox.setPosition(exitBlockerPosition);
+    hitboxVector[HITBOX_EXIT_BLOCKER].collisionType = TA_COLLISION_SOLID;
 
     hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX2);
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
@@ -49,6 +64,8 @@ bool TA_MechaGolemMk2::update() {
     }
 
     updateDamage();
+    updateEnterBlocker();
+    updateExitBlocker();
     return true;
 }
 
@@ -168,6 +185,30 @@ void TA_MechaGolemMk2::updateDamage() {
     health--;
 }
 
+void TA_MechaGolemMk2::updateEnterBlocker() {
+    if(state == State::WAIT) {
+        return;
+    }
+
+    if(state == State::DEFEATED) {
+        enterBlockerOffset = std::min(32.0F, enterBlockerOffset + (TA::elapsedTime * 2));
+    } else {
+        enterBlockerOffset = std::max(0.0F, enterBlockerOffset - (TA::elapsedTime * 2));
+    }
+
+    enterBlockerSprite.setPosition(enterBlockerPosition - TA_Point(0, enterBlockerOffset));
+    hitboxVector[HITBOX_ENTER_BLOCKER].hitbox.setPosition(enterBlockerPosition - TA_Point(0, enterBlockerOffset));
+}
+
+void TA_MechaGolemMk2::updateExitBlocker() {
+    if(state == State::DEFEATED) {
+        exitBlockerOffset = std::min(32.0F, exitBlockerOffset + (TA::elapsedTime * 2));
+    }
+
+    exitBlockerSprite.setPosition(exitBlockerPosition - TA_Point(exitBlockerOffset, 0));
+    hitboxVector[HITBOX_EXIT_BLOCKER].hitbox.setPosition(exitBlockerPosition - TA_Point(exitBlockerOffset, 0));
+}
+
 void TA_MechaGolemMk2::draw() {
     bodySprite.draw();
     headSprite.draw();
@@ -176,4 +217,7 @@ void TA_MechaGolemMk2::draw() {
         headFlashSprite.setFrame(headSprite.getCurrentFrame() + 6);
         headFlashSprite.draw();
     }
+
+    enterBlockerSprite.draw();
+    exitBlockerSprite.draw();
 }

@@ -6,7 +6,7 @@ spawn = [
 
 [objects.static]
 mecha_golem_mk2 = [
-	{ tile_x=9, tile_y=41 },
+	{ tile_x=9, tile_y=41, enter_blocker_x=336, enter_blocker_y=640, exit_blocker_x=176, exit_blocker_y=576 },
 ]
 level_transition = [
 	{ path="maps/vt/vt2", left=96, top=48, right=98, bottom=96 },
@@ -46,11 +46,6 @@ breakable_block = [
 	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=50, tile_y=39, strong=true },
 	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=50, tile_y=40, strong=true },
 	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=50, tile_y=41, strong=true },
-	
-	{ path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=21, tile_y=40, strong=true },
-	{ path="maps/vt/block5.png", particle_path="maps/vt/rock.png", tile_x=21, tile_y=41, strong=true },
-	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=22, tile_y=40, strong=true },
-	{ path="maps/vt/block6.png", particle_path="maps/vt/rock.png", tile_x=22, tile_y=41, strong=true },
 	
 	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=11, tile_y=47 },
 	{ path="maps/vt/block1.png", particle_path="maps/vt/rock.png", tile_x=11, tile_y=48 },

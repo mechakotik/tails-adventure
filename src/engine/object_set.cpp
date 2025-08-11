@@ -444,7 +444,13 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "mecha_golem_mk2") {
-        spawnObject<TA_MechaGolemMk2>(position);
+        TA_Point enterBlockerPosition;
+        enterBlockerPosition.x = object.at("enter_blocker_x").as_integer();
+        enterBlockerPosition.y = object.at("enter_blocker_y").as_integer();
+        TA_Point exitBlockerPosition;
+        exitBlockerPosition.x = object.at("exit_blocker_x").as_integer();
+        exitBlockerPosition.y = object.at("exit_blocker_y").as_integer();
+        spawnObject<TA_MechaGolemMk2>(position, enterBlockerPosition, exitBlockerPosition);
     }
 
     else {
