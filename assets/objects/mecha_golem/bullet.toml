@@ -1,0 +1,9 @@
+[sprite]
+image = "bullet.png"
+width = 6
+height = 6
+
+[animations.bullet]
+frames = [0, 1]
+delay = 1
+

@@ -1,4 +1,5 @@
 #include "mecha_golem_mk2.h"
+#include "bullet.h"
 #include "explosion.h"
 #include "sound.h"
 
@@ -26,6 +27,10 @@ void TA_MechaGolemMk2::load(TA_Point position, TA_Point enterBlockerPosition, TA
     exitBlockerSprite.setCamera(objectSet->getLinks().camera);
     exitBlockerSprite.setPosition(exitBlockerPosition);
 
+    fireEffectSprite.loadFromToml("objects/mecha_golem/fire_effect.toml");
+    fireEffectSprite.setCamera(objectSet->getLinks().camera);
+    fireEffectSprite.setPosition(position + TA_Point(18, 22));
+
     hitboxVector.assign(HITBOX_MAX, HitboxVectorElement());
     hitboxVector[HITBOX_BODY].hitbox.setRectangle({8, 12}, {54, 45});
     hitboxVector[HITBOX_BODY].hitbox.setPosition(position);
@@ -52,6 +57,9 @@ bool TA_MechaGolemMk2::update() {
             break;
         case State::IDLE:
             updateIdle();
+            break;
+        case State::FIRE:
+            updateFire();
             break;
         case State::PHASE_CHANGE:
             updatePhaseChange();
@@ -91,6 +99,43 @@ void TA_MechaGolemMk2::updateIdle() {
     if(health <= 0) {
         initBlow();
         return;
+    }
+
+    static constexpr float cooldown = 80;
+
+    timer += TA::elapsedTime;
+    if(timer > cooldown) {
+        initFire();
+    }
+}
+
+void TA_MechaGolemMk2::initFire() {
+    timer = 0;
+    fireIndex = 0;
+    state = State::FIRE;
+}
+
+void TA_MechaGolemMk2::updateFire() {
+    static constexpr float fireInterval = 10;
+    static constexpr std::array<float, 8> fireAngles = {TA::pi * 3 / 16, TA::pi * 2 / 16, TA::pi / 16, 0,
+        -TA::pi * 4 / 16, -TA::pi * 3 / 16, -TA::pi * 2 / 16, -TA::pi / 16};
+    static constexpr float bulletSpeed = 5;
+
+    timer += TA::elapsedTime;
+    if(timer <= fireInterval) {
+        return;
+    }
+
+    TA_Point firePosition = position + TA_Point(19, 23);
+    TA_Point fireVelocity = {
+        std::cos(fireAngles[fireIndex]) * bulletSpeed, std::sin(fireAngles[fireIndex]) * bulletSpeed};
+    objectSet->spawnObject<TA_MechaGolemBullet>(firePosition, fireVelocity);
+    fireEffectSprite.setAnimation("fire");
+
+    fireIndex++;
+    timer = 0;
+    if(fireIndex >= fireAngles.size()) {
+        state = State::IDLE;
     }
 }
 
@@ -220,4 +265,8 @@ void TA_MechaGolemMk2::draw() {
 
     enterBlockerSprite.draw();
     exitBlockerSprite.draw();
+
+    if(fireEffectSprite.isAnimated()) {
+        fireEffectSprite.draw();
+    }
 }

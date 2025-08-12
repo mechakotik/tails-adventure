@@ -11,7 +11,7 @@ public:
     void draw() override;
 
 private:
-    enum class State : uint8_t { WAIT, IDLE, PHASE_CHANGE, BLOW, DEFEATED };
+    enum class State : uint8_t { WAIT, IDLE, FIRE, PHASE_CHANGE, BLOW, DEFEATED };
 
     enum Hitbox : uint8_t {
         HITBOX_BODY,
@@ -30,6 +30,8 @@ private:
 
     void updateWait();
     void updateIdle();
+    void initFire();
+    void updateFire();
     void initPhaseChange();
     void updatePhaseChange();
     void initBlow();
@@ -47,6 +49,7 @@ private:
     TA_Sprite headFlashSprite;
     TA_Sprite enterBlockerSprite;
     TA_Sprite exitBlockerSprite;
+    TA_Sprite fireEffectSprite;
 
     TA_Point enterBlockerPosition;
     TA_Point exitBlockerPosition;
@@ -60,6 +63,8 @@ private:
 
     int health = 32;
     float invincibleTimer = invincibleTime;
+
+    int fireIndex = 0;
 };
 
 #endif

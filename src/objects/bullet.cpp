@@ -102,9 +102,20 @@ void TA_PilotBullet::onDestroy() {
 }
 
 void TA_DrFukurokovLazer::load(TA_Point position, TA_Point velocity) {
-    TA_Bullet::load("objects/dr_fukurokov_lazer.toml", position, velocity);
+    TA_Bullet::load("objects/dr_fukurokov/lazer.toml", position, velocity);
 }
 
 void TA_DrFukurokovLazer::onDestroy() {
     objectSet->spawnObject<TA_Explosion>(position - TA_Point(7, 0), 0, TA_EXPLOSION_ENEMY);
+}
+
+void TA_MechaGolemBullet::load(TA_Point position, TA_Point velocity) {
+    TA_Bullet::load("objects/mecha_golem/bullet.toml", position, velocity);
+    setAnimation("bullet");
+    explosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX2);
+}
+
+void TA_MechaGolemBullet::onDestroy() {
+    objectSet->spawnObject<TA_Explosion>(position - TA_Point(7, 0), 0, TA_EXPLOSION_ENEMY);
+    explosionSound.play();
 }

@@ -1,0 +1,9 @@
+[sprite]
+image = "fire_effect.png"
+width = 8
+height = 8
+
+[animations.fire]
+frames = [0, 1]
+delay = 3
+repeat = 1
