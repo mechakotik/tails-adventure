@@ -1,6 +1,7 @@
 #include "mecha_golem_mk2.h"
 #include "bullet.h"
 #include "explosion.h"
+#include "mecha_golem_energy_shot.h"
 #include "sound.h"
 
 void TA_MechaGolemMk2::load(TA_Point position, TA_Point enterBlockerPosition, TA_Point exitBlockerPosition) {
@@ -105,7 +106,12 @@ void TA_MechaGolemMk2::updateIdle() {
 
     timer += TA::elapsedTime;
     if(timer > cooldown) {
-        initFire();
+        if(secondPhase && TA::random::next() % 2 == 0) {
+            objectSet->spawnObject<TA_MechaGolemEnergyShot>(position + TA_Point(48, 24));
+            timer = 0;
+        } else {
+            initFire();
+        }
     }
 }
 

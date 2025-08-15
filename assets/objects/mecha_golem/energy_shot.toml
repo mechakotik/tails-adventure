@@ -1,0 +1,9 @@
+[sprite]
+image = "energy_shot.png"
+width = 14
+height = 14
+
+[animations]
+foreground = 1
+background = 0
+
