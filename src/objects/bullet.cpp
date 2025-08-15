@@ -112,7 +112,7 @@ void TA_DrFukurokovLazer::onDestroy() {
 void TA_MechaGolemBullet::load(TA_Point position, TA_Point velocity) {
     TA_Bullet::load("objects/mecha_golem/bullet.toml", position, velocity);
     setAnimation("bullet");
-    explosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX2);
+    explosionSound.load("sound/explosion_small.ogg", TA_SOUND_CHANNEL_SFX3);
 }
 
 void TA_MechaGolemBullet::onDestroy() {
