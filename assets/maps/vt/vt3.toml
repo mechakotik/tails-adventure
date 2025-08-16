@@ -73,4 +73,7 @@ bridge = [
 	{ path="maps/vt/bridge.png", particle_path="maps/vt/rock.png", leftx=528, rightx=559, y=832 },
 	{ path="maps/vt/bridge.png", particle_path="maps/vt/rock.png", leftx=656, rightx=687, y=864 },
 ]
+item_box = [
+	{ number=21, item_name="extra_armor", tile_x=6, tile_y=33, offset_x=8 },
+]
 

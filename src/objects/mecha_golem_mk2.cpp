@@ -2,6 +2,7 @@
 #include "bullet.h"
 #include "explosion.h"
 #include "mecha_golem_energy_shot.h"
+#include "save.h"
 #include "sound.h"
 
 void TA_MechaGolemMk2::load(TA_Point position, TA_Point enterBlockerPosition, TA_Point exitBlockerPosition) {
@@ -49,6 +50,10 @@ void TA_MechaGolemMk2::load(TA_Point position, TA_Point enterBlockerPosition, TA
 
     hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX2);
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
+
+    if((TA::save::getSaveParameter("item_mask") & (1 << 21)) != 0) {
+        initDefeated();
+    }
 }
 
 bool TA_MechaGolemMk2::update() {
@@ -212,6 +217,8 @@ void TA_MechaGolemMk2::initDefeated() {
     objectSet->getLinks().camera->unlock();
     headSprite.setAlpha(0);
     headFlashSprite.setAlpha(0);
+    hitboxVector[HITBOX_BODY].collisionType = TA_COLLISION_TRANSPARENT;
+    hitboxVector[HITBOX_HEAD].collisionType = TA_COLLISION_TRANSPARENT;
     state = State::DEFEATED;
 }
 

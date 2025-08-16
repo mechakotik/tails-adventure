@@ -21,7 +21,7 @@ private:
         HITBOX_MAX,
     };
 
-    static constexpr float invincibleTime = 30;
+    static constexpr float invincibleTime = 60;
     static constexpr float damageFlashTime = 5;
     static constexpr float phaseChangeTime = 120;
     static constexpr float phaseChangeExplosionInterval = 6;
