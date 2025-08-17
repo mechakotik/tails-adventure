@@ -32,13 +32,17 @@ private:
     void drawModCount();
     void drawSplash();
     void drawSelector();
+
+    std::vector<std::string> generateSplashSequence();
     std::string generateSplash();
 
     TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite, optionsSprite;
     TA_Sound switchSound, selectSound, loadSaveSound;
     TA_Font font, splashFont;
-    std::string splash;
     float timer = 0, selectorTimer = 0;
+
+    std::vector<std::string> splashSequence;
+    float splashTimer = 0;
 
     std::array<TA_OnscreenButton, 9> buttons;
     float position = 0, scrollVelocity = 0;

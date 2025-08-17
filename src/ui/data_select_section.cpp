@@ -1,5 +1,6 @@
 #include "data_select_section.h"
 #include <bit>
+#include <numeric>
 #include "resource_manager.h"
 #include "save.h"
 
@@ -23,7 +24,7 @@ void TA_DataSelectSection::load() {
         buttons[pos].setRectangle(topLeft, bottomRight);
     }
 
-    splash = generateSplash();
+    splashSequence = generateSplashSequence();
 }
 
 TA_MainMenuState TA_DataSelectSection::update() {
@@ -172,8 +173,14 @@ void TA_DataSelectSection::drawModCount() {
 }
 
 void TA_DataSelectSection::drawSplash() {
+    static constexpr float spashInterval = 4;
+
+    splashTimer += TA::elapsedTime;
+    int pos = static_cast<int>(splashTimer / spashInterval);
+    pos = std::min(pos, static_cast<int>(splashSequence.size()) - 1);
+
     splashFont.setAlpha(alpha);
-    splashFont.drawTextCentered(TA::screenHeight - 24, splash, TA_Point(-1, 0));
+    splashFont.drawTextCentered(TA::screenHeight - 24, splashSequence[pos], TA_Point(-1, 0));
 }
 
 void TA_DataSelectSection::drawSelector() {
@@ -240,16 +247,64 @@ std::string TA_DataSelectSection::getSaveTime(int save) {
     return std::to_string(hours) + ":" + std::to_string(minutes);
 }
 
+std::vector<std::string> TA_DataSelectSection::generateSplashSequence() {
+    static constexpr int sequenceSize = 8;
+
+    std::string splash = generateSplash();
+    std::vector<int> permutation(splash.size());
+    std::ranges::iota(permutation, 0);
+    for(int i = 0; i < splash.size(); i++) {
+        std::swap(permutation[i], permutation[TA::random::next() % splash.size()]);
+    }
+
+    std::vector<int> positions(sequenceSize + 1);
+    positions[0] = 0;
+    positions[sequenceSize] = static_cast<int>(splash.size());
+    for(int i = 1; i < sequenceSize; i++) {
+        positions[i] = static_cast<int>(TA::random::next() % splash.size());
+    }
+    std::ranges::sort(positions);
+
+    std::vector<std::string> sequence(sequenceSize);
+    std::set<int> stable;
+
+    for(int i = 0; i < sequenceSize; i++) {
+        for(int j = positions[i]; j < positions[i + 1]; j++) {
+            stable.insert(permutation[j]);
+        }
+
+        sequence[i] = splash;
+        for(int j = 0; j < splash.size(); j++) {
+            if(splash[j] != ' ' && !stable.contains(j)) {
+                if(TA::random::next() % 5 != 0) {
+                    sequence[i][j] = static_cast<char>('a' + (TA::random::next() % 26));
+                } else {
+                    sequence[i][j] = static_cast<char>('A' + (TA::random::next() % 26));
+                }
+            }
+        }
+    }
+
+    return sequence;
+}
+
 std::string TA_DataSelectSection::generateSplash() {
     const std::vector<std::string> splashes{
-        "test splash",
         "Free as in freedom",
-        "Install Gentoo",
         "Also try Sonic Forces",
         "Bleeding edge SDL3 o_o",
         "One Piece wa jitsuzai suru!",
         "Row Row Fight The Power",
+        "Giga Drill Break!",
+        "Blazingly fast!",
+        "Memory unsafe :(",
+        "Mods supported!",
+        "Only 3% can pass!",
+        "You have (not) tried",
+        "Nanomachines, son!",
+        "hjkl friendly?",
+        "Flint and Steel!",
     };
 
-    return splashes[TA::random::next() % (int)splashes.size()];
+    return splashes[TA::random::next() % static_cast<int>(splashes.size())];
 }
