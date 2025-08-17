@@ -1,7 +1,5 @@
 #include "game.h"
 #include <chrono>
-#include <thread>
-#include "SDL3_image/SDL_image.h"
 #include "SDL3_mixer/SDL_mixer.h"
 #include "error.h"
 #include "gamepad.h"
@@ -16,7 +14,7 @@ TA_Game::TA_Game() {
     TA::save::load();
     initSDL();
     createWindow();
-    TA::random::init(std::chrono::steady_clock::now().time_since_epoch().count());
+    TA::random::init(std::chrono::high_resolution_clock::now().time_since_epoch().count());
     TA::gamepad::init();
     TA::resmgr::load();
 
