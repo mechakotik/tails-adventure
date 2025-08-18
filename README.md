@@ -57,5 +57,11 @@ Tails Adventure Remake has mod support, which allows you to replace any file in 
 
 ## Contributing
 
-Contributions are welcome! Just be sure to follow project's code style (use clang-format to format the code automatically) and write clear descriptions of changes that you are making. To get started, you may search for TODO in source code.
+Contributions are welcome! Just be sure to:
+
+- Always open pull requests to `develop` branch: all the development happens there and gets merged to `main` when it's stable enough.
+- Follow project's code style (use clang-format to format the code automatically)
+- Write clear descriptions of changes that you are making.
+
+To get started, you may search for TODO in source code.
 
