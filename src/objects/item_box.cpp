@@ -118,7 +118,7 @@ void TA_ItemBox::updateUnpack() {
 }
 
 void TA_ItemBox::updateRaise() {
-    if(!objectSet->getLinks().character->isAnimated()) {
+    if(!objectSet->getLinks().character->isAnimated() || objectSet->getLinks().character->isRemoteRobot()) {
         state = STATE_HOLD;
         timer = 0;
         return;
