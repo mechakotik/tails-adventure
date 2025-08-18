@@ -1,5 +1,6 @@
 #include "game.h"
 #include <chrono>
+#include "SDL3/SDL_hints.h"
 #include "SDL3_mixer/SDL_mixer.h"
 #include "error.h"
 #include "gamepad.h"
@@ -25,6 +26,7 @@ TA_Game::TA_Game() {
 }
 
 void TA_Game::initSDL() {
+    SDL_SetHint(SDL_HINT_CHECK_OBJECT_VALIDITY, "0");
     if(!SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMEPAD |
                  SDL_INIT_EVENTS | SDL_INIT_SENSOR)) {
         TA::handleSDLError("%s", "SDL init failed");
