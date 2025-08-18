@@ -30,6 +30,6 @@ proton_torpedo = "proton torpedo"
 spark = "spark"
 extra_speed = "extra speed"
 mine = "mine"
-extra_armor = "extra_armor"
-rocket_booster = "rocket_booster"
+extra_armor = "extra armor"
+rocket_booster = "rocket booster"
 
