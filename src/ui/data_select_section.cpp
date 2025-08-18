@@ -252,7 +252,7 @@ std::vector<std::string> TA_DataSelectSection::generateSplashSequence() {
 
     std::string splash = generateSplash();
     std::vector<int> permutation(splash.size());
-    std::ranges::iota(permutation, 0);
+    std::iota(permutation.begin(), permutation.end(), 0);
     for(int i = 0; i < splash.size(); i++) {
         std::swap(permutation[i], permutation[TA::random::next() % splash.size()]);
     }

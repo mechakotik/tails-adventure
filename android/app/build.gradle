@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace "com.mechakotik.tailsadventure"
-    ndkVersion "29.0.13113456"
+    ndkVersion "29.0.13846066"
     compileSdkVersion 36
     defaultConfig {
         minSdkVersion 21

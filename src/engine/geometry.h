@@ -2,6 +2,7 @@
 #define TA_GEOMETRY_H
 
 #include <SDL3/SDL_intrin.h>
+#include <algorithm>
 #include <error.h>
 #include <cmath>
 #include <cstddef>
