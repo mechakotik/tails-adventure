@@ -25,13 +25,11 @@ Also, it was made from the ground up in C++ without using any game engines to be
 
 ## Implemented
 
-**Levels (fully):** Poloy Forest, Polly Mt. 1, Cavern Island, Caron Forest, Green Island, Lake Crystal, Polly Mt. 2.
+**Levels:** Poloy Forest, Volcanic Tunnel, Polly Mt. 1, Lake Rocky, Cavern Island, Caron Forest, Green Island, Lake Crystal, Polly Mt. 2, Coco Island.
 
-**Levels (partially):** Volcanic Tunnel, Lake Rocky.
+**Items:** Regular Bomb, Remote Bomb, Large Bomb, Napalm Bomb, Triple Bomb, Large Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio, Fang.
 
-**Items:** Regular Bomb, Remote Bomb, Napalm Bomb, Triple Bomb, Large Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio, Fang.
-
-**Sea Fox items:** Vulcan Gun, Anti-air Missile, Extra Speed.
+**Sea Fox items:** Vulcan Gun, Anti-air Missile, Mine, Extra Speed, Extra Armor.
 
 ## Get it
 
