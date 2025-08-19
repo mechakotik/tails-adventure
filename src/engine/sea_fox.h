@@ -78,6 +78,9 @@ private:
 
     bool hidden = false;
 
+    bool debugMode = false;
+    bool noclip = false;
+
 public:
     void load(TA_Links links);
     void update();
@@ -89,6 +92,7 @@ public:
     void setHide(bool hidden);
     TA_Rect* getHitbox() { return &hitbox; }
     TA_Rect* getDrillHitbox() { return &drillHitbox; }
+    bool isFastCamera() { return debugMode; }
     bool gameOver() { return dead && deadTimer >= deadTime; }
 };
 

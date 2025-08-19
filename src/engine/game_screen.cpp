@@ -71,7 +71,7 @@ TA_ScreenState TA_GameScreen::update() {
 
         if(isSeaFox) {
             seaFox.update();
-            camera.update(!isSeaFoxGround && !isSeaFoxFly, false);
+            camera.update(!isSeaFoxGround && !isSeaFoxFly, seaFox.isFastCamera());
         } else {
             character.update();
             camera.update(character.isOnGround(), character.isFastCamera());

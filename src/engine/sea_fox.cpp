@@ -25,6 +25,8 @@ void TA_SeaFox::load(TA_Links links) {
     waterSound.load("sound/water.ogg", TA_SOUND_CHANNEL_SFX1);
 
     hitbox.setRectangle(TA_Point(9, 4), TA_Point(23, 30));
+
+    debugMode = TA::arguments.contains("--debug");
 }
 
 void TA_SeaFox::setSpawnPoint(TA_Point position, bool flip) {
@@ -44,6 +46,18 @@ void TA_SeaFox::update() {
         updateDead();
         setFlip(flip);
         return;
+    }
+
+    if(debugMode) {
+        if(TA::keyboard::isScancodeJustPressed(SDL_SCANCODE_X)) {
+            noclip = !noclip;
+        }
+        if(noclip) {
+            position += links.controller->getDirectionVector() * TA::elapsedTime * 5;
+            setPosition(position);
+            updateFollowPosition();
+            return;
+        }
     }
 
     physicsStep();
@@ -305,9 +319,13 @@ void TA_SeaFox::updateDamage() {
     if(!extraArmor && (links.objectSet->checkCollision(hitbox) & TA_COLLISION_DAMAGE) != 0) {
         if(TA::save::getParameter("ring_drop")) {
             dropRings();
-            links.objectSet->addRings(-4);
+            if(!debugMode) {
+                links.objectSet->addRings(-4);
+            }
         } else {
-            links.objectSet->addRings(-2);
+            if(!debugMode) {
+                links.objectSet->addRings(-2);
+            }
         }
         TA::gamepad::rumble(0.75, 0.75, 20);
         if(TA::save::getSaveParameter("rings") <= 0) {
