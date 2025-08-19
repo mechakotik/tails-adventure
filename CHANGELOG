@@ -1,4 +1,18 @@
 =======================
+        v0.3.1
+=======================
+
+- New levels: Coco Island and Lake Rocky path to it
+- New bosses: Mecha Golem Mk. 2, Dr. Fukurokov
+- New items: Large Bomb, Fang, Mine, Extra Armor
+- Game is now saved on quit
+- Added water splash animations
+- Fixed crash in HitboxContainer
+- Fixed crash when using Radio
+- Restructured and refactored code
+- Added debug mode and noclip
+
+=======================
         v0.3.0
 =======================
 
