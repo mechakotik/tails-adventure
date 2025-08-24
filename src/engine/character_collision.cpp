@@ -231,7 +231,7 @@ void TA_Character::updateClimb() {
             return;
         }
 
-        TA_Point topLeft = TA_Point(16, 12), bottomRight = TA_Point(32, 39);
+        TA_Point topLeft = TA_Point(18, 12), bottomRight = TA_Point(30, 39);
         TA_Rect hitbox;
         hitbox.setRectangle(topLeft, bottomRight);
         hitbox.setPosition(climbPosition);
@@ -264,7 +264,7 @@ void TA_Character::updateClimb() {
 
             hitbox.setPosition(climbPosition + TA_Point(0, 0.01));
             int collisionFlags = links.objectSet->checkCollision(hitbox);
-            if(collisionFlags & TA_COLLISION_MOVING_PLATFORM) {
+            if(collisionFlags & (TA_COLLISION_PUSHABLE | TA_COLLISION_MOVING_PLATFORM)) {
                 return;
             }
 
