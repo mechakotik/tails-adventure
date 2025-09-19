@@ -14,3 +14,26 @@ land_cutscene = [
 	{ x=200, y=114, land_y=73, selection=8 },
 ]
 
+[objects.default]
+cannon_launcher = [
+	{ tile_x=20, tile_y=185, offset_x=-9, offset_y=10 },
+	{ tile_x=11, tile_y=171, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=19, tile_y=162, offset_x=-9, offset_y=10 },
+	{ tile_x=11, tile_y=152, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=20, tile_y=138, offset_x=-9, offset_y=10 },
+	{ tile_x=19, tile_y=127, offset_x=-9, offset_y=10 },
+	{ tile_x=11, tile_y=124, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=19, tile_y=109, offset_x=-9, offset_y=10 },
+	{ tile_x=11, tile_y=106, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=19, tile_y=97, offset_x=-9, offset_y=10 },
+	{ tile_x=19, tile_y=91, offset_x=-9, offset_y=10 },
+	{ tile_x=19, tile_y=73, offset_x=-9, offset_y=10 },
+	{ tile_x=11, tile_y=70, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=19, tile_y=59, offset_x=-9, offset_y=10 },
+	{ tile_x=11, tile_y=54, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=11, tile_y=40, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=11, tile_y=32, offset_x=9, offset_y=10, flip=true },
+	{ tile_x=19, tile_y=23, offset_x=-9, offset_y=10 },
+	{ tile_x=11, tile_y=20, offset_x=9, offset_y=10, flip=true },
+]
+

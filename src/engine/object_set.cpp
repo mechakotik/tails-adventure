@@ -9,6 +9,7 @@
 #include "objects/bomber.h"
 #include "objects/breakable_block.h"
 #include "objects/bridge.h"
+#include "objects/cannon_launcher.h"
 #include "objects/conveyor_belt.h"
 #include "objects/cruiser.h"
 #include "objects/dr_fukurokov.h"
@@ -451,6 +452,11 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
         exitBlockerPosition.x = object.at("exit_blocker_x").as_integer();
         exitBlockerPosition.y = object.at("exit_blocker_y").as_integer();
         spawnObject<TA_MechaGolemMk2>(position, enterBlockerPosition, exitBlockerPosition);
+    }
+
+    else if(name == "cannon_launcher") {
+        bool flip = object.contains("flip") && object.at("flip").as_boolean();
+        spawnObject<TA_CannonLauncher>(position, flip);
     }
 
     else {

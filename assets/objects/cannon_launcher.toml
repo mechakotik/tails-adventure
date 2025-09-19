@@ -1,0 +1,9 @@
+[sprite]
+image = "cannon_launcher.png"
+width = 32
+height = 22
+
+[animations]
+look_forward = 0
+look_up = 1
+
