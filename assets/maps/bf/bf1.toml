@@ -4,9 +4,13 @@ mode = "seafox_fly"
 borders = { top=true, bottom=true, left=true, right=true }
 spawn = [
 	{ x=0, y=90 },
+	{ x=4048, y=90, previous="maps/bf/bf2", flip=true },
 ]
 
 [objects.static]
+level_transition = [
+	{ path="maps/bf/bf2", left=4080, top=0, right=4096, bottom=208 },
+]
 pilot_spawner = [
 	{},
 ]
