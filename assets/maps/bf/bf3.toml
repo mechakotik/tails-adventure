@@ -1,0 +1,6 @@
+[level]
+music = "sound/bf.vgm"
+spawn = [
+	{ x=-4, y=41 },
+]
+
