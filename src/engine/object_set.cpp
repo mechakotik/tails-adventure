@@ -156,20 +156,56 @@ void TA_ObjectSet::tryLoad(std::string filename) {
 void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     TA_Point position{0, 0};
     if(object.contains("tile_x")) {
-        position.x = static_cast<int>(object.at("tile_x").as_integer()) * 16;
+        position.x = static_cast<float>(object.at("tile_x").as_integer()) * 16;
     } else if(object.contains("x")) {
-        position.x = static_cast<int>(object.at("x").as_integer());
+        position.x = static_cast<float>(object.at("x").as_integer());
     }
     if(object.contains("tile_y")) {
-        position.y = static_cast<int>(object.at("tile_y").as_integer()) * 16;
+        position.y = static_cast<float>(object.at("tile_y").as_integer()) * 16;
     } else if(object.contains("y")) {
-        position.y = static_cast<int>(object.at("y").as_integer());
+        position.y = static_cast<float>(object.at("y").as_integer());
     }
     if(object.contains("offset_x")) {
-        position.x += static_cast<int>(object.at("offset_x").as_integer());
+        position.x += static_cast<float>(object.at("offset_x").as_integer());
     }
     if(object.contains("offset_y")) {
-        position.y += static_cast<int>(object.at("offset_y").as_integer());
+        position.y += static_cast<float>(object.at("offset_y").as_integer());
+    }
+
+    TA_Point topLeft{0, 0};
+    if(object.contains("tile_left")) {
+        topLeft.x = static_cast<float>(object.at("tile_left").as_integer()) * 16;
+    } else if(object.contains("left")) {
+        topLeft.x = static_cast<float>(object.at("left").as_integer());
+    }
+    if(object.contains("tile_top")) {
+        topLeft.y = static_cast<float>(object.at("tile_top").as_integer()) * 16;
+    } else if(object.contains("top")) {
+        topLeft.y = static_cast<float>(object.at("top").as_integer());
+    }
+    if(object.contains("offset_left")) {
+        topLeft.x += static_cast<float>(object.at("offset_left").as_integer());
+    }
+    if(object.contains("offset_top")) {
+        topLeft.y += static_cast<float>(object.at("offset_top").as_integer());
+    }
+
+    TA_Point bottomRight{0, 0};
+    if(object.contains("tile_right")) {
+        bottomRight.x = static_cast<float>(object.at("tile_right").as_integer()) * 16;
+    } else if(object.contains("right")) {
+        bottomRight.x = static_cast<float>(object.at("right").as_integer());
+    }
+    if(object.contains("tile_bottom")) {
+        bottomRight.y = static_cast<float>(object.at("tile_bottom").as_integer()) * 16;
+    } else if(object.contains("bottom")) {
+        bottomRight.y = static_cast<float>(object.at("bottom").as_integer());
+    }
+    if(object.contains("offset_right")) {
+        bottomRight.x += static_cast<float>(object.at("offset_right").as_integer());
+    }
+    if(object.contains("offset_bottom")) {
+        bottomRight.y += static_cast<float>(object.at("offset_bottom").as_integer());
     }
 
     if(name == "breakable_block") {
@@ -212,23 +248,17 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "level_transition") {
-        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
-        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
         std::string levelPath = object.at("path").as_string();
         spawnObject<TA_Transition>(topLeft, bottomRight, levelPath);
     }
 
     else if(name == "map_transition") {
-        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
-        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
         int selection = object.at("selection").as_integer();
         bool seaFox = object.contains("seafox") && object.at("seafox").as_boolean();
         spawnObject<TA_Transition>(topLeft, bottomRight, selection, seaFox);
     }
 
     else if(name == "wind") {
-        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
-        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
         TA_Point velocity(asIntOrFloat(object.at("xsp")), asIntOrFloat(object.at("ysp")));
         std::string animation = "leaf";
         if(object.contains("animation")) {
@@ -326,8 +356,6 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "strong_wind") {
-        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
-        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
         spawnObject<TA_StrongWind>(topLeft, bottomRight);
     }
 
@@ -348,8 +376,6 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     }
 
     else if(name == "conveyor_belt") {
-        TA_Point topLeft(object.at("left").as_integer(), object.at("top").as_integer());
-        TA_Point bottomRight(object.at("right").as_integer(), object.at("bottom").as_integer());
         bool flip = object.contains("flip") && object.at("flip").as_boolean();
         spawnObject<TA_ConveyorBelt>(topLeft, bottomRight, flip);
     }
