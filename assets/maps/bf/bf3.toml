@@ -4,3 +4,29 @@ spawn = [
 	{ x=-4, y=41 },
 ]
 
+[objects.static]
+conveyor_belt = [
+	{ left=304, top=80, right=608, bottom=96, flip=true },
+	{ left=416, top=32, right=496, bottom=48, flip=true },
+	{ left=384, top=176, right=480, bottom=192 },
+	{ left=528, top=176, right=592, bottom=192, flip=true },
+	{ left=336, top=240, right=416, bottom=256 },
+	{ left=192, top=304, right=624, bottom=320, flip=true },
+	{ left=960, top=144, right=1040, bottom=160, flip=true },
+	{ left=912, top=192, right=1088, bottom=208, flip=true },
+	{ left=1184, top=256, right=1392, bottom=272, flip=true },
+	{ left=1536, top=128, right=1648, bottom=144 },
+	{ left=1680, top=80, right=1776, bottom=96 },
+	{ left=1712, top=128, right=1808, bottom=144, flip=true },
+	{ left=1680, top=176, right=1776, bottom=192 },
+	{ left=1712, top=224, right=1808, bottom=240, flip=true },
+	{ left=1680, top=272, right=1744, bottom=288 },
+	{ left=1776, top=288, right=1952, bottom=304, flip=true },
+	{ left=1840, top=224, right=1920, bottom=240 },
+	{ left=1872, top=176, right=1968, bottom=192, flip=true },
+	{ left=1840, top=128, right=1888, bottom=144 },
+	{ left=1808, top=80, right=1840, bottom=96, flip=true },
+	{ left=1216, top=112, right=1264, bottom=128, flip=true },
+	{ left=1296, top=112, right=1344, bottom=128 },
+]
+
