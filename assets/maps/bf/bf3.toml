@@ -29,4 +29,10 @@ conveyor_belt = [
 	{ left=1216, top=112, right=1264, bottom=128, flip=true },
 	{ left=1296, top=112, right=1344, bottom=128 },
 ]
+robo_kukku_spawner = [
+	{ tile_x=28, tile_y=1, flip=true },
+	{ tile_x=23, tile_y=14 },
+	{ tile_x=62, tile_y=8, flip=true },
+	{ tile_x=105, tile_y=4 },
+]
 
