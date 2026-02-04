@@ -5,6 +5,34 @@ spawn = [
 ]
 
 [objects.static]
+breakable_block = [
+	{ tile_x=8, tile_y=16, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=8, tile_y=17, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=8, tile_y=18, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=8, tile_y=19, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=9, tile_y=16, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=9, tile_y=17, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=9, tile_y=18, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=9, tile_y=19, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	
+	{ tile_x=40, tile_y=14, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=40, tile_y=15, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=40, tile_y=16, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=40, tile_y=17, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=40, tile_y=18, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=41, tile_y=14, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=41, tile_y=15, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=41, tile_y=16, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=41, tile_y=17, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=41, tile_y=18, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	
+	{ tile_x=71, tile_y=3, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=71, tile_y=4, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=71, tile_y=5, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=72, tile_y=3, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=72, tile_y=4, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+	{ tile_x=72, tile_y=5, path="maps/bf/block2.png", particle_path="maps/bf/rock.png" },
+]
 conveyor_belt = [
 	{ left=304, top=80, right=608, bottom=96, flip=true },
 	{ left=416, top=32, right=496, bottom=48, flip=true },
@@ -34,5 +62,26 @@ robo_kukku_spawner = [
 	{ tile_x=23, tile_y=14 },
 	{ tile_x=62, tile_y=8, flip=true },
 	{ tile_x=105, tile_y=4 },
+]
+electric_barrier = [
+	{ left=49, top=8, right=50, bottom=11, tile_x=40, tile_y=11, offset_x=-4, offset_y=8 },
+	{ left=89, top=13, right=90, bottom=16, tile_x=98, tile_y=21, offset_x=-4, offset_y=8 },
+]
+item_box = [
+	{ number=15, item_name="wrench", tile_x=53, tile_y=5, offset_x=8 },
+]
+
+[objects.default]
+sniper = [
+	{ tile_x=6, tile_y=18 },
+	{ tile_x=16, tile_y=10 },
+	{ tile_x=31, tile_y=14 },
+	{ tile_x=48, tile_y=4 },
+	{ tile_x=51, tile_y=17 },
+	{ tile_x=59, tile_y=17 },
+	{ tile_x=65, tile_y=17 },
+	{ tile_x=79, tile_y=1 },
+	{ tile_x=96, tile_y=1 },
+	{ tile_x=105, tile_y=20 },
 ]
 
