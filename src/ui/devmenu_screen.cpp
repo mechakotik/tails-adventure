@@ -3,44 +3,48 @@
 
 void TA_DevmenuScreen::init() {
     controller.load();
-    levels.emplace_back("maps/pf/pf1");
-    levels.emplace_back("maps/pf/pf2");
-    levels.emplace_back("maps/pf/pf3");
-    levels.emplace_back("maps/vt/vt1");
-    levels.emplace_back("maps/vt/vt2");
-    levels.emplace_back("maps/vt/vt3");
-    levels.emplace_back("maps/pm/pm1");
-    levels.emplace_back("maps/pm/pm2");
-    levels.emplace_back("maps/pm/pm3");
-    levels.emplace_back("maps/pm/pm4");
-    levels.emplace_back("maps/ci/ci1");
-    levels.emplace_back("maps/ci/ci2");
-    levels.emplace_back("maps/ci/ci3");
-    levels.emplace_back("maps/cf/cf1");
-    levels.emplace_back("maps/cf/cf2");
-    levels.emplace_back("maps/lr/lr1");
-    levels.emplace_back("maps/lr/lr2");
-    levels.emplace_back("maps/lr/lr3");
-    levels.emplace_back("maps/lr/lr4");
-    levels.emplace_back("maps/lr/lr5");
-    levels.emplace_back("maps/lr/lr6");
-    levels.emplace_back("maps/lr/lr7");
-    levels.emplace_back("maps/lr/lr8");
-    levels.emplace_back("maps/lr/lr9");
-    levels.emplace_back("maps/lc/lc1");
-    levels.emplace_back("maps/lc/lc2");
-    levels.emplace_back("maps/gi/gi1");
-    levels.emplace_back("maps/gi/gi2");
-    levels.emplace_back("maps/pv/pv1");
-    levels.emplace_back("maps/pv/pv2");
-    levels.emplace_back("maps/cc/cc1");
-    levels.emplace_back("maps/cc/cc2");
-    levels.emplace_back("maps/cc/cc3");
-    levels.emplace_back("maps/bf/bf1");
-    levels.emplace_back("maps/bf/bf2");
-    levels.emplace_back("maps/bf/bf3");
     normalFont.loadFont("fonts/devmenu.toml");
     selectedFont.loadFont("fonts/devmenu_selected.toml");
+
+    levels = {
+        "maps/pf/pf1",
+        "maps/pf/pf2",
+        "maps/pf/pf3",
+        "maps/vt/vt1",
+        "maps/vt/vt2",
+        "maps/vt/vt3",
+        "maps/pm/pm1",
+        "maps/pm/pm2",
+        "maps/pm/pm3",
+        "maps/pm/pm4",
+        "maps/ci/ci1",
+        "maps/ci/ci2",
+        "maps/ci/ci3",
+        "maps/cf/cf1",
+        "maps/cf/cf2",
+        "maps/lr/lr1",
+        "maps/lr/lr2",
+        "maps/lr/lr3",
+        "maps/lr/lr4",
+        "maps/lr/lr5",
+        "maps/lr/lr6",
+        "maps/lr/lr7",
+        "maps/lr/lr8",
+        "maps/lr/lr9",
+        "maps/lc/lc1",
+        "maps/lc/lc2",
+        "maps/gi/gi1",
+        "maps/gi/gi2",
+        "maps/pv/pv1",
+        "maps/pv/pv2",
+        "maps/cc/cc1",
+        "maps/cc/cc2",
+        "maps/cc/cc3",
+        "maps/bf/bf1",
+        "maps/bf/bf2",
+        "maps/bf/bf3",
+        "maps/bf/bf4",
+    };
 }
 
 TA_ScreenState TA_DevmenuScreen::update() {
