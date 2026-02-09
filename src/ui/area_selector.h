@@ -12,6 +12,7 @@ class TA_AreaSelector {
 private:
     void loadPoints();
     void appendPoints();
+    void fixAreaMask();
     void addSelectedArea();
     void setActivePoints();
     void loadTailsIcon();
@@ -21,6 +22,7 @@ private:
     TA_Sprite tailsIcon;
     TA_Sound switchSound;
     int pos;
+    float bfTimer = 0;
 
 public:
     void load();
@@ -38,12 +40,14 @@ private:
     TA_Point position;
     std::string name = "", path = "";
     std::array<int, TA_DIRECTION_MAX> neighbours;
+    bool battleFortress;
 
     bool active = false;
-    float timer = 0;
+    float bfTimer = 0;
+    float lightTimer = 0;
 
 public:
-    TA_MapPoint(std::string name, std::string path, TA_Point position);
+    TA_MapPoint(std::string name, std::string path, TA_Point position, bool battleFortress);
     void setNeighbour(TA_Direction direction, int neighbour) { neighbours[direction] = neighbour; }
     void activate() { active = true; }
     bool updateButton();
@@ -53,6 +57,7 @@ public:
     std::string getName() { return name; }
     std::string getPath() { return path; }
     bool isActive() { return active; }
+    bool isBattleFortress() { return battleFortress; }
     int getNeighbour(TA_Direction direction) { return neighbours[direction]; }
 };
 

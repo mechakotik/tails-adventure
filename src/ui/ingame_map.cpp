@@ -1,4 +1,6 @@
 #include "ingame_map.h"
+#include "resource_manager.h"
+#include "save.h"
 #include "tools.h"
 
 void TA_InGameMap::load() {
@@ -8,6 +10,11 @@ void TA_InGameMap::load() {
     mapSprite.loadFromToml("worldmap/map.toml");
     mapSprite.setPosition({xOffset, yOffset});
     mapSprite.setAnimation("map");
+
+    battleFortressSprite.loadFromToml("worldmap/battle_fortress.toml");
+    toml::value basePosValue = TA::resmgr::loadToml("worldmap/points.toml").at("battle_fortress");
+    battleFortressBasePos = TA_Point(basePosValue.at("x").as_integer(), basePosValue.at("y").as_integer());
+    battleFortressBasePos += TA_Point(xOffset, yOffset);
 
     namePlateSprite.load("worldmap/name_plate.png");
     namePlateSprite.setPosition(16, TA::screenHeight - 24);
@@ -30,6 +37,28 @@ void TA_InGameMap::load() {
     birdSprites[0].setPosition(xOffset + 68, yOffset + 88);
     birdSprites[1].setPosition(xOffset + 64, yOffset + 96);
     birdSprites[2].setPosition(xOffset + 72, yOffset + 96);
+
+    const toml::array& tomlMainPoints = TA::resmgr::loadToml("worldmap/points.toml").at("main").as_array();
+    const toml::array& tomlSeafoxPoints = TA::resmgr::loadToml("worldmap/points.toml").at("seafox").as_array();
+
+    int64_t areaMask = TA::save::getSaveParameter("area_mask");
+    int idx = 0;
+    for(const toml::value& element : tomlMainPoints) {
+        bool battleFortress = element.contains("battle_fortress") && element.at("battle_fortress").as_boolean();
+        if(battleFortress && (areaMask & (1LL << idx)) != 0) {
+            battleFortressNeeded = true;
+        }
+        idx++;
+    }
+
+    idx = 40;
+    for(const toml::value& element : tomlSeafoxPoints) {
+        bool battleFortress = element.contains("battle_fortress") && element.at("battle_fortress").as_boolean();
+        if(battleFortress && (areaMask & (1LL << idx)) != 0) {
+            battleFortressNeeded = true;
+        }
+        idx++;
+    }
 }
 
 void TA_InGameMap::draw() {
@@ -40,6 +69,13 @@ void TA_InGameMap::draw() {
     }
     for(int i = 0; i < 3; i++) {
         birdSprites[i].draw();
+    }
+
+    timer = std::fmod(timer + TA::elapsedTime, TA::pi * 20);
+    if(battleFortressNeeded) {
+        battleFortressSprite.setPosition(
+            battleFortressBasePos + TA_Point(std::cos(timer * 0.1), std::abs(std::sin(timer * 0.1))));
+        battleFortressSprite.draw();
     }
 }
 

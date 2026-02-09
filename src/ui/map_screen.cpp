@@ -8,8 +8,8 @@ void TA_MapScreen::init() {
         setMaxRings();
     }
 
-    map.load();
     selector.load();
+    map.load();
     TA::sound::playMusic("sound/map.vgm");
     TA::previousLevelPath = "";
 }
@@ -25,10 +25,10 @@ TA_ScreenState TA_MapScreen::update() {
 }
 
 void TA_MapScreen::setMaxRings() {
-    long long itemMask = TA::save::getSaveParameter("item_mask");
+    int64_t itemMask = TA::save::getSaveParameter("item_mask");
     int rings = 8;
     for(int num = 29; num <= 34; num++) {
-        if(itemMask & (1ll << num)) {
+        if((itemMask & (1LL << num)) != 0) {
             rings += 2;
         }
     }

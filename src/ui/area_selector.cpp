@@ -1,4 +1,5 @@
 #include "area_selector.h"
+#include <cmath>
 #include "controller.h"
 #include "resource_manager.h"
 #include "save.h"
@@ -6,6 +7,7 @@
 void TA_AreaSelector::load() {
     controller.load();
     appendPoints();
+    fixAreaMask();
     addSelectedArea();
     setActivePoints();
     loadTailsIcon();
@@ -16,19 +18,17 @@ void TA_AreaSelector::appendPoints() {
     float xOffset = (TA::screenWidth - 256) / 2;
     float yOffset = (TA::screenHeight - 144) / 2;
 
-    toml::array tomlPoints;
-    if(TA::save::getSaveParameter("seafox") == 1) {
-        tomlPoints = TA::resmgr::loadToml("worldmap/points.toml").at("seafox").as_array();
-    } else {
-        tomlPoints = TA::resmgr::loadToml("worldmap/points.toml").at("main").as_array();
-    }
+    const toml::array& tomlMainPoints = TA::resmgr::loadToml("worldmap/points.toml").at("main").as_array();
+    const toml::array& tomlSeafoxPoints = TA::resmgr::loadToml("worldmap/points.toml").at("seafox").as_array();
+    const toml::array& tomlPoints = TA::save::getSaveParameter("seafox") ? tomlSeafoxPoints : tomlMainPoints;
 
-    for(toml::value element : tomlPoints) {
+    for(const toml::value& element : tomlPoints) {
         std::string name = element.at("name").as_string();
         std::string path = (element.contains("path") ? element.at("path").as_string() : "");
         float x = static_cast<float>(element.at("x").as_integer());
         float y = static_cast<float>(element.at("y").as_integer());
-        points.emplace_back(name, path, TA_Point(x + xOffset, y + yOffset));
+        bool battleFortress = element.contains("battle_fortress") && element.at("battle_fortress").as_boolean();
+        points.emplace_back(name, path, TA_Point(x + xOffset, y + yOffset), battleFortress);
 
         if(element.contains("up")) {
             points.back().setNeighbour(TA_DIRECTION_UP, static_cast<int>(element.at("up").as_integer()));
@@ -47,25 +47,39 @@ void TA_AreaSelector::appendPoints() {
     pos = TA::save::getSaveParameter("map_selection");
 }
 
+void TA_AreaSelector::fixAreaMask() {
+    // seafox levels started at 9 instead of 40 before, migrate mask to not break legacy saves
+    int64_t areaMask = TA::save::getSaveParameter("area_mask");
+    if((areaMask & (1LL << 40)) == 0) {
+        for(int add = 0; add <= 20; add++) {
+            if((areaMask & (1LL << (9 + add))) != 0) {
+                areaMask ^= (1LL << (9 + add));
+                areaMask ^= (1LL << (40 + add));
+            }
+        }
+        TA::save::setSaveParameter("area_mask", areaMask);
+    }
+}
+
 void TA_AreaSelector::addSelectedArea() {
-    long long areaMask = TA::save::getSaveParameter("area_mask");
+    int64_t areaMask = TA::save::getSaveParameter("area_mask");
     int index = TA::save::getSaveParameter("map_selection");
     if(TA::save::getSaveParameter("seafox")) {
-        index += 9;
+        index += 40;
     }
 
-    if((areaMask & (1ll << index)) == 0) {
-        areaMask |= (1ll << index);
+    if((areaMask & (1LL << index)) == 0) {
+        areaMask |= (1LL << index);
         TA::save::setSaveParameter("area_mask", areaMask);
         TA::save::setSaveParameter("last_unlocked", index);
     }
 }
 
 void TA_AreaSelector::setActivePoints() {
-    int mask = TA::save::getSaveParameter("area_mask");
-    int add = (TA::save::getSaveParameter("seafox") ? 9 : 0);
-    for(int level = 0; level < (int)points.size(); level++) {
-        if(mask & (1 << (level + add))) {
+    int64_t areaMask = TA::save::getSaveParameter("area_mask");
+    int add = (TA::save::getSaveParameter("seafox") ? 40 : 0);
+    for(int level = 0; level < static_cast<int>(points.size()); level++) {
+        if((areaMask & (1LL << (level + add))) != 0) {
             points[level].activate();
         }
     }
@@ -95,7 +109,13 @@ TA_ScreenState TA_AreaSelector::update() {
     }
 
     TA::save::setSaveParameter("map_selection", pos);
-    tailsIcon.setPosition(points[pos].getPosition() + TA_Point(-2, 8));
+
+    bfTimer = std::fmod(bfTimer + TA::elapsedTime, TA::pi * 20);
+    TA_Point tailsIconPos = points[pos].getPosition() + TA_Point(-2, 8);
+    if(points[pos].isBattleFortress()) {
+        tailsIconPos += TA_Point(std::cos(bfTimer * 0.1), std::abs(std::sin(bfTimer * 0.1)));
+    }
+    tailsIcon.setPosition(tailsIconPos);
 
     if(controller.isJustPressed(TA_BUTTON_A) || controller.isJustPressed(TA_BUTTON_B) || points[pos].updateButton()) {
         TA::levelPath = points[pos].getPath();
@@ -109,7 +129,7 @@ TA_ScreenState TA_AreaSelector::update() {
 
 void TA_AreaSelector::draw() {
     if(TA::save::getSaveParameter("seafox") == 0) {
-        for(int pos = 1; pos < (int)points.size(); pos++) {
+        for(int pos = 1; pos < static_cast<int>(points.size()); pos++) {
             points[pos].draw();
         }
     }
@@ -121,10 +141,11 @@ std::string TA_AreaSelector::getSelectionName() {
     return points[pos].getName();
 }
 
-TA_MapPoint::TA_MapPoint(std::string name, std::string path, TA_Point position) {
+TA_MapPoint::TA_MapPoint(std::string name, std::string path, TA_Point position, bool battleFortress) {
     this->position = position;
     this->name = name;
     this->path = path;
+    this->battleFortress = battleFortress;
     for(int direction = 0; direction < TA_DIRECTION_MAX; direction++) {
         neighbours[direction] = -1;
     }
@@ -143,11 +164,17 @@ void TA_MapPoint::draw() {
     if(!active) {
         return;
     }
-    timer = fmod(timer + TA::elapsedTime, lightTime * 2);
-    if(timer < lightTime) {
-        sprite.setAlpha(255 * timer / appearTime);
+
+    if(battleFortress) {
+        bfTimer = std::fmod(bfTimer + TA::elapsedTime, TA::pi * 20);
+        sprite.setPosition(position + TA_Point(std::cos(bfTimer * 0.1), std::abs(std::sin(bfTimer * 0.1))));
+    }
+
+    lightTimer = std::fmod(lightTimer + TA::elapsedTime, lightTime * 2);
+    if(lightTimer < lightTime) {
+        sprite.setAlpha(255 * lightTimer / appearTime);
     } else {
-        sprite.setAlpha(255 - 255 * (timer - lightTime) / appearTime);
+        sprite.setAlpha(255 - 255 * (lightTimer - lightTime) / appearTime);
     }
     sprite.draw();
 }
