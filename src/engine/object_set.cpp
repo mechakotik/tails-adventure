@@ -256,7 +256,8 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     else if(name == "map_transition") {
         int selection = object.at("selection").as_integer();
         bool seaFox = object.contains("seafox") && object.at("seafox").as_boolean();
-        spawnObject<TA_Transition>(topLeft, bottomRight, selection, seaFox);
+        int unlock = object.contains("unlock") ? object.at("unlock").as_integer() : 0;
+        spawnObject<TA_Transition>(topLeft, bottomRight, selection, seaFox, unlock);
     }
 
     else if(name == "wind") {

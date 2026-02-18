@@ -9,6 +9,7 @@ void TA_DataSelectSection::load() {
     selectorRedSprite.load("data_select/selector.png", 48, 72);
     selectorWhiteSprite.load("data_select/selector.png", 48, 72);
     previewSprite.load("data_select/preview.png", 46, 46);
+    previewSeafoxSprite.load("data_select/preview_seafox.png", 46, 46);
     optionsSprite.load("data_select/options.png");
 
     font.loadFont("fonts/pause_menu.toml");
@@ -141,6 +142,7 @@ void TA_DataSelectSection::drawCustomEntries() {
 void TA_DataSelectSection::drawSaveEntries() {
     entrySprite.setAlpha(alpha);
     previewSprite.setAlpha(alpha);
+    previewSeafoxSprite.setAlpha(alpha);
     font.setAlpha(255 * ((float)alpha / 255) * ((float)alpha / 255));
 
     for(int num = 0; num < 8; num++) {
@@ -149,13 +151,22 @@ void TA_DataSelectSection::drawSaveEntries() {
         entrySprite.setPosition(entryPosition);
         entrySprite.draw();
 
+        previewSprite.setPosition(entryPosition + TA_Point(1, 1));
+        previewSeafoxSprite.setPosition(entryPosition + TA_Point(1, 1));
         if(TA::save::saveExists(num) && num != createdSave) {
-            previewSprite.setFrame(TA::save::getParameter("save_" + std::to_string(num) + "/last_unlocked"));
+            int lastUnlocked =
+                static_cast<int>(TA::save::getParameter("save_" + std::to_string(num) + "/last_unlocked"));
+            if(lastUnlocked >= 41) {
+                previewSeafoxSprite.setFrame(lastUnlocked - 41);
+                previewSeafoxSprite.draw();
+            } else {
+                previewSprite.setFrame(lastUnlocked);
+                previewSprite.draw();
+            }
         } else {
             previewSprite.setFrame(0);
+            previewSprite.draw();
         }
-        previewSprite.setPosition(entryPosition + TA_Point(1, 1));
-        previewSprite.draw();
 
         font.drawText(entryPosition + TA_Point(11, 50), std::to_string(getSavePercent(num)) + "%");
         font.drawText(entryPosition + TA_Point(11, 60), getSaveTime(num), TA_Point(-2, 0));
@@ -227,7 +238,7 @@ int TA_DataSelectSection::getSavePercent(int save) {
     std::string saveName = "save_" + std::to_string(save);
     int areaCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/area_mask"));
     int itemCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/item_mask"));
-    return 50 * (float(areaCount - 3) / 12 + float(itemCount - 2) / 30);
+    return 50 * (float(areaCount - 3) / 13 + float(itemCount - 2) / 30);
 }
 
 std::string TA_DataSelectSection::getSaveTime(int save) {

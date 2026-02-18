@@ -11,7 +11,7 @@ level_transition = [
 	{ path="maps/bf/bf1", left=176, top=3070, right=336, bottom=3072 },
 ]
 land_cutscene = [
-	{ x=200, y=114, land_y=73, selection=8 },
+	{ x=200, y=114, land_y=73, selection=9 },
 ]
 
 [objects.default]

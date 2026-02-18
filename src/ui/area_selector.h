@@ -43,11 +43,12 @@ private:
     bool battleFortress;
 
     bool active = false;
+    bool highlight = true;
     float bfTimer = 0;
     float lightTimer = 0;
 
 public:
-    TA_MapPoint(std::string name, std::string path, TA_Point position, bool battleFortress);
+    TA_MapPoint(std::string name, std::string path, TA_Point position, bool highlight, bool battleFortress);
     void setNeighbour(TA_Direction direction, int neighbour) { neighbours[direction] = neighbour; }
     void activate() { active = true; }
     bool updateButton();

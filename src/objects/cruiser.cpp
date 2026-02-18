@@ -146,7 +146,7 @@ void TA_Cruiser::updateDestroyed() {
     if(position.x < lockPosition.x - getWidth() - 32) {
         TA::sound::playMusic("sound/lr.vgm");
         objectSet->spawnObject<TA_Transition>(lockPosition + TA_Point(TA::screenWidth + 64, 0),
-            lockPosition + TA_Point(TA::screenWidth + 66, TA::screenHeight), 6, false);
+            lockPosition + TA_Point(TA::screenWidth + 66, TA::screenHeight), 6, false, 0);
         state = State::POST_DESTROYED;
     }
 

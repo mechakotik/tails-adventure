@@ -20,7 +20,7 @@ pushable_object = [
 	{ tile_x=20, tile_y=2, offset_x=1, path="objects/weight.png" },
 ]
 map_transition = [
-	{ selection=8, left=0, top=320, right=2, bottom=352 },
+	{ selection=8, unlock=43, left=0, top=320, right=2, bottom=352 },
 ]
 
 [[objects.static.dr_fukurokov]]

@@ -36,7 +36,7 @@ private:
     std::vector<std::string> generateSplashSequence();
     std::string generateSplash();
 
-    TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite, optionsSprite;
+    TA_Sprite entrySprite, selectorRedSprite, selectorWhiteSprite, previewSprite, previewSeafoxSprite, optionsSprite;
     TA_Sound switchSound, selectSound, loadSaveSound;
     TA_Font font, splashFont;
     float timer = 0, selectorTimer = 0;

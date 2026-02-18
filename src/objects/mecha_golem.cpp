@@ -10,7 +10,7 @@
 
 void TA_MechaGolem::load() {
     if(isComplete()) {
-        objectSet->spawnObject<TA_Transition>(TA_Point(510, 0), TA_Point(512, 144), 4, false);
+        objectSet->spawnObject<TA_Transition>(TA_Point(510, 0), TA_Point(512, 144), 4, false, 0);
         return;
     }
 

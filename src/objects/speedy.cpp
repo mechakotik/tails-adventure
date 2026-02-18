@@ -16,7 +16,7 @@ void TA_Speedy::load() {
 
     if(isComplete()) {
         objectSet->spawnObject<TA_Transition>(
-            TA_Point(leftX + TA::screenWidth - 2, 3888), TA_Point(leftX + TA::screenWidth, 4016), 3, false);
+            TA_Point(leftX + TA::screenWidth - 2, 3888), TA_Point(leftX + TA::screenWidth, 4016), 3, false, 0);
         return;
     }
 

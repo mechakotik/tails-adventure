@@ -8,13 +8,14 @@ class TA_Transition : public TA_Object {
 private:
     TA_ScreenState screenState;
     std::string levelPath;
-    int selection;
-    bool seaFox;
+    int selection = 0;
+    bool seaFox = false;
+    int unlock = 0;
 
 public:
     using TA_Object::TA_Object;
     void load(TA_Point topLeft, TA_Point bottomRight, std::string levelPath);
-    void load(TA_Point topLeft, TA_Point bottomRight, int selection, bool seaFox);
+    void load(TA_Point topLeft, TA_Point bottomRight, int selection, bool seaFox, int unlock);
     bool update() override;
     void draw() override;
 };

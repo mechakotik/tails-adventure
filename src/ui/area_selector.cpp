@@ -27,8 +27,9 @@ void TA_AreaSelector::appendPoints() {
         std::string path = (element.contains("path") ? element.at("path").as_string() : "");
         float x = static_cast<float>(element.at("x").as_integer());
         float y = static_cast<float>(element.at("y").as_integer());
+        bool highlight = !element.contains("highlight") || element.at("highlight").as_boolean();
         bool battleFortress = element.contains("battle_fortress") && element.at("battle_fortress").as_boolean();
-        points.emplace_back(name, path, TA_Point(x + xOffset, y + yOffset), battleFortress);
+        points.emplace_back(name, path, TA_Point(x + xOffset, y + yOffset), highlight, battleFortress);
 
         if(element.contains("up")) {
             points.back().setNeighbour(TA_DIRECTION_UP, static_cast<int>(element.at("up").as_integer()));
@@ -77,8 +78,13 @@ void TA_AreaSelector::addSelectedArea() {
 
 void TA_AreaSelector::setActivePoints() {
     int64_t areaMask = TA::save::getSaveParameter("area_mask");
-    int add = (TA::save::getSaveParameter("seafox") ? 40 : 0);
+    int64_t itemMask = TA::save::getSaveParameter("item_mask");
+    bool seafox = (TA::save::getSaveParameter("seafox") != 0);
+    int add = (seafox ? 40 : 0);
     for(int level = 0; level < static_cast<int>(points.size()); level++) {
+        if(seafox && points[level].isBattleFortress() && (itemMask & (1LL << 25)) == 0) {
+            continue;
+        }
         if((areaMask & (1LL << (level + add))) != 0) {
             points[level].activate();
         }
@@ -128,10 +134,8 @@ TA_ScreenState TA_AreaSelector::update() {
 }
 
 void TA_AreaSelector::draw() {
-    if(TA::save::getSaveParameter("seafox") == 0) {
-        for(int pos = 1; pos < static_cast<int>(points.size()); pos++) {
-            points[pos].draw();
-        }
+    for(int pos = 1; pos < static_cast<int>(points.size()); pos++) {
+        points[pos].draw();
     }
     tailsIcon.draw();
     controller.draw();
@@ -141,10 +145,11 @@ std::string TA_AreaSelector::getSelectionName() {
     return points[pos].getName();
 }
 
-TA_MapPoint::TA_MapPoint(std::string name, std::string path, TA_Point position, bool battleFortress) {
+TA_MapPoint::TA_MapPoint(std::string name, std::string path, TA_Point position, bool highlight, bool battleFortress) {
     this->position = position;
     this->name = name;
     this->path = path;
+    this->highlight = highlight;
     this->battleFortress = battleFortress;
     for(int direction = 0; direction < TA_DIRECTION_MAX; direction++) {
         neighbours[direction] = -1;
@@ -161,7 +166,7 @@ bool TA_MapPoint::updateButton() {
 }
 
 void TA_MapPoint::draw() {
-    if(!active) {
+    if(!active || !highlight) {
         return;
     }
 
