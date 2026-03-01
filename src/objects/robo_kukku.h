@@ -22,8 +22,10 @@ public:
 
 private:
     static constexpr float cooldown = 60;
+    static constexpr float globalCooldown = 300;
 
     float timer = 0;
+    float globalTimer = 0;
     bool flip = false;
     bool lock = false;
 };

@@ -12,6 +12,7 @@ void TA_RoboKukku::load(TA_Point position, bool flip, bool* lock) {
     this->position = position;
     this->flip = flip;
     this->lock = lock;
+    this->collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
     hitbox.setRectangle({3, 5}, {13, 32});
     velocity = {flip ? -1 : 1, 0};
     updatePosition();
@@ -42,15 +43,17 @@ bool TA_RoboKukku::update() {
         }
     }
 
-    bool destroy = false;
-    destroy |= (TA::equal(velocity.x, 0) && TA::equal(velocity.y, 0));
-    destroy |= (collisionFlags & TA_COLLISION_CHARACTER) != 0;
-    destroy |= (TA::equal(velocity.y, 0) &&
-                (collisionFlags & (TA_COLLISION_CONVEYOR_BELT_LEFT | TA_COLLISION_CONVEYOR_BELT_RIGHT)) == 0);
+    bool destroy = (collisionFlags & TA_COLLISION_CHARACTER) != 0;
+    bool destroyFriendly = false;
+    destroyFriendly |= (collisionFlags & TA_COLLISION_ATTACK) != 0;
+    destroyFriendly |= (TA::equal(velocity.y, 0) &&
+                        (collisionFlags & (TA_COLLISION_CONVEYOR_BELT_LEFT | TA_COLLISION_CONVEYOR_BELT_RIGHT)) == 0);
+    destroyFriendly |= (TA::equal(velocity.x, 0) && TA::equal(velocity.y, 0));
 
-    if(destroy) {
+    if(destroy || destroyFriendly) {
         objectSet->spawnObject<TA_DeadKukku>(position);
-        objectSet->spawnObject<TA_Explosion>(position + TA_Point(0, 16), 0, TA_EXPLOSION_ENEMY);
+        objectSet->spawnObject<TA_Explosion>(
+            position + TA_Point(0, 16), 0, destroyFriendly ? TA_EXPLOSION_NEUTRAL : TA_EXPLOSION_ENEMY);
         *lock = false;
         return false;
     }
@@ -63,15 +66,17 @@ void TA_RoboKukkuSpawner::load(TA_Point position, bool flip) {
 }
 
 bool TA_RoboKukkuSpawner::update() {
+    globalTimer += TA::elapsedTime;
     if(lock || !objectSet->isVisible(TA_Rect(position - TA_Point(16, 16), position + TA_Point(32, 48)))) {
         return true;
     }
 
     timer += TA::elapsedTime;
-    if(timer > cooldown) {
+    if(timer > cooldown && globalTimer > globalCooldown) {
         objectSet->spawnObject<TA_RoboKukku>(position - TA_Point(0, 1), flip, &lock);
         lock = true;
         timer = 0;
+        globalTimer = 0;
     }
 
     return true;
