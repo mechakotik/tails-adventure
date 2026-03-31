@@ -43,7 +43,7 @@ private:
     TA_Point startPosition, controlPosition;
     TA_Rect controlHitbox;
 
-    TA_Sound drFukurokovSound;
+    TA_Sound waitSound;
     TA_Sound quickFallSound;
 
     TA_Sprite characterMock;

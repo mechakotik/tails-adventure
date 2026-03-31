@@ -15,7 +15,7 @@ void TA_DrFukurokov::load(const Properties& properties) {
     // TODO: don't hardcode music path
     TA::sound::playMusic("sound/boss.vgm");
 
-    drFukurokovSound.load("sound/dr_fukurokov.ogg", TA_SOUND_CHANNEL_SFX1);
+    waitSound.load("sound/boss_wait.ogg", TA_SOUND_CHANNEL_SFX1);
     quickFallSound.load("sound/quick_fall.ogg", TA_SOUND_CHANNEL_SFX1);
 
     mockPosition = objectSet->getCharacterSpawnPoint();
@@ -84,7 +84,7 @@ void TA_DrFukurokov::updateWaitCharacter() {
     objectSet->getLinks().camera->setFollowPosition(&followPosition);
 
     if(prevX < position.x - 80 && mockPosition.x >= position.x - 80) {
-        drFukurokovSound.play();
+        waitSound.play();
     }
 
     if(mockPosition.x > position.x - 41) {

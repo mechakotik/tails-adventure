@@ -40,6 +40,7 @@
 #include "objects/sliding_bomb.h"
 #include "objects/sniper.h"
 #include "objects/speedy.h"
+#include "objects/speedy2.h"
 #include "objects/transition.h"
 #include "objects/underwater_barrier.h"
 #include "objects/underwater_gun.h"
@@ -490,6 +491,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
     else if(name == "cannon_launcher") {
         bool flip = object.contains("flip") && object.at("flip").as_boolean();
         spawnObject<TA_CannonLauncher>(position, flip);
+    }
+
+    else if(name == "speedy2") {
+        spawnObject<TA_Speedy2>(position);
     }
 
     else {

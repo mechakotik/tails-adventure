@@ -1,0 +1,29 @@
+[sprite]
+image = "speedy2.png"
+width = 32
+height = 40
+
+[animations]
+fly = 6
+fly_forward = 4
+fly_back = 5
+electro_release = 7
+fire_release = 7
+
+[animations.wait]
+frames = [2, 3]
+delay = 6
+
+[animations.electro_charge]
+frames = [6, 4, 6, 5]
+delay = 6
+
+[animations.fire_charge]
+frames = [2, 0, 1]
+delay = 6
+
+[animations.destroyed]
+frames = [0, 1, 7]
+delay = 6
+repeat = 12
+

@@ -1,0 +1,11 @@
+[level]
+music = "sound/bf.vgm"
+spawn = [
+	{ x=277, y=409 },
+]
+
+[objects.static]
+speedy2 = [
+	{ tile_x=15, tile_y=17 },
+]
+

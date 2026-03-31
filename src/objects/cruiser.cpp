@@ -2,7 +2,6 @@
 #include "barrel.h"
 #include "dead_kukku.h"
 #include "explosion.h"
-#include "ring.h"
 #include "sea_fox.h"
 #include "transition.h"
 
