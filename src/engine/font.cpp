@@ -21,7 +21,7 @@ void TA_Font::tryLoadFont(const std::filesystem::path& path) {
     setMapping(table.at("font").at("mapping").as_string());
 }
 
-std::string TA_Font::getUtf8Char(const std::string& text, int pos) {
+std::string TA_Font::getUtf8Rune(const std::string& text, int pos) {
     if(pos >= text.size()) {
         TA::handleError("UTF8 symbol position out of range (text = %s, pos = %i)", text.c_str(), pos);
     }
@@ -54,7 +54,7 @@ void TA_Font::setMapping(const std::string& mappingString) {
     mapping.clear();
     int frame = 0;
     for(int pos = 0; pos < static_cast<int>(mappingString.length());) {
-        std::string symbol = getUtf8Char(mappingString, pos);
+        std::string symbol = getUtf8Rune(mappingString, pos);
         mapping[symbol] = frame;
         frame++;
         pos += static_cast<int>(symbol.size());
@@ -64,7 +64,7 @@ void TA_Font::setMapping(const std::string& mappingString) {
 void TA_Font::drawText(TA_Point position, std::string text, TA_Point offset) {
     TA_Point currentPosition = position;
     for(int pos = 0; pos < static_cast<int>(text.length());) {
-        std::string symbol = getUtf8Char(text, pos);
+        std::string symbol = getUtf8Rune(text, pos);
         if(mapping.count(symbol)) {
             setPosition(currentPosition);
             setFrame(mapping[symbol]);
@@ -87,7 +87,7 @@ float TA_Font::getTextWidth(std::string text, TA_Point offset) {
     float currentWidth = 0;
     float maxWidth = 0;
     for(int pos = 0; pos < static_cast<int>(text.length());) {
-        std::string symbol = getUtf8Char(text, pos);
+        std::string symbol = getUtf8Rune(text, pos);
         if(symbol != "\n") {
             currentWidth += getWidth() + offset.x;
             maxWidth = std::max(maxWidth, currentWidth);

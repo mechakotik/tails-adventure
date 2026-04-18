@@ -1,0 +1,39 @@
+credits = [
+	{ lines=["tails adventure", "remake"] },
+	{ line="staff" },
+	
+	{ lines=["producer", "k.hasegawa"], sides=true },
+	{ lines=["director", "k.hasegawa"], sides=true },
+	
+	{ line="game designers", head=true },
+	{ line="m.simamura" },
+	{ line="o.kodera" },
+	
+	{ line="artists", head=true },
+	{ line="n.honda" },
+	{ line="s.higashi" },
+	
+	{ line="programmers", head=true },
+	{ line="k.oikawa" },
+	{ line="h.saigusa" },
+	{ line="y.makishima" },
+	{ line="mechakotik" },
+	
+	{ lines=["sound composer", "k.mixa"] },
+	
+	{ line="special thanks to", head=true },
+	{ line="t.ihoroi" },
+	{ line="p.tezuka" },
+	{ line="h.yoshida" },
+	{ line="r.fujimura" },
+	{ line="r.hasegawa" },
+	{ line="o.nakazoto" },
+	{ line="t.kojima" },
+	{ line="suppertails66" },
+	{ line="remake contributors" },
+	{ line="sonic fangames hq" },
+	{ line="...and you" },
+	{ line="presented by sega" },
+	{ line="e n d" }
+]
+

@@ -16,7 +16,7 @@ public:
 
 private:
     void tryLoadFont(const std::filesystem::path& path);
-    static std::string getUtf8Char(const std::string& text, int pos);
+    static std::string getUtf8Rune(const std::string& text, int pos);
 
     std::map<std::string, int> mapping;
 };
