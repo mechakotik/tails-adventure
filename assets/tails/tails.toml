@@ -119,3 +119,7 @@ frames = [97, 98, 99, 100]
 delay = 6
 repeat = 1
 
+[animations.run]
+frames = [117, 118, 119, 120, 121, 116]
+delay = 6
+

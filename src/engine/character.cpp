@@ -194,6 +194,8 @@ void TA_Character::updateAnimation() {
             setAnimation("idle");
         } else if(wall) {
             setAnimation("push");
+        } else if(usingSpeedBoots) {
+            setAnimation("run");
         } else {
             setAnimation("walk");
         }
