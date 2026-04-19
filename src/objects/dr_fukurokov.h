@@ -40,6 +40,8 @@ private:
     void updateGun(Gun& gun);
 
     State state = State::WAIT_CHARACTER;
+    bool firstUpdate = true;
+
     TA_Point startPosition, controlPosition;
     TA_Rect controlHitbox;
 

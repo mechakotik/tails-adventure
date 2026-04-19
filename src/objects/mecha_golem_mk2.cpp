@@ -52,7 +52,7 @@ void TA_MechaGolemMk2::load(TA_Point position, TA_Point enterBlockerPosition, TA
     hitSound.load("sound/hit.ogg", TA_SOUND_CHANNEL_SFX2);
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
-    if((TA::save::getSaveParameter("item_mask") & (1 << 21)) != 0) {
+    if((TA::save::getSaveParameter("boss_mask") & TA_BOSS_MECHA_GOLEM_MK2) != 0) {
         initDefeated();
     }
 }
@@ -221,6 +221,10 @@ void TA_MechaGolemMk2::initDefeated() {
     hitboxVector[HITBOX_BODY].collisionType = TA_COLLISION_TRANSPARENT;
     hitboxVector[HITBOX_HEAD].collisionType = TA_COLLISION_TRANSPARENT;
     state = State::DEFEATED;
+
+    int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+    bossMask |= TA_BOSS_MECHA_GOLEM_MK2;
+    TA::save::setSaveParameter("boss_mask", bossMask);
 }
 
 void TA_MechaGolemMk2::updateDamage() {

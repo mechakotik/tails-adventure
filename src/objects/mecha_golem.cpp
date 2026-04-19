@@ -6,8 +6,8 @@
 #include "item_box.h"
 #include "mecha_golem_bomb.h"
 #include "save.h"
-#include "transition.h"
 #include "tools.h"
+#include "transition.h"
 
 void TA_MechaGolem::load() {
     if(isComplete()) {
@@ -119,8 +119,8 @@ bool TA_MechaGolem::update() {
 }
 
 bool TA_MechaGolem::isComplete() {
-    long long itemMask = TA::save::getSaveParameter("item_mask");
-    return itemMask & (1ll << 22);
+    int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+    return (bossMask & TA_BOSS_MECHA_GOLEM) != 0;
 }
 
 void TA_MechaGolem::updateIdle() {
@@ -454,10 +454,15 @@ void TA_MechaGolem::updateDefeated() {
 }
 
 bool TA_MechaGolem::canDoTransition() {
-    return isComplete() && !objectSet->getLinks().character->isGettingItem();
+    int64_t itemMask = TA::save::getSaveParameter("item_mask");
+    return (itemMask & (1LL << 22)) != 0 && !objectSet->getLinks().character->isGettingItem();
 }
 
 void TA_MechaGolem::doTransition() {
+    int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+    bossMask |= TA_BOSS_MECHA_GOLEM;
+    TA::save::setSaveParameter("boss_mask", bossMask);
+
     TA::save::setSaveParameter("map_selection", 4);
     TA::save::setSaveParameter("seafox", 0);
     objectSet->setTransition(TA_SCREENSTATE_MAP);

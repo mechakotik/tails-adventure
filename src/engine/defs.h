@@ -48,4 +48,14 @@ enum TA_FunctionButton {
     TA_BUTTON_MAX,
 };
 
+enum TA_BossFlag {
+    TA_BOSS_BIRD_WALKER = (1 << 0),
+    TA_BOSS_SPEEDY = (1 << 1),
+    TA_BOSS_MECHA_GOLEM = (1 << 2),
+    TA_BOSS_CRUISER = (1 << 3),
+    TA_BOSS_MECHA_GOLEM_MK2 = (1 << 4),
+    TA_BOSS_DR_FUKUROKOV = (1 << 5),
+    TA_BOSS_SPEEDY2 = (1 << 6),
+};
+
 #endif

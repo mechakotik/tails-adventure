@@ -2,11 +2,26 @@
 #include "barrel.h"
 #include "dead_kukku.h"
 #include "explosion.h"
+#include "save.h"
 #include "sea_fox.h"
-#include "transition.h"
 #include "tools.h"
+#include "transition.h"
+
+namespace {
+    bool isComplete() {
+        int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+        return (bossMask & TA_BOSS_CRUISER) != 0;
+    }
+} // namespace
 
 void TA_Cruiser::load() {
+    lockPosition = {32, 240 - TA::screenHeight};
+    objectSet->getLinks().camera->setLockPosition(lockPosition);
+
+    if(isComplete()) {
+        return;
+    }
+
     loadFromToml("objects/cruiser/cruiser.toml");
     hitbox.setRectangle({16, 45}, {164, 94});
     collisionType = TA_COLLISION_DAMAGE | TA_COLLISION_TARGET;
@@ -34,11 +49,16 @@ void TA_Cruiser::load() {
 
     updatePosition();
     updateBorderPosition();
-    lockPosition = {32, 240 - TA::screenHeight};
-    objectSet->getLinks().camera->setLockPosition(lockPosition);
 }
 
 bool TA_Cruiser::update() {
+    if(firstUpdate && isComplete()) {
+        objectSet->spawnObject<TA_Transition>(lockPosition + TA_Point(TA::screenWidth, 0),
+            lockPosition + TA_Point(TA::screenWidth + 66, TA::screenHeight), 6, false, 0);
+        return false;
+    }
+    firstUpdate = false;
+
     switch(state) {
         case State::IDLE:
             updateIdle();
@@ -128,6 +148,9 @@ void TA_Cruiser::updateDamage() {
             hitSound.play();
             health--;
             if(health == 0) {
+                int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+                bossMask |= TA_BOSS_CRUISER;
+                TA::save::setSaveParameter("boss_mask", bossMask);
                 state = State::DESTROYED;
             }
         }

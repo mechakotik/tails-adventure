@@ -1,11 +1,23 @@
 #include "speedy2.h"
+#include "defs.h"
 #include "explosion.h"
+#include "save.h"
 #include "speedy2_electro.h"
 #include "speedy2_fire.h"
-#include "defs.h"
 #include "tools.h"
 
+namespace {
+    bool isComplete() {
+        int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+        return (bossMask & TA_BOSS_SPEEDY2) != 0;
+    }
+} // namespace
+
 void TA_Speedy2::load(TA_Point origin) {
+    if(isComplete()) {
+        return;
+    }
+
     loadFromToml("objects/speedy2/speedy2.toml");
     flashSprite.loadFromToml("objects/speedy2/flash.toml");
     flashSprite.setCamera(objectSet->getLinks().camera);
@@ -39,12 +51,22 @@ void TA_Speedy2::load(TA_Point origin) {
 }
 
 bool TA_Speedy2::update() {
+    if(isComplete()) {
+        return false;
+    }
+
     if(health <= 0) {
         updateDestroyed();
+
         if(!isAnimated()) {
+            int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+            bossMask |= TA_BOSS_SPEEDY2;
+            TA::save::setSaveParameter("boss_mask", bossMask);
+
             TA::sound::playMusic("sound/bf.vgm");
             return false;
         }
+
         return isAnimated();
     }
 

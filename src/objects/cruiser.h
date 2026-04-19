@@ -24,6 +24,7 @@ private:
     State state = State::IDLE;
     TA_Point lockPosition;
     bool cameraNormalized = false;
+    bool firstUpdate = true;
 
     TA_Sprite watcherSprite;
     TA_Sprite leftThrowerSprite;

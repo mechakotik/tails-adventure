@@ -1,13 +1,14 @@
 #include "bird_walker.h"
 #include <cmath>
 #include "bullet.h"
+#include "defs.h"
 #include "explosion.h"
 #include "gamepad.h"
 #include "save.h"
 #include "tools.h"
 
 void TA_BirdWalker::load(float newFloorY) {
-    if(TA::save::getSaveParameter("boss_mask") & (1ll << 0)) {
+    if((TA::save::getSaveParameter("boss_mask") & TA_BOSS_BIRD_WALKER) != 0) {
         return;
     }
 
@@ -107,7 +108,7 @@ void TA_BirdWalker::insertBorderHitboxes() {
 }
 
 bool TA_BirdWalker::update() {
-    if(TA::save::getSaveParameter("boss_mask") & (1ll << 0)) {
+    if((TA::save::getSaveParameter("boss_mask") & TA_BOSS_BIRD_WALKER) != 0) {
         return false;
     }
 
@@ -342,7 +343,7 @@ bool TA_BirdWalker::update() {
                 TA::sound::playMusic("sound/pf.vgm");
 
                 long long bossMask = TA::save::getSaveParameter("boss_mask");
-                bossMask |= (1ll << 0);
+                bossMask |= TA_BOSS_BIRD_WALKER;
                 TA::save::setSaveParameter("boss_mask", bossMask);
 
                 return false;

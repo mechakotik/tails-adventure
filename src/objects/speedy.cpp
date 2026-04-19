@@ -1,8 +1,8 @@
 #include "speedy.h"
 #include "character.h"
+#include "defs.h"
 #include "item_box.h"
 #include "save.h"
-#include "defs.h"
 #include "tools.h"
 #include "transition.h"
 
@@ -24,8 +24,7 @@ void TA_Speedy::load() {
 }
 
 bool TA_Speedy::isComplete() {
-    long long itemMask = TA::save::getSaveParameter("item_mask");
-    return itemMask & (1ll << 33);
+    return (TA::save::getSaveParameter("boss_mask") & TA_BOSS_SPEEDY) != 0;
 }
 
 void TA_Speedy::loadSprite() {
@@ -312,7 +311,8 @@ void TA_Speedy::updateEndSequencePhase5() {
 }
 
 void TA_Speedy::updateWaitItem() {
-    if(!(isComplete() && !objectSet->getLinks().character->isGettingItem())) {
+    int64_t itemMask = TA::save::getSaveParameter("item_mask");
+    if((itemMask & (1LL << 33)) == 0 || objectSet->getLinks().character->isGettingItem()) {
         return;
     }
 
@@ -346,11 +346,16 @@ void TA_Speedy::updateFlip() {
 }
 
 void TA_Speedy::doTransition() {
-    long long areaMask = TA::save::getSaveParameter("area_mask");
+    int64_t areaMask = TA::save::getSaveParameter("area_mask");
     areaMask |= (1LL << 41);
     TA::save::setSaveParameter("area_mask", areaMask);
+
+    int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+    bossMask |= TA_BOSS_SPEEDY;
+    TA::save::setSaveParameter("boss_mask", bossMask);
+
     TA::save::setSaveParameter("last_unlocked", 41);
-    TA::save::setSaveParameter("seafox", true);
+    TA::save::setSaveParameter("seafox", 1);
     objectSet->setTransition(TA_SCREENSTATE_HOUSE);
 }
 
