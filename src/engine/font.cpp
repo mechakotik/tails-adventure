@@ -1,5 +1,4 @@
 #include "font.h"
-#include <utility>
 #include "error.h"
 #include "resource_manager.h"
 #include "tools.h"

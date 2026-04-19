@@ -1,9 +1,8 @@
 #include "tilemap.h"
 #include <error.h>
 #include <algorithm>
-#include <sstream>
 #include <tmxpp.hpp>
-#include "character.h"
+#include "defs.h"
 #include "resource_manager.h"
 #include "tools.h"
 

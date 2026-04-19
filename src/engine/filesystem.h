@@ -2,6 +2,7 @@
 #define TA_FILESYSTEM_H
 
 #include <filesystem>
+#include <string>
 
 namespace TA::filesystem {
     bool fileExists(std::filesystem::path path);

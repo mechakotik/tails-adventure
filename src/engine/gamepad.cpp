@@ -1,7 +1,7 @@
 #include "gamepad.h"
 #include <array>
+#include <string>
 #include "save.h"
-#include "tools.h"
 
 namespace TA::gamepad {
     void updateMapping();

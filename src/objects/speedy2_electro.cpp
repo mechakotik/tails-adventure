@@ -1,5 +1,6 @@
 #include "speedy2_electro.h"
 #include "explosion.h"
+#include "tools.h"
 
 void TA_Speedy2Electro::load(TA_Point position) {
     this->position = position;

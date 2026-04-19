@@ -1,0 +1,51 @@
+#ifndef TA_DEFS_H
+#define TA_DEFS_H
+
+enum TA_CollisionType {
+    TA_COLLISION_TRANSPARENT = 0,
+    TA_COLLISION_SOLID = (1 << 0),
+    TA_COLLISION_SOLID_UP = (1 << 1),
+    TA_COLLISION_SOLID_DOWN = (1 << 2),
+    TA_COLLISION_DAMAGE = (1 << 3),
+    TA_COLLISION_ATTACK = (1 << 4),
+    TA_COLLISION_BOMB = (1 << 5),
+    TA_COLLISION_CHARACTER = (1 << 6),
+    TA_COLLISION_PUSHABLE = (1 << 7),
+    TA_COLLISION_SPRING = (1 << 8),
+    TA_COLLISION_MOVING_PLATFORM = (1 << 9),
+    TA_COLLISION_WATER = (1 << 10),
+    TA_COLLISION_NAPALM = (1 << 11),
+    TA_COLLISION_DRILL = (1 << 12),
+    TA_COLLISION_CONVEYOR_BELT_LEFT = (1 << 13),
+    TA_COLLISION_CONVEYOR_BELT_RIGHT = (1 << 14),
+    TA_COLLISION_TARGET = (1 << 15),
+    TA_COLLISION_ATTACK_STRONG = (1 << 16),
+    TA_COLLISION_UNSTABLE = (1 << 17),
+    TA_COLLISION_REMOTE_ROBOT_BLOCKER = (1 << 18),
+};
+
+enum TA_CollisionState {
+    TA_GROUND_COLLISION = (1 << 0),
+    TA_WALL_COLLISION = (1 << 1),
+    TA_CEIL_COLLISION = (1 << 2),
+    TA_COLLISION_ERROR = (1 << 3)
+};
+
+enum TA_Direction {
+    TA_DIRECTION_UP,
+    TA_DIRECTION_DOWN,
+    TA_DIRECTION_LEFT,
+    TA_DIRECTION_RIGHT,
+    TA_DIRECTION_MAX,
+};
+
+enum TA_FunctionButton {
+    TA_BUTTON_A,
+    TA_BUTTON_B,
+    TA_BUTTON_PAUSE,
+    TA_BUTTON_LB,
+    TA_BUTTON_RB,
+    TA_BUTTON_MAX,
+};
+
+#endif

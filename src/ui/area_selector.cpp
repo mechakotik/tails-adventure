@@ -3,6 +3,7 @@
 #include "controller.h"
 #include "resource_manager.h"
 #include "save.h"
+#include "tools.h"
 
 void TA_AreaSelector::load() {
     controller.load();

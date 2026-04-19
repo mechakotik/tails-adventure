@@ -1,5 +1,6 @@
 #include "devmenu_screen.h"
 #include "save.h"
+#include "tools.h"
 
 void TA_DevmenuScreen::init() {
     controller.load();

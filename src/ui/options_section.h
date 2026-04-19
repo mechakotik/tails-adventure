@@ -1,11 +1,15 @@
 #ifndef TA_OPTIONS_MENU_H
 #define TA_OPTIONS_MENU_H
 
+#include <array>
 #include <memory>
+#include <string>
+#include <vector>
 #include "controller.h"
 #include "font.h"
 #include "main_menu_section.h"
 #include "sound.h"
+#include "tools.h"
 
 enum TA_MoveSoundId { TA_MOVE_SOUND_SWITCH, TA_MOVE_SOUND_SELECT, TA_MOVE_SOUND_ERROR, TA_MOVE_SOUND_EMPTY };
 

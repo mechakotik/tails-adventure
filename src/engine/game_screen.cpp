@@ -1,6 +1,7 @@
 #include "game_screen.h"
 #include "resource_manager.h"
 #include "save.h"
+#include "tools.h"
 
 void TA_GameScreen::init() {
     const toml::value& table = TA::resmgr::loadToml(TA::levelPath + ".toml");

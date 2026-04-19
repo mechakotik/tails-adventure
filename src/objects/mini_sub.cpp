@@ -1,6 +1,7 @@
 #include "mini_sub.h"
 #include "dead_kukku.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_MiniSub::load(TA_Point position) {
     loadFromToml("objects/mini_sub.toml");

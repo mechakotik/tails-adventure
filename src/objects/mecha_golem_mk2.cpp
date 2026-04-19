@@ -4,6 +4,7 @@
 #include "mecha_golem_energy_shot.h"
 #include "save.h"
 #include "sound.h"
+#include "tools.h"
 
 void TA_MechaGolemMk2::load(TA_Point position, TA_Point enterBlockerPosition, TA_Point exitBlockerPosition) {
     this->position = position;

@@ -2,7 +2,8 @@
 #include "explosion.h"
 #include "speedy2_electro.h"
 #include "speedy2_fire.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_Speedy2::load(TA_Point origin) {
     loadFromToml("objects/speedy2/speedy2.toml");

@@ -4,7 +4,8 @@
 #include "ring.h"
 #include "save.h"
 #include "splash.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 int TA_Character::getSolidFlags() {
     int flags = TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE;

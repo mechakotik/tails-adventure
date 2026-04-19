@@ -7,6 +7,7 @@
 #include "mecha_golem_bomb.h"
 #include "save.h"
 #include "transition.h"
+#include "tools.h"
 
 void TA_MechaGolem::load() {
     if(isComplete()) {

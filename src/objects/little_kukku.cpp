@@ -1,6 +1,7 @@
 #include "little_kukku.h"
 #include "explosion.h"
 #include "ring.h"
+#include "tools.h"
 
 void TA_LittleKukku::load(TA_Point position) {
     loadFromToml("objects/little_kukku.toml");

@@ -1,8 +1,7 @@
 #include "beehive.h"
 #include "explosion.h"
 #include "geometry.h"
-#include "sprite.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_BeeHive::load(TA_Point position) {

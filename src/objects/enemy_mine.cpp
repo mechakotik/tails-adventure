@@ -1,6 +1,7 @@
 #include "enemy_mine.h"
 #include <cmath>
 #include "explosion.h"
+#include "tools.h"
 
 void TA_EnemyMine::load(TA_Point position, bool fall) {
     TA_Sprite::load("objects/enemy_mine.png");

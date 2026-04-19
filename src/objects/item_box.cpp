@@ -3,7 +3,7 @@
 #include "character.h"
 #include "resource_manager.h"
 #include "save.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName) {

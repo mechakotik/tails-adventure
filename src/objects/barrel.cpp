@@ -1,6 +1,7 @@
 #include "barrel.h"
 #include "explosion.h"
 #include "splash.h"
+#include "tools.h"
 
 void TA_Barrel::load(TA_Point position, TA_Point velocity) {
     loadFromToml("objects/cruiser/barrel.toml");

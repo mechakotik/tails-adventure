@@ -4,6 +4,7 @@
 #include "large_bomb.h"
 #include "objects/bomb.h"
 #include "tilemap.h"
+#include "tools.h"
 
 void TA_Character::updateTool() {
     if(usingNightVision) {

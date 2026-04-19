@@ -1,6 +1,6 @@
 #include "hover_pod.h"
 #include "dead_kukku.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_HoverPod::load(TA_Point newPosition, int range, bool flip) {

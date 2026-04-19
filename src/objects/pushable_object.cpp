@@ -1,6 +1,6 @@
 #include "pushable_object.h"
 #include "character.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_PushableObject::load(std::string filename, TA_Point newPosition) {

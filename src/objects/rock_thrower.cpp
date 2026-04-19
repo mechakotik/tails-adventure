@@ -1,6 +1,7 @@
 #include "rock_thrower.h"
 #include "dead_kukku.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_RockThrower::load(TA_Point position, bool direction) {
     this->position = position;

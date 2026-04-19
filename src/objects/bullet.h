@@ -2,7 +2,7 @@
 #define TA_BULLET_H
 
 #include "object_set.h"
-#include "tilemap.h"
+#include "defs.h"
 
 class TA_Bullet : public TA_Object {
 private:

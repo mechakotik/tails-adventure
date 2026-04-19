@@ -1,4 +1,5 @@
 #include "object_set.h"
+#include <array>
 #include <toml.hpp>
 #include "character.h"
 #include "error.h"
@@ -51,6 +52,8 @@
 #include "resource_manager.h"
 #include "save.h"
 #include "sea_fox.h"
+#include "tilemap.h"
+#include "tools.h"
 
 inline float asIntOrFloat(const toml::value& value) {
     if(value.is_floating()) {

@@ -1,5 +1,6 @@
 #include "map_screen.h"
 #include "save.h"
+#include "tools.h"
 
 void TA_MapScreen::init() {
     if(TA::save::getSaveParameter("rings") <= 0) {

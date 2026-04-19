@@ -3,6 +3,7 @@
 #include "character.h"
 #include "save.h"
 #include "screen.h"
+#include "tools.h"
 
 void TA_Hud::load(TA_Links newLinks) {
     links = newLinks;

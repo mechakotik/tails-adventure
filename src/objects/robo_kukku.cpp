@@ -1,8 +1,7 @@
 #include "robo_kukku.h"
 #include "dead_kukku.h"
 #include "explosion.h"
-#include "object_set.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_RoboKukku::load(TA_Point position, bool flip, bool* lock) {

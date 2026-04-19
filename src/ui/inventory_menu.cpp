@@ -3,6 +3,7 @@
 #include "resource_manager.h"
 #include "save.h"
 #include "sound.h"
+#include "tools.h"
 
 void TA_InventoryMenu::load(TA_Controller* controller) {
     this->controller = controller;

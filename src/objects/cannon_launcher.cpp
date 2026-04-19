@@ -1,7 +1,8 @@
 #include "cannon_launcher.h"
 #include "bullet.h"
 #include "dead_kukku.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_CannonLauncher::load(TA_Point position, bool flip) {
     loadFromToml("objects/cannon_launcher.toml");

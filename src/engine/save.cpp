@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <map>
 #include <sstream>
-#include <vector>
 #include "error.h"
 #include "filesystem.h"
 

@@ -1,10 +1,9 @@
 #include "tools.h"
 #include <algorithm>
+#include <cmath>
 #include <fstream>
 #include <limits>
 #include <random>
-#include <vector>
-#include "SDL3/SDL.h"
 
 namespace TA {
     SDL_Window* window;

@@ -1,6 +1,6 @@
 #include "jumper.h"
 #include "dead_kukku.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_Jumper::load(TA_Point position) {

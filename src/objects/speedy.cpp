@@ -1,9 +1,8 @@
 #include "speedy.h"
 #include "character.h"
-#include "error.h"
 #include "item_box.h"
 #include "save.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 #include "transition.h"
 

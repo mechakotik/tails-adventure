@@ -1,6 +1,7 @@
 #include "moving_platform.h"
 #include "character.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_MovingPlatform::load(TA_Point startPosition, TA_Point endPosition, bool idle) {
     this->startPosition = startPosition;

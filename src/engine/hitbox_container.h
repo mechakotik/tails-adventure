@@ -1,9 +1,10 @@
 #ifndef TA_HITBOX_CONTAINER_H
 #define TA_HITBOX_CONTAINER_H
 
+#include <array>
 #include <vector>
+#include "defs.h"
 #include "geometry.h"
-#include "tilemap.h"
 
 class TA_HitboxContainer {
 private:

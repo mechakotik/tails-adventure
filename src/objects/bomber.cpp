@@ -2,7 +2,8 @@
 #include "dead_kukku.h"
 #include "explosion.h"
 #include "splash.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_Bomber::load(float aimX, float maxY) {
     loadFromToml("objects/bomber.toml");

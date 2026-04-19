@@ -1,6 +1,6 @@
 #include "sliding_bomb.h"
+#include "defs.h"
 #include "explosion.h"
-#include "object_set.h"
 #include "tools.h"
 
 void TA_SlidingBomb::load(TA_Point position, bool flip, bool* lock) {

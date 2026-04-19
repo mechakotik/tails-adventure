@@ -1,5 +1,6 @@
 #include "wood.h"
 #include "dead_kukku.h"
+#include "tools.h"
 
 void TA_Wood::load(TA_Point position) {
     loadFromToml("objects/wood.toml");

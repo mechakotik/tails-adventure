@@ -2,6 +2,7 @@
 #include <cmath>
 #include "explosion.h"
 #include "ring.h"
+#include "tools.h"
 
 void TA_DrillMole::load(TA_Point position) {
     this->position = position;

@@ -1,11 +1,10 @@
 #ifndef TA_KEYBOARD_H
 #define TA_KEYBOARD_H
 
-#include <array>
 #include "SDL3/SDL.h"
 #include "SDL3/SDL_scancode.h"
+#include "defs.h"
 #include "geometry.h"
-#include "tools.h"
 
 namespace TA {
     namespace keyboard {

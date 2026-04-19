@@ -4,6 +4,7 @@
 #include "explosion.h"
 #include "sea_fox.h"
 #include "transition.h"
+#include "tools.h"
 
 void TA_Cruiser::load() {
     loadFromToml("objects/cruiser/cruiser.toml");

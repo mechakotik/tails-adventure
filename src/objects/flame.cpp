@@ -1,6 +1,6 @@
 #include "flame.h"
 #include <cmath>
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_Flame::load(TA_Point position, float startSpeed) {

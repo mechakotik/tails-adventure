@@ -2,7 +2,7 @@
 #include "character.h"
 #include "napalm_fire.h"
 #include "objects/explosion.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_Bomb::load(TA_Point newPosition, bool newDirection, TA_BombMode newMode) {

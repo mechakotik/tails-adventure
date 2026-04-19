@@ -1,6 +1,7 @@
 #include "mecha_golem_bomb.h"
 #include "explosion.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_MechaGolemBomb::load(TA_Point position) {
     TA_Sprite::load("objects/mecha_golem/bomb.png");

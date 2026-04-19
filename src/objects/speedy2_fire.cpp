@@ -1,4 +1,5 @@
 #include "speedy2_fire.h"
+#include "tools.h"
 
 void TA_Speedy2Fire::load(TA_Point position) {
     loadFromToml("objects/speedy2/fire.toml");

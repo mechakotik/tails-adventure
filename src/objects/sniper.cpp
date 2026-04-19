@@ -1,6 +1,7 @@
 #include "sniper.h"
 #include "bullet.h"
 #include "dead_kukku.h"
+#include "tools.h"
 
 void TA_Sniper::load(TA_Point position) {
     loadFromToml("objects/sniper.toml");

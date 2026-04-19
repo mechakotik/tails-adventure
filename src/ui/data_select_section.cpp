@@ -3,6 +3,7 @@
 #include <numeric>
 #include "resource_manager.h"
 #include "save.h"
+#include "tools.h"
 
 void TA_DataSelectSection::load() {
     entrySprite.load("data_select/entry.png");

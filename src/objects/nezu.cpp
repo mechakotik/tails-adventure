@@ -1,7 +1,7 @@
 #include "nezu.h"
 #include "explosion.h"
 #include "ring.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_Nezu::load(TA_Point position) {

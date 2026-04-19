@@ -1,5 +1,5 @@
 #include "grass_block.h"
-#include "tilemap.h"
+#include "defs.h"
 
 void TA_GrassBlock::load(TA_Point position, std::string texture) {
     TA_Sprite::load(texture, 16, 16);

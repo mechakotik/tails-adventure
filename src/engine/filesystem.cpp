@@ -1,6 +1,6 @@
 #include "filesystem.h"
 #include <filesystem>
-#include "SDL3/SDL.h"
+#include "SDL3/SDL_iostream.h"
 #include "error.h"
 
 #ifdef __APPLE__

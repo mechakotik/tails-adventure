@@ -1,6 +1,6 @@
 #include "walker.h"
 #include "dead_kukku.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_Walker::load(TA_Point newPosition, int range, bool flip) {

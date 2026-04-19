@@ -1,5 +1,5 @@
 #include "electric_barrier.h"
-#include "tilemap.h"
+#include "defs.h"
 
 void TA_ElectricBarrier::load(int top, int left, int bottom, int right, TA_Point switchPosition) {
     this->top = top;

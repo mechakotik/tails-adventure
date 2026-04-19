@@ -1,5 +1,5 @@
 #include "keyboard.h"
-#include "SDL3/SDL.h"
+#include <array>
 #include "save.h"
 
 namespace TA {
@@ -44,7 +44,7 @@ void TA::keyboard::updateMapping() {
 
 std::array<bool, SDL_SCANCODE_COUNT> TA::keyboard::getKeyboardState() {
     std::array<bool, SDL_SCANCODE_COUNT> state;
-    const bool* keyState = SDL_GetKeyboardState(NULL);
+    const bool* keyState = SDL_GetKeyboardState(nullptr);
     for(int button = 0; button < SDL_SCANCODE_COUNT; button++) {
         state[button] = keyState[button];
     }

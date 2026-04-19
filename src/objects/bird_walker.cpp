@@ -1,7 +1,6 @@
 #include "bird_walker.h"
 #include <cmath>
 #include "bullet.h"
-#include "error.h"
 #include "explosion.h"
 #include "gamepad.h"
 #include "save.h"

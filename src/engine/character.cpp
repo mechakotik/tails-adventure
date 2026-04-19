@@ -1,9 +1,8 @@
 #include "character.h"
 #include <algorithm>
 #include <cmath>
-#include "error.h"
-#include "gamepad.h"
-#include "hud.h"
+#include "controller.h"
+#include "keyboard.h"
 #include "object_set.h"
 #include "save.h"
 #include "tools.h"

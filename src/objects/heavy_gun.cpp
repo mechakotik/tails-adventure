@@ -1,5 +1,6 @@
 #include "heavy_gun.h"
 #include "bullet.h"
+#include "tools.h"
 
 void TA_HeavyGun::load(TA_Point position, bool flip) {
     loadFromToml("objects/heavy_gun.toml");

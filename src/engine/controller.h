@@ -2,10 +2,10 @@
 #define TA_CONTROLLER_H
 
 #include <array>
+#include "defs.h"
 #include "gamepad.h"
 #include "keyboard.h"
 #include "sprite.h"
-#include "tools.h"
 #include "touchscreen.h"
 
 class TA_GamepadController {

@@ -1,5 +1,6 @@
 #include "mine_launcher.h"
 #include "enemy_mine.h"
+#include "tools.h"
 
 void TA_MineLauncher::load(TA_Point position) {
     loadFromToml("objects/mine_launcher.toml");

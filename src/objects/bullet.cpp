@@ -1,6 +1,6 @@
 #include "bullet.h"
 #include "explosion.h"
-#include "tilemap.h"
+#include "defs.h"
 #include "tools.h"
 
 void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVelocity) {

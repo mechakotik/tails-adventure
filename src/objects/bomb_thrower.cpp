@@ -1,7 +1,8 @@
 #include "bomb_thrower.h"
 #include "dead_kukku.h"
 #include "explosion.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_BombThrower::load(TA_Point position, float leftX, float rightX) {
     this->position = position;

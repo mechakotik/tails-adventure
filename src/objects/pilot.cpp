@@ -3,6 +3,7 @@
 #include "dead_kukku.h"
 #include "sea_fox.h"
 #include "tilemap.h"
+#include "tools.h"
 
 bool TA_PilotSpawner::update() {
     timer += TA::elapsedTime;

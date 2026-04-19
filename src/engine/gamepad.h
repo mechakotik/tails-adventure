@@ -2,8 +2,8 @@
 #define TA_GAMEPAD_H
 
 #include "SDL3/SDL.h"
+#include "defs.h"
 #include "geometry.h"
-#include "tools.h"
 
 namespace TA {
     namespace gamepad {

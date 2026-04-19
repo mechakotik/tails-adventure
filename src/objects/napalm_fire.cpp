@@ -1,4 +1,5 @@
 #include "napalm_fire.h"
+#include "tools.h"
 
 void TA_NapalmFire::load(TA_Point position, float xsp) {
     this->position = position;

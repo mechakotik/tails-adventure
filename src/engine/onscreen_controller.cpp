@@ -1,5 +1,6 @@
 #include "controller.h"
 #include "save.h"
+#include "tools.h"
 
 void TA_OnscreenController::load() {
     sprites[TA_BUTTON_A].load("controls/a_button.png", 20, 22);

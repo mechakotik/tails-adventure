@@ -10,6 +10,7 @@
 #include "map_screen.h"
 #include "save.h"
 #include "title_screen.h"
+#include "tools.h"
 
 void TA_ScreenStateMachine::init() {
     if(TA::arguments.count("--devmenu")) {

@@ -1,5 +1,6 @@
 #include "mecha_golem_energy_shot.h"
 #include "explosion.h"
+#include "tools.h"
 
 void TA_MechaGolemEnergyShot::load(TA_Point position) {
     this->position = position;

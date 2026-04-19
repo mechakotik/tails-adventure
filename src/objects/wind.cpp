@@ -1,5 +1,6 @@
 #include "wind.h"
 #include "character.h"
+#include "tools.h"
 
 void TA_Wind::load(TA_Point topLeft, TA_Point bottomRight, TA_Point velocity, const std::string& animation) {
     hitbox.setRectangle(topLeft, bottomRight);

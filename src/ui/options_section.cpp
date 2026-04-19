@@ -1,7 +1,16 @@
 #include "options_section.h"
-#include "SDL3/SDL.h"
+#include <array>
+#include <memory>
+#include <string>
+#include <vector>
+#include "SDL3/SDL_gamepad.h"
+#include "SDL3/SDL_render.h"
+#include "SDL3/SDL_scancode.h"
+#include "gamepad.h"
+#include "keyboard.h"
 #include "resource_manager.h"
 #include "save.h"
+#include "tools.h"
 
 namespace {
     std::string getOptionString(const std::string& name) {

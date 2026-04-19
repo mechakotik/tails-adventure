@@ -1,10 +1,15 @@
 #ifndef TA_INVENTORY_MENU_H
 #define TA_INVENTORY_MENU_H
 
+#include <array>
+#include <map>
+#include <string>
+#include <utility>
 #include "controller.h"
 #include "font.h"
 #include "sound.h"
 #include "sprite.h"
+#include "tools.h"
 
 class TA_InventoryMenu {
 private:

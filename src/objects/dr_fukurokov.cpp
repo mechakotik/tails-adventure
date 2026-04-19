@@ -1,7 +1,8 @@
 #include "dr_fukurokov.h"
 #include "bullet.h"
 #include "sound.h"
-#include "tilemap.h"
+#include "defs.h"
+#include "tools.h"
 
 void TA_DrFukurokov::load(const Properties& properties) {
     loadFromToml("objects/dr_fukurokov/dr_fukurokov.toml");

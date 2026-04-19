@@ -1,6 +1,7 @@
 #include "anti_air_missile.h"
 #include "explosion.h"
 #include "splash.h"
+#include "tools.h"
 
 void TA_AntiAirMissile::load(TA_Point position) {
     loadFromToml("objects/anti_air_missile.toml");

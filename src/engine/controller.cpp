@@ -1,8 +1,5 @@
 #include "controller.h"
-#include <algorithm>
-#include "error.h"
-#include "tools.h"
-#include "touchscreen.h"
+#include <cmath>
 
 void TA_Controller::load() {
 #ifdef __ANDROID__
@@ -47,7 +44,7 @@ TA_Direction TA_Controller::getDirection() {
     if(vector.length() < analogDeadZone) {
         return TA_DIRECTION_MAX;
     }
-    float angle = atan2(vector.y, vector.x) * 180 / (atan(1) * 4);
+    float angle = std::atan2(vector.y, vector.x) * 180 / (std::atan(1) * 4);
     if(-90 - verticalRange <= angle && angle <= -90 + verticalRange) {
         return TA_DIRECTION_UP;
     }

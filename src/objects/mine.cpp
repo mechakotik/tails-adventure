@@ -1,6 +1,7 @@
 #include "mine.h"
 #include "explosion.h"
 #include "geometry.h"
+#include "tools.h"
 
 void TA_Mine::load(TA_Point position, float xsp) {
     loadFromToml("objects/mine.toml");

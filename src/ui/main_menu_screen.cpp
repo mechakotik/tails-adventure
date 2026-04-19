@@ -2,6 +2,7 @@
 #include "data_select_section.h"
 #include "options_section.h"
 #include "sound.h"
+#include "tools.h"
 
 void TA_MainMenuScreen::init() {
     TA::sound::playMusic("sound/password.vgm");
