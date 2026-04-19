@@ -22,7 +22,7 @@ private:
     float shakeTime = -1;
 
 public:
-    void update(bool ground, bool spring);
+    void update(bool ground, bool spring, bool canLock);
     void setFollowPosition(TA_Point* newFollowPosition);
     void setLockPosition(TA_Point newLockPosition);
     void forceLockX();

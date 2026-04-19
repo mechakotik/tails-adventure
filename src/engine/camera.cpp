@@ -33,7 +33,7 @@ void TA_Camera::setBorder(TA_Point topLeft, TA_Point bottomRight) {
     this->borderBottomRight = bottomRight;
 }
 
-void TA_Camera::update(bool ground, bool spring) {
+void TA_Camera::update(bool ground, bool spring, bool canLock) {
     updateOffset();
     float movementSpeed = airSpeed;
     if(ground) {
@@ -74,7 +74,7 @@ void TA_Camera::update(bool ground, bool spring) {
         }
     }
 
-    if(locked && lockPosition.getDistance(position) <= maxLockDistance) {
+    if(locked && canLock && lockPosition.getDistance(position) <= maxLockDistance) {
         if(!lockedX && (TA::sign(previousPosition.x - lockPosition.x) != TA::sign(position.x - lockPosition.x) ||
                            abs(position.x - lockPosition.x) < 0.5)) {
             position.x = lockPosition.x;
