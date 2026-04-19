@@ -3,6 +3,7 @@
 #include "SDL3_image/SDL_image.h"
 #include "error.h"
 #include "filesystem.h"
+#include "sound.h"
 #include "tools.h"
 
 namespace TA::resmgr {
@@ -25,8 +26,8 @@ namespace TA::resmgr {
     int loadedMods = 0;
 
     std::unordered_map<std::string, SDL_Texture*> textureMap;
-    std::unordered_map<std::string, Mix_Music*> musicMap;
-    std::unordered_map<std::string, Mix_Chunk*> chunkMap;
+    std::unordered_map<std::string, MIX_Audio*> musicMap;
+    std::unordered_map<std::string, MIX_Audio*> chunkMap;
     std::unordered_map<std::string, std::string> assetMap;
     std::unordered_map<std::string, toml::value> tomlMap;
 }
@@ -157,12 +158,12 @@ SDL_Texture* TA::resmgr::loadTexture(std::filesystem::path path) {
     return textureMap[path.generic_string()];
 }
 
-Mix_Music* TA::resmgr::loadMusic(std::filesystem::path path) {
+MIX_Audio* TA::resmgr::loadMusic(std::filesystem::path path) {
     path = getAssetPath(path);
 
     if(!musicMap.count(path.generic_string())) {
         std::string pathStr = path.generic_string();
-        musicMap[path.generic_string()] = Mix_LoadMUS(pathStr.c_str());
+        musicMap[path.generic_string()] = MIX_LoadAudio(TA::sound::getMixer(), pathStr.c_str(), false);
         if(musicMap[path.generic_string()] == nullptr) {
             TA::handleSDLError("%s load failed", pathStr.c_str());
         }
@@ -171,12 +172,12 @@ Mix_Music* TA::resmgr::loadMusic(std::filesystem::path path) {
     return musicMap[path.generic_string()];
 }
 
-Mix_Chunk* TA::resmgr::loadChunk(std::filesystem::path path) {
+MIX_Audio* TA::resmgr::loadChunk(std::filesystem::path path) {
     path = getAssetPath(path);
 
     if(!chunkMap.contains(path.generic_string())) {
         std::string pathStr = path.generic_string();
-        chunkMap[path.generic_string()] = Mix_LoadWAV(pathStr.c_str());
+        chunkMap[path.generic_string()] = MIX_LoadAudio(TA::sound::getMixer(), pathStr.c_str(), true);
         if(chunkMap[path.generic_string()] == nullptr) {
             TA::handleSDLError("%s load failed", pathStr.c_str());
         }
@@ -217,10 +218,10 @@ void TA::resmgr::quit() {
     for(std::pair<std::string, SDL_Texture*> element : textureMap) {
         SDL_DestroyTexture(element.second);
     }
-    for(std::pair<std::string, Mix_Music*> element : musicMap) {
-        Mix_FreeMusic(element.second);
+    for(std::pair<std::string, MIX_Audio*> element : musicMap) {
+        MIX_DestroyAudio(element.second);
     }
-    for(std::pair<std::string, Mix_Chunk*> element : chunkMap) {
-        Mix_FreeChunk(element.second);
+    for(std::pair<std::string, MIX_Audio*> element : chunkMap) {
+        MIX_DestroyAudio(element.second);
     }
 }
