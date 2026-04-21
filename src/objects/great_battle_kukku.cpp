@@ -241,7 +241,8 @@ void TA_GreatBattleKukku::updateMove() {
     captureHitbox.setPosition(position);
     TA_Character* character = objectSet->getLinks().character;
 
-    if(!character->isInvincible() && (objectSet->checkCollision(captureHitbox) & TA_COLLISION_CHARACTER) != 0) {
+    if(!character->isInvincible() && !character->isAttacking() &&
+        (objectSet->checkCollision(captureHitbox) & TA_COLLISION_CHARACTER) != 0) {
         character->setHide(true);
         setAnimation("capture");
         characterMock.setPosition(position + TA_Point(-31, -16));
@@ -293,7 +294,7 @@ void TA_GreatBattleKukku::updateCrouchPhase2() {
     float prevTimer = timer;
     timer += TA::elapsedTime;
 
-    if(prevTimer < 30 && timer >= 30) {
+    if(prevTimer < 40 && timer >= 40) {
         objectSet->spawnObject<TA_EnemyBomb>("objects/great_battle_kukku/bomb.toml", position + TA_Point(8, 0),
             TA_Point(2, 3), TA_Point(14, 15), TA_Point(-1.25F, -4.5F));
         objectSet->spawnObject<TA_EnemyBomb>("objects/great_battle_kukku/bomb.toml", position + TA_Point(8, 0),
