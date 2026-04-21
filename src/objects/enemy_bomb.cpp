@@ -31,7 +31,7 @@ bool TA_EnemyBomb::update() {
     updatePosition();
 
     flags = objectSet->checkCollision(hitbox);
-    if((flags & TA_COLLISION_ATTACK) != 0) {
+    if((flags & TA_GENERIC_ATTACK) != 0) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 1), 0, TA_EXPLOSION_NEUTRAL);
         return false;
     }

@@ -1,7 +1,7 @@
 #include "nezu.h"
+#include "defs.h"
 #include "explosion.h"
 #include "ring.h"
-#include "defs.h"
 #include "tools.h"
 
 void TA_Nezu::load(TA_Point position) {
@@ -38,7 +38,7 @@ bool TA_Nezu::update() {
     if(isGoingToFall()) {
         state = STATE_FALL;
     }
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
+    if(objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) {
         destroy();
         return false;
     }

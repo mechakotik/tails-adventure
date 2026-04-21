@@ -26,7 +26,7 @@ bool TA_UnderwaterBarrier::update() {
         return true;
     }
 
-    if((objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) != 0) {
+    if((objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) != 0) {
         hp--;
         timer = 0;
         if(hp <= 0) {

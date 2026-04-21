@@ -22,7 +22,10 @@ enum TA_CollisionType {
     TA_COLLISION_ATTACK_STRONG = (1 << 16),
     TA_COLLISION_UNSTABLE = (1 << 17),
     TA_COLLISION_REMOTE_ROBOT_BLOCKER = (1 << 18),
+    TA_COLLISION_HELMET = (1 << 19),
 };
+
+constexpr int TA_GENERIC_ATTACK = TA_COLLISION_ATTACK | TA_COLLISION_HELMET;
 
 enum TA_CollisionState {
     TA_GROUND_COLLISION = (1 << 0),

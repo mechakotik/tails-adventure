@@ -55,7 +55,7 @@ bool TA_MechaGolemEnergyShot::update() {
     updatePosition();
 
     int flags = objectSet->checkCollision(hitbox);
-    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_ATTACK | TA_COLLISION_CHARACTER)) != 0) {
+    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_GENERIC_ATTACK | TA_COLLISION_CHARACTER)) != 0) {
         bool hit = (flags & TA_COLLISION_CHARACTER) != 0;
         objectSet->spawnObject<TA_Explosion>(
             position - TA_Point(1, 1), 0, hit ? TA_EXPLOSION_ENEMY : TA_EXPLOSION_NEUTRAL);

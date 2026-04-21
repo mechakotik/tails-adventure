@@ -18,12 +18,13 @@ private:
         TOOL_SPEED_BOOTS = 7,
         TOOL_NAPALM_BOMB = 13,
         TOOL_TRIPLE_BOMB = 14,
+        TOOL_HELMET = 16,
         TOOL_RADIO = 18,
         TOOL_HAMMER = 19
     };
 
     enum CharacterState {
-        STATE_NORMAL, // TODO: create ground, air, helitail state
+        STATE_NORMAL,
         STATE_CLIMB_LOW,
         STATE_CLIMB_HIGH,
         STATE_THROW_BOMB,
@@ -33,6 +34,7 @@ private:
         STATE_RAISE_ITEM,
         STATE_TELEPORT,
         STATE_HAMMER,
+        STATE_HELMET,
         STATE_DEAD
     };
 
@@ -65,7 +67,7 @@ private:
 
     TA_Point position, followPosition, velocity, climbPosition;
     TA_Links links;
-    TA_Rect hitbox, hammerHitbox;
+    TA_Rect hitbox, attackHitbox;
     TA_Point topLeft, bottomRight;
     TA_Point windVelocity;
 
@@ -98,6 +100,7 @@ private:
     float deltaX = 0;
     int rings, currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
+    bool quittingHelmet = false;
 
     float nightVisionTimer = 0;
     bool usingNightVision = false;
@@ -134,6 +137,8 @@ private:
     void updateTeleport();
     void initNightVision();
     void updateNightVision();
+    void initHelmet();
+    void updateHelmet();
     void changeMusic();
     float getMaxHelitailTime();
     void dropRings();
@@ -150,7 +155,7 @@ public:
     bool isClimbing() { return state == STATE_CLIMB_LOW || state == STATE_CLIMB_HIGH; }
 
     TA_Rect* getHitbox() { return &hitbox; }
-    TA_Rect* getHammerHitbox() { return &hammerHitbox; }
+    TA_Rect* getAttackHitbox() { return &attackHitbox; }
     void setSpawnPoint(TA_Point newPosition, bool newFlip);
     TA_Point getPosition() { return position; }
     TA_Point getVelocity() { return velocity; }
@@ -166,7 +171,8 @@ public:
     bool isFlying() { return helitail; }
     bool isOnCeiling() { return ceiling; }
     bool isTeleported();
-    bool isUsingHammer() { return state == STATE_HAMMER; }
+    bool isAttacking() { return state == STATE_HAMMER || state == STATE_HELMET; }
+    bool isUsingHelmet() { return state == STATE_HELMET; }
     bool isFastCamera() { return spring || strongWind || usingSpeedBoots || conveyorBelt || noclip; }
     bool isInWater() { return water; }
     bool isNightVisionApplied() { return nightVisionTimer > 0; }

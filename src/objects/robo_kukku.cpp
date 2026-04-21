@@ -1,7 +1,7 @@
 #include "robo_kukku.h"
 #include "dead_kukku.h"
-#include "explosion.h"
 #include "defs.h"
+#include "explosion.h"
 #include "tools.h"
 
 void TA_RoboKukku::load(TA_Point position, bool flip, bool* lock) {
@@ -44,7 +44,7 @@ bool TA_RoboKukku::update() {
 
     bool destroy = (collisionFlags & TA_COLLISION_CHARACTER) != 0;
     bool destroyFriendly = false;
-    destroyFriendly |= (collisionFlags & TA_COLLISION_ATTACK) != 0;
+    destroyFriendly |= (collisionFlags & TA_GENERIC_ATTACK) != 0;
     destroyFriendly |= (TA::equal(velocity.y, 0) &&
                         (collisionFlags & (TA_COLLISION_CONVEYOR_BELT_LEFT | TA_COLLISION_CONVEYOR_BELT_RIGHT)) == 0);
     destroyFriendly |= (TA::equal(velocity.x, 0) && TA::equal(velocity.y, 0));

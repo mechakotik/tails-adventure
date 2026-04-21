@@ -49,7 +49,7 @@ void TA_Character::handleInput() {
         }
     }
 
-    if(state == STATE_THROW_BOMB || state == STATE_HAMMER) {
+    if(state == STATE_THROW_BOMB || state == STATE_HAMMER || state == STATE_HELMET) {
         setPosition(position);
         hitbox.setPosition(position);
     }
@@ -78,6 +78,11 @@ void TA_Character::update() {
 
     if(state == STATE_HAMMER) {
         updateHammer();
+        return;
+    }
+
+    if(state == STATE_HELMET) {
+        updateHelmet();
         return;
     }
 
@@ -143,7 +148,7 @@ void TA_Character::update() {
     updateTool();
     updateFollowPosition();
     if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT ||
-        state == STATE_HAMMER) {
+        state == STATE_HAMMER || state == STATE_HELMET) {
         return;
     }
     updateAnimation();

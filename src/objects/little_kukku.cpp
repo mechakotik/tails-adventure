@@ -27,7 +27,7 @@ bool TA_LittleKukku::update() {
     updatePosition();
     setFlip(flip);
 
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
+    if(objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) {
         destroy();
         return false;
     }

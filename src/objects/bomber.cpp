@@ -1,8 +1,8 @@
 #include "bomber.h"
 #include "dead_kukku.h"
+#include "defs.h"
 #include "explosion.h"
 #include "splash.h"
-#include "defs.h"
 #include "tools.h"
 
 void TA_Bomber::load(float aimX, float maxY) {
@@ -39,7 +39,7 @@ bool TA_Bomber::update() {
     }
 
     updatePosition();
-    if(state != State::IDLE && (objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) != 0) {
+    if(state != State::IDLE && (objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) != 0) {
         objectSet->spawnObject<TA_DeadKukku>(position);
         return false;
     }

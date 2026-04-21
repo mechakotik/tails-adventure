@@ -561,8 +561,12 @@ void TA_ObjectSet::checkCollision(TA_Rect& hitbox, int& flags) {
         flags |= TA_COLLISION_CHARACTER;
     }
 
-    if(links.character && links.character->isUsingHammer() && links.character->getHammerHitbox()->intersects(hitbox)) {
-        flags |= TA_COLLISION_ATTACK;
+    if(links.character && links.character->isAttacking() && links.character->getAttackHitbox()->intersects(hitbox)) {
+        if(links.character->isUsingHelmet()) {
+            flags |= TA_COLLISION_HELMET;
+        } else {
+            flags |= TA_COLLISION_ATTACK;
+        }
     }
     if(links.seaFox && links.seaFox->getDrillHitbox()->intersects(hitbox)) {
         flags |= TA_COLLISION_DRILL;

@@ -1,4 +1,5 @@
 #include "bat_robot.h"
+#include "defs.h"
 #include "explosion.h"
 #include "ring.h"
 #include "tools.h"
@@ -60,7 +61,7 @@ bool TA_BatRobot::update() {
 
     updatePosition();
 
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
+    if(objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) {
         objectSet->spawnObject<TA_Explosion>(position + TA_Point(4, 0), 0, TA_EXPLOSION_NEUTRAL);
         objectSet->resetInstaShield();
         if(objectSet->enemyShouldDropRing()) {

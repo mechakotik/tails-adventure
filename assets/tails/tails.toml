@@ -14,6 +14,7 @@ remote_robot_idle = 41
 unpack = 73
 uncontrolled_fall = 32
 captured = 108
+helmet = 138
 
 [animations.walk]
 frames = [3, 4, 5, 6, 1, 2]
@@ -123,4 +124,14 @@ repeat = 1
 [animations.run]
 frames = [117, 118, 119, 120, 121, 116]
 delay = 6
+
+[animations.helmet_init]
+frames = [136, 137]
+delay = 6
+repeat = 1
+
+[animations.helmet_quit]
+frames = [137, 136]
+delay = 6
+repeat = 1
 

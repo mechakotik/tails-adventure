@@ -63,6 +63,9 @@ void TA_Character::updateTool() {
         case TOOL_NIGHT_VISION:
             initNightVision();
             break;
+        case TOOL_HELMET:
+            initHelmet();
+            break;
         default:
             damageSound.play();
             break;
@@ -159,7 +162,7 @@ void TA_Character::updateHammer() {
 
     setPosition(position);
     hitbox.setPosition(position);
-    hammerHitbox.setPosition(position);
+    attackHitbox.setPosition(position);
     TA_Point topLeft;
 
     switch(getAnimationFrame()) {
@@ -180,7 +183,7 @@ void TA_Character::updateHammer() {
     if(flip) {
         topLeft.x = 30 - topLeft.x;
     }
-    hammerHitbox.setRectangle(topLeft, topLeft + TA_Point(18, 18));
+    attackHitbox.setRectangle(topLeft, topLeft + TA_Point(18, 18));
     updateFollowPosition();
 
     if(!isAnimated()) {
@@ -233,8 +236,63 @@ void TA_Character::updateNightVision() {
     }
 }
 
+void TA_Character::initHelmet() {
+    setAnimation("helmet_init");
+    setAlpha(255);
+    state = STATE_HELMET;
+    quittingHelmet = false;
+    attackHitbox.setRectangle({4, 18}, {36, 39});
+    if(!ground) {
+        jump = helitail = false;
+        velocity = {0, 0};
+    }
+}
+
+void TA_Character::updateHelmet() {
+    if(!quittingHelmet && !links.controller->isPressed(TA_BUTTON_B)) {
+        quittingHelmet = true;
+        setAnimation("helmet_quit");
+    }
+    if(quittingHelmet && !isAnimated()) {
+        state = STATE_NORMAL;
+        return;
+    }
+    if(!isAnimated()) {
+        setAnimation("helmet");
+    }
+
+    if(!ground) {
+        velocity.y = std::min(maxJumpSpeed, velocity.y + (grv * TA::elapsedTime));
+        useSolidUpTiles = useMovingPlatforms = true;
+        useSolidDownTiles = false;
+
+        TA_Point topLeft{18, 12};
+        TA_Point bottomRight{30, 39};
+        auto [delta, flags] = links.objectSet->moveAndCollide(
+            position, topLeft, bottomRight, velocity * TA::elapsedTime, getSolidFlags());
+        position += delta;
+        if((flags & TA_GROUND_COLLISION) != 0) {
+            ground = true;
+        }
+    } else {
+        velocity.y = 0;
+    }
+
+    if(links.controller->getDirection() == TA_DIRECTION_LEFT) {
+        flip = true;
+    } else if(links.controller->getDirection() == TA_DIRECTION_RIGHT) {
+        flip = false;
+    }
+
+    setPosition(position);
+    setFlip(flip);
+    hitbox.setPosition(position);
+    attackHitbox.setPosition(position);
+    updateFollowPosition();
+}
+
 void TA_Character::changeMusic() {
-    // TODO: don't hardcoode this?
+    // TODO: don't hardcode this?
     const std::vector<std::string> music{"sound/bf.vgm", "sound/boss.vgm", "sound/cc.vgm", "sound/cf.vgm",
         "sound/final.vgm", "sound/house.vgm", "sound/lr.vgm", "sound/map.vgm", "sound/password.vgm", "sound/pf.vgm",
         "sound/pm.vgm", "sound/lc.vgm", "sound/radio.vgm", "sound/title.vgm", "sound/vt.vgm"};

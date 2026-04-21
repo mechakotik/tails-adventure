@@ -49,7 +49,7 @@ bool TA_HoverPod::update() {
 
     int flags;
     objectSet->checkCollision(hitbox, flags);
-    if(flags & TA_COLLISION_ATTACK) {
+    if(flags & TA_GENERIC_ATTACK) {
         objectSet->spawnObject<TA_DeadKukku>(position);
         objectSet->resetInstaShield();
         return false;

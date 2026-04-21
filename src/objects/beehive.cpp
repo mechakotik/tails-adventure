@@ -1,7 +1,7 @@
 #include "beehive.h"
+#include "defs.h"
 #include "explosion.h"
 #include "geometry.h"
-#include "defs.h"
 #include "tools.h"
 
 void TA_BeeHive::load(TA_Point position) {
@@ -25,7 +25,7 @@ bool TA_BeeHive::update() {
         }
     }
 
-    if(!destroyed && (objectSet->checkCollision(hitbox) & (TA_COLLISION_ATTACK | TA_COLLISION_NAPALM)) != 0) {
+    if(!destroyed && (objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) != 0) {
         objectSet->spawnObject<TA_StrongBee>(position);
         objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
         destroyed = true;
@@ -62,7 +62,7 @@ bool TA_Bee::update() {
     }
     updatePosition();
 
-    if((objectSet->checkCollision(hitbox) & (TA_COLLISION_ATTACK | TA_COLLISION_NAPALM)) != 0) {
+    if((objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) != 0) {
         objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
         hive->deleteBee();
         return false;
@@ -133,7 +133,7 @@ bool TA_StrongBee::update() {
     setFlip(std::cos(angle) > 0);
     updatePosition();
 
-    if((objectSet->checkCollision(hitbox) & (TA_COLLISION_ATTACK | TA_COLLISION_NAPALM)) != 0) {
+    if((objectSet->checkCollision(hitbox) & (TA_GENERIC_ATTACK | TA_COLLISION_NAPALM)) != 0) {
         objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_NEUTRAL);
         return false;
     }

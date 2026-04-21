@@ -108,7 +108,7 @@ bool TA_Jumper::isCloseToCharacter() {
 }
 
 bool TA_Jumper::shouldBeDestroyed() {
-    return (objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) != 0;
+    return (objectSet->checkCollision(hitbox) & TA_GENERIC_ATTACK) != 0;
 }
 
 void TA_Jumper::destroy() {

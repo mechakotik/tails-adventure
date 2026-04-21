@@ -36,7 +36,7 @@ bool TA_EnemyMine::update() {
     updatePosition();
 
     int flags = objectSet->checkCollision(hitbox);
-    if((flags & (TA_COLLISION_SOLID | TA_COLLISION_ATTACK | TA_COLLISION_CHARACTER)) != 0) {
+    if((flags & (TA_COLLISION_SOLID | TA_GENERIC_ATTACK | TA_COLLISION_CHARACTER)) != 0) {
         objectSet->spawnObject<TA_Explosion>(position - TA_Point(1, 1), 0, TA_EXPLOSION_ENEMY);
         if((flags & TA_COLLISION_CHARACTER) != 0) {
             smallExplosionSound.play();
