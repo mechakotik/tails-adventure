@@ -1,10 +1,10 @@
 #include "character.h"
 #include "controller.h"
+#include "defs.h"
 #include "object_set.h"
 #include "ring.h"
 #include "save.h"
 #include "splash.h"
-#include "defs.h"
 #include "tools.h"
 
 int TA_Character::getSolidFlags() {
@@ -144,13 +144,10 @@ void TA_Character::updateCollisions() {
             if((flags & TA_COLLISION_DAMAGE) == 0) {
                 return;
             }
-            hurt = true;
-            ground = helitail = jump = false;
+            setHurt();
             position.y -= 1;
             velocity.x = hurtXsp * sign;
             velocity.y = hurtYsp;
-            damageSound.play();
-            TA::gamepad::rumble(0.75, 0.75, 20);
 
             if(TA::save::getParameter("ring_drop")) {
                 dropRings();
@@ -184,8 +181,10 @@ void TA_Character::updateCollisions() {
             hurt = false;
             invincibleTimeLeft = invincibleTime;
             if(rings <= 0) {
+                setPosition(position);
                 setAnimation("death");
                 state = STATE_DEAD;
+                invincibleTimeLeft = 300;
                 TA::sound::playMusic("sound/death.vgm");
             }
         }
@@ -196,6 +195,16 @@ void TA_Character::updateCollisions() {
     }
 
     hitbox.setPosition(position);
+}
+
+void TA_Character::setHurt() {
+    if(hurt) {
+        return;
+    }
+    hurt = true;
+    ground = helitail = jump = false;
+    damageSound.play();
+    TA::gamepad::rumble(0.75, 0.75, 20);
 }
 
 void TA_Character::dropRings() {

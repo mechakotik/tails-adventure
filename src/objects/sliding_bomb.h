@@ -3,14 +3,14 @@
 class TA_SlidingBomb : public TA_Object {
 public:
     using TA_Object::TA_Object;
-    void load(TA_Point position, bool flip, bool* lock);
+    void load(TA_Point position, float speed, bool* lock);
     bool update() override;
 
 private:
     static constexpr float gravity = 0.125;
 
     TA_Point velocity;
-    bool flip = false;
+    float speed = 0;
     bool* lock = nullptr;
 };
 

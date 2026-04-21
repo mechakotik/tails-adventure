@@ -13,6 +13,7 @@ crouch = 24
 remote_robot_idle = 41
 unpack = 73
 uncontrolled_fall = 32
+captured = 108
 
 [animations.walk]
 frames = [3, 4, 5, 6, 1, 2]

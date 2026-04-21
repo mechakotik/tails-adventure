@@ -2,15 +2,17 @@
 #include <algorithm>
 #include "tools.h"
 
-void TA_Camera::setFollowPosition(TA_Point* newFollowPosition) {
-    updateOffset();
+void TA_Camera::setFollowPosition(TA_Point* newFollowPosition, bool hotswap) {
     followPosition = newFollowPosition;
 
-    if(!lockedX) {
-        position.x = (*followPosition).x;
-    }
-    if(!lockedY) {
-        position.y = (*followPosition).y - yBottomOffset;
+    if(!hotswap) {
+        updateOffset();
+        if(!lockedX) {
+            position.x = (*followPosition).x;
+        }
+        if(!lockedY) {
+            position.y = (*followPosition).y - yBottomOffset;
+        }
     }
 }
 
@@ -21,11 +23,6 @@ void TA_Camera::setLockPosition(TA_Point newLockPosition) {
     lockPosition = newLockPosition;
     locked = true;
     lockedX = lockedY = false;
-}
-
-void TA_Camera::forceLockX() {
-    position.x = lockPosition.x;
-    lockedX = true;
 }
 
 void TA_Camera::setBorder(TA_Point topLeft, TA_Point bottomRight) {
@@ -43,35 +40,39 @@ void TA_Camera::update(bool ground, bool spring, bool canLock) {
         movementSpeed = springSpeed;
     }
 
+    stable = true;
+
     auto move = [&](float current, float need) {
         if(current < need) {
             current = std::min(need, current + movementSpeed * TA::elapsedTime);
+            if(current != need) {
+                stable = false;
+            }
         } else {
             current = std::max(need, current - movementSpeed * TA::elapsedTime);
+            if(current != need) {
+                stable = false;
+            }
         }
         return current;
     };
 
     TA_Point previousPosition = position, watchPosition = *followPosition;
     bool offset = true;
-    if(locked && (lockedX || lockedY) && lockPosition.getDistance(position) < 64) {
+    if(locked && (lockedX || lockedY) && ((lockedX && lockedY) || lockPosition.getDistance(position) < 64)) {
         watchPosition = lockPosition;
         offset = false;
     }
 
-    if(!lockedX) {
-        if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
-            position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
-        } else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
-            position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
-        }
+    if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
+        position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
+    } else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
+        position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
     }
-    if(!lockedY) {
-        if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
-            position.y = move(position.y, watchPosition.y - (offset ? yBottomOffset : 0));
-        } else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
-            position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
-        }
+    if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
+        position.y = move(position.y, watchPosition.y - (offset ? yBottomOffset : 0));
+    } else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
+        position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
     }
 
     if(locked && canLock && lockPosition.getDistance(position) <= maxLockDistance) {

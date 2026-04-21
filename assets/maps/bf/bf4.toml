@@ -7,6 +7,7 @@ spawn = [
 [objects.static]
 level_transition = [
 	{ path="maps/bf/bf3", tile_left=0, tile_top=55, tile_right=0, tile_bottom=57, offset_right=2 },
+	{ path="maps/bf/bf5", tile_left=29, tile_top=0, tile_right=32, tile_bottom=2 },
 ]
 breakable_block = [
 	{ tile_x=34, tile_y=40, path="maps/bf/block1.png", particle_path="maps/bf/rock.png" },

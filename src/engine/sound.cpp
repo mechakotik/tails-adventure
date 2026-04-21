@@ -98,7 +98,7 @@ void TA::sound::playMusic(const std::string& filename, int repeat) {
 
 void TA::sound::update() {
     MIX_SetMixerGain(mixer, getVolumeGain("main_volume"));
-    MIX_SetTrackGain(musicTrack, getVolumeGain("music_volume"));
+    MIX_SetTrackGain(musicTrack, getVolumeGain("music_volume") * 0.6F);
     for(MIX_Track* channel : channels) {
         MIX_SetTrackGain(channel, getVolumeGain("sfx_volume"));
     }

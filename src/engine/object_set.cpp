@@ -20,6 +20,7 @@
 #include "objects/fire.h"
 #include "objects/flame.h"
 #include "objects/grass_block.h"
+#include "objects/great_battle_kukku.h"
 #include "objects/heavy_gun.h"
 #include "objects/hover_pod.h"
 #include "objects/item_box.h"
@@ -498,6 +499,10 @@ void TA_ObjectSet::loadObject(std::string name, toml::value object) {
 
     else if(name == "speedy2") {
         spawnObject<TA_Speedy2>(position);
+    }
+
+    else if(name == "great_battle_kukku") {
+        spawnObject<TA_GreatBattleKukku>(position);
     }
 
     else {

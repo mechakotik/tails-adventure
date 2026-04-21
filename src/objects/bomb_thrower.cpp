@@ -1,7 +1,7 @@
 #include "bomb_thrower.h"
 #include "dead_kukku.h"
-#include "explosion.h"
 #include "defs.h"
+#include "enemy_bomb.h"
 #include "tools.h"
 
 void TA_BombThrower::load(TA_Point position, float leftX, float rightX) {
@@ -68,7 +68,8 @@ void TA_BombThrower::updateWalkForward() {
 }
 
 void TA_BombThrower::initAttack() {
-    objectSet->spawnObject<TA_EnemyBomb>(position + TA_Point(6, 7));
+    objectSet->spawnObject<TA_EnemyBomb>(
+        "objects/enemy_bomb.toml", position + TA_Point(6, 7), TA_Point(1, 6), TA_Point(7, 12), TA_Point(-1.2, -2.4));
     state = STATE_ATTACK;
     setAnimation("throw");
     setFlip(false);
@@ -104,36 +105,10 @@ TA_Point TA_BombThrower::getDistanceToCharacter() {
 }
 
 bool TA_BombThrower::shouldBeDestroyed() {
-    if(objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) {
-        return true;
-    }
-    return false;
+    return (objectSet->checkCollision(hitbox) & TA_COLLISION_ATTACK) != 0;
 }
 
 void TA_BombThrower::destroy() {
     objectSet->spawnObject<TA_DeadKukku>(position - TA_Point(4, 2));
     objectSet->resetInstaShield();
-}
-
-void TA_EnemyBomb::load(TA_Point position) {
-    this->position = position;
-    TA_Sprite::load("objects/enemy_bomb.png");
-    hitbox.setRectangle(topLeft - TA_Point(0.5, 0.5), bottomRight + TA_Point(0.5, 0.5));
-    collisionType = TA_COLLISION_DAMAGE;
-    updatePosition();
-}
-
-bool TA_EnemyBomb::update() {
-    velocity.y += grv * TA::elapsedTime;
-    auto [delta, flags] = objectSet->moveAndCollide(position, topLeft, bottomRight, velocity * TA::elapsedTime,
-        TA_COLLISION_SOLID | TA_COLLISION_SOLID_UP | TA_COLLISION_CHARACTER);
-    position += delta;
-
-    if(flags != 0) {
-        objectSet->spawnObject<TA_Explosion>(position - TA_Point(4, 1), 0, TA_EXPLOSION_ENEMY);
-        return false;
-    }
-
-    updatePosition();
-    return true;
 }

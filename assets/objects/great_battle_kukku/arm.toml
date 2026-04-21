@@ -1,0 +1,8 @@
+[sprite]
+image = "arm.png"
+width = 8
+height = 16
+
+[animations]
+capture = 0
+

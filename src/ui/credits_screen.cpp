@@ -69,7 +69,7 @@ void TA_CreditsScreen::init() {
     explosionSound.load("sound/explosion.ogg", TA_SOUND_CHANNEL_SFX3);
 
     loadCredits();
-    TA::sound::playMusic("sound/credits.vgm");
+    TA::sound::playMusic("sound/credits.vgm", 1);
 }
 
 void TA_CreditsScreen::loadCredits() {

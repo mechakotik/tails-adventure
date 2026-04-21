@@ -8,4 +8,7 @@ spawn = [
 speedy2 = [
 	{ tile_x=15, tile_y=17 },
 ]
+great_battle_kukku = [
+	{ tile_x=16, tile_y=4 },
+]
 

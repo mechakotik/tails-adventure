@@ -31,17 +31,4 @@ public:
     bool update() override;
 };
 
-class TA_EnemyBomb : public TA_Object {
-private:
-    const float grv = 0.125;
-    const TA_Point topLeft{1, 6}, bottomRight{7, 12};
-
-    TA_Point velocity{-1.2, -2.4};
-
-public:
-    using TA_Object::TA_Object;
-    void load(TA_Point position);
-    bool update() override;
-};
-
 #endif // TA_BOMB_THROWER_H

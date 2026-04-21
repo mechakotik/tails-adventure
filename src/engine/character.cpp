@@ -352,7 +352,7 @@ bool TA_Character::displayFlightTimeBar() {
     if(state == STATE_TELEPORT) {
         return false;
     }
-    return helitail && !remoteRobot;
+    return helitail && !remoteRobot && !hidden;
 }
 
 void TA_Character::setCharacterPosition(TA_Point position) {
@@ -367,7 +367,7 @@ void TA_Character::setCharacterPosition(TA_Point position) {
 }
 
 void TA_Character::restoreFollowPosition() {
-    links.objectSet->getLinks().camera->setFollowPosition(&followPosition);
+    links.objectSet->getLinks().camera->setFollowPosition(&followPosition, true);
 }
 
 void TA_Character::setPaused(bool paused) {

@@ -3,14 +3,14 @@
 #include "explosion.h"
 #include "tools.h"
 
-void TA_SlidingBomb::load(TA_Point position, bool flip, bool* lock) {
+void TA_SlidingBomb::load(TA_Point position, float speed, bool* lock) {
     loadFromToml("objects/sliding_bomb.toml");
     setAnimation("idle");
     this->position = position;
-    this->flip = flip;
+    this->speed = speed;
     this->lock = lock;
     hitbox.setRectangle({3, 5}, {13, 16});
-    velocity = {flip ? -1 : 1, 0};
+    velocity = {speed, 0};
     updatePosition();
 }
 
@@ -21,7 +21,7 @@ bool TA_SlidingBomb::update() {
     updatePosition();
 
     if((flags & TA_GROUND_COLLISION) != 0) {
-        velocity.x = (flip ? -1.0F : 1.0F);
+        velocity.x = speed;
         velocity.y = 0;
     } else {
         velocity.y += gravity * TA::elapsedTime;
@@ -36,7 +36,9 @@ bool TA_SlidingBomb::update() {
 
     if(destroy) {
         objectSet->spawnObject<TA_Explosion>(position, 0, TA_EXPLOSION_ENEMY);
-        *lock = false;
+        if(lock != nullptr) {
+            *lock = false;
+        }
         return false;
     }
     return true;
@@ -54,7 +56,7 @@ bool TA_SlidingBombSpawner::update() {
 
     timer += TA::elapsedTime;
     if(timer > cooldown) {
-        objectSet->spawnObject<TA_SlidingBomb>(position - TA_Point(0, 1), flip, &lock);
+        objectSet->spawnObject<TA_SlidingBomb>(position - TA_Point(0, 1), flip ? -1 : 1, &lock);
         lock = true;
         timer = 0;
     }

@@ -183,6 +183,8 @@ public:
     void addToPosition(TA_Point delta) { position = position + delta; }
     void resetInstaShield();
     void setWindVelocity(TA_Point windVelocity);
+    bool isInvincible() { return hurt || invincibleTimeLeft > 0; }
+    void setHurt();
     void setPaused(bool paused);
 };
 
