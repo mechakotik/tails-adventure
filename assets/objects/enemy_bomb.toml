@@ -1,5 +1,5 @@
 [sprite]
-image = "enemy_bomb"
+image = "enemy_bomb.png"
 width = 8
 height = 13
 
