@@ -176,8 +176,8 @@ void TA_GreatBattleKukku::updateCharacterFly() {
         characterMock.setAnimation("idle");
         TA::sound::playMusic("sound/final.vgm");
         camera->setLockPosition(origin + TA_Point(104 - (TA::screenWidth / 2), 160 - TA::screenHeight));
-        camera->forceLockX();
-        camera->forceLockY();
+        camera->followLockX();
+        camera->followLockY();
         state = State::APPROACH;
     } else {
         characterMock.setPosition(mockPosition);

@@ -25,6 +25,11 @@ void TA_Camera::setLockPosition(TA_Point newLockPosition) {
     lockedX = lockedY = false;
 }
 
+void TA_Camera::forceLockX() {
+    position.x = lockPosition.x;
+    lockedX = true;
+}
+
 void TA_Camera::setBorder(TA_Point topLeft, TA_Point bottomRight) {
     this->borderTopLeft = topLeft;
     this->borderBottomRight = bottomRight;
@@ -59,20 +64,28 @@ void TA_Camera::update(bool ground, bool spring, bool canLock) {
 
     TA_Point previousPosition = position, watchPosition = *followPosition;
     bool offset = true;
-    if(locked && (lockedX || lockedY) && ((lockedX && lockedY) || lockPosition.getDistance(position) < 64)) {
+    if(locked && (lockedX || lockedY) && lockPosition.getDistance(position) < 64) {
         watchPosition = lockPosition;
         offset = false;
     }
 
-    if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
-        position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
-    } else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
-        position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
+    if(!lockedX) {
+        if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
+            position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
+        } else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
+            position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
+        }
+    } else if(followingLockX) {
+        position.x = move(position.x, lockPosition.x);
     }
-    if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
-        position.y = move(position.y, watchPosition.y - (offset ? yBottomOffset : 0));
-    } else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
-        position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
+    if(!lockedY) {
+        if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
+            position.y = move(position.y, watchPosition.y - (offset ? yBottomOffset : 0));
+        } else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
+            position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
+        }
+    } else if(followingLockY) {
+        position.y = move(position.y, lockPosition.y);
     }
 
     if(locked && canLock && lockPosition.getDistance(position) <= maxLockDistance) {
