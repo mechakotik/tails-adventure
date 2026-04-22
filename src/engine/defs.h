@@ -59,6 +59,7 @@ enum TA_BossFlag {
     TA_BOSS_MECHA_GOLEM_MK2 = (1 << 4),
     TA_BOSS_DR_FUKUROKOV = (1 << 5),
     TA_BOSS_SPEEDY2 = (1 << 6),
+    TA_BOSS_GREAT_BATTLE_KUKKU = (1 << 7),
 };
 
 #endif

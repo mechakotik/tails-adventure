@@ -359,6 +359,10 @@ void TA_GreatBattleKukku::updateThrow() {
 
 void TA_GreatBattleKukku::updateDestroyed() {
     if(!isAnimated()) {
+        int64_t bossMask = TA::save::getSaveParameter("boss_mask");
+        bossMask |= TA_BOSS_GREAT_BATTLE_KUKKU;
+        TA::save::setSaveParameter("boss_mask", bossMask);
+
         TA::sound::playMusic("sound/bf.vgm");
         setAlpha(0);
         state = State::WAIT_GROUND;

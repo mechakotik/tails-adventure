@@ -10,6 +10,9 @@ level_transition = [
 	{ path="maps/cc/cc1", left=112, top=0, right=256, bottom=48 },
 	{ path="maps/cc/cc3", left=974, top=816, right=976, bottom=864 },
 ]
+item_box = [
+	{ tile_x=5, tile_y=34, number=3, item_name="teleport_device" }
+]
 remote_robot_blocker = [
 	{ tile_x=33, tile_y=5, offset_x=-3 },
 	{ tile_x=41, tile_y=5, offset_x=-3 },
