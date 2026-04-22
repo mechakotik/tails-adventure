@@ -303,19 +303,25 @@ std::vector<std::string> TA_DataSelectSection::generateSplashSequence() {
 std::string TA_DataSelectSection::generateSplash() {
     const std::vector<std::string> splashes{
         "Free as in freedom",
-        "Also try Sonic Forces",
+        "GNU/Tails Adventure",
         "Bleeding edge SDL3 o_o",
         "One Piece wa jitsuzai suru!",
         "Row Row Fight The Power",
         "Giga Drill Break!",
         "Blazingly fast!",
         "Memory unsafe :(",
+        "C++23!",
         "Mods supported!",
         "Only 3% can pass!",
         "You have (not) tried",
         "Nanomachines, son!",
-        "hjkl friendly?",
         "Flint and Steel!",
+        "Usecase?",
+        "peak fiction",
+        "Absolute cinema!",
+        "Fun is infinite",
+        "The cake is a lie",
+        "Every copy is personalized",
     };
 
     return splashes[TA::random::next() % static_cast<int>(splashes.size())];
