@@ -1,4 +1,16 @@
 =======================
+        v0.3.2
+=======================
+
+- The game can now be completed 100%
+- New level: Battle Fortress
+- New bosses: Speedy II, Great Battle Kukku
+- New items: Helmet, Rocket Booster
+- Added credits scene
+- Refined Tails spritesheet
+- Migrated sound to SDL3_mixer
+
+=======================
         v0.3.1
 =======================
 
