@@ -33,6 +33,9 @@ void TA::save::addOptionsFromFile(std::filesystem::path path) {
     std::string name;
     long long value;
     while(stream >> name >> value) {
+        if(name.starts_with("default_save/") && saveMap.contains(name)) {
+            continue;
+        }
         saveMap[name] = value;
     }
 }
