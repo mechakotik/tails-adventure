@@ -23,13 +23,16 @@ This project aims to bring Tails Adventure experience to modern platforms, pushi
 
 Also, it was made from the ground up in C++ without using any game engines to be less bloated, maximize performance and portability. Effort is put into making the framework as lightweight as possible, able to run on weak hardware.
 
-## Implemented
+## Completion status
 
-**Levels:** Poloy Forest, Volcanic Tunnel, Polly Mt. 1, Lake Rocky, Cavern Island, Caron Forest, Green Island, Lake Crystal, Polly Mt. 2, Coco Island.
+The game is fully playable and can be completed 100%. However, a few non-essential features from the original game are still missing:
 
-**Items:** Regular Bomb, Remote Bomb, Large Bomb, Napalm Bomb, Triple Bomb, Large Bomb, Remote Robot, Hammer, Teleport Device, Speed Boots, Radio, Fang.
-
-**Sea Fox items:** Vulcan Gun, Anti-air Missile, Mine, Extra Speed, Extra Armor.
+- Items: Wrench, Sonic, Item Radar
+- Items (not planned): Knuckles, Super Glove
+- Most in-game cutscenes
+- Hover pod bullet and fire attacks
+- Tails idle animation
+- Helmet rotated frames
 
 ## Get it
 
@@ -55,10 +58,11 @@ Tails Adventure Remake has mod support, which allows you to replace any file in 
 
 ## Contributing
 
-Contributions are welcome! Just be sure to:
+Contributions are welcome! Just be sure to follow these rules:
 
 - Always open pull requests to `develop` branch: all the development happens there and gets merged to `main` when it's stable enough.
 - Follow project's code style (use clang-format to format the code automatically)
+- Usage of AI is allowed, but please review and test code yourself before submitting PR
 - Write clear descriptions of changes that you are making.
 
 To get started, you may search for TODO in source code.
