@@ -237,9 +237,10 @@ int TA_DataSelectSection::getSavePercent(int save) {
     }
 
     std::string saveName = "save_" + std::to_string(save);
-    int areaCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/area_mask"));
-    int itemCount = std::popcount((unsigned long long)TA::save::getParameter(saveName + "/item_mask"));
-    return 50 * (float(areaCount - 3) / 13 + float(itemCount - 2) / 30);
+    int areaCount = std::popcount(static_cast<uint64_t>(TA::save::getParameter(saveName + "/area_mask")));
+    int itemCount = std::popcount(static_cast<uint64_t>(TA::save::getParameter(saveName + "/item_mask")));
+    int bossCount = std::popcount(static_cast<uint64_t>(TA::save::getParameter(saveName + "/boss_mask")));
+    return std::min(100, (30 * std::min(11, areaCount - 3) / 11) + (30 * bossCount / 8) + (40 * (itemCount - 2) / 30));
 }
 
 std::string TA_DataSelectSection::getSaveTime(int save) {
