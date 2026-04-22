@@ -98,7 +98,7 @@ public:
     bool isVisible(const TA_Rect& hitbox);
 
     int getEmeraldsCount();
-    int getMaxRings() { return 8 + 2 * getEmeraldsCount(); }
+    int getMaxRings() { return 12 + 2 * getEmeraldsCount(); }
     void addRings(int count);
     void addRingsToMaximum();
     bool isNight() { return night; }
