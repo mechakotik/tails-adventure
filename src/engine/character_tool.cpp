@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "character.h"
+#include "defs.h"
 #include "hud.h"
 #include "large_bomb.h"
 #include "objects/bomb.h"
@@ -237,14 +238,16 @@ void TA_Character::updateNightVision() {
 }
 
 void TA_Character::initHelmet() {
+    if(strongWind) {
+        return;
+    }
     setAnimation("helmet_init");
     setAlpha(255);
     state = STATE_HELMET;
     quittingHelmet = false;
-    attackHitbox.setRectangle({4, 18}, {36, 39});
+    attackHitbox.setRectangle({6, 20}, {34, 39});
     if(!ground) {
         jump = helitail = false;
-        velocity = {0, 0};
     }
 }
 
@@ -261,21 +264,45 @@ void TA_Character::updateHelmet() {
         setAnimation("helmet");
     }
 
-    if(!ground) {
-        velocity.y = std::min(maxJumpSpeed, velocity.y + (grv * TA::elapsedTime));
-        useSolidUpTiles = useMovingPlatforms = true;
-        useSolidDownTiles = false;
-
-        TA_Point topLeft{18, 12};
-        TA_Point bottomRight{30, 39};
-        auto [delta, flags] = links.objectSet->moveAndCollide(
-            position, topLeft, bottomRight, velocity * TA::elapsedTime, getSolidFlags());
-        position += delta;
-        if((flags & TA_GROUND_COLLISION) != 0) {
-            ground = true;
-        }
+    velocity.y = std::min(maxJumpSpeed, velocity.y + (grv * TA::elapsedTime));
+    if(velocity.x > 0) {
+        velocity.x = std::max(0.0F, velocity.x - (helmetAirSlowdown * TA::elapsedTime));
     } else {
-        velocity.y = 0;
+        velocity.x = std::min(0.0F, velocity.x + (helmetAirSlowdown * TA::elapsedTime));
+    }
+
+    TA_Point velocityAdd{0, 0};
+    if(ground) {
+        int flags = links.objectSet->checkCollision(hitbox);
+        conveyorBelt = false;
+        if((flags & TA_COLLISION_CONVEYOR_BELT_LEFT) != 0) {
+            velocityAdd.x -= 0.8F;
+            conveyorBelt = true;
+        }
+        if((flags & TA_COLLISION_CONVEYOR_BELT_RIGHT) != 0) {
+            velocityAdd.x += 0.8F;
+            conveyorBelt = true;
+        }
+    }
+
+    useSolidUpTiles = useMovingPlatforms = true;
+    useSolidDownTiles = false;
+
+    TA_Point topLeft{18, 20};
+    TA_Point bottomRight{30, 39};
+    auto [delta, flags] = links.objectSet->moveAndCollide(
+        position, topLeft, bottomRight, (velocity + velocityAdd) * TA::elapsedTime, getSolidFlags(), ground);
+    position += delta;
+
+    ground = (flags & TA_GROUND_COLLISION) != 0;
+    if(ground) {
+        velocity = {0, 0};
+    }
+    if((flags & TA_WALL_COLLISION) != 0) {
+        velocity.x = 0;
+    }
+    if((flags & TA_CEIL_COLLISION) != 0) {
+        velocity.y = std::max(velocity.y, 0.0F);
     }
 
     if(links.controller->getDirection() == TA_DIRECTION_LEFT) {
@@ -283,6 +310,8 @@ void TA_Character::updateHelmet() {
     } else if(links.controller->getDirection() == TA_DIRECTION_RIGHT) {
         flip = false;
     }
+
+    updateSpringCollision();
 
     setPosition(position);
     setFlip(flip);

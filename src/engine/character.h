@@ -64,6 +64,7 @@ private:
     static constexpr float waterFlowAcc = 0.15;
     static constexpr float maxCoyoteTime = 10;
     static constexpr float nightVisionActivateTime = 10;
+    static constexpr float helmetAirSlowdown = 0.015;
 
     TA_Point position, followPosition, velocity, climbPosition;
     TA_Links links;

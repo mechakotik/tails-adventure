@@ -336,6 +336,9 @@ void TA_Character::setWindVelocity(TA_Point windVelocity) {
         velocity.y -= strongWindForce * TA::elapsedTime;
         velocity.y = std::max(velocity.y, float(-5));
         strongWind = true;
+        if(state == STATE_HELMET) {
+            state = STATE_NORMAL;
+        }
         if(hurt && rings >= 1) {
             hurt = false;
             invincibleTimeLeft = invincibleTime;
