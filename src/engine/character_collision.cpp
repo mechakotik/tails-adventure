@@ -55,7 +55,7 @@ void TA_Character::updateCollisions() {
         if(velocity.y < 0.01 && !useSolidDownTiles) {
             useSolidDownTiles = true;
             TA_Rect hitbox;
-            hitbox.setRectangle(topLeft - TA_Point(0.01, 0.01), bottomRight + TA_Point(0.01, 0.01));
+            hitbox.setRectangle(topLeft, bottomRight);
             hitbox.setPosition(position);
             if((links.objectSet->checkCollision(hitbox) & getSolidFlags()) != 0) {
                 useSolidDownTiles = false;
