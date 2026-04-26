@@ -4,8 +4,7 @@
 
 void TA_Character::physicsStep() {
     if(!hurt) {
-        if(TA::levelPath.substr(0, 7) == "maps/ci" &&
-            (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
+        if(water && (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
             updateWaterFlow();
         } else if(helitail) {
             updateHelitail();
@@ -15,6 +14,9 @@ void TA_Character::physicsStep() {
             updateAir();
         }
     } else {
+        if(water && (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
+            hurt = false;
+        }
         velocity.y += grv * (water ? 0.5F : 1) * TA::elapsedTime;
         velocity.y = std::min(velocity.y, maxJumpSpeed * (water ? 0.5F : 1));
     }

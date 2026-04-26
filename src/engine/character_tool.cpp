@@ -241,6 +241,9 @@ void TA_Character::initHelmet() {
     if(strongWind) {
         return;
     }
+    if(water && (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
+        return;
+    }
     setAnimation("helmet_init");
     setAlpha(255);
     state = STATE_HELMET;
@@ -264,7 +267,8 @@ void TA_Character::updateHelmet() {
         setAnimation("helmet");
     }
 
-    velocity.y = std::min(maxJumpSpeed, velocity.y + (grv * TA::elapsedTime));
+    velocity.y += grv * (water ? 0.5F : 1) * TA::elapsedTime;
+    velocity.y = std::min(velocity.y, maxJumpSpeed * (water ? 0.5F : 1));
     if(velocity.x > 0) {
         velocity.x = std::max(0.0F, velocity.x - (helmetAirSlowdown * TA::elapsedTime));
     } else {
@@ -312,6 +316,11 @@ void TA_Character::updateHelmet() {
     }
 
     updateSpringCollision();
+    updateWaterCollision();
+    if(water && (!TA::equal(windVelocity.x, 0) || !TA::equal(windVelocity.y, 0))) {
+        state = STATE_NORMAL;
+        return;
+    }
 
     setPosition(position);
     setFlip(flip);
