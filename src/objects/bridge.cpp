@@ -1,6 +1,6 @@
 #include "bridge.h"
-#include "particle.h"
 #include "defs.h"
+#include "particle.h"
 #include "tools.h"
 
 void TA_Bridge::load(TA_Point newPosition, std::string filename, std::string newParticleFilename) {

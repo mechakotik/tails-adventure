@@ -1,6 +1,6 @@
 #include "ring.h"
-#include "save.h"
 #include "defs.h"
+#include "save.h"
 #include "tools.h"
 
 void TA_Ring::load(TA_Point position, TA_Point velocity, float delay) {

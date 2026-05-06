@@ -1,8 +1,8 @@
 #ifndef TA_BULLET_H
 #define TA_BULLET_H
 
-#include "object_set.h"
 #include "defs.h"
+#include "object_set.h"
 
 class TA_Bullet : public TA_Object {
 private:

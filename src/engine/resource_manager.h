@@ -1,10 +1,10 @@
 #ifndef TA_RESOURCE_MANAGER_H
 #define TA_RESOURCE_MANAGER_H
 
-#include <filesystem>
-#include <toml.hpp>
 #include <SDL3/SDL.h>
 #include <SDL3_mixer/SDL_mixer.h>
+#include <filesystem>
+#include <toml.hpp>
 
 namespace TA {
     namespace resmgr {

@@ -1,6 +1,6 @@
 #include "mecha_golem_bomb.h"
-#include "explosion.h"
 #include "defs.h"
+#include "explosion.h"
 #include "tools.h"
 
 void TA_MechaGolemBomb::load(TA_Point position) {

@@ -1,9 +1,9 @@
 #include "item_box.h"
 #include <cmath>
 #include "character.h"
+#include "defs.h"
 #include "resource_manager.h"
 #include "save.h"
-#include "defs.h"
 #include "tools.h"
 
 void TA_ItemBox::load(TA_Point position, TA_Point velocity, int itemNumber, std::string itemName) {

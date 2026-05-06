@@ -1,6 +1,6 @@
 #include "bullet.h"
-#include "explosion.h"
 #include "defs.h"
+#include "explosion.h"
 #include "tools.h"
 
 void TA_Bullet::load(std::string filename, TA_Point newPosition, TA_Point newVelocity) {

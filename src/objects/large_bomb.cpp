@@ -1,7 +1,7 @@
 #include "large_bomb.h"
+#include "defs.h"
 #include "explosion.h"
 #include "gamepad.h"
-#include "defs.h"
 #include "tools.h"
 
 void TA_LargeBomb::load(TA_Point position) {
