@@ -20,7 +20,8 @@ enum TA_BirdWalkerState {
 
 class TA_BirdWalker : public TA_Object {
 private:
-    const float aimingTime = 30, aimBorder = 32;
+    const float aimingTime = 30;
+    const float aimRadius = 80;
     const float flyingTime = 25;
     const float crouchTime = 6;
     const float coolDownTime = 60;
@@ -28,7 +29,7 @@ private:
     const float walkSpeed = 0.5, walkDistance = 32, walkBorder = 20;
     const float shortFireDelay = 12, longFireDelay = 20, maxFireAngle = atan(1) * 2 / 3, bulletSpeed = 1;
     const int shortFireBullets = 3, longFireBullets = 10;
-    const float invincibleTime = 30;
+    const float invincibleTime = 60;
     const float deathTime = 180, deathExplosionDelay = 6;
     const float jumpWaitTime = 60;
     const float damageFlashTime = 5;
@@ -49,10 +50,11 @@ private:
     int bulletCounter = 0;
 
     float invincibleTimeLeft = -1;
-    int health = 8;
+    int health = 12;
 
-    std::vector<HitboxVectorElement> borderHitboxVector, defaultHitboxVector, flipHitboxVector;
+    std::vector<HitboxVectorElement> defaultHitboxVector, flipHitboxVector;
     TA_Rect weakHitbox;
+    bool topWall = false;
 
     float floorY, timer = 0, jumpTimer = 0, flashTimer = damageFlashTime * 5;
 

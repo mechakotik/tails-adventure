@@ -5,6 +5,7 @@
 #include "explosion.h"
 #include "gamepad.h"
 #include "save.h"
+#include "tilemap.h"
 #include "tools.h"
 
 void TA_BirdWalker::load(float newFloorY) {
@@ -48,9 +49,6 @@ void TA_BirdWalker::load(float newFloorY) {
     defaultHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
     flipHitboxVector.push_back({bodyHitbox, TA_COLLISION_DAMAGE | TA_COLLISION_TARGET});
 
-    hitbox.setPosition(TA_Point(0, 0));
-    hitbox.setRectangle(TA_Point(TA::screenWidth + 576, 0), TA_Point(TA::screenWidth + 592, 448));
-    collisionType = TA_COLLISION_SOLID;
     objectSet->getLinks().camera->setLockPosition(TA_Point(576, 64 - ((TA::screenHeight - 144) / 2)));
 }
 
@@ -79,11 +77,7 @@ void TA_BirdWalker::updatePosition() {
         hitboxVector.push_back(element);
     }
 
-    if(flip) {
-        weakHitbox.setRectangle({4, -61}, {8, -36});
-    } else {
-        weakHitbox.setRectangle({31, -61}, {35, -36});
-    }
+    weakHitbox.setRectangle({4, -80}, {35, -40});
     weakHitbox.setPosition(position);
 
     headFlashSprite.setPosition(headSprite.getPosition());
@@ -96,15 +90,23 @@ void TA_BirdWalker::updatePosition() {
 }
 
 void TA_BirdWalker::insertBorderHitboxes() {
-    borderHitboxVector.clear();
     TA_Rect borderHitbox;
-    TA_Point cameraPosition = objectSet->getLinks().camera->getPosition();
+    float cameraX = objectSet->getLinks().camera->getPosition().x;
+    int mapHeight = objectSet->getLinks().tilemap->getHeight();
 
-    borderHitbox.setRectangle(cameraPosition + TA_Point(-16, -16), cameraPosition + TA_Point(0, TA::screenHeight + 16));
-    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+    if(objectSet->getLinks().camera->isLockedX()) {
+        borderHitbox.setRectangle({cameraX - 16, 0}, {cameraX, mapHeight});
+        hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
 
-    borderHitbox.setRectangle(cameraPosition + TA_Point(-16, -16), cameraPosition + TA_Point(TA::screenWidth + 16, 0));
-    hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+        borderHitbox.setRectangle({cameraX + TA::screenWidth, 0}, {cameraX + TA::screenWidth + 16, mapHeight});
+        hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+    }
+
+    if(topWall) {
+        float cameraY = objectSet->getLinks().camera->getPosition().y;
+        borderHitbox.setRectangle({cameraX - 16, cameraY - 16}, {cameraX + TA::screenWidth + 16, cameraY});
+        hitboxVector.push_back({borderHitbox, TA_COLLISION_SOLID});
+    }
 }
 
 bool TA_BirdWalker::update() {
@@ -112,14 +114,22 @@ bool TA_BirdWalker::update() {
         return false;
     }
 
+    if(objectSet->getLinks().camera->isLocked() &&
+        objectSet->getLinks().character->getPosition().y > objectSet->getLinks().camera->getPosition().y) {
+        topWall = true;
+    }
+
     auto initAiming = [&]() {
         timer = 0;
         aimPosition.y = floorY - 20;
 
+        float screenCenterX = objectSet->getLinks().camera->getPosition().x + TA::screenWidth / 2;
         if(objectSet->getCharacterPosition().x < objectSet->getLinks().camera->getPosition().x + TA::screenWidth / 2) {
-            aimPosition.x = objectSet->getLinks().camera->getPosition().x + TA::screenWidth - aimBorder - 12;
+            aimPosition.x = screenCenterX + aimRadius - 12;
+            flip = false;
         } else {
-            aimPosition.x = objectSet->getLinks().camera->getPosition().x + aimBorder;
+            aimPosition.x = screenCenterX - aimRadius;
+            flip = true;
         }
 
         state = TA_BIRD_WALKER_STATE_AIMING;
@@ -140,7 +150,6 @@ bool TA_BirdWalker::update() {
     switch(state) {
         case TA_BIRD_WALKER_STATE_IDLE: {
             if(objectSet->getLinks().camera->isLocked()) {
-                updatePosition();
                 TA::sound::playMusic("sound/boss.vgm");
                 initAiming();
             }
@@ -150,8 +159,6 @@ bool TA_BirdWalker::update() {
         case TA_BIRD_WALKER_STATE_AIMING: {
             headSprite.setAnimation("idle");
             if(timer > aimingTime) {
-                float centeredX = (aimPosition.x - 12) + bodySprite.getWidth() / 2;
-                flip = (TA::sign(int(centeredX - objectSet->getCharacterPosition().x)) < 0);
                 timer = 0;
                 state = TA_BIRD_WALKER_STATE_LANDING;
                 fallSound.play();
@@ -353,9 +360,7 @@ bool TA_BirdWalker::update() {
     }
 
     updateDamage();
-    if(state != TA_BIRD_WALKER_STATE_IDLE) {
-        updatePosition();
-    }
+    updatePosition();
 
     headSprite.updateAnimation();
     bodySprite.updateAnimation();

@@ -30,6 +30,8 @@ public:
     void forceLockX();
     void followLockX() { lockedX = followingLockX = true; }
     void followLockY() { lockedY = followingLockY = true; }
+    bool isLockedX() { return locked && lockedX; }
+    bool isLockedY() { return locked && lockedY; }
     bool isLocked() { return locked && lockedX && lockedY; }
     void unlock() { locked = lockedX = lockedY = followingLockX = followingLockY = false; }
     void setBorder(TA_Point topLeft, TA_Point bottomRight);
