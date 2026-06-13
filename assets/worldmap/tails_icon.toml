@@ -1,7 +1,7 @@
 [sprite]
 image = "tails_icon.png"
 width = 8
-height = 16
+height = 14
 
 [animations.blink]
 frames = [0, 1]
