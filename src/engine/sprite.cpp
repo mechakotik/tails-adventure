@@ -129,8 +129,10 @@ void TA_Sprite::drawFrom(SDL_Rect srcRect) {
     }
 
     SDL_Rect dstRect;
-    dstRect.x = int(position.x * TA::scaleFactor + 0.5) - int(cameraPosition.x * TA::scaleFactor + 0.5);
-    dstRect.y = int(position.y * TA::scaleFactor + 0.5) - int(cameraPosition.y * TA::scaleFactor + 0.5);
+    dstRect.x = static_cast<int>(std::round(position.x * TA::scaleFactor)) -
+                static_cast<int>(std::round(cameraPosition.x * TA::scaleFactor));
+    dstRect.y = static_cast<int>(std::round(position.y * TA::scaleFactor)) -
+                static_cast<int>(std::round(cameraPosition.y * TA::scaleFactor));
     dstRect.w = srcRect.w * TA::scaleFactor;
     dstRect.h = srcRect.h * TA::scaleFactor;
 
