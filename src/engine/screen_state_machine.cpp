@@ -6,6 +6,7 @@
 #include "game_screen.h"
 #include "house_screen.h"
 #include "intro_screen.h"
+#include "item_ratio_screen.h"
 #include "main_menu_screen.h"
 #include "map_screen.h"
 #include "save.h"
@@ -76,6 +77,9 @@ bool TA_ScreenStateMachine::update() {
                 break;
             case TA_SCREENSTATE_CREDITS:
                 currentScreen = std::make_unique<TA_CreditsScreen>();
+                break;
+            case TA_SCREENSTATE_ITEM_RATIO:
+                currentScreen = std::make_unique<TA_ItemRatioScreen>();
                 break;
             default:
                 TA::handleError("%s", "invalid new screen state");

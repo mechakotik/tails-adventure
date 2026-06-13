@@ -217,7 +217,7 @@ TA_ScreenState TA_CreditsScreen::update() {
     }
 
     if(timer >= static_cast<float>(tailsFrame.size())) {
-        return TA_SCREENSTATE_TITLE;
+        return TA_SCREENSTATE_ITEM_RATIO;
     }
     return TA_SCREENSTATE_CURRENT;
 }
