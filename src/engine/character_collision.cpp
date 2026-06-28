@@ -22,6 +22,7 @@ int TA_Character::getSolidFlags() {
 }
 
 void TA_Character::updateCollisions() {
+    bool wasGround = ground;
     if(remoteRobot) {
         topLeft = TA_Point(18, 27);
     } else if(hurt) {
@@ -109,6 +110,7 @@ void TA_Character::updateCollisions() {
     }
 
     position += delta;
+    bool horizontalBlocked = !TA::equal(delta.x, positionDelta.x);
 
     if((flags & TA_GROUND_COLLISION) != 0) {
         ground = true;
@@ -119,7 +121,7 @@ void TA_Character::updateCollisions() {
     }
 
     wall = bool(flags & TA_WALL_COLLISION);
-    if(wall && (hurt || !ground)) {
+    if(wall && (hurt || (!ground && !wasGround && horizontalBlocked))) {
         velocity.x = 0;
     }
 
