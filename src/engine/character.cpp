@@ -190,13 +190,27 @@ void TA_Character::updateAnimation() {
     if(hurt) {
         setAnimation("hurt");
     } else if(ground) {
+        TA_Direction direction = links.controller->getDirection();
+        bool horizontalInput = direction == TA_DIRECTION_LEFT || direction == TA_DIRECTION_RIGHT;
+        bool movingWithInput =
+            (direction == TA_DIRECTION_RIGHT && velocity.x > 0) || (direction == TA_DIRECTION_LEFT && velocity.x < 0);
+        bool pushContact = wall && !TA::equal(velocity.x, 0);
+
+        if(pushContact) {
+            pushAnimationTimer = pushAnimationGraceTime;
+        } else if(horizontalInput && movingWithInput) {
+            pushAnimationTimer = std::max(0.0F, pushAnimationTimer - TA::elapsedTime);
+        } else {
+            pushAnimationTimer = 0;
+        }
+
         if(lookUp) {
             setAnimation("look_up");
         } else if(crouch) {
             setAnimation("crouch");
         } else if(TA::equal(velocity.x, 0)) {
             setAnimation("idle");
-        } else if(wall) {
+        } else if(pushContact || pushAnimationTimer > 0) {
             setAnimation("push");
         } else if(usingSpeedBoots) {
             setAnimation("run");
@@ -204,6 +218,7 @@ void TA_Character::updateAnimation() {
             setAnimation("walk");
         }
     } else {
+        pushAnimationTimer = 0;
         if(helitail) {
             if(getAnimationName() != "throw_helitail") {
                 float maxTime = getMaxHelitailTime();

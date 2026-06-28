@@ -65,6 +65,7 @@ private:
     static constexpr float maxCoyoteTime = 10;
     static constexpr float nightVisionActivateTime = 10;
     static constexpr float helmetAirSlowdown = 0.015;
+    static constexpr float pushAnimationGraceTime = 4;
 
     TA_Point position, followPosition, velocity, climbPosition;
     TA_Links links;
@@ -98,6 +99,7 @@ private:
     float climbTime = 0, helitailTime = 0, invincibleTimeLeft = -1;
     float timer = 0, lookTime = 0, teleportTime = 0;
     float coyoteTime = 0;
+    float pushAnimationTimer = 0;
     float deltaX = 0;
     int rings, currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
