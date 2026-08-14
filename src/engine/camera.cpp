@@ -1,8 +1,14 @@
 #include "camera.h"
 #include <algorithm>
 #include "tools.h"
+#include "save.h"
+
+static float cameraLerpT = 1.0F;
 
 void TA_Camera::setFollowPosition(TA_Point* newFollowPosition, bool hotswap) {
+    long long cameraSmoothing = TA::save::getParameter("camera_smoothing");
+    cameraLerpT = std::lerp(1.0F, 0.01F, std::pow((float)cameraSmoothing / 8.0F, 0.1F));
+    
     followPosition = newFollowPosition;
 
     if(!hotswap) {
@@ -71,21 +77,21 @@ void TA_Camera::update(bool ground, bool spring, bool canLock) {
 
     if(!lockedX) {
         if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
-            position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
+            position.x = std::lerp(position.x, watchPosition.x - (offset ? xOffset : 0), cameraLerpT);
         } else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
-            position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
+            position.x = std::lerp(position.x, watchPosition.x + (offset ? xOffset : 0), cameraLerpT);
         }
     } else if(followingLockX) {
-        position.x = move(position.x, lockPosition.x);
+        position.x = std::lerp(position.x, lockPosition.x, cameraLerpT);
     }
     if(!lockedY) {
         if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
-            position.y = move(position.y, watchPosition.y - (offset ? yBottomOffset : 0));
+            position.y = std::lerp(position.y, watchPosition.y - (offset ? yBottomOffset : 0), cameraLerpT);
         } else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
-            position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
+            position.y = std::lerp(position.y, watchPosition.y + (offset ? yTopOffset : 0), cameraLerpT);
         }
     } else if(followingLockY) {
-        position.y = move(position.y, lockPosition.y);
+        position.y = std::lerp(position.y, lockPosition.y, cameraLerpT);
     }
 
     if(locked && canLock && lockPosition.getDistance(position) <= maxLockDistance) {

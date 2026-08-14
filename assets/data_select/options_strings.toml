@@ -1,6 +1,7 @@
 video = "video"
 controls = "controls"
 sound = "sound"
+misc = "misc."
 on = "on"
 off = "off"
 
@@ -33,3 +34,4 @@ main = "main"
 music = "music"
 sfx = "sfx"
 
+camera_smoothing = "camera\nsmoothing"
