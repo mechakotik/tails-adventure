@@ -107,7 +107,7 @@ void TA_Camera::update(bool ground, bool spring, bool canLock) {
             if (cameraLerpT < 1) {
                 position.y = std::lerp(position.y, watchPosition.y + (offset ? yTopOffset : 0), cameraLerpT);
             } else {
-                position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0), cameraLerpT);
+                position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0));
             }
         }
     } else if(followingLockY) {
