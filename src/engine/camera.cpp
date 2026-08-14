@@ -77,20 +77,20 @@ void TA_Camera::update(bool ground, bool spring, bool canLock) {
 
     if(!lockedX) {
         if(position.x < watchPosition.x - (offset ? xOffset : 0)) {
-            if (cameraLertP < 1) {
+            if (cameraLerpT < 1) {
                 position.x = std::lerp(position.x, watchPosition.x - (offset ? xOffset : 0), cameraLerpT);
             } else {
                 position.x = move(position.x, watchPosition.x - (offset ? xOffset : 0));
             }
         } else if(position.x > watchPosition.x + (offset ? xOffset : 0)) {
-            if (cameraLertP < 1) {
+            if (cameraLerpT < 1) {
                 position.x = std::lerp(position.x, watchPosition.x + (offset ? xOffset : 0), cameraLerpT);
             } else {
                 position.x = move(position.x, watchPosition.x + (offset ? xOffset : 0));
             }
         }
     } else if(followingLockX) {
-        if (cameraLertP < 1) {
+        if (cameraLerpT < 1) {
             position.x = std::lerp(position.x, lockPosition.x, cameraLerpT);
         } else {
             position.x = move(position.x, lockPosition.x);
@@ -98,20 +98,20 @@ void TA_Camera::update(bool ground, bool spring, bool canLock) {
     }
     if(!lockedY) {
         if(position.y < watchPosition.y - (offset ? yBottomOffset : 0)) {
-            if (cameraLertP < 1) {
+            if (cameraLerpT < 1) {
                 position.y = std::lerp(position.y, watchPosition.y - (offset ? yBottomOffset : 0), cameraLerpT);
             } else {
                 position.y = move(position.y, watchPosition.y - (offset ? yBottomOffset : 0));
             }
         } else if(position.y > watchPosition.y + (offset ? yTopOffset : 0)) {
-            if (cameraLertP < 1) {
+            if (cameraLerpT < 1) {
                 position.y = std::lerp(position.y, watchPosition.y + (offset ? yTopOffset : 0), cameraLerpT);
             } else {
                 position.y = move(position.y, watchPosition.y + (offset ? yTopOffset : 0), cameraLerpT);
             }
         }
     } else if(followingLockY) {
-        if (cameraLertP < 1) {
+        if (cameraLerpT < 1) {
             position.y = std::lerp(position.y, lockPosition.y, cameraLerpT);
         } else {
             position.y = move(position.y, lockPosition.y);
