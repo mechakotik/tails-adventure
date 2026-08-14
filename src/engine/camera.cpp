@@ -1,14 +1,14 @@
 #include "camera.h"
 #include <algorithm>
-#include "tools.h"
 #include "save.h"
+#include "tools.h"
 
 static float cameraLerpT = 1.0F;
 
 void TA_Camera::setFollowPosition(TA_Point* newFollowPosition, bool hotswap) {
     long long cameraSmoothing = TA::save::getParameter("camera_smoothing");
     cameraLerpT = std::lerp(1.0F, 0.01F, std::pow((float)cameraSmoothing / 8.0F, 0.1F));
-    
+
     followPosition = newFollowPosition;
 
     if(!hotswap) {
