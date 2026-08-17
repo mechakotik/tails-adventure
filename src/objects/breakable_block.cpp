@@ -21,7 +21,7 @@ bool TA_BreakableBlock::update() {
     objectSet->checkCollision(hitbox, flags);
 
     bool shouldBreak = false;
-    if((flags & TA_COLLISION_NAPALM) == 0) {
+    if((flags & TA_COLLISION_NO_BREAK) == 0) {
         if(objectSet->getLinks().character != nullptr) {
             if(strong && (flags & TA_COLLISION_ATTACK_STRONG) != 0) {
                 shouldBreak = true;

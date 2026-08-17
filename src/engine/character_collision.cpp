@@ -8,7 +8,7 @@
 #include "tools.h"
 
 int TA_Character::getSolidFlags() {
-    int flags = TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE;
+    int flags = TA_COLLISION_SOLID | TA_COLLISION_PUSHABLE | TA_COLLISION_DYNAMIC_SOLID;
     if(useSolidUpTiles) {
         flags |= TA_COLLISION_SOLID_UP;
     }
@@ -204,6 +204,7 @@ void TA_Character::setHurt() {
         return;
     }
     hurt = true;
+    releaseCarriedObject();
     ground = helitail = jump = false;
     damageSound.play();
     TA::gamepad::rumble(0.75, 0.75, 20);
@@ -221,7 +222,7 @@ void TA_Character::dropRings() {
 }
 
 void TA_Character::updateClimb() {
-    if(remoteRobot || !wall || !TA::equal(deltaX, 0)) {
+    if(remoteRobot || carriedPushableObject != nullptr || !wall || !TA::equal(deltaX, 0)) {
         return;
     }
     if(helitail && TA::levelPath == "maps/pm/pm4") {

@@ -45,6 +45,10 @@ void TA_Character::updateGround() {
         velocity.x = 0;
     }
     if(links.controller->isJustPressed(TA_BUTTON_A)) {
+        if(carriedPushableObject != nullptr) {
+            throwCarriedObject();
+            return;
+        }
         if(lookUp && (!water || remoteRobot)) {
             initHelitail();
         } else {
@@ -62,6 +66,11 @@ void TA_Character::updateGround() {
 void TA_Character::updateAir() {
     coyoteTime += TA::elapsedTime;
     horizontalMove();
+
+    if(carriedPushableObject != nullptr && links.controller->isJustPressed(TA_BUTTON_A)) {
+        throwCarriedObject();
+        return;
+    }
 
     if(jump) {
         jumpSpeed += grv * (water ? 0.5F : 1) * TA::elapsedTime;
@@ -159,6 +168,10 @@ void TA_Character::horizontalMove() {
 
     if(usingSpeedBoots) {
         currentTopX *= 2;
+    }
+    if(carriedPushableObject != nullptr) {
+        currentTopX *= superGloveCarrySpeedMultiplier;
+        currentAcc *= superGloveCarrySpeedMultiplier;
     }
     if(water) {
         currentTopX *= 0.75;

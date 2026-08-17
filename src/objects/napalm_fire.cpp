@@ -14,7 +14,7 @@ void TA_NapalmFire::load(TA_Point position, float xsp) {
 
     TA_Rect napalmHitbox;
     napalmHitbox.setRectangle(TA_Point(-4, -64), TA_Point(12, 28));
-    hitboxVector.push_back({napalmHitbox, TA_COLLISION_NAPALM});
+    hitboxVector.push_back({napalmHitbox, TA_COLLISION_NAPALM | TA_COLLISION_NO_BREAK});
 
     updatePosition();
 }

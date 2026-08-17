@@ -49,7 +49,8 @@ void TA_Character::handleInput() {
         }
     }
 
-    if(state == STATE_THROW_BOMB || state == STATE_HAMMER || state == STATE_HELMET) {
+    if(state == STATE_THROW_BOMB || state == STATE_HAMMER || state == STATE_HELMET ||
+        state == STATE_SUPER_GLOVE_PICKUP || state == STATE_SUPER_GLOVE_PUT_DOWN || state == STATE_SUPER_GLOVE_THROW) {
         setPosition(position);
         hitbox.setPosition(position);
     }
@@ -88,6 +89,21 @@ void TA_Character::update() {
 
     if(state == STATE_TELEPORT) {
         updateTeleport();
+        return;
+    }
+
+    if(state == STATE_SUPER_GLOVE_PICKUP) {
+        updateSuperGlovePickup();
+        return;
+    }
+
+    if(state == STATE_SUPER_GLOVE_PUT_DOWN) {
+        updateSuperGlovePutDown();
+        return;
+    }
+
+    if(state == STATE_SUPER_GLOVE_THROW) {
+        updateSuperGloveThrow();
         return;
     }
 
@@ -145,13 +161,18 @@ void TA_Character::update() {
     setFlip(flip);
     updateSpringCollision();
     updateWaterCollision();
+    if(carriedPushableObject != nullptr && !ground) {
+        releaseCarriedObject();
+    }
     updateTool();
     updateFollowPosition();
     if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT ||
-        state == STATE_HAMMER || state == STATE_HELMET) {
+        state == STATE_HAMMER || state == STATE_HELMET || state == STATE_SUPER_GLOVE_PICKUP ||
+        state == STATE_SUPER_GLOVE_PUT_DOWN || state == STATE_SUPER_GLOVE_THROW) {
         return;
     }
     updateAnimation();
+    updateCarriedObjectPosition();
 }
 
 void TA_Character::draw() {
@@ -196,6 +217,16 @@ void TA_Character::updateAnimation() {
             (direction == TA_DIRECTION_RIGHT && velocity.x > 0) || (direction == TA_DIRECTION_LEFT && velocity.x < 0);
         bool pushContact = wall && !TA::equal(velocity.x, 0);
 
+        if(carriedPushableObject != nullptr) {
+            pushAnimationTimer = 0;
+            if(!TA::equal(velocity.x, 0)) {
+                setAnimation("super_glove_walk");
+            } else {
+                setAnimation("super_glove_idle");
+            }
+            return;
+        }
+
         if(pushContact) {
             pushAnimationTimer = pushAnimationGraceTime;
         } else if(horizontalInput && movingWithInput) {
@@ -219,6 +250,10 @@ void TA_Character::updateAnimation() {
         }
     } else {
         pushAnimationTimer = 0;
+        if(carriedPushableObject != nullptr) {
+            setAnimation("super_glove_idle");
+            return;
+        }
         if(helitail) {
             if(getAnimationName() != "throw_helitail") {
                 float maxTime = getMaxHelitailTime();

@@ -579,6 +579,30 @@ int TA_ObjectSet::checkCollision(TA_Rect& hitbox) {
     return flags;
 }
 
+TA_PushableObject* TA_ObjectSet::getPushableObject(TA_Rect hitbox) {
+    TA_PushableObject* bestObject = nullptr;
+    float bestDistance = 1e9F;
+
+    for(TA_Object* currentObject : objects) {
+        TA_PushableObject* pushableObject = currentObject->asPushableObject();
+        if(pushableObject == nullptr || !pushableObject->canBePickedUp()) {
+            continue;
+        }
+        if(!currentObject->hitbox.intersects(hitbox)) {
+            continue;
+        }
+
+        TA_Point distance = pushableObject->getDistanceToCharacter();
+        float absoluteDistance = distance.length();
+        if(absoluteDistance < bestDistance) {
+            bestDistance = absoluteDistance;
+            bestObject = pushableObject;
+        }
+    }
+
+    return bestObject;
+}
+
 TA_Point TA_ObjectSet::getCharacterPosition() {
     if(links.character) {
         return links.character->getPosition() + TA_Point(24, 24);

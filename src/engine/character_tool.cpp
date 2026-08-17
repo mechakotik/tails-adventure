@@ -4,6 +4,7 @@
 #include "hud.h"
 #include "large_bomb.h"
 #include "objects/bomb.h"
+#include "objects/pushable_object.h"
 #include "tilemap.h"
 #include "tools.h"
 
@@ -19,6 +20,11 @@ void TA_Character::updateTool() {
     }
 
     if(hurt) {
+        return;
+    }
+
+    if(carriedPushableObject != nullptr) {
+        initSuperGlovePutDown();
         return;
     }
 
@@ -60,6 +66,9 @@ void TA_Character::updateTool() {
             break;
         case TOOL_SPEED_BOOTS:
             usingSpeedBoots = true;
+            break;
+        case TOOL_SUPER_GLOVE:
+            initSuperGlove();
             break;
         case TOOL_NIGHT_VISION:
             initNightVision();
@@ -327,6 +336,218 @@ void TA_Character::updateHelmet() {
     hitbox.setPosition(position);
     attackHitbox.setPosition(position);
     updateFollowPosition();
+}
+
+void TA_Character::initSuperGlove() {
+    if(!ground || lookUp || crouch || carriedPushableObject != nullptr) {
+        damageSound.play();
+        return;
+    }
+
+    TA_Rect pickupHitbox;
+    if(flip) {
+        pickupHitbox.setRectangle({6, 20}, {18, 39});
+    } else {
+        pickupHitbox.setRectangle({30, 20}, {42, 39});
+    }
+    pickupHitbox.setPosition(position);
+
+    carriedPushableObject = links.objectSet->getPushableObject(pickupHitbox);
+    if(carriedPushableObject == nullptr) {
+        damageSound.play();
+        return;
+    }
+
+    velocity.x = 0;
+    pushAnimationTimer = 0;
+
+    carriedPushableObject->startCarry();
+    setAnimation("super_glove_pickup");
+    state = STATE_SUPER_GLOVE_PICKUP;
+    carriedPushableObject->setCarriedPosition(getCarriedObjectPosition());
+}
+
+void TA_Character::updateSuperGlovePickup() {
+    if(carriedPushableObject != nullptr) {
+        carriedPushableObject->setCarriedPosition(getCarriedObjectPosition());
+    }
+
+    setPosition(position);
+    setFlip(flip);
+    hitbox.setPosition(position);
+    updateFollowPosition();
+
+    if(!isAnimated()) {
+        state = STATE_NORMAL;
+        updateCarriedObjectPosition();
+    }
+}
+
+void TA_Character::initSuperGlovePutDown() {
+    if(carriedPushableObject == nullptr) {
+        return;
+    }
+
+    velocity.x = 0;
+    pushAnimationTimer = 0;
+
+    setAnimation("super_glove_put_down");
+    state = STATE_SUPER_GLOVE_PUT_DOWN;
+    updateCarriedObjectPosition();
+}
+
+void TA_Character::updateSuperGlovePutDown() {
+    if(carriedPushableObject == nullptr) {
+        state = STATE_NORMAL;
+        return;
+    }
+
+    carriedPushableObject->setCarriedPosition(getCarriedObjectPosition());
+
+    setPosition(position);
+    setFlip(flip);
+    hitbox.setPosition(position);
+    updateFollowPosition();
+
+    if(!isAnimated()) {
+        carriedPushableObject->setCarriedPosition(getSuperGlovePutDownPosition());
+        carriedPushableObject->releaseCarry();
+        carriedPushableObject = nullptr;
+        state = STATE_NORMAL;
+    }
+}
+
+void TA_Character::updateSuperGloveThrow() {
+    if(carriedPushableObject != nullptr) {
+        if(getAnimationFrame() <= 1) {
+            carriedPushableObject->setCarriedPosition(getCarriedObjectPosition());
+        } else {
+            carriedPushableObject->setCarriedPosition(
+                position + TA_Point(flip ? 48 - carriedPushableObject->getWidth() : 0, 7));
+            carriedPushableObject->throwFromCarry(
+                {(flip ? -superGloveThrowXSpeed : superGloveThrowXSpeed), superGloveThrowYSpeed});
+            carriedPushableObject = nullptr;
+        }
+    }
+
+    setPosition(position);
+    setFlip(flip);
+    hitbox.setPosition(position);
+    updateFollowPosition();
+
+    if(!isAnimated()) {
+        state = STATE_NORMAL;
+    }
+}
+
+void TA_Character::updateCarriedObjectPosition() {
+    if(carriedPushableObject != nullptr) {
+        carriedPushableObject->setCarriedPosition(getCarriedObjectPosition());
+    }
+}
+
+void TA_Character::throwCarriedObject() {
+    if(carriedPushableObject == nullptr) {
+        return;
+    }
+
+    setAnimation("super_glove_throw");
+    state = STATE_SUPER_GLOVE_THROW;
+    pushAnimationTimer = 0;
+    updateCarriedObjectPosition();
+}
+
+void TA_Character::releaseCarriedObject() {
+    if(carriedPushableObject == nullptr) {
+        return;
+    }
+
+    carriedPushableObject->setCarriedPosition(getCarriedObjectPosition() + TA_Point(flip ? -8 : 8, 0));
+    carriedPushableObject->releaseCarry();
+    carriedPushableObject = nullptr;
+    pushAnimationTimer = 0;
+}
+
+TA_Point TA_Character::getSuperGloveObjectOffset(int frame) {
+    switch(frame) {
+        case 143:
+        case 144:
+            return {27, 23};
+        case 145:
+        case 146:
+            return {23, 19};
+        case 147:
+            return {20, 17};
+        case 149:
+        case 150:
+        case 151:
+        case 152:
+        case 153:
+        case 154:
+            return {23, 15};
+        case 155:
+            return {23, 15};
+        case 156:
+            return {23, 15};
+        default:
+            return {21, 15};
+    }
+}
+
+TA_Point TA_Character::getCarriedObjectPosition() {
+    if(carriedPushableObject == nullptr) {
+        return position;
+    }
+
+    if(state == STATE_SUPER_GLOVE_PICKUP) {
+        switch(getAnimationFrame()) {
+            case 0:
+                return position + TA_Point(flip ? 18 - carriedPushableObject->getWidth() : 30, 23);
+            case 1:
+                return position + TA_Point(flip ? 21 - carriedPushableObject->getWidth() : 27, 23);
+            default:
+                return position + TA_Point(flip ? 25 - carriedPushableObject->getWidth() : 23, 19);
+        }
+    }
+
+    if(state == STATE_SUPER_GLOVE_PUT_DOWN) {
+        switch(getAnimationFrame()) {
+            case 0:
+                return position + TA_Point(flip ? 25 - carriedPushableObject->getWidth() : 23, 19);
+            case 2:
+                return position + TA_Point(flip ? 18 - carriedPushableObject->getWidth() : 30, 23);
+            default:
+                return position + TA_Point(flip ? 21 - carriedPushableObject->getWidth() : 27, 23);
+        }
+    }
+
+    if(state == STATE_SUPER_GLOVE_THROW) {
+        switch(getAnimationFrame()) {
+            case 0:
+                return position + TA_Point(flip ? 27 - carriedPushableObject->getWidth() : 21, 7);
+            default:
+                return position + TA_Point(flip ? 48 - carriedPushableObject->getWidth() : 0, 7);
+        }
+    }
+
+    if(state == STATE_NORMAL && TA::equal(velocity.x, 0)) {
+        return position + TA_Point(flip ? 25 - carriedPushableObject->getWidth() : 23, 15);
+    }
+
+    TA_Point offset = getSuperGloveObjectOffset(getCurrentFrame());
+    if(flip) {
+        offset.x = getWidth() - offset.x - carriedPushableObject->getWidth();
+    }
+    return position + offset;
+}
+
+TA_Point TA_Character::getSuperGlovePutDownPosition() {
+    if(carriedPushableObject == nullptr) {
+        return position;
+    }
+    float x = flip ? 18 - carriedPushableObject->getWidth() : 30;
+    float y = bottomRight.y - carriedPushableObject->getHeight();
+    return position + TA_Point(x, y);
 }
 
 void TA_Character::changeMusic() {

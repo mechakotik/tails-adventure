@@ -15,6 +15,7 @@ unpack = 73
 uncontrolled_fall = 32
 captured = 108
 helmet = 138
+super_glove_idle = 157
 
 [animations.walk]
 frames = [3, 4, 5, 6, 1, 2]
@@ -135,3 +136,21 @@ frames = [137, 136]
 delay = 6
 repeat = 1
 
+[animations.super_glove_pickup]
+frames = [73, 78, 73]
+delay = 8
+repeat = 1
+
+[animations.super_glove_put_down]
+frames = [73, 78, 73]
+delay = 8
+repeat = 1
+
+[animations.super_glove_walk]
+frames = [149, 150, 151, 152, 153, 154]
+delay = 8
+
+[animations.super_glove_throw]
+frames = [145, 146, 145, 147, 148]
+delay = 6
+repeat = 1

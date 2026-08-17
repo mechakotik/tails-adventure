@@ -12,6 +12,7 @@
 
 class TA_ObjectSet;
 enum TA_BombMode : int;
+class TA_PushableObject;
 
 class TA_Object : public TA_Sprite {
     friend class TA_ObjectSet;
@@ -37,6 +38,7 @@ public:
         return collisionType != TA_COLLISION_TRANSPARENT && hitbox.intersects(rv);
     }
     virtual int getDrawPriority() { return 0; }
+    virtual TA_PushableObject* asPushableObject() { return nullptr; }
     TA_Point getDistanceToCharacter();
     virtual void destroy() {}
     virtual ~TA_Object() = default;
@@ -86,6 +88,7 @@ public:
     std::pair<TA_Point, int> moveAndCollide(TA_Point position, TA_Point topLeft, TA_Point bottomRight,
         TA_Point velocity, int solidFlags, bool ground = false);
     int getCollisionFlags(TA_Point position, TA_Point topLeft, TA_Point bottomRight, int solidFlags);
+    TA_PushableObject* getPushableObject(TA_Rect hitbox);
     void setTransition(TA_ScreenState screenState) { transition = screenState; }
     TA_ScreenState getTransition() { return transition; }
     bool hasCollisionType(TA_CollisionType type) { return hitboxContainer.hasCollisionType(type); }

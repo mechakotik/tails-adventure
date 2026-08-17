@@ -6,6 +6,8 @@
 #include "sound.h"
 #include "sprite.h"
 
+class TA_PushableObject;
+
 class TA_Character : public TA_Sprite {
 private:
     enum CharacterTool {
@@ -16,6 +18,7 @@ private:
         TOOL_NIGHT_VISION = 5,
         TOOL_REMOTE_ROBOT = 6,
         TOOL_SPEED_BOOTS = 7,
+        TOOL_SUPER_GLOVE = 8,
         TOOL_NAPALM_BOMB = 13,
         TOOL_TRIPLE_BOMB = 14,
         TOOL_HELMET = 16,
@@ -35,6 +38,9 @@ private:
         STATE_TELEPORT,
         STATE_HAMMER,
         STATE_HELMET,
+        STATE_SUPER_GLOVE_PICKUP,
+        STATE_SUPER_GLOVE_PUT_DOWN,
+        STATE_SUPER_GLOVE_THROW,
         STATE_DEAD
     };
 
@@ -66,6 +72,9 @@ private:
     static constexpr float nightVisionActivateTime = 10;
     static constexpr float helmetAirSlowdown = 0.015;
     static constexpr float pushAnimationGraceTime = 4;
+    static constexpr float superGloveCarrySpeedMultiplier = 0.5;
+    static constexpr float superGloveThrowXSpeed = 1.6;
+    static constexpr float superGloveThrowYSpeed = -2.0;
 
     TA_Point position, followPosition, velocity, climbPosition;
     TA_Links links;
@@ -82,6 +91,7 @@ private:
 
     TA_Sprite remoteRobotControlSprite;
     TA_Point remoteRobotInitialPosition;
+    TA_PushableObject* carriedPushableObject = nullptr;
 
     bool ground = false, helitail = false, wall = false, ceiling = false, flip = false;
     bool jump = false, jumpReleased = false, spring = false;
@@ -142,6 +152,17 @@ private:
     void updateNightVision();
     void initHelmet();
     void updateHelmet();
+    void initSuperGlove();
+    void updateSuperGlovePickup();
+    void initSuperGlovePutDown();
+    void updateSuperGlovePutDown();
+    void updateSuperGloveThrow();
+    void updateCarriedObjectPosition();
+    void throwCarriedObject();
+    void releaseCarriedObject();
+    TA_Point getSuperGloveObjectOffset(int frame);
+    TA_Point getCarriedObjectPosition();
+    TA_Point getSuperGlovePutDownPosition();
     void changeMusic();
     float getMaxHelitailTime();
     void dropRings();
