@@ -3,8 +3,8 @@
  <properties>
   <property name="priority" type="bool" value="true"/>
  </properties>
- <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="320" columns="20">
-  <image source="pv1.png" width="320" height="256"/>
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="132" columns="12">
+  <image source="pv.png" width="192" height="176"/>
   <tile id="1">
    <properties>
     <property name="spikes" type="int" value="2"/>
@@ -50,12 +50,80 @@
     </object>
    </objectgroup>
   </tile>
+  <tile id="10">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="13">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="14">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="15">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="18">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="19">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
   <tile id="20">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+   <animation>
+    <frame tileid="20" duration="400"/>
+    <frame tileid="30" duration="400"/>
+    <frame tileid="20" duration="400"/>
+    <frame tileid="84" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="21">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="22">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="22" duration="400"/>
+    <frame tileid="31" duration="400"/>
+    <frame tileid="22" duration="400"/>
+    <frame tileid="85" duration="400"/>
+   </animation>
   </tile>
   <tile id="23">
    <objectgroup draworder="index" id="2">
@@ -64,14 +132,7 @@
     </object>
    </objectgroup>
   </tile>
-  <tile id="24">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="25">
+  <tile id="26">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
@@ -85,7 +146,28 @@
     </object>
    </objectgroup>
   </tile>
-  <tile id="29">
+  <tile id="34">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="35">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="38">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="39">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
@@ -98,12 +180,6 @@
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
-   <animation>
-    <frame tileid="40" duration="400"/>
-    <frame tileid="50" duration="400"/>
-    <frame tileid="40" duration="400"/>
-    <frame tileid="200" duration="400"/>
-   </animation>
   </tile>
   <tile id="41">
    <objectgroup draworder="index" id="2">
@@ -118,12 +194,6 @@
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
-   <animation>
-    <frame tileid="42" duration="400"/>
-    <frame tileid="52" duration="400"/>
-    <frame tileid="42" duration="400"/>
-    <frame tileid="202" duration="400"/>
-   </animation>
   </tile>
   <tile id="43">
    <objectgroup draworder="index" id="2">
@@ -132,33 +202,97 @@
     </object>
    </objectgroup>
   </tile>
-  <tile id="46">
+  <tile id="44">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
   </tile>
-  <tile id="48">
+  <tile id="49">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
   </tile>
-  <tile id="62">
+  <tile id="50">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="50" duration="400"/>
+    <frame tileid="52" duration="400"/>
+    <frame tileid="50" duration="400"/>
+    <frame tileid="88" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="51">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="51" duration="400"/>
+    <frame tileid="53" duration="400"/>
+    <frame tileid="51" duration="400"/>
+    <frame tileid="89" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="54">
+   <animation>
+    <frame tileid="54" duration="400"/>
+    <frame tileid="61" duration="400"/>
+    <frame tileid="54" duration="400"/>
+    <frame tileid="91" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="55">
+   <animation>
+    <frame tileid="55" duration="400"/>
+    <frame tileid="62" duration="400"/>
+    <frame tileid="55" duration="400"/>
+    <frame tileid="92" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="56">
+   <animation>
+    <frame tileid="56" duration="400"/>
+    <frame tileid="63" duration="400"/>
+    <frame tileid="56" duration="400"/>
+    <frame tileid="93" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="57">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
   </tile>
-  <tile id="63">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
+  <tile id="58">
+   <animation>
+    <frame tileid="58" duration="400"/>
+    <frame tileid="64" duration="400"/>
+    <frame tileid="58" duration="400"/>
+    <frame tileid="94" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="spikes" type="int" value="0"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <animation>
+    <frame tileid="65" duration="400"/>
+    <frame tileid="75" duration="400"/>
+    <frame tileid="65" duration="400"/>
+    <frame tileid="98" duration="400"/>
+   </animation>
   </tile>
   <tile id="66">
    <objectgroup draworder="index" id="2">
@@ -175,253 +309,98 @@
    </objectgroup>
   </tile>
   <tile id="68">
+   <animation>
+    <frame tileid="68" duration="400"/>
+    <frame tileid="76" duration="400"/>
+    <frame tileid="68" duration="400"/>
+    <frame tileid="99" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="69">
+   <animation>
+    <frame tileid="69" duration="400"/>
+    <frame tileid="77" duration="400"/>
+    <frame tileid="69" duration="400"/>
+    <frame tileid="100" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="70">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="8">
+     <polygon points="0,0 16,0 16,8 0,8"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="71">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="8">
+     <polygon points="0,0 16,0 16,8 0,8"/>
+    </object>
+   </objectgroup>
+  </tile>
+  <tile id="72">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
   </tile>
-  <tile id="69">
+  <tile id="73">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <properties>
+      <property name="type" type="int" value="2"/>
+     </properties>
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="73" duration="400"/>
+    <frame tileid="78" duration="400"/>
+    <frame tileid="73" duration="400"/>
+    <frame tileid="101" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="74">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+  </tile>
+  <tile id="79">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0">
+     <properties>
+      <property name="type" type="int" value="2"/>
+     </properties>
+     <polygon points="0,0 16,0 16,16 0,16"/>
+    </object>
+   </objectgroup>
+   <animation>
+    <frame tileid="79" duration="400"/>
+    <frame tileid="82" duration="400"/>
+    <frame tileid="79" duration="400"/>
+    <frame tileid="103" duration="400"/>
+   </animation>
   </tile>
   <tile id="80">
    <objectgroup draworder="index" id="2">
     <object id="1" x="0" y="0">
+     <properties>
+      <property name="type" type="int" value="2"/>
+     </properties>
      <polygon points="0,0 16,0 16,16 0,16"/>
     </object>
    </objectgroup>
+   <animation>
+    <frame tileid="80" duration="400"/>
+    <frame tileid="83" duration="400"/>
+    <frame tileid="80" duration="400"/>
+    <frame tileid="104" duration="400"/>
+   </animation>
   </tile>
   <tile id="81">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="82">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="87">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="88">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-   <animation>
-    <frame tileid="88" duration="400"/>
-    <frame tileid="98" duration="400"/>
-    <frame tileid="88" duration="400"/>
-    <frame tileid="248" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="89">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-   <animation>
-    <frame tileid="89" duration="400"/>
-    <frame tileid="99" duration="400"/>
-    <frame tileid="89" duration="400"/>
-    <frame tileid="249" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="100">
-   <animation>
-    <frame tileid="100" duration="400"/>
-    <frame tileid="110" duration="400"/>
-    <frame tileid="100" duration="400"/>
-    <frame tileid="260" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="101">
-   <animation>
-    <frame tileid="101" duration="400"/>
-    <frame tileid="111" duration="400"/>
-    <frame tileid="101" duration="400"/>
-    <frame tileid="261" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="102">
-   <animation>
-    <frame tileid="102" duration="400"/>
-    <frame tileid="112" duration="400"/>
-    <frame tileid="102" duration="400"/>
-    <frame tileid="262" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="103">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="104">
-   <animation>
-    <frame tileid="104" duration="400"/>
-    <frame tileid="114" duration="400"/>
-    <frame tileid="104" duration="400"/>
-    <frame tileid="264" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="106">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="107">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="108">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="109">
-   <properties>
-    <property name="spikes" type="int" value="0"/>
-   </properties>
-  </tile>
-  <tile id="120">
-   <animation>
-    <frame tileid="120" duration="400"/>
-    <frame tileid="130" duration="400"/>
-    <frame tileid="120" duration="400"/>
-    <frame tileid="280" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="121">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="122">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="123">
-   <animation>
-    <frame tileid="123" duration="400"/>
-    <frame tileid="133" duration="400"/>
-    <frame tileid="123" duration="400"/>
-    <frame tileid="283" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="124">
-   <animation>
-    <frame tileid="124" duration="400"/>
-    <frame tileid="134" duration="400"/>
-    <frame tileid="124" duration="400"/>
-    <frame tileid="284" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="125">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="8">
-     <polygon points="0,0 16,0 16,8 0,8"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="126">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="8">
-     <polygon points="0,0 16,0 16,8 0,8"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="127">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="128">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <properties>
-      <property name="type" type="int" value="2"/>
-     </properties>
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-   <animation>
-    <frame tileid="128" duration="400"/>
-    <frame tileid="138" duration="400"/>
-    <frame tileid="128" duration="400"/>
-    <frame tileid="288" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="129">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-  </tile>
-  <tile id="140">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <properties>
-      <property name="type" type="int" value="2"/>
-     </properties>
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-   <animation>
-    <frame tileid="140" duration="400"/>
-    <frame tileid="150" duration="400"/>
-    <frame tileid="140" duration="400"/>
-    <frame tileid="300" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="141">
-   <objectgroup draworder="index" id="2">
-    <object id="1" x="0" y="0">
-     <properties>
-      <property name="type" type="int" value="2"/>
-     </properties>
-     <polygon points="0,0 16,0 16,16 0,16"/>
-    </object>
-   </objectgroup>
-   <animation>
-    <frame tileid="141" duration="400"/>
-    <frame tileid="151" duration="400"/>
-    <frame tileid="141" duration="400"/>
-    <frame tileid="301" duration="400"/>
-   </animation>
-  </tile>
-  <tile id="142">
    <objectgroup draworder="index" id="3">
     <object id="2" x="0" y="0">
      <properties>
@@ -431,39 +410,39 @@
     </object>
    </objectgroup>
    <animation>
-    <frame tileid="142" duration="400"/>
-    <frame tileid="152" duration="400"/>
-    <frame tileid="142" duration="400"/>
-    <frame tileid="302" duration="400"/>
+    <frame tileid="81" duration="400"/>
+    <frame tileid="81" duration="400"/>
+    <frame tileid="81" duration="400"/>
+    <frame tileid="81" duration="400"/>
    </animation>
   </tile>
  </tileset>
  <layer id="1" name="layer0" width="27" height="24">
   <data encoding="csv">
-81,81,81,81,81,81,81,81,81,81,47,81,5,81,81,81,81,5,89,82,81,81,81,81,81,81,81,
+43,43,43,43,43,43,43,43,43,43,27,43,5,43,43,43,43,5,51,44,43,43,43,43,43,43,43,
 1,1,1,1,1,1,1,1,1,2,3,4,5,1,1,1,1,5,4,6,7,1,1,1,1,1,1,
 8,1,1,1,8,1,8,1,1,1,1,2,9,1,1,1,1,9,7,1,1,1,1,8,1,8,1,
-10,1,1,1,10,1,10,1,1,1,1,2,21,1,1,1,1,21,7,1,22,23,1,10,1,10,1,
-24,25,24,25,24,25,24,26,1,1,1,1,1,1,22,23,1,1,1,1,27,28,1,29,25,24,25,
-30,41,30,42,43,42,30,44,1,8,1,1,1,22,45,46,23,1,1,8,1,1,1,47,41,30,42,
-48,48,48,48,48,48,41,49,1,10,1,1,1,50,61,61,62,1,1,10,1,1,1,63,48,48,48,
-48,48,48,48,48,48,64,49,1,10,1,1,1,27,65,66,28,1,1,10,1,1,1,47,67,48,48,
-48,48,48,48,68,69,70,6,29,26,1,1,1,1,27,28,1,1,1,29,26,1,1,3,82,43,48,
-48,48,48,48,48,70,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,63,83,48,
-48,48,48,48,48,49,1,1,1,1,84,85,85,85,85,85,85,86,84,85,85,87,1,1,47,88,89,
-48,48,48,48,90,44,1,1,84,101,85,85,85,85,85,85,85,85,85,85,87,1,1,1,63,69,68,
-48,48,48,48,64,49,1,84,102,103,85,87,1,1,1,1,1,84,85,85,101,87,1,1,104,82,48,
-48,48,48,68,68,70,84,85,105,103,102,85,87,1,1,1,1,1,84,85,103,106,87,1,1,63,48,
-48,48,89,70,104,6,1,84,105,103,105,85,85,87,1,1,84,85,85,85,103,87,1,1,1,63,89,
-48,48,69,49,1,1,84,102,105,103,105,87,110,110,1,1,110,110,84,85,103,106,87,1,1,47,64,
-48,48,41,70,1,1,1,121,121,29,122,26,25,24,25,24,25,24,29,123,26,1,1,29,24,47,82,
-48,48,64,49,1,1,1,121,121,6,104,6,1,1,1,1,1,1,3,104,6,1,1,3,63,30,48,
-48,48,70,44,29,26,1,121,121,124,1,1,1,1,1,1,1,1,1,1,124,1,1,1,63,125,48,
-48,48,48,30,42,49,1,121,121,124,1,1,1,1,126,127,1,1,1,1,124,1,1,1,63,48,48,
-48,48,48,48,48,128,129,129,129,129,129,129,129,129,129,129,129,129,129,129,129,129,129,129,130,48,48,
-48,48,48,48,48,128,141,141,141,141,141,141,141,141,141,141,141,141,141,141,141,141,141,141,130,48,48,
-48,48,48,48,48,128,142,142,142,142,142,142,142,142,142,142,142,142,142,142,142,142,142,142,130,48,48,
-48,48,48,48,48,128,143,143,143,143,143,143,143,143,143,143,143,143,143,143,143,143,143,143,130,48,48
+10,1,1,1,10,1,10,1,1,1,1,2,11,1,1,1,1,11,7,1,12,13,1,10,1,10,1,
+14,15,14,15,14,15,14,16,1,1,1,1,1,1,12,13,1,1,1,1,17,18,1,19,15,14,15,
+20,21,20,22,23,22,20,24,1,8,1,1,1,12,25,26,13,1,1,8,1,1,1,27,21,20,22,
+28,28,28,28,28,28,21,29,1,10,1,1,1,30,33,33,34,1,1,10,1,1,1,35,28,28,28,
+28,28,28,28,28,28,36,29,1,10,1,1,1,17,37,38,18,1,1,10,1,1,1,27,39,28,28,
+28,28,28,28,40,41,42,6,19,16,1,1,1,1,17,18,1,1,1,19,16,1,1,3,44,23,28,
+28,28,28,28,28,42,6,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,35,45,28,
+28,28,28,28,28,29,1,1,1,1,46,47,47,47,47,47,47,48,46,47,47,49,1,1,27,50,51,
+28,28,28,28,52,24,1,1,46,55,47,47,47,47,47,47,47,47,47,47,49,1,1,1,35,41,40,
+28,28,28,28,36,29,1,46,56,57,47,49,1,1,1,1,1,46,47,47,55,49,1,1,58,44,28,
+28,28,28,40,40,42,46,47,59,57,56,47,49,1,1,1,1,1,46,47,57,60,49,1,1,35,28,
+28,28,51,42,58,6,1,46,59,57,59,47,47,49,1,1,46,47,47,47,57,49,1,1,1,35,51,
+28,28,41,29,1,1,46,56,59,57,59,49,61,61,1,1,61,61,46,47,57,60,49,1,1,27,36,
+28,28,21,42,1,1,1,66,66,19,67,16,15,14,15,14,15,14,19,68,16,1,1,19,14,27,44,
+28,28,36,29,1,1,1,66,66,6,58,6,1,1,1,1,1,1,3,58,6,1,1,3,35,20,28,
+28,28,42,24,19,16,1,66,66,69,1,1,1,1,1,1,1,1,1,1,69,1,1,1,35,70,28,
+28,28,28,20,22,29,1,66,66,69,1,1,1,1,71,72,1,1,1,1,69,1,1,1,35,28,28,
+28,28,28,28,28,73,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,75,28,28,
+28,28,28,28,28,73,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,75,28,28,
+28,28,28,28,28,73,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,81,75,28,28,
+28,28,28,28,28,73,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,75,28,28
 </data>
  </layer>
  <layer id="2" name="layer1" width="27" height="24" visible="0">
@@ -471,30 +450,30 @@
    <property name="priority" type="bool" value="true"/>
   </properties>
   <data encoding="csv">
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,259,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,211,171,171,213,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,211,171,171,
-171,171,171,171,171,171,260,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,213,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,259,
-171,171,171,171,211,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,271,273,171,171,171,171,171,171,171,171,171,171,271,171,171,171,171,171,171,
-171,171,171,171,171,171,171,171,275,273,271,171,171,171,171,171,171,171,171,171,273,171,171,171,171,171,171,
-171,171,259,171,171,171,171,171,275,273,275,171,171,171,171,171,171,171,171,171,273,171,171,171,171,171,259,
-171,171,171,171,171,171,171,271,275,273,275,171,171,171,171,171,171,171,171,171,273,171,171,171,171,171,171,
-171,171,211,171,171,171,171,275,275,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,275,275,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,
-171,171,171,171,171,171,171,275,275,273,171,171,171,171,171,171,171,171,171,171,273,171,171,171,171,213,171,
-171,171,171,171,171,171,171,275,275,273,171,171,171,171,171,171,171,171,171,171,273,171,171,171,171,171,171,
-171,171,171,171,171,171,299,299,299,299,299,299,299,299,299,299,299,299,299,299,299,299,299,299,171,171,171,
-171,171,171,171,171,171,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,171,171,171,
-171,171,171,171,171,171,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,171,171,171,
-171,171,171,171,171,171,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,306,171,171,171
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,91,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,87,1,1,88,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,87,1,1,
+1,1,1,1,1,1,87,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,88,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,91,
+1,1,1,1,87,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,96,97,1,1,1,1,1,1,1,1,1,1,96,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,98,97,96,1,1,1,1,1,1,1,1,1,97,1,1,1,1,1,1,
+1,1,91,1,1,1,1,1,98,97,98,1,1,1,1,1,1,1,1,1,97,1,1,1,1,1,91,
+1,1,1,1,1,1,1,96,98,97,98,1,1,1,1,1,1,1,1,1,97,1,1,1,1,1,1,
+1,1,87,1,1,1,1,98,98,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,98,98,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,98,98,97,1,1,1,1,1,1,1,1,1,1,97,1,1,1,1,88,1,
+1,1,1,1,1,1,1,98,98,97,1,1,1,1,1,1,1,1,1,1,97,1,1,1,1,1,1,
+1,1,1,1,1,1,103,103,103,103,103,103,103,103,103,103,103,103,103,103,103,103,103,103,1,1,1,
+1,1,1,1,1,1,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,1,1,1,
+1,1,1,1,1,1,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,1,1,1,
+1,1,1,1,1,1,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,106,1,1,1
 </data>
  </layer>
 </map>

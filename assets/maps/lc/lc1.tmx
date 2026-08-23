@@ -3,8 +3,8 @@
  <properties>
   <property name="priority" type="bool" value="true"/>
  </properties>
- <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="42" columns="6">
-  <image source="lc1.png" width="96" height="112"/>
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="55" columns="8">
+  <image source="lc.png" width="128" height="112"/>
   <tile id="15">
    <objectgroup draworder="index" id="2">
     <object id="3" x="8" y="8">
