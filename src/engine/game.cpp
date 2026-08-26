@@ -38,7 +38,11 @@ void TA_Game::createWindow() {
         TA::handleSDLError("%s", "failed to create window");
     }
 
-    TA::renderer = SDL_CreateRenderer(TA::window, NULL);
+#ifdef __APPLE__
+    // FIXME: remove this once V-Sync is fixed on Metal renderer (likely an SDL issue)
+    SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "opengl,metal", SDL_HINT_DEFAULT);
+#endif
+    TA::renderer = SDL_CreateRenderer(TA::window, nullptr);
     if(TA::renderer == nullptr) {
         TA::handleSDLError("%s", "failed to create renderer");
     }
