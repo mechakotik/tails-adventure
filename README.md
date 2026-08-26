@@ -28,7 +28,6 @@ Also, it was made from the ground up in C++ without using any game engines to be
 The game is fully playable and can be completed 100%. However, a few non-essential features from the original game are still missing:
 
 - Items: Wrench, Sonic, Item Radar
-- Items (not planned): Knuckles, Super Glove
 - Most in-game cutscenes
 - Hover pod bullet and fire attacks
 - Tails idle animation

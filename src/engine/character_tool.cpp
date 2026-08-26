@@ -58,6 +58,9 @@ void TA_Character::updateTool() {
         case TOOL_HAMMER:
             initHammer();
             break;
+        case TOOL_KNUCKLES:
+            initKnuckles();
+            break;
         case TOOL_TELEPORT_DEVICE:
             initTeleport();
             break;
@@ -194,6 +197,54 @@ void TA_Character::updateHammer() {
         topLeft.x = 30 - topLeft.x;
     }
     attackHitbox.setRectangle(topLeft, topLeft + TA_Point(18, 18));
+    updateFollowPosition();
+
+    if(!isAnimated()) {
+        state = STATE_NORMAL;
+    }
+}
+
+void TA_Character::initKnuckles() {
+    if(ground || (jump && !helitail)) {
+        setAnimation("knuckles");
+        state = STATE_KNUCKLES;
+        knucklesSound.play();
+        if(!ground) {
+            jump = helitail = false;
+            velocity = {0, hammerFallSpeed};
+        }
+    }
+}
+
+void TA_Character::updateKnuckles() {
+    if(!ground) {
+        TA_Point topLeft{18, 12}, bottomRight{30, 39};
+        auto [delta, flags] = links.objectSet->moveAndCollide(
+            position, topLeft, bottomRight, velocity * TA::elapsedTime, getSolidFlags());
+        position += delta;
+        if(flags & TA_GROUND_COLLISION) {
+            ground = true;
+        }
+    }
+
+    setPosition(position);
+    hitbox.setPosition(position);
+    attackHitbox.setPosition(position);
+    TA_Point topLeft;
+
+    switch(getAnimationFrame()) {
+        case 0:
+            topLeft = {7, 22};
+            break;
+        case 1:
+            topLeft = {27, 17};
+            break;
+    }
+
+    if(flip) {
+        topLeft.x = 30 - topLeft.x;
+    }
+    attackHitbox.setRectangle(topLeft, topLeft + TA_Point(16, 16));
     updateFollowPosition();
 
     if(!isAnimated()) {

@@ -19,6 +19,7 @@ private:
         TOOL_REMOTE_ROBOT = 6,
         TOOL_SPEED_BOOTS = 7,
         TOOL_SUPER_GLOVE = 8,
+        TOOL_KNUCKLES = 10,
         TOOL_NAPALM_BOMB = 13,
         TOOL_TRIPLE_BOMB = 14,
         TOOL_HELMET = 16,
@@ -37,6 +38,7 @@ private:
         STATE_RAISE_ITEM,
         STATE_TELEPORT,
         STATE_HAMMER,
+        STATE_KNUCKLES,
         STATE_HELMET,
         STATE_SUPER_GLOVE_PICKUP,
         STATE_SUPER_GLOVE_PUT_DOWN,
@@ -84,7 +86,7 @@ private:
 
     TA_Sound jumpSound, remoteRobotStepSound;
     TA_Sound flySound, remoteRobotFlySound;
-    TA_Sound damageSound, hammerSound, waterSound, teleportSound;
+    TA_Sound damageSound, hammerSound, knucklesSound, waterSound, teleportSound;
     TA_Sound nightVisionSound;
 
     CharacterState state = STATE_NORMAL;
@@ -146,6 +148,8 @@ private:
     void spawnRemoteRobot();
     void initHammer();
     void updateHammer();
+    void initKnuckles();
+    void updateKnuckles();
     void initTeleport();
     void updateTeleport();
     void initNightVision();
@@ -195,7 +199,7 @@ public:
     bool isFlying() { return helitail; }
     bool isOnCeiling() { return ceiling; }
     bool isTeleported();
-    bool isAttacking() { return state == STATE_HAMMER || state == STATE_HELMET; }
+    bool isAttacking() { return state == STATE_HAMMER || state == STATE_KNUCKLES || state == STATE_HELMET; }
     bool isUsingHelmet() { return state == STATE_HELMET; }
     bool isFastCamera() { return spring || strongWind || usingSpeedBoots || conveyorBelt || noclip; }
     bool isInWater() { return water; }

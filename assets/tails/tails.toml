@@ -154,3 +154,9 @@ delay = 8
 frames = [145, 146, 145, 147, 148]
 delay = 6
 repeat = 1
+
+[animations.knuckles]
+frames = [19, 22]
+delay = 8
+repeat = 1
+

@@ -127,9 +127,11 @@ void TA::resmgr::preloadTextures() {
 }
 
 void TA::resmgr::preloadChunks() {
-    const std::vector<std::string> names{"break", "damage", "enter", "explosion", "fall", "find_item", "fly", "hammer",
-        "hit", "item_switch", "jump", "land", "open", "remote_robot_fly", "remote_robot_step", "ring", "select_item",
-        "select", "shoot", "switch", "teleport"};
+    const std::vector<std::string> names{"boss_wait", "break", "bullet", "damage", "enter", "explosion",
+        "explosion_small", "extra_speed", "fall", "find_item", "fly", "hammer", "hit", "item_switch", "jump",
+        "knuckles", "land", "laugh", "load_save", "quick_fall", "remote_robot_fly", "remote_robot_step", "ring",
+        "select", "select_item", "shoot", "speedy2_electro_charge", "speedy2_electro_release", "speedy2_fire", "switch",
+        "teleport", "water"};
 
     for(std::string name : names) {
         loadChunk("sound/" + name + ".ogg");
