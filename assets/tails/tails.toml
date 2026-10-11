@@ -16,6 +16,7 @@ uncontrolled_fall = 32
 captured = 108
 helmet = 138
 super_glove_idle = 157
+sonic = 128
 
 [animations.walk]
 frames = [3, 4, 5, 6, 1, 2]
@@ -159,4 +160,8 @@ repeat = 1
 frames = [19, 22]
 delay = 8
 repeat = 1
+
+[animations.sonic_charge]
+frames = [125, 126, 127]
+delay = 6
 

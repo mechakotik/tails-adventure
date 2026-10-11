@@ -16,6 +16,8 @@ void TA_Character::load(TA_Links newLinks) {
     damageSound.load("sound/damage.ogg", TA_SOUND_CHANNEL_SFX1);
     hammerSound.load("sound/hammer.ogg", TA_SOUND_CHANNEL_SFX3);
     knucklesSound.load("sound/knuckles.ogg", TA_SOUND_CHANNEL_SFX3);
+    sonicChargeSound.load("sound/sonic_charge.ogg", TA_SOUND_CHANNEL_SFX3);
+    sonicReleaseSound.load("sound/sonic_release.ogg", TA_SOUND_CHANNEL_SFX3);
     teleportSound.load("sound/teleport.ogg", TA_SOUND_CHANNEL_SFX3);
     waterSound.load("sound/water.ogg", TA_SOUND_CHANNEL_SFX1);
     nightVisionSound.load("sound/land.ogg", TA_SOUND_CHANNEL_SFX3);
@@ -50,8 +52,9 @@ void TA_Character::handleInput() {
         }
     }
 
-    if(state == STATE_THROW_BOMB || state == STATE_HAMMER || state == STATE_KNUCKLES || state == STATE_HELMET ||
-        state == STATE_SUPER_GLOVE_PICKUP || state == STATE_SUPER_GLOVE_PUT_DOWN || state == STATE_SUPER_GLOVE_THROW) {
+    if(state == STATE_THROW_BOMB || state == STATE_HAMMER || state == STATE_KNUCKLES || state == STATE_SONIC_CHARGE ||
+        state == STATE_SONIC || state == STATE_HELMET || state == STATE_SUPER_GLOVE_PICKUP ||
+        state == STATE_SUPER_GLOVE_PUT_DOWN || state == STATE_SUPER_GLOVE_THROW) {
         setPosition(position);
         hitbox.setPosition(position);
     }
@@ -85,6 +88,16 @@ void TA_Character::update() {
 
     if(state == STATE_KNUCKLES) {
         updateKnuckles();
+        return;
+    }
+
+    if(state == STATE_SONIC_CHARGE) {
+        updateSonicCharge();
+        return;
+    }
+
+    if(state == STATE_SONIC) {
+        updateSonic();
         return;
     }
 
@@ -173,8 +186,9 @@ void TA_Character::update() {
     updateTool();
     updateFollowPosition();
     if(state == STATE_THROW_BOMB || state == STATE_REMOTE_ROBOT_RETURN || state == STATE_TELEPORT ||
-        state == STATE_HAMMER || state == STATE_KNUCKLES || state == STATE_HELMET ||
-        state == STATE_SUPER_GLOVE_PICKUP || state == STATE_SUPER_GLOVE_PUT_DOWN || state == STATE_SUPER_GLOVE_THROW) {
+        state == STATE_HAMMER || state == STATE_KNUCKLES || state == STATE_SONIC_CHARGE || state == STATE_SONIC ||
+        state == STATE_HELMET || state == STATE_SUPER_GLOVE_PICKUP || state == STATE_SUPER_GLOVE_PUT_DOWN ||
+        state == STATE_SUPER_GLOVE_THROW) {
         return;
     }
     updateAnimation();

@@ -138,46 +138,7 @@ void TA_Character::updateCollisions() {
     }
 
     if(!remoteRobot && !hurt && invincibleTimeLeft <= 0) {
-        auto handleDamage = [&](TA_Rect& hitbox, int sign) {
-            if(hurt) {
-                return;
-            }
-            links.objectSet->checkCollision(hitbox, flags);
-            if((flags & TA_COLLISION_DAMAGE) == 0) {
-                return;
-            }
-            setHurt();
-            position.y -= 1;
-            velocity.x = hurtXsp * sign;
-            velocity.y = hurtYsp;
-
-            if(TA::save::getParameter("ring_drop")) {
-                dropRings();
-                if(!debugMode) {
-                    links.objectSet->addRings(-4);
-                }
-            } else {
-                if(!debugMode) {
-                    links.objectSet->addRings(-2);
-                }
-            }
-        };
-
-        TA_Rect leftHalf, rightHalf;
-        {
-            float middleX = (topLeft.x + bottomRight.x) / 2;
-            leftHalf.setRectangle(topLeft - TA_Point(0.01, 0.01), {middleX, bottomRight.y + 0.01});
-            rightHalf.setRectangle({middleX, topLeft.y - 0.01}, bottomRight + TA_Point(0.01, 0.01));
-            leftHalf.setPosition(position);
-            rightHalf.setPosition(position);
-        }
-        if(flip) {
-            handleDamage(rightHalf, -1);
-            handleDamage(leftHalf, 1);
-        } else {
-            handleDamage(leftHalf, 1);
-            handleDamage(rightHalf, -1);
-        }
+        updateDamageCollision();
     } else if(hurt) {
         if(ground) {
             hurt = false;
@@ -199,11 +160,57 @@ void TA_Character::updateCollisions() {
     hitbox.setPosition(position);
 }
 
+void TA_Character::updateDamageCollision() {
+    if(remoteRobot || hurt || invincibleTimeLeft > 0) {
+        return;
+    }
+
+    auto handleDamage = [&](TA_Rect& hitbox, int sign) {
+        if(hurt) {
+            return;
+        }
+        int flags = links.objectSet->checkCollision(hitbox);
+        if((flags & TA_COLLISION_DAMAGE) == 0) {
+            return;
+        }
+        setHurt();
+        position.y -= 1;
+        velocity.x = hurtXsp * sign;
+        velocity.y = hurtYsp;
+
+        if(TA::save::getParameter("ring_drop")) {
+            dropRings();
+            if(!debugMode) {
+                links.objectSet->addRings(-4);
+            }
+        } else if(!debugMode) {
+            links.objectSet->addRings(-2);
+        }
+    };
+
+    float middleX = (topLeft.x + bottomRight.x) / 2;
+    TA_Rect leftHalf{topLeft - TA_Point(0.01, 0.01), {middleX, bottomRight.y + 0.01}};
+    TA_Rect rightHalf{{middleX, topLeft.y - 0.01}, bottomRight + TA_Point(0.01, 0.01)};
+    leftHalf.setPosition(position);
+    rightHalf.setPosition(position);
+
+    if(flip) {
+        handleDamage(rightHalf, -1);
+        handleDamage(leftHalf, 1);
+    } else {
+        handleDamage(leftHalf, 1);
+        handleDamage(rightHalf, -1);
+    }
+}
+
 void TA_Character::setHurt() {
     if(hurt) {
         return;
     }
     hurt = true;
+    if(state == STATE_SONIC_CHARGE || state == STATE_SONIC) {
+        state = STATE_NORMAL;
+    }
     releaseCarriedObject();
     ground = helitail = jump = false;
     damageSound.play();
@@ -222,7 +229,7 @@ void TA_Character::dropRings() {
 }
 
 void TA_Character::updateClimb() {
-    if(remoteRobot || carriedPushableObject != nullptr || !wall || !TA::equal(deltaX, 0)) {
+    if(state != STATE_NORMAL || remoteRobot || carriedPushableObject != nullptr || !wall || !TA::equal(deltaX, 0)) {
         return;
     }
     if(helitail && TA::levelPath == "maps/pm/pm4") {

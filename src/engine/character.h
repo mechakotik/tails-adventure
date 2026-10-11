@@ -20,6 +20,7 @@ private:
         TOOL_SPEED_BOOTS = 7,
         TOOL_SUPER_GLOVE = 8,
         TOOL_KNUCKLES = 10,
+        TOOL_SONIC = 11,
         TOOL_NAPALM_BOMB = 13,
         TOOL_TRIPLE_BOMB = 14,
         TOOL_HELMET = 16,
@@ -39,6 +40,8 @@ private:
         STATE_TELEPORT,
         STATE_HAMMER,
         STATE_KNUCKLES,
+        STATE_SONIC_CHARGE,
+        STATE_SONIC,
         STATE_HELMET,
         STATE_SUPER_GLOVE_PICKUP,
         STATE_SUPER_GLOVE_PUT_DOWN,
@@ -77,6 +80,9 @@ private:
     static constexpr float superGloveCarrySpeedMultiplier = 0.5;
     static constexpr float superGloveThrowXSpeed = 1.6;
     static constexpr float superGloveThrowYSpeed = -2.0;
+    static constexpr float sonicInitialSpeed = 4;
+    static constexpr float sonicStopSpeed = 1;
+    static constexpr float sonicSlowdown = 0.015;
 
     TA_Point position, followPosition, velocity, climbPosition;
     TA_Links links;
@@ -86,7 +92,7 @@ private:
 
     TA_Sound jumpSound, remoteRobotStepSound;
     TA_Sound flySound, remoteRobotFlySound;
-    TA_Sound damageSound, hammerSound, knucklesSound, waterSound, teleportSound;
+    TA_Sound damageSound, hammerSound, knucklesSound, sonicChargeSound, sonicReleaseSound, waterSound, teleportSound;
     TA_Sound nightVisionSound;
 
     CharacterState state = STATE_NORMAL;
@@ -134,6 +140,7 @@ private:
     void updateFollowPosition();
     void horizontalMove();
     void updateCollisions();
+    void updateDamageCollision();
     void updateAnimation();
     void updateClimb();
     void updateClimbAnimation();
@@ -150,6 +157,11 @@ private:
     void updateHammer();
     void initKnuckles();
     void updateKnuckles();
+    void initSonicCharge();
+    void updateSonicCharge();
+    void initSonic();
+    void updateSonic();
+    void updateSonicAttackHitbox();
     void initTeleport();
     void updateTeleport();
     void initNightVision();
@@ -199,9 +211,13 @@ public:
     bool isFlying() { return helitail; }
     bool isOnCeiling() { return ceiling; }
     bool isTeleported();
-    bool isAttacking() { return state == STATE_HAMMER || state == STATE_KNUCKLES || state == STATE_HELMET; }
+    bool isAttacking() {
+        return state == STATE_HAMMER || state == STATE_KNUCKLES || state == STATE_SONIC || state == STATE_HELMET;
+    }
     bool isUsingHelmet() { return state == STATE_HELMET; }
-    bool isFastCamera() { return spring || strongWind || usingSpeedBoots || conveyorBelt || noclip; }
+    bool isFastCamera() {
+        return spring || strongWind || usingSpeedBoots || state == STATE_SONIC || conveyorBelt || noclip;
+    }
     bool isInWater() { return water; }
     bool isNightVisionApplied() { return nightVisionTimer > 0; }
     bool isGettingItem() {

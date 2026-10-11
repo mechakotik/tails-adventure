@@ -61,6 +61,9 @@ void TA_Character::updateTool() {
         case TOOL_KNUCKLES:
             initKnuckles();
             break;
+        case TOOL_SONIC:
+            initSonicCharge();
+            break;
         case TOOL_TELEPORT_DEVICE:
             initTeleport();
             break;
@@ -250,6 +253,101 @@ void TA_Character::updateKnuckles() {
     if(!isAnimated()) {
         state = STATE_NORMAL;
     }
+}
+
+void TA_Character::initSonicCharge() {
+    if(!ground && (!jump || helitail)) {
+        return;
+    }
+
+    state = STATE_SONIC_CHARGE;
+    setAnimation("sonic_charge");
+    sonicChargeSound.play();
+    velocity.x = 0;
+    jump = helitail = false;
+    lookUp = crouch = false;
+
+    hitbox.setRectangle({18, 12}, {30, 39});
+    hitbox.setPosition(position);
+}
+
+void TA_Character::updateSonicCharge() {
+    topLeft = {18, 12};
+    bottomRight = {30, 39};
+    updateDamageCollision();
+
+    setPosition(position);
+    setFlip(flip);
+    hitbox.setPosition(position);
+    updateFollowPosition();
+
+    if(state == STATE_SONIC_CHARGE && !links.controller->isPressed(TA_BUTTON_B)) {
+        initSonic();
+    }
+}
+
+void TA_Character::initSonic() {
+    state = STATE_SONIC;
+    setAnimation("sonic");
+    sonicReleaseSound.play();
+    velocity.x = sonicInitialSpeed * (flip ? -1 : 1);
+
+    updateSonicAttackHitbox();
+}
+
+void TA_Character::updateSonic() {
+    if(ground && links.controller->isJustPressed(TA_BUTTON_A)) {
+        state = STATE_NORMAL;
+        jumpSound.play();
+        jumpSpeed = jmp * (water ? 0.7F : 1);
+        jump = true;
+        jumpReleased = false;
+        jumpTime = 0;
+        ground = false;
+        updateAir();
+    } else if(!ground) {
+        velocity.y += grv * (water ? 0.5F : 1) * TA::elapsedTime;
+        velocity.y = std::min(velocity.y, maxJumpSpeed * (water ? 0.5F : 1));
+    }
+
+    float prevX = position.x;
+    updateCollisions();
+    deltaX = position.x - prevX;
+
+    setPosition(position);
+    setFlip(flip);
+    updateSonicAttackHitbox();
+    updateFollowPosition();
+
+    windVelocity = {0, 0};
+    strongWind = false;
+
+    if(state != STATE_SONIC) {
+        updateAnimation();
+        return;
+    }
+
+    if(wall) {
+        velocity.x = 0;
+    }
+
+    if(velocity.x > 0) {
+        velocity.x = std::max(0.0F, velocity.x - sonicSlowdown * TA::elapsedTime);
+    } else {
+        velocity.x = std::min(0.0F, velocity.x + sonicSlowdown * TA::elapsedTime);
+    }
+
+    if(std::abs(velocity.x) <= sonicStopSpeed) {
+        ground = jump = helitail = false;
+        coyoteTime = maxCoyoteTime;
+        state = STATE_NORMAL;
+        setAnimation("fall");
+    }
+}
+
+void TA_Character::updateSonicAttackHitbox() {
+    attackHitbox.setRectangle({10, 6}, {38, 45});
+    attackHitbox.setPosition(position);
 }
 
 void TA_Character::resetInstaShield() {}
