@@ -327,10 +327,11 @@ private:
 void TA_OptionsSection::load() {
     font.loadFont("fonts/pause_menu.toml");
 
-    groups = std::vector<std::string>(3);
+    groups = std::vector<std::string>(4);
     groups[0] = getOptionString("video");
     groups[1] = getOptionString("controls");
     groups[2] = getOptionString("sound");
+    groups[3] = getOptionString("misc");
 
     options.resize(groups.size());
     options[0].push_back(std::make_unique<TA_ResolutionOption>());
@@ -351,6 +352,8 @@ void TA_OptionsSection::load() {
     options[2].push_back(std::make_unique<TA_VolumeOption>(getOptionString("main"), "main_volume"));
     options[2].push_back(std::make_unique<TA_VolumeOption>(getOptionString("music"), "music_volume"));
     options[2].push_back(std::make_unique<TA_VolumeOption>(getOptionString("sfx"), "sfx_volume"));
+
+    options[3].push_back(std::make_unique<TA_VolumeOption>(getOptionString("camera_smoothing"), "camera_smoothing"));
 
     switchSound.load("sound/switch.ogg", TA_SOUND_CHANNEL_SFX1);
     selectSound.load("sound/select_item.ogg", TA_SOUND_CHANNEL_SFX2);
