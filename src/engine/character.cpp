@@ -73,6 +73,7 @@ void TA_Character::handleInput() {
 
 void TA_Character::update() {
     rings = TA::save::getSaveParameter("rings");
+    updateIdleTime();
     if(hidden || noclip) {
         return;
     }
@@ -205,6 +206,17 @@ void TA_Character::draw() {
     TA_Sprite::draw();
 }
 
+void TA_Character::updateIdleTime() {
+    if(state == STATE_NORMAL && ground && !hurt && !remoteRobot && !hidden && !noclip &&
+        carriedPushableObject == nullptr && TA::equal(velocity.x, 0) &&
+        links.controller->getDirection() == TA_DIRECTION_MAX && !links.controller->isPressed(TA_BUTTON_A) &&
+        !links.controller->isPressed(TA_BUTTON_B)) {
+        idleTime = std::min(idleTime + TA::elapsedTime, idleAnimationDelay + 1);
+    } else {
+        idleTime = 0;
+    }
+}
+
 void TA_Character::updateAnimation() {
     if(rings >= 0 && hurt) {
         setAlpha(255);
@@ -260,7 +272,7 @@ void TA_Character::updateAnimation() {
         } else if(crouch) {
             setAnimation("crouch");
         } else if(TA::equal(velocity.x, 0)) {
-            setAnimation("idle");
+            setAnimation(idleTime > idleAnimationDelay ? "wait" : "idle");
         } else if(pushContact || pushAnimationTimer > 0) {
             setAnimation("push");
         } else if(usingSpeedBoots) {
@@ -349,6 +361,7 @@ void TA_Character::updateFollowPosition() {
 void TA_Character::setSpawnPoint(TA_Point newPosition, bool newFlip) {
     position = newPosition;
     flip = newFlip;
+    idleTime = 0;
     updateFollowPosition();
     links.camera->setFollowPosition(&followPosition);
 }
@@ -440,6 +453,7 @@ void TA_Character::setCharacterPosition(TA_Point position) {
     jump = helitail = false;
     lookUp = crouch = false;
     flip = false;
+    idleTime = 0;
     updateFollowPosition();
     updateAnimation();
 }

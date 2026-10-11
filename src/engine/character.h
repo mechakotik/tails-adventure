@@ -77,6 +77,7 @@ private:
     static constexpr float nightVisionActivateTime = 10;
     static constexpr float helmetAirSlowdown = 0.015;
     static constexpr float pushAnimationGraceTime = 4;
+    static constexpr float idleAnimationDelay = 180;
     static constexpr float superGloveCarrySpeedMultiplier = 0.5;
     static constexpr float superGloveThrowXSpeed = 1.6;
     static constexpr float superGloveThrowYSpeed = -2.0;
@@ -118,6 +119,7 @@ private:
     float timer = 0, lookTime = 0, teleportTime = 0;
     float coyoteTime = 0;
     float pushAnimationTimer = 0;
+    float idleTime = 0;
     float deltaX = 0;
     int rings, currentTool = TOOL_BOMB;
     bool usingSpeedBoots = false;
@@ -142,6 +144,7 @@ private:
     void updateCollisions();
     void updateDamageCollision();
     void updateAnimation();
+    void updateIdleTime();
     void updateClimb();
     void updateClimbAnimation();
     void updateThrowAnimation();

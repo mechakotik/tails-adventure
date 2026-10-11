@@ -30,7 +30,6 @@ The game is fully playable and can be completed 100%. However, a few non-essenti
 - Items: Wrench, Item Radar, Proton Torpedo, Spark
 - Most in-game cutscenes
 - Hover pod bullet and fire attacks
-- Tails idle animation
 - Helmet rotated frames
 
 ## Get it
